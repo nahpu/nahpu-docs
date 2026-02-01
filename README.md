@@ -1,4 +1,4 @@
-# NAHPU Website
+# NAHPU Docs
 
 This serves documentation, guides, and project information for [NAHPU](https://nahpu.app).
 
