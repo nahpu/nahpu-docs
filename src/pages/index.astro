@@ -1,11 +1,13 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import AnchorHeading from "@astrojs/starlight/components/AnchorHeading.astro";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<StarlightPage frontmatter={{ title: "My custom page" }}>
+  <p>This is a custom page with a custom component:</p>
+
+  <AnchorHeading level="2" id="learn-more">Learn more</AnchorHeading>
+  <p>
+    <a href="https://starlight.astro.build/">Read more in the Starlight docs</a>
+  </p>
+</StarlightPage>
