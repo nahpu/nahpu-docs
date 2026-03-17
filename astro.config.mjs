@@ -29,9 +29,37 @@ export default defineConfig({
         },
       ],
       sidebar: [
+        { label: "Introduction", link: "intro" },
+        { label: "NAHPU Day 1", link: "day_one" },
+        { label: "Switch to NAHPU", link: "switch" },
+        { label: "Installation", link: "installation" },
         {
           label: "General Usages",
           autogenerate: { directory: "usages" },
+        },
+        {
+          label: "Data Management",
+          autogenerate: { directory: "data-management" },
+        },
+        {
+          label: "Curatorial Guidelines",
+          autogenerate: { directory: "curatorial-guideline" },
+        },
+        {
+          label: "Developer Guidelines",
+          autogenerate: { directory: "developer-guide" },
+        },
+        {
+          label: "Contributing",
+          autogenerate: { directory: "contributing" },
+        },
+        {
+          label: "Privacy Policy",
+          link: "privacy",
+        },
+        {
+          label: "Terms and Conditions",
+          link: "terms",
         },
       ],
     }),
