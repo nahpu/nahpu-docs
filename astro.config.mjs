@@ -14,6 +14,7 @@ export default defineConfig({
         es: "Documentación de NAHPU",
         id: "Dokumentasi NAHPU",
       },
+      customCss: ["./src/styles/global.css"],
       description:
         "Documentation for NAHPU, a digital field catalog for natural history collections.",
       logo: {
@@ -23,6 +24,9 @@ export default defineConfig({
       // Use BCP 47 language tags,
       // https://gist.github.com/typpo/b2b828a35e683b9bf8db91b5404f1bd1
       defaultLocale: "root",
+      components: {
+        SiteTitle: "./src/components/SiteTitle.astro",
+      },
       locales: {
         root: { label: "English (United States)", lang: "en-US" },
         pt: { label: "Portuguese (Brazil)", lang: "pt-BR" },

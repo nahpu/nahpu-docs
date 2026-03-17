@@ -1,0 +1,340 @@
+---
+import cntl from "cntl";
+import OpenMenuButton from "./buttons/OpenMenuButton.astro";
+import CloseMenuButton from "./buttons/CloseMenuButton.astro";
+import { Image } from "astro:assets";
+import logo from "../assets/nahpu.svg";
+
+const navItems = [
+  { path: "/intro", label: "Docs" },
+  { path: "/installation", label: "Installation" },
+  { path: "/day_one", label: "Day 1" },
+  { path: "/contributing", label: "Contributing" },
+];
+
+const currentPath = Astro.url.pathname;
+
+const navClasses = cntl`
+  sticky
+  top-0
+  z-50
+  flex
+  items-center
+  justify-between
+  px-6
+  py-4
+  border-b
+  border-emerald-900/40
+  bg-gray-950/80
+  backdrop-blur-md
+`;
+
+const brandWrapperClasses = cntl`
+  flex
+  items-center
+  gap-3
+  group
+`;
+
+const brandTextClasses = cntl`
+  text-lg
+  font-semibold
+  tracking-tight
+  text-emerald-300
+  group-hover:text-emerald-200
+  transition-colors
+`;
+
+const logoClasses = cntl`
+  w-8
+  h-8
+  rounded-xl
+  ring-1
+  ring-emerald-500/40
+  bg-gradient-to-tr
+  from-emerald-500/20
+  to-emerald-300/10
+`;
+
+const desktopNavWrapperClasses = cntl`
+  hidden
+  lg:flex
+  items-center
+  gap-x-1
+  bg-gray-900/80
+  border
+  border-emerald-900
+  rounded-full
+  p-1
+  shadow-sm
+`;
+
+const desktopLinkBaseClasses = cntl`
+  text-sm
+  font-medium
+  px-4
+  py-1.5
+  rounded-full
+  transition-colors
+  whitespace-nowrap
+`;
+
+const desktopLinkActiveClasses = cntl`
+  bg-emerald-500
+  text-gray-950
+  shadow
+`;
+
+const desktopLinkInactiveClasses = cntl`
+  text-emerald-100/80
+  hover:text-emerald-50
+  hover:bg-emerald-900/60
+`;
+
+const rightSectionClasses = cntl`
+  flex
+  items-center
+  gap-3
+`;
+
+const githubLinkClasses = cntl`
+  text-emerald-200/70
+  hover:text-emerald-100
+  transition-colors
+`;
+
+const githubIconClasses = cntl`
+  w-5
+  h-5
+`;
+
+const ctaButtonClasses = cntl`
+  hidden
+  sm:inline-flex
+  items-center
+  justify-center
+  px-4
+  py-1.5
+  rounded-full
+  text-sm
+  font-semibold
+  bg-emerald-500
+  text-gray-950
+  hover:bg-emerald-400
+  transition-colors
+  shadow
+`;
+
+const mobileMenuRootClasses = cntl`
+  hidden
+`;
+
+const mobileMenuPanelClasses = cntl`
+  fixed
+  inset-x-0
+  top-0
+  z-50
+  bg-gray-950
+  border-b
+  border-emerald-900
+  px-6
+  py-6
+  rounded-b-2xl
+  shadow-xl
+  transform
+  transition-transform
+  ease-in-out
+  duration-300
+`;
+
+const mobileHeaderClasses = cntl`
+  flex
+  items-center
+  justify-between
+  mb-6
+`;
+
+const mobileBrandTextClasses = cntl`
+  text-lg
+  font-semibold
+  text-emerald-200
+`;
+
+const mobileLinksWrapperClasses = cntl`
+  flex
+  flex-col
+  gap-1
+`;
+
+const mobileLinkBaseClasses = cntl`
+  block
+  px-4
+  py-2.5
+  rounded-lg
+  text-base
+  font-semibold
+  transition-colors
+`;
+
+const mobileLinkActiveClasses = cntl`
+  bg-emerald-500
+  text-gray-950
+`;
+
+const mobileLinkInactiveClasses = cntl`
+  text-emerald-100/80
+  hover:text-emerald-50
+  hover:bg-emerald-900/60
+`;
+
+const mobileCtaWrapperClasses = cntl`
+  pt-4
+  mt-3
+  border-t
+  border-emerald-900/60
+`;
+
+const mobileCtaButtonClasses = cntl`
+  block
+  text-center
+  px-4
+  py-2.5
+  rounded-full
+  bg-emerald-500
+  hover:bg-emerald-400
+  text-gray-950
+  font-semibold
+  text-sm
+  transition-colors
+  shadow
+`;
+---
+
+<nav class={navClasses} aria-label="Global">
+  <a href="/" class={brandWrapperClasses}>
+    <Image
+      src={logo}
+      alt="NAHPU logo"
+      width={32}
+      height={32}
+      class={logoClasses}
+    />
+    <span class={brandTextClasses}>NAHPU</span>
+  </a>
+
+  <div class={desktopNavWrapperClasses}>
+    {
+      navItems.map(({ path, label }) => {
+        const isActive = currentPath === path || currentPath === `${path}/`;
+        const classes = cntl`
+          ${desktopLinkBaseClasses}
+          ${isActive ? desktopLinkActiveClasses : desktopLinkInactiveClasses}
+        `;
+        return (
+          <a href={path} class={classes}>
+            {label}
+          </a>
+        );
+      })
+    }
+  </div>
+
+  <div class={rightSectionClasses}>
+    <a
+      href="https://github.com/nahpu"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="GitHub"
+      class={githubLinkClasses}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class={githubIconClasses}
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577
+          0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755
+          -1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236
+          1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466
+          -1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176
+          0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405
+          2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23
+          1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22
+          0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12
+          c0-6.63-5.37-12-12-12z"
+        ></path>
+      </svg>
+    </a>
+
+    <a href="/intro" class={ctaButtonClasses}> Get Started </a>
+
+    <div class="flex lg:hidden">
+      <OpenMenuButton />
+    </div>
+  </div>
+</nav>
+
+<div
+  id="mobile-menu"
+  class={mobileMenuRootClasses}
+  role="dialog"
+  aria-modal="true"
+>
+  <div class="fixed inset-0 z-50">
+    <div id="menu-panel" class={mobileMenuPanelClasses}>
+      <div class={mobileHeaderClasses}>
+        <a href="/" class="flex items-center gap-3">
+          <Image
+            src={logo}
+            alt="NAHPU logo"
+            width={28}
+            height={28}
+            class="w-7 h-7"
+          />
+          <span class={mobileBrandTextClasses}>NAHPU</span>
+        </a>
+        <CloseMenuButton />
+      </div>
+
+      <div class={mobileLinksWrapperClasses}>
+        {
+          navItems.map(({ path, label }) => {
+            const isActive = currentPath === path || currentPath === `${path}/`;
+            const classes = cntl`
+              ${mobileLinkBaseClasses}
+              ${isActive ? mobileLinkActiveClasses : mobileLinkInactiveClasses}
+            `;
+            return (
+              <a href={path} class={classes}>
+                {label}
+              </a>
+            );
+          })
+        }
+        <div class={mobileCtaWrapperClasses}>
+          <a href="/intro" class={mobileCtaButtonClasses}> Get Started </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const menuButton = document.getElementById("menu-button");
+  const closeButton = document.getElementById("close-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  if (menuButton && mobileMenu) {
+    menuButton.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+
+  if (closeButton && mobileMenu) {
+    closeButton.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+</script>

@@ -1,33 +1,34 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import HomePageFeatures from "../components/HomePageFeatures.astro";
+import HomeLayout from "../layouts/Layout.astro";
 ---
 
-<StarlightPage
-  frontmatter={{
-    title: "NAHPU",
-    description:
-      "Revolutionizing Field Expeditions with a Digital Catalog for Everyone",
-    template: "splash",
-    hero: {
-      title: "NAHPU",
-      tagline:
-        "Revolutionizing Field Expeditions with a Digital Catalog for Everyone",
-      actions: [
-        {
-          text: "Learn NAHPU",
-          link: "en/intro",
-          variant: "primary",
-        },
-        {
-          text: "Install",
-          link: "en/installation",
-          variant: "secondary",
-        },
-      ],
-    },
-  }}
-  hasSidebar={false}
+<HomeLayout
+  title="NAHPU Documentation"
+  description="Revolutionizing Field Expeditions with a Digital Catalog for Everyone"
 >
-  <HomePageFeatures />
-</StarlightPage>
+  <!-- <HomePageFeatures /> -->
+  <section
+    class="flex flex-col items-center justify-center text-center px-4 py-28 bg-linear-to from-gray-900 to-gray-950"
+  >
+    <!-- <img src="/src/assets/nahpu.svg" alt="NAHPU logo" class="w-24 h-24 mb-6" /> -->
+    <h1 class="text-5xl font-bold tracking-tight mb-4">NAHPU</h1>
+    <p class="text-xl font-bold text-gray-400 max-w-xl mb-10">
+      Revolutionizing Field Expeditions with a Digital Catalog for Everyone
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a
+        href="/intro"
+        class="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-colors"
+      >
+        Learn NAHPU
+      </a>
+      <a
+        href="/installation"
+        class="px-6 py-3 rounded-lg border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white font-semibold transition-colors"
+      >
+        Install
+      </a>
+    </div>
+  </section>
+</HomeLayout>
