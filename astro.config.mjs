@@ -16,7 +16,6 @@ export default defineConfig({
       },
       description:
         "Documentation for NAHPU, a digital field catalog for natural history collections.",
-
       logo: {
         src: "./src/assets/nahpu.svg",
       },
@@ -29,6 +28,9 @@ export default defineConfig({
         pt: { label: "Portuguese (Brazil)", lang: "pt-BR" },
         es: { label: "Spanish", lang: "es" },
         id: { label: "Indonesian", lang: "id" },
+      },
+      editLink: {
+        baseUrl: "https://github.com/nahpu/nahpu-docs/edit/main/",
       },
       social: [
         {
