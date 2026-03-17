@@ -1,13 +1,33 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
-import AnchorHeading from "@astrojs/starlight/components/AnchorHeading.astro";
+import HomePageFeatures from "../components/HomePageFeatures.astro";
 ---
 
-<StarlightPage frontmatter={{ title: "My custom page" }}>
-  <p>This is a custom page with a custom component:</p>
-
-  <AnchorHeading level="2" id="learn-more">Learn more</AnchorHeading>
-  <p>
-    <a href="https://starlight.astro.build/">Read more in the Starlight docs</a>
-  </p>
+<StarlightPage
+  frontmatter={{
+    title: "NAHPU",
+    description:
+      "Revolutionizing Field Expeditions with a Digital Catalog for Everyone",
+    template: "splash",
+    hero: {
+      title: "NAHPU",
+      tagline:
+        "Revolutionizing Field Expeditions with a Digital Catalog for Everyone",
+      actions: [
+        {
+          text: "Learn NAHPU",
+          link: "en/intro",
+          variant: "primary",
+        },
+        {
+          text: "Install",
+          link: "en/installation",
+          variant: "secondary",
+        },
+      ],
+    },
+  }}
+  hasSidebar={false}
+>
+  <HomePageFeatures />
 </StarlightPage>

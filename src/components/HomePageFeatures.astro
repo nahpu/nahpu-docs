@@ -1,0 +1,50 @@
+---
+import Image from "astro/components/Image.astro";
+import fieldworkSvg from "../assets/illustration/complexFieldwork.svg";
+import forEveryoneSvg from "../assets/illustration/forEveryone.svg";
+import responsibleCollectingSvg from "../assets/illustration/responsibleCollecting.svg";
+
+const features = [
+  {
+    title: "Built to handle complex fieldwork",
+    svg: fieldworkSvg,
+    description:
+      "NAHPU seamlessly integrates specimen data, including localities, collecting effort, tissue sample information, and photographs.",
+  },
+  {
+    title: "Designed for modern collecting",
+    svg: responsibleCollectingSvg,
+    description:
+      "NAHPU boosts efficiency of specimen data collection, streamlines data management, and provides real-time smaries for data monitoring.",
+  },
+  {
+    title: "Accessible for everyone",
+    svg: forEveryoneSvg,
+    description:
+      "NAHPU is a free, open-source app that works on various devices. We are creating multilingual instructions to ensure NAHPU is universally accessible and easy to use.",
+  },
+];
+---
+
+<section class="py-16 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {
+        features.map((feature) => (
+          <div class="flex flex-col items-center text-center p-4">
+            <Image
+              src={feature.svg}
+              alt=""
+              role="img"
+              class="w-48 h-48 object-contain mb-6"
+            />
+            <h3 class="text-xl font-semibold mb-3 text-white">
+              {feature.title}
+            </h3>
+            <p class="text-gray-300 leading-relaxed">{feature.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
