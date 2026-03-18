@@ -2,14 +2,14 @@
 import cntl from "cntl";
 import OpenMenuButton from "./buttons/OpenMenuButton.astro";
 import CloseMenuButton from "./buttons/CloseMenuButton.astro";
+import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
 import { Image } from "astro:assets";
 import logo from "../assets/nahpu.svg";
+import "../styles/global.css";
 
 const navItems = [
-  { path: "/intro", label: "Docs" },
-  { path: "/installation", label: "Installation" },
-  { path: "/day_one", label: "Day 1" },
-  { path: "/contributing", label: "Contributing" },
+  { path: "/en", label: "Docs" },
+  { path: "/team", label: "Team" },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -17,7 +17,7 @@ const currentPath = Astro.url.pathname;
 const navClasses = cntl`
   sticky
   top-0
-  z-50
+  z-40
   flex
   items-center
   justify-between
@@ -77,6 +77,7 @@ const desktopLinkBaseClasses = cntl`
   rounded-full
   transition-colors
   whitespace-nowrap
+  no-underline
 `;
 
 const desktopLinkActiveClasses = cntl`
@@ -101,32 +102,18 @@ const githubLinkClasses = cntl`
   text-emerald-200/70
   hover:text-emerald-100
   transition-colors
+  no-underline
 `;
 
 const githubIconClasses = cntl`
   w-5
   h-5
-`;
 
-const ctaButtonClasses = cntl`
-  hidden
-  sm:inline-flex
-  items-center
-  justify-center
-  px-4
-  py-1.5
-  rounded-full
-  text-sm
-  font-semibold
-  bg-emerald-500
-  text-gray-950
-  hover:bg-emerald-400
-  transition-colors
-  shadow
 `;
 
 const mobileMenuRootClasses = cntl`
   hidden
+  no-underline
 `;
 
 const mobileMenuPanelClasses = cntl`
@@ -185,28 +172,6 @@ const mobileLinkInactiveClasses = cntl`
   text-emerald-100/80
   hover:text-emerald-50
   hover:bg-emerald-900/60
-`;
-
-const mobileCtaWrapperClasses = cntl`
-  pt-4
-  mt-3
-  border-t
-  border-emerald-900/60
-`;
-
-const mobileCtaButtonClasses = cntl`
-  block
-  text-center
-  px-4
-  py-2.5
-  rounded-full
-  bg-emerald-500
-  hover:bg-emerald-400
-  text-gray-950
-  font-semibold
-  text-sm
-  transition-colors
-  shadow
 `;
 ---
 
@@ -268,8 +233,7 @@ const mobileCtaButtonClasses = cntl`
       </svg>
     </a>
 
-    <a href="/intro" class={ctaButtonClasses}> Get Started </a>
-
+    <ThemeSelect />
     <div class="flex lg:hidden">
       <OpenMenuButton />
     </div>
@@ -313,9 +277,6 @@ const mobileCtaButtonClasses = cntl`
             );
           })
         }
-        <div class={mobileCtaWrapperClasses}>
-          <a href="/intro" class={mobileCtaButtonClasses}> Get Started </a>
-        </div>
       </div>
     </div>
   </div>

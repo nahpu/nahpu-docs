@@ -1,37 +1,88 @@
 ---
 import HomePageFeatures from "../components/HomePageFeatures.astro";
 import HomeLayout from "../layouts/Layout.astro";
-import "../styles/tailwind.pages.css";
+import "../styles/global.css";
+import cntl from "cntl";
+
+const primarySectionClasses = cntl`
+  flex
+  flex-col
+  items-center
+  justify-center
+  text-center
+  px-4
+  py-28
+  bg-linear-to-b from-silver-tree-950 via-silver-tree-900 to-silver-tree-700
+  dark:from-silver-tree-950 dark:via-silver-tree-900 dark:to-silver-tree-600
+`;
+
+const titleClasses = cntl`
+  text-5xl
+  md:text-6xl
+  font-bold
+  tracking-tight
+  mb-4
+  text-white
+  drop-shadow-lg
+`;
+
+const subtitleClasses = cntl`
+  text-lg
+  md:text-xl
+  italic
+  text-silver-tree-100
+  max-w-xl
+  mb-10
+`;
+
+const mainBtnClasses = cntl`
+  px-6
+  py-3
+  rounded-lg
+  bg-linear-to-r from-silver-tree-500 to-silver-tree-400
+  hover:from-silver-tree-400 hover:to-silver-tree-300
+  text-white
+  font-semibold
+  transition-all
+  shadow-lg hover:shadow-xl
+  no-underline
+`;
+
+const secondaryBtnClasses = cntl`
+  px-6
+  py-3
+  rounded-lg
+  border-2 border-silver-tree-300
+  text-silver-tree-100 bg-silver-tree-800/50 backdrop-blur-sm
+  hover:bg-silver-tree-600 hover:text-white hover:border-silver-tree-400
+  font-semibold transition-all shadow-lg hover:shadow-xl
+  no-underline
+`;
+
+const secondarySectionClasses = cntl`
+  py-16
+  bg-silver-tree-900/50
+  dark:bg-silver-tree-800/50
+`;
 ---
 
 <HomeLayout
   title="NAHPU Documentation"
   description="Revolutionizing Field Expeditions with a Digital Catalog for Everyone"
 >
-  <section
-    class="flex flex-col items-center justify-center text-center px-4 py-28 bg-linear-to from-gray-900 to-gray-950"
-  >
-    <!-- <img src="/src/assets/nahpu.svg" alt="NAHPU logo" class="w-24 h-24 mb-6" /> -->
-    <h1 class="text-5xl font-bold tracking-tight mb-4">NAHPU</h1>
-    <p class="text-xl font-bold text-gray-400 max-w-xl mb-10">
+  <section class={primarySectionClasses}>
+    <h1 class={titleClasses}>NAHPU</h1>
+    <p class={subtitleClasses}>
       Rethinking species inventory in the digital age
     </p>
     <div class="flex flex-wrap gap-4 justify-center">
-      <a
-        href="/en"
-        class="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-colors"
-      >
-        Learn NAHPU
-      </a>
-      <a
-        href="/en/installation"
-        class="px-6 py-3 rounded-lg border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white font-semibold transition-colors"
-      >
-        Install
-      </a>
+      <a href="/en" class={mainBtnClasses}> Learn NAHPU </a>
+
+      <a href="/en/installation" class={secondaryBtnClasses}> Install </a>
     </div>
   </section>
-  <section class="py-16 bg-gray-100 dark:bg-gray-800">
+
+  <section class={secondarySectionClasses}>
     <div class="container mx-auto px-4">
       <HomePageFeatures />
     </div>
