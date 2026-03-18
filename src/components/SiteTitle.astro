@@ -1,7 +1,40 @@
 ---
-import Default from "@astrojs/starlight/components/SiteTitle.astro";
+import config from "virtual:starlight/user-config";
+import nahpuLogo from "../assets/nahpu.svg";
+
+const { siteTitle } = Astro.locals.starlightRoute;
 ---
 
-<a href="/" class="site-title-home-link">
-  <Default {...Astro.props}><slot /></Default>
+<a
+  href="/"
+  class="sl-flex items-center gap-nav font-semibold text-accent text-h4 no-underline whitespace-nowrap min-w-0"
+>
+  {
+    config.logo && (
+      <img
+        class="light:hidden print:hidden h-[calc(var(--sl-nav-height)-2*var(--sl-nav-pad-y))] w-auto max-w-full object-contain object-[0_50%]"
+        alt={config.logo.alt}
+        src={nahpuLogo.src}
+        width={nahpuLogo.width}
+        height={nahpuLogo.height}
+      />
+    )
+  }
+  <span class={config.logo?.replacesTitle ? "sr-only" : ""} translate="no">
+    {siteTitle}
+  </span>
 </a>
+
+<style>
+  @layer starlight.core {
+    .gap-nav {
+      gap: var(--sl-nav-gap);
+    }
+    .text-h4 {
+      font-size: var(--sl-text-h4);
+    }
+    .text-accent {
+      color: var(--sl-color-text-accent);
+    }
+  }
+</style>

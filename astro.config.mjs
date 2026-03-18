@@ -24,9 +24,9 @@ export default defineConfig({
       // Use BCP 47 language tags,
       // https://gist.github.com/typpo/b2b828a35e683b9bf8db91b5404f1bd1
       defaultLocale: "en",
-      // components: {
-      //   SiteTitle: "./src/components/SiteTitle.astro",
-      // },
+      components: {
+        SiteTitle: "./src/components/SiteTitle.astro",
+      },
       locales: {
         en: { label: "English (United States)", lang: "en-US" },
         pt: { label: "Portuguese (Brazil)", lang: "pt-BR" },
