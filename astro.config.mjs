@@ -4,7 +4,7 @@ import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
-  site: "https://stargazers.club",
+  site: "https://nahpu.app",
   integrations: [
     starlight({
       title: {
