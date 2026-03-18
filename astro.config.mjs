@@ -34,7 +34,7 @@ export default defineConfig({
         id: { label: "Indonesian", lang: "id" },
       },
       editLink: {
-        baseUrl: "https://github.com/nahpu/nahpu-docs/edit/revisions/",
+        baseUrl: "https://github.com/nahpu/nahpu-docs/edit/main/",
       },
       social: [
         {
