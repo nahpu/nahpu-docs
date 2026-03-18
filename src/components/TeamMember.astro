@@ -1,0 +1,124 @@
+---
+import { Image } from "astro:assets";
+import "../styles/global.css";
+import cntl from "cntl";
+
+interface Props {
+  name: string;
+  institution: string;
+  description: string;
+  url: string;
+  photoSrc?: string | null;
+}
+
+const { name, institution, description, url, photoSrc } = Astro.props as Props;
+const hasPhoto = !!photoSrc;
+
+const cardClasses = cntl`
+  rounded-2xl
+  p-6
+  md:p-8
+  h-6xl
+  bg-silver-tree-200
+  dark:bg-silver-tree-800
+  backdrop-blur-sm
+  hover:shadow-xl
+  transition-all
+  group
+`;
+
+const nameClasses = cntl`
+  text-xl md:text-2xl
+  font-bold
+  text-silver-tree-900
+  dark:text-silver-tree-50
+  group-hover:text-silver-tree-700
+  dark:group-hover:text-silver-tree-100
+  mb-3
+  no-underline
+`;
+
+const institutionClasses = cntl`
+  text-sm
+  text-silver-tree-700 dark:text-silver-tree-100
+  mb-4
+  no-underline
+`;
+
+const descriptionClasses = cntl`
+  text-silver-tree-600 dark:text-silver-tree-400
+  text-sm
+  leading-relaxed
+  line-clamp-3
+  px-2
+`;
+
+const avatarClasses = cntl`
+    w-24 
+    h-24 
+    md:w-28 
+    md:h-28 
+    rounded-full 
+    bg-linear-to-br 
+    from-silver-tree-400 
+    via-silver-tree-500 
+    to-golden-grass-400 
+    ring-4 
+    ring-silver-tree-100/50 
+    dark:ring-silver-tree-800/50 
+    group-hover:ring-silver-tree-300/80 
+    shadow-lg 
+    group-hover:scale-105 
+    transition-all 
+    duration-300 
+    flex 
+    items-center 
+    justify-center
+`;
+---
+
+<div class={cardClasses}>
+  <a
+    href={url}
+    class="block h-full focus:outline-none focus:ring-4 focus:ring-silver-tree-300/50 no-underline"
+  >
+    <!-- Avatar Circle -->
+    <div class="flex justify-center mb-6">
+      {
+        hasPhoto ? (
+          <Image
+            src={photoSrc!}
+            alt={`${name}'s photo`}
+            width={120}
+            height={120}
+            class="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class={avatarClasses}>
+            <span class="text-2xl font-bold text-white drop-shadow">
+              {name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")}
+            </span>
+          </div>
+        )
+      }
+    </div>
+
+    <!-- Content -->
+    <div class="text-center">
+      <h3 class={nameClasses}>
+        {name}
+      </h3>
+      <p class={institutionClasses}>
+        {institution}
+      </p>
+      <p class={descriptionClasses}>
+        {description}
+      </p>
+    </div>
+  </a>
+</div>

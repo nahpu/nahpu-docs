@@ -1,10 +1,135 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import TeamMember from "../components/TeamMember.astro";
+import "../styles/global.css";
+const teamData = [
+  {
+    name: "Heru Handika",
+    institution: "Florida Museum of Natural History",
+    description:
+      "Responsible for the overall project and the main developer of the app.",
+    url: "https://hhandika.com/",
+  },
+  {
+    name: "Andre E. Moncrieff",
+    institution: "Sam Noble Oklahoma Museum of Natural History",
+    description:
+      "Conceives new app features, designs bird taxon format, writes documentation, and tests the app.",
+    url: "https://www.moncriefflab.org/",
+  },
+  {
+    name: "Glaucia Del-Rio",
+    institution: "Florida Museum of Natural History",
+    description: "Key contributor to NAHPU development.",
+    url: "https://www.gdel-rio.com/",
+  },
+  {
+    name: "Roberta Canton",
+    institution: "Clemson University",
+    description: "Key contributor to NAHPU development.",
+    url: "https://robertacanton.com/",
+  },
+  {
+    name: "Austin S. Chipps",
+    institution: "U.S. National Museum of Natural History",
+    description: "Key contributor to NAHPU development.",
+    url: "https://scholar.google.com/citations?user=5w8sJyIAAAAJ&hl=en&oi=ao",
+  },
+  {
+    name: "Samantha L. Rutledge",
+    institution: "LSU Museum of Natural Science",
+    description: "Key contributor to NAHPU development.",
+    url: "https://slrutledge.wordpress.com/",
+  },
+  {
+    name: "Natalia Pérez-Amaya",
+    institution: "Sam Noble Oklahoma Museum of Natural History",
+    description:
+      "Colombian ornithologist and Collection Manager of Birds at the Sam Noble Museum. Her research interests are focused on the phylogeography and ecomorphology of Neotropical birds.​",
+    url: "https://www.nperez-amaya.com",
+  },
+  {
+    name: "Ada Chornelia",
+    institution: "School of BioSciences, The University of Melbourne",
+    description: "Key contributor to NAHPU development.",
+    url: "https://scholar.google.com/citations?user=DRDqstQAAAAJ&hl=en&oi=ao",
+  },
+  {
+    name: "Gregory Thom",
+    institution: "LSU Museum of Natural Science",
+    description: "Key contributor to NAHPU development.",
+    url: "https://www.thom-lab.org/",
+  },
+  {
+    name: "Jacob A. Esselstyn",
+    institution: "LSU Museum of Natural Science",
+    description: "Key contributor to NAHPU development.",
+    url: "https://esselstyn.github.io/",
+  },
+  {
+    name: "Marco Rego",
+    institution: "Florida Museum of Natural History",
+    description: "Key contributor to NAHPU development.",
+    url: "http://www.ornithologymaps.com",
+  },
+  {
+    name: "Nurul Inayah",
+    institution: "Museum Zoologicum Bogoriense",
+    description: "Key contributor to NAHPU development.",
+    url: "https://www.researchgate.net/profile/Nurul-Brin?ev=hdr_xprf",
+  },
+  {
+    name: "Cody Henderson",
+    institution: "College of Computing, Georgia Institute of Technology",
+    description:
+      "He is responsible for developing support for new taxon formats within NAHPU via collaboration with research partners.",
+    url: "https://github.com/cody-henderson",
+  },
+  {
+    name: "Danté Evangelista",
+    institution: "College of Computing, Georgia Institute of Technology",
+    description:
+      "AI/ML Researcher discovering + building AI features for the app",
+    url: "https://www.linkedin.com/in/danteorbit",
+  },
+  {
+    name: "Lawrence Gan",
+    institution: "College of Computing, Georgia Institute of Technology",
+    description: "Key contributor to NAHPU development.",
+    url: "https://www.linkedin.com/in/larry-gan/",
+  },
+];
 ---
 
 <Layout
   title="NAHPU Team"
-  description="Meet the team behind the NAHPU project, dedicated to revolutionizing field expeditions with a digital catalog for everyone."
+  description="Meet the team behind the NAHPU project."
 >
-  <div>Team page coming soon!</div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-16">
+      <h1
+        class="text-4xl md:text-5xl font-bold bg-linear-to-r from-silver-tree-400 via-silver-tree-500 to-golden-grass-400 bg-clip-text text-transparent mb-6"
+      >
+        NAHPU Team
+      </h1>
+      <p
+        class="text-xl text-silver-tree-600 dark:text-silver-tree-300 max-w-2xl mx-auto"
+      >
+        {teamData.length} dedicated scientists revolutionizing biodiversity fieldwork.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {
+        teamData.map((member) => (
+          <TeamMember
+            name={member.name}
+            institution={member.institution}
+            description={member.description}
+            url={member.url}
+          />
+        ))
+      }
+    </div>
+  </div>
 </Layout>
