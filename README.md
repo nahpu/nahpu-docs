@@ -1,6 +1,6 @@
 # NAHPU Docs
 
-This serves documentation, guides, and project information for [NAHPU](https://nahpu.app).
+This serves documentation, guides, and project information for [NAHPU](https://nahpu.app). We develop the documentation using [Astro](https://astro.build/) and [Starlight](https://starlight.astro.build/). The frameworks allow us to create a fast, modern, and multilingual documentation site with support for Markdown content and custom components. It also environmentally friendly by optimizing for performance and minimizing unnecessary re-renders (see details in [Starlight's documentation](https://starlight.astro.build/)).
 
 ## Project details
 
@@ -11,34 +11,32 @@ This serves documentation, guides, and project information for [NAHPU](https://n
 ## Prerequisites
 
 - Node.js >= 18 (Astro 5+ works best with recent Node versions).  
-- Yarn (project uses Yarn as the package manager per `package.json`). Using npm is possible but the repo was bootstrapped with Yarn.
+- [Bun](https://bun.sh/).
 
-If you need to install Yarn you can follow the official guide (or use npm: `npm install -g yarn`).
+If you need to install [bun](https://bun.sh/), you can do so with the following command:
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
 
 ## Quick start
 
 Install dependencies:
 
 ```fish
-yarn install
+bun install
 ```
 
 Run the development server (hot reload):
 
 ```fish
-yarn dev
+bun run dev
 ```
 
 Build the site for production:
 
 ```fish
-yarn build
-```
-
-Preview the built site locally:
-
-```fish
-yarn preview
+bun run build
 ```
 
 These scripts map to the entries in `package.json`:
@@ -51,13 +49,13 @@ These scripts map to the entries in `package.json`:
 
 - `src/pages/` - site pages and routes
 - `src/layouts/` - page layout components (e.g. `Layout.astro`)
-- `src/docs/` - Markdown documentation used by the site
+- `src/content/docs/` - Markdown documentation used by the site
 - `src/components/` - reusable UI components
 - `public/` - static assets (images, favicon, etc.)
 
 ## Contributing
 
-See the documentation in `src/docs/contributing/` for contribution guidance, code & doc contribution workflows, and developer tooling.
+See the documentation in `src/content/docs/contributing/` for contribution guidance, code & doc contribution workflows, and developer tooling.
 
 If you'd like to propose changes, open an issue or submit a pull request on the `main` branch.
 

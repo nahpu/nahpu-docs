@@ -2,9 +2,9 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
-
 // https://astro.build/config
 export default defineConfig({
+  site: "https://stargazers.club",
   integrations: [
     starlight({
       title: {
@@ -23,12 +23,12 @@ export default defineConfig({
       favicon: "./src/assets/nahpu.svg",
       // Use BCP 47 language tags,
       // https://gist.github.com/typpo/b2b828a35e683b9bf8db91b5404f1bd1
-      defaultLocale: "root",
-      components: {
-        SiteTitle: "./src/components/SiteTitle.astro",
-      },
+      defaultLocale: "en",
+      // components: {
+      //   SiteTitle: "./src/components/SiteTitle.astro",
+      // },
       locales: {
-        root: { label: "English (United States)", lang: "en-US" },
+        en: { label: "English (United States)", lang: "en-US" },
         pt: { label: "Portuguese (Brazil)", lang: "pt-BR" },
         es: { label: "Spanish", lang: "es" },
         id: { label: "Indonesian", lang: "id" },
@@ -46,7 +46,7 @@ export default defineConfig({
       sidebar: [
         {
           label: "Introduction",
-          link: "intro",
+          link: "/",
           translations: {
             "pt-BR": "Introdução",
             es: "Introducción",
@@ -97,6 +97,7 @@ export default defineConfig({
             es: "Gestión de Datos",
             id: "Manajemen Data",
           },
+          collapsed: true,
         },
         {
           label: "Curatorial Guidelines",
@@ -106,6 +107,7 @@ export default defineConfig({
             es: "Directrices Curatoriales",
             id: "Pedoman Kuratorial",
           },
+          collapsed: true,
         },
         {
           label: "Developer Guidelines",
@@ -115,6 +117,7 @@ export default defineConfig({
             es: "Directrices para Desarrolladores",
             id: "Pedoman Pengembang",
           },
+          collapsed: true,
         },
         {
           label: "Contributing",
@@ -124,6 +127,7 @@ export default defineConfig({
             es: "Contribuyendo",
             id: "Berkontribusi",
           },
+          collapsed: true,
         },
         {
           label: "Privacy Policy",
