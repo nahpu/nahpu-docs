@@ -1,0 +1,193 @@
+---
+import cntl from "cntl";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const wrapperClasses = cntl`
+  relative
+  inline-block
+  ${className ?? ""}
+`;
+
+const triggerClasses = cntl`
+  inline-flex h-10 w-28 items-center justify-between px-3 py-1.5
+  rounded-full bg-silver-tree-900/80 border border-silver-tree-700/50
+  text-xs font-medium text-silver-tree-300 hover:text-silver-tree-100
+  hover:bg-silver-tree-800/80 focus:outline-none focus:ring-2 focus:ring-silver-tree-400/50 focus:ring-offset-2
+  transition-all duration-200 shadow-md hover:shadow-lg
+`;
+
+const triggerLabelClasses = cntl`
+  inline-flex items-center gap-2 truncate
+`;
+
+const dropdownClasses = cntl`
+  absolute right-0 mt-1.5 w-32
+  bg-silver-tree-950/95 border border-silver-tree-800/50
+  backdrop-blur-md rounded-xl shadow-2xl shadow-silver-tree-900/80
+  opacity-0 scale-95 pointer-events-none
+  transition-all duration-200 ease-out origin-top-right z-50
+`;
+
+const optionClasses = cntl`
+  inline-flex items-center gap-2
+  w-full px-3 py-2.5 text-sm font-medium cursor-pointer
+  text-silver-tree-300 hover:bg-silver-tree-800/60 hover:text-silver-tree-100
+  transition-colors rounded-lg first:rounded-t-xl last:rounded-b-xl
+  focus:outline-none focus:bg-silver-tree-700/50
+`;
+
+const themes = [
+  { value: "light", icon: "☀️", label: "Light", title: "Light mode" },
+  { value: "dark", icon: "🌙", label: "Dark", title: "Dark mode" },
+  { value: "auto", icon: "💻", label: "Auto", title: "System preference" },
+];
+---
+
+<div class={wrapperClasses}>
+  <!-- Trigger Button -->
+  <button
+    id="theme-trigger"
+    class={triggerClasses}
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-label="Select theme"
+  >
+    <span class={triggerLabelClasses}>
+      <span id="theme-current-icon">💻</span>
+      <span id="theme-current-label">Auto</span>
+    </span>
+    <svg
+      class="w-3.5 h-3.5 shrink-0"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2.5"
+        d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+
+  <!-- Dropdown -->
+  <div id="theme-dropdown" class={dropdownClasses} role="listbox">
+    {
+      themes.map(({ value, icon, label, title }) => (
+        <div
+          class={optionClasses}
+          data-theme-value={value}
+          data-theme-icon={icon}
+          data-theme-label={label}
+          role="option"
+          tabindex="0"
+          title={title}
+        >
+          <span>{icon}</span>
+          <span>{label}</span>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const trigger = document.getElementById("theme-trigger")!;
+  const dropdown = document.getElementById("theme-dropdown")!;
+  const currentIconEl = document.getElementById("theme-current-icon")!;
+  const currentLabelEl = document.getElementById("theme-current-label")!;
+
+  const themes: Record<string, { icon: string; label: string }> = {
+    light: { icon: "☀️", label: "Light" },
+    dark: { icon: "🌙", label: "Dark" },
+    auto: { icon: "💻", label: "Auto" },
+  };
+
+  function openDropdown() {
+    dropdown.classList.remove("opacity-0", "scale-95", "pointer-events-none");
+    dropdown.classList.add("opacity-100", "scale-100");
+    trigger.setAttribute("aria-expanded", "true");
+  }
+
+  function closeDropdown() {
+    dropdown.classList.add("opacity-0", "scale-95", "pointer-events-none");
+    dropdown.classList.remove("opacity-100", "scale-100");
+    trigger.setAttribute("aria-expanded", "false");
+  }
+
+  function applyTheme(value: string) {
+    const html = document.documentElement;
+    if (value === "auto") {
+      html.removeAttribute("data-theme");
+      localStorage.removeItem("theme");
+    } else {
+      html.dataset.theme = value;
+      localStorage.setItem("theme", value);
+    }
+    const { icon, label } = themes[value] ?? themes.auto;
+    currentIconEl.textContent = icon;
+    currentLabelEl.textContent = label;
+  }
+
+  trigger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    trigger.getAttribute("aria-expanded") === "true"
+      ? closeDropdown()
+      : openDropdown();
+  });
+
+  dropdown.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const option = (e.target as HTMLElement).closest(
+      "[data-theme-value]",
+    ) as HTMLElement | null;
+    if (!option) return;
+    applyTheme(option.dataset.themeValue!);
+    closeDropdown();
+  });
+
+  dropdown.addEventListener("keydown", (e) => {
+    const option = (e.target as HTMLElement).closest(
+      "[data-theme-value]",
+    ) as HTMLElement | null;
+    if (!option) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      applyTheme(option.dataset.themeValue!);
+      closeDropdown();
+    }
+    if (e.key === "Escape") closeDropdown();
+  });
+
+  document.addEventListener("click", () => closeDropdown());
+
+  // Init label from storage
+  const saved = localStorage.getItem("theme") ?? "auto";
+  applyTheme(saved);
+
+  // Init theme on load
+  (function () {
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+      document.documentElement.dataset.theme = "dark";
+    } else if (savedTheme === "light") {
+      document.documentElement.dataset.theme = "light";
+    }
+  })();
+
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", (e) => {
+      if (!localStorage.getItem("theme")) {
+        document.documentElement.dataset.theme = e.matches ? "dark" : "light";
+      }
+    });
+</script>

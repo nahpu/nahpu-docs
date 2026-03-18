@@ -2,14 +2,15 @@
 import cntl from "cntl";
 import OpenMenuButton from "./buttons/OpenMenuButton.astro";
 import CloseMenuButton from "./buttons/CloseMenuButton.astro";
-import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
+import ThemeSelector from "./buttons/ThemeSelector.astro";
 import { Image } from "astro:assets";
 import logo from "../assets/nahpu.svg";
 import "../styles/global.css";
 
 const navItems = [
-  { path: "/en", label: "Docs" },
+  { path: "/", label: "Home" },
   { path: "/team", label: "Team" },
+  { path: "/en", label: "Docs" },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -22,7 +23,7 @@ const navClasses = cntl`
   items-center
   justify-between
   px-6
-  py-4
+  py-2
   border-b
   border-emerald-900/40
   bg-gray-950/80
@@ -36,24 +37,9 @@ const brandWrapperClasses = cntl`
   group
 `;
 
-const brandTextClasses = cntl`
-  text-lg
-  font-semibold
-  tracking-tight
-  text-emerald-300
-  group-hover:text-emerald-200
-  transition-colors
-`;
-
 const logoClasses = cntl`
-  w-8
-  h-8
-  rounded-xl
-  ring-1
-  ring-emerald-500/40
-  bg-gradient-to-tr
-  from-emerald-500/20
-  to-emerald-300/10
+  w-12
+  h-12
 `;
 
 const desktopNavWrapperClasses = cntl`
@@ -103,6 +89,7 @@ const githubLinkClasses = cntl`
   hover:text-emerald-100
   transition-colors
   no-underline
+  mr-2
 `;
 
 const githubIconClasses = cntl`
@@ -184,7 +171,6 @@ const mobileLinkInactiveClasses = cntl`
       height={32}
       class={logoClasses}
     />
-    <span class={brandTextClasses}>NAHPU</span>
   </a>
 
   <div class={desktopNavWrapperClasses}>
@@ -233,7 +219,7 @@ const mobileLinkInactiveClasses = cntl`
       </svg>
     </a>
 
-    <ThemeSelect />
+    <ThemeSelector />
     <div class="flex lg:hidden">
       <OpenMenuButton />
     </div>
