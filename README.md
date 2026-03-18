@@ -39,6 +39,12 @@ Build the site for production:
 bun run build
 ```
 
+To preview the production build locally:
+
+```fish
+bun run preview
+```
+
 These scripts map to the entries in `package.json`:
 
 - `dev` -> `astro dev`
@@ -58,16 +64,3 @@ These scripts map to the entries in `package.json`:
 See the documentation in `src/content/docs/contributing/` for contribution guidance, code & doc contribution workflows, and developer tooling.
 
 If you'd like to propose changes, open an issue or submit a pull request on the `main` branch.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-## Maintainers / Contact
-
-NAHPU Digital Catalog team
-
---
-Notes and assumptions:
-
-- Assumed Node >= 18 to work well with Astro 5.x. If you need a different Node version, let me know and I can add an `.nvmrc` or update the README.
