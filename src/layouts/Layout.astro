@@ -1,5 +1,6 @@
 ---
 import Navbar from "../components/Navbar.astro";
+import cntl from "cntl";
 
 interface Props {
   title: string;
@@ -7,6 +8,28 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+
+const bodyClasses = cntl`
+  bg-silver-tree-950
+  text-silver-tree-900
+  dark:text-silver-tree-100
+  min-h-screen
+  flex
+  flex-col
+`;
+
+const footerClasses = cntl`
+  text-center
+  dark:bg-silver-tree-800
+  bg-silver-tree-200
+  text-silver-tree-600
+  dark:text-silver-tree-200
+  text-sm
+  py-4
+  border-t
+  border-silver-tree-100
+  dark:border-silver-tree-800
+`;
 ---
 
 <!doctype html>
@@ -18,17 +41,13 @@ const { title, description } = Astro.props;
     <title>{title}</title>
     <link rel="icon" href="/src/assets/nahpu.svg" type="image/svg+xml" />
   </head>
-  <body
-    class="bg-silver-tree-950 text-silver-tree-900 dark:text-silver-tree-100 min-h-full w-full flex flex-col"
-  >
+  <body class={bodyClasses}>
     <Navbar />
     <main>
       <slot />
     </main>
 
-    <footer
-      class="text-center text-silver-tree-600 dark:text-silver-tree-400 text-sm py-6 border-t border-silver-tree-800"
-    >
+    <footer class={footerClasses}>
       © {new Date().getFullYear()} the NAHPU project. All rights reserved.
     </footer>
   </body>

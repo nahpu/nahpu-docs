@@ -1,6 +1,6 @@
 ---
 import HomePageFeatures from "../components/HomePageFeatures.astro";
-import HomeLayout from "../layouts/Layout.astro";
+import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
 import cntl from "cntl";
 
@@ -10,10 +10,15 @@ const primarySectionClasses = cntl`
   items-center
   justify-center
   text-center
-  px-4
-  py-28
-  bg-linear-to-b from-silver-tree-950 via-silver-tree-900 to-silver-tree-700
-  dark:from-silver-tree-950 dark:via-silver-tree-900 dark:to-silver-tree-600
+  py-14
+  bg-linear-to-b from-silver-tree-200 via-silver-tree-400 to-silver-tree-700
+  dark:from-silver-tree-900 dark:via-silver-tree-900 dark:to-silver-tree-950
+`;
+
+const secondarySectionClasses = cntl`
+  py-8
+  bg-silver-tree-800
+  dark:bg-silver-tree-900
 `;
 
 const titleClasses = cntl`
@@ -50,23 +55,60 @@ const mainBtnClasses = cntl`
 
 const secondaryBtnClasses = cntl`
   px-6
-  py-3
+  py-2
   rounded-lg
-  border-2 border-silver-tree-300
+  border border-silver-tree-300
   text-silver-tree-100 bg-silver-tree-800/50 backdrop-blur-sm
   hover:bg-silver-tree-600 hover:text-white hover:border-silver-tree-400
   font-semibold transition-all shadow-lg hover:shadow-xl
   no-underline
 `;
 
-const secondarySectionClasses = cntl`
-  py-16
-  bg-silver-tree-900/50
-  dark:bg-silver-tree-800/50
-`;
+const features = [
+  {
+    icon: "📸",
+    title: "Digital asset management",
+    desc: "Attach photos of specimens, habitats, and field notes directly to your collection records.",
+  },
+  {
+    icon: "🐦",
+    title: "Multi-taxon support",
+    desc: "Mix taxa in a single project — each specimen gets a catalog format tailored to its taxon.",
+  },
+  {
+    icon: "🌍",
+    title: "Write site once, use everywhere",
+    desc: "Create rich site profiles with unlimited coordinates and reuse them across specimens and events.",
+  },
+  {
+    icon: "📅",
+    title: "Collecting events",
+    desc: "Document collection date, method, effort, and personnel, then link them to multiple specimens.",
+  },
+  {
+    icon: "🧬",
+    title: "Tissue sample management",
+    desc: "Track large sample sets with barcode and QR scanning via the device camera.",
+  },
+  {
+    icon: "📊",
+    title: "Real-time statistics",
+    desc: "Monitor activity and preservation resources to prevent over-collection at a glance.",
+  },
+  {
+    icon: "🔄",
+    title: "Advanced sharing",
+    desc: "Share data with collaborators or pipe it automatically into a museum database.",
+  },
+  {
+    icon: "💪",
+    title: "Open source & open standards",
+    desc: "Built on open-source stacks, following Darwin Core and FAIR principles.",
+  },
+];
 ---
 
-<HomeLayout
+<Layout
   title="NAHPU Documentation"
   description="Revolutionizing Field Expeditions with a Digital Catalog for Everyone"
 >
@@ -76,15 +118,39 @@ const secondarySectionClasses = cntl`
       Rethinking species inventory in the digital age
     </p>
     <div class="flex flex-wrap gap-4 justify-center">
-      <a href="/en" class={mainBtnClasses}> Learn NAHPU </a>
-
-      <a href="/en/installation" class={secondaryBtnClasses}> Install </a>
+      <a href="/en" class={mainBtnClasses}>Learn NAHPU</a>
+      <a href="/en/installation" class={secondaryBtnClasses}>Try NAHPU</a>
     </div>
   </section>
 
   <section class={secondarySectionClasses}>
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto">
       <HomePageFeatures />
     </div>
   </section>
-</HomeLayout>
+
+  <section class="py-8 bg-silver-tree-400 dark:bg-silver-tree-950">
+    <div class="max-w-5xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center text-white mb-10">
+        Key Features
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {
+          features.map(({ icon, title, desc }) => (
+            <div class="flex flex-col gap-2 bg-silver-tree-200 dark:bg-silver-tree-800 rounded-xl p-5 transition-shadow">
+              <div>
+                <span class="text-3xl">{icon}</span>
+                <h3 class="font-semibold text-silver-tree-900 dark:text-silver-tree-50">
+                  {title}
+                </h3>
+              </div>
+              <p class="text-sm text-silver-tree-700 dark:text-silver-tree-200 leading-relaxed">
+                {desc}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

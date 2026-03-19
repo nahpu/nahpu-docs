@@ -6,18 +6,25 @@ interface Props {
 }
 
 const { class: className } = Astro.props;
-
 const wrapperClasses = cntl`
   relative
   inline-block
+  w-fit
   ${className ?? ""}
 `;
 
 const triggerClasses = cntl`
-  inline-flex h-10 w-28 items-center justify-between px-3 py-1.5
-  rounded-full bg-silver-tree-900/80 border border-silver-tree-700/50
-  text-xs font-medium text-silver-tree-300 hover:text-silver-tree-100
-  hover:bg-silver-tree-800/80 focus:outline-none focus:ring-2 focus:ring-silver-tree-400/50 focus:ring-offset-2
+  inline-flex 
+  h-8 w-24 
+  items-center 
+  justify-between 
+  px-2 py-2
+  rounded-full 
+  bg-silver-tree-800 dark:bg-silver-tree-200 
+  border border-silver-tree-700
+  text-xs font-medium 
+  text-silver-tree-100 dark:text-silver-tree-900 hover:text-silver-tree-50
+  hover:bg-silver-tree-800 focus:outline-none focus:ring-2 focus:ring-silver-tree-400 focus:ring-offset-2
   transition-all duration-200 shadow-md hover:shadow-lg
 `;
 
@@ -26,19 +33,27 @@ const triggerLabelClasses = cntl`
 `;
 
 const dropdownClasses = cntl`
-  absolute right-0 mt-1.5 w-32
-  bg-silver-tree-950/95 border border-silver-tree-800/50
-  backdrop-blur-md rounded-xl shadow-2xl shadow-silver-tree-900/80
-  opacity-0 scale-95 pointer-events-none
+  absolute right-0 mt-2
+  w-full
+  p-2
+  bg-silver-tree-200 dark:bg-silver-tree-950 
+  border 
+  border-silver-tree-200 dark:border-silver-tree-800
+  backdrop-blur-md 
+  rounded-xl
+  shadow-md 
+  shadow-silver-tree-800 dark:shadow-silver-tree-900
+  opacity-0 pointer-events-none
   transition-all duration-200 ease-out origin-top-right z-50
 `;
 
 const optionClasses = cntl`
-  inline-flex items-center gap-2
-  w-full px-3 py-2.5 text-sm font-medium cursor-pointer
-  text-silver-tree-300 hover:bg-silver-tree-800/60 hover:text-silver-tree-100
+  flex items-center gap-2
+  w-full py-2 text-sm font-medium cursor-pointer
+  text-silver-tree-900 dark:text-silver-tree-100
+  hover:bg-silver-tree-800 hover:text-silver-tree-100
   transition-colors rounded-lg first:rounded-t-xl last:rounded-b-xl
-  focus:outline-none focus:bg-silver-tree-700/50
+  focus:outline-none focus:bg-silver-tree-700
 `;
 
 const themes = [
@@ -88,7 +103,7 @@ const themes = [
           tabindex="0"
           title={title}
         >
-          <span>{icon}</span>
+          <span class="pl-2">{icon}</span>
           <span>{label}</span>
         </div>
       ))

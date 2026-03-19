@@ -11,6 +11,7 @@ const navItems = [
   { path: "/", label: "Home" },
   { path: "/team", label: "Team" },
   { path: "/en", label: "Docs" },
+  { path: "/tutorials", label: "Tutorials" },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -22,8 +23,9 @@ const navClasses = cntl`
   flex
   items-center
   justify-between
-  bg-silver-tree-800
-  px-6
+  bg-silver-tree-200
+  dark:bg-silver-tree-900
+  px-8
   py-2
   backdrop-blur-md
 `;
@@ -33,6 +35,7 @@ const brandWrapperClasses = cntl`
   items-center
   gap-3
   group
+  w-1/4 
 `;
 
 const logoClasses = cntl`
@@ -45,10 +48,14 @@ const desktopNavWrapperClasses = cntl`
   lg:flex
   items-center
   gap-x-1
-  bg-silver-tree-700
+  bg-silver-tree-500
+  dark:bg-silver-tree-700
   rounded-full
-  p-1
   shadow-sm
+  p-1
+  absolute        
+  left-1/2          
+  -translate-x-1/2 
 `;
 
 const desktopLinkBaseClasses = cntl`
@@ -63,21 +70,25 @@ const desktopLinkBaseClasses = cntl`
 `;
 
 const desktopLinkActiveClasses = cntl`
-  bg-emerald-500
+  bg-silver-tree-200
   text-gray-950
   shadow
 `;
 
 const desktopLinkInactiveClasses = cntl`
-  text-emerald-100/80
-  hover:text-emerald-50
-  hover:bg-emerald-900/60
+  text-silver-tree-100
+  hover:text-silver-tree-50
+  hover:bg-silver-tree-800
+  dark:hover:bg-silver-tree-900
+  dark:hover:text-silver-tree-100
 `;
 
 const rightSectionClasses = cntl`
   flex
   items-center
   gap-3
+  w-1/4
+  justify-end
 `;
 
 const githubLinkClasses = cntl`
@@ -89,6 +100,8 @@ const githubLinkClasses = cntl`
 `;
 
 const githubIconClasses = cntl`
+  fill-silver-tree-800
+  dark:fill-silver-tree-200
   w-5
   h-5
 `;
@@ -197,7 +210,6 @@ const mobileLinkInactiveClasses = cntl`
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class={githubIconClasses}
-        fill="currentColor"
         viewBox="0 0 24 24"
       >
         <path
