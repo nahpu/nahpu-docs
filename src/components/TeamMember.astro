@@ -9,15 +9,17 @@ interface Props {
   description: string;
   url: string;
   photoSrc?: string | null;
+  leader?: boolean;
 }
 
-const { name, institution, description, url, photoSrc } = Astro.props as Props;
+const { name, institution, description, url, photoSrc, leader } =
+  Astro.props as Props;
 const hasPhoto = !!photoSrc;
 
 const cardClasses = cntl`
   rounded-2xl
-  p-6
-  md:p-8
+  p-4
+  md:p-6
   h-6xl
   bg-silver-tree-200
   dark:bg-silver-tree-800
@@ -34,23 +36,22 @@ const nameClasses = cntl`
   dark:text-silver-tree-50
   group-hover:text-silver-tree-700
   dark:group-hover:text-silver-tree-100
-  mb-3
   no-underline
 `;
 
 const institutionClasses = cntl`
   text-sm
   text-silver-tree-700 dark:text-silver-tree-100
-  mb-4
   no-underline
 `;
 
 const descriptionClasses = cntl`
-  text-silver-tree-600 dark:text-silver-tree-400
+  text-silver-tree-800 dark:text-silver-tree-200
   text-sm
   leading-relaxed
   line-clamp-3
   px-2
+  mt-6
 `;
 
 const avatarClasses = cntl`
@@ -75,6 +76,21 @@ const avatarClasses = cntl`
     items-center 
     justify-center
 `;
+
+const leaderBadgeClasses = cntl`
+  inline-flex 
+  items-center 
+  px-2 
+  py-1 
+  text-xs 
+  font-medium 
+  tracking-wide 
+  text-golden-grass-900 
+  bg-golden-grass-200 
+  border 
+  border-golden-grass-400 
+  rounded-full
+`;
 ---
 
 <div class={cardClasses}>
@@ -83,7 +99,7 @@ const avatarClasses = cntl`
     class="block h-full focus:outline-none focus:ring-4 focus:ring-silver-tree-300/50 no-underline"
   >
     <!-- Avatar Circle -->
-    <div class="flex justify-center mb-6">
+    <div class="flex justify-center mb-4">
       {
         hasPhoto ? (
           <Image
@@ -116,6 +132,7 @@ const avatarClasses = cntl`
       <p class={institutionClasses}>
         {institution}
       </p>
+      {leader && <span class={leaderBadgeClasses}>Principal Investigator</span>}
       <p class={descriptionClasses}>
         {description}
       </p>

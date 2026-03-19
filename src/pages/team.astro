@@ -9,6 +9,13 @@ const teamData = [
     description:
       "Responsible for the overall project and the main developer of the app.",
     url: "https://hhandika.com/",
+    leader: true,
+  },
+  {
+    name: "Ada Chornelia",
+    institution: "School of BioSciences, The University of Melbourne",
+    description: "Key contributor to NAHPU development.",
+    url: "https://scholar.google.com/citations?user=DRDqstQAAAAJ&hl=en&oi=ao",
   },
   {
     name: "Andre E. Moncrieff",
@@ -18,65 +25,10 @@ const teamData = [
     url: "https://www.moncriefflab.org/",
   },
   {
-    name: "Glaucia Del-Rio",
-    institution: "Florida Museum of Natural History",
-    description: "Key contributor to NAHPU development.",
-    url: "https://www.gdel-rio.com/",
-  },
-  {
-    name: "Roberta Canton",
-    institution: "Clemson University",
-    description: "Key contributor to NAHPU development.",
-    url: "https://robertacanton.com/",
-  },
-  {
     name: "Austin S. Chipps",
     institution: "U.S. National Museum of Natural History",
     description: "Key contributor to NAHPU development.",
     url: "https://scholar.google.com/citations?user=5w8sJyIAAAAJ&hl=en&oi=ao",
-  },
-  {
-    name: "Samantha L. Rutledge",
-    institution: "LSU Museum of Natural Science",
-    description: "Key contributor to NAHPU development.",
-    url: "https://slrutledge.wordpress.com/",
-  },
-  {
-    name: "Natalia Pérez-Amaya",
-    institution: "Sam Noble Oklahoma Museum of Natural History",
-    description:
-      "Colombian ornithologist and Collection Manager of Birds at the Sam Noble Museum. Her research interests are focused on the phylogeography and ecomorphology of Neotropical birds.​",
-    url: "https://www.nperez-amaya.com",
-  },
-  {
-    name: "Ada Chornelia",
-    institution: "School of BioSciences, The University of Melbourne",
-    description: "Key contributor to NAHPU development.",
-    url: "https://scholar.google.com/citations?user=DRDqstQAAAAJ&hl=en&oi=ao",
-  },
-  {
-    name: "Gregory Thom",
-    institution: "LSU Museum of Natural Science",
-    description: "Key contributor to NAHPU development.",
-    url: "https://www.thom-lab.org/",
-  },
-  {
-    name: "Jacob A. Esselstyn",
-    institution: "LSU Museum of Natural Science",
-    description: "Key contributor to NAHPU development.",
-    url: "https://esselstyn.github.io/",
-  },
-  {
-    name: "Marco Rego",
-    institution: "Florida Museum of Natural History",
-    description: "Key contributor to NAHPU development.",
-    url: "http://www.ornithologymaps.com",
-  },
-  {
-    name: "Nurul Inayah",
-    institution: "Museum Zoologicum Bogoriense",
-    description: "Key contributor to NAHPU development.",
-    url: "https://www.researchgate.net/profile/Nurul-Brin?ev=hdr_xprf",
   },
   {
     name: "Cody Henderson",
@@ -93,10 +45,65 @@ const teamData = [
     url: "https://www.linkedin.com/in/danteorbit",
   },
   {
+    name: "Glaucia Del-Rio",
+    institution: "Florida Museum of Natural History",
+    description: "Key contributor to NAHPU development.",
+    url: "https://www.gdel-rio.com/",
+  },
+  {
+    name: "Gregory Thom",
+    institution: "LSU Museum of Natural Science",
+    description: "Key contributor to NAHPU development.",
+    url: "https://www.thom-lab.org/",
+  },
+  {
+    name: "Jacob A. Esselstyn",
+    institution: "LSU Museum of Natural Science",
+    description: "Key contributor to NAHPU development.",
+    url: "https://esselstyn.github.io/",
+  },
+  {
     name: "Lawrence Gan",
     institution: "College of Computing, Georgia Institute of Technology",
     description: "Key contributor to NAHPU development.",
     url: "https://www.linkedin.com/in/larry-gan/",
+  },
+  {
+    name: "Lauren Vonnahme",
+    institution: "The American Museum of Natural History",
+    description: "Key contributor to NAHPU development.",
+    url: "https://www.amnh.org/research/staff-directory/lauren-vonnahme",
+  },
+  {
+    name: "Marco Rego",
+    institution: "Florida Museum of Natural History",
+    description: "Key contributor to NAHPU development.",
+    url: "http://www.ornithologymaps.com",
+  },
+  {
+    name: "Natalia Pérez-Amaya",
+    institution: "Sam Noble Oklahoma Museum of Natural History",
+    description:
+      "Colombian ornithologist and Collection Manager of Birds at the Sam Noble Museum. Her research interests are focused on the phylogeography and ecomorphology of Neotropical birds.​",
+    url: "https://www.nperez-amaya.com",
+  },
+  {
+    name: "Nurul Inayah",
+    institution: "Museum Zoologicum Bogoriense",
+    description: "Key contributor to NAHPU development.",
+    url: "https://www.researchgate.net/profile/Nurul-Brin?ev=hdr_xprf",
+  },
+  {
+    name: "Roberta Canton",
+    institution: "Clemson University",
+    description: "Key contributor to NAHPU development.",
+    url: "https://robertacanton.com/",
+  },
+  {
+    name: "Samantha L. Rutledge",
+    institution: "LSU Museum of Natural Science",
+    description: "Key contributor to NAHPU development.",
+    url: "https://slrutledge.wordpress.com/",
   },
 ];
 ---
@@ -130,6 +137,7 @@ const teamData = [
               institution={member.institution}
               description={member.description}
               url={member.url}
+              leader={member.leader || false}
             />
           ))
         }
