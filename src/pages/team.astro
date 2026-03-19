@@ -105,31 +105,35 @@ const teamData = [
   title="NAHPU Team"
   description="Meet the team behind the NAHPU project."
 >
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="text-center mb-16">
-      <h1
-        class="text-4xl md:text-5xl font-bold bg-linear-to-r from-silver-tree-400 via-silver-tree-500 to-golden-grass-400 bg-clip-text text-transparent mb-6"
-      >
-        NAHPU Team
-      </h1>
-      <p
-        class="text-xl text-silver-tree-600 dark:text-silver-tree-300 max-w-2xl mx-auto"
-      >
-        {teamData.length} dedicated scientists revolutionizing biodiversity fieldwork.
-      </p>
-    </div>
+  <div
+    class="mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-silver-tree-100 dark:bg-silver-tree-950"
+  >
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <h1
+          class="text-4xl md:text-5xl font-bold bg-linear-to-r from-silver-tree-400 via-silver-tree-500 to-golden-grass-400 bg-clip-text text-transparent mb-6"
+        >
+          NAHPU Team
+        </h1>
+        <p
+          class="text-xl text-silver-tree-600 dark:text-silver-tree-300 max-w-2xl mx-auto"
+        >
+          {teamData.length} dedicated scientists revolutionizing biodiversity fieldwork.
+        </p>
+      </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {
-        teamData.map((member) => (
-          <TeamMember
-            name={member.name}
-            institution={member.institution}
-            description={member.description}
-            url={member.url}
-          />
-        ))
-      }
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {
+          teamData.map((member) => (
+            <TeamMember
+              name={member.name}
+              institution={member.institution}
+              description={member.description}
+              url={member.url}
+            />
+          ))
+        }
+      </div>
     </div>
   </div>
 </Layout>
