@@ -20,7 +20,18 @@ export default defineConfig({
       logo: {
         src: "./src/assets/nahpu.svg",
       },
-      favicon: "./src/assets/nahpu.svg",
+      favicon: "/nahpu.svg",
+      head: [
+        {
+          tag: "link",
+          attrs: {
+            rel: "icon",
+            type: "image/png",
+            href: "/favicon.png", // Fallback PNG
+          },
+        },
+        // Add other icon sizes/formats as needed (e.g., apple-touch-icon.png)
+      ],
       // Use BCP 47 language tags,
       // https://gist.github.com/typpo/b2b828a35e683b9bf8db91b5404f1bd1
       defaultLocale: "en",
