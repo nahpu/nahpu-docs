@@ -105,21 +105,15 @@ const githubIconClasses = cntl`
   w-5
   h-5
 `;
-
-const mobileMenuRootClasses = cntl`
-  hidden
-  no-underline
-`;
-
 const mobileMenuPanelClasses = cntl`
   fixed
   inset-x-0
   top-0
   z-50
-  bg-silver-tree-800
-  dark:bg-silver-tree-200
+  bg-silver-tree-100
+  dark:bg-silver-tree-900
   border-b
-  border-emerald-900
+  border-silver-tree-700
   px-6
   py-6
   rounded-b-2xl
@@ -130,6 +124,25 @@ const mobileMenuPanelClasses = cntl`
   duration-300
 `;
 
+const mobileLinkActiveClasses = cntl`
+  bg-silver-tree-800
+  dark:bg-silver-tree-200
+  text-gray-100
+  dark:text-gray-900
+`;
+
+const mobileLinkInactiveClasses = cntl`
+  text-silver-tree-700
+  dark:text-silver-tree-200
+  hover:text-silver-tree-50
+  hover:bg-silver-tree-700
+`;
+
+const mobileMenuRootClasses = cntl`
+  hidden
+  no-underline
+`;
+
 const mobileHeaderClasses = cntl`
   flex
   items-center
@@ -137,16 +150,10 @@ const mobileHeaderClasses = cntl`
   mb-6
 `;
 
-const mobileBrandTextClasses = cntl`
-  text-lg
-  font-semibold
-  text-emerald-200
-`;
-
 const mobileLinksWrapperClasses = cntl`
   flex
   flex-col
-  gap-1
+  gap-2
 `;
 
 const mobileLinkBaseClasses = cntl`
@@ -157,17 +164,7 @@ const mobileLinkBaseClasses = cntl`
   text-base
   font-semibold
   transition-colors
-`;
-
-const mobileLinkActiveClasses = cntl`
-  bg-emerald-500
-  text-gray-950
-`;
-
-const mobileLinkInactiveClasses = cntl`
-  text-emerald-100/80
-  hover:text-emerald-50
-  hover:bg-emerald-900/60
+  no-underline
 `;
 ---
 
@@ -249,9 +246,8 @@ const mobileLinkInactiveClasses = cntl`
             alt="NAHPU logo"
             width={28}
             height={28}
-            class="w-7 h-7"
+            class="w-8 h-8"
           />
-          <span class={mobileBrandTextClasses}>NAHPU</span>
         </a>
         <CloseMenuButton />
       </div>
