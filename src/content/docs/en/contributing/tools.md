@@ -1,6 +1,7 @@
 ---
-sidebar_position: 5
-title: "Develop Tools"
+title: "Tools"
+sidebar:
+  order: 4
 ---
 
 ## Develop Tools to Parse and Validate NAHPU Data

@@ -1,5 +1,7 @@
 ---
 title: "Become a Contributor"
+sidebar:
+  order: 1
 ---
 
 NAHPU at its core is a collaborative project. We appreciate all contributions, regardless of their size or complexity. We also welcome you to be a part of the development team. If you are interested, please contact the [project maintainer](https://hhandika.com/).

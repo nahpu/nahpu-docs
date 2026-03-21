@@ -2,155 +2,154 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
+import markdoc from "@astrojs/markdoc";
 // https://astro.build/config
 export default defineConfig({
   site: "https://nahpu.app",
-  integrations: [
-    starlight({
-      title: {
-        default: "NAHPU Documentation",
-        "en-US": "NAHPU Documentation",
-        "pt-BR": "Documentação do NAHPU",
-        es: "Documentación de NAHPU",
-        id: "Dokumentasi NAHPU",
+  integrations: [starlight({
+    title: {
+      default: "NAHPU Documentation",
+      "en-US": "NAHPU Documentation",
+      "pt-BR": "Documentação do NAHPU",
+      es: "Documentación de NAHPU",
+      id: "Dokumentasi NAHPU",
+    },
+    customCss: ["./src/styles/global.css"],
+    description:
+      "Documentation for NAHPU, a digital field catalog for natural history collections.",
+    logo: {
+      src: "./src/assets/nahpu.svg",
+    },
+    favicon: "/nahpu.svg",
+    head: [
+      {
+        tag: "link",
+        attrs: {
+          rel: "icon",
+          type: "image/png",
+          href: "/favicon.png", // Fallback PNG
+        },
       },
-      customCss: ["./src/styles/global.css"],
-      description:
-        "Documentation for NAHPU, a digital field catalog for natural history collections.",
-      logo: {
-        src: "./src/assets/nahpu.svg",
+      // Add other icon sizes/formats as needed (e.g., apple-touch-icon.png)
+    ],
+    // Use BCP 47 language tags,
+    // https://gist.github.com/typpo/b2b828a35e683b9bf8db91b5404f1bd1
+    defaultLocale: "en",
+    components: {
+      SiteTitle: "./src/components/SiteTitle.astro",
+    },
+    locales: {
+      en: { label: "English (United States)", lang: "en-US" },
+      pt: { label: "Portuguese (Brazil)", lang: "pt-BR" },
+      es: { label: "Spanish", lang: "es" },
+      id: { label: "Indonesian", lang: "id" },
+    },
+    editLink: {
+      baseUrl: "https://github.com/nahpu/nahpu-docs/edit/main/",
+    },
+    social: [
+      {
+        icon: "github",
+        label: "GitHub",
+        href: "https://github.com/nahpu",
       },
-      favicon: "/nahpu.svg",
-      head: [
-        {
-          tag: "link",
-          attrs: {
-            rel: "icon",
-            type: "image/png",
-            href: "/favicon.png", // Fallback PNG
-          },
+    ],
+    sidebar: [
+      {
+        label: "Introduction",
+        link: "/",
+        translations: {
+          "pt-BR": "Introdução",
+          es: "Introducción",
+          id: "Pendahuluan",
         },
-        // Add other icon sizes/formats as needed (e.g., apple-touch-icon.png)
-      ],
-      // Use BCP 47 language tags,
-      // https://gist.github.com/typpo/b2b828a35e683b9bf8db91b5404f1bd1
-      defaultLocale: "en",
-      components: {
-        SiteTitle: "./src/components/SiteTitle.astro",
       },
-      locales: {
-        en: { label: "English (United States)", lang: "en-US" },
-        pt: { label: "Portuguese (Brazil)", lang: "pt-BR" },
-        es: { label: "Spanish", lang: "es" },
-        id: { label: "Indonesian", lang: "id" },
+      {
+        label: "NAHPU Day 1",
+        link: "day_one",
+        translations: {
+          "pt-BR": "NAHPU Dia 1",
+          es: "NAHPU Día 1",
+          id: "NAHPU Hari 1",
+        },
       },
-      editLink: {
-        baseUrl: "https://github.com/nahpu/nahpu-docs/edit/main/",
+      {
+        label: "Switch to NAHPU",
+        link: "switch",
+        translations: {
+          "pt-BR": "Migrar para NAHPU",
+          es: "Cambiar a NAHPU",
+          id: "Beralih ke NAHPU",
+        },
       },
-      social: [
-        {
-          icon: "github",
-          label: "GitHub",
-          href: "https://github.com/nahpu",
+      {
+        label: "Installation",
+        link: "installation",
+        translations: {
+          "pt-BR": "Instalação",
+          es: "Instalación",
+          id: "Instalasi",
         },
-      ],
-      sidebar: [
-        {
-          label: "Introduction",
-          link: "/",
-          translations: {
-            "pt-BR": "Introdução",
-            es: "Introducción",
-            id: "Pendahuluan",
-          },
+      },
+      {
+        label: "General Usages",
+        autogenerate: { directory: "usages" },
+        translations: {
+          "pt-BR": "Usos Gerais",
+          es: "Usos Generales",
+          id: "Penggunaan Umum",
         },
-        {
-          label: "NAHPU Day 1",
-          link: "day_one",
-          translations: {
-            "pt-BR": "NAHPU Dia 1",
-            es: "NAHPU Día 1",
-            id: "NAHPU Hari 1",
-          },
+      },
+      {
+        label: "Data Management",
+        autogenerate: { directory: "data-management" },
+        translations: {
+          "pt-BR": "Gerenciamento de Dados",
+          es: "Gestión de Datos",
+          id: "Manajemen Data",
         },
-        {
-          label: "Switch to NAHPU",
-          link: "switch",
-          translations: {
-            "pt-BR": "Migrar para NAHPU",
-            es: "Cambiar a NAHPU",
-            id: "Beralih ke NAHPU",
-          },
+        collapsed: true,
+      },
+      {
+        label: "Curatorial Guidelines",
+        autogenerate: { directory: "curatorial-guideline" },
+        translations: {
+          "pt-BR": "Diretrizes Curatoriais",
+          es: "Directrices Curatoriales",
+          id: "Pedoman Kuratorial",
         },
-        {
-          label: "Installation",
-          link: "installation",
-          translations: {
-            "pt-BR": "Instalação",
-            es: "Instalación",
-            id: "Instalasi",
-          },
+        collapsed: true,
+      },
+      {
+        label: "Contributing",
+        autogenerate: { directory: "contributing" },
+        translations: {
+          "pt-BR": "Contribuindo",
+          es: "Contribuyendo",
+          id: "Berkontribusi",
         },
-        {
-          label: "General Usages",
-          autogenerate: { directory: "usages" },
-          translations: {
-            "pt-BR": "Usos Gerais",
-            es: "Usos Generales",
-            id: "Penggunaan Umum",
-          },
+        collapsed: true,
+      },
+      {
+        label: "Privacy Policy",
+        link: "privacy",
+        translations: {
+          "pt-BR": "Política de Privacidade",
+          es: "Política de Privacidad",
+          id: "Kebijakan Privasi",
         },
-        {
-          label: "Data Management",
-          autogenerate: { directory: "data-management" },
-          translations: {
-            "pt-BR": "Gerenciamento de Dados",
-            es: "Gestión de Datos",
-            id: "Manajemen Data",
-          },
-          collapsed: true,
+      },
+      {
+        label: "Terms and Conditions",
+        link: "terms",
+        translations: {
+          "pt-BR": "Termos e Condições",
+          es: "Términos y Condiciones",
+          id: "Syarat dan Ketentuan",
         },
-        {
-          label: "Curatorial Guidelines",
-          autogenerate: { directory: "curatorial-guideline" },
-          translations: {
-            "pt-BR": "Diretrizes Curatoriais",
-            es: "Directrices Curatoriales",
-            id: "Pedoman Kuratorial",
-          },
-          collapsed: true,
-        },
-        {
-          label: "Contributing",
-          autogenerate: { directory: "contributing" },
-          translations: {
-            "pt-BR": "Contribuindo",
-            es: "Contribuyendo",
-            id: "Berkontribusi",
-          },
-          collapsed: true,
-        },
-        {
-          label: "Privacy Policy",
-          link: "privacy",
-          translations: {
-            "pt-BR": "Política de Privacidade",
-            es: "Política de Privacidad",
-            id: "Kebijakan Privasi",
-          },
-        },
-        {
-          label: "Terms and Conditions",
-          link: "terms",
-          translations: {
-            "pt-BR": "Termos e Condições",
-            es: "Términos y Condiciones",
-            id: "Syarat dan Ketentuan",
-          },
-        },
-      ],
-    }),
-  ],
+      },
+    ],
+  }), markdoc()],
   vite: {
     plugins: [tailwindcss()],
   },
