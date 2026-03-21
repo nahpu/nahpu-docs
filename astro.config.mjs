@@ -121,16 +121,6 @@ export default defineConfig({
           collapsed: true,
         },
         {
-          label: "Developer Guidelines",
-          autogenerate: { directory: "developer-guide" },
-          translations: {
-            "pt-BR": "Diretrizes para Desenvolvedores",
-            es: "Directrices para Desarrolladores",
-            id: "Pedoman Pengembang",
-          },
-          collapsed: true,
-        },
-        {
           label: "Contributing",
           autogenerate: { directory: "contributing" },
           translations: {
