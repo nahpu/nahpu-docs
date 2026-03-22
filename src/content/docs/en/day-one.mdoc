@@ -5,7 +5,7 @@ sidebar:
     order: 2
 ---
 
-NAHPU is a project-based cataloging app. The data is managed and organized based on a project. Each project can have multiple people, sites, narratives, collecting events, and specimen records. The app is designed to record natural history specimens both in the lab and in the fields and is optimized for mobile and computer screens.
+NAHPU is a project-based cataloging app. The data is managed and organized based on a project. Each project can have multiple people, sites, narratives, collecting events, and specimen records. The app is designed to record natural history specimens both in the lab and in the fields and is optimized for mobile and computer screens. If your team work on multiple supported taxa, such as, bird and mammals, you can have both in the same project. 
 
 ## Getting Started
 
@@ -66,14 +66,17 @@ NAHPU is a project-based cataloging app. The data is managed and organized based
 
     Example taxon import table:
 
+    ```text
     | class    | order    | family  | genus   | epithet   | scientific name   | common name        | notes |
     | -------- | -------- | ------- | ------- | --------- | ----------------- | ------------------ | ----- |
     | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Bunomys coelestis | Heavenly hill rat  |       |
     | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Bunomys penitus   | Inland hill rat    |       |
 
+    ```
+
 5. **Create a site**
 
-    Navigate to the site page using the bottom navigation bar. To create a new site, use the `+` button in the top right corner of the site. Fill at least the `Site ID`. The app limits the site ID to 20 characters and enforces upper case format. You will refer to this ID throughout the record field whenever it asks for a site. 
+   In some paper based catalog, this term will be labeled as `Locality`. Navigate to the site page using the bottom navigation bar. To create a new site, use the `+` button in the top right corner of the site. Fill at least the `Site ID`. The app limits the site ID to 20 characters and enforces upper case format. You will refer to this ID throughout the record field whenever it asks for a site. 
     
     {% aside type="tip" %}
 
@@ -81,8 +84,14 @@ NAHPU is a project-based cataloging app. The data is managed and organized based
     
     - City, town, or village is ID-ed as it is. For example, the city of Bogor will be `BOGOR`. 
     - The camp site uses `{2-letter locality abbreviation}-CAMP{camp number}` format. For example, camp 1 in Mt. Gede-Pangrango is `GP-CAMP1`.
-    - The trap line uses `{2-letter locality abbreviation}{trapline leader initial}-L{line number}` format. For example, line 1 in Mt. Gede-Pangrango is `GPHH-L1`.
-    - The pitfall line uses `{2-letter locality abbreviation}{pitfall line leader initial}-P{line number}` format. For example, line 1 in Mt. Gede-Pangrango is `GPHH-P1`.
+    - The trap line uses `{2-letter locality abbreviation}{trapline leader initial}-L{line number}` format. For example, line 1 in Mt. Gede-Pangrango led by Heru Handika is `GPHH-L1`.
+    - The pitfall line uses `{2-letter locality abbreviation}{pitfall line leader initial}-P{line number}` format. For example, line 1 in Mt. Gede-Pangrango led by Heru Handika is `GPHH-P1`.
+
+    {% /aside %}
+
+    {% aside type="note" %}
+
+    Future NAHPU updates will allow you the change the term `Site` to `Locality`, while ensuring backward compatibility with previous database.
 
     {% /aside %}
 
@@ -96,9 +105,14 @@ NAHPU is a project-based cataloging app. The data is managed and organized based
 
     To create a collecting event, use the `+` button in the top right corner of the collecting event. Select `site ID`, `start date`, `start time`, `end date`, and `end time`. Then, fill out the rest of the form.
 
-    Unlike the site you will only create each time you move to a new site, collecting events are created for each collection effort. For example, when studying nocturnal rodents, we often set traps the night before and check them the next day. We will create a collecting event after we collect the specimen. The start date will be a day earlier, and the end date will be today.
-
     The app combines site ID and start date to create a unique ID for each collecting event. For example, `GP-L1-March, 23 2023`. You will use this ID to refer to the collecting event in the specimen record. In some edge cases where you have multiple collecting events in a single day on the same site, you can add a suffix to the ID. For example, `Line1-Mar 26, 2023-1` and `Line1-Mar 26, 2023-2`.
+
+    {% aside type="tip" title="Important considerations" %}
+
+
+    Unlike a site that you will only create each time you start collecting in a new site, we recommend creating collecting events for each collection effort. For example, when studying nocturnal rodents, we often set traps the night before and check them the next day. We will create a collecting event after we collect the specimen. The start date will be a day earlier, and the end date will be today. This approach allows you to keep track changes in trap numbers or personnel involve in each event. Future NAHPU updates will include statistics of species counts/trap efforts.
+
+    {% /aside %}
 
 7. **Add specimen records**
 
