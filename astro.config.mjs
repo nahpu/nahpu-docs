@@ -111,16 +111,6 @@ export default defineConfig({
           },
         },
         {
-          label: "Data Management",
-          autogenerate: { directory: "data-management" },
-          translations: {
-            "pt-BR": "Gerenciamento de Dados",
-            es: "Gestión de Datos",
-            id: "Manajemen Data",
-          },
-          collapsed: true,
-        },
-        {
           label: "Curatorial Guidelines",
           autogenerate: { directory: "curatorial-guideline" },
           translations: {
