@@ -4,7 +4,76 @@ sidebar:
   order: 7
 ---
 
+## Setting up specimen records
+
+
+## Setting up events
+
+The NAHPU default lists for `Specimen parts` and `Treatments` are limited and do not include all possible options. If this is your first NAHPU project, we recommend setting up the entries first. You can do this by going to the settings:
+
+{% steps %}
+
+1. Navigate to the dashboard.
+2. Tab/click the humburger menu in the top left corner.
+3. Select `Settings`.
+4. Select `Specimens`. 
+5. Add `Tissue ID` (optional).
+
+    Some museums have separate tissue numbers for the same specimen. You can setup the prefix and the number here. It will auto increment each time you add a new tissue number.
+
+6. Add `Specimen part types`.
+
+    Add all the possibilities. You can have more than what you will collect.
+
+7. Add `Treatments`
+
+    You can do it in a similar manner as the `Specimen part types`.
+
+{% /steps %}
+
+{% aside type="tip" %}
+
+Future versions of NAHPU will allow you to share the settings to other devices. You can use share setting options to share all the list you created.
+
+{% /aside %}
+
 ## Adding a new specimen record
+
+{% steps %}
+1. Navigate to the specimen page using the bottom navigation bar.
+
+2. Click the `+` button to add a new specimen record.
+
+    You can also use the tree dot menu icon and tap on `Create site`.
+
+    {% aside type="tip" %}
+
+    If you collect the same `Specimen part` for each new specimen, you can minimize typing by using the `Duplicate part` option. Tap/click on the three dot menu botton. Then, `Duplicate site`. It will create a new site using information from the current site, except the `Site ID` and coordinates are empty. Then, fill in the `Site ID` and add coordinetes.
+
+    {% /aside %}
+
+3. Select `Cataloger`.
+
+    This is the person that responsible for cataloging this specimen in the field.
+
+4. Select `Preparator`.
+
+    The app automatically input the same personel as the cataloger. If a different person prepare the specimen, you should update the field with the person name.
+
+5. Select `Species`.
+
+    Start typing, the field will show the closest species matching the name. Tab/click on the name of the species. The app will also auto populate the `Taxonomy` panel based on selected species.
+
+6. Select `ID confidence`.
+
+    This tells the users reading the data about how confident you are about the species identification. It also helps the museum curators/collection manager to prioritize which specimens needed careful look to check the identification.
+
+
+7. Select the specimen `Condition`.
+
+8. Add the `Prep. date` and `Prep. time`.
+
+{% /steps %}
 
 ## Collecting Records
 
@@ -14,6 +83,32 @@ sidebar:
 
 ## Measurements
 
+Select the tab below to view measurement options for each taxonomic group.
+
+{% tabs %}
+{% tabitem label="Mammals" %}
+
+- `Total length (mm)`: the total length of the specimen including from to tip of the nose to the tip of the tail.
+- `Tail length (mm)`: the length of the tail from the base to the tip.
+- `Head and body length (mm)`: Auto calculated from the `Total length (mm) - Tail length (mm)`.
+- `Tail/HB length` percentage: Auto calculated from the `Tail length (mm) / Head and body length (mm)`.
+- `Hind foot length (mm)`: the length of the hind foot from the base to the tip of the claw.
+
+{% /tabitem %}
+{% tabitem label="Birds" %}
+Work in progress.
+{% /tabitem %}
+{% tabitem label="Fish" %}
+
+Work in progress.
+{% /tabitem %}
+{% tabitem label="Herpetofauna" %}
+Work in progress.
+{% /tabitem %}
+
+
+
+{% /tabs %}
 ## Specimen Parts
 
 ## Media
