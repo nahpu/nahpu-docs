@@ -4,8 +4,131 @@ sidebar:
   order: 5
 ---
 
-## Overview
-
 ## Creating a new Site
 
+{% steps %}
+1. Navigate to the site page using the bottom navigation bar.
+2. Use to `+` button at the top right corner to create a new site. 
+    
+    You can also use the tree dot menu icon and tap on `Create site`.
+
+3. Create a site ID. 
+
+
+
+    We recommend creating a site ID convention for your team. An example of site ID convention for mammalogy fieldwork:
+    
+    - City, town, or village is ID-ed as it is. For example, the city of Bogor will be `BOGOR`. 
+    - The camp site uses `{2-letter locality abbreviation}-CAMP{camp number}` format. For example, camp 1 in Mt. Gede-Pangrango is `GP-CAMP1`.
+    - The trap line uses `{2-letter locality abbreviation}{trapline leader initial}-L{line number}` format. For example, line 1 in Mt. Gede-Pangrango led by Heru Handika is `GPHH-L1`.
+    - The pitfall line uses `{2-letter locality abbreviation}{pitfall line leader initial}-P{line number}` format. For example, line 1 in Mt. Gede-Pangrango led by Heru Handika is `GPHH-P1`.
+
+    {% aside type="tip" %}
+
+    For a project involving multiple devices, we recommend creating the same `siteID` for an identical site. The [upcoming data merging feature](https://github.com/nahpu/nahpu/issues/124) will use the `siteID` to identify and merge records from different devices. Future NAHPU update will allow to share site info to different site in similar manner as sharing project information. 
+
+    {% /aside %}
+
+4. Add the Site leader
+    
+    If this is a field camp, you can put the team leader name. If you it is a trap line, you can design a person in-charge of that trap line as the site leader.
+
+5. Add the site type
+
+    The site type helps categorize the site based on its characteristics or usage. Currently, there is no option to edit the list. Upcoming NAHPU feature will allow you to do so.
+
+6. Fill in the geography details
+
+    We recommend to follow your museum convention for writing the precise locality and remarks.
+
+    {% aside type="tip" title="Writing remarks" %}
+
+    If the site is a trapline, it is a good practice to explain how the trapline is run. 
+
+    For example:
+
+    ```text
+    The trapline runs from Shelter I to Shelter IV along the trails betweeen the to camp sites.
+    ```
+
+    {% /aside %}
+
+7. Fill in the habitat information
+
+    - Type: The type of habitats: plantation, lowland rainforest, upper montane forest, etc.
+    - Condition: The condition of the habitat: disturbed, undisturbed, minimal disturbance, etc.
+    - Description: A brief description of the habitat. For example:
+
+      ```text
+      Dominated by oak trees. The ground was mostly covered by ferns, gingers, and oak seedlings.
+
+      ```
+
+{% /steps %}
+
 ## Adding coordinates
+
+You can add coordinate manually from your GPS device or use the device coordinate.
+
+### Get coordinates from a current device
+
+{% steps %}
+
+1. Tap/click the `GPS point` button next to the `Add coordinate` button.
+
+2. It will take you the add coordinate page with the most of the information already filled.
+
+3. Fill in the rest of the fields. 
+    
+    See the [manually adding coordinate](#adding-coordinates) section for details. Your GPS unit name should match the exact model of your device. For example: `iPad Mini 4`.
+
+{% /steps %}
+
+### Manually adding coordinate
+
+{% steps %}
+
+1. On the site page at the coordinate panel, tap/click on the `Add coordinate` button.
+
+2. Enter the coordinate name.
+
+    Keep the name short and informative. You can use the `Notes` field to add additional information about the coordinate. 
+
+    {% aside type="tip" %}
+
+    We recommend creating a coordinate name convention for your team. Example of coordinate convention for mammalogy:
+
+      - `{siteID}S` for a coordinate taken at the start of the trapline, such as `KMHH-L1S`.
+      - `{siteID}C` for the coordinate taken at the center of the trapline.
+      - `{siteID}E` for a coordinate taken at the end of the trapline, such as `KMHH-L1E`.
+      - If the trapline extends beyond the first start point, the coordinate at the new start is suffixed with `{number}`. For example, `KMHH-L1S2` for first extension, `KMHH-L1S3` for the next extension, and so on until the trapline are fully moved.
+      - If the trapline extends beyond the first end point, the coordinate at the new end is suffixed with `{number}`. For example, `KMHH-L1E2` for first extension, and continue in a similar manner as the start line extension.
+
+
+
+    {% /aside %}
+
+3. Enter the latitude and longitude values.
+
+    Currently, NAHPU only support decimal coordinates.
+
+4. Add elevation in meters.
+
+5. Select the datum.
+
+    The default datum is WGS84. Check your GPS settings for the exact datum of your coordinates.
+
+6. Enter uncertainty values in meters.
+
+    Watch the uncertainty of your GPS. Some old GPS may not record the number. It is a good practice to take note of the uncertainty if you do not bring the NAHPU device with you to the coordinate location.
+
+7. Enter the name of the GPS you use.
+
+    Example device name: `Garmin 62sc`
+
+8. Add notes.
+
+    Add additional information if any.
+
+{% /steps %}
+

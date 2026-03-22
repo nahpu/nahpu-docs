@@ -54,7 +54,7 @@ If you are not a team member, you can still contribute to the project. Here's ho
 2. Make changes to the documentation.
 3. Submit a pull request.
 
-{% aside type="tip" title="Did you know?" %}
+ {% aside type="note" title="Did you know?" icon="star" %}
 
 NAHPU always welcome a new member to contribute regularly to the project. We are a mix of technical and non-technical contributors. Please, reach out the [NAHPU team member](/teams) for more details.
 
@@ -62,7 +62,7 @@ NAHPU always welcome a new member to contribute regularly to the project. We are
 
 ## Create New Content
 
-For create one or two pages, you can add a new file in the [GitHub repository](https://github.com/nahpu/nahpu-docs). The documentation files are inside `src/content/docs/[language]`. We require to add the English content first then write translation for the rest of the language. We prefer the documentation in markdoc 'mdoc` format. However, you can start with a plain markdown and let our team do the rest.
+For create one or two pages, you can add a new file in the [GitHub repository](https://github.com/nahpu/nahpu-docs). The documentation files are inside `src/content/docs/[language]`. We require to add the English content first then write translation for the rest of the language. We prefer the documentation in markdoc `.mdoc` format. However, you can start with a plain markdown and let the documentation maintainer do the rest.
 
 For a more complex scenario with complex pages and rooting, see the [Deep Dive](./deep_dive) section for more details.
 
@@ -79,6 +79,15 @@ language code (e.g., `en`, `es`, `fr`).
 ## Deep Dive
 
 This section explains the advance method to develop the NAHPU documentation.
+
+### Technologies
+
+Below is a list of the technologies used in the NAHPU documentation:
+
+- [Astro](https://astro.build/) - Static site generator
+- [Starlight](https://starlight.astro.build/) - Documentation theme for Astro
+- [Markdoc](https://markdoc.dev/) - Documentation format
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 
 ### Local development
 
@@ -142,36 +151,94 @@ Here's the directory structure and short description of each file/directory.
 
 {% filetree %}
 - astro.config.mjs Configuration for Astro site
-  - markdoc.config.mjs Configuration for Markdoc documentation
-  - package.json Project dependencies and scripts
-  - README.md Overview and instructions for the project
-  - tsconfig.json TypeScript configuration
-  - public/ Static assets served directly
-  - src/ Main source code directory
-    - content.config.ts Content management configuration
+- markdoc.config.mjs Configuration for Markdoc documentation
+- package.json Project dependencies and scripts
+- README.md Overview and instructions for the project
+- tsconfig.json TypeScript configuration
+- public/ Static assets served directly
+- src/ Main source code directory
+    - content.config.ts Content management configurationS
     - assets/ Media files like images
     - components/ Reusable UI components
     - content/ Documentation files organized by language
-    - layouts/ Layout components for pages
+    - layouts/ Layout components for reusable page template
     - pages/ Main pages of the site
-  - styles/ Global stylesheets
+  - styles/ Global CSS stylesheets
 {% /filetree %}
+
+For more details, about the directory structure, follow [Astro guidelines](https://docs.astro.build/en/basics/project-structure/) and [Starlight documentation](https://starlight.astro.build/).
 ---
 
-Some consideration when you are working on the documentation:
+### Code convention
 
 1. If the same code snippet appears in multiple places, use a shared component to avoid duplication and ensure consistency. Put the shared component in the `src/components` directory with a file name following the PascalCase convention, e.g., `SharedComponent.astro`.
 
-2. You can also use the Layout for a reusable UI template. The filename follows similar convention as the components.
+2. You can also use the Layout for a reusable UI template. The filename follows a similar convention as the components.
 
-3. Avoid using vanilla CSS for styling whenever possible. Use [tailwindcss](https://tailwindcss.com/) instead.
+3. Layouts should follow the same naming convention as components and be placed in the `src/layouts` directory.
 
+4. Avoid using vanilla CSS for styling whenever possible. Use [tailwindcss](https://tailwindcss.com/) instead. We use Tailwind v4.
+
+5. Avoid writing many classes on the element. Instead, use the `cntl` const variable to store classes. See the `pages/index.astro` file for an example.
 
 {% aside type="danger" %}
 
-Tailwind CSS usage outside the `docs` directory requires an import. See `src/pages/index.astro` for an example.
+Tailwind CSS usage outside the `docs` directory requires importing the global styles `import "../styles/global.css";`. See `src/pages/index.astro` for an example.
 
 {% /aside %}
+
+### Adding New Components
+
+{% steps %}
+
+1. Create a new component in `src/components/`. Use PascalCase for the filename,
+   e.g., `MyComponent.astro`.
+
+   ```astro
+   ---
+   // src/components/MyComponent.astro
+   ---
+   <div>
+     Your component content here
+   </div>
+   ```
+
+2. Register it as a Markdoc tag in `markdoc.config.mjs`.
+
+   ```js
+   import { defineMarkdocConfig, component } from "@astrojs/markdoc/config";
+   import starlightMarkdoc from "@astrojs/starlight-markdoc";
+
+   export default defineMarkdocConfig({
+     extends: [starlightMarkdoc()],
+     tags: {
+       mycomponent: {
+         render: component("./src/components/MyComponent.astro"),
+         selfClosing: true,
+       },
+     },
+   });
+   ```
+
+3. Use it in any `.mdoc` file.
+
+   ```markdoc
+   {% mycomponent / %}
+   ```
+
+{% /steps %}
+
+{% aside type="note" title="Self-closing vs. block tags" %}
+Use `selfClosing: true` for components that don't wrap content. For components
+that wrap content, omit it and use opening and closing tags:
+
+```markdoc
+{% mycomponent %}
+  Content goes here
+{% /mycomponent %}
+```
+{% /aside %}
+
 
 
 ### Running the website locally
