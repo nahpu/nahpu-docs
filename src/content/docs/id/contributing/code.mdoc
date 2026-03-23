@@ -1,0 +1,147 @@
+---
+title: "Kode"
+sidebar:
+  order: 2
+---
+
+NAHPU lebih dari sekadar aplikasi katalog digital untuk kerja lapangan sejarah alam. Ini adalah sistem perangkat lunak untuk mendukung digitalisasi spesimen tepat pada saat koleksi dilakukan. Halaman ini berfokus pada penjelasan tentang cara berkontribusi pada aplikasi utama NAHPU, yaitu katalog digital itu sendiri. Lihat bagian [alat pengembangan](./tools) untuk detail lebih lanjut tentang berkontribusi pada perangkat lunak pendukung proyek.
+
+## Memulai dengan Cepat
+
+### Prasyarat
+
+Sebelum Anda dapat berkontribusi pada proyek NAHPU, pastikan Anda telah menginstal hal-hal berikut di mesin Anda:
+
+- [Git](https://git-scm.com/downloads)
+- [Dart SDK](https://dart.dev/get-dart)
+- [Flutter SDK](https://flutter.dev/docs/get-started/install)
+- [Rust toolchain](https://rustup.rs/)
+- [Flutter rust bridge](https://github.com/fzyzcjy/flutter_rust_bridge)
+
+Untuk menyiapkan mesin pengguna agar siap bagi pengembangan NAHPU:
+
+{% steps %}
+
+1. Instal Flutter SDK
+
+    Ikuti panduan oleh [tim Flutter](https://flutter.dev/docs/get-started/install). Anda juga perlu menginstal Android Studio.
+
+2. Instal Rust toolchain
+
+3. Instal Flutter rust bridge
+
+{% /steps %}
+
+### Kontribusi Kode
+
+{% steps %}
+
+1. Fork repositori NAHPU di GitHub.
+
+2. Clone repositori yang telah di-fork ke mesin lokal Anda.
+
+    ```bash
+    git clone https://github.com/hhandika/nahpu.git
+    ```
+
+    Jika Anda menggunakan [GitHub CLI](https://cli.github.com/).
+
+    ```bash
+    gh repo clone hhandika/nahpu
+    ```
+
+3. Masuk ke direktori repositori NAHPU.
+
+    ```bash
+    cd nahpu/
+    ```
+
+4. Buat branch baru untuk perubahan Anda.
+
+    ```bash
+    git checkout -b nama-branch-anda
+    ```
+
+5. Lakukan perubahan dan commit.
+
+    ```bash
+    git add .
+    git commit -m "Pesan commit Anda"
+    ``` 
+6. Push perubahan Anda ke repositori fork Anda.
+
+7. Buat pull request ke repositori utama NAHPU.
+
+    Jika Anda mengerjakan perubahan antarmuka pengguna (UI), pastikan untuk menyertakan tangkapan layar atau video demo untuk mengilustrasikan perubahan Anda. Beberapa contoh perubahan antarmuka pengguna yang baik dapat ditemukan di [NAHPU GitHub issues](https://github.com/hhandika/nahpu/issues).
+
+{% /steps %}
+
+### Pemecahan Masalah
+
+Berikut adalah beberapa masalah umum dan solusinya:
+
+#### `flutter_rust_bridge_codegen` tidak ditemukan
+- **Penyebab:** `flutter_rust_bridge_codegen` tidak ada dalam PATH Anda.
+- **Solusi:** Pastikan Anda telah menginstalnya dengan `cargo install flutter_rust_bridge_codegen` dan direktori cargo bin ada dalam PATH Anda.
+
+#### Kesalahan pada macOS: `flutter_rust_bridge_codegen` gagal dengan "Please supply one or more path/to/llvm..."
+- **Penyebab:** Pembuat kode tidak dapat menemukan instalasi LLVM Anda.
+- **Solusi:** Instal LLVM dengan Homebrew (`brew install llvm`).
+
+#### Kesalahan pada Windows: gagal dengan "nudget" atau kesalahan linker
+- **Penyebab:** MSVC build tools atau Windows SDK hilang atau tidak dikonfigurasi dengan benar, menyebabkan Rust toolchain gagal saat proses linking.
+- **Solusi:** Instal [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) dan pastikan beban kerja **Desktop development with C++** dipilih. Kemudian atur Rust toolchain ke MSVC:
+  ```bash
+  rustup default stable-x86_64-pc-windows-msvc
+  ```
+
+## Pembahasan Mendalam
+
+### Arsitektur Kode
+
+NAHPU adalah aplikasi lintas platform yang dibangun dengan Flutter, framework berperforma tinggi untuk membangun aplikasi yang dikompilasi secara asli. Flutter menggunakan bahasa pemrograman Dart, yang dioptimalkan untuk membangun antarmuka pengguna yang cepat dan indah. Pendekatan ini menyederhanakan proses pengembangan dan merupakan resep kami untuk memastikan bahwa NAHPU memiliki performa tinggi dan mendukung sistem operasi seluler serta desktop.
+
+**Penyimpanan Data**: Di sisi backend, NAHPU sangat bergantung pada SQLite untuk penyimpanan lokal yang mengutamakan mode offline. Karena kerja lapangan sering kali dilakukan di daerah terpencil tanpa akses internet, manajemen data lokal yang tangguh sangatlah penting.
+
+**Integrasi Rust**: Sejak awal 2024, kami telah memigrasikan operasi yang membutuhkan komputasi berat ke Rust. Rust adalah bahasa pemrograman sistem yang berfokus pada performa, keandalan, dan keamanan memori. Dengan mengintegrasikan Rust dengan Flutter melalui flutter_rust_bridge, kami mencapai yang terbaik dari kedua dunia:
+
+**Flutter/Dart** menangani manajemen status, perutean, dan rendering UI dengan lancar pada 60-120fps.
+**Rust** menangani pekerjaan berat: memproses kumpulan data besar, transformasi data yang kompleks, I/O file, dan algoritma khusus yang jika tidak dilakukan akan menghambat Dart isolate.
+
+### Antarmuka Pengguna dan Desain
+
+NAHPU menggunakan sistem Material Design 3 sebagai fondasi identitas visualnya.
+
+**Konsistensi**: Material Design terintegrasi secara mendalam dengan Flutter. Kapan pun memungkinkan, kami menggunakan widget Material standar untuk memastikan pengalaman pengguna yang konsisten, mudah diakses, dan intuitif di semua sistem operasi.
+
+**Responsivitas**: NAHPU sering digunakan pada tablet lapangan dan perangkat seluler. Saat berkontribusi pada komponen UI, selalu pertimbangkan tata letak yang responsif. Gunakan alat seperti LayoutBuilder, MediaQuery, atau sistem grid fleksibel untuk memastikan perubahan Anda terlihat bagus di layar ponsel kecil maupun tampilan tablet atau desktop yang besar.
+
+**Aksesibilitas**: Pastikan teks memiliki kontras yang cukup, target sentuh berukuran memadai (setidaknya 48x48 piksel logis), dan label semantik disediakan untuk pembaca layar.
+
+
+### Struktur Direktori
+
+{% filetree %}
+- android/ Kode khusus platform Android dan konfigurasi build
+- assets/ Aset statis seperti gambar, font, dan ikon
+- db_schemas/ Definisi skema database dan file migrasi
+- installer/ Skrip installer dan konfigurasi untuk pengemasan aplikasi
+- integration_test/ Pengujian integrasi end-to-end
+- ios/ Kode khusus platform iOS dan konfigurasi build
+- lib/ Kode sumber Dart utama untuk aplikasi Flutter
+- linux/ Kode khusus platform Linux dan konfigurasi build
+- macos/ Kode khusus platform macOS dan konfigurasi build
+- rust/ Kode sumber Rust untuk komponen asli yang mementingkan performa
+- rust_builder/ Skrip build dan konfigurasi untuk mengompilasi kode Rust
+- scripts/ Skrip utilitas untuk tugas pengembangan dan otomatisasi
+- snap/ Konfigurasi paket Snap untuk distribusi Linux
+- test/ Pengujian unit dan widget
+- test_driver/ Pengujian Flutter driver untuk pengujian UI otomatis
+- web/ Kode khusus platform Web dan konfigurasi build
+- windows/ Kode khusus platform Windows dan konfigurasi build
+{% /filetree %}
+
+
+### Mendapatkan Bantuan
+
+Jika Anda mengalami kesulitan saat menyiapkan lingkungan atau memahami arsitektur, jangan ragu untuk menghubungi kami! Periksa [NAHPU GitHub Issues](https://github.com/nahpu/nahpu/issues) untuk diskusi yang sedang berlangsung, atau buka utas diskusi baru jika Anda memiliki proposal arsitektur.

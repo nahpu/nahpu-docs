@@ -1,0 +1,67 @@
+---
+title: Registro de taxones
+sidebar:
+  order: 4
+---
+
+Puede registrar un nuevo taxón manualmente o importando un archivo.
+
+## Registrar un nuevo taxón
+
+### Campos obligatorios
+
+- **Clase**: La clase del taxón.
+- **Orden**: El orden del taxón.
+- **Familia**: La familia del taxón.
+- **Género**: El género del taxón.
+- **Epíteto específico**: El epíteto específico del taxón.
+
+### Campos opcionales
+
+- **Autor**: El autor del taxón y el año de la publicación.
+- **Nombre común**: El nombre común del taxón.
+- **Categoría de la Lista Roja de la UICN**: El estado en la Lista Roja de la UICN del taxón.
+- **Estado CITES**: El estado CITES del taxón.
+- **Estado de conservación en el país**: El estado de conservación del taxón en un país específico.
+- **Orden de clasificación**: Orden arbitrario para clasificar el taxón. Se utiliza principalmente cuando se exporta el registro. Por ejemplo, puede utilizar el orden filogenético.
+- **Notas**: Cualquier información adicional sobre el taxón.
+
+### Registro manual
+
+1. Vaya al tablero del proyecto.
+2. En el panel de taxones, haga clic en el botón `+ Agregar taxón`.
+3. Complete la información del taxón.
+
+### Importar desde archivo
+
+1. Prepare su archivo de importación. Los formatos preferidos son `.xlsx`, `.csv` y `.tsv`.
+2. Vaya al tablero del proyecto.
+3. En el panel de taxones, haga clic en el botón `Importar desde archivo`.
+4. Utilice el botón `Seleccionar archivo` para agregar el archivo. La aplicación mapeará automáticamente las columnas a los campos correctos.
+
+Comportamiento del delimitador:
+
+- `.csv` utiliza coma.
+- `.tsv` utiliza tabulación.
+- Los archivos de Excel se analizan como hojas de cálculo.
+- Para otros tipos de archivos, NAHPU realiza un intento de análisis de mejor esfuerzo.
+- Si no se reconoce una extensión de archivo, la detección automática intenta primero con Excel, coma, tabulación y punto y coma.
+- Si la detección automática falla, ingrese un delimitador personalizado en la anulación del analizador avanzado.
+
+Columnas recomendadas para la plantilla de importación:
+
+- `class`, `order`, `family`, `genus`, `epithet`, `scientific name`, `common name`
+- Los campos de importación obligatorios son `class`, `order`, `family`, `genus` y `epithet`.
+- La coincidencia de encabezados es flexible, por lo que también se aceptan alias como `taxonClass`, `taxonOrder`, `taxonFamily` y `specificEpithet`.
+
+{% aside type="note" %}
+
+El mejor soporte es para `.xlsx`. Otros formatos de Excel más antiguos pueden fallar. Si es necesario, vuelva a guardarlos como `.xlsx`, `.csv` o `.tsv`.
+
+{% /aside %}
+
+## Editar un taxón
+
+1. Vaya al tablero del proyecto.
+2. En el panel de taxones, dentro del taxón registrado, haga clic en el botón `Ver todo`.
+3. Haga clic en el icono del lápiz para editar el taxón.

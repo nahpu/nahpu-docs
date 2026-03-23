@@ -1,0 +1,145 @@
+---
+title: Primeiro Dia no NAHPU
+sidebar:
+    label: Primeiro Dia no NAHPU
+    order: 2
+---
+
+O NAHPU é um aplicativo de catalogação baseado em projetos. Os dados são gerenciados e organizados com base em um projeto. Cada projeto pode ter várias pessoas, locais, narrativas, eventos de coleta e registros de espécimes. O aplicativo foi projetado para registrar espécimes de história natural tanto no laboratório quanto no campo, sendo otimizado para telas de dispositivos móveis e computadores. Se a sua equipe trabalha com múltiplos táxons suportados, como aves e mamíferos, você pode ter ambos no mesmo projeto.
+
+## Primeiros Passos
+
+{% steps %}
+
+1. **Criar um novo projeto**
+
+    Use o botão `+` no canto inferior direito da tela inicial. O nome do projeto deve ter entre 3 e 25 caracteres.
+    
+    Você pode adicionar uma descrição ao projeto. Isso é opcional, mas útil para lembrar o propósito e o escopo do projeto.
+    
+    Em seguida, selecione o formato principal do catálogo. Atualmente, o aplicativo suporta formatos de catálogo para mamíferos e aves. O suporte para herpetofauna, peixes e fósseis está em desenvolvimento.
+
+    O aplicativo o levará ao painel de controle (dashboard).
+    
+    Após a criação de um projeto, o aplicativo gera automaticamente um UUID para o projeto. Este identificador único é usado em todo o banco de dados para distinguir registros de diferentes projetos. Utilizamos o [UUID versão 4](https://en.wikipedia.org/wiki/Universally_unique_identifier). É quase impossível que dois UUIDs coincidam.
+
+    {% aside type="tip" %}
+
+    Em alguns cenários de campo, você pode ter várias pessoas usando seus próprios dispositivos para registrar dados de espécimes no NAHPU. Recomendamos que o líder da equipe crie o novo projeto do zero. Outros membros da equipe devem criar um novo projeto digitalizando o código QR no painel do NAHPU do líder da equipe (veja detalhes sobre o painel abaixo). Esta abordagem transfere todas as informações do projeto, incluindo o UUID. O aplicativo usa o UUID para identificar o mesmo projeto a partir de múltiplos conjuntos de dados do NAHPU, o que é essencial para o nosso [trabalho contínuo de suporte à fusão de dados](https://github.com/nahpu/nahpu/issues/124).
+    
+    {% /aside %}
+
+2. **Conhecendo o painel de controle**
+
+    O painel de controle é a interface principal do projeto. Ele se divide em quatro painéis principais.
+    
+    - **O painel superior esquerdo** contém as informações do projeto. Inclui um código QR que outros usuários podem escanear ao criar um novo projeto.
+    - **O painel superior direito** contém os dados do pessoal. Este painel permite adicionar e gerenciar informações de pessoal para o projeto. O pessoal será exibido como uma lista neste painel após ser criado.
+    - **O painel inferior esquerdo** é o registro de táxons. Este painel permite adicionar e gerenciar informações de táxons para o projeto.
+    - **O painel inferior direito** contém as estatísticas de registros. Este painel mostra o número de registros adicionados ao projeto. Você pode entrar na janela de tela cheia para ver mais estatísticas.
+
+    {% aside type="note" %}
+
+    Na tela de um smartphone, os painéis são organizados nesta ordem: **informações do projeto**, **pessoal**, **registro de táxons** e **estatísticas de registros**.
+    {% /aside %}
+
+3. **Adicionar um novo integrante à equipe**
+
+    Você precisa de pelo menos uma pessoa para assumir o papel de catalogador de espécimes. Você pode adicionar mais pessoas com diferentes funções.
+
+    - **[Catalogador](./usages/personnel#cataloger)** é responsável por catalogar o espécime. Em algumas instituições, isso pode ser chamado de coletor. No aplicativo, chamamos de coletor qualquer pessoa que colete o espécime, independentemente de estar envolvida na catalogação no aplicativo ou não. Suas iniciais e número de campo serão usados para gerar o ID de Campo na página do catálogo de espécimes. Seu nome também aparecerá sempre que o campo solicitar o nome de um integrante da equipe, como pessoal de coleta e preparador. O aplicativo não permite alterar a função de catalogador após sua criação.
+
+    - **[Apenas preparador](./usages/personnel#preparator-only)** é uma pessoa que ajuda a preparar o espécime, mas não está envolvida na gestão dos dados. Seus nomes não aparecerão no campo de catalogador da página do espécime, mas em outros lugares, como nos campos `Preparador` e `Pessoal de coleta`.
+
+    - **[Nenhuma](./usages/personnel#none)** função é reservada para outros membros da equipe não diretamente envolvidos no cuidado com o espécime. O objetivo do NAHPU é garantir que todos os envolvidos no campo sejam registrados nos dados de campo. Você pode atribuir esta função ao seu motorista, guias locais, cozinheiros, etc. Seus nomes aparecerão apenas no campo `Pessoal de coleta`. Se eles estiverem envolvidos na obtenção de um espécime, você pode associá-los a ele.
+
+
+4. **Adicionar um novo táxon**
+
+    Você pode adicionar um táxon manualmente usando o botão de adicionar táxon ou importar de um arquivo. Os formatos preferidos são `.xlsx`, `.csv` e `.tsv`. O NAHPU fará o melhor esforço para processar outros tipos de arquivo.
+
+    - Para arquivos delimitados reconhecidos, o aplicativo seleciona os delimitadores pela extensão (`.csv` = vírgula, `.tsv` = tabulação).
+    - Para extensões não reconhecidas, a detecção automática tenta Excel, vírgula, tabulação e ponto e vírgula primeiro. Se isso falhar, use a substituição avançada do analisador e insira um delimitador personalizado.
+    - O melhor suporte é para `.xlsx`; formatos de Excel mais antigos ou diferentes podem falhar.
+
+    Seu arquivo de importação requer todas estas colunas: `class`, `order`, `family`, `genus`, `epithet`. Você também pode incluir `scientific name`, `common name` e `notes`. O aplicativo detectará automaticamente apelidos de cabeçalho suportados (por exemplo, `taxonClass`, `taxonOrder`, `taxonFamily`, `specificEpithet`). Você pode selecionar manualmente o tipo de coluna usando o menu suspenso se o aplicativo não atribuir automaticamente a coluna correta para cada dado. Outras colunas serão ignoradas.
+
+    Exemplo de tabela de importação de táxons:
+
+    ```text
+    | class    | order    | family  | genus   | epithet   | scientific name   | common name        | notes |
+    | -------- | -------- | ------- | ------- | --------- | ----------------- | ------------------ | ----- |
+    | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Bunomys coelestis | Heavenly hill rat  |       |
+    | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Bunomys penitus   | Inland hill rat    |       |
+
+    ```
+
+5. **Criar um local (site)**
+
+   Em alguns catálogos de papel, este termo será rotulado como `Localidade`. Navegue até a página de locais usando a barra de navegação inferior. Para criar um novo local, use o botão `+` no canto superior direito. Preencha pelo menos o `Site ID`. O aplicativo limita o ID do local a 20 caracteres e impõe o formato em letras maiúsculas. Você se referirá a este ID em todo o campo de registro sempre que solicitar um local.
+    
+    {% aside type="tip" %}
+
+    Recomendamos a criação de uma convenção de ID de local única para sua equipe. Um exemplo de convenção de ID de local para trabalho de campo em mamalogia:
+    
+    - Cidade, vila ou vilarejo é identificado como tal. Por exemplo, a cidade de Bogor será `BOGOR`.
+    - O acampamento usa o formato `{abreviação da localidade com 2 letras}-CAMP{número do acampamento}`. Por exemplo, o acampamento 1 no Mt. Gede-Pangrango é `GP-CAMP1`.
+    - A linha de armadilhas usa o formato `{abreviação da localidade com 2 letras}{iniciais do líder da linha}-L{número da linha}`. Por exemplo, a linha 1 no Mt. Gede-Pangrango liderada por Heru Handika é `GPHH-L1`.
+    - A linha de queda (pitfall) usa o formato `{abreviação da localidade com 2 letras}{iniciais do líder da linha}-P{número da linha}`. Por exemplo, a linha 1 no Mt. Gede-Pangrango liderada por Heru Handika é `GPHH-P1`.
+
+    {% /aside %}
+
+    {% aside type="note" %}
+
+    Futuras atualizações do NAHPU permitirão alterar o termo `Site` para `Locality` (Localidade), garantindo a compatibilidade com bancos de dados anteriores.
+
+    {% /aside %}
+
+5. **Adicionar narrativa**
+
+    Você também pode chamar de notas de campo. Navegue até a página de narrativa usando a barra de navegação inferior. Para criar uma narrativa, use o botão `+` no canto superior direito. Selecione a data e o ID do local. Em seguida, escreva a narrativa.
+
+6. **Adicionar eventos de coleta**
+
+    Os eventos de coleta ajudam você a acompanhar os esforços de coleta, pessoal e dados climáticos e astronômicos para cada evento. Os registros de espécimes vinculam-se ao evento em vez de ao local. Dessa forma, você pode ter vários eventos de coleta em um único local.
+
+    Para criar um evento de coleta, use o botão `+` no canto superior direito. Selecione `ID do local`, `data de início`, `hora de início`, `data de término` e `hora de término`. Em seguida, preencha o restante do formulário.
+
+    O aplicativo combina o ID do local e a data de início para criar um ID exclusivo para cada evento de coleta. Por exemplo, `GP-L1-23 de março de 2023`. Você usará este ID para se referir ao evento de coleta no registro do espécime. Em alguns casos excepcionais onde você tem vários eventos de coleta em um único dia no mesmo local, você pode adicionar um sufixo ao ID. Por exemplo, `Linha1-26 de Mar de 2023-1` e `Linha1-26 de Mar de 2023-2`.
+
+    {% aside type="caution" title="Considerações Importantes" %}
+
+
+    Diferente de um local que você criará apenas cada vez que começar a coletar em um novo lugar, recomendamos criar eventos de coleta para cada esforço de coleta. Por exemplo, ao estudar roedores noturnos, muitas vezes armamos armadilhas na noite anterior e as verificamos na manhã seguinte. Criaremos um evento de coleta após coletarmos o espécime. A data de início será um dia antes e a data de término será hoje. Esta abordagem permite que você acompanhe as mudanças nos números de armadilhas ou pessoal envolvido em cada evento. Futuras atualizações do NAHPU incluirão estatísticas de contagem de espécies/esforço de armadilha.
+
+    {% /aside %}
+
+7. **Adicionar registros de espécimes**
+
+    Para criar um registro de espécime, use o botão `+` no canto superior direito. O ícone de registro de espécime na barra de navegação informa sobre o formato ativo no momento. Ele gerará o formato correspondente para o catálogo atualmente ativo. A única diferença entre os diferentes formatos de catálogo são os campos de medição. Após criar um novo registro de espécime, preencha as informações relevantes. Repita o processo para os próximos espécimes.
+
+    {% aside type="note" %}
+    O NAHPU foi projetado para permitir que os coletores coletem diferentes táxons. Na versão atual, você pode ter aves, morcegos e outros mamíferos no mesmo projeto. Altere o formato do catálogo nas configurações quando adicionar um grupo taxonômico diferente do formato de catálogo ativo no momento. O NAHPU gerará um formulário para esse grupo taxonômico quando você criar um novo registro de espécime. Ao percorrer diferentes registros de espécimes, você pode verificar qual formato de catálogo está na página atual observando o ícone nas partes do espécime. O catálogo de mamíferos será uma `pata` e o de aves será uma `cabeça de ave`.
+    {% /aside %}
+
+8. **Exportando registros**
+
+    Para exportar registros, vá ao menu do painel de controle (indicado pelo ícone de hambúrguer/três linhas horizontais no canto superior esquerdo). Temos várias opções de exportação:
+
+    - Criar um relatório. Gera lista de espécies, mídia e coordenadas do local em formato delimitado (.csv ou .tsv).
+
+    - Agrupar projetos (Bundle projects). Gera relatórios disponíveis (por exemplo, contagem de espécies), narrativas, locais, eventos de coleta e registros de espécimes. Estão todos em formato delimitado por vírgula (.csv). O aplicativo gerará um arquivo zip contendo todos os arquivos e mídias. Você pode usar esta opção para fazer backup dos seus dados.
+
+    - Exportar registros. Você pode escolher quais registros exportar. Suporta exportação em formato delimitado (.csv ou .tsv).
+
+9. **Fazendo backup do banco de dados**
+
+    Para fazer backup do banco de dados, vá ao menu no painel de controle e selecione backup do banco de dados. Por padrão, o banco de dados será exportado como um arquivo sqlite3. Use o botão de alternância `incluir dados do projeto` para adicionar os dados do projeto ao backup. O aplicativo gerará um arquivo zip contendo o banco de dados e as mídias.
+
+    {% aside type="tip" %}
+
+    Em um local de campo remoto, ter uma conexão de internet confiável pode ser um desafio. Recomendamos exportar apenas os dados `sqlite` para carregá-los em sua conta na nuvem, como [OneDrive](https://onedrive.live.com), [Google Drive](https://drive.google.com) ou [Dropbox](https://www.dropbox.com). Armazene o arquivo zip da configuração `incluir dados do projeto` no armazenamento do seu telefone e um backup secundário em um pendrive à prova d'água. Também é uma boa prática fazer backup entre dispositivos quando você tem vários aparelhos usando o NAHPU.
+
+    {% /aside %}
+
+{% /steps %}

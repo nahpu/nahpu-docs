@@ -205,26 +205,28 @@ Tailwind CSS usage outside the `docs` directory requires importing the global st
 
 2. Register it as a Markdoc tag in `markdoc.config.mjs`.
 
-   ```js
-   import { defineMarkdocConfig, component } from "@astrojs/markdoc/config";
-   import starlightMarkdoc from "@astrojs/starlight-markdoc";
+    ```js
+    import { defineMarkdocConfig, component } from "@astrojs/markdoc/config";
+    import starlightMarkdoc from "@astrojs/starlight-markdoc";
 
-   export default defineMarkdocConfig({
-     extends: [starlightMarkdoc()],
-     tags: {
-       mycomponent: {
-         render: component("./src/components/MyComponent.astro"),
-         selfClosing: true,
-       },
-     },
-   });
+    export default defineMarkdocConfig({
+      extends: [starlightMarkdoc()],
+      tags: {
+        mycomponent: {
+          render: component("./src/components/MyComponent.astro"),
+          selfClosing: true,
+        },
+      },
+    });
    ```
 
 3. Use it in any `.mdoc` file.
 
-   ```markdoc
-   {% mycomponent / %}
-   ```
+    {% code
+    code="{% mycomponent / %}"
+    lang="text"
+  /%}
+
 
 {% /steps %}
 
@@ -232,11 +234,11 @@ Tailwind CSS usage outside the `docs` directory requires importing the global st
 Use `selfClosing: true` for components that don't wrap content. For components
 that wrap content, omit it and use opening and closing tags:
 
-```markdoc
-{% mycomponent %}
-  Content goes here
-{% /mycomponent %}
-```
+  {% code
+  code="{% mycomponent / %}"
+  lang="mdoc"
+  /%}
+
 {% /aside %}
 
 

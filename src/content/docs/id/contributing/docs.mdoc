@@ -1,0 +1,262 @@
+---
+title: "Dokumentasi"
+sidebar:
+  order: 3
+---
+
+Kami menghargai minat Anda dalam meningkatkan dokumentasi kami. Baik Anda anggota tim maupun kontributor eksternal, ada beberapa cara yang dapat Anda lakukan untuk membantu:
+
+- **Memperbarui dokumentasi yang ada**: Memperbaiki kesalahan atau menambahkan informasi baru pada halaman saat ini.
+- **Membuat konten baru**: Menulis halaman atau bagian baru tentang topik yang belum kami bahas.
+- **Menerjemahkan dokumentasi**: Bantu kami menjangkau lebih banyak orang dengan menerjemahkan ke bahasa lain.
+
+Pilih metode kontribusi yang paling sesuai untuk Anda di bawah ini.
+
+## Memperbarui Dokumentasi yang Ada
+
+### Anggota Tim
+
+Di bagian bawah setiap halaman di situs web, Anda akan menemukan tautan `Edit page`. Klik tautan ini untuk membuka halaman tersebut di GitHub. Berikut adalah langkah-langkahnya:
+
+{% steps %}
+
+1. Klik tautan `Edit page` di bagian bawah halaman.
+
+2. Buat perubahan pada dokumentasi.
+
+3. Lakukan commit pada perubahan tersebut.
+
+{% /steps %}
+
+{% aside type="note" title="Perlu diingat" %}
+Perubahan Anda tidak akan langsung ditayangkan. Seorang pemelihara akan meninjau dan menggabungkannya sebelum situs web di-deploy.
+
+{% /aside %}
+
+### Kontributor Eksternal
+
+Jika Anda bukan anggota tim, Anda tetap dapat berkontribusi pada proyek ini. Berikut caranya:
+
+1. Fork repositori dokumentasi.
+
+   ```bash
+   https://github.com/nahpu/nahpu-docs.git
+
+   ```
+
+   Jika Anda menggunakan [GitHub CLI](https://cli.github.com/).
+
+   ```bash
+   gh repo clone nahpu/nahpu-docs
+   
+   ```
+
+2. Lakukan perubahan pada dokumentasi.
+3. Kirimkan pull request.
+
+ {% aside type="note" title="Tahukah Anda?" icon="star" %}
+
+NAHPU selalu menyambut anggota baru untuk berkontribusi secara berkala pada proyek ini. Kami adalah campuran dari kontributor teknis dan non-teknis. Silakan hubungi [anggota tim NAHPU](/teams) untuk detail lebih lanjut.
+
+{% /aside %}
+
+## Membuat Konten Baru
+
+Untuk membuat satu atau dua halaman, Anda dapat menambahkan file baru di [repositori GitHub](https://github.com/nahpu/nahpu-docs). File dokumentasi berada di dalam `src/content/docs/[bahasa]`. Kami mewajibkan untuk menambahkan konten bahasa Inggris terlebih dahulu, kemudian menulis terjemahan untuk bahasa lainnya. Kami lebih menyukai dokumentasi dalam format Markdoc `.mdoc`. Namun, Anda dapat memulai dengan Markdown biasa dan membiarkan pemelihara dokumentasi melakukan sisanya.
+
+Untuk skenario yang lebih kompleks dengan halaman dan perutean yang rumit, lihat bagian [Pembahasan Mendalam](#pembahasan-mendalam) untuk detail lebih lanjut.
+
+## Menambahkan Terjemahan Bahasa Baru
+
+Kami selalu mencari penutur bahasa yang saat ini belum kami dukung. Untuk memfasilitasi penambahan bahasa baru, kami menggunakan AI untuk membantu proses terjemahan. Jika Anda tertarik untuk berkontribusi, silakan hubungi salah satu [anggota tim kami](/teams). Alur kerja kami untuk menambahkan bahasa baru meliputi:
+
+1. Membuat direktori bahasa baru di folder `src/content/docs`. Nama folder mengikuti kode bahasa (misalnya, `en`, `es`, `id`).
+2. Menggunakan model bahasa besar (LLM) untuk menerjemahkan dokumentasi bahasa Inggris.
+3. Menambahkan terjemahan bilah sisi (sidebar) di file `astro.config.mjs`.
+4. Meninjau dan merevisi terjemahan AI untuk akurasi oleh anggota tim.
+
+## Pembahasan Mendalam
+
+Bagian ini menjelaskan metode tingkat lanjut untuk mengembangkan dokumentasi NAHPU.
+
+### Teknologi
+
+Berikut adalah daftar teknologi yang digunakan dalam dokumentasi NAHPU:
+
+- [Astro](https://astro.build/) - Generator situs statis
+- [Starlight](https://starlight.astro.build/) - Tema dokumentasi untuk Astro
+- [Markdoc](https://markdoc.dev/) - Format dokumentasi
+- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utility-first
+
+### Pengembangan Lokal
+
+#### Prasyarat
+
+Anda perlu menginstal [Bun](https://bun.com/) dan editor kode (misalnya, [VS Code](https://code.visualstudio.com/)) di mesin Anda. Berikut adalah panduan langkah demi langkahnya:
+
+
+{% steps %}
+
+1. Instal [bun](https://bun.com/docs/installation).
+
+    ```bash
+    curl -fsSL https://bun.com/install | bash
+    ```
+
+    Ikuti [dokumentasi bun](https://bun.com/docs/installation) untuk detail lebih lanjut.
+
+2. Periksa instalasi bun.
+
+    ```bash
+    bun --version
+    ```
+
+    Jika instalasi berhasil, Anda akan melihat nomor versinya.
+
+3. Clone repositori dokumentasi.
+
+    ```bash
+    git clone https://github.com/nahpu/nahpu-docs.git
+    ```
+
+4. Masuk ke direktori repositori.
+
+    ```bash
+    cd nahpu-docs
+    ```
+
+    Jika Anda menggunakan VS Code, Anda dapat langsung membuka repositori di editor.
+
+    ```bash
+    code nahpu-docs
+    ```
+
+5. Instal semua dependensi:
+
+    ```bash
+    bun install
+    ```
+
+6. Lakukan perubahan.
+
+    Dokumentasi berada di folder `src/content/docs/[bahasa]`. Halaman lain berada di `src/pages`.
+
+{% /steps %}
+
+
+### Struktur Direktori
+
+Berikut adalah struktur direktori dan deskripsi singkat dari setiap file/direktori.
+
+{% filetree %}
+- astro.config.mjs Konfigurasi untuk situs Astro
+- markdoc.config.mjs Konfigurasi untuk dokumentasi Markdoc
+- package.json Dependensi dan skrip proyek
+- README.md Gambaran umum dan instruksi untuk proyek
+- tsconfig.json Konfigurasi TypeScript
+- public/ Aset statis yang disajikan secara langsung
+- src/ Direktori kode sumber utama
+    - content.config.ts Konfigurasi manajemen konten
+    - assets/ File media seperti gambar
+    - components/ Komponen UI yang dapat digunakan kembali
+    - content/ File dokumentasi yang disusun berdasarkan bahasa
+    - layouts/ Komponen layout untuk templat halaman yang dapat digunakan kembali
+    - pages/ Halaman utama situs
+    - styles/ Stylesheet CSS global
+{% /filetree %}
+
+Untuk detail lebih lanjut tentang struktur direktori, ikuti [panduan Astro](https://docs.astro.build/en/basics/project-structure/) dan [dokumentasi Starlight](https://starlight.astro.build/).
+
+---
+
+### Konvensi Kode
+
+1. Jika cuplikan kode yang sama muncul di beberapa tempat, gunakan komponen bersama untuk menghindari duplikasi dan memastikan konsistensi. Letakkan komponen bersama di direktori `src/components` dengan nama file mengikuti konvensi PascalCase, misalnya, `SharedComponent.astro`.
+
+2. Anda juga dapat menggunakan Layout untuk templat UI yang dapat digunakan kembali. Nama file mengikuti konvensi yang sama dengan komponen.
+
+3. Layout harus mengikuti konvensi penamaan yang sama dengan komponen dan ditempatkan di direktori `src/layouts`.
+
+4. Hindari penggunaan CSS murni untuk penataan gaya jika memungkinkan. Gunakan [tailwindcss](https://tailwindcss.com/) sebagai gantinya. Kami menggunakan Tailwind v4.
+
+5. Hindari menulis terlalu banyak kelas pada elemen. Sebaliknya, gunakan variabel konstanta `cntl` untuk menyimpan kelas. Lihat file `pages/index.astro` untuk contohnya.
+
+{% aside type="danger" %}
+
+Penggunaan Tailwind CSS di luar direktori `docs` memerlukan impor gaya global `import "../styles/global.css";`. Lihat `src/pages/index.astro` untuk contohnya.
+
+{% /aside %}
+
+### Menambahkan Komponen Baru
+
+{% steps %}
+
+1. Buat komponen baru di `src/components/`. Gunakan PascalCase untuk nama file, misalnya, `MyComponent.astro`.
+
+   ```astro
+   ---
+   // src/components/MyComponent.astro
+   ---
+   <div>
+     Konten komponen Anda di sini
+   </div>
+   ```
+
+2. Daftarkan sebagai tag Markdoc di `markdoc.config.mjs`.
+
+   ```js
+   import { defineMarkdocConfig, component } from "@astrojs/markdoc/config";
+   import starlightMarkdoc from "@astrojs/starlight-markdoc";
+
+   export default defineMarkdocConfig({
+     extends: [starlightMarkdoc()],
+     tags: {
+       mycomponent: {
+         render: component("./src/components/MyComponent.astro"),
+         selfClosing: true,
+       },
+     },
+   });
+   ```
+
+3. Gunakan di file `.mdoc` mana pun.
+
+   {% code
+  code="{% mycomponent / %}"
+  lang="text"
+  /%}
+
+{% /steps %}
+
+{% aside type="note" title="Tag self-closing vs. block" %}
+Gunakan `selfClosing: true` untuk komponen yang tidak membungkus konten. Untuk komponen yang membungkus konten, hilangkan opsi tersebut dan gunakan tag pembuka serta penutup:
+
+{% code
+  code="{% mycomponent / %}"
+  lang="text"
+  /%}
+
+{% /aside %}
+
+
+
+### Menjalankan Situs Web Secara Lokal
+
+
+{% steps %}
+
+1. Jalankan Astro dalam mode pengembangan (dev mode)
+
+    ```bash
+    bun run dev
+    ```
+
+2. Buka peramban Anda dan arahkan ke `http://localhost:4321/` untuk melihat situs web dokumentasi.
+
+    {% aside type="tip" %}
+
+    Di VS Code, Anda dapat menekan CTR + klik pada tautan yang ditampilkan di terminal.
+
+    {% /aside %}
+
+{% /steps %}

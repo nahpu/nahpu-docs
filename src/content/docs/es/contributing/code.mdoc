@@ -1,0 +1,147 @@
+---
+title: "Código"
+sidebar:
+  order: 2
+---
+
+NAHPU es más que una simple aplicación de catálogo digital para el trabajo de campo en historia natural. Es un sistema de software para apoyar la digitalización de especímenes justo en el momento de la recolección. Esta página se centra en explicar cómo contribuir a la aplicación principal de NAHPU, que es el catálogo digital en sí. Consulte la sección de [herramientas de desarrollo](./tools) para obtener más detalles sobre cómo contribuir al software de soporte del proyecto.
+
+## Inicio rápido
+
+### Prerrequisitos
+
+Antes de poder contribuir al proyecto NAHPU, asegúrese de tener instalado lo siguiente en su máquina:
+
+- [Git](https://git-scm.com/downloads)
+- [Dart SDK](https://dart.dev/get-dart)
+- [Flutter SDK](https://flutter.dev/docs/get-started/install)
+- [Rust toolchain](https://rustup.rs/)
+- [Flutter rust bridge](https://github.com/fzyzcjy/flutter_rust_bridge)
+
+Para preparar su máquina para el desarrollo de NAHPU:
+
+{% steps %}
+
+1. Instale el SDK de Flutter
+
+    Siga la guía del [equipo de Flutter](https://flutter.dev/docs/get-started/install). También deberá instalar Android Studio.
+
+2. Instale el toolchain de Rust
+
+3. Instale Flutter rust bridge
+
+{% /steps %}
+
+### Contribución de código
+
+{% steps %}
+
+1. Haga un fork del repositorio de NAHPU en GitHub.
+
+2. Clone el repositorio forkeado en su máquina local.
+
+    ```bash
+    git clone https://github.com/hhandika/nahpu.git
+    ```
+
+    Si está utilizando [GitHub CLI](https://cli.github.com/).
+
+    ```bash
+    gh repo clone hhandika/nahpu
+    ```
+
+3. Cambie al directorio del repositorio NAHPU.
+
+    ```bash
+    cd nahpu/
+    ```
+
+4. Cree una nueva rama para sus cambios.
+
+    ```bash
+    git checkout -b nombre-de-su-rama
+    ```
+
+5. Realice sus cambios y confírmelos (commit).
+
+    ```bash
+    git add .
+    git commit -m "Su mensaje de commit"
+    ``` 
+6. Suba (push) sus cambios a su repositorio forkeado.
+
+7. Cree un pull request al repositorio principal de NAHPU.
+
+    Si está trabajando en cambios en la interfaz de usuario, asegúrese de incluir capturas de pantalla o un video de demostración para ilustrar sus cambios. Se pueden encontrar buenos ejemplos de cambios en la interfaz de usuario en los [issues de GitHub de NAHPU](https://github.com/hhandika/nahpu/issues).
+
+{% /steps %}
+
+### Solución de problemas
+
+Aquí hay algunos problemas comunes y sus soluciones:
+
+#### `flutter_rust_bridge_codegen` no encontrado
+- **Causa:** `flutter_rust_bridge_codegen` no está en su PATH.
+- **Solución:** Asegúrese de haberlo instalado con `cargo install flutter_rust_bridge_codegen` y que el directorio bin de cargo esté en su PATH.
+
+#### Error en macOS: `flutter_rust_bridge_codegen` falla con "Please supply one or more path/to/llvm..."
+- **Causa:** El generador de código no puede encontrar su instalación de LLVM.
+- **Solución:** Instale LLVM con Homebrew (`brew install llvm`).
+
+#### Error en Windows: falla con "nudget" o errores de enlazador (linker)
+- **Causa:** Las herramientas de compilación de MSVC o el SDK de Windows faltan o no están configurados correctamente, lo que provoca que el toolchain de Rust falle durante el enlazado.
+- **Solución:** Instale las [Herramientas de compilación de Visual Studio](https://visualstudio.microsoft.com/visual-cpp-build-tools/) y asegúrese de que la carga de trabajo **Desarrollo para el escritorio con C++** esté seleccionada. Luego, configure el toolchain de Rust a MSVC:
+  ```bash
+  rustup default stable-x86_64-pc-windows-msvc
+  ```
+
+## Profundización
+
+### Arquitectura del código
+
+NAHPU es una aplicación multiplataforma construida con Flutter, un framework de alto rendimiento para crear aplicaciones compiladas nativamente. Flutter utiliza el lenguaje de programación Dart, que está optimizado para construir interfaces de usuario rápidas y atractivas. Este enfoque simplifica el proceso de desarrollo y es nuestra receta para asegurar que NAHPU sea eficiente y admita sistemas operativos móviles y de escritorio.
+
+**Almacenamiento de datos**: En el backend, NAHPU depende en gran medida de SQLite para el almacenamiento local, priorizando el funcionamiento sin conexión (offline-first). Debido a que el trabajo de campo a menudo ocurre en áreas remotas sin acceso a Internet, la gestión robusta de datos locales es crítica.
+
+**La integración con Rust**: Desde principios de 2024, hemos estado migrando las operaciones de cómputo intensivo a Rust. Rust es un lenguaje de programación de sistemas que se centra en el rendimiento, la confiabilidad y la seguridad de la memoria. Al integrar Rust con Flutter a través de flutter_rust_bridge, logramos lo mejor de ambos mundos:
+
+**Flutter/Dart** maneja la gestión de estado, el enrutamiento y la renderización de la interfaz de usuario de manera fluida a 60-120 fps.
+**Rust** se encarga del trabajo pesado: análisis de grandes conjuntos de datos, transformaciones de datos complejas, E/S de archivos y algoritmos especializados que de otro modo saturarían el isolate de Dart.
+
+### Interfaz de usuario y diseño
+
+NAHPU utiliza el sistema Material Design 3 como base para su identidad visual.
+
+**Consistencia**: Material Design está profundamente integrado con Flutter. Siempre que es posible, utilizamos widgets estándar de Material para asegurar una experiencia de usuario consistente, accesible e intuitiva en todos los sistemas operativos.
+
+**Capacidad de respuesta (Responsiveness)**: NAHPU se utiliza con frecuencia en tabletas de campo y dispositivos móviles. Al contribuir con componentes de interfaz de usuario, considere siempre los diseños responsivos. Utilice herramientas como LayoutBuilder, MediaQuery o sistemas de cuadrícula flexible para asegurar que sus cambios se vean bien tanto en pantallas de teléfonos pequeños como en pantallas grandes de tabletas o escritorios.
+
+**Accesibilidad**: Asegúrese de que el texto tenga suficiente contraste, que los objetivos táctiles tengan un tamaño adecuado (al menos 48x48 píxeles lógicos) y que se proporcionen etiquetas semánticas para los lectores de pantalla.
+
+
+### Estructura de directorios
+
+{% filetree %}
+- android/ Código específico de la plataforma Android y configuración de compilación
+- assets/ Activos estáticos como imágenes, fuentes e iconos
+- db_schemas/ Definiciones de esquemas de base de datos y archivos de migración
+- installer/ Scripts de instalación y configuración para empaquetar la aplicación
+- integration_test/ Pruebas de integración de extremo a extremo
+- ios/ Código específico de la plataforma iOS y configuración de compilación
+- lib/ Código fuente principal en Dart para la aplicación Flutter
+- linux/ Código específico de la plataforma Linux y configuración de compilación
+- macos/ Código específico de la plataforma macOS y configuración de compilación
+- rust/ Código fuente en Rust para componentes nativos críticos para el rendimiento
+- rust_builder/ Scripts de compilación y configuración para compilar código Rust
+- scripts/ Scripts de utilidad para tareas de desarrollo y automatización
+- snap/ Configuración del paquete Snap para la distribución en Linux
+- test/ Pruebas unitarias y de widgets
+- test_driver/ Pruebas de Flutter driver para pruebas automáticas de interfaz de usuario
+- web/ Código específico de la plataforma web y configuración de compilación
+- windows/ Código específico de la plataforma Windows y configuración de compilación
+{% /filetree %}
+
+
+### Obteniendo ayuda
+
+Si se queda atascado mientras configura el entorno o intenta comprender la arquitectura, ¡no dude en contactarnos! Consulte los [Issues de GitHub de NAHPU](https://github.com/nahpu/nahpu/issues) para discusiones en curso, o abra un nuevo hilo de discusión si tiene una propuesta arquitectónica.

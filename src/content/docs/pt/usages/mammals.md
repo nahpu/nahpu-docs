@@ -1,5 +1,0 @@
----
-title: "Mamíferos"
----
-
-## Medidas

@@ -1,0 +1,136 @@
+---
+title: Sitios
+sidebar:
+  order: 5
+---
+
+## Crear un nuevo sitio
+
+{% steps %}
+1. Navegue a la página de sitios utilizando la barra de navegación inferior.
+
+2. Utilice el botón `+` en la esquina superior derecha para crear un nuevo sitio. 
+    
+    También puede utilizar el icono del menú de tres puntos y tocar en `Crear sitio`.
+
+    {% aside type="tip" %}
+
+    Puede minimizar la escritura de la misma información duplicando el sitio en lugar de crear uno nuevo. Toque/haga clic en el botón del menú de tres puntos. Luego, en `Duplicar sitio`. Esto creará un nuevo sitio utilizando la información del sitio actual, excepto que el `ID del sitio` y las coordenadas estarán vacíos. Luego, complete el `ID del sitio` y agregue las coordenadas.
+
+    {% /aside %}
+
+3. Cree un ID de sitio. 
+
+    Recomendamos crear una convención de ID de sitio para su equipo. Un ejemplo de convención de ID de sitio para el trabajo de campo en mastozoología:
+    
+    - La ciudad, pueblo o aldea se identifica tal cual. Por ejemplo, la ciudad de Bogor será `BOGOR`. 
+    - El sitio del campamento utiliza el formato `{abreviatura de 2 letras de la localidad}-CAMP{número de campamento}`. Por ejemplo, el campamento 1 en el monte Gede-Pangrango es `GP-CAMP1`.
+    - La línea de trampas utiliza el formato `{abreviatura de 2 letras de la localidad}{inicial del líder de la línea}-L{número de línea}`. Por ejemplo, la línea 1 en el monte Gede-Pangrango dirigida por Heru Handika es `GPHH-L1`.
+    - La línea de trampas de caída (pitfall) utiliza el formato `{abreviatura de 2 letras de la localidad}{inicial del líder de la línea}-P{número de línea}`. Por ejemplo, la línea 1 en el monte Gede-Pangrango dirigida por Heru Handika es `GPHH-P1`.
+
+    {% aside type="tip" %}
+
+    Para un proyecto que involucra múltiples dispositivos, recomendamos crear el mismo `siteID` para un sitio idéntico. La [próxima función de fusión de datos](https://github.com/nahpu/nahpu/issues/124) utilizará el `siteID` para identificar y fusionar registros de diferentes dispositivos. Una futura actualización de NAHPU permitirá compartir la información del sitio con diferentes sitios de manera similar a como se comparte la información del proyecto. 
+
+    {% /aside %}
+
+4. Agregue al líder del sitio.
+    
+    Si se trata de un campamento de campo, puede poner el nombre del líder del equipo. Si es una línea de trampas, puede designar a una persona encargada de esa línea de trampas como líder del sitio.
+
+5. Agregue el tipo de sitio.
+
+    El tipo de sitio ayuda a categorizar el sitio según sus características o uso. Actualmente, no hay opción para editar la lista. Una próxima función de NAHPU le permitirá hacerlo.
+
+6. Complete los detalles geográficos.
+
+    Recomendamos seguir la convención de su museo para escribir la localidad precisa y las observaciones.
+
+    {% aside type="tip" title="Escribir observaciones" %}
+
+    Si el sitio es una línea de trampas, es una buena práctica explicar cómo funciona la línea. 
+
+    Por ejemplo:
+
+    ```text
+    La línea de trampas va desde el Refugio I hasta el Refugio IV a lo largo de los senderos entre los dos sitios de campamento.
+    ```
+
+    {% /aside %}
+
+7. Complete la información del hábitat.
+
+    - Tipo: El tipo de hábitat: plantación, selva tropical de tierras bajas, bosque montano alto, etc.
+    - Condición: La condición del hábitat: perturbado, no perturbado, perturbación mínima, etc.
+    - Descripción: Una breve descripción del hábitat. Por ejemplo:
+
+      ```text
+      Dominado por robles. El suelo estaba cubierto principalmente por helechos, jengibres y plántulas de roble.
+
+      ```
+
+{% /steps %}
+
+## Agregar coordenadas
+
+Puede agregar coordenadas manualmente desde su dispositivo GPS o utilizar las coordenadas del dispositivo.
+
+### Obtener coordenadas del dispositivo actual
+
+{% steps %}
+
+1. Toque/haga clic en el botón `punto GPS` junto al botón `Agregar coordenada`.
+
+2. Esto le llevará a la página de agregar coordenada con la mayor parte de la información ya completada.
+
+3. Complete el resto de los campos. 
+    
+    Consulte la sección [agregar coordenadas manualmente](#agregar-coordenadas-manualmente) para obtener más detalles. El nombre de su unidad GPS debe coincidir con el modelo exacto de su dispositivo. Por ejemplo: `iPad Mini 4`.
+
+{% /steps %}
+
+### Agregar coordenadas manualmente
+
+{% steps %}
+
+1. En la página del sitio, en el panel de coordenadas, toque/haga clic en el botón `Agregar coordenada`.
+
+2. Ingrese el nombre de la coordenada.
+
+    Mantenga el nombre corto e informativo. Puede usar el campo `Notas` para agregar información adicional sobre la coordenada. 
+
+    {% aside type="tip" %}
+
+    Recomendamos crear una convención de nombres de coordenadas para su equipo. Ejemplo de convención de coordenadas para mastozoología:
+
+      - `{siteID}S` para una coordenada tomada al inicio de la línea de trampas, como `KMHH-L1S`.
+      - `{siteID}C` para la coordenada tomada en el centro de la línea de trampas.
+      - `{siteID}E` para una coordenada tomada al final de la línea de trampas, como `KMHH-L1E`.
+      - Si la línea de trampas se extiende más allá del primer punto de inicio, la coordenada en el nuevo inicio se sufija con `{número}`. Por ejemplo, `KMHH-L1S2` para la primera extensión, `KMHH-L1S3` para la siguiente, y así sucesivamente hasta que la línea se mueva por completo.
+      - Si la línea de trampas se extiende más allá del primer punto final, la coordenada en el nuevo final se sufija con `{número}`. Por ejemplo, `KMHH-L1E2` para la primera extensión, y continúe de manera similar a la extensión de la línea de inicio.
+
+    {% /aside %}
+
+3. Ingrese los valores de latitud y longitud.
+
+    Actualmente, NAHPU solo admite coordenadas decimales.
+
+4. Agregue la elevación en metros.
+
+5. Seleccione el datum.
+
+    El datum predeterminado es WGS84. Verifique la configuración de su GPS para conocer el datum exacto de sus coordenadas.
+
+6. Ingrese los valores de incertidumbre en metros.
+
+    Observe la incertidumbre de su GPS. Algunos GPS antiguos pueden no registrar el número. Es una buena práctica tomar nota de la incertidumbre si no lleva el dispositivo NAHPU con usted a la ubicación de la coordenada.
+
+7. Ingrese el nombre del GPS que utiliza.
+
+    Ejemplo de nombre de dispositivo: `Garmin 62sc`
+
+8. Agregue notas.
+
+    Agregue información adicional si la hay.
+
+{% /steps %}

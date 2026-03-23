@@ -1,0 +1,67 @@
+---
+title: Registri Takson
+sidebar:
+  order: 4
+---
+
+Anda dapat mendaftarkan takson baru secara manual atau dengan mengimpor berkas.
+
+## Mendaftarkan takson baru
+
+### Bidang wajib
+
+- **Kelas**: Kelas takson.
+- **Ordo**: Ordo takson.
+- **Famili**: Famili takson.
+- **Genus**: Genus takson.
+- **Epiteta spesifik**: Epiteta spesifik takson.
+
+### Bidang opsional
+
+- **Penulis**: Penulis takson dan tahun publikasi.
+- **Nama umum**: Nama umum takson.
+- **Kategori Daftar Merah IUCN**: Status Daftar Merah IUCN takson.
+- **Status CITES**: Status CITES takson.
+- **Status konservasi negara**: Status konservasi takson di negara tertentu.
+- **Urutan penyortiran**: Urutan sewenang-wenang untuk menyortir takson. Ini sebagian besar digunakan saat Anda mengekspor catatan. Misalnya, Anda dapat menggunakan urutan filogenetik.
+- **Catatan**: Informasi tambahan apa pun tentang takson.
+
+### Pendaftaran manual
+
+1. Buka dasbor proyek.
+2. Pada panel takson, klik tombol `+ Tambah takson`.
+3. Isi informasi takson.
+
+### Impor dari berkas
+
+1. Siapkan berkas impor Anda. Format yang disukai adalah `.xlsx`, `.csv`, dan `.tsv`.
+2. Buka dasbor proyek.
+3. Pada panel takson, klik tombol `Impor dari berkas`.
+4. Gunakan tombol `Pilih berkas` untuk menambahkan berkas. Aplikasi akan secara otomatis memetakan kolom ke bidang yang benar.
+
+Perilaku pembatas (delimiter):
+
+- `.csv` menggunakan koma.
+- `.tsv` menggunakan tab.
+- Berkas Excel diurai sebagai lembar sebar (spreadsheet).
+- Untuk jenis berkas lainnya, NAHPU melakukan upaya terbaik untuk mengurai.
+- Jika ekstensi berkas tidak dikenali, deteksi otomatis mencoba Excel, koma, tab, dan titik koma terlebih dahulu.
+- Jika deteksi otomatis masih gagal, masukkan pembatas mentah khusus di pengabaian pengurai tingkat lanjut (advanced parser override).
+
+Kolom templat impor yang disarankan:
+
+- `class`, `order`, `family`, `genus`, `epithet`, `scientific name`, `common name`
+- Bidang impor yang wajib adalah `class`, `order`, `family`, `genus`, dan `epithet`.
+- Pencocokan header bersifat fleksibel, sehingga alias seperti `taxonClass`, `taxonOrder`, `taxonFamily`, dan `specificEpithet` juga diterima.
+
+{% aside type="note" %}
+
+Dukungan terbaik adalah `.xlsx`. Format Excel yang lebih lama/lainnya mungkin gagal. Jika perlu, simpan ulang sebagai `.xlsx`, `.csv`, atau `.tsv`.
+
+{% /aside %}
+
+## Mengedit takson
+
+1. Buka dasbor proyek.
+2. Pada panel takson di dalam takson terdaftar, klik tombol `Lihat semua`.
+3. Klik pada ikon pensil untuk mengedit takson.

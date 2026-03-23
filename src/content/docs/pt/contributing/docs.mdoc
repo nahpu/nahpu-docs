@@ -1,0 +1,256 @@
+---
+title: "Documentação"
+sidebar:
+  order: 3
+---
+
+Agradecemos o seu interesse em melhorar nossa documentação. Seja você um membro da equipe ou um colaborador externo, existem várias maneiras de ajudar:
+
+- **Atualizar documentação existente**: Corrigir erros ou adicionar novas informações às páginas atuais
+- **Criar novo conteúdo**: Escrever novas páginas ou seções sobre tópicos que ainda não cobrimos
+- **Traduzir documentação**: Ajude-nos a alcançar mais pessoas traduzindo para outros idiomas (em breve)
+
+Escolha o método de contribuição que melhor funciona para você abaixo.
+
+## Atualizando a Documentação Existente
+
+### Membros da Equipe
+
+No final de cada página do site, você encontrará um link `Edit page`. Clique neste link para abrir a página no GitHub. Aqui estão os passos para fazer isso:
+
+{% steps %}
+
+1. Clique no link `Edit page` no final da página.
+
+2. Faça suas alterações na documentação.
+
+3. Comite as alterações.
+
+{% /steps %}
+
+{% aside type="note" title="Tenha em mente" %}
+Suas alterações não entrarão no ar imediatamente. Um mantenedor irá revisá-las e mesclá-las antes que o site seja implantado.
+
+{% /aside %}
+
+### Colaboradores Externos
+
+Se você não é um membro da equipe, ainda pode contribuir para o projeto. Veja como:
+
+1. Faça um fork do repositório de documentação.
+
+   ```bash
+   https://github.com/nahpu/nahpu-docs.git
+
+   ```
+
+   Se você estiver usando o [GitHub CLI](https://cli.github.com/).
+
+   ```bash
+   gh repo clone nahpu/nahpu-docs
+   
+   ```
+
+2. Faça as alterações na documentação.
+3. Envie um pull request.
+
+ {% aside type="note" title="Você sabia?" icon="star" %}
+
+O NAHPU sempre dá as boas-vindas a novos membros para contribuir regularmente com o projeto. Somos uma mistura de colaboradores técnicos e não técnicos. Por favor, entre em contato com um [membro da equipe NAHPU](/pt/teams) para mais detalhes.
+
+{% /aside %}
+
+## Criar Novo Conteúdo
+
+Para criar uma ou duas páginas, você pode adicionar um novo arquivo no [repositório do GitHub](https://github.com/nahpu/nahpu-docs). Os arquivos de documentação estão dentro de `src/content/docs/[idioma]`. Solicitamos que adicione o conteúdo em inglês primeiro e depois escreva a tradução para os demais idiomas. Preferimos a documentação no formato Markdoc `.mdoc`. No entanto, você pode começar com um Markdown simples e deixar o mantenedor da documentação fazer o resto.
+
+Para um cenário mais complexo com páginas e roteamento complexos, veja a seção [Deep Dive](./deep_dive) para mais detalhes.
+
+## Adicionando Nova Tradução de Idioma
+
+Estamos sempre em busca de falantes de idiomas que não suportamos atualmente. Para facilitar a adição de novos idiomas, usamos IA para auxiliar nas traduções. Se estiver interessado em contribuir, entre em contato com um de nossos [membros da equipe](/pt/teams). Nosso fluxo de trabalho para adicionar um novo idioma envolve:
+
+1. Criar um novo diretório de idioma na pasta `src/content/docs`. O nome da pasta segue o código do idioma (ex: `en`, `es`, `fr`).
+2. Usar um modelo de linguagem de grande porte para traduzir a documentação em inglês.
+3. Adicionar as traduções da barra lateral no arquivo `astro.config.mjs`.
+4. Revisar e revisar a tradução da IA para precisão por um membro da equipe.
+
+## Deep Dive
+
+Esta seção explica o método avançado para desenvolver a documentação do NAHPU.
+
+### Tecnologias
+
+Abaixo está uma lista das tecnologias usadas na documentação do NAHPU:
+
+- [Astro](https://astro.build/) - Gerador de site estático
+- [Starlight](https://starlight.astro.build/) - Tema de documentação para Astro
+- [Markdoc](https://markdoc.dev/) - Formato de documentação
+- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utilitário
+
+### Desenvolvimento Local
+
+#### Pré-requisitos
+
+Você precisará instalar o [Bun](https://bun.com/) e um editor de código (ex: [VS Code](https://code.visualstudio.com/)) em sua máquina. Abaixo está o guia passo a passo:
+
+{% steps %}
+
+1. Instale o [bun](https://bun.com/docs/installation).
+
+    ```bash
+    curl -fsSL https://bun.com/install | bash
+    ```
+
+    Siga a [documentação do bun](https://bun.com/docs/installation) para mais detalhes.
+
+2. Verifique a instalação do bun.
+
+    ```bash
+    bun --version
+    ```
+
+    Se sua instalação foi bem-sucedida, você deverá ver o número da versão.
+
+3. Clone o repositório de documentação.
+
+    ```bash
+    git clone https://github.com/nahpu/nahpu-docs.git
+    ```
+
+4. Acesse o repositório.
+
+    ```bash
+    cd nahpu-docs
+    ```
+
+    Se você estiver usando o VS Code, pode abrir o repositório diretamente no editor.
+
+    ```bash
+    code nahpu-docs
+    ```
+
+5. Instale todas as dependências:
+
+    ```bash
+    bun install
+    ```
+
+6. Faça as alterações.
+
+    A documentação está na pasta `src\content\docs\[idioma]`. Outras páginas estão em `src\pages`.
+
+{% /steps %}
+
+### Estrutura de diretórios
+
+Aqui está a estrutura de diretórios e uma breve descrição de cada arquivo/diretório.
+
+{% filetree %}
+- astro.config.mjs Configuração do site Astro
+- markdoc.config.mjs Configuração da documentação Markdoc
+- package.json Dependências e scripts do projeto
+- README.md Visão geral e instruções para o projeto
+- tsconfig.json Configuração do TypeScript
+- public/ Ativos estáticos servidos diretamente
+- src/ Diretório principal do código fonte
+    - content.config.ts Configuração de gerenciamento de conteúdo
+    - assets/ Arquivos de mídia como imagens
+    - components/ Componentes de UI reutilizáveis
+    - content/ Arquivos de documentação organizados por idioma
+    - layouts/ Componentes de layout para modelos de página reutilizáveis
+    - pages/ Páginas principais do site
+  - styles/ Folhas de estilo CSS globais
+{% /filetree %}
+
+Para mais detalhes sobre a estrutura de diretórios, siga as [diretrizes do Astro](https://docs.astro.build/en/basics/project-structure/) e a [documentação do Starlight](https://starlight.astro.build/).
+---
+
+### Convenção de código
+
+1. Se o mesmo trecho de código aparecer em vários lugares, use um componente compartilhado para evitar duplicação e garantir consistência. Coloque o componente compartilhado no diretório `src/components` com o nome do arquivo seguindo a convenção PascalCase, ex: `SharedComponent.astro`.
+
+2. Você também pode usar o Layout para um modelo de UI reutilizável. O nome do arquivo segue uma convenção semelhante à dos componentes.
+
+3. Os layouts devem seguir a mesma convenção de nomenclatura dos componentes e ser colocados no diretório `src/layouts`.
+
+4. Evite usar CSS puro para estilização sempre que possível. Use [tailwindcss](https://tailwindcss.com/) em vez disso. Usamos o Tailwind v4.
+
+5. Evite escrever muitas classes no elemento. Em vez disso, use a variável constante `cntl` para armazenar as classes. Veja o arquivo `pages/index.astro` para um exemplo.
+
+{% aside type="danger" %}
+
+O uso do Tailwind CSS fora do diretório `docs` requer a importação dos estilos globais `import "../styles/global.css";`. Veja `src/pages/index.astro` para um exemplo.
+
+{% /aside %}
+
+### Adicionando Novos Componentes
+
+{% steps %}
+
+1. Crie um novo componente em `src/components/`. Use PascalCase para o nome do arquivo, ex: `MyComponent.astro`.
+
+   ```astro
+   ---
+   // src/components/MyComponent.astro
+   ---
+   <div>
+     Conteúdo do seu componente aqui
+   </div>
+   ```
+
+2. Registre-o como uma tag Markdoc em `markdoc.config.mjs`.
+
+   ```js
+   import { defineMarkdocConfig, component } from "@astrojs/markdoc/config";
+   import starlightMarkdoc from "@astrojs/starlight-markdoc";
+
+   export default defineMarkdocConfig({
+     extends: [starlightMarkdoc()],
+     tags: {
+       mycomponent: {
+         render: component("./src/components/MyComponent.astro"),
+         selfClosing: true,
+       },
+     },
+   });
+   ```
+
+3. Use-o em qualquer arquivo `.mdoc`.
+
+    {% code
+    code="{% mycomponent / %}"
+    lang="text"
+    /%}
+
+{% /steps %}
+
+{% aside type="note" title="Tags de fechamento automático vs. blocos" %}
+Use `selfClosing: true` para componentes que não envolvem conteúdo. Para componentes que envolvem conteúdo, omita-o e use tags de abertura e fechamento:
+
+{% code
+    code="{% mycomponent / %}"
+    lang="text"
+    /%}
+
+{% /aside %}
+
+### Executando o site localmente
+
+{% steps %}
+
+1. Execute o astro em modo dev
+
+    ```bash
+    bun run dev
+    ```
+
+2. Abra seu navegador e navegue até `http://localhost:4321/` para visualizar o site de documentação.
+
+    {% aside type="tip" %}
+
+    No VS Code, você pode usar CTRL + clique no link mostrado no terminal.
+
+    {% /aside %}
+
+{% /steps %}

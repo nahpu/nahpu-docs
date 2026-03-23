@@ -1,0 +1,135 @@
+---
+title: Localidades
+sidebar:
+  order: 5
+---
+
+## Criando uma nova Localidade
+
+{% steps %}
+1. Navegue até a página de localidades usando a barra de navegação inferior.
+
+2. Use o botão `+` no canto superior direito para criar uma nova localidade.
+
+    Você também pode usar o ícone do menu de três pontos e tocar em `Criar localidade`.
+
+    {% aside type="tip" %}
+
+    Você pode minimizar a digitação das mesmas informações duplicando a localidade em vez de criar uma nova. Toque/clique no botão de menu de três pontos. Em seguida, `Duplicar localidade`. Isso criará uma nova localidade usando as informações da localidade atual, exceto que o `ID da Localidade` e as coordenadas estarão vazios. Em seguida, preencha o `ID da Localidade` e adicione as coordenadas.
+
+    {% /aside %}
+
+3. Crie um ID de localidade.
+
+    Recomendamos criar uma convenção de ID de localidade para sua equipe. Um exemplo de convenção de ID de localidade para trabalho de campo em mastozoologia:
+
+    - Cidade, vila ou povoado é identificado como é. Por exemplo, a cidade de Bogor será `BOGOR`.
+    - O local do acampamento usa o formato `{abreviação da localidade com 2 letras}-CAMP{número do acampamento}`. Por exemplo, o acampamento 1 no Mt. Gede-Pangrango é `GP-CAMP1`.
+    - A linha de armadilhas usa o formato `{abreviação da localidade com 2 letras}{inicial do líder da linha de armadilhas}-L{número da linha}`. Por exemplo, a linha 1 no Mt. Gede-Pangrango liderada por Heru Handika é `GPHH-L1`.
+    - A linha de pitfall usa o formato `{abreviação da localidade com 2 letras}{inicial do líder da linha de pitfall}-P{número da linha}`. Por exemplo, a linha 1 no Mt. Gede-Pangrango liderada por Heru Handika é `GPHH-P1`.
+
+    {% aside type="tip" %}
+
+    Para um projeto envolvendo vários dispositivos, recomendamos criar o mesmo `siteID` para uma localidade idêntica. O [próximo recurso de mesclagem de dados](https://github.com/nahpu/nahpu/issues/124) usará o `siteID` para identificar e mesclar registros de diferentes dispositivos. Atualizações futuras do NAHPU permitirão compartilhar informações de localidade para diferentes localidades de maneira semelhante ao compartilhamento de informações de projeto.
+
+    {% /aside %}
+
+4. Adicione o líder da Localidade
+
+    Se este for um acampamento de campo, você pode colocar o nome do líder da equipe. Se for uma linha de armadilhas, você pode designar uma pessoa responsável por essa linha como o líder da localidade.
+
+5. Adicione o tipo de localidade
+
+    O tipo de localidade ajuda a categorizar a localidade com base em suas características ou uso. Atualmente, não há opção para editar a lista. Um recurso futuro do NAHPU permitirá que você faça isso.
+
+6. Preencha os detalhes geográficos
+
+    Recomendamos seguir a convenção do seu museu para escrever a localidade precisa e as observações.
+
+    {% aside type="tip" title="Escrevendo observações" %}
+
+    Se a localidade for uma linha de armadilhas, é uma boa prática explicar como a linha é operada.
+
+    Por exemplo:
+
+    ```text
+    A linha de armadilhas vai do Abrigo I ao Abrigo IV ao longo das trilhas entre os dois locais de acampamento.
+    ```
+
+    {% /aside %}
+
+7. Preencha as informações do habitat
+
+    - Tipo: O tipo de habitat: plantação, floresta tropical de terras baixas, floresta montana alta, etc.
+    - Condição: A condição do habitat: perturbado, não perturbado, perturbação mínima, etc.
+    - Descrição: Uma breve descrição do habitat. Por exemplo:
+
+      ```text
+      Dominado por carvalhos. O solo estava coberto principalmente por samambaias, gengibres e mudas de carvalho.
+      ```
+
+{% /steps %}
+
+## Adicionando coordenadas
+
+Você pode adicionar coordenadas manualmente a partir do seu dispositivo GPS ou usar a coordenada do dispositivo.
+
+### Obter coordenadas de um dispositivo atual
+
+{% steps %}
+
+1. Toque/clique no botão `Ponto GPS` ao lado do botão `Adicionar coordenada`.
+
+2. Ele o levará para a página de adição de coordenada com a maioria das informações já preenchidas.
+
+3. Preencha o restante dos campos.
+
+    Veja a seção [adicionando coordenadas manualmente](#adicionando-coordenadas-manualmente) para detalhes. O nome da sua unidade GPS deve corresponder ao modelo exato do seu dispositivo. Por exemplo: `iPad Mini 4`.
+
+{% /steps %}
+
+### Adicionando coordenadas manualmente
+
+{% steps %}
+
+1. Na página da localidade, no painel de coordenadas, toque/clique no botão `Adicionar coordenada`.
+
+2. Insira o nome da coordenada.
+
+    Mantenha o nome curto e informativo. Você pode usar o campo `Notas` para adicionar informações adicionais sobre a coordenada.
+
+    {% aside type="tip" %}
+
+    Recomendamos criar uma convenção de nomes de coordenadas para sua equipe. Exemplo de convenção de coordenadas para mastozoologia:
+
+      - `{siteID}S` para uma coordenada tirada no início da linha de armadilhas, como `KMHH-L1S`.
+      - `{siteID}C` para a coordenada tirada no centro da linha de armadilhas.
+      - `{siteID}E` para uma coordenada tirada no final da linha de armadilhas, como `KMHH-L1E`.
+      - Se a linha de armadilhas se estender além do primeiro ponto inicial, a coordenada no novo início é sufixada com `{número}`. Por exemplo, `KMHH-L1S2` para a primeira extensão, `KMHH-L1S3` para a próxima extensão, e assim por diante até que a linha seja totalmente movida.
+      - Se a linha de armadilhas se estender além do primeiro ponto final, a coordenada no novo final é sufixada com `{número}`. Por exemplo, `KMHH-L1E2` para a primeira extensão, e continue de maneira semelhante à extensão da linha inicial.
+
+    {% /aside %}
+
+3. Insira os valores de latitude e longitude.
+
+    Atualmente, o NAHPU suporta apenas coordenadas decimais.
+
+4. Adicione a elevação em metros.
+
+5. Selecione o datum.
+
+    O datum padrão é WGS84. Verifique as configurações do seu GPS para o datum exato das suas coordenadas.
+
+6. Insira os valores de incerteza em metros.
+
+    Observe a incerteza do seu GPS. Alguns GPS antigos podem não registrar o número. É uma boa prática anotar a incerteza se você não levar o dispositivo NAHPU com você até o local da coordenada.
+
+7. Insira o nome do GPS que você usa.
+
+    Exemplo de nome de dispositivo: `Garmin 62sc`
+
+8. Adicione notas.
+
+    Adicione informações adicionais, se houver.
+
+{% /steps %}

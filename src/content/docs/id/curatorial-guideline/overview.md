@@ -3,6 +3,6 @@ sidebar_position: 1
 title: "Gambaran Umum"
 ---
 
-Sistem NAHPU dirancang untuk menyederhanakan proses kurasi dan pengelolaan koleksi sejarah alam dari koleksi lapangan hingga kurasi museum. Panduan ini akan memberikan beberapa pendekatan untuk proses ini. Pada akhirnya, akan menjadi keputusan institusi untuk memutuskan cara terbaik mengimplementasikan sistem untuk memenuhi kebutuhan mereka.
+Sistem NAHPU dirancang untuk menyederhanakan proses kurasi dan manajemen koleksi sejarah alam, mulai dari koleksi di lapangan hingga kurasi di museum. Panduan ini akan memberikan beberapa pendekatan untuk proses tersebut. Pada akhirnya, keputusan untuk mengimplementasikan sistem yang terbaik guna memenuhi kebutuhan institusi akan berada di tangan institusi itu sendiri.
 
-Detail lebih lanjut segera...
+Detail lebih lanjut segera hadir...

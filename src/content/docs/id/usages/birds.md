@@ -1,5 +1,0 @@
----
-title: "Burung"
----
-
-## Pengukuran

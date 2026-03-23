@@ -1,0 +1,136 @@
+---
+title: Lokasi
+sidebar:
+  order: 5
+---
+
+## Membuat Lokasi Baru
+
+{% steps %}
+1. Navigasi ke halaman lokasi menggunakan bilah navigasi bawah.
+
+2. Gunakan tombol `+` di pojok kanan atas untuk membuat lokasi baru. 
+    
+    Anda juga dapat menggunakan ikon menu tiga titik dan ketuk pada `Buat lokasi`.
+
+    {% aside type="tip" %}
+
+    Anda dapat meminimalkan pengetikan informasi yang sama dengan menduplikasi lokasi alih-alih membuat yang baru. Ketuk/klik pada tombol menu tiga titik. Kemudian, `Duplikat lokasi`. Ini akan membuat lokasi baru menggunakan informasi dari lokasi saat ini, kecuali `ID Lokasi` dan koordinat yang kosong. Kemudian, isi `ID Lokasi` dan tambahkan koordinat.
+
+    {% /aside %}
+
+3. Buat ID lokasi. 
+
+    Kami merekomendasikan pembuatan konvensi ID lokasi untuk tim Anda. Contoh konvensi ID lokasi untuk kerja lapangan mamalogi:
+    
+    - Kota, kota kecil, atau desa diidentifikasi apa adanya. Misalnya, kota Bogor akan menjadi `BOGOR`. 
+    - Lokasi perkemahan menggunakan format `{singkatan lokalitas 2 huruf}-CAMP{nomor perkemahan}`. Misalnya, perkemahan 1 di Gn. Gede-Pangrango adalah `GP-CAMP1`.
+    - Jalur jebakan (trap line) menggunakan format `{singkatan lokalitas 2 huruf}{inisial pemimpin jalur}-L{nomor jalur}`. Misalnya, jalur 1 di Gn. Gede-Pangrango yang dipimpin oleh Heru Handika adalah `GPHH-L1`.
+    - Jalur jebakan jatuh (pitfall line) menggunakan format `{singkatan lokalitas 2 huruf}{inisial pemimpin jalur jebakan jatuh}-P{nomor jalur}`. Misalnya, jalur 1 di Gn. Gede-Pangrango yang dipimpin oleh Heru Handika adalah `GPHH-P1`.
+
+    {% aside type="tip" %}
+
+    Untuk proyek yang melibatkan banyak perangkat, kami merekomendasikan pembuatan `siteID` yang sama untuk lokasi yang identik. [Fitur penggabungan data yang akan datang](https://github.com/nahpu/nahpu/issues/124) akan menggunakan `siteID` untuk mengidentifikasi dan menggabungkan catatan dari perangkat yang berbeda. Pembaruan NAHPU di masa mendatang akan memungkinkan untuk berbagi info lokasi ke lokasi yang berbeda dengan cara yang serupa seperti berbagi informasi proyek. 
+
+    {% /aside %}
+
+4. Tambahkan Pemimpin Lokasi
+    
+    Jika ini adalah kamp lapangan, Anda dapat memasukkan nama pemimpin tim. Jika ini adalah jalur jebakan, Anda dapat menunjuk seseorang yang bertanggung jawab atas jalur jebakan tersebut sebagai pemimpin lokasi.
+
+5. Tambahkan tipe lokasi
+
+    Tipe lokasi membantu mengategorikan lokasi berdasarkan karakteristik atau kegunaannya. Saat ini, tidak ada opsi untuk mengedit daftar tersebut. Fitur NAHPU mendatang akan memungkinkan Anda melakukannya.
+
+6. Isi detail geografi
+
+    Kami merekomendasikan untuk mengikuti konvensi museum Anda untuk menulis lokalitas dan keterangan yang tepat.
+
+    {% aside type="tip" title="Menulis keterangan" %}
+
+    Jika lokasi tersebut adalah jalur jebakan, praktik yang baik adalah menjelaskan bagaimana jalur jebakan tersebut dijalankan. 
+
+    Contoh:
+
+    ```text
+    Jalur jebakan membentang dari Shelter I ke Shelter IV di sepanjang jalan setapak di antara dua lokasi perkemahan.
+    ```
+
+    {% /aside %}
+
+7. Isi informasi habitat
+
+    - Tipe: Jenis habitat: perkebunan, hutan hujan dataran rendah, hutan pegunungan atas, dll.
+    - Kondisi: Kondisi habitat: terganggu, tidak terganggu, gangguan minimal, dll.
+    - Deskripsi: Deskripsi singkat tentang habitat. Contoh:
+
+      ```text
+      Didominasi oleh pohon ek. Tanah sebagian besar tertutup oleh pakis, jahe-jahean, dan bibit pohon ek.
+
+      ```
+
+{% /steps %}
+
+## Menambahkan koordinat
+
+Anda dapat menambahkan koordinat secara manual dari perangkat GPS Anda atau menggunakan koordinat perangkat.
+
+### Mendapatkan koordinat dari perangkat saat ini
+
+{% steps %}
+
+1. Ketuk/klik tombol `Titik GPS` di sebelah tombol `Tambah koordinat`.
+
+2. Ini akan membawa Anda ke halaman tambah koordinat dengan sebagian besar informasi sudah terisi.
+
+3. Isi sisa bidang lainnya. 
+    
+    Lihat bagian [menambahkan koordinat secara manual](#menambahkan-koordinat-secara-manual) untuk detailnya. Nama unit GPS Anda harus sesuai dengan model persis perangkat Anda. Contoh: `iPad Mini 4`.
+
+{% /steps %}
+
+### Menambahkan koordinat secara manual
+
+{% steps %}
+
+1. Pada halaman lokasi di panel koordinat, ketuk/klik pada tombol `Tambah koordinat`.
+
+2. Masukkan nama koordinat.
+
+    Buat nama yang singkat dan informatif. Anda dapat menggunakan bidang `Catatan` untuk menambahkan informasi tambahan tentang koordinat tersebut. 
+
+    {% aside type="tip" %}
+
+    Kami merekomendasikan pembuatan konvensi nama koordinat untuk tim Anda. Contoh konvensi koordinat untuk mamalogi:
+
+      - `{siteID}S` untuk koordinat yang diambil di awal jalur jebakan, seperti `KMHH-L1S`.
+      - `{siteID}C` untuk koordinat yang diambil di tengah jalur jebakan.
+      - `{siteID}E` untuk koordinat yang diambil di akhir jalur jebakan, seperti `KMHH-L1E`.
+      - Jika jalur jebakan melampaui titik awal pertama, koordinat pada awal baru diberi akhiran `{nomor}`. Contoh, `KMHH-L1S2` untuk ekstensi pertama, `KMHH-L1S3` untuk ekstensi berikutnya, dan seterusnya hingga jalur jebakan sepenuhnya dipindahkan.
+      - Jika jalur jebakan melampaui titik akhir pertama, koordinat pada akhir baru diberi akhiran `{nomor}`. Contoh, `KMHH-L1E2` untuk ekstensi pertama, dan dilanjutkan dengan cara yang sama seperti ekstensi garis awal.
+
+    {% /aside %}
+
+3. Masukkan nilai lintang (latitude) dan bujur (longitude).
+
+    Saat ini, NAHPU hanya mendukung koordinat desimal.
+
+4. Tambahkan ketinggian (elevation) dalam meter.
+
+5. Pilih datum.
+
+    Datum default adalah WGS84. Periksa pengaturan GPS Anda untuk datum yang tepat dari koordinat Anda.
+
+6. Masukkan nilai ketidakpastian (uncertainty) dalam meter.
+
+    Perhatikan ketidakpastian GPS Anda. Beberapa GPS lama mungkin tidak mencatat nomor tersebut. Praktik yang baik adalah mencatat ketidakpastian jika Anda tidak membawa perangkat NAHPU ke lokasi koordinat.
+
+7. Masukkan nama GPS yang Anda gunakan.
+
+    Contoh nama perangkat: `Garmin 62sc`
+
+8. Tambahkan catatan.
+
+    Tambahkan informasi tambahan jika ada.
+
+{% /steps %}
