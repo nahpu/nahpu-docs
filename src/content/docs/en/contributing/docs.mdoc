@@ -24,6 +24,11 @@ At the bottom of each page in the website, you will find an `Edit page` link. Cl
 
 2. Make your changes to the documentation.
 
+    We use [Markdoc](https://markdoc.dev/) format for our documentation. This format is similar to markdown but with additional features for documentation. It is designed to be easy to write for non-technical contributors.
+    {% aside type="caution" %}
+    Be careful not to break the Markdoc syntax (marked with `{% %}`). These are Starlight components that style the documentation. They use the format `{% component %}` with closing tags marked as `{% /component %}`. This section uses the `steps` component to render numbered instructions. Learn more [below](#writing-with-starlight-components).
+    {% /aside %}
+
 3. Commit the changes.
 
 {% /steps %}
@@ -82,12 +87,13 @@ This section explains the advance method to develop the NAHPU documentation.
 
 ### Technologies
 
-Below is a list of the technologies used in the NAHPU documentation:
+Technologies we use to develop the NAHPU documentation:
 
 - [Astro](https://astro.build/) - Static site generator
 - [Starlight](https://starlight.astro.build/) - Documentation theme for Astro
 - [Markdoc](https://markdoc.dev/) - Documentation format
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Bun](https://bun.com/) - JavaScript runtime/package manager for development
 
 ### Local development
 
@@ -186,6 +192,46 @@ For more details, about the directory structure, follow [Astro guidelines](https
 Tailwind CSS usage outside the `docs` directory requires importing the global styles `import "../styles/global.css";`. See `src/pages/index.astro` for an example.
 
 {% /aside %}
+
+## Writing with Starlight Components
+
+When writing documentation, keep the following in mind:
+
+- Use Starlight components for repeated documentation patterns.
+- Use the `code` component whenever you need to show Markdoc component syntax as text.
+- Keep examples short and easy to copy.
+- Prefer examples that match the NAHPU documentation workflow.
+
+### Examples of using Starlight components
+
+You can include a tip box in your documentation using the `aside` component:
+
+{% code
+code="{% aside type='tip' %}\nThis is a tip!\n{% /aside %}"
+lang="text"
+/%}
+
+It will render as:
+
+{% aside type="tip" %}
+This is a tip!
+{% /aside %}
+
+For showing numbered steps, you can use the `steps` component:
+
+{% code
+code="{% steps %}\n1. Step one\n2. Step two\n{% /steps %}"
+lang="text"
+/%}
+
+It will render as:
+
+{% steps %}
+1. Step one
+2. Step two
+{% /steps %}
+
+You can find the list of Starlight components in the [Starlight documentation](https://starlight.astro.build/components/using-components/).
 
 ### Adding New Components
 
