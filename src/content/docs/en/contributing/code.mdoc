@@ -76,29 +76,6 @@ To prepare user machine ready for NAHPU development:
 
 {% /steps %}
 
-### Troubleshooting
-
-Here are some common issues and their solutions:
-
-#### `flutter_rust_bridge_codegen` not found
-- **Cause:** `flutter_rust_bridge_codegen` is not in your PATH.
-- **Solution:** Make sure you have installed it with `cargo install flutter_rust_bridge_codegen`
-  and that the cargo bin directory is in your PATH.
-
-#### Error on macOS: `flutter_rust_bridge_codegen` fails with "Please supply one or more path/to/llvm..."
-- **Cause:** The code generator cannot find your LLVM installation.
-- **Solution:** Install LLVM with Homebrew (`brew install llvm`).
-
-#### Error on Windows: fails with "nudget" or linker errors
-- **Cause:** The MSVC build tools or Windows SDK are missing or not properly configured,
-  causing the Rust toolchain to fail during linking.
-- **Solution:** Install the [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
-  and ensure the **Desktop development with C++** workload is selected. Then set the
-  Rust toolchain to MSVC:
-  ```bash
-  rustup default stable-x86_64-pc-windows-msvc
-
-
 ## Deep Dive
 
 ### Code Architecture
@@ -144,6 +121,79 @@ NAHPU uses the Material Design 3 system as a foundation for its visual identity.
 - web/ Web platform-specific code and build configuration
 - windows/ Windows platform-specific code and build configuration
 {% /filetree %}
+
+### Troubleshooting
+
+Here are some common issues and their solutions:
+
+#### `flutter_rust_bridge_codegen` not found
+- **Cause:** `flutter_rust_bridge_codegen` is not in your PATH.
+- **Solution:** Make sure you have installed it with `cargo install flutter_rust_bridge_codegen`
+  and that the cargo bin directory is in your PATH.
+
+#### Error on macOS: `flutter_rust_bridge_codegen` fails with "Please supply one or more path/to/llvm..."
+- **Cause:** The code generator cannot find your LLVM installation.
+- **Solution:** Install LLVM with Homebrew (`brew install llvm`).
+
+#### Error on Windows: fails with "nudget" or linker errors
+- **Cause:** The MSVC build tools or Windows SDK are missing or not properly configured,
+  causing the Rust toolchain to fail during linking.
+- **Solution:** Install the [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+  and ensure the **Desktop development with C++** workload is selected. Then set the
+  Rust toolchain to MSVC:
+  ```bash
+  rustup default stable-x86_64-pc-windows-msvc
+
+#### App stuck on the home screen with a blank page or spinning indicator after schema changes
+- **Cause:** Schema changes were made without bumping the database version or creating a new migration file. Usually happens before the schema version is finalized.
+- **Solution:** Delete the existing database `nahpu.db` from your device or emulator to reset the schema. For production releases, make sure to create proper migration files and bump the version number in `db_schemas/schema_version.txt`.
+
+    {% tabs %}
+    {% tabitem label="macOS" %}
+    ```bash
+    # Find the database file
+    find ~/Library/Containers -name "nahpu.db" 2>/dev/null
+
+    # Delete the database file
+    rm /path/to/nahpu.db
+    ```
+    {% /tabitem %}
+    {% tabitem label="Linux" %}
+    ```bash
+    # Find the database file
+    find ~/.local/share -name "nahpu.db" 2>/dev/null
+
+    # Delete the database file
+    rm /path/to/nahpu.db
+    ```
+    {% /tabitem %}
+    {% tabitem label="Windows" %}
+    ```powershell
+    # Find the database file
+    Get-ChildItem -Recurse -Path $env:APPDATA -Filter "nahpu.db" 2>$null
+
+    # Delete the database file
+    Remove-Item "$env:APPDATA\nahpu.db"
+    ```
+    {% /tabitem %}
+    
+    {% tabitem label="Android Emulator" %}
+    ```bash
+    adb shell
+    cd /data/data/org.nahpu.app/databases
+    rm nahpu.db
+    ```
+
+    {% /tabitem %}
+    {% tabitem label="iOS Simulator" %}
+     ```bash
+    xcrun simctl spawn booted rm /data/Containers/Data/Application/*/Library/Application\ Support/nahpu.db
+
+    ```
+    {% /tabitem %}
+    
+    {% /tabs %}
+
 
 
 ### Getting Help
