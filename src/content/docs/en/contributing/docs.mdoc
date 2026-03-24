@@ -6,9 +6,9 @@ sidebar:
 
 We appreciate your interest in improving NAHPU documentation. Several ways you can help:
 
-- **Update existing docs**: Fix errors or add new information to current pages
-- **Create new content**: Write new pages or sections on topics we haven't covered yet
-- **Translate docs**: Help us reach more people by translating into other languages (coming soon)
+- [**Update existing docs**](#update-existing-docs): Fix errors or add new information to current pages
+- [**Create new content**](#create-new-content): Write new pages or sections on topics we haven't covered yet
+- [**Translate docs**](#adding-a-new-language-translation): Help us reach more people by translating into other languages (coming soon)
 
 ## Updating Existing Docs
 
@@ -20,9 +20,7 @@ At the bottom of each page on the website, you will find an `Edit page` link. Cl
 
 1. Check if you have been added as a collaborator.
 
-   Go to [GitHub repository](https://github.com/nahpu/nahpu-docs) and navigate
-   to **Settings → Collaborators**. If you do not see your username listed,
-   reach out to a [NAHPU team member](/teams) to request access.
+   Go to [GitHub repository](https://github.com/nahpu/nahpu-docs) and navigate to **Settings → Collaborators**. If you do not see your username listed, reach out to a [NAHPU team member](/teams) to request access.
 
 2. Click the `Edit page` link at the bottom of the page.
 
@@ -30,13 +28,11 @@ At the bottom of each page on the website, you will find an `Edit page` link. Cl
 
 3. Start by making small changes.
 
-   If you are new to the project, begin with minor fixes such as typos,
-   grammar corrections, or broken links before tackling larger edits.
+   If you are new to the project, begin with minor fixes such as typos, grammar corrections, or broken links before tackling larger edits.
 
 4. Commit your changes.
 
-   GitHub will prompt you to write a commit message. Keep it concise,
-   descriptive, and start with an active verb. Example of a good message:
+   GitHub will prompt you to write a commit message. Keep it concise, descriptive, and start with an active verb. Example of a good message:
 
    ```text
    Fix typos in the mammalian measurements.
@@ -51,17 +47,11 @@ At the bottom of each page on the website, you will find an `Edit page` link. Cl
 
 6. Check your changes.
 
-   After committing, navigate to the **Actions** tab in the GitHub repository
-   to monitor the build. Wait for the workflow to complete — a green checkmark
-   indicates a successful deployment. Once the build is done, visit the page
-   where you made your changes on the live site to verify everything looks
-   correct.
+   After committing, navigate to the **Actions** tab in the GitHub repository to monitor the build. Wait for the workflow to complete. A green checkmark indicates a successful deployment. Once the build is done, visit the page where you made your changes on the live site to verify everything looks correct.
 
 7. Make more changes.
 
-   Repeat steps 2–5 for any additional edits. For larger contributions
-   involving multiple pages or new sections, consider [cloning the repository
-   locally](#local-development) for a more efficient workflow.
+   Repeat steps 2–5 for any additional edits. For larger contributions involving multiple pages or new sections, consider [cloning the repository locally](#local-development) for a more efficient workflow.
 
 
     We use [Markdoc](https://markdoc.dev/) format for our documentation. This format is similar to markdown but with additional features for documentation. It is designed to be easy for non-technical contributors to contribute while providing flexibility to style the writing.
@@ -145,12 +135,11 @@ For create one or two pages, you can add a new file in the [GitHub repository](h
 
 For a more complex scenario with complex pages and rooting, see the [Deep Dive](./deep_dive) section for more details.
 
-## Adding New Language translation
+## Adding a New Language Translation
 
 We're always looking for speakers of languages we don't currently support. To facilitate the addition of new languages, we use AI to assist with translations. If you're interested in contributing, please reach out to one of our [team members](/teams). Our workflow for adding a new language involves:
 
-1. Creating a new language directory in the `src/content/docs` folder. The folder name follows the
-language code (e.g., `en`, `es`, `fr`).
+1. Creating a new language directory in the `src/content/docs` folder. The folder name follows the language code (e.g., `en`, `es`, `fr`).
 2. Using a large language model to translate the English documentation.
 3. Add the sidebar translations in the `astro.config.mjs` file.
 3. Reviewing and revising the AI translation for accuracy by a team member.
@@ -161,13 +150,26 @@ This section explains the advanced method to develop the NAHPU documentation.
 
 ### Technologies
 
-Technologies we use to develop the NAHPU documentation:
+NAHPU documentation is built with the following technologies:
 
-- [Astro](https://astro.build/) - Static site generator
-- [Starlight](https://starlight.astro.build/) - Documentation theme for Astro
-- [Markdoc](https://markdoc.dev/) - Documentation format
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [Bun](https://bun.com/) - JavaScript runtime/package manager for development
+- [Astro](https://astro.build/) — Static site generator
+- [Starlight](https://starlight.astro.build/) — Documentation theme for Astro
+- [Markdoc](https://markdoc.dev/) — Documentation format
+- [Tailwind CSS](https://tailwindcss.com/) — Utility-first CSS framework
+- [Bun](https://bun.com/) — JavaScript runtime and package manager
+
+#### Why These Technologies?
+
+**Astro** generates static HTML pages at build time, meaning the documentation site ships zero JavaScript by default. This results in fast page loads, low bandwidth usage, and a smaller carbon footprint. They are important values for the NAHPU project.
+
+**Starlight** is Astro's official documentation theme. It provides out-of-the-box features essential for technical documentation, including full-text search, sidebar navigation, internationalization, and accessibility, without requiring us to build them from scratch.
+
+**Markdoc** extends standard Markdown with a powerful, structured tag system. Unlike MDX, Markdoc keeps content and logic cleanly separated, making it easier for non-technical contributors to write and edit documentation without worrying about breaking component code. It also validates content at build time, catching errors early.
+
+**Tailwind CSS** allows us to style custom pages and components using utility classes directly in markup, without writing separate CSS files. Its design token system ensures visual consistency across pages, and its built-in purging keeps the final stylesheet small.
+
+**Bun** is a fast JavaScript runtime and package manager that replaces Node.js and npm in our development workflow. It is less finicky than Node.js and npm, and it installs dependencies significantly faster. It also runs build scripts with lower overhead, making local development and CI builds quicker for contributors.
+
 ### Local Development
 
 #### Prerequisites

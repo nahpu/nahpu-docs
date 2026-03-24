@@ -293,48 +293,53 @@ If you already have Git configured and connected to GitHub, skip to
 
 ## Deep Dive
 
+## Technologies
 
+NAHPU is built with the following core technologies:
+
+- [Dart](https://dart.dev/) — Programming language for the Flutter app
+- [Flutter](https://flutter.dev/) — Cross-platform UI framework
+- [Riverpod](https://riverpod.dev/) — State management library for Flutter
+- [Drift](https://drift.simonbinder.eu/) — SQLite database library for Dart
+- [Rust](https://www.rust-lang.org/) — Systems programming language for
+  performance-critical components
+- [flutter_rust_bridge](https://cjycode.com/flutter_rust_bridge/) — Bridge
+  between Flutter and Rust
+
+### Why These Technologies?
+
+**Dart and Flutter** allow NAHPU to run natively on Android, iOS, Linux, macOS, and Windows from a single codebase. Flutter's widget system and Material Design 3 integration make it straightforward to build a consistent, accessible UI across all supported platforms without maintaining separate codebases for each operating system.
+
+**Riverpod** is a robust, compile-safe state management solution for Flutter. It simplifies managing complex async state. NAHPU extensively uses `AsyncNotifier` for database-driven state.
+
+**Drift** is a type-safe SQLite library for Dart that generates query code atcompile time. This eliminates entire classes of runtime SQL errors and makes database schema changes easier to manage and migrate. Because fieldwork happens in remote areas without internet access, SQLite's offline-first approach is fundamental to NAHPU's architecture.
+
+**Rust** provides memory safety and near-native performance for compute-intensive operations such as parsing large datasets, file I/O, and complex data transformations. In the NAHPU codebase, Rust acts as a wrapper layer. The core implementations live in the separate
+[nahpu_api](https://github.com/nahpu/nahpu_api) repository.
+
+**flutter_rust_bridge** generates the FFI bindings that allow Flutter and Rust to communicate safely and efficiently. It handles type conversions between Dart and Rust automatically, letting us call Rust functions from Dart as if the were native async Dart functions.
 
 ### Code Architecture
 
-NAHPU is a cross-platform application built with [Flutter](https://flutter.dev/),
-a high-performance framework for building natively compiled applications across
-mobile, desktop, and web from a single codebase. Flutter uses the Dart
-programming language, optimized for building fast, responsive user interfaces.
+NAHPU is a cross-platform application built with [Flutter](https://flutter.dev/), a high-performance framework for building natively compiled applications across mobile, desktop, and web from a single codebase. Flutter uses the Dart programming language, optimized for building fast, responsive user interfaces.
 
-**Data storage** relies heavily on SQLite for local, offline-first storage.
-Because fieldwork often happens in remote areas without internet access, robust
-local data management is critical to NAHPU's design.
+**Data storage** relies heavily on SQLite for local, offline-first storage. Because fieldwork often happens in remote areas without internet access, robust local data management is critical to NAHPU's design.
 
-**Rust integration** — since early 2024, we have been migrating
-compute-heavy operations to [Rust](https://www.rust-lang.org/). By integrating
-Rust with Flutter via [flutter_rust_bridge](https://cjycode.com/flutter_rust_bridge/),
-we achieve the best of both worlds:
+**Rust integration** — since early 2024, we have been migrating compute-heavy operations to [Rust](https://www.rust-lang.org/). By integrating Rust with Flutter via [flutter_rust_bridge](https://cjycode.com/flutter_rust_bridge/), we achieve the best of both worlds:
 
-- **Flutter/Dart** handles state management, routing, and rendering the UI
-  smoothly at 60–120 fps.
-- **Rust** handles the heavy lifting: parsing large datasets, complex data
-  transformations, file I/O, and specialized algorithms that would otherwise
-  bottleneck the Dart isolate.
+- **Flutter/Dart** handles state management, routing, and rendering the UI smoothly at 60–120 fps.
+- **Rust** handles the heavy lifting: parsing large datasets, complex data transformations, file I/O, and specialized algorithms that would otherwise bottleneck the Dart isolate.
 
 ### User Interface and Design
 
 NAHPU uses the [Material Design 3](https://m3.material.io/) system as the
 foundation for its visual identity.
 
-**Consistency** — Material Design is deeply integrated with Flutter. Whenever
-possible, use standard Material widgets to ensure a consistent, accessible, and
-intuitive experience across all platforms.
+**Consistency** — Material Design is deeply integrated with Flutter. Whenever possible, use standard Material widgets to ensure a consistent, accessible, and intuitive experience across all platforms.
 
-**Responsiveness** — NAHPU is frequently used on field tablets and mobile
-devices. When contributing UI components, always consider responsive layouts.
-Use `LayoutBuilder`, `MediaQuery`, or flexible grid systems to ensure your
-changes look good on small phone screens as well as large tablet and desktop
-displays.
+**Responsiveness** — NAHPU is frequently used on field tablets and mobile devices. When contributing UI components, always consider responsive layouts. Use `LayoutBuilder`, `MediaQuery`, or flexible grid systems to ensure your changes look good on small phone screens as well as large tablet and desktop displays.
 
-**Accessibility** — ensure that text has sufficient contrast, touch targets are
-at least 48×48 logical pixels, and semantic labels are provided for screen
-readers.
+**Accessibility** — ensure that text has sufficient contrast, touch targets are at least 48×48 logical pixels, and semantic labels are provided for screen readers.
 
 ### Directory Structure
 
