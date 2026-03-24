@@ -174,12 +174,106 @@ NAHPU documentation is built with the following technologies:
 
 #### Prerequisites
 
-You will need [Bun](https://bun.com/) and a code editor
-(e.g., [VS Code](https://code.visualstudio.com/)) installed on your machine.
+Before setting up the documentation locally, make sure you have the following
+installed:
+
+- [Git](https://git-scm.com/downloads)
+- [Bun](https://bun.com/)
+- [GitHub CLI](https://cli.github.com/) *(optional, but recommended)*
+- A code editor (e.g., [VS Code](https://code.visualstudio.com/))
+
+{% aside type="tip" title="Experienced Git user?" %}
+If you already have Git configured and connected to GitHub, skip to [step 5](#) to install Bun and set up the documentation locally.
+{% /aside %}
 
 {% steps %}
 
-1. Install [Bun](https://bun.com/docs/installation).
+1. Install Git.
+
+   {% tabs %}
+   {% tabitem label="macOS" %}
+   Git comes pre-installed on macOS. Verify with:
+
+   ```bash
+   git --version
+   ```
+
+   If not installed, install it via Homebrew:
+
+   ```bash
+   brew install git
+   ```
+   {% /tabitem %}
+   {% tabitem label="Linux" %}
+   ```bash
+   # Debian/Ubuntu
+   sudo apt install git
+
+   # Fedora
+   sudo dnf install git
+   ```
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   Download and install Git from [git-scm.com](https://git-scm.com/downloads). During installation, keep the default options. Verify with:
+
+   ```powershell
+   git --version
+   ```
+   {% /tabitem %}
+   {% /tabs %}
+
+2. Install GitHub CLI *(optional, but recommended)*.
+
+   {% tabs %}
+   {% tabitem label="macOS" %}
+   ```bash
+   brew install gh
+   ```
+   {% /tabitem %}
+   {% tabitem label="Linux" %}
+   ```bash
+   # Debian/Ubuntu
+   sudo apt install gh
+
+   # Fedora
+   sudo dnf install gh
+   ```
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   ```powershell
+   winget install --id GitHub.cli
+   ```
+   {% /tabitem %}
+   {% /tabs %}
+
+   Verify the installation:
+
+   ```bash
+   gh --version
+   ```
+
+3. Authenticate GitHub CLI with your GitHub account.
+
+   ```bash
+   gh auth login
+   ```
+
+   Follow the prompts: select **GitHub.com** as the host, **HTTPS** as the protocol, and confirm when asked to authenticate via browser. Verify once complete:
+
+   ```bash
+   gh auth status
+   ```
+
+4. Configure Git with your name and email.
+
+   ```bash
+   git config --global user.name "Your Name"
+   git config --global user.email "your@email.com"
+   ```
+
+   Use the same email address associated with your GitHub account.
+
+5. Install [Bun](https://bun.com/docs/installation).
 
    {% tabs %}
    {% tabitem label="macOS / Linux" %}
@@ -194,42 +288,45 @@ You will need [Bun](https://bun.com/) and a code editor
    {% /tabitem %}
    {% /tabs %}
 
-   Follow the [Bun documentation](https://bun.com/docs/installation) for
-   more details.
-
-2. Verify your Bun installation.
+   Verify the installation:
 
    ```bash
    bun --version
    ```
 
-   A successful installation will print the version number.
+6. Clone the documentation repository.
 
-3. Clone the documentation repository.
-
+   {% tabs %}
+   {% tabitem label="Git" %}
    ```bash
    git clone https://github.com/nahpu/nahpu-docs.git
    ```
+   {% /tabitem %}
+   {% tabitem label="GitHub CLI" %}
+   ```bash
+   gh repo clone nahpu/nahpu-docs
+   ```
+   {% /tabitem %}
+   {% /tabs %}
 
-4. Navigate into the repository.
+7. Navigate into the repository.
 
-    {% tabs %}
-    {% tabitem label="macOS / Linux" %}
-    ```bash
-    cd nahpu-docs
-    ```
-    {% /tabitem %}
-    {% tabitem label="Windows" %}
-    ```powershell
-    # PowerShell 7+
-    cd nahpu-docs
+   {% tabs %}
+   {% tabitem label="macOS / Linux" %}
+   ```bash
+   cd nahpu-docs
+   ```
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   ```powershell
+   # PowerShell 7+
+   cd nahpu-docs
 
-    # Alternatively, use the full cmdlet
-    Set-Location nahpu-docs
-    ```
-    {% /tabitem %}
-
-    {% /tabs %}
+   # Alternatively, use the full cmdlet
+   Set-Location nahpu-docs
+   ```
+   {% /tabitem %}
+   {% /tabs %}
 
    If you are using VS Code, you can open it directly in the editor.
 
@@ -237,16 +334,15 @@ You will need [Bun](https://bun.com/) and a code editor
    code nahpu-docs
    ```
 
-5. Install all dependencies.
+8. Install all dependencies.
 
    ```bash
    bun install
    ```
 
-6. Make your changes.
+9. Make your changes.
 
-   Documentation files are in `src/content/docs/[language]`. Other pages
-   are in `src/pages`.
+   Documentation files are in `src/content/docs/[language]`. Other pages are in `src/pages`.
 
 {% /steps %}
 
