@@ -10,7 +10,6 @@ This serves documentation, guides, and project information for [NAHPU](https://n
 
 ## Prerequisites
 
-- Node.js >= 18 (Astro 5+ works best with recent Node versions).
 - [Bun](https://bun.sh/).
 
 If you need to install [bun](https://bun.sh/), you can do so with the following command:
