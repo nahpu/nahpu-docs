@@ -569,7 +569,7 @@ wrapper:
    ```bash
    cargo clippy --all-targets --all-features
    ```
-
+   
 ### Troubleshooting
 
 #### `flutter_rust_bridge_codegen` not found
@@ -585,6 +585,38 @@ wrapper:
 
   ```bash
   brew install llvm
+  ```
+
+#### Error on macOS: CocoaPods issues
+
+- **Cause:** CocoaPods is outdated, missing, or incompatible with the current
+  Xcode version, causing `pod install` to fail during the Flutter build.
+- **Solution:** Install or update CocoaPods and reinstall the pods:
+
+  ```bash
+  # Install or update CocoaPods
+  sudo gem install cocoapods
+
+  # Navigate to the iOS directory and reinstall pods
+  cd ios
+  pod deintegrate
+  pod install
+  ```
+
+  If the issue persists, try clearing the CocoaPods cache:
+
+  ```bash
+  pod cache clean --all
+  rm -rf ~/Library/Caches/CocoaPods
+  rm -rf ios/Pods
+  rm -rf ios/Podfile.lock
+  cd ios && pod install
+  ```
+
+  Make sure your Xcode command line tools are up to date:
+
+  ```bash
+  xcode-select --install
   ```
 
 #### Error on Windows: linker errors or "nudget" failures
