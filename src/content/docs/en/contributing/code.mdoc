@@ -4,101 +4,337 @@ sidebar:
   order: 2
 ---
 
-NAHPU is more than just a digital catalog app for natural history fieldwork. It is a software system to support specimen digitization right at the point of collection. This page focus on explaning how to contribute to the main NAHPU app, which is the digital catalog itself. Take a look at the [develop tools](./develop_tools) section for more details about contributing to the project supporting software.
+NAHPU is more than just a digital catalog app for natural history fieldwork. It
+is a software system that supports specimen digitization right at the point of
+collection. This page explains how to contribute to the main NAHPU app — the
+digital catalog itself. See the [developer tools](./develop_tools) section for
+details on contributing to supporting software.
 
 ## Quick Start
 
 ### Prerequisites
 
-Before you can contribute to the NAHPU project, make sure you have the following installed on your machine:
+### Prerequisites
+
+Before contributing to NAHPU, make sure you have the following installed:
 
 - [Git](https://git-scm.com/downloads)
 - [Dart SDK](https://dart.dev/get-dart)
 - [Flutter SDK](https://flutter.dev/docs/get-started/install)
 - [Rust toolchain](https://rustup.rs/)
-- [Flutter rust bridge](https://github.com/fzyzcjy/flutter_rust_bridge)
+- [flutter_rust_bridge](https://cjycode.com/flutter_rust_bridge/)
+- [GitHub CLI](https://cli.github.com/) *(optional, but recommended)*
 
-To prepare user machine ready for NAHPU development:
+{% aside type="tip" title="Experienced Git user?" %}
+If you already have Git configured and connected to GitHub, skip to
+[step 5](#) to set up the Flutter and Rust development environment.
+{% /aside %}
 
 {% steps %}
 
-1. Install Flutter SDK
+1. Install Git.
 
-    Follow the guideline by [the Fluter team](https://flutter.dev/docs/get-started/install). You will need to also install Android Studio.
+   {% tabs %}
+   {% tabitem label="macOS" %}
+   Git comes pre-installed on macOS. Verify with:
 
-2. Install Rust toolchain
+   ```bash
+   git --version
+   ```
 
-3. Install Flutter rust bridge
+   If not installed, install it via Homebrew:
+
+   ```bash
+   brew install git
+   ```
+   {% /tabitem %}
+   {% tabitem label="Linux" %}
+   ```bash
+   # Debian/Ubuntu
+   sudo apt install git
+
+   # Fedora
+   sudo dnf install git
+   ```
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   Download and install Git from [git-scm.com](https://git-scm.com/downloads).
+   During installation, keep the default options. Verify with:
+
+   ```powershell
+   git --version
+   ```
+   {% /tabitem %}
+   {% /tabs %}
+
+2. Install GitHub CLI *(optional, but recommended)*.
+
+   {% tabs %}
+   {% tabitem label="macOS" %}
+   ```bash
+   brew install gh
+   ```
+   {% /tabitem %}
+   {% tabitem label="Linux" %}
+   ```bash
+   # Debian/Ubuntu
+   sudo apt install gh
+
+   # Fedora
+   sudo dnf install gh
+   ```
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   ```powershell
+   winget install --id GitHub.cli
+   ```
+   {% /tabitem %}
+   {% /tabs %}
+
+   Verify the installation:
+
+   ```bash
+   gh --version
+   ```
+
+3. Authenticate GitHub CLI with your GitHub account.
+
+   ```bash
+   gh auth login
+   ```
+
+   Follow the prompts: select **GitHub.com** as the host, **HTTPS** as the
+   protocol, and confirm when asked to authenticate via browser. Verify once
+   complete:
+
+   ```bash
+   gh auth status
+   ```
+
+4. Configure Git with your name and email.
+
+   ```bash
+   git config --global user.name "Your Name"
+   git config --global user.email "your@email.com"
+   ```
+
+   Use the same email address associated with your GitHub account.
+
+5. Install the Flutter SDK.
+
+   {% tabs %}
+   {% tabitem label="macOS" %}
+   Follow the [official Flutter macOS guide](https://docs.flutter.dev/get-started/install/macos).
+   Install Android Studio for Android development, then run:
+
+   ```bash
+   flutter doctor
+   ```
+   {% /tabitem %}
+   {% tabitem label="Linux" %}
+   Follow the [official Flutter Linux guide](https://docs.flutter.dev/get-started/install/linux).
+   Install Android Studio for Android development, then run:
+
+   ```bash
+   flutter doctor
+   ```
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   Follow the [official Flutter Windows guide](https://docs.flutter.dev/get-started/install/windows).
+   Install Android Studio for Android development, then run:
+
+   ```powershell
+   flutter doctor
+   ```
+   {% /tabitem %}
+   {% /tabs %}
+
+   Resolve any issues reported before proceeding.
+
+6. Install the Rust toolchain.
+
+   {% tabs %}
+   {% tabitem label="macOS / Linux" %}
+   ```bash
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   ```
+
+   Verify the installation:
+
+   ```bash
+   rustc --version
+   ```
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   Download and run [rustup-init.exe](https://rustup.rs/) from the official
+   site. Verify the installation:
+
+   ```powershell
+   rustc --version
+   ```
+   {% /tabitem %}
+   {% /tabs %}
+
+7. Install flutter_rust_bridge dependencies.
+
+   ```bash
+   cargo install flutter_rust_bridge_codegen
+   ```
+
+   Make sure your cargo bin directory is in your `PATH`:
+
+   {% tabs %}
+   {% tabitem label="macOS / Linux" %}
+   ```bash
+   export PATH="$HOME/.cargo/bin:$PATH"
+   ```
+
+   Add this line to your `~/.bashrc`, `~/.zshrc`, or equivalent shell config
+   to make it permanent.
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   Add `%USERPROFILE%\.cargo\bin` to your system `PATH` via
+   **System Properties → Environment Variables**.
+   {% /tabitem %}
+   {% /tabs %}
+
+   See the [flutter_rust_bridge documentation](https://cjycode.com/flutter_rust_bridge/)
+   for more details.
 
 {% /steps %}
 
-### Code contribution
+
+### Code Contribution
 
 {% steps %}
 
 1. Fork the NAHPU repository on GitHub.
 
+   Go to [hhandika/nahpu](https://github.com/hhandika/nahpu) and click **Fork**.
+
 2. Clone the forked repository to your local machine.
 
-    ```bash
-    git clone https://github.com/hhandika/nahpu.git
-    ```
+   {% tabs %}
+   {% tabitem label="Git" %}
+   ```bash
+   git clone https://github.com/nahpu/nahpu.git
+   ```
+   {% /tabitem %}
+   {% tabitem label="GitHub CLI" %}
+   ```bash
+   gh repo clone nahpu/nahpu
+   ```
+   {% /tabitem %}
+   {% /tabs %}
 
-    If you are using [GitHub CLI](https://cli.github.com/).
+3. Navigate into the repository.
 
-    ```bash
-    gh repo clone hhandika/nahpu
-    ```
-
-3. Change to the NAHPU repository.
-
-    ```bash
-    cd nahpu/
-    ```
+   ```bash
+   cd nahpu
+   ```
 
 4. Create a new branch for your changes.
 
-    ```bash
-    git checkout -b your-branch-name
-    ```
+   {% tabs %}
+   {% tabitem label="Git" %}
+   ```bash
+   git checkout -b your-branch-name
+   ```
+   {% /tabitem %}
+   {% tabitem label="GitHub CLI" %}
+   ```bash
+   git checkout -b your-branch-name
+   ```
+   {% /tabitem %}
+   {% /tabs %}
 
 5. Make your changes and commit them.
 
-    ```bash
-    git add .
-    git commit -m "Your commit message"
-    ``` 
+   ```bash
+   git add .
+   git commit -m "Your commit message"
+   ```
+
 6. Push your changes to your forked repository.
 
-7. Create a pull request to the main NAHPU repository.
+   {% tabs %}
+   {% tabitem label="Git" %}
+   ```bash
+   git push origin your-branch-name
+   ```
+   {% /tabitem %}
+   {% tabitem label="GitHub CLI" %}
+   ```bash
+   git push origin your-branch-name
+   ```
+   {% /tabitem %}
+   {% /tabs %}
 
-    If you are working on user interface changes, make sure to include screenshots or a demo video to illustrate your changes. Some good examples of user interface changes can be found in the [NAHPU GitHub issues](https://github.com/hhandika/nahpu/issues).
+7. Open a pull request to the main NAHPU repository.
+
+   {% tabs %}
+   {% tabitem label="Git" %}
+   Go to your fork on GitHub and click **Compare & pull request**.
+   {% /tabitem %}
+   {% tabitem label="GitHub CLI" %}
+   ```bash
+   gh pr create --repo nahpu/nahpu --base main --fill
+   ```
+   {% /tabitem %}
+   {% /tabs %}
+
+   If your changes affect the user interface, include screenshots or a short
+   demo video. See the
+   [NAHPU GitHub issues](https://github.com/nahpu/nahpu/issues) for examples
+   of well-documented UI contributions.
+
 
 {% /steps %}
 
 ## Deep Dive
 
+
+
 ### Code Architecture
 
-NAHPU is a cross-platform application built with Flutter, a high-performance framework for building natively compiled applications. Flutter uses the Dart programming language, which is optimized for building fast, beautiful user interfaces. This approach simplifies the development process and is our recipe for making sure that NAHPU is performant and support mobile and desktop operating sytems.
+NAHPU is a cross-platform application built with [Flutter](https://flutter.dev/),
+a high-performance framework for building natively compiled applications across
+mobile, desktop, and web from a single codebase. Flutter uses the Dart
+programming language, optimized for building fast, responsive user interfaces.
 
-**Data Storage**: In the backend, NAHPU heavily relies on SQLite for local, offline-first storage. Because fieldwork often happens in remote areas without internet access, robust local data management is critical.
+**Data storage** relies heavily on SQLite for local, offline-first storage.
+Because fieldwork often happens in remote areas without internet access, robust
+local data management is critical to NAHPU's design.
 
-**The Rust Integration**: Since early 2024, we have been migrating compute-heavy operations to Rust. Rust is a systems programming language that focuses on performance, reliability, and memory safety. By integrating Rust with Flutter via flutter_rust_bridge, we achieve the best of both worlds:
+**Rust integration** — since early 2024, we have been migrating
+compute-heavy operations to [Rust](https://www.rust-lang.org/). By integrating
+Rust with Flutter via [flutter_rust_bridge](https://cjycode.com/flutter_rust_bridge/),
+we achieve the best of both worlds:
 
-**Flutter/Dart** handles state management, routing, and rendering the UI smoothly at 60-120fps.
-Rust handles the heavy lifting: parsing large datasets, complex data transformations, file I/O, and specialized algorithms that would otherwise bottleneck the Dart isolate.
+- **Flutter/Dart** handles state management, routing, and rendering the UI
+  smoothly at 60–120 fps.
+- **Rust** handles the heavy lifting: parsing large datasets, complex data
+  transformations, file I/O, and specialized algorithms that would otherwise
+  bottleneck the Dart isolate.
 
 ### User Interface and Design
 
-NAHPU uses the Material Design 3 system as a foundation for its visual identity.
+NAHPU uses the [Material Design 3](https://m3.material.io/) system as the
+foundation for its visual identity.
 
-**Consistency**: Material Design is deeply integrated with Flutter. Whenever possible, we use standard Material widgets to ensure a consistent, accessible, and intuitive user experience across all operating systems.
+**Consistency** — Material Design is deeply integrated with Flutter. Whenever
+possible, use standard Material widgets to ensure a consistent, accessible, and
+intuitive experience across all platforms.
 
-**Responsiveness**: NAHPU is frequently used on field tablets and mobile devices. When contributing UI components, always consider responsive layouts. Use tools like LayoutBuilder, MediaQuery, or flexible grid systems to ensure your changes look good on small phone screens and large tablet or desktop displays.
+**Responsiveness** — NAHPU is frequently used on field tablets and mobile
+devices. When contributing UI components, always consider responsive layouts.
+Use `LayoutBuilder`, `MediaQuery`, or flexible grid systems to ensure your
+changes look good on small phone screens as well as large tablet and desktop
+displays.
 
-**Accessibility**: Ensure that text has sufficient contrast, touch targets are adequately sized (at least 48x48 logical pixels), and semantic labels are provided for screen readers.
-
+**Accessibility** — ensure that text has sufficient contrast, touch targets are
+at least 48×48 logical pixels, and semantic labels are provided for screen
+readers.
 
 ### Directory Structure
 
@@ -122,80 +358,318 @@ NAHPU uses the Material Design 3 system as a foundation for its visual identity.
 - windows/ Windows platform-specific code and build configuration
 {% /filetree %}
 
+
+### Code Conventions
+
+#### Dart and Flutter
+
+NAHPU follows standard [Dart style guidelines](https://dart.dev/guides/language/effective-dart/style).
+If you are new to Dart, the [official Dart language tour](https://dart.dev/language)
+is the best place to start. Key conventions to follow:
+
+1. **Use `const` constructors wherever possible.** This tells Flutter to skip
+   rebuilding widgets that do not change, improving performance.
+
+   ```dart
+   // Preferred
+   const Text('Hello, NAHPU!');
+
+   // Avoid
+   Text('Hello, NAHPU!');
+   ```
+
+2. **Prefer `final` over `var`** for variables that are assigned once.
+
+   ```dart
+   // Preferred
+   final specimenId = 'NAHPU-001';
+
+   // Avoid
+   var specimenId = 'NAHPU-001';
+   ```
+
+3. **Split large widgets into smaller ones** rather than nesting deeply. Each
+   widget should have a single, clear responsibility.
+
+4. **Name files using `snake_case`** and classes using `PascalCase`. For
+   example, `specimen_card.dart` contains the `SpecimenCard` widget.
+
+5. **Avoid business logic inside widgets.** Keep widgets focused on rendering.
+   Move logic to providers, services, or helper classes.
+#### State Management with Riverpod
+
+NAHPU uses [Riverpod](https://riverpod.dev/) for state management. If you are
+unfamiliar with Riverpod, read the
+[official Riverpod documentation](https://riverpod.dev/docs/introduction/getting_started)
+before contributing to state-related code. Key concepts you need to know:
+
+- **`Provider`** — exposes a read-only value or service.
+- **`StateProvider`** — exposes a simple mutable value.
+- **`NotifierProvider`** — exposes a class-based state with methods to mutate
+  it. Preferred for complex synchronous state.
+- **`AsyncNotifierProvider`** — like `NotifierProvider` but for async state.
+  Used extensively in NAHPU for database operations and data loading.
+- **`FutureProvider`** — exposes a one-time async value. Use this for simple
+  read-only async data; prefer `AsyncNotifierProvider` when you also need to
+  mutate state.
+- **`StreamProvider`** — exposes a stream of values.
+
+**`AsyncNotifier` is the primary pattern for database-backed state in NAHPU.**
+It combines async data loading with mutation methods in a single class, keeping
+your providers clean and testable:
+
+```dart
+// ✅ Preferred pattern for database-backed state
+@riverpod
+class SpecimenListNotifier extends _$SpecimenListNotifier {
+  @override
+  Future<List<Specimen>> build() async {
+    // Initial data load from the database
+    return ref.read(databaseProvider).getAllSpecimens();
+  }
+
+  Future<void> addSpecimen(Specimen specimen) async {
+    // Optimistically set loading state
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () async {
+        await ref.read(databaseProvider).insertSpecimen(specimen);
+        return ref.read(databaseProvider).getAllSpecimens();
+      },
+    );
+  }
+
+  Future<void> deleteSpecimen(String id) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () async {
+        await ref.read(databaseProvider).deleteSpecimen(id);
+        return ref.read(databaseProvider).getAllSpecimens();
+      },
+    );
+  }
+}
+```
+
+Handle the three async states — data, loading, and error — explicitly in your
+widgets using `.when()`:
+
+```dart
+final specimens = ref.watch(specimenListNotifierProvider);
+
+return specimens.when(
+  data: (data) => SpecimenListView(specimens: data),
+  loading: () => const CircularProgressIndicator(),
+  error: (e, _) => Text('Error: $e'),
+);
+```
+
+**Prefer `ConsumerWidget` over passing `ref` down the widget tree.** Passing
+`ref` as a constructor parameter couples widgets to Riverpod unnecessarily and
+makes them harder to test and reuse. Instead, make the widget a `ConsumerWidget`
+and read the provider directly inside `build`:
+
+```dart
+// ✅ Preferred — use ConsumerWidget
+class SpecimenList extends ConsumerWidget {
+  const SpecimenList({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final specimens = ref.watch(specimenListNotifierProvider);
+    return specimens.when(
+      data: (data) => ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) => SpecimenTile(specimen: data[index]),
+      ),
+      loading: () => const CircularProgressIndicator(),
+      error: (e, _) => Text('Error: $e'),
+    );
+  }
+}
+
+// ❌ Avoid — passing ref as a parameter
+class SpecimenList extends StatelessWidget {
+  const SpecimenList({super.key, required this.ref});
+
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    final specimens = ref.watch(specimenListNotifierProvider);
+    ...
+  }
+}
+```
+
+Use `ref.watch` to reactively rebuild the widget when provider state changes.
+Use `ref.read` only inside callbacks and event handlers where you do not want
+to trigger a rebuild:
+
+```dart
+// Watching a provider — rebuilds when state changes
+final specimens = ref.watch(specimenListNotifierProvider);
+
+// Reading inside a callback — no rebuild triggered
+onPressed: () => ref.read(specimenListNotifierProvider.notifier).addSpecimen(data),
+```
+
+
+#### Rust
+
+NAHPU uses Rust for performance-critical operations via
+[flutter_rust_bridge](https://cjycode.com/flutter_rust_bridge/). In the NAHPU
+codebase, **Rust is used only as a wrapper** — it exposes functionality to
+Flutter but does not contain core implementations. All Rust implementations
+live in the [nahpu_api](https://github.com/nahpu/nahpu_api) repository. If
+your contribution involves Rust logic, head over there instead.
+
+If you are new to Rust, the [Rust Book](https://doc.rust-lang.org/book/) is the
+recommended starting point. Key conventions to follow when working on the Rust
+wrapper:
+
+1. **Follow standard Rust naming conventions** — `snake_case` for functions and
+   variables, `PascalCase` for types and structs, `SCREAMING_SNAKE_CASE` for
+   constants.
+
+2. **Prefer returning `Result<T, E>` over panicking.** Panics in Rust code
+   called from Flutter will crash the app. Always handle errors gracefully:
+
+   ```rust
+   // ✅ Preferred
+   pub fn parse_specimen(data: &str) -> Result<Specimen, ParseError> {
+       // ...
+   }
+
+   // ❌ Avoid
+   pub fn parse_specimen(data: &str) -> Specimen {
+       data.parse().unwrap() // panics on failure
+   }
+   ```
+
+3. **Keep the Rust/Flutter boundary thin.** Avoid passing complex Dart objects
+   into Rust. Prefer primitive types or simple structs that
+   `flutter_rust_bridge` can easily serialize.
+
+4. **Document public API functions** with doc comments (`///`), especially
+   functions exposed to Dart via the bridge:
+
+   ```rust
+   /// Parses raw specimen data and returns a structured [Specimen].
+   ///
+   /// Returns an error if the input is malformed or missing required fields.
+   pub fn parse_specimen(data: &str) -> Result<Specimen, ParseError> {
+       // ...
+   }
+   ```
+
+5. **Run `cargo clippy` before submitting** to catch common mistakes and style
+   issues:
+
+   ```bash
+   cargo clippy --all-targets --all-features
+   ```
+
 ### Troubleshooting
 
-Here are some common issues and their solutions:
-
 #### `flutter_rust_bridge_codegen` not found
+
 - **Cause:** `flutter_rust_bridge_codegen` is not in your PATH.
-- **Solution:** Make sure you have installed it with `cargo install flutter_rust_bridge_codegen`
-  and that the cargo bin directory is in your PATH.
+- **Solution:** Install it with `cargo install flutter_rust_bridge_codegen` and
+  ensure `~/.cargo/bin` is in your PATH.
 
 #### Error on macOS: `flutter_rust_bridge_codegen` fails with "Please supply one or more path/to/llvm..."
-- **Cause:** The code generator cannot find your LLVM installation.
-- **Solution:** Install LLVM with Homebrew (`brew install llvm`).
 
-#### Error on Windows: fails with "nudget" or linker errors
-- **Cause:** The MSVC build tools or Windows SDK are missing or not properly configured,
+- **Cause:** The code generator cannot find your LLVM installation.
+- **Solution:** Install LLVM with Homebrew:
+
+  ```bash
+  brew install llvm
+  ```
+
+#### Error on Windows: linker errors or "nudget" failures
+
+- **Cause:** MSVC build tools or the Windows SDK are missing or misconfigured,
   causing the Rust toolchain to fail during linking.
-- **Solution:** Install the [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
-  and ensure the **Desktop development with C++** workload is selected. Then set the
-  Rust toolchain to MSVC:
+- **Solution:** Install the
+  [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+  and select the **Desktop development with C++** workload. Then switch to the
+  MSVC Rust toolchain:
+
   ```bash
   rustup default stable-x86_64-pc-windows-msvc
+  ```
 
-#### App stuck on the home screen with a blank page or spinning indicator after schema changes
-- **Cause:** Schema changes were made without bumping the database version or creating a new migration file. Usually happens before the schema version is finalized.
-- **Solution:** Delete the existing database `nahpu.db` from your device or emulator to reset the schema. For production releases, make sure to create proper migration files and bump the version number in `db_schemas/schema_version.txt`.
+#### Error on Android: `android context was not initialized`
 
-    {% tabs %}
-    {% tabitem label="macOS" %}
-    ```bash
-    # Find the database file
-    find ~/Library/Containers -name "nahpu.db" 2>/dev/null
+- **Cause:** The Dart VM loads the Rust library differently than a standard
+  Android JVM application, skipping NDK context initialization.
+- **Solution:** This is a known quirk. Ensure your setup follows the official
+  [flutter_rust_bridge examples](https://github.com/fzyzcjy/flutter_rust_bridge/tree/master/frb_example),
+  which include workarounds for this issue.
 
-    # Delete the database file
-    rm /path/to/nahpu.db
-    ```
-    {% /tabitem %}
-    {% tabitem label="Linux" %}
-    ```bash
-    # Find the database file
-    find ~/.local/share -name "nahpu.db" 2>/dev/null
+#### Error on iOS TestFlight: `store_dart_post_cobject` not found
 
-    # Delete the database file
-    rm /path/to/nahpu.db
-    ```
-    {% /tabitem %}
-    {% tabitem label="Windows" %}
-    ```powershell
-    # Find the database file
-    Get-ChildItem -Recurse -Path $env:APPDATA -Filter "nahpu.db" 2>$null
+- **Cause:** Xcode may strip necessary symbols from the final release build.
+- **Solution:** In Xcode, navigate to the build settings for the
+  `native-staticlib` target. Under **Deployment**, set **Strip Linked Product**
+  to `No` and **Strip Style** to `Debugging Symbols`.
 
-    # Delete the database file
-    Remove-Item "$env:APPDATA\nahpu.db"
-    ```
-    {% /tabitem %}
-    
-    {% tabitem label="Android Emulator" %}
-    ```bash
-    adb shell
-    cd /data/data/org.nahpu.app/databases
-    rm nahpu.db
-    ```
+#### App stuck on home screen after schema changes
 
-    {% /tabitem %}
-    {% tabitem label="iOS Simulator" %}
-     ```bash
-    xcrun simctl spawn booted rm /data/Containers/Data/Application/*/Library/Application\ Support/nahpu.db
+- **Cause:** Schema changes were made without bumping the database version or
+  creating a new migration file.
+- **Solution:** Delete the existing `nahpu.db` from your device or emulator to
+  reset the schema. For production releases, create proper migration files and
+  bump the version in `db_schemas/schema_version.txt`.
 
-    ```
-    {% /tabitem %}
-    
-    {% /tabs %}
+  {% tabs %}
+  {% tabitem label="macOS" %}
+  ```bash
+  # Find the database file
+  find ~/Library/Containers -name "nahpu.db" 2>/dev/null
 
+  # Delete the database file
+  rm /path/to/nahpu.db
+  ```
+  {% /tabitem %}
+  {% tabitem label="Linux" %}
+  ```bash
+  # Find the database file
+  find ~/.local/share -name "nahpu.db" 2>/dev/null
 
+  # Delete the database file
+  rm /path/to/nahpu.db
+  ```
+  {% /tabitem %}
+  {% tabitem label="Windows" %}
+  ```powershell
+  # Find the database file
+  Get-ChildItem -Recurse -Path $env:APPDATA -Filter "nahpu.db" 2>$null
+
+  # Delete the database file
+  Remove-Item "$env:APPDATA\nahpu.db"
+  ```
+  {% /tabitem %}
+  {% tabitem label="Android Emulator" %}
+  ```bash
+  adb shell
+  cd /data/data/org.nahpu.app/databases
+  rm nahpu.db
+  ```
+  {% /tabitem %}
+  {% tabitem label="iOS Simulator" %}
+  ```bash
+  xcrun simctl spawn booted rm \
+    /data/Containers/Data/Application/*/Library/Application\ Support/nahpu.db
+  ```
+  {% /tabitem %}
+  {% /tabs %}
 
 ### Getting Help
 
-If you get stuck while setting up the environment or figuring out the architecture, don't hesitate to reach out! Check the [NAHPU GitHub Issues](https://github.com/nahpu/nahpu/issues) for ongoing discussions, or open a new discussion thread if you have an architectural proposal.
+If you get stuck setting up the environment or understanding the architecture,
+don't hesitate to reach out. Check the
+[NAHPU GitHub Issues](https://github.com/hhandika/nahpu/issues) for ongoing
+discussions, or open a new issue if you have a bug report or architectural
+proposal.
