@@ -10,7 +10,7 @@ This serves documentation, guides, and project information for [NAHPU](https://n
 
 ## Prerequisites
 
-- Node.js >= 18 (Astro 5+ works best with recent Node versions).  
+- Node.js >= 18 (Astro 5+ works best with recent Node versions).
 - [Bun](https://bun.sh/).
 
 If you need to install [bun](https://bun.sh/), you can do so with the following command:
@@ -61,6 +61,6 @@ These scripts map to the entries in `package.json`:
 
 ## Contributing
 
-See the documentation in `src/content/docs/contributing/` for contribution guidance, code & doc contribution workflows, and developer tooling.
+See the [contribution guidelines](https://nahpu.app/en/contributing/docs/) for guidance on code and documentation contributions, as well as developer tooling information.
 
 If you'd like to propose changes, open an issue or submit a pull request on the `main` branch.
