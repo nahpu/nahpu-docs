@@ -4,13 +4,11 @@ sidebar:
   order: 3
 ---
 
-We appreciate your interest in improving our documentation. Whether you're a team member or an external contributor, there are several ways you can help:
+We appreciate your interest in improving NAHPU documentation. Several ways you can help:
 
 - **Update existing docs**: Fix errors or add new information to current pages
 - **Create new content**: Write new pages or sections on topics we haven't covered yet
 - **Translate docs**: Help us reach more people by translating into other languages (coming soon)
-
-Choose the contribution method that works best for you below.
 
 ## Updating Existing Docs
 
@@ -20,45 +18,125 @@ At the bottom of each page on the website, you will find an `Edit page` link. Cl
 
 {% steps %}
 
-1. Click on the `Edit page` link at the bottom of the page.
+1. Check if you have been added as a collaborator.
 
-2. Make your changes to the documentation.
+   Go to [GitHub repository](https://github.com/nahpu/nahpu-docs) and navigate
+   to **Settings → Collaborators**. If you do not see your username listed,
+   reach out to a [NAHPU team member](/teams) to request access.
+
+2. Click the `Edit page` link at the bottom of the page.
+
+   This will open the file directly in the GitHub web editor.
+
+3. Start by making small changes.
+
+   If you are new to the project, begin with minor fixes such as typos,
+   grammar corrections, or broken links before tackling larger edits.
+
+4. Commit your changes.
+
+   GitHub will prompt you to write a commit message. Keep it concise,
+   descriptive, and start with an active verb. Example of a good message:
+
+   ```text
+   Fix typos in the mammalian measurements.
+   ```
+
+5. Select a commit option.
+
+   - **Commit directly to the `release` branch** — preferred if you have
+     collaborator access and the change is minor.
+   - **Create a new branch and open a pull request** — use this if direct
+     commit fails or if your change is significant and needs review.
+
+6. Check your changes.
+
+   After committing, navigate to the **Actions** tab in the GitHub repository
+   to monitor the build. Wait for the workflow to complete — a green checkmark
+   indicates a successful deployment. Once the build is done, visit the page
+   where you made your changes on the live site to verify everything looks
+   correct.
+
+7. Make more changes.
+
+   Repeat steps 2–5 for any additional edits. For larger contributions
+   involving multiple pages or new sections, consider [cloning the repository
+   locally](#local-development) for a more efficient workflow.
+
 
     We use [Markdoc](https://markdoc.dev/) format for our documentation. This format is similar to markdown but with additional features for documentation. It is designed to be easy for non-technical contributors to contribute while providing flexibility to style the writing.
 
-    {% aside type="caution" %}
-    Be careful not to break the Markdoc syntax (marked with `{% %}`). These are Starlight components that style the documentation. They use the format `{% component %}` with closing tags marked as `{% /component %}`. This section uses the `steps` component to render numbered instructions. Learn more [below](#writing-with-starlight-components).
-    {% /aside %}
+    Consider the following when making changes:
 
-3. Commit the changes.
+    - Any text enclosed with `{% text %}` is a [Starlight component](https://starlight.astro.build/reference/components/). It is sensitive to spaces.
+    - You can use the component to style your writing. Learn more [below](#writing-with-starlight-components).
+
+
+3. Continue with step 4 and 5.
 
 {% /steps %}
 
+
 ### External Contributors
 
-If you are not a team member, you can still contribute to the project. Here's how:
+If you are not a team member, you can still contribute to the project.
+Here's how:
 
-1. Fork the documentation repository.
+{% steps %}
 
+1. Fork the documentation repository on
+   [GitHub](https://github.com/nahpu/nahpu-docs), then clone it to your
+   local machine.
+
+   {% tabs %}
+   {% tabitem label="Git" %}
    ```bash
-   https://github.com/nahpu/nahpu-docs.git
-
+   git clone https://github.com/nahpu/nahpu-docs.git
    ```
-
-   If you are using [GitHub CLI](https://cli.github.com/).
-
+   {% /tabitem %}
+   {% tabitem label="GitHub CLI" %}
    ```bash
    gh repo clone nahpu/nahpu-docs
-   
+   ```
+   {% /tabitem %}
+   {% /tabs %}
+
+2. Navigate into the project directory.
+
+   ```bash
+   cd nahpu-docs
    ```
 
-2. Make changes to the documentation.
-3. Submit a pull request.
+3. Create a new branch for your changes.
 
- {% aside type="note" title="Did you know?" icon="star" %}
+   ```bash
+   git checkout -b your-branch-name
+   ```
 
-NAHPU always welcomes a new member to contribute regularly to the project. We are a mix of technical and non-technical contributors. Please reach out to the [NAHPU team member](/teams) for more details.
+4. Make your changes to the documentation.
 
+   Files are located in `src/content/docs/[language]`.
+
+5. Commit and push your changes.
+
+   ```bash
+   git add .
+   git commit -m "Your commit message"
+   git push origin your-branch-name
+   ```
+
+6. Submit a pull request.
+
+   Go to the [GitHub repository](https://github.com/nahpu/nahpu-docs) and
+   open a pull request from your branch. A maintainer will review and merge
+   your changes before the site is deployed.
+
+{% /steps %}
+
+{% aside type="tip" title="Did you know?" %}
+NAHPU always welcomes new contributors! We are a mix of technical and
+non-technical contributors. Please reach out to a
+[NAHPU team member](/teams) for more details.
 {% /aside %}
 
 ## Create New Content
@@ -90,59 +168,83 @@ Technologies we use to develop the NAHPU documentation:
 - [Markdoc](https://markdoc.dev/) - Documentation format
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Bun](https://bun.com/) - JavaScript runtime/package manager for development
-
-### Local development
+### Local Development
 
 #### Prerequisites
 
-You will need to install [Bun ](https://bun.com/) and a code editor (e.g., [VS Code](https://code.visualstudio.com/)) on your machine. Below is the step-by-step guide:
-
+You will need [Bun](https://bun.com/) and a code editor
+(e.g., [VS Code](https://code.visualstudio.com/)) installed on your machine.
 
 {% steps %}
 
-1. Install [bun](https://bun.com/docs/installation).
+1. Install [Bun](https://bun.com/docs/installation).
 
-    ```bash
-    curl -fsSL https://bun.com/install | bash
-    ```
+   {% tabs %}
+   {% tabitem label="macOS / Linux" %}
+   ```bash
+   curl -fsSL https://bun.com/install | bash
+   ```
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   ```powershell
+   powershell -c "irm bun.sh/install.ps1 | iex"
+   ```
+   {% /tabitem %}
+   {% /tabs %}
 
-    Follow the [bun documentation](https://bun.com/docs/installation) for more details.
+   Follow the [Bun documentation](https://bun.com/docs/installation) for
+   more details.
 
-2. Check bun installation.
+2. Verify your Bun installation.
 
-    ```bash
-    bun --version
-    ```
+   ```bash
+   bun --version
+   ```
 
-    If your installation was successful, you should see the version number.
+   A successful installation will print the version number.
 
 3. Clone the documentation repository.
 
-    ```bash
-    git clone https://github.com/nahpu/nahpu-docs.git
-    ```
+   ```bash
+   git clone https://github.com/nahpu/nahpu-docs.git
+   ```
 
-4. Change to the repository.
+4. Navigate into the repository.
 
+    {% tabs %}
+    {% tabitem label="macOS / Linux" %}
     ```bash
     cd nahpu-docs
     ```
+    {% /tabitem %}
+    {% tabitem label="Windows" %}
+    ```powershell
+    # PowerShell 7+
+    cd nahpu-docs
 
-    If you are using VS Code, you can directly open the repository in the editor.
-
-    ```bash
-    code nahpu-docs
+    # Alternatively, use the full cmdlet
+    Set-Location nahpu-docs
     ```
+    {% /tabitem %}
 
-5. Install all dependencies:
+    {% /tabs %}
 
-    ```bash
-    bun install
-    ```
+   If you are using VS Code, you can open it directly in the editor.
 
-6. Make changes.
+   ```bash
+   code nahpu-docs
+   ```
 
-    The documentation is in the `src\content\docs\[language]` folder. Other pages are in the `src\pages`.
+5. Install all dependencies.
+
+   ```bash
+   bun install
+   ```
+
+6. Make your changes.
+
+   Documentation files are in `src/content/docs/[language]`. Other pages
+   are in `src/pages`.
 
 {% /steps %}
 
@@ -171,22 +273,55 @@ Here's the directory structure and short description of each file/directory.
 For more details about the directory structure, follow [Astro guidelines](https://docs.astro.build/en/basics/project-structure/) and [Starlight documentation](https://starlight.astro.build/).
 ---
 
-### Code convention
+### Code Conventions
 
-1. If the same code snippet appears in multiple places, use a shared component to avoid duplication and ensure consistency. Put the shared component in the `src/components` directory with a file name following the PascalCase convention, e.g., `SharedComponent.astro`.
+#### Markdoc Documentation Files
 
-2. You can also use the Layout for a reusable UI template. The filename follows a similar convention to the components.
+Most contributors will work on `.mdoc` files inside
+`src/content/docs/[language]`. Follow these conventions when editing or
+creating documentation pages:
 
-3. Layouts should follow the same naming convention as components and be placed in the `src/layouts` directory.
+1. Use [Markdoc](https://markdoc.dev/) syntax for all documentation files.
+   Prefer `.mdoc` over plain `.md` to take full advantage of custom tags and
+   components.
 
-4. Avoid using vanilla CSS for styling whenever possible. Use [tailwindcss](https://tailwindcss.com/) instead. We use Tailwind v4.
+2. Use built-in Starlight components for common UI patterns such as asides,
+   steps, tabs, and file trees. See [Writing with Starlight Components](#writing-with-starlight-components)
+   for examples.
 
-5. Avoid writing many classes on the element. Instead, use the `cntl` const variable to store classes. See the `pages/index.astro` file for an example.
+3. Keep frontmatter minimal. Only include fields required by the schema, such
+   as `title` and `sidebar`:
+
+   ```text
+   ---
+   title: "Page Title"
+   sidebar:
+     order: 1
+   ---
+   ```
+
+#### Astro and General Pages
+
+These conventions apply to `.astro` files in `src/components/`,
+`src/layouts/`, and `src/pages/`:
+
+1. If the same code snippet appears in multiple places, use a shared component
+   to avoid duplication. Place shared components in `src/components/` using
+   PascalCase filenames, e.g., `SharedComponent.astro`.
+
+2. Use layouts for reusable UI templates. Follow the same PascalCase naming
+   convention and place them in `src/layouts/`.
+
+3. Avoid vanilla CSS for styling whenever possible. Use
+   [Tailwind CSS](https://tailwindcss.com/) instead. We use Tailwind v4.
+
+4. Avoid writing many classes inline on elements. Instead, use a `cntl` const
+   variable to store classes. See `src/pages/index.astro` for an example.
 
 {% aside type="danger" %}
-
-Tailwind CSS usage outside the `docs` directory requires importing the global styles `import "../styles/global.css";`. See `src/pages/index.astro` for an example.
-
+Tailwind CSS usage outside the `docs` directory requires importing global
+styles: `import "../styles/global.css"`. See `src/pages/index.astro` for
+an example.
 {% /aside %}
 
 ## Writing with Starlight Components
@@ -198,7 +333,7 @@ When writing documentation, keep the following in mind:
 - Keep examples short and easy to copy.
 - Prefer examples that match the NAHPU documentation workflow.
 
-### Examples of using Starlight components
+### Built-in Components
 
 You can include a tip box in your documentation using the `aside` component:
 
@@ -227,7 +362,8 @@ It will render as:
 2. Step two
 {% /steps %}
 
-You can find the list of Starlight components in the [Starlight documentation](https://starlight.astro.build/components/using-components/).
+You can find the full list of Starlight components in the
+[Starlight documentation](https://starlight.astro.build/components/using-components/).
 
 ### Adding New Components
 
@@ -247,28 +383,27 @@ You can find the list of Starlight components in the [Starlight documentation](h
 
 2. Register it as a Markdoc tag in `markdoc.config.mjs`.
 
-    ```js
-    import { defineMarkdocConfig, component } from "@astrojs/markdoc/config";
-    import starlightMarkdoc from "@astrojs/starlight-markdoc";
+   ```js
+   import { defineMarkdocConfig, component } from "@astrojs/markdoc/config";
+   import starlightMarkdoc from "@astrojs/starlight-markdoc";
 
-    export default defineMarkdocConfig({
-      extends: [starlightMarkdoc()],
-      tags: {
-        mycomponent: {
-          render: component("./src/components/MyComponent.astro"),
-          selfClosing: true,
-        },
-      },
-    });
+   export default defineMarkdocConfig({
+     extends: [starlightMarkdoc()],
+     tags: {
+       mycomponent: {
+         render: component("./src/components/MyComponent.astro"),
+         selfClosing: true,
+       },
+     },
+   });
    ```
 
 3. Use it in any `.mdoc` file.
 
-    {% code
-    code="{% mycomponent / %}"
-    lang="text"
-  /%}
-
+   {% code
+   code="{% mycomponent / %}"
+   lang="text"
+   /%}
 
 {% /steps %}
 
@@ -276,13 +411,11 @@ You can find the list of Starlight components in the [Starlight documentation](h
 Use `selfClosing: true` for components that don't wrap content. For components
 that wrap content, omit it and use opening and closing tags:
 
-  {% code
-  code="{% mycomponent / %}"
-  lang="mdoc"
-  /%}
-
+{% code
+code="{% mycomponent %}\n  Content goes here\n{% /mycomponent %}"
+lang="text"
+/%}
 {% /aside %}
-
 
 
 ### Running the website locally
