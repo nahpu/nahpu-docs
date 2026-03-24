@@ -97,21 +97,24 @@ NAHPU is a project-based cataloging app. The data is managed and organized based
 
 5. **Add narrative**
 
-    You can also call it field notes. Navigate to the narrative page using the bottom navigation bar. To create a narrative, use the `+` button in the top right corner of the narrative. Select the date and site ID. Then, write the narrative.
+    This is your field journal. You can use it to record observations, thoughts, and other information related to your fieldwork. In the field, it is a good practice to write narrative notes every day. Navigate to the narrative page using the bottom navigation bar. To create a narrative, use the `+` button in the top right corner of the narrative. Select the date and site ID. Then, write the narrative.
 
 6. **Add collecting events**
 
-    Collecting events helps you keep track of the collecting efforts, personnel, and weather and astronomy data for each event. The specimen records link to the event instead of the site. This way, you can have multiple collecting events on a single site.
+    A collecting event captures the details of a single collection effort, including personnel, weather, and astronomy data for a specific site and time period. Specimen records link to a collecting event rather than directly to a site. If you are coming from paper catalogs, this may be a new concept: think of a collecting event as the "session" during which specimens were collected, separate from the site where it happened. 
 
     To create a collecting event, use the `+` button in the top right corner of the collecting event. Select `site ID`, `start date`, `start time`, `end date`, and `end time`. Then, fill out the rest of the form.
 
-    The app combines site ID and start date to create a unique ID for each collecting event. For example, `GP-L1-March, 23 2023`. You will use this ID to refer to the collecting event in the specimen record. In some edge cases where you have multiple collecting events in a single day on the same site, you can add a suffix to the ID. For example, `Line1-Mar 26, 2023-1` and `Line1-Mar 26, 2023-2`.
+    The app combines site ID and start date to create a unique ID for each collecting event. For example, `GP-L1-March, 23 2023`. You will use this ID to refer to the collecting event in the specimen record. In the rare case where you run multiple collecting events at the same site on the same day, add a suffix to distinguish them, e.g., `Line1-Mar 26, 2023-1`, `Line1-Mar 26, 2023-2`, or `Line1-Mar 26, 2023-day` and `Line1-Mar 26, 2023-night`.
 
-    {% aside type="caution" title="Important considerations" %}
+    {% aside type="tip"%}
+    Unlike sites, which you create once per new location, we recommend creating a new collecting event for **each individual collection effort**, even at the same site. For example, when studying nocturnal rodents, traps are typically set the evening before and checked the following morning. In this case:
 
+    - **Start date** = the evening the traps were set
+    
+    - **End date** = the morning the traps were checked and specimens collected
 
-    Unlike a site that you will only create each time you start collecting in a new site, we recommend creating collecting events for each collection effort. For example, when studying nocturnal rodents, we often set traps the night before and check them the next morning. We will create a collecting event after we collect the specimen. The start date will be a day earlier, and the end date will be today. This approach allows you to keep track changes in trap numbers or personnel involve in each event. Future NAHPU updates will include statistics of species counts/trap efforts.
-
+    This approach accurately captures the trapping effort and allows you to track changes in trap numbers or personnel across events. Future NAHPU updates will include per-event statistics such as species counts and trap effort summaries.
     {% /aside %}
 
 7. **Add specimen records**
@@ -119,16 +122,23 @@ NAHPU is a project-based cataloging app. The data is managed and organized based
     To create a specimen record, use the `+` button in the top right corner of the specimen record. The specimen record icon in the navigation bar tells you about the current active format. It will generate the matching format for the currently active catalog. The only difference between different catalog formats is the measurement fields. After creating a new specimen record, fill in the relevant information. Repeat the process for the next specimens.
 
     {% aside type="note" %}
-    NAHPU is designed to allow collectors to collect different taxa. For the current version, you can have birds, bats, and other mammals in the same project. Change the catalog format in the setting when you add a different taxon group that differs from the currently active catalog format. NAHPU will generate a form for that taxon group when you create a new specimen record. When scrolling through different specimen records. You can check which catalog format is on the current page by looking at the icon in the specimen parts. The mammal catalog will be a `paw,` and the bird will be a `bird head.`
+    NAHPU enables collectors to document multiple taxon groups within a single project. The `Specimen Record` icon in the navigation bar reflects the currently active format. You can identify the catalog format on the current page by observing the icon in the specimen parts, for example a `paw` represents the mammal catalog, while a `bird head` signifies the bird catalog.
+    
+    **Steps to test:**
+    
+    - Go to settings
+    - Format > Select catalog format different from the current format
+    - Go back to Specimen Record
+    - Create a specimen
     {% /aside %}
 
 8. **Exporting records**
 
     To export records, go to the dashboard's menu (indicated by the hamburger icon/three horizontal lines in the top left corner). We have multiple export options:
 
-    - Create a report. Generate species list, media, and site coordinates h in delimited format (.csv or .tsv).
+    - Create a report. Generate species list, media, and site coordinates in delimited format (.csv or .tsv).
 
-    - Bundle projects. Generate available reports (e.g., species count), narratives, sites, collecting events, and specimen records. They are all in a comma-delimited (.csv) format. The app will generate a zip file that contains all the files and media. You can use this option to back up your data.
+    - Bundle projects. Generate available reports, such as species count, narratives, sites, collecting events, and specimen records. They are all in a comma-delimited (.csv) format. The app will generate a zip file that contains all the files and media.
 
     - Export records. You can choose which records to export. It supports exporting in delimited format (.csv or .tsv).
 
