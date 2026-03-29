@@ -672,6 +672,8 @@ wrapper:
   ```bash
   # Find the database file
   find ~/.local/share -name "nahpu.db" 2>/dev/null
+  # or try:
+  find ~/Documents -name "nahpu.db" 2>/dev/null
 
   # Delete the database file
   rm /path/to/nahpu.db
@@ -680,10 +682,11 @@ wrapper:
   {% tabitem label="Windows" %}
   ```powershell
   # Find the database file
-  Get-ChildItem -Recurse -Path $env:APPDATA -Filter "nahpu.db" 2>$null
+  # Find the database file
+  Get-ChildItem -Recurse -Path "$env:USERPROFILE\Documents" -Filter "nahpu.db"
 
   # Delete the database file
-  Remove-Item "$env:APPDATA\nahpu.db"
+  Remove-Item "$env:USERPROFILE\Documents\nahpu\nahpu.db"
   ```
   {% /tabitem %}
   {% tabitem label="Android Emulator" %}
