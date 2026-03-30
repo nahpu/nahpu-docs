@@ -573,6 +573,61 @@ wrapper:
    cargo clippy --all-targets --all-features
    ```
    
+#### Database Schema Changes
+
+NAHPU uses [Drift](https://drift.simonbinder.eu/) for SQLite database management. You can find the database schema definitions in the `db_schemas/` directory. 
+
+{% steps %}
+
+1. Propose the schema change in a [GitHub issue](https://github.com/nahpu/nahpu/issues) first.
+
+2. Once the change is approved, add the new schema definition in the `/lib/services/database/table.drift` file. 
+
+3. Bump the database version in the `/lib/services/database/database.dart` file. 
+
+    For example, to bump from version 6 to 7, update the `kSchemaVersion` constant:
+
+   ```dart
+   const int kSchemaVersion = 7;
+   ```
+4. Write a new migration function in the same file to handle the schema change. For example:
+
+    ```dart
+    Future<void> _migrateFromVersion7(Migrator m) async {
+      await m.addColumn(specimens, specimens.newColumn);
+      // Add any additional migration steps here
+    }
+    ```
+
+5. After updating the schema, run the code generator to update the generated
+   Dart code:
+
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+6. Dump the final schema to a new file in `db_schemas/` with the next version number. 
+    
+    Use the `the builtin `drift_dev` command to generate the schema dump:
+
+    ```bash
+    dart run drift_dev schema dump lib/services/database/database.dart db_schemas/drift_schema_v7.json
+    ```
+
+7. Run test.
+
+    ```bash
+    flutter test
+    ```
+7. Commit your changes and open a pull request with a clear description of the
+   schema change, the reason for it, and any potential impacts on existing data.
+
+{% /steps %}
+
+
+
+
+
 ### Troubleshooting
 
 #### `flutter_rust_bridge_codegen` not found
