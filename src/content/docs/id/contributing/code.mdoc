@@ -76,6 +76,57 @@ Untuk menyiapkan mesin pengguna agar siap bagi pengembangan NAHPU:
 
 {% /steps %}
 
+#### Perubahan Skema Database
+
+NAHPU menggunakan [Drift](https://drift.simonbinder.eu/) untuk manajemen database SQLite. Anda dapat menemukan definisi skema database di direktori `db_schemas/`.
+
+{% steps %}
+
+1. Usulkan perubahan skema dalam [GitHub issue](https://github.com/nahpu/nahpu/issues) terlebih dahulu.
+
+2. Setelah perubahan disetujui, tambahkan definisi skema baru pada berkas `/lib/services/database/table.drift`. 
+
+3. Tingkatkan versi database pada berkas `/lib/services/database/database.dart`. 
+
+    Sebagai contoh, untuk meningkatkan dari versi 6 ke 7, perbarui konstanta `kSchemaVersion`:
+
+   ```dart
+   const int kSchemaVersion = 7;
+   ```
+4. Tulis fungsi migrasi baru pada berkas yang sama untuk menangani perubahan skema. Contohnya:
+
+    ```dart
+    Future<void> _migrateFromVersion7(Migrator m) async {
+      await m.addColumn(specimens, specimens.newColumn);
+      // Tambahkan langkah migrasi tambahan apa pun di sini
+    }
+    ```
+
+5. Setelah memperbarui skema, jalankan pembuat kode (code generator) untuk memperbarui kode Dart yang dihasilkan:
+
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+6. Dump skema akhir ke berkas baru di `db_schemas/` dengan nomor versi berikutnya. 
+    
+    Gunakan perintah bawaan `drift_dev` untuk membuat dump skema:
+
+    ```bash
+    dart run drift_dev schema dump lib/services/database/database.dart db_schemas/drift_schema_v7.json
+    ```
+
+7. Jalankan pengujian.
+
+    ```bash
+    flutter test
+    ```
+8. Commit perubahan Anda dan buka pull request dengan deskripsi yang jelas mengenai perubahan skema, alasan dilakukannya perubahan tersebut, dan dampak apa pun pada data yang sudah ada.
+
+{% /steps %}
+
+
+
 ### Pemecahan Masalah
 
 Berikut adalah beberapa masalah umum dan solusinya:
@@ -141,6 +192,21 @@ NAHPU menggunakan sistem Material Design 3 sebagai fondasi identitas visualnya.
 - windows/ Kode khusus platform Windows dan konfigurasi build
 {% /filetree %}
 
+
+  {% aside type="note" title="Memeriksa jalur (path) database" %}
+  Meskipun Anda mengeksekusi `flutter run`, terminal akan mencetak jalur database secara persis dalam beberapa baris pertama pada output. 
+  
+  Sebagai contoh:
+
+  ```text
+  ========================================
+  App database path: /home/[user]/Documents/nahpu/nahpu.db
+  Directory exists: true
+  Database exists: false
+  ========================================
+  ```
+  Gunakan jalur ini untuk mengonfirmasi berkas (file) yang tepat sebelum menghapus. Database exists: false hal yang normal pada peluncuran perdana — berkas akan otomatis terbuat saat aplikasi dibuka.
+  {% /aside %}
 
 ### Mendapatkan Bantuan
 

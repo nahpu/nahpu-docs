@@ -76,6 +76,57 @@ Para preparar su máquina para el desarrollo de NAHPU:
 
 {% /steps %}
 
+#### Cambios en el esquema de base de datos
+
+NAHPU utiliza [Drift](https://drift.simonbinder.eu/) para la administración de la base de datos SQLite. Puede encontrar las definiciones de esquemas de bases de datos en el directorio `db_schemas/`.
+
+{% steps %}
+
+1. Proponga primero el cambio de esquema en un [issue de GitHub](https://github.com/nahpu/nahpu/issues).
+
+2. Una vez que el cambio sea aprobado, agregue la definición de nuevo esquema en el archivo `/lib/services/database/table.drift`. 
+
+3. Actualice la versión de la base de datos en el archivo `/lib/services/database/database.dart`. 
+
+    Por ejemplo, para pasar de la versión 6 a la 7, actualice la constante `kSchemaVersion`:
+
+   ```dart
+   const int kSchemaVersion = 7;
+   ```
+4. Escriba una nueva función de migración en el mismo archivo para manejar el cambio en el esquema. Por ejemplo:
+
+    ```dart
+    Future<void> _migrateFromVersion7(Migrator m) async {
+      await m.addColumn(specimens, specimens.newColumn);
+      // Agregue cualquier paso de migración adicional aquí
+    }
+    ```
+
+5. Después de actualizar el esquema, ejecute el generador de código para actualizar el código Dart generado:
+
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+6. Genere (dump) el esquema final a un archivo nuevo en `db_schemas/` con la próxima versión numerada. 
+    
+    Utilice el comando integrado `drift_dev` para producir el "dump" del esquema:
+
+    ```bash
+    dart run drift_dev schema dump lib/services/database/database.dart db_schemas/drift_schema_v7.json
+    ```
+
+7. Ejecute el test (las pruebas).
+
+    ```bash
+    flutter test
+    ```
+8. Realice un commit con sus cambios y abra un *pull request* con una descripción clara abordando el cambio, la razón del mismo y efectos potenciales sobre los datos existentes.
+
+{% /steps %}
+
+
+
 ### Solución de problemas
 
 Aquí hay algunos problemas comunes y sus soluciones:
@@ -141,6 +192,21 @@ NAHPU utiliza el sistema Material Design 3 como base para su identidad visual.
 - windows/ Código específico de la plataforma Windows y configuración de compilación
 {% /filetree %}
 
+
+  {% aside type="note" title="Comprobar la ruta de la base de datos" %}
+  Al ejecutar `flutter run`, la terminal emitirá la ruta exacta de la base de datos dentro de las primeras líneas del registro de ejecución. 
+  
+  Por ejemplo:
+
+  ```text
+  ========================================
+  App database path: /home/[user]/Documents/nahpu/nahpu.db
+  Directory exists: true
+  Database exists: false
+  ========================================
+  ```
+  Use esta ruta para confirmar el archivo correcto pre-eliminación. "Database exists: false" es un suceso ordinario en el primer inicio — el archivo automáticamente es creado al abrir la app.
+  {% /aside %}
 
 ### Obteniendo ayuda
 

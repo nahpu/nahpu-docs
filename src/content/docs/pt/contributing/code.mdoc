@@ -76,6 +76,57 @@ Para preparar a máquina do usuário para o desenvolvimento do NAHPU:
 
 {% /steps %}
 
+#### Alterações no Esquema do Banco de Dados
+
+O NAHPU usa [Drift](https://drift.simonbinder.eu/) para o gerenciamento do banco de dados SQLite. Você pode encontrar as definições de esquema do banco de dados no diretório `db_schemas/`.
+
+{% steps %}
+
+1. Proponha a alteração do esquema em uma [Issue do GitHub](https://github.com/nahpu/nahpu/issues) primeiro.
+
+2. Assim que a alteração for aprovada, adicione a nova definição de esquema no arquivo `/lib/services/database/table.drift`. 
+
+3. Aumente a versão do banco de dados no arquivo `/lib/services/database/database.dart`. 
+
+    Por exemplo, para atualizar da versão 6 para a 7, atualize a constante `kSchemaVersion`:
+
+   ```dart
+   const int kSchemaVersion = 7;
+   ```
+4. Escreva uma nova função de migração no mesmo arquivo para lidar com a alteração do esquema. Por exemplo:
+
+    ```dart
+    Future<void> _migrateFromVersion7(Migrator m) async {
+      await m.addColumn(specimens, specimens.newColumn);
+      // Adicione quaisquer etapas adicionais de migração aqui
+    }
+    ```
+
+5. Após atualizar o esquema, execute o gerador de código para atualizar o código Dart gerado:
+
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+6. Faça o dump do esquema final para um novo arquivo em `db_schemas/` com o número da próxima versão. 
+    
+    Use o comando interno `drift_dev` para gerar o dump do esquema:
+
+    ```bash
+    dart run drift_dev schema dump lib/services/database/database.dart db_schemas/drift_schema_v7.json
+    ```
+
+7. Execute os testes.
+
+    ```bash
+    flutter test
+    ```
+8. Faça commit das suas alterações e abra um pull request com uma descrição clara da alteração do esquema, o motivo e quaisquer impactos potenciais nos dados existentes.
+
+{% /steps %}
+
+
+
 ### Solução de Problemas
 
 Aqui estão alguns problemas comuns e suas soluções:
@@ -139,6 +190,21 @@ O NAHPU usa o sistema Material Design 3 como base para sua identidade visual.
 - web/ Código específico da plataforma Web e configuração de compilação
 - windows/ Código específico da plataforma Windows e configuração de compilação
 {% /filetree %}
+
+  {% aside type="note" title="Verificando o caminho do banco de dados" %}
+  Ao executar `flutter run`, o terminal vai exibir o caminho exato do banco de dados nas primeiras linhas da saída. 
+  
+  Por exemplo:
+
+  ```text
+  ========================================
+  App database path: /home/[user]/Documents/nahpu/nahpu.db
+  Directory exists: true
+  Database exists: false
+  ========================================
+  ```
+  Use este caminho para confirmar se o arquivo é o correto antes de removê-lo. "Database exists: false" é normal no primeiro lançamento — o arquivo é criado automaticamente assim que o app for aberto.
+  {% /aside %}
 
 ### Obtendo Ajuda
 
