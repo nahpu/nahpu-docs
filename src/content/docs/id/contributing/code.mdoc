@@ -4,9 +4,9 @@ sidebar:
   order: 2
 ---
 
-NAHPU lebih dari sekadar aplikasi katalog digital untuk kerja lapangan sejarah alam. Ini adalah sistem perangkat lunak untuk mendukung digitalisasi spesimen tepat pada saat koleksi dilakukan. Halaman ini berfokus pada penjelasan tentang cara berkontribusi pada aplikasi utama NAHPU, yaitu katalog digital itu sendiri. Lihat bagian [alat pengembangan](./tools) untuk detail lebih lanjut tentang berkontribusi pada perangkat lunak pendukung proyek.
+NAHPU lebih dari sekadar aplikasi katalog digital untuk kerja lapangan pada bidang ilmu *natural history*. NAHPU merupakan sistem perangkat lunak untuk mendukung digitalisasi spesimen pada saat koleksi dilakukan. Halaman ini bertujuan untuk menjelaskan tentang cara berkontribusi pada aplikasi utama NAHPU. Lihat bagian [alat pengembangan](./tools) untuk detail lebih lanjut tentang cara berkontribusi pada perangkat lunak pendukung proyek.
 
-## Memulai dengan Cepat
+## Panduan Memulai
 
 ### Prasyarat
 
@@ -146,15 +146,15 @@ Berikut adalah beberapa masalah umum dan solusinya:
   rustup default stable-x86_64-pc-windows-msvc
   ```
 
-## Pembahasan Mendalam
+## Pembahasan Terperinci
 
 ### Arsitektur Kode
 
-NAHPU adalah aplikasi lintas platform yang dibangun dengan Flutter, framework berperforma tinggi untuk membangun aplikasi yang dikompilasi secara asli. Flutter menggunakan bahasa pemrograman Dart, yang dioptimalkan untuk membangun antarmuka pengguna yang cepat dan indah. Pendekatan ini menyederhanakan proses pengembangan dan merupakan resep kami untuk memastikan bahwa NAHPU memiliki performa tinggi dan mendukung sistem operasi seluler serta desktop.
+NAHPU adalah aplikasi lintas platform yang dibangun dengan Flutter, yang merupakan framework berperforma tinggi untuk membangun aplikasi yang dikompilasi secara asli. Flutter menggunakan bahasa pemrograman Dart, yang dioptimalkan untuk membangun antarmuka pengguna (*User Interface*) yang cepat dan responsif. Pendekatan ini menyederhanakan proses pengembangan dan merupakan resep kami untuk memastikan bahwa NAHPU memiliki performa tinggi dan mendukung sistem operasi seluler serta desktop.
 
 **Penyimpanan Data**: Di sisi backend, NAHPU sangat bergantung pada SQLite untuk penyimpanan lokal yang mengutamakan mode offline. Karena kerja lapangan sering kali dilakukan di daerah terpencil tanpa akses internet, manajemen data lokal yang tangguh sangatlah penting.
 
-**Integrasi Rust**: Sejak awal 2024, kami telah memigrasikan operasi yang membutuhkan komputasi berat ke Rust. Rust adalah bahasa pemrograman sistem yang berfokus pada performa, keandalan, dan keamanan memori. Dengan mengintegrasikan Rust dengan Flutter melalui flutter_rust_bridge, kami mencapai yang terbaik dari kedua dunia:
+**Integrasi Rust**: Sejak awal 2024, kami telah memigrasikan operasi yang membutuhkan komputasi berat ke Rust. Rust adalah bahasa pemrograman sistem yang berfokus pada performa, keandalan, dan keamanan memori. Dengan mengintegrasikan Rust dengan Flutter melalui flutter_rust_bridge, kami mencapai yang terbaik dari kedua platform:
 
 **Flutter/Dart** menangani manajemen status, perutean, dan rendering UI dengan lancar pada 60-120fps.
 **Rust** menangani pekerjaan berat: memproses kumpulan data besar, transformasi data yang kompleks, I/O file, dan algoritma khusus yang jika tidak dilakukan akan menghambat Dart isolate.
