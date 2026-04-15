@@ -26,25 +26,25 @@ const features = [
 ];
 ---
 
-<section class="py-8 px-4">
-  <div class="max-w-6xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {
-        features.map((feature) => (
-          <div class="flex flex-col items-center text-center p-4">
-            <Image
-              src={feature.svg}
-              alt=""
-              role="img"
-              class="w-48 h-48 object-contain mb-6"
-            />
-            <h3 class="text-xl font-semibold mb-3 text-white">
-              {feature.title}
-            </h3>
-            <p class="text-gray-300 leading-relaxed">{feature.description}</p>
-          </div>
-        ))
-      }
-    </div>
+<div class="max-w-6xl mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    {
+      features.map((feature) => (
+        <div class="flex flex-col items-center text-center p-4">
+          <Image
+            src={feature.svg}
+            alt=""
+            role="img"
+            class="w-48 h-48 object-contain mb-6"
+          />
+          <h3 class="text-xl font-semibold mb-3 text-silver-tree-100">
+            {feature.title}
+          </h3>
+          <p class="text-silver-tree-200 text-md leading-relaxed">
+            {feature.description}
+          </p>
+        </div>
+      ))
+    }
   </div>
-</section>
+</div>

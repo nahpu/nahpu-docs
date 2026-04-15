@@ -2,11 +2,13 @@
 import HomePageFeatures from "../components/HomePageFeatures.astro";
 import Layout from "../layouts/Layout.astro";
 import homeScreenIpad from "../assets/screenshots/home-screen-ipad.jpeg";
+import siteIpad from "../assets/screenshots/site-ipad.jpeg";
 import specimenRecordIphone from "../assets/screenshots/specimen-record-iphone.jpeg";
-import "../styles/global.css";
+import specimenPartIphoneDark from "../assets/screenshots/specimen-part-iphone-dark.jpeg";
 import cntl from "cntl";
-import { Image } from "astro:assets";
 import ImageWithFrame from "../components/ImageWithFrame.astro";
+
+import "../styles/global.css";
 
 const primarySectionClasses = cntl`
   pt-4
@@ -16,7 +18,7 @@ const primarySectionClasses = cntl`
 `;
 
 const secondarySectionClasses = cntl`
-  py-8
+  pt-8
   bg-silver-tree-800
   dark:bg-silver-tree-900
 `;
@@ -138,6 +140,7 @@ const features = [
       >
         <ImageWithFrame
           src={homeScreenIpad}
+          darkSrc={siteIpad}
           alt="NAHPU Home Screen"
           width={600}
         />
@@ -145,8 +148,18 @@ const features = [
     </div>
   </section>
   <section class={secondarySectionClasses}>
-    <div class="container mx-auto">
-      <HomePageFeatures />
+    <div class="flex flex-col lg:flex-row items-center gap-2 justify-center">
+      <div class="flex lg:self-end order-last lg:order-first">
+        <ImageWithFrame
+          src={specimenRecordIphone}
+          darkSrc={specimenPartIphoneDark}
+          alt="NAHPU Specimen Record"
+          width={200}
+        />
+      </div>
+      <div class="pb-4 ml-8">
+        <HomePageFeatures />
+      </div>
     </div>
   </section>
 
