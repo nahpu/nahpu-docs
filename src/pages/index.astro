@@ -5,8 +5,6 @@ import "../styles/global.css";
 import cntl from "cntl";
 
 const primarySectionClasses = cntl`
-  flex
-  flex-col
   items-center
   justify-center
   text-center
@@ -25,8 +23,7 @@ const titleClasses = cntl`
   text-5xl
   md:text-6xl
   font-bold
-  tracking-tight
-  mb-4
+  tracking-wide
   text-silver-tree-950
   dark:text-silver-tree-50
   drop-shadow-lg
@@ -39,7 +36,8 @@ const subtitleClasses = cntl`
   text-silver-tree-700
   dark:text-silver-tree-200
   max-w-xl
-  mb-10
+  mb-12
+  mx-auto
 `;
 
 const mainBtnClasses = cntl`
@@ -48,7 +46,7 @@ const mainBtnClasses = cntl`
   rounded-lg
   bg-linear-to-r from-silver-tree-700 to-silver-tree-600
   dark:bg-linear-to-r dark:from-silver-tree-400 dark:to-silver-tree-300
-  hover:bg-silver-tree-200 hover:to-silver-tree-100
+  hover:bg-silver-tree-800 hover:to-silver-tree-700
   dark:hover:from-silver-tree-400 dark:hover:to-silver-tree-300
   text-silver-tree-100 dark:text-silver-tree-950
   font-semibold
@@ -120,9 +118,9 @@ const features = [
 >
   <section class={primarySectionClasses}>
     <h1 class={titleClasses}>NAHPU</h1>
-    <p class={subtitleClasses}>
-      Rethinking species inventory in the digital age
-    </p>
+    <h2 class={subtitleClasses}>
+      A cross-platform digital field catalog for natural history collections
+    </h2>
     <div class="flex flex-wrap gap-4 justify-center">
       <a href="/en" class={mainBtnClasses}>Learn NAHPU</a>
       <a href="/en/installation" class={secondaryBtnClasses}>Try NAHPU</a>
