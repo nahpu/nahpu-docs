@@ -7,15 +7,21 @@ interface Props {
     darkSrc?: ImageMetadata;
     alt: string;
     width: number;
+    color?: string;
+    borderColor?: string;
 }
 
-const { src, darkSrc, alt, width } = Astro.props;
+const { src, darkSrc, alt, width, color, borderColor } = Astro.props;
+
+const bgColor = color || "bg-silver-tree-200/90 dark:bg-silver-tree-800/90";
+const frameBorderColor =
+    borderColor || "border-silver-tree-300 dark:border-silver-tree-700";
 
 const frameClasses = cntl`
     border-t border-x 
-    border-silver-tree-300 dark:border-silver-tree-700
-    bg-silver-tree-200 dark:bg-silver-tree-800 
-    shadow-lg 
+    ${frameBorderColor}
+    ${bgColor}
+    shadow-lg
     backdrop-blur-lg
     rounded-t-2xl
     overflow-hidden pt-2 px-2
