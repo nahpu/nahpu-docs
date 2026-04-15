@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import cntl from "cntl";
+
+interface Props {
+    src: ImageMetadata;
+    alt: string;
+    width: number;
+}
+
+const { src, alt, width } = Astro.props;
+
+const frameClasses = cntl`
+    border-t border-x 
+    border-silver-tree-300 dark:border-silver-tree-700
+    bg-silver-tree-200 dark:bg-silver-tree-800 
+    shadow-lg 
+    backdrop-blur-lg
+    rounded-t-2xl
+    overflow-hidden pt-2 px-2
+`;
+---
+
+<div class={frameClasses}>
+    <Image
+        src={src}
+        alt={alt}
+        width={width}
+        class="block rounded-t-lg w-full"
+        quality="max"
+    />
+</div>

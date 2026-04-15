@@ -1,14 +1,15 @@
 ---
 import HomePageFeatures from "../components/HomePageFeatures.astro";
 import Layout from "../layouts/Layout.astro";
+import homeScreenIpad from "../assets/screenshots/home-screen-ipad.jpeg";
+import specimenRecordIphone from "../assets/screenshots/specimen-record-iphone.jpeg";
 import "../styles/global.css";
 import cntl from "cntl";
+import { Image } from "astro:assets";
+import ImageWithFrame from "../components/ImageWithFrame.astro";
 
 const primarySectionClasses = cntl`
-  items-center
-  justify-center
-  text-center
-  py-14
+  pt-4
   bg-linear-to-b from-silver-tree-200 to-silver-tree-400
   dark:from-silver-tree-900 dark:to-silver-tree-700
 `;
@@ -20,6 +21,7 @@ const secondarySectionClasses = cntl`
 `;
 
 const titleClasses = cntl`
+  text-left
   text-5xl
   md:text-6xl
   font-bold
@@ -31,19 +33,19 @@ const titleClasses = cntl`
 
 const subtitleClasses = cntl`
   text-lg
+  text-left
   md:text-xl
   italic
   text-silver-tree-700
   dark:text-silver-tree-200
-  max-w-xl
-  mb-12
-  mx-auto
+  max-w-2xl
+  pb-4
 `;
 
 const mainBtnClasses = cntl`
   px-6
   py-4
-  rounded-lg
+  rounded-xl
   bg-linear-to-r from-silver-tree-700 to-silver-tree-600
   dark:bg-linear-to-r dark:from-silver-tree-400 dark:to-silver-tree-300
   hover:bg-silver-tree-800 hover:to-silver-tree-700
@@ -57,7 +59,7 @@ const mainBtnClasses = cntl`
 const secondaryBtnClasses = cntl`
   px-6
   py-4
-  rounded-lg
+  rounded-xl
   border border-silver-tree-800
   dark:border-silver-tree-400
   text-silver-tree-800
@@ -117,16 +119,30 @@ const features = [
   description="Revolutionizing Field Expeditions with a Digital Catalog for Everyone"
 >
   <section class={primarySectionClasses}>
-    <h1 class={titleClasses}>NAHPU</h1>
-    <h2 class={subtitleClasses}>
-      A cross-platform digital field catalog for natural history collections
-    </h2>
-    <div class="flex flex-wrap gap-4 justify-center">
-      <a href="/en" class={mainBtnClasses}>Learn NAHPU</a>
-      <a href="/en/installation" class={secondaryBtnClasses}>Try NAHPU</a>
+    <div class="flex flex-col lg:flex-row items-center gap-24 justify-center">
+      <div id="text-hero" class="lg:pb-2">
+        <h1 class={titleClasses}>NAHPU</h1>
+        <h2 class={subtitleClasses}>
+          A cross-platform digital field catalog for natural history collections
+        </h2>
+
+        <div class="flex flex-wrap gap-4 justify-left">
+          <a href="/en" class={mainBtnClasses}>Learn NAHPU</a>
+          <a href="/en/installation" class={secondaryBtnClasses}>Try NAHPU</a>
+        </div>
+      </div>
+      <div
+        id="image-hero"
+        class="rounded-t-2xl overflow-hidden flex lg:self-end"
+      >
+        <ImageWithFrame
+          src={homeScreenIpad}
+          alt="NAHPU Home Screen"
+          width={600}
+        />
+      </div>
     </div>
   </section>
-
   <section class={secondarySectionClasses}>
     <div class="container mx-auto">
       <HomePageFeatures />
