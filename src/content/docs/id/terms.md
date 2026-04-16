@@ -5,31 +5,31 @@ sidebar:
     order: 13
 ---
 
-## Pendahuluan
+## Pengantar
 
-Syarat dan Ketentuan ini mengatur penggunaan Anda atas aplikasi seluler kami, NAHPU. Dengan mengunduh atau menggunakan aplikasi ini, Anda setuju untuk terikat oleh Syarat dan Ketentuan ini.
+Syarat dan Ketentuan ini mengatur penggunaan Anda atas aplikasi seluler kami, NAHPU. Dengan mengunduh atau menggunakan aplikasi, Anda setuju untuk terikat oleh Syarat dan Ketentuan ini.
 
 ## Perubahan pada Syarat dan Ketentuan Ini
 
-Kami berhak untuk mengubah syarat dan ketentuan ini kapan saja, dan tanpa pemberitahuan sebelumnya, dengan memposting Syarat dan Ketentuan yang telah diubah yang selalu dapat diakses melalui aplikasi. Penggunaan aplikasi secara berkelanjutan oleh Anda menunjukkan penerimaan Anda terhadap Syarat dan Ketentuan yang telah diubah tersebut.
+Kami berhak untuk mengubah syarat dan ketentuan ini kapan saja, dan tanpa pemberitahuan sebelumnya, dengan memposting Syarat dan Ketentuan yang diubah yang selalu dapat diakses melalui aplikasi. Penggunaan aplikasi yang berkelanjutan oleh Anda menunjukkan penerimaan Anda terhadap Syarat dan Ketentuan yang diubah.
 
 ## Menggunakan NAHPU
 
-Anda setuju untuk menggunakan NAHPU hanya untuk tujuan yang diizinkan oleh Syarat dan Ketentuan ini dan hukum, peraturan, atau praktik atau pedoman yang berlaku secara umum di yurisdiksi yang relevan.
+Anda setuju untuk menggunakan NAHPU hanya untuk tujuan yang diizinkan oleh Syarat dan Ketentuan ini dan setiap hukum, peraturan, atau praktik atau pedoman yang berlaku secara umum di yurisdiksi terkait.
 
 ## Sumber Terbuka dan Lisensi MIT
 
-NAHPU adalah aplikasi sumber terbuka. Kode sumber tersedia secara bebas dan dapat didistribusikan serta dimodifikasi di bawah ketentuan Lisensi MIT.
+NAHPU adalah aplikasi sumber terbuka (open-source). Kode sumber tersedia secara bebas dan dapat didistribusikan serta dimodifikasi berdasarkan persyaratan Lisensi MIT.
 
-Lisensi MIT adalah lisensi perangkat lunak bebas permisif yang berasal dari Massachusetts Institute of Technology (MIT). Lisensi ini hanya memberikan batasan yang sangat terbatas pada penggunaan kembali dan, oleh karena itu, memiliki kompatibilitas lisensi yang tinggi.
+Lisensi MIT adalah lisensi perangkat lunak bebas yang permisif yang berasal dari Institut Teknologi Massachusetts (MIT). Lisensi ini hanya memberikan batasan yang sangat terbatas pada penggunaan kembali dan oleh karena itu, memiliki kompatibilitas lisensi yang tinggi.
 
-Dengan menggunakan NAHPU, Anda mengakui bahwa Anda memahami dan setuju untuk mematuhi syarat dan ketentuan Lisensi MIT. Anda dapat melihat teks lengkap Lisensi MIT di: [https://github.com/hhandika/nahpu/blob/main/LICENSE](https://github.com/hhandika/nahpu/blob/main/LICENSE)
+Dengan menggunakan NAHPU, Anda menyatakan bahwa Anda memahami dan setuju untuk mematuhi syarat dan ketentuan Lisensi MIT. Anda dapat melihat teks lengkap Lisensi MIT di: [https://github.com/hhandika/nahpu/blob/main/LICENSE](https://github.com/hhandika/nahpu/blob/main/LICENSE)
 
 ## Pustaka Pihak Ketiga
 
-Harap dicatat bahwa meskipun NAHPU didistribusikan di bawah Lisensi MIT, aplikasi ini menggunakan pustaka pihak ketiga yang mungkin didistribusikan di bawah lisensi yang berbeda. Penggunaan pustaka-pustaka ini tunduk pada lisensi masing-masing. Kami menyarankan pengguna untuk meninjau lisensi-lisensi tersebut.
+Harap diperhatikan bahwa meskipun NAHPU didistribusikan di bawah Lisensi MIT, ia menggunakan pustaka pihak ketiga yang mungkin didistribusikan di bawah lisensi yang berbeda. Penggunaan pustaka ini tunduk pada lisensi masing-masing. Kami mendorong pengguna untuk meninjau lisensi ini.
 
-Kami tidak mengklaim kepemilikan atau tanggung jawab apa pun atas pustaka pihak ketiga ini. Masalah apa pun yang terkait dengan pustaka ini harus ditujukan kepada penulis atau pengelola masing-masing.
+Kami tidak mengklaim kepemilikan atau tanggung jawab apa pun atas pustaka pihak ketiga ini. Segala masalah yang berkaitan dengan pustaka ini harus diarahkan kepada penulis atau pengelola masing-masing.
 
 ## Data Lokasi
 
@@ -37,11 +37,11 @@ NAHPU menggunakan data lokasi untuk menyediakan dan meningkatkan layanan berbasi
 
 ## Kekayaan Intelektual
 
-NAHPU dan hak kekayaan intelektual atas konten, fitur, dan fungsionalitas (termasuk namun tidak terbatas pada semua informasi, perangkat lunak, teks, tampilan, gambar, video dan audio, serta desain, pemilihan, dan pengaturannya), dimiliki oleh aplikasi, pemberi lisensinya, atau penyedia materi lainnya, dan dilindungi oleh undang-undang hak cipta dan merek dagang serta undang-undang kekayaan intelektual atau hak kepemilikan lainnya.
+NAHPU dan hak kekayaan intelektual dari konten, fitur, dan fungsionalitas (termasuk namun tidak terbatas pada seluruh informasi, perangkat lunak, teks, tampilan, gambar, video dan audio, dan desain, pemilihan serta pengaturannya), dimiliki oleh aplikasi, pemberi lisensinya, atau penyedia materi lainnya dan dilindungi oleh hak cipta dan undang-undang merek dagang serta hak kekayaan intelektual atau hak milik lainnya.
 
 ## Penyelesaian Sengketa
 
-Jika Anda memiliki sengketa dengan kami terkait penggunaan NAHPU, Anda setuju untuk menghubungi kami secara langsung dan memberikan deskripsi terperinci mengenai masalah yang Anda hadapi. Anda setuju untuk memberi kami kesempatan untuk menyelesaikan setiap sengketa atau perselisihan di antara kita secara langsung, sebelum mengambil tindakan hukum apa pun.
+Jika Anda memiliki perselisihan dengan kami terkait penggunaan NAHPU oleh Anda, Anda setuju untuk menghubungi kami secara langsung dan memberikan deskripsi terperinci mengenai masalah yang Anda temui. Anda setuju untuk memberi kami kesempatan untuk menyelesaikan perselisihan atau ketidaksepakatan antara kita secara langsung, sebelum menempuh jalur hukum apa pun.
 
 ## Hubungi Kami
 
