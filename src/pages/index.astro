@@ -124,7 +124,18 @@ const features = [
   <section class={primarySectionClasses}>
     <div class="flex flex-col lg:flex-row items-center gap-24 justify-center">
       <div id="text-hero" class="lg:pb-2">
-        <h1 class={titleClasses}>NAHPU</h1>
+        <h1 class={titleClasses}>
+          {
+            "NAHPU".split("").map((letter, i) => (
+              <span
+                class="inline-block opacity-0 animate-fade-in"
+                style={`animation-delay: ${i * 0.5}s;`}
+              >
+                {letter}
+              </span>
+            ))
+          }
+        </h1>
         <h2 class={subtitleClasses}>
           A cross-platform digital field catalog for natural history collections
         </h2>
