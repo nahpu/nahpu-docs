@@ -28,12 +28,13 @@ const frameClasses = cntl`
 `;
 ---
 
-<div class={frameClasses}>
+<div class={frameClasses} style={`max-width: ${width}px; width: 100%;`}>
     <Image
         src={src}
         alt={alt}
         width={width}
-        class={`block rounded-t-lg w-full ${darkSrc ? "dark:hidden" : ""}`}
+        densities={[1.5, 2]}
+        class={`block rounded-t-lg w-full h-auto object-contain ${darkSrc ? "dark:hidden" : ""}`}
         quality="max"
     />
     {
@@ -42,7 +43,8 @@ const frameClasses = cntl`
                 src={darkSrc}
                 alt={alt}
                 width={width}
-                class="hidden dark:block rounded-t-lg w-full"
+                densities={[1.5, 2]}
+                class="hidden dark:block rounded-t-lg w-full h-auto object-contain"
                 quality="max"
             />
         )
