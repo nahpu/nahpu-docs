@@ -1,4 +1,4 @@
-# NAHPU Docs
+# NAHPU Docs <img src="assets/nahpu-docs.svg" alt="nahpu logo" align="right" width="150"/>
 
 This serves documentation, guides, and project information for [NAHPU](https://nahpu.app). We develop the documentation using [Astro](https://astro.build/) and [Starlight](https://starlight.astro.build/). The frameworks allow us to create a fast, modern, and multilingual documentation site with support for Markdown content and custom components. It also environmentally friendly by optimizing for performance and minimizing unnecessary re-renders (see details in [Starlight's documentation](https://starlight.astro.build/)).
 
