@@ -26,7 +26,24 @@ The reusable Rust logic comes from NAHPU API crates used by the app:
 | `nahpu_db` | Record import/export helpers |
 | `nahpu_export` | Document export and PDF generation support |
 | `nahpu_gis` | GIS export formats such as KML, GeoJSON, TopoJSON, and Shapefile |
-| `nahpu_configs` | User configuration, export presets, and document layout presets |
+| `nahpu_configs` | `redb` storage for reproducible user configuration, export presets, template presets, and document layouts |
+
+## Data ownership
+
+The NAHPU API does not own every kind of persisted app data. Keep these
+boundaries clear when adding Rust behavior:
+
+- **Project records** stay in the Flutter app's Drift-managed SQLite database.
+  The `nahpu_db` crate mirrors the Drift schema for Rust-side types and helpers,
+  but the SQLite database remains the canonical project store.
+- **App settings** that are not required for research reproducibility stay in
+  Flutter `SharedPreferences`. Do not route local UI preferences or transient
+  app flags through NAHPU API.
+- **User configs** that affect reproducible outputs belong in `nahpu_configs`.
+  This crate uses `redb` tables for custom option lists, field formatting
+  choices, record export presets, template presets, and document layouts. These
+  configs can be exported/imported with project archives so another
+  installation can reproduce the same export and document behavior.
 
 ## Wrapper modules
 
@@ -35,7 +52,7 @@ The app exposes Rust behavior through modules in `rust/src/api/`:
 | Module | Purpose |
 |---|---|
 | `archive.rs` | Archive creation and extraction wrappers |
-| `config.rs` | App settings, export presets, and document layout preset wrappers |
+| `config.rs` | User config, export preset, template preset, and document layout wrappers backed by `nahpu_configs` |
 | `export.rs` | Record, GIS, document, Typst, and PDF export wrappers |
 | `gis.rs` | GIS-related utility wrappers |
 | `import.rs` | Import wrappers |

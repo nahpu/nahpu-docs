@@ -136,10 +136,6 @@ export default defineConfig({
                 },
                 { label: "NAHPU API", link: "contributing/code/nahpu-api" },
                 {
-                  label: "AI-assisted development",
-                  link: "contributing/code/ai-assisted-development",
-                },
-                {
                   label: "Code conventions",
                   link: "contributing/code/conventions",
                 },
@@ -150,6 +146,10 @@ export default defineConfig({
                 {
                   label: "Troubleshooting",
                   link: "contributing/code/troubleshooting",
+                },
+                {
+                  label: "AI-assisted development",
+                  link: "contributing/code/ai-assisted-development",
                 },
               ],
             },

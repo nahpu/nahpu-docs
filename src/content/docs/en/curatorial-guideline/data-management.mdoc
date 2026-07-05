@@ -4,4 +4,194 @@ sidebar:
   order: 2
 ---
 
-This page will provide guideline on managing NAHPU data after fieldwork. More details soon...
+Good data management in NAHPU means keeping three things safe and portable:
+
+- **Project database**: specimen, site, event, personnel, taxonomy, narrative,
+  media metadata, and related project records stored in SQLite.
+- **Project files**: media and other files stored in the NAHPU app documents
+  directory.
+- **User configs**: reproducibility-related configuration such as controlled
+  option lists, export presets, template presets, and document layout presets.
+
+NAHPU separates these data types so you can make small database-only backups
+for daily safety, fuller project archives when moving between devices, and
+settings/config backups when you want another installation to produce the same
+exports and documents.
+
+## Backup strategy
+
+Use more than one backup type during fieldwork.
+
+- **Daily database backup**: a compact `.sqlite3` file. Use this frequently
+  because it is small and easy to upload over limited internet.
+- **Project archive backup**: a `.zip` file that includes the SQLite database
+  plus project files such as media. Use this when you need a complete project
+  copy for another device or long-term storage.
+- **User config backup**: a `.json` or `.json.nl` file containing user configs,
+  export presets, template presets, and document layouts. Use this when you need
+  another device to share the same controlled lists, export behavior, and
+  document layouts.
+
+{% aside type="tip" title="Recommended practice" %}
+At the end of each field day, export a database-only backup to cloud storage if
+internet is available, and export a project archive to local storage such as a
+USB-C flash drive or a second device. Periodically restore a backup on another
+device to confirm the file is usable.
+{% /aside %}
+
+## Backing up the database
+
+Use `Backup database` from the project menu.
+
+{% steps %}
+
+1. Navigate to the `Dashboard` page.
+2. Open the project menu and select `Backup database`.
+3. Keep `Database (.sqlite3)` selected.
+4. Choose what to include.
+   - Leave both toggles off to export only the SQLite database as `.sqlite3`.
+   - Turn on `Include project data` to include media/project files.
+   - Turn on `Include app settings` to include user configs in the archive.
+5. Add a file name.
+6. Select the save directory.
+7. Click `Save`.
+
+{% /steps %}
+
+If `Include project data` or `Include app settings` is enabled, NAHPU writes a
+`.zip` archive instead of a plain `.sqlite3` file. When `Include app settings`
+is enabled, the archive includes exported user configs as `user_configs.json`.
+
+## Restoring a database
+
+Use database restore when you need to replace the current NAHPU database with a
+backup file.
+
+{% steps %}
+
+1. Open `Settings`.
+2. Select `Database`.
+3. Choose a `.sqlite3` database file or a NAHPU archive `.zip`.
+4. Keep `Backup current database` enabled unless you are certain you do not need
+   the current data.
+5. Click `Replace`.
+6. Confirm the warning.
+
+{% /steps %}
+
+Restoring a database replaces the current project database. If you restore a
+`.zip` archive, NAHPU extracts the archive, copies included project files into
+the app documents directory, imports any included user configs, and then
+replaces the active SQLite database.
+
+## Backing up user configs
+
+User configs store choices that affect reproducibility but are not project
+records. They include controlled option lists, field formatting choices, record
+export presets, template presets, and document layout presets.
+
+Use `Export settings` to back them up separately.
+
+{% steps %}
+
+1. Navigate to the `Dashboard` page.
+2. Open the project menu and select `Export settings`.
+3. Select the settings format.
+   - `JSON (.json)` is easiest to inspect and share.
+   - `JSON Lines (.json.nl)` is useful for line-based processing.
+4. Add a file name.
+5. Select the save directory.
+6. Click `Save`.
+
+{% /steps %}
+
+## Restoring user configs
+
+Use settings restore when you want to replace the current user configs with
+configs from another device or backup.
+
+{% steps %}
+
+1. Open `Settings`.
+2. Select the settings import option.
+3. Choose a `.json` or `.json.nl` settings file.
+4. Click `Replace`.
+5. Confirm the warning.
+
+{% /steps %}
+
+Restoring user configs updates the app's configuration store. It does not
+replace the project SQLite database by itself. To restore both project data and
+user configs together, restore a `.zip` database archive that includes app
+settings.
+
+## Document layouts
+
+Document layouts define how saved document templates are placed on pages. Use
+them for label sheets, continuous roll labels, tags, and other printable
+documents.
+
+Document layouts are managed in `Settings` under `Document Presets`.
+
+{% steps %}
+
+1. Open `Settings`.
+2. Select `Document Presets`.
+3. In the `Presets` tab, create a new preset or select an existing one.
+4. In `Edit Preset`, choose a `Layout style`.
+   - `Whole Page` places templates on standard or custom pages.
+   - `Continuous Roll` is for roll-style output.
+5. Configure page setup.
+   - Select page size, such as A4, A5, Letter, or `Custom`.
+   - Set orientation when using whole-page layouts.
+   - Adjust margins and padding as needed.
+6. Configure template blocks.
+   - Select the template for each block.
+   - Set template count, rows, and columns.
+   - Adjust template padding.
+   - Add a page break after a block when needed.
+7. Use `Preview` to check the layout against selected records.
+8. Save the preset.
+
+{% /steps %}
+
+You can import and export document layout presets as JSON from the `Document
+Presets` screen. This is useful for sharing label layouts across devices or
+between projects. Document layouts are also included in user config exports.
+
+## Exporting documents
+
+Use `Export documents` to create PDFs from the selected document layout and
+template presets.
+
+{% steps %}
+
+1. Navigate to the `Dashboard` page.
+2. Open the project menu and select `Export documents`.
+3. Select a `Document Layout` profile.
+4. Review or adjust page setup and template blocks.
+5. Select the records to include when record selection is available.
+6. Generate a preview and verify that text, page breaks, and template placement
+   are correct.
+7. Add a file name.
+8. Select the save directory on desktop. On Android and iOS, NAHPU uses the app
+   documents directory.
+9. Click `Export Documents`.
+
+{% /steps %}
+
+Exported documents are PDFs. If the output is not correct, edit the template or
+document layout preset, regenerate the preview, and export again.
+
+## Before sharing data
+
+Before sending NAHPU data to a museum, collaborator, or another device:
+
+- Create a fresh database backup.
+- Create a project archive if media or associated files need to move with the
+  project.
+- Export user configs if the recipient needs the same controlled lists, export
+  presets, templates, or document layouts.
+- Export record files or documents needed by the recipient.
+- Verify at least one restore path before deleting data from the original
+  device.

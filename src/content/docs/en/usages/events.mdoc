@@ -4,21 +4,31 @@ sidebar:
   order: 6
 ---
 
-Collecting events helps you keep track of the collecting efforts, personnel, weather, and astronomy data for each event. The specimen records link directly to the event instead of the site.
+Collecting events help you keep track of activity, effort, personnel, weather,
+and astronomy data for a period of work at a site. Specimen records link to a
+collecting event, not directly to a site, so the event is the bridge between a
+specimen and the site, coordinate, method, and collector context.
 
 ## Setting up events
 
-The NAHPU default lists for `Collection Methods` and `Personnel Roles` are limited and do not include all possible options. If this is your first NAHPU project, we recommend setting up the entries. You can do this by going to the settings:
+The NAHPU default lists for `Collection Methods` and `Personnel Roles` are
+limited. If this is your first NAHPU project, set up the lists before entering
+many events.
 
 {% steps %}
 
 1. Navigate to the dashboard.
-2. Tab/click the humburger menu in the top left corner.
+2. Tap/click the hamburger menu in the top left corner.
 3. Select `Settings`.
-4. Select `Events`. 
-5. Edit the enties to match with your field scenario.
+4. Select `Events`.
+5. Edit the entries to match your field scenario.
 
 {% /steps %}
+
+Default collection methods include `Hand`, `Net`, and `Pitfall`. Default
+personnel roles include `Leader` and `Helper`. You can add more specific values,
+such as mist net, harp trap, visual encounter survey, driver, recorder, or
+observer, depending on your protocol.
 
 ## Creating a new event
 
@@ -31,7 +41,10 @@ The NAHPU default lists for `Collection Methods` and `Personnel Roles` are limit
 
     {% aside type="tip" %}
 
-    You can minimize typing the same information by duplicating the event instead of creating a new one. Tap/click on the three dot menu button. Then, `Duplicate event`. It will create a new event using information from the current event with the `Start Date` and the `End Date` automatically updated to next day.
+    You can minimize repeated entry by duplicating an event. Tap/click the
+    three-dot menu, then choose `Duplicate event`. NAHPU copies the site, times,
+    activity, notes, effort, and personnel, increments the `Start Date` and
+    `End Date` by one day, and creates a new empty weather record.
 
     {% /aside %}
 
@@ -39,20 +52,46 @@ The NAHPU default lists for `Collection Methods` and `Personnel Roles` are limit
 
 4. Add the `Start Date` and `End Date`.
 
-    The `Event ID` will be automatically populated with the `{Site ID}-{Start Date}`.
+    The `Event ID` is generated from `{Site ID}-{Start Date}`.
 
 5. Edit the `Event ID` (optional).
 
-    If you have multiple events with the same `Site ID` and `Start date`, you should edit the `Event Id` to include a unique suffix for the event. It usually happens when you want to separate the day and night collecting efforts, or when you have multiple activities in the same site at the same time.
+    If you have multiple events with the same `Site ID` and `Start Date`, add an
+    ID suffix. This is useful when you separate day and night work, run multiple
+    activities at the same site, or need to distinguish repeated events on the
+    same date.
 
 6. Add `Start Time` and `End Time`.
 
+7. Add `Primary activity`.
 
-7. Add primary activity.
-
-    For field collecting scenario, this will almost always `Collecting`. However, if you also doing recording at the same time. You may want to create a separate event for the record.
+    Activity values are `Collecting`, `Recording`, `Observing`, and `Other`.
+    For many specimen workflows this will be `Collecting`, but create separate
+    events when recording, observing, or other activities need their own effort,
+    personnel, or weather context.
 
 {% /steps %}
+
+## General information
+
+The `General Information` card stores the core event identity and timing:
+
+- `Event ID`: generated from site ID, start date, and optional suffix.
+- `Site ID`: site where the event occurred.
+- `Start Date` and `End Date`: event date range.
+- `Start Time` and `End Time`: event time range.
+
+For mammal projects, the default start date is set to the previous day and the
+default time picker starts at `07:00`, which supports overnight trap checks. For
+other catalog formats, date and time pickers default to the current date/time.
+
+## Activity
+
+The `Activity` card stores the broad purpose of the event.
+
+- `Primary activity`: one of `Collecting`, `Recording`, `Observing`, or `Other`.
+- `Notes`: free-text notes about the activity, secondary activities, protocol
+  details, or why `Other` was selected.
 
 ## Adding effort
 
@@ -62,9 +101,79 @@ The NAHPU default lists for `Collection Methods` and `Personnel Roles` are limit
 
 2. Select a method.
 
+3. Add `Brand and Model` when the method uses specific equipment.
 
+4. Add `Count`.
 
+    This is the number of tools, traps, nets, recorders, or other units used.
+
+5. Add `Size` when applicable.
+
+6. Add `Notes` for effort-specific details.
 
 {% /steps %}
 
+Effort records are stored separately from the event so one event can include
+multiple methods. Each effort contains:
+
+- `Method`: user-defined collection method.
+- `Brand and Model`: equipment brand/model when relevant.
+- `Count`: number of tools or units.
+- `Size`: size of the tool or setup.
+- `Notes`: any method-specific notes.
+
+Specimen capture records can later select one of these event efforts as the
+specimen's `Method`.
+
 ## Adding collecting personnel
+
+Use the `Event Personnel` tab to record everyone involved in the event.
+
+{% steps %}
+
+1. Open the personnel tab in the lower right event panel.
+2. Use `+ Add personnel`.
+3. Select a `Personnel` entry from the project personnel list.
+4. Select a `Role`.
+
+{% /steps %}
+
+Personnel roles are user-defined in event settings. Add anyone who contributed
+to the event, including collectors, leaders, helpers, drivers, observers,
+recorders, or people who assisted with logistics. Specimen capture records can
+later select an event personnel entry as the specimen's `Collector`.
+
+## Weather and astronomy
+
+NAHPU creates one weather record for each collecting event. Use the weather tab
+to record environmental context for the event.
+
+Weather fields include:
+
+- `Day Lowest` and `Day Highest`: daytime temperature range in degrees Celsius.
+- `Night Lowest` and `Night Highest`: nighttime temperature range in degrees
+  Celsius.
+- `Average`: average humidity percentage.
+- `Dew Point`: dew point temperature.
+- `Sunrise` and `Sunset`: local sunrise and sunset times.
+- `Moon Phase`: one of `New Moon`, `Waxing Crescent`, `First Quarter`,
+  `Waxing Gibbous`, `Full Moon`, `Waning Gibbous`, `Last Quarter`, or
+  `Waning Crescent`.
+- `Notes`: additional weather, habitat, or astronomy notes.
+
+Weather data is not copied when duplicating an event. The duplicated event gets
+a blank weather record so you can enter the correct conditions for that date.
+
+## How specimen records use events
+
+When you create or edit a specimen, the `Capture Records` card pulls data from
+collecting events:
+
+- `Site ID` filters the available event IDs.
+- `Event ID` links the specimen to the event.
+- `Method` comes from the event's effort records.
+- `Collector` comes from the event personnel list.
+- `Coordinate ID` comes from coordinates associated with the event site.
+
+Changing a specimen's event clears event-dependent fields such as method,
+collector, and coordinate, while preserving the specimen's capture date and time.

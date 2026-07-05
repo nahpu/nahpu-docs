@@ -4,8 +4,9 @@ sidebar:
   order: 4
 ---
 
-NAHPU is a cross-platform Flutter app with local SQLite storage and a thin Rust
-bridge for operations that are better handled in shared Rust crates.
+NAHPU is a cross-platform Flutter app with local SQLite project storage,
+`SharedPreferences` app settings, `redb` user configuration storage, and a thin
+Rust bridge for operations that are better handled in shared Rust crates.
 
 ## High-level schema
 
@@ -58,6 +59,16 @@ bridge for operations that are better handled in shared Rust crates.
                               │ nahpu_db, nahpu_export, nahpu_gis,   │
                               │ nahpu_archive, nahpu_configs         │
                               └──────────────────────────────────────┘
+                                                 │
+                                                 │ redb transactions
+                                                 ▼
+                              ┌──────────────────────────────────────┐
+                              │ redb config DB                       │
+                              │ Owned through nahpu_configs          │
+                              └──────────────────────────────────────┘
+
+SharedPreferences is also accessed from Dart services/providers for local app
+settings that are not required for reproducibility.
 ```
 
 ## Layers
@@ -76,15 +87,40 @@ mutation behavior in one testable class.
 database orchestration, and platform-specific behavior should live in
 `lib/services/`, not in widgets.
 
-**Database** code uses Drift over SQLite. The app is offline-first, so database
-changes require careful schema versions, migrations, and tests.
+**Database** code uses Drift over SQLite for canonical project records. The app
+is offline-first, so database changes require careful schema versions,
+migrations, and tests.
+
+**App settings** use `SharedPreferences` for local UI or device state that is not
+required to reproduce research output. Examples include theme mode and transient
+app flags.
+
+**User configs** use a `redb` database through the Rust `nahpu_configs` crate.
+This store holds reproducibility-related user choices such as custom option
+lists, field formatting choices, record export presets, template presets, and
+document layouts. These values are separate from the project SQLite database but
+can be exported and imported with project archives.
 
 **Rust wrappers** in `rust/src/api/` expose functionality to Dart through
 Flutter Rust Bridge. Keep this layer thin.
 
 **NAHPU API crates** contain reusable Rust implementations. The app currently
 depends on crates for archive handling, database export/import, document export,
-GIS output, and user configuration.
+GIS output, and `redb`-backed user configuration.
+
+## Persistence boundaries
+
+NAHPU separates persisted data by reproducibility and ownership:
+
+- **SQLite project data** is the authoritative dataset for specimens, sites,
+  collecting events, personnel, taxonomy, media metadata, and narratives. It is
+  managed by Drift in the Flutter app.
+- **SharedPreferences app settings** are local to the installation and should
+  only store preferences or flags that are not needed for research
+  reproducibility.
+- **`redb` user configs** are managed by `nahpu_configs` in NAHPU API and store
+  user-defined configuration that affects exports, documents, or controlled
+  option behavior.
 
 ## Directory map
 

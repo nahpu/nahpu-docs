@@ -1,126 +1,134 @@
 ---
 title: "AI-assisted development"
 sidebar:
-  order: 6
+  order: 10
 ---
 
-NAHPU welcomes AI-assisted development when it is used as an engineering tool
-under human direction. AI can help contributors explore unfamiliar code, draft
-tests, generate small implementation options, and speed up repetitive work. It
-does not replace domain understanding, code review, testing, or accountability.
+NAHPU welcomes AI-assisted development when it helps a human contributor move
+faster without giving up engineering judgment. Coding agents are useful for
+finding relevant files, explaining unfamiliar code paths, drafting focused
+tests, checking edge cases, and making small implementation changes that the
+contributor reviews.
 
-## Why NAHPU needs careful engineering
-
-NAHPU supports natural history fieldwork, and natural history work is
-inherently complex. A single collecting record can connect biology, taxonomy,
-geography, time, personnel, field methods, morphology, specimen preparation,
-media metadata, permitting, and downstream statistics. The app has to preserve
-those relationships while remaining usable in remote field conditions.
-
-This complexity is not accidental:
-
-- Biodiversity infrastructure such as [GBIF](https://www.gbif.org/what-is-gbif)
-  brings together data from museum specimens, DNA barcodes, observations, and
-  other sources using shared standards and tools.
-- [Darwin Core](https://www.tdwg.org/standards/dwc/) exists because biological
-  diversity data needs shared identifiers, labels, and definitions for taxa,
-  occurrences, specimens, samples, and related information.
-- Specimen data often depends on multiple disciplines at once: taxonomy for
-  names and identifications, geography and GIS for localities and coordinates,
-  ecology for habitat and sampling context, morphology and physiology for
-  measurements, statistics for summaries and analyses, and informatics for data
-  validation, import, export, and interoperability.
-
-Because of this, many changes that look small in the UI can affect data
-integrity. For example, changing an export field can affect Darwin Core mapping;
-changing coordinate handling can affect GIS exports; changing date or time
-handling can affect field chronology; changing database schema can affect all
-existing projects.
-
-## How to use AI well
-
-Use AI tools to accelerate work that you can still understand, verify, and
-maintain.
-
-Good uses include:
-
-- asking for a map of relevant files before editing;
-- generating a first draft of a focused test;
-- comparing two implementation approaches;
-- explaining unfamiliar Flutter, Drift, Rust, or GIS code;
-- finding edge cases for import, export, backup, or migration logic;
-- drafting documentation that you then fact-check and edit.
-
-Poor uses include:
-
-- pasting generated code into NAHPU without understanding it;
-- accepting generated migrations without testing old database versions;
-- changing export behavior without validating output files;
-- adding dependencies suggested by AI without checking maintenance, license, and
-  platform impact;
-- using AI-generated scientific or taxonomic claims without a source.
-
-## Required contributor responsibility
-
-If you use AI while contributing to NAHPU, you are still the author of the
-change.
-
-You must be able to:
-
-- explain the problem being solved;
-- explain the code path that changed;
-- explain any generated code you kept;
-- describe the domain assumptions behind the change;
-- run and report the relevant checks;
-- respond to review comments without delegating judgment to AI.
-
-Pull requests submitted by AI agents, bot accounts, or contributors who cannot
-explain and maintain the submitted code will be rejected. We also reject
-contributions that appear to be copied from AI output without review,
-integration with existing NAHPU patterns, or appropriate tests.
+The contributor is still responsible for the pull request. You must understand
+the change, test it, explain it, and maintain it.
 
 {% aside type="caution" title="AI-assisted development is not vibe coding" %}
 We use AI as an assistant, not as an accountable developer. Merriam-Webster
 describes vibe coding as careless AI-assisted coding where a person tells AI
 what to build and may not understand how or why the code works. That is not
-acceptable for NAHPU. Production contributions must be reviewed, understood,
-tested, and owned by a human contributor.
+acceptable for NAHPU. Vibe-coded contributions and pull requests submitted by
+AI agents or bot accounts will be rejected.
 {% /aside %}
 
-## Pull request expectations
+## Use `AGENTS.md` as context
 
-When AI helped with a contribution, include a short note in the pull request if
-it materially shaped the implementation.
+NAHPU includes an `AGENTS.md` file at the root of the app repository. This file
+is the project brief for AI coding tools. It tells agents how the repository is
+organized, which commands to run, where to put logic, and what boundaries not
+to cross.
 
-Useful disclosure examples:
+Many agents can read `AGENTS.md` automatically. If your tool does not, paste it
+into the model context before asking for code changes.
 
-- "AI helped identify related files; implementation and tests were written and
-  verified manually."
-- "AI drafted the first version of the widget test; I revised it and confirmed
-  it fails without the fix."
-- "AI helped compare two migration strategies; this PR uses the smaller
-  additive migration described below."
+Good prompts include:
 
-The disclosure is not a penalty. It helps reviewers understand the development
-process and focus review on the parts most likely to need scrutiny.
+- "Read this `AGENTS.md` and summarize the constraints before editing."
+- "Use this `AGENTS.md` as the project instructions for the next task."
+- "Before changing files, identify which guideline from `AGENTS.md` applies."
+- "After the change, verify using the commands listed in `AGENTS.md`."
 
-## Extra care areas
+## Current `AGENTS.md`
 
-Be especially careful when using AI around:
+```md
+# Repository Guidelines
 
-- database migrations;
-- import, export, and backup code;
-- coordinate, locality, and GIS transformations;
-- taxonomic names and biological terminology;
-- date, time, timezone, and chronology handling;
-- generated Flutter Rust Bridge bindings;
-- platform-specific file access on Android, iOS, macOS, Windows, and Linux.
+## Project Structure & Module Organization
 
-For these areas, prefer smaller changes, stronger tests, and source-backed
-documentation.
+NAHPU is a Flutter app with Rust via Flutter Rust Bridge. Dart lives in `lib/`: screens in `lib/screens/`, services/providers in `lib/services/`, styling in `lib/styles/`, and generated bridge Dart in `lib/src/rust/`. Rust wrappers live in `rust/src/api/`; keep core logic upstream. Tests are in `test/` and `integration_test/`. Assets are under `assets/`; platforms are `android/`, `ios/`, `linux/`, `macos/`, `web/`, and `windows/`.
+
+## Build, Test, and Development Commands
+
+- `flutter analyze`: analyze.
+- `flutter test`: test.
+- `flutter pub run build_runner build --delete-conflicting-outputs`: codegen.
+- `python scripts.py frb --generate`: bridge codegen.
+- `python scripts.py frb --check`: `cargo check` in `rust/`.
+
+## Coding Style & Naming Conventions
+
+Use 2-space Dart formatting; run `dart format lib test integration_test`. Follow `flutter_lints` and `custom_lint`. Name Dart files in `snake_case.dart` and classes/widgets in `PascalCase`.
+
+## Rust Best Practices
+
+Keep Rust code, comments, and docstrings to 100 characters per line; wrap long signatures cleanly. Follow `rustfmt` and Rust API Guidelines. Prefer `struct` plus `impl` over loose globals. In `impl` blocks, put `pub fn` methods first and private helpers last. Use `?`, pattern matching, references over clones, and no `.unwrap()` unless justified. Use `snake_case` for functions/variables, `PascalCase` for types/traits/enums, and `SCREAMING_SNAKE_CASE` for constants.
+
+## Flutter Best Practices
+
+Keep screens as thin UI wrappers under `lib/screens/`. Put business logic in `lib/services/` and reusable UI in `lib/screens/shared/`. Do not place UI in services or return widgets from helpers; create widget classes. In widget classes, only `@override` methods go before `build`; keep `build` near the top and helpers below. Prefer `const`, immutable models, and Riverpod over mutable globals. Keep `build` side-effect free; do IO, database, and bridge work in services/providers. Guard async UI updates with `context.mounted`. Use theme values.
+
+## Testing Guidelines
+
+Add focused `*_test.dart` files in `test/`. Prefer service tests for import/export, persistence, validation, and migrations; add widget tests for regressions. Run integration tests for startup, navigation, IO, or bridge changes.
+
+## Commit & Pull Request Guidelines
+
+Git history uses short imperative commits such as `Fix overflow issues.` Keep commits scoped. PRs target `dev`, explain changes, list tests, and include UI screenshots.
+
+## Agent-Specific Instructions
+
+Preserve user changes and avoid unrelated refactors. Always write the product name as `NAHPU`. Agents must not create commits, branches, pushes, or pull requests; leave Git under user control. After bridge API edits, regenerate bindings and verify analysis plus `cargo check`. Add assets to `pubspec.yaml` only when needed.
+```
+
+## What the file does
+
+`AGENTS.md` gives different AI models the same operating rules:
+
+- it points agents to the important directories;
+- it tells agents which commands verify Dart, Flutter, and Rust changes;
+- it keeps UI logic, business logic, generated bridge files, and Rust wrappers
+  in the right places;
+- it reminds agents that NAHPU has generated code and bridge code that require
+  regeneration;
+- it prevents unsafe workflow actions such as committing, branching, pushing, or
+  opening pull requests on behalf of the contributor.
+
+This makes agent output more predictable across tools such as Codex, Claude
+Code, Cursor, Continue, Copilot Workspace, or other model-based coding systems.
+Even when a model does not support `AGENTS.md` as a special file, the text works
+as plain prompt context.
+
+## Recommended workflow
+
+{% steps %}
+
+1. Start the agent in the NAHPU repository root.
+2. Make sure the agent has read `AGENTS.md`.
+3. Ask it to inspect relevant files before editing.
+4. Keep the task narrow: one bug, one feature slice, or one docs update.
+5. Review every generated change yourself.
+6. Run the relevant checks from `AGENTS.md`.
+7. Write the pull request yourself, including tests run and screenshots for UI
+   changes.
+
+{% /steps %}
+
+## Good agent tasks
+
+- "Find the service responsible for record export and explain the data flow."
+- "Add a focused widget test for this regression before changing the UI."
+- "Update this service without moving UI logic into services."
+- "Check whether this bridge API change needs generated bindings."
+- "Review this diff against `AGENTS.md` and list risks."
+
+## Tasks that are not acceptable
+
+- asking an agent to create a pull request for you;
+- submitting code you cannot explain;
+- accepting untested database migrations or export changes;
+- letting an agent invent scientific, taxonomic, or geographic facts;
+- using generated code that ignores the project structure in `AGENTS.md`.
 
 ## References
 
-- [GBIF: What is GBIF?](https://www.gbif.org/what-is-gbif)
-- [TDWG: Darwin Core](https://www.tdwg.org/standards/dwc/)
 - [Merriam-Webster: vibe coding](https://www.merriam-webster.com/slang/vibe-coding)
