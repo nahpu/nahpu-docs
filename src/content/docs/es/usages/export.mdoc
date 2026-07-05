@@ -4,108 +4,139 @@ sidebar:
   order: 9
 ---
 
-NAHPU tiene cuatro categorías de exportación:
+NAHPU tiene estas acciones de exportación en el menú del proyecto:
 
-- **Exportar registros** - Exporta cada tipo de registro del proyecto como archivos delimitados por comas (.csv) o por tabuladores (.tsv).
-- **Crear reportes** - Crea reportes basados en los datos del proyecto.
-- **Agrupar registros** - Exporta todos los registros del proyecto como un solo archivo ZIP.
-- **Exportar pdf** - Exporta cada tipo de registro como un archivo PDF.
+- **Exportar registros** - Exporta un tipo de registro a CSV, TSV, Excel o JSON.
+- **Crear reporte** - Crea reportes del proyecto. Los reportes de conteo de especies y datos multimedia se exportan a CSV; los reportes de coordenadas se exportan a KML, GeoJSON, TopoJSON o Shapefile comprimido.
+- **Agrupar proyecto** - Exporta registros del proyecto, el reporte de especies y archivos multimedia en un archivo ZIP.
+- **Exportar documentos** - Crea documentos PDF desde plantillas de documento y perfiles de diseño.
+- **Respaldar base de datos** - Exporta la base de datos como SQLite, o como ZIP cuando se incluyen datos del proyecto o ajustes de la app.
+- **Exportar ajustes** - Exporta los ajustes de la app como JSON o JSON Lines.
 
 ## Exportación de registros
 
-Esta opción exporta los datos principales de NAHPU como un solo archivo. Para exportar, siga estos pasos:
+Use `Exportar registros` para escribir un tipo de datos del proyecto en un archivo.
 
 {% steps %}
 
 1. Navegue a la página `Panel de control`.
-2. Seleccione `Exportar registros` en el menú de exportación.
-3. Seleccione el `Tipo de registro` que desea exportar.
+2. Abra el menú del proyecto y seleccione `Exportar registros`.
+3. Opcional: elija un preset en `Usar preset`.
+4. Si no usa un preset, seleccione el `Tipo de registro`.
     - `Narrativa`
     - `Sitios`
     - `Eventos`
-    - `Especímenes`
+    - `Registros de especímenes`
     - `Partes de especímenes`
-4. Seleccione el `Formato` que desea exportar.
+5. Para registros de especímenes, seleccione el grupo taxonómico. Las exportaciones de mamíferos pueden limitarse a no murciélagos, murciélagos o todos los mamíferos.
+6. Seleccione el modo de campos de espécimen.
+    - `Estándar`
+    - `Todos los campos`
+    - `Campos personalizados`
+7. Opcional: active `Concatenar entradas múltiples` para combinar valores repetidos en una celda.
+8. Opcional: active `Usar solo nombres de campos` para usar identificadores de campo en lugar de etiquetas visibles.
+9. Seleccione el `Formato`.
+    - `Separado por comas (.csv)`
+    - `Separado por tabuladores (.tsv)`
+    - `Excel (.xlsx)`
+    - `JSON (.json)`
+10. Añada el `Nombre de archivo`.
+11. Seleccione el `Directorio` donde desea guardar el archivo.
+12. Haga clic en `Guardar`.
 
-    Actualmente, NAHPU solo admite estos formatos:
-    - `Delimitado por comas (.csv)`
-    - `Delimitado por tabuladores (.tsv)`
-
-5. Añada un `Nombre de archivo` para el archivo exportado.
-
-6. Seleccione el `Directorio` donde desea guardar el archivo (solo para escritorio y Android).
-
-    {% aside type="note" %}
-    Debido a las restricciones de seguridad de iOS, no puede seleccionar directamente el directorio donde guarda los exportados. La aplicación exportará el archivo al directorio de documentos de la aplicación. 
-    {% /aside %}
-
-7. Seleccione la columna que desea incluir en el archivo exportado (trabajo en progreso).
-
-8. El botón `Guardar` se habilitará.
-    {% aside type="tip" title="Consejos para usuarios de iOS" %}
-    Después de guardar el archivo, el botón `Guardar` cambiará a `Compartir`. Haga clic para compartir el archivo a otras aplicaciones. Puede guardar el archivo en su dispositivo seleccionando la aplicación `Archivos` del menú de compartir.
-    {% /aside %}
 {% /steps %}
+
+{% aside type="tip" title="Compartir archivos guardados" %}
+Después de guardar el archivo, el botón `Guardar` cambia a `Compartir`. Use `Compartir` en dispositivos móviles para enviar el archivo a otra app o guardarlo con el selector de archivos del sistema.
+{% /aside %}
 
 ## Creación de reportes
 
-NAHPU proporciona algunas opciones para crear reportes.
+NAHPU proporciona tres tipos de reporte:
 
-- **Conteo de especies** - Generará un reporte del número de especímenes de cada especie en el proyecto.
-- **Datos multimedia** - Generará un reporte de todos los archivos multimedia y sus metadados dentro del proyecto.
-- **Coordenadas** - Generará un reporte de todas las coordenadas presentes en el proyecto.
-
-Los pasos para crear un reporte son similares a los de la exportación de registros.
+- **Conteo de especies** - Un reporte CSV del número de especímenes por especie en el proyecto.
+- **Datos multimedia** - Un reporte CSV de archivos multimedia y sus metadatos.
+- **Coordenadas** - Un reporte espacial de las coordenadas del proyecto.
 
 {% steps %}
 
 1. Navegue a la página `Panel de control`.
-2. Seleccione `Crear reportes` en el menú de exportación.
-3. Seleccione el `Tipo` que desea crear.
+2. Abra el menú del proyecto y seleccione `Crear reporte`.
+3. Seleccione el `Tipo`.
     - `Conteo de especies`
     - `Datos multimedia`
     - `Coordenadas`
-4. Seleccione el `Formato` que desea exportar.
-    - `Delimitado por comas (.csv)`
-    - `Delimitado por tabuladores (.tsv)`
-5. Añada el `Nombre de archivo` para el archivo a exportar.
-6. Seleccione el `Directorio` donde desea guardarlo (solo para escritorio y Android).
-7. Haga clic en el botón `Guardar`.
+4. Seleccione el `Formato`.
+    - Los reportes de conteo de especies y datos multimedia usan `Separado por comas (.csv)`.
+    - Los reportes de coordenadas pueden usar `Keyhole Markup Language (.kml)`, `GeoJSON (.geojson)`, `TopoJSON (.topojson)` o `Shapefile (.zip)`.
+5. Añada el `Nombre de archivo`.
+6. Seleccione el `Directorio` donde desea guardar el reporte.
+7. Haga clic en `Guardar`.
 
 {% /steps %}
 
-## Agrupar registros
+## Agrupar proyecto
 
-Esta opción exportará todos los registros del proyecto, incluidos los medios multimedia, en un único archivo ZIP.
+`Agrupar proyecto` crea un archivo ZIP que contiene exportaciones de registros del proyecto, el reporte de especies y archivos multimedia del proyecto. Los archivos de registros dentro del paquete se escriben como CSV.
 
 {% steps %}
 
 1. Navegue a la página `Panel de control`.
-2. Seleccione `Agrupar registros` en el menú de exportación.
-3. Para registros de mamíferos, puede optar por escribir `inpreciso entre corchetes` en todas las medidas marcadas como inexactas en los registros del espécimen.
-4. Añada el `Nombre de archivo` para el archivo exportado.
-5. Seleccione el `Directorio` donde desea guardarlo (solo para escritorio y Android).
-6. Haga clic en el botón `Guardar`.
+2. Abra el menú del proyecto y seleccione `Agrupar proyecto`.
+3. Para registros de mamíferos, use `Inexacto entre corchetes` para elegir si las medidas inexactas se escriben entre corchetes.
+4. Añada el `Nombre de archivo` para el ZIP.
+5. Seleccione el `Directorio` donde desea guardarlo.
+6. Haga clic en `Agrupar`.
 
 {% /steps %}
 
-## Exportar PDF
+## Exportar documentos
 
-Este es un trabajo en progreso. Actualmente, NAHPU admite únicamente la exportación de la `Narrativa` y el `Registro de espécimen de mamífero`.
-
-Los pasos para exportar a PDF son similares a los de exportar registros.
+`Exportar documentos` crea archivos PDF desde plantillas de documento y perfiles de diseño. Use esta opción para etiquetas imprimibles, rótulos y otros documentos con formato.
 
 {% steps %}
 
 1. Navegue a la página `Panel de control`.
-2. Seleccione `Exportar pdf` en el menú de exportación.
-3. Seleccione el `Tipo de registro` que desea exportar.
-    - `Narrativa`
-    - `Registro de espécimen de mamífero`
-4. Seleccione el `Formato de página`.
-5. Seleccione la `Orientación de página`.
-6. Añada el `Nombre de archivo` para el archivo exportado.
-7. Seleccione el `Directorio` donde desea guardarlo (solo para escritorio y Android).
-8. Haga clic en el botón `Guardar`.
+2. Abra el menú del proyecto y seleccione `Exportar documentos`.
+3. Seleccione un perfil de `Diseño de documento`.
+4. Ajuste la configuración de página, los bloques de plantilla y la selección de especímenes según sea necesario.
+5. Opcional: use el panel de vista previa para generar una previsualización.
+6. Añada el `Nombre de archivo`.
+7. Seleccione el directorio de guardado en plataformas de escritorio. En Android e iOS, NAHPU usa el directorio de documentos de la app.
+8. Haga clic en `Exportar documentos`.
+
+{% /steps %}
+
+## Respaldar base de datos
+
+`Respaldar base de datos` exporta la base de datos de NAHPU. Si no incluye datos del proyecto ni ajustes de la app, el resultado es un archivo `.sqlite3`. Si incluye cualquiera de esas opciones, NAHPU crea un archivo `.zip`.
+
+{% steps %}
+
+1. Navegue a la página `Panel de control`.
+2. Abra el menú del proyecto y seleccione `Respaldar base de datos`.
+3. Mantenga seleccionado `Base de datos (.sqlite3)`.
+4. Opcional: active `Incluir datos del proyecto` para incluir archivos multimedia.
+5. Opcional: active `Incluir ajustes de la app` para incluir ajustes en el respaldo.
+6. Añada el `Nombre de archivo`.
+7. Seleccione el `Directorio` donde desea guardar el respaldo.
+8. Haga clic en `Guardar`.
+
+{% /steps %}
+
+## Exportar ajustes
+
+`Exportar ajustes` escribe los ajustes de la app, incluidos los presets de exportación y documentos guardados, en un archivo de ajustes.
+
+{% steps %}
+
+1. Navegue a la página `Panel de control`.
+2. Abra el menú del proyecto y seleccione `Exportar ajustes`.
+3. Seleccione el `Formato de ajustes`.
+    - `JSON (.json)`
+    - `JSON Lines (.json.nl)`
+4. Añada el `Nombre de archivo`.
+5. Seleccione el `Directorio` donde desea guardar el archivo.
+6. Haga clic en `Guardar`.
 
 {% /steps %}

@@ -1,0 +1,119 @@
+---
+title: "Architecture"
+sidebar:
+  order: 4
+---
+
+NAHPU is a cross-platform Flutter app with local SQLite storage and a thin Rust
+bridge for operations that are better handled in shared Rust crates.
+
+## High-level schema
+
+```text
+┌─────────────────────────────────────────────────────────────────────┐
+│                             NAHPU App                               │
+│                    Flutter UI + Dart application                    │
+└─────────────────────────────────────────────────────────────────────┘
+          │
+          │ user actions, routes, forms, previews
+          ▼
+┌───────────────────────────┐     ┌──────────────────────────────────┐
+│ lib/screens/              │     │ lib/screens/shared/              │
+│ Page-level UI             │────▶│ Reusable widgets and controls    │
+└───────────────────────────┘     └──────────────────────────────────┘
+          │
+          │ watches / reads providers
+          ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│ lib/services/providers/                                             │
+│ Riverpod providers and AsyncNotifiers                               │
+└─────────────────────────────────────────────────────────────────────┘
+          │
+          │ calls services
+          ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│ lib/services/                                                       │
+│ Dart business logic: database access, import/export orchestration,  │
+│ media handling, file pickers, settings, platform services           │
+└─────────────────────────────────────────────────────────────────────┘
+          │                                      │
+          │ Drift queries                         │ Flutter Rust Bridge calls
+          ▼                                      ▼
+┌───────────────────────────┐     ┌──────────────────────────────────┐
+│ lib/services/database/    │     │ lib/src/rust/                    │
+│ Drift + SQLite            │     │ Generated Dart bridge bindings   │
+└───────────────────────────┘     └──────────────────────────────────┘
+          │                                      │
+          │ local files                          │ FFI
+          ▼                                      ▼
+┌───────────────────────────┐     ┌──────────────────────────────────┐
+│ App document directory    │     │ rust/src/api/                    │
+│ SQLite DB, media, exports │     │ Thin Rust wrapper modules        │
+└───────────────────────────┘     └──────────────────────────────────┘
+                                                 │
+                                                 │ calls crates
+                                                 ▼
+                              ┌──────────────────────────────────────┐
+                              │ NAHPU API crates                     │
+                              │ nahpu_db, nahpu_export, nahpu_gis,   │
+                              │ nahpu_archive, nahpu_configs         │
+                              └──────────────────────────────────────┘
+```
+
+## Layers
+
+**Screens** are page-level UI wrappers. Keep them focused on rendering,
+navigation, and connecting controls to providers or services.
+
+**Shared widgets** live under `lib/screens/shared/`. Put reusable UI here when
+more than one screen needs it.
+
+**Providers** expose app state through Riverpod. NAHPU uses `AsyncNotifier`
+heavily for database-backed state because it keeps loading, success, error, and
+mutation behavior in one testable class.
+
+**Services** contain business logic. Import/export, file IO, media handling,
+database orchestration, and platform-specific behavior should live in
+`lib/services/`, not in widgets.
+
+**Database** code uses Drift over SQLite. The app is offline-first, so database
+changes require careful schema versions, migrations, and tests.
+
+**Rust wrappers** in `rust/src/api/` expose functionality to Dart through
+Flutter Rust Bridge. Keep this layer thin.
+
+**NAHPU API crates** contain reusable Rust implementations. The app currently
+depends on crates for archive handling, database export/import, document export,
+GIS output, and user configuration.
+
+## Directory map
+
+{% filetree %}
+- android/ Android platform-specific code and build configuration
+- assets/ Static assets such as images, fonts, and icons
+- db_schemas/ Drift schema snapshots and migration fixtures
+- integration_test/ End-to-end integration tests
+- ios/ iOS platform-specific code and build configuration
+- lib/ Main Dart source code for the Flutter app
+  - screens/ Page-level Flutter UI
+  - screens/shared/ Reusable UI components
+  - services/ Business logic, providers, database, IO, export services
+  - src/rust/ Generated Flutter Rust Bridge Dart bindings
+- linux/ Linux platform-specific code and build configuration
+- macos/ macOS platform-specific code and build configuration
+- rust/ Rust wrapper crate used by Flutter Rust Bridge
+  - src/api/ Thin wrapper modules exposed to Dart
+- scripts/ Development and automation scripts
+- test/ Unit and widget tests
+- web/ Web platform-specific code and build configuration
+- windows/ Windows platform-specific code and build configuration
+{% /filetree %}
+
+## Design principles
+
+- Keep screens thin and move logic into services/providers.
+- Keep Rust wrappers thin and move reusable Rust behavior into NAHPU API crates.
+- Prefer local, deterministic behavior because NAHPU must work without network
+  access in field conditions.
+- Treat exports, imports, and migrations as data integrity features. Add tests
+  when changing them.

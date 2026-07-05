@@ -4,108 +4,139 @@ sidebar:
   order: 9
 ---
 
-NAHPU has four categories of exports:
+NAHPU has these export-related actions in the project menu:
 
-- **Export records** - Exports each record type in the project as either comma-delimited (.csv) or tab-delimited (.tsv) files.
-- **Create reports** - Creates reports based on the project data.
-- **Bundle records** - Exports all project records as a single ZIP file.
-- **Export pdf** - Exports each record type as a PDF file.
+- **Export records** - Exports one record type to CSV, TSV, Excel, or JSON.
+- **Create report** - Creates project reports. Species count and media data reports export to CSV; coordinate reports export to KML, GeoJSON, TopoJSON, or a zipped Shapefile.
+- **Bundle project** - Exports project records, the species report, and media files as a single ZIP file.
+- **Export documents** - Creates PDF documents from document templates and layout profiles.
+- **Backup database** - Exports the database as SQLite, or as a ZIP file when project data or app settings are included.
+- **Export settings** - Exports app settings as JSON or JSON Lines.
 
 ## Record exports
 
-This option export NAHPU main data as a single file. To export, follow these steps:
+Use `Export records` to write one type of project data to a file.
 
 {% steps %}
 
 1. Navigate to the `Dashboard` page.
-2. Select `Export records` from the export menu.
-3. Select the `Record type` you want to export.
+2. Open the project menu and select `Export records`.
+3. Optional: choose an export preset from `Use Preset`.
+4. If you are not using a preset, select the `Record type`.
     - `Narrative`
     - `Sites`
     - `Events`
-    - `Specimens`
+    - `Specimen records`
     - `Specimen parts`
-4. Select the `Format` you want to export.
+5. For specimen records, select the taxon group. Mammal exports can be limited to non-bats, bats, or all mammals.
+6. Select the specimen field mode.
+    - `Standard`
+    - `All fields`
+    - `Custom fields`
+7. Optional: turn on `Concatenate multi-entry` to combine repeated values in one cell.
+8. Optional: turn on `Use field names only` to use field IDs instead of display labels.
+9. Select the file `Format`.
+    - `Comma-separated (.csv)`
+    - `Tab-separated (.tsv)`
+    - `Excel (.xlsx)`
+    - `JSON (.json)`
+10. Add `File name` for the exported file.
+11. Select the `Directory` where you want to save the exported file.
+12. Click `Save`.
 
-    Currently, NAHPU only supports these formats:
-    - `Comma-delimited (.csv)`
-    - `Tab-delimited (.tsv)`
-
-5. Add `File name` for the exported file.
-
-6. Select the `Directory` where you want to save the exported file (desktop and Android only).
-
-    {% aside type="note" %}
-    Due to iOS security restrictions, you cannot select the directory where you want to save the exported file. The app will export the file to the app's document directory. 
-    {% /aside %}
-
-7. Select column to include in the exported file (work in progress).
-
-8. The `Save` button will be enable
-    {% aside type="tip" title="Tips for iOS users" %}
-    After you save the file, the `Save` button will change to `Share`. Click it to share the file to other apps. You can save the file to your device by selecting the `Files` app from the share sheet.
-    {% /aside %}
 {% /steps %}
 
-## Creating Reports
+{% aside type="tip" title="Sharing saved files" %}
+After the file is saved, the `Save` button changes to `Share`. Use `Share` on mobile devices to send the file to another app or save it through the system file picker.
+{% /aside %}
 
-NAHPU provides a few options for creating reports.
+## Creating reports
 
-- **Species count** - It will generate a report of the number of specimen for each species in the project.
-- **Media Data** - It will generate a report of all the media files and their metadata in the project.
-- **Coordinates** - It will generate a report of all the coordinates in the project.
+NAHPU provides three report types:
 
-The steps to create a report is similar to the steps to export records.
+- **Species count** - A CSV report of the number of specimens for each species in the project.
+- **Media data** - A CSV report of media files and their metadata.
+- **Coordinates** - A spatial report of project coordinates.
 
 {% steps %}
 
 1. Navigate to the `Dashboard` page.
-2. Select `Create reports` from the export menu.
-3. Select the `Type` you want to create.
+2. Open the project menu and select `Create report`.
+3. Select the report `Type`.
     - `Species count`
-    - `Media Data`
+    - `Media data`
     - `Coordinates`
-4. Select the `Format` you want to export.
-    - `Comma-delimited (.csv)`
-    - `Tab-delimited (.tsv)`
-5. Add `File name` for the exported file.
-6. Select the `Directory` where you want to save the exported file (desktop and Android only).
-7. Click the `Save` button.
+4. Select the `Format`.
+    - Species count and media data reports use `Comma-separated (.csv)`.
+    - Coordinate reports can use `Keyhole Markup Language (.kml)`, `GeoJSON (.geojson)`, `TopoJSON (.topojson)`, or `Shapefile (.zip)`.
+5. Add `File name` for the report.
+6. Select the `Directory` where you want to save the report.
+7. Click `Save`.
 
 {% /steps %}
 
-## Bundle records
+## Bundle project
 
-The bundle records will export all project records, including media, as a single ZIP file.
+`Bundle project` creates a ZIP file that contains project record exports, the species report, and project media files. Record files inside the bundle are written as CSV files.
 
 {% steps %}
 
 1. Navigate to the `Dashboard` page.
-2. Select `Bundle records` from the export menu.
-3. For mammal records, you can choose to write `inaccurate in brackets` for all the measurements labeled inaccurate in the specimen records.
-4. Add `File name` for the exported file.
-5. Select the `Directory` where you want to save the exported file (desktop and Android only).
-6. Click the `Save` button.
+2. Open the project menu and select `Bundle project`.
+3. For mammal records, use `Inaccurate in brackets` to choose whether inaccurate measurements are written in brackets.
+4. Add `File name` for the ZIP file.
+5. Select the `Directory` where you want to save it.
+6. Click `Bundle`.
 
 {% /steps %}
 
-## Exporting PDF
+## Export documents
 
-This work in progress. Currently NAHPU support exporting `Narrative` and the `Mammal Specimen Record` only. 
-
-The steps to export pdf is similar to the steps to export records.
+`Export documents` creates PDF files from document templates and layout profiles. Use this for printable labels, tags, and other formatted documents.
 
 {% steps %}
 
 1. Navigate to the `Dashboard` page.
-2. Select `Export pdf` from the export menu.
-3. Select `Record type` you want to export.
-    - `Narrative`
-    - `Mammal Specimen Record`
-4. Select `Page format`.
-5. Select `Page orientation`.
-6. Add `File name` for the exported file.
-7. Select the `Directory` where you want to save the exported file (desktop and Android only).
-8. Click the `Save` button.
+2. Open the project menu and select `Export documents`.
+3. Select a `Document Layout` profile.
+4. Adjust page setup, template blocks, and specimen selection as needed.
+5. Optional: use the preview pane to generate a preview.
+6. Add `File name`.
+7. Select the save directory on desktop platforms. On Android and iOS, NAHPU uses the app documents directory.
+8. Click `Export Documents`.
+
+{% /steps %}
+
+## Backup database
+
+`Backup database` exports the NAHPU database. If you do not include project data or app settings, the result is a `.sqlite3` file. If you include either option, NAHPU creates a `.zip` archive.
+
+{% steps %}
+
+1. Navigate to the `Dashboard` page.
+2. Open the project menu and select `Backup database`.
+3. Keep `Database (.sqlite3)` selected.
+4. Optional: turn on `Include project data` to include media files.
+5. Optional: turn on `Include app settings` to include settings in the backup.
+6. Add `File name`.
+7. Select the `Directory` where you want to save the backup.
+8. Click `Save`.
+
+{% /steps %}
+
+## Export settings
+
+`Export settings` writes app settings, including saved export and document presets, to a settings file.
+
+{% steps %}
+
+1. Navigate to the `Dashboard` page.
+2. Open the project menu and select `Export settings`.
+3. Select the `Settings format`.
+    - `JSON (.json)`
+    - `JSON Lines (.json.nl)`
+4. Add `File name`.
+5. Select the `Directory` where you want to save the file.
+6. Click `Save`.
 
 {% /steps %}

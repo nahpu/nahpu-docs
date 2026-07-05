@@ -1,0 +1,126 @@
+---
+title: "AI-assisted development"
+sidebar:
+  order: 6
+---
+
+NAHPU welcomes AI-assisted development when it is used as an engineering tool
+under human direction. AI can help contributors explore unfamiliar code, draft
+tests, generate small implementation options, and speed up repetitive work. It
+does not replace domain understanding, code review, testing, or accountability.
+
+## Why NAHPU needs careful engineering
+
+NAHPU supports natural history fieldwork, and natural history work is
+inherently complex. A single collecting record can connect biology, taxonomy,
+geography, time, personnel, field methods, morphology, specimen preparation,
+media metadata, permitting, and downstream statistics. The app has to preserve
+those relationships while remaining usable in remote field conditions.
+
+This complexity is not accidental:
+
+- Biodiversity infrastructure such as [GBIF](https://www.gbif.org/what-is-gbif)
+  brings together data from museum specimens, DNA barcodes, observations, and
+  other sources using shared standards and tools.
+- [Darwin Core](https://www.tdwg.org/standards/dwc/) exists because biological
+  diversity data needs shared identifiers, labels, and definitions for taxa,
+  occurrences, specimens, samples, and related information.
+- Specimen data often depends on multiple disciplines at once: taxonomy for
+  names and identifications, geography and GIS for localities and coordinates,
+  ecology for habitat and sampling context, morphology and physiology for
+  measurements, statistics for summaries and analyses, and informatics for data
+  validation, import, export, and interoperability.
+
+Because of this, many changes that look small in the UI can affect data
+integrity. For example, changing an export field can affect Darwin Core mapping;
+changing coordinate handling can affect GIS exports; changing date or time
+handling can affect field chronology; changing database schema can affect all
+existing projects.
+
+## How to use AI well
+
+Use AI tools to accelerate work that you can still understand, verify, and
+maintain.
+
+Good uses include:
+
+- asking for a map of relevant files before editing;
+- generating a first draft of a focused test;
+- comparing two implementation approaches;
+- explaining unfamiliar Flutter, Drift, Rust, or GIS code;
+- finding edge cases for import, export, backup, or migration logic;
+- drafting documentation that you then fact-check and edit.
+
+Poor uses include:
+
+- pasting generated code into NAHPU without understanding it;
+- accepting generated migrations without testing old database versions;
+- changing export behavior without validating output files;
+- adding dependencies suggested by AI without checking maintenance, license, and
+  platform impact;
+- using AI-generated scientific or taxonomic claims without a source.
+
+## Required contributor responsibility
+
+If you use AI while contributing to NAHPU, you are still the author of the
+change.
+
+You must be able to:
+
+- explain the problem being solved;
+- explain the code path that changed;
+- explain any generated code you kept;
+- describe the domain assumptions behind the change;
+- run and report the relevant checks;
+- respond to review comments without delegating judgment to AI.
+
+Pull requests submitted by AI agents, bot accounts, or contributors who cannot
+explain and maintain the submitted code will be rejected. We also reject
+contributions that appear to be copied from AI output without review,
+integration with existing NAHPU patterns, or appropriate tests.
+
+{% aside type="caution" title="AI-assisted development is not vibe coding" %}
+We use AI as an assistant, not as an accountable developer. Merriam-Webster
+describes vibe coding as careless AI-assisted coding where a person tells AI
+what to build and may not understand how or why the code works. That is not
+acceptable for NAHPU. Production contributions must be reviewed, understood,
+tested, and owned by a human contributor.
+{% /aside %}
+
+## Pull request expectations
+
+When AI helped with a contribution, include a short note in the pull request if
+it materially shaped the implementation.
+
+Useful disclosure examples:
+
+- "AI helped identify related files; implementation and tests were written and
+  verified manually."
+- "AI drafted the first version of the widget test; I revised it and confirmed
+  it fails without the fix."
+- "AI helped compare two migration strategies; this PR uses the smaller
+  additive migration described below."
+
+The disclosure is not a penalty. It helps reviewers understand the development
+process and focus review on the parts most likely to need scrutiny.
+
+## Extra care areas
+
+Be especially careful when using AI around:
+
+- database migrations;
+- import, export, and backup code;
+- coordinate, locality, and GIS transformations;
+- taxonomic names and biological terminology;
+- date, time, timezone, and chronology handling;
+- generated Flutter Rust Bridge bindings;
+- platform-specific file access on Android, iOS, macOS, Windows, and Linux.
+
+For these areas, prefer smaller changes, stronger tests, and source-backed
+documentation.
+
+## References
+
+- [GBIF: What is GBIF?](https://www.gbif.org/what-is-gbif)
+- [TDWG: Darwin Core](https://www.tdwg.org/standards/dwc/)
+- [Merriam-Webster: vibe coding](https://www.merriam-webster.com/slang/vibe-coding)

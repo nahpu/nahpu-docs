@@ -1,0 +1,32 @@
+---
+export function getStaticPaths() {
+  return [
+    { params: { slug: undefined } },
+    { params: { slug: 'code' } },
+    { params: { slug: 'code/ai-assisted-development' } },
+    { params: { slug: 'code/architecture' } },
+    { params: { slug: 'code/conventions' } },
+    { params: { slug: 'code/database' } },
+    { params: { slug: 'code/nahpu-api' } },
+    { params: { slug: 'code/setup' } },
+    { params: { slug: 'code/troubleshooting' } },
+    { params: { slug: 'docs' } },
+    { params: { slug: 'tools' } },
+  ];
+}
+
+const slug = Astro.params.slug ? `/${Astro.params.slug}` : '';
+const target = `/en/contributing${slug}/`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>Redirecting to English contributing docs</title>
+  </head>
+  <body>
+    <a href={target}>Redirecting to English contributing docs</a>
+  </body>
+</html>

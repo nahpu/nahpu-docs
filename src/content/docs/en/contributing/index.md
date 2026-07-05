@@ -1,5 +1,5 @@
 ---
-title: "Become a Contributor"
+title: "Become a contributor"
 sidebar:
   order: 1
 ---
@@ -8,12 +8,12 @@ NAHPU at its core is a collaborative project. We appreciate all contributions, r
 
 ## Code Contributions
 
-Help us fix bugs, add new features, and improve the NAHPU app and supporting software. Refer to the [Code Contribution](./code_contribution) section for more information.
+Help us fix bugs, add new features, and improve the NAHPU app and supporting software. Start with the [Code](./code) section, then use the topic page that matches your change.
 
 ## Documentation Contributions
 
-We would love any contribution from improving the existing documentation to adding new language translation. Refer to the [Documentation Contribution](./doc_contribution) section for more information.
+We welcome contributions that improve existing documentation, add examples, or add a new language translation. See the [Documentation](./docs) page for the docs workflow.
 
 ## Testing Contributions
 
-Test early version of NAHPU and report issues to the coding team.
+Test early versions of NAHPU and report issues to the coding team. Include the platform, app version, steps to reproduce, and screenshots or sample files when they help explain the issue.

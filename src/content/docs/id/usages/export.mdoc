@@ -4,108 +4,139 @@ sidebar:
   order: 9
 ---
 
-NAHPU memiliki empat kategori ekspor:
+NAHPU memiliki aksi ekspor berikut di menu proyek:
 
-- **Ekspor catatan** - Mengekspor setiap tipe catatan dalam proyek baik sebagai file berbatas koma (.csv) atau berbatas tab (.tsv).
-- **Buat laporan** - Membuat laporan berdasarkan data proyek.
-- **Gabungkan catatan** - Mengekspor semua catatan proyek sebagai file ZIP tunggal.
-- **Ekspor pdf** - Mengekspor setiap tipe catatan sebagai file PDF.
+- **Ekspor catatan** - Mengekspor satu tipe catatan ke CSV, TSV, Excel, atau JSON.
+- **Buat laporan** - Membuat laporan proyek. Laporan jumlah spesies dan data media diekspor ke CSV; laporan koordinat diekspor ke KML, GeoJSON, TopoJSON, atau Shapefile terkompresi.
+- **Gabungkan proyek** - Mengekspor catatan proyek, laporan spesies, dan file media sebagai satu file ZIP.
+- **Ekspor dokumen** - Membuat dokumen PDF dari templat dokumen dan profil tata letak.
+- **Cadangkan database** - Mengekspor database sebagai SQLite, atau sebagai ZIP jika data proyek atau pengaturan aplikasi disertakan.
+- **Ekspor pengaturan** - Mengekspor pengaturan aplikasi sebagai JSON atau JSON Lines.
 
 ## Ekspor catatan
 
-Opsi ini mengekspor data utama NAHPU sebagai satu file. Untuk mengekspor, ikuti langkah-langkah berikut:
+Gunakan `Ekspor catatan` untuk menulis satu tipe data proyek ke file.
 
 {% steps %}
 
 1. Navigasi ke halaman `Dasbor`.
-2. Pilih `Ekspor catatan` dari menu ekspor.
-3. Pilih `Tipe catatan` yang ingin Anda ekspor.
+2. Buka menu proyek dan pilih `Ekspor catatan`.
+3. Opsional: pilih preset ekspor dari `Gunakan Preset`.
+4. Jika tidak menggunakan preset, pilih `Tipe catatan`.
     - `Naratif`
     - `Situs`
     - `Aktivitas`
-    - `Spesimen`
+    - `Catatan spesimen`
     - `Bagian spesimen`
-4. Pilih `Format` yang ingin Anda ekspor.
-
-    Saat ini, NAHPU hanya mendukung format berikut:
+5. Untuk catatan spesimen, pilih kelompok takson. Ekspor mamalia dapat dibatasi ke non-kelelawar, kelelawar, atau semua mamalia.
+6. Pilih mode kolom spesimen.
+    - `Standar`
+    - `Semua kolom`
+    - `Kolom kustom`
+7. Opsional: aktifkan `Gabungkan entri ganda` untuk menggabungkan nilai berulang dalam satu sel.
+8. Opsional: aktifkan `Gunakan nama kolom saja` untuk memakai ID kolom, bukan label tampilan.
+9. Pilih `Format`.
     - `Berbatas koma (.csv)`
     - `Berbatas tab (.tsv)`
+    - `Excel (.xlsx)`
+    - `JSON (.json)`
+10. Tambahkan `Nama file`.
+11. Pilih `Direktori` tempat file akan disimpan.
+12. Klik `Simpan`.
 
-5. Tambahkan `Nama file` untuk file yang diekspor.
-
-6. Pilih `Direktori` tempat Anda ingin menyimpan file yang diekspor (hanya desktop dan Android).
-
-    {% aside type="note" %}
-    Karena pembatasan keamanan iOS, Anda tidak dapat memilih direktori tempat Anda menyimpan file yang diekspor. Aplikasi akan mengekspor file ke direktori dokumen aplikasi. 
-    {% /aside %}
-
-7. Pilih kolom yang akan disertakan dalam file yang diekspor (dalam tahap pengembangan).
-
-8. Tombol `Simpan` akan aktif.
-    {% aside type="tip" title="Tips untuk pengguna iOS" %}
-    Setelah Anda menyimpan file, tombol `Simpan` akan berubah menjadi `Bagikan`. Klik untuk membagikannya ke aplikasi lain. Anda dapat menyimpan file ke perangkat Anda dengan memilih aplikasi `Files` dari setelan berbagi.
-    {% /aside %}
 {% /steps %}
 
-## Membuat Laporan
+{% aside type="tip" title="Membagikan file tersimpan" %}
+Setelah file disimpan, tombol `Simpan` berubah menjadi `Bagikan`. Gunakan `Bagikan` di perangkat seluler untuk mengirim file ke aplikasi lain atau menyimpannya melalui pemilih file sistem.
+{% /aside %}
 
-NAHPU menyediakan beberapa opsi untuk membuat laporan.
+## Membuat laporan
 
-- **Jumlah spesies** - Akan menghasilkan laporan jumlah spesimen untuk setiap spesies dalam proyek.
-- **Data Media** - Akan menghasilkan laporan semua file media beserta metadatanya di dalam proyek.
-- **Koordinat** - Akan menghasilkan laporan semua titik koordinat yang ada di dalam proyek.
+NAHPU menyediakan tiga tipe laporan:
 
-Langkah-langkah untuk membuat laporan mirip dengan langkah-langkah ekspor catatan.
+- **Jumlah spesies** - Laporan CSV jumlah spesimen untuk setiap spesies dalam proyek.
+- **Data media** - Laporan CSV file media dan metadatanya.
+- **Koordinat** - Laporan spasial koordinat proyek.
 
 {% steps %}
 
 1. Navigasi ke halaman `Dasbor`.
-2. Pilih `Buat laporan` dari menu ekspor.
-3. Pilih `Tipe` yang ingin Anda buat.
+2. Buka menu proyek dan pilih `Buat laporan`.
+3. Pilih `Tipe`.
     - `Jumlah spesies`
-    - `Data Media`
+    - `Data media`
     - `Koordinat`
-4. Pilih `Format` yang ingin Anda ekspor.
-    - `Berbatas koma (.csv)`
-    - `Berbatas tab (.tsv)`
-5. Tambahkan `Nama file` untuk file laporan.
-6. Pilih `Direktori` tempat Anda menyimpan file (hanya desktop dan Android).
-7. Klik tombol `Simpan`.
+4. Pilih `Format`.
+    - Laporan jumlah spesies dan data media menggunakan `Berbatas koma (.csv)`.
+    - Laporan koordinat dapat menggunakan `Keyhole Markup Language (.kml)`, `GeoJSON (.geojson)`, `TopoJSON (.topojson)`, atau `Shapefile (.zip)`.
+5. Tambahkan `Nama file`.
+6. Pilih `Direktori` tempat laporan akan disimpan.
+7. Klik `Simpan`.
 
 {% /steps %}
 
-## Gabungkan catatan
+## Gabungkan proyek
 
-Fitur gabungkan catatan akan mengekspor semua catatan proyek, termasuk media, menjadi satu file ZIP.
+`Gabungkan proyek` membuat file ZIP yang berisi ekspor catatan proyek, laporan spesies, dan file media proyek. File catatan di dalam paket ditulis sebagai CSV.
 
 {% steps %}
 
 1. Navigasi ke halaman `Dasbor`.
-2. Pilih `Gabungkan catatan` dari menu ekspor.
-3. Untuk catatan mamalia, Anda dapat memilih untuk menulis `tidak akurat dalam kurung` untuk semua pengukuran yang diberi label tidak akurat pada catatan spesimen.
-4. Tambahkan `Nama file` untuk file yang diekspor.
-5. Pilih `Direktori` tempat Anda ingin menyimpan file yang diekspor (hanya desktop dan Android).
-6. Klik tombol `Simpan`.
+2. Buka menu proyek dan pilih `Gabungkan proyek`.
+3. Untuk catatan mamalia, gunakan `Tidak akurat dalam kurung` untuk memilih apakah pengukuran tidak akurat ditulis dalam kurung.
+4. Tambahkan `Nama file` untuk file ZIP.
+5. Pilih `Direktori` tempat file akan disimpan.
+6. Klik `Gabungkan`.
 
 {% /steps %}
 
-## Mengekspor PDF
+## Ekspor dokumen
 
-Fitur ini dalam tahap pengembangan. Saat ini NAHPU hanya mendukung pengeksporan dokumen `Naratif` dan `Catatan Spesimen Mamalia`.
-
-Langkah-langkah untuk mengekspor pdf mirip dengan proses ekspor catatan.
+`Ekspor dokumen` membuat file PDF dari templat dokumen dan profil tata letak. Gunakan fitur ini untuk label, tag, dan dokumen berformat lain yang dapat dicetak.
 
 {% steps %}
 
 1. Navigasi ke halaman `Dasbor`.
-2. Pilih `Ekspor pdf` dari menu ekspor.
-3. Pilih `Tipe catatan` yang ingin diekspor.
-    - `Naratif`
-    - `Catatan Spesimen Mamalia`
-4. Pilih `Format halaman`.
-5. Pilih `Orientasi halaman`.
-6. Tambahkan `Nama file` untuk file.
-7. Pilih `Direktori` tempat Anda menyimpan file (hanya desktop dan Android).
-8. Klik tombol `Simpan`.
+2. Buka menu proyek dan pilih `Ekspor dokumen`.
+3. Pilih profil `Tata Letak Dokumen`.
+4. Sesuaikan pengaturan halaman, blok templat, dan pilihan spesimen sesuai kebutuhan.
+5. Opsional: gunakan panel pratinjau untuk membuat pratinjau.
+6. Tambahkan `Nama file`.
+7. Pilih direktori penyimpanan di platform desktop. Di Android dan iOS, NAHPU menggunakan direktori dokumen aplikasi.
+8. Klik `Ekspor Dokumen`.
+
+{% /steps %}
+
+## Cadangkan database
+
+`Cadangkan database` mengekspor database NAHPU. Jika data proyek atau pengaturan aplikasi tidak disertakan, hasilnya adalah file `.sqlite3`. Jika salah satu opsi tersebut disertakan, NAHPU membuat arsip `.zip`.
+
+{% steps %}
+
+1. Navigasi ke halaman `Dasbor`.
+2. Buka menu proyek dan pilih `Cadangkan database`.
+3. Biarkan `Database (.sqlite3)` tetap dipilih.
+4. Opsional: aktifkan `Sertakan data proyek` untuk menyertakan file media.
+5. Opsional: aktifkan `Sertakan pengaturan aplikasi` untuk menyertakan pengaturan dalam cadangan.
+6. Tambahkan `Nama file`.
+7. Pilih `Direktori` tempat cadangan akan disimpan.
+8. Klik `Simpan`.
+
+{% /steps %}
+
+## Ekspor pengaturan
+
+`Ekspor pengaturan` menulis pengaturan aplikasi, termasuk preset ekspor dan dokumen yang tersimpan, ke file pengaturan.
+
+{% steps %}
+
+1. Navigasi ke halaman `Dasbor`.
+2. Buka menu proyek dan pilih `Ekspor pengaturan`.
+3. Pilih `Format pengaturan`.
+    - `JSON (.json)`
+    - `JSON Lines (.json.nl)`
+4. Tambahkan `Nama file`.
+5. Pilih `Direktori` tempat file akan disimpan.
+6. Klik `Simpan`.
 
 {% /steps %}

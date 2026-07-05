@@ -122,12 +122,40 @@ export default defineConfig({
         },
         {
           label: "Contributing",
-          autogenerate: { directory: "contributing" },
-          translations: {
-            "pt-BR": "Contribuindo",
-            es: "Contribuyendo",
-            id: "Berkontribusi",
-          },
+          items: [
+            { label: "Become a contributor", link: "contributing" },
+            {
+              label: "Code",
+              collapsed: true,
+              items: [
+                { label: "Overview", link: "contributing/code" },
+                { label: "Setup", link: "contributing/code/setup" },
+                {
+                  label: "Architecture",
+                  link: "contributing/code/architecture",
+                },
+                { label: "NAHPU API", link: "contributing/code/nahpu-api" },
+                {
+                  label: "AI-assisted development",
+                  link: "contributing/code/ai-assisted-development",
+                },
+                {
+                  label: "Code conventions",
+                  link: "contributing/code/conventions",
+                },
+                {
+                  label: "Database changes",
+                  link: "contributing/code/database",
+                },
+                {
+                  label: "Troubleshooting",
+                  link: "contributing/code/troubleshooting",
+                },
+              ],
+            },
+            { label: "Documentation", link: "contributing/docs" },
+            { label: "Tools", link: "contributing/tools" },
+          ],
           collapsed: true,
         },
         {

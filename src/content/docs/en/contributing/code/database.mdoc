@@ -1,0 +1,74 @@
+---
+title: "Database changes"
+sidebar:
+  order: 8
+---
+
+NAHPU uses [Drift](https://drift.simonbinder.eu/) over SQLite. Database changes
+must preserve existing user data because NAHPU is used offline in field
+conditions where backups and app updates may happen far from reliable internet.
+
+## Schema workflow
+
+{% steps %}
+
+1. Open or discuss a GitHub issue before making a schema change.
+2. Update the Drift schema in `lib/services/database/tables.drift`.
+3. Add comments at the top of `tables.drift` explaining the schema change.
+4. Bump `kSchemaVersion` in `lib/services/database/database.dart`.
+
+   ```dart
+   const int kSchemaVersion = 8;
+   ```
+
+5. Add migration steps in `Database.migration`.
+
+   ```dart
+   if (from < 8) {
+     await _migrateFromVersion7(m);
+   }
+   ```
+
+6. Add the migration helper in the same file or a migration utility file.
+
+   ```dart
+   Future<void> _migrateFromVersion7(Migrator m) async {
+     await m.addColumn(specimen, specimen.newColumn);
+   }
+   ```
+
+7. Regenerate Dart code.
+
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+8. Dump the new schema snapshot.
+
+   ```bash
+   dart run drift_dev schema dump \
+     lib/services/database/database.dart \
+     db_schemas/drift_schema_v8.json
+   ```
+
+9. Copy the updated `tables.drift` snapshot to `db_schemas/drift_tables/` if
+   the schema workflow for that release requires it.
+10. Add or update migration tests for existing database versions.
+11. Run verification with `flutter test` and `flutter analyze`.
+
+{% /steps %}
+
+## Migration rules
+
+- Never rely on users deleting their database to recover from a migration.
+- Keep migration steps idempotent when older development builds may already
+  have applied part of the change.
+- Use helper functions for multi-step migrations so `database.dart` remains
+  readable.
+- Test migrations with realistic old schemas when data shape matters.
+- Include migration risk in the pull request description.
+
+{% aside type="caution" title="Data integrity" %}
+Import, export, backup, and migration changes can permanently affect user data.
+Favor small migrations, explicit tests, and clear pull request notes.
+{% /aside %}

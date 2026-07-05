@@ -1,0 +1,97 @@
+---
+title: "NAHPU API"
+sidebar:
+  order: 5
+---
+
+The NAHPU app uses Rust through Flutter Rust Bridge, but the app repository is
+not where most Rust business logic should live. The app's `rust/` crate is a
+wrapper crate that exposes stable functions and types to Dart.
+
+## What the API layer means
+
+In the app repository:
+
+- `rust/src/api/*.rs` defines bridge-facing wrapper modules.
+- `lib/src/rust/` contains generated Dart bindings.
+- `python scripts.py frb --generate` regenerates bridge code after wrapper API
+  changes.
+- `python scripts.py frb --check` runs Rust checks for the wrapper crate.
+
+The reusable Rust logic comes from NAHPU API crates used by the app:
+
+| Crate | Used for |
+|---|---|
+| `nahpu_archive` | Creating and extracting ZIP archives |
+| `nahpu_db` | Record import/export helpers |
+| `nahpu_export` | Document export and PDF generation support |
+| `nahpu_gis` | GIS export formats such as KML, GeoJSON, TopoJSON, and Shapefile |
+| `nahpu_configs` | User configuration, export presets, and document layout presets |
+
+## Wrapper modules
+
+The app exposes Rust behavior through modules in `rust/src/api/`:
+
+| Module | Purpose |
+|---|---|
+| `archive.rs` | Archive creation and extraction wrappers |
+| `config.rs` | App settings, export presets, and document layout preset wrappers |
+| `export.rs` | Record, GIS, document, Typst, and PDF export wrappers |
+| `gis.rs` | GIS-related utility wrappers |
+| `import.rs` | Import wrappers |
+| `common.rs` | Shared bridge-facing types and helpers |
+
+## When to edit the app wrapper
+
+Edit `rust/src/api/` when you need to:
+
+- expose an existing crate function to Dart;
+- convert Dart-friendly inputs into crate-friendly Rust inputs;
+- map Rust errors into strings or simple result types that Flutter can display;
+- add simple structs/enums that Flutter Rust Bridge can serialize.
+
+Do not put durable domain logic in the wrapper. If the behavior should be reused
+outside the Flutter app, or if it is a core parser/exporter/validator, implement
+it in the appropriate NAHPU API crate and then call it from the wrapper.
+
+## Boundary rules
+
+- Keep wrapper functions small.
+- Return `Result<T, String>` or another bridge-friendly result instead of
+  panicking.
+- Avoid `.unwrap()` unless the invariant is local and documented.
+- Prefer primitive values, strings, byte lists, and simple structs at the Dart
+  boundary.
+- Keep line lengths readable and run Rust formatting before submitting.
+- Regenerate bindings after changing any bridge-facing Rust signature.
+
+## Adding a bridge API
+
+{% steps %}
+
+1. Implement or update the reusable Rust behavior in the relevant NAHPU API
+   crate if the logic does not already exist.
+2. Add a wrapper function or type in the appropriate `rust/src/api/*.rs` file.
+3. Export the module from `rust/src/api/mod.rs` if it is a new module.
+4. Regenerate Flutter Rust Bridge bindings.
+
+   ```bash
+   python scripts.py frb --generate
+   ```
+
+5. Update the Dart service that calls the generated binding in `lib/src/rust/`.
+6. Add focused tests for the Dart service, Rust behavior, or integration path.
+7. Verify the bridge and app.
+
+   ```bash
+   python scripts.py frb --check
+   flutter analyze
+   flutter test
+   ```
+
+{% /steps %}
+
+{% aside type="note" title="Generated files" %}
+Files under `lib/src/rust/` and `rust/src/frb_generated.rs` are generated. Do
+not hand-edit them. Change the wrapper API and regenerate the bindings instead.
+{% /aside %}
