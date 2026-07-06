@@ -1,0 +1,69 @@
+---
+title: Export Documents
+sidebar:
+  order: 11
+---
+
+Use `Export documents` when you need printable PDFs from NAHPU records. This is
+the export for labels, tags, sheets, and other formatted documents.
+
+## Quick way to export documents
+
+{% steps %}
+
+1. Navigate to the `Dashboard` page.
+2. Open the project menu and select `Export documents`.
+3. Select a `Document Layout` profile.
+4. Review or adjust page setup, template blocks, and specimen selection.
+5. Optional: use the preview pane to generate a preview.
+6. Add `File name`.
+7. Select the save directory on desktop platforms. On Android and iOS, NAHPU
+   uses the app documents directory.
+8. Click `Export Documents`.
+
+{% /steps %}
+
+## Deep dive
+
+Document export combines three pieces of configuration: records, document
+templates, and document layouts. Records provide the data. Templates define what
+appears on each label, tag, or document block. Layouts define how those template
+blocks are placed on a page.
+
+```text
+Project records
+    |
+    v
+Document template + document layout
+    |
+    v
+Preview
+    |
+    v
+PDF document
+```
+
+Document layouts are managed in `Settings` under `Document Presets`. A layout
+can target standard page sizes such as A4, A5, or Letter, or a custom page size.
+Layouts also store margins, padding, block order, rows, columns, template
+counts, and page-break behavior.
+
+When you export documents, NAHPU applies the selected layout to the selected
+records and generates a PDF. Use the preview before exporting whenever the
+document will be printed, because the preview helps catch text overflow,
+incorrect page breaks, and unexpected template placement.
+
+Use document layout presets for repeatable printing workflows. For example,
+museum label sheets and field tag sheets should use separate layouts, even if
+both use some of the same specimen data. Save the layout once, then reuse it
+when exporting new records.
+
+Document layouts and templates are app settings. They can be shared between
+devices by exporting settings or by including app settings in a database archive.
+If a PDF does not look correct, edit the template or document layout preset,
+regenerate the preview, and export again.
+
+Document exports are for presentation and printing. They are not a substitute
+for [Export records](./export-records) when the recipient needs structured data,
+and they are not a substitute for [Backup database](./export#backup-database)
+when you need a restorable copy of the project.

@@ -1,0 +1,72 @@
+---
+title: Exportar Registros
+sidebar:
+  order: 10
+---
+
+Use `Exportar registros` cuando necesite datos del proyecto en CSV, TSV, Excel o JSON. Es la exportación adecuada para revisar datos en hojas de cálculo, importarlos en otra base de datos, analizarlos o compartir datos estructurados.
+
+## Forma rápida de exportar registros
+
+{% steps %}
+
+1. Navegue a la página `Panel de control`.
+2. Abra el menú del proyecto y seleccione `Exportar registros`.
+3. Opcional: elija un preset en `Usar preset`.
+4. Si no usa un preset, seleccione el `Tipo de registro`.
+    - `Narrativa`
+    - `Sitios`
+    - `Eventos`
+    - `Registros de especímenes`
+    - `Partes de especímenes`
+5. Para registros de especímenes, seleccione el grupo taxonómico. Las exportaciones de mamíferos pueden limitarse a no murciélagos, murciélagos o todos los mamíferos.
+6. Seleccione el modo de campos de espécimen.
+    - `Estándar`
+    - `Todos los campos`
+    - `Campos personalizados`
+7. Opcional: active `Concatenar entradas múltiples` para combinar valores repetidos en una celda.
+8. Opcional: active `Usar solo nombres de campos` para usar identificadores de campo en lugar de etiquetas visibles.
+9. Seleccione el `Formato`.
+    - `Separado por comas (.csv)`
+    - `Separado por tabuladores (.tsv)`
+    - `Excel (.xlsx)`
+    - `JSON (.json)`
+10. Añada el `Nombre de archivo`.
+11. Seleccione el `Directorio` donde desea guardar el archivo.
+12. Haga clic en `Guardar`.
+
+{% /steps %}
+
+{% aside type="tip" title="Compartir archivos guardados" %}
+Después de guardar el archivo, el botón `Guardar` cambia a `Compartir`. Use `Compartir` en dispositivos móviles para enviar el archivo a otra app o guardarlo con el selector de archivos del sistema.
+{% /aside %}
+
+## Detalles
+
+La exportación de registros lee datos del proyecto activo y escribe un tipo de registro a la vez. El tipo de registro define qué parte del proyecto se exporta: narrativa, sitios, eventos, registros de especímenes o partes de especímenes.
+
+```text
+Base de datos del proyecto
+    |
+    v
+Tipo de registro + filtros + modo de campos
+    |
+    v
+Exportador
+    |
+    +--> CSV / TSV
+    +--> Excel
+    +--> JSON
+```
+
+Los presets guardan opciones repetibles como tipo de registro, modo de campos, formato y comportamiento de etiquetas. Úselos cuando el equipo necesite la misma estructura de exportación entre días de campo, dispositivos o proyectos.
+
+Los registros de especímenes tienen opciones adicionales porque suelen ser la exportación más grande. El grupo taxonómico limita los registros antes de escribir el archivo. El modo de campos controla las columnas:
+
+- `Estándar` escribe los campos usados por la mayoría de flujos de trabajo.
+- `Todos los campos` escribe todos los campos compatibles.
+- `Campos personalizados` permite elegir un conjunto de columnas específico.
+
+CSV y TSV son formatos portátiles para hojas de cálculo e importación. Excel es útil para revisión manual. JSON conserva datos estructurados para scripts y software posterior.
+
+Las exportaciones de registros no reemplazan los respaldos de base de datos. Use [Respaldar base de datos](./export) cuando necesite una copia restaurable de NAHPU.

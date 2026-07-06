@@ -1,0 +1,72 @@
+---
+title: Ekspor Catatan
+sidebar:
+  order: 10
+---
+
+Gunakan `Ekspor catatan` saat membutuhkan data proyek dalam CSV, TSV, Excel, atau JSON. Ekspor ini cocok untuk peninjauan di spreadsheet, impor database, analisis, dan berbagi data terstruktur.
+
+## Cara cepat mengekspor catatan
+
+{% steps %}
+
+1. Navigasi ke halaman `Dasbor`.
+2. Buka menu proyek dan pilih `Ekspor catatan`.
+3. Opsional: pilih preset ekspor dari `Gunakan Preset`.
+4. Jika tidak menggunakan preset, pilih `Tipe catatan`.
+    - `Naratif`
+    - `Situs`
+    - `Aktivitas`
+    - `Catatan spesimen`
+    - `Bagian spesimen`
+5. Untuk catatan spesimen, pilih kelompok takson. Ekspor mamalia dapat dibatasi ke non-kelelawar, kelelawar, atau semua mamalia.
+6. Pilih mode kolom spesimen.
+    - `Standar`
+    - `Semua kolom`
+    - `Kolom kustom`
+7. Opsional: aktifkan `Gabungkan entri ganda` untuk menggabungkan nilai berulang dalam satu sel.
+8. Opsional: aktifkan `Gunakan nama kolom saja` untuk memakai ID kolom, bukan label tampilan.
+9. Pilih `Format`.
+    - `Berbatas koma (.csv)`
+    - `Berbatas tab (.tsv)`
+    - `Excel (.xlsx)`
+    - `JSON (.json)`
+10. Tambahkan `Nama file`.
+11. Pilih `Direktori` tempat file akan disimpan.
+12. Klik `Simpan`.
+
+{% /steps %}
+
+{% aside type="tip" title="Membagikan file tersimpan" %}
+Setelah file disimpan, tombol `Simpan` berubah menjadi `Bagikan`. Gunakan `Bagikan` di perangkat seluler untuk mengirim file ke aplikasi lain atau menyimpannya melalui pemilih file sistem.
+{% /aside %}
+
+## Penjelasan mendalam
+
+Ekspor catatan membaca data dari proyek aktif dan menulis satu tipe catatan setiap kali ekspor. Tipe catatan menentukan bagian proyek yang diekspor: naratif, situs, aktivitas, catatan spesimen, atau bagian spesimen.
+
+```text
+Database proyek
+    |
+    v
+Tipe catatan + filter + mode kolom
+    |
+    v
+Eksportir
+    |
+    +--> CSV / TSV
+    +--> Excel
+    +--> JSON
+```
+
+Preset menyimpan pilihan yang dapat dipakai ulang, seperti tipe catatan, mode kolom, format, dan perilaku label kolom. Gunakan preset saat tim membutuhkan bentuk ekspor yang sama antar hari lapangan, perangkat, atau proyek.
+
+Catatan spesimen memiliki opsi tambahan karena biasanya menjadi ekspor terbesar. Kelompok takson membatasi catatan sebelum file ditulis. Mode kolom mengatur kolom yang diekspor:
+
+- `Standar` menulis kolom bawaan untuk sebagian besar alur kerja.
+- `Semua kolom` menulis semua kolom yang didukung.
+- `Kolom kustom` memungkinkan pemilihan kolom tertentu.
+
+CSV dan TSV mudah dipakai untuk spreadsheet dan impor database. Excel nyaman untuk peninjauan manual. JSON mempertahankan data terstruktur untuk skrip dan perangkat lunak lain.
+
+Ekspor catatan bukan pengganti cadangan database. Gunakan [Cadangkan database](./export) saat membutuhkan salinan database NAHPU yang dapat dipulihkan.

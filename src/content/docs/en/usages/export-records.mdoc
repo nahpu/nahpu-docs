@@ -1,0 +1,104 @@
+---
+title: Export Records
+sidebar:
+  order: 10
+---
+
+Use `Export records` when you need project data as CSV, TSV, Excel, or JSON.
+This is the best export for spreadsheet review, database import, analysis, and
+sharing structured data with collaborators.
+
+## Quick way to export records
+
+{% steps %}
+
+1. Navigate to the `Dashboard` page.
+2. Open the project menu and select `Export records`.
+3. Optional: choose an export preset from `Use Preset`.
+4. If you are not using a preset, select the `Record type`.
+    - `Narrative`
+    - `Sites`
+    - `Events`
+    - `Specimen records`
+    - `Specimen parts`
+5. For specimen records, select the taxon group. Mammal exports can be limited
+   to non-bats, bats, or all mammals.
+6. Select the specimen field mode.
+    - `Standard`
+    - `All fields`
+    - `Custom fields`
+7. Optional: turn on `Concatenate multi-entry` to combine repeated values in one
+   cell.
+8. Optional: turn on `Use field names only` to use field IDs instead of display
+   labels.
+9. Select the file `Format`.
+    - `Comma-separated (.csv)`
+    - `Tab-separated (.tsv)`
+    - `Excel (.xlsx)`
+    - `JSON (.json)`
+10. Add `File name` for the exported file.
+11. Select the `Directory` where you want to save the exported file.
+12. Click `Save`.
+
+{% /steps %}
+
+{% aside type="tip" title="Sharing saved files" %}
+After the file is saved, the `Save` button changes to `Share`. Use `Share` on
+mobile devices to send the file to another app or save it through the system
+file picker.
+{% /aside %}
+
+## Deep dive
+
+Record export reads data from the active project and writes one selected record
+type at a time. Choose the record type that matches the table or workflow you
+want to inspect: narrative entries, sites, events, specimen records, or specimen
+parts.
+
+```text
+Project database
+    |
+    v
+Record type + filters + field mode
+    |
+    v
+Exporter
+    |
+    +--> CSV / TSV
+    +--> Excel
+    +--> JSON
+```
+
+Export presets save repeatable choices such as record type, field mode, format,
+and field label behavior. Use a preset when your team needs the same export
+shape across field days, devices, or projects. If a collaborator also needs the
+same presets, export app settings or include app settings in a database archive.
+
+Specimen records have extra filtering because they are usually the largest and
+most institution-specific export. The taxon group narrows the record set before
+the file is written. Field mode controls the columns:
+
+- `Standard` writes the default fields used by most workflows.
+- `All fields` writes every supported specimen field.
+- `Custom fields` lets you choose a smaller or institution-specific column set.
+
+Repeated values can be written as separate values or concatenated into one cell.
+Concatenation is useful for spreadsheets and quick review, while keeping entries
+separate is better when another database will parse the file.
+
+`Use field names only` writes field IDs instead of display labels. Use this when
+the receiving system expects stable field names or when you need predictable
+headers for scripts. Leave it off when people will read the export directly in a
+spreadsheet.
+
+Choose the output format based on the next tool:
+
+- CSV and TSV are the most portable spreadsheet and database-import formats.
+- Excel is convenient for manual review and sharing with spreadsheet users.
+- JSON preserves structured data for scripts and downstream software.
+
+Record exports do not replace database backups. Use them for data exchange,
+review, and analysis. Use [Backup database](./export#backup-database) when you
+need a restorable copy of the NAHPU database, and use
+[Bundle project](./export#bundle-project) when media files should travel with
+the exported project data.
