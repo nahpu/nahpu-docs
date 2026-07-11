@@ -58,6 +58,30 @@ museum label sheets and field tag sheets should use separate layouts, even if
 both use some of the same specimen data. Save the layout once, then reuse it
 when exporting new records.
 
+## Auto-fill and dynamic templates
+
+Turn on `Auto-fill page` for a template block when labels or document blocks
+should use their actual rendered height instead of a fixed number of rows. This
+is useful for templates containing narrative text, nested lists, or Markdown
+tables whose height changes from one record to another.
+
+NAHPU calculates the usable page area from the selected page size and the page
+padding in the document layout. Each auto-fill template keeps its configured
+template height as a minimum, then grows when its visible content needs more
+space. Template top and bottom padding controls the space around each template;
+the next row starts immediately after the previous row's padded boundary.
+
+Dynamic text moves later rows down so text does not overlap. NAHPU keeps a
+2 mm clearance after expanded dynamic text before a genuinely lower row. Items
+whose saved vertical positions are within 1 mm are treated as the same row, so
+elements arranged side by side across a template stay aligned while either
+element grows.
+
+For reliable printing, use the preview with records that include the longest
+expected text or largest nested lists. If a row does not fit in the remaining
+usable page area, NAHPU starts it on the next page. A row taller than the usable
+page area is rendered on its own page without being clipped or scaled.
+
 Document layouts and templates are app settings. They can be shared between
 devices by exporting settings or by including app settings in a database archive.
 If a PDF does not look correct, edit the template or document layout preset,
