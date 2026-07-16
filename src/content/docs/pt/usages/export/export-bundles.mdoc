@@ -1,0 +1,143 @@
+---
+title: Agrupar Projeto
+sidebar:
+  order: 11
+---
+
+Use `Agrupar projeto` para empacotar dados e arquivos relacionados do NAHPU
+para intercâmbio, publicação, arquivamento ou reprodutibilidade.
+
+O NAHPU oferece três formatos: **Darwin Core Archive**, **Darwin Core Data
+Package** e **NAHPU Data Package**. Os dois últimos usam `datapackage.json` do
+Frictionless; o NAHPU Data Package preserva o banco de dados completo.
+
+## Criar um pacote
+
+{% steps %}
+
+1. Abra o `Painel de controle` e o menu do projeto.
+2. Selecione `Agrupar projeto` e depois o `Formato do pacote`.
+3. Selecione `TAR.GZ` ou `ZIP` quando disponível. TAR.GZ é o padrão para Data
+   Packages; Darwin Core Archive sempre usa ZIP.
+4. Para Darwin Core, escolha `Todos os táxons` ou `Táxons selecionados`.
+5. Informe o `Nome do arquivo`, selecione o `Diretório` e revise conteúdo e
+   avisos.
+6. Clique em `Exportar`.
+
+{% /steps %}
+
+{% aside type="caution" title="Revise antes de compartilhar" %}
+NAHPU Data Package contém o banco de dados completo e as configurações do
+usuário. Pode incluir pessoas, localizações, mídia, fontes personalizadas e
+registros de outros projetos.
+{% /aside %}
+
+## Contêineres de arquivo
+
+### TAR.GZ
+
+TAR.GZ primeiro combina os arquivos em um tar e depois comprime o fluxo com
+gzip. Exemplos: `especimes.dwc-dp.tar.gz` e `nahpu-data.nahpu-dp.tar.gz`.
+Após a extração, `datapackage.json` fica na raiz do pacote.
+
+### ZIP
+
+ZIP é um contêiner amplamente compatível. O NAHPU Data Package o aceita
+normalmente. O DwC-DP também oferece ZIP como opção de compatibilidade, embora
+a orientação atual recomende gzip para o pacote completo.
+
+## Aprofundamento
+
+### Darwin Core Archive
+
+Darwin Core Archive é um pacote de intercâmbio de espécimes baseado nas
+[Darwin Core Text Guidelines](https://dwc.tdwg.org/text/). O grupo taxonômico
+selecionado define as ocorrências e as relações com eventos de coleta, partes
+de espécimes, medições, mídia e pessoas. Os arquivos principais são `meta.xml`,
+`eml.xml`, `occurrence.csv`, as extensões disponíveis e `media/`. O resultado é
+`<nome>.dwca.zip`.
+
+### Darwin Core Data Package
+
+DwC-DP representa Darwin Core como tabelas relacionadas e segue o modelo
+Frictionless. `datapackage.json` descreve CSVs, campos, chaves primárias, chaves
+estrangeiras e relações. O pacote pode conter `occurrence`, `event`, `material`,
+`occurrence-assertion`, `agent`, tabelas de papéis, `media` e relações de mídia.
+TAR.GZ é o padrão; ZIP está disponível para compatibilidade e gera um aviso.
+
+### NAHPU Data Package
+
+NAHPU Data Package é o formato completo e reprodutível do NAHPU. Ele não é
+limitado aos táxons selecionados: contém um snapshot de todo o banco de dados.
+
+#### Estrutura
+
+```text
+datapackage.json
+nahpu.toml
+database/nahpu.sqlite3
+tables/                 (as 21 tabelas NAHPU em CSV)
+configs/user_configs.json
+mappings/sqlite_enums.csv
+vocabularies/site.csv
+vocabularies/events.csv
+vocabularies/specimens.csv
+files/...
+```
+
+As 21 tabelas são incluídas mesmo quando vazias; o CSV mantém seu cabeçalho e
+esquema completo.
+
+#### Snapshot SQLite
+
+`database/nahpu.sqlite3` é a cópia consistente e sem perdas do banco no momento
+da exportação. É a fonte autoritativa para valores exatos, inclusive a
+diferença entre `NULL` e uma string vazia. Os CSVs são representações abertas
+para inspeção, análise e ferramentas Frictionless.
+
+#### Mapeamentos de enums SQLite
+
+`mappings/sqlite_enums.csv` explica os inteiros armazenados como índices de enum.
+Cada linha registra tabela, coluna, tipo de enum, índice SQLite baseado em zero,
+nome estável e nome exibido. O contexto de tabela e coluna evita confusão quando
+tipos diferentes usam o mesmo nome curto em ordens diferentes. O arquivo inclui
+sexo, confiança de identificação, idade e campos reprodutivos de mamíferos,
+campos reprodutivos e de muda de aves, idade de herpetofauna e ecolocalização.
+Booleanos e medições numéricas não são índices de enum.
+
+#### Vocabulários controlados
+
+O pacote captura os nomes configuráveis em `Configurações`:
+
+- `vocabularies/site.csv`: tipos de local e de habitat.
+- `vocabularies/events.csv`: métodos de coleta e funções do pessoal.
+- `vocabularies/specimens.csv`: tipos e tratamentos de espécimes.
+
+Cada linha registra a chave de configuração, o nome do vocabulário, a posição
+baseada em zero e o valor. Se uma lista ainda não foi personalizada, o valor
+predefinido do NAHPU vigente na exportação é usado.
+
+#### Descriptor e manifesto
+
+`datapackage.json` usa o perfil `data-package` e declara cada tabela e CSV de
+metadados como recurso tabular UTF-8 com tipos, restrições e chaves. O banco
+SQLite, a configuração, `nahpu.toml` e os arquivos de mídia são recursos não
+tabulares.
+
+`nahpu.toml` registra formato e versão, data, aplicação, número de compilação,
+versões dos esquemas, contagens de recursos e versões das dependências
+`nahpu_api`, incluindo `nahpu_dp`. `configs/user_configs.json` contém
+configuração versionada, presets e layouts; `files/` contém mídia e fontes
+disponíveis em caminhos relativos seguros.
+
+### Pacote e backup
+
+Os pacotes Darwin Core são formatos de intercâmbio. O NAHPU Data Package contém
+um snapshot restaurável, mas use [Backup do banco de dados](./#backup-database)
+para o fluxo simplificado de backup.
+
+### Validação e avisos
+
+O NAHPU valida tabelas, relações e metadados antes de gravar e reabre o arquivo
+depois. Os avisos podem indicar mídia ausente ou o modo ZIP de compatibilidade
+do DwC-DP.

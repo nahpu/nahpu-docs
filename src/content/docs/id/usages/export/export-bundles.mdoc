@@ -1,0 +1,141 @@
+---
+title: Gabungkan Proyek
+sidebar:
+  order: 11
+---
+
+Gunakan `Gabungkan proyek` untuk mengemas data dan file NAHPU terkait untuk
+pertukaran, publikasi, pengarsipan, atau reproduksibilitas.
+
+NAHPU menyediakan tiga format: **Darwin Core Archive**, **Darwin Core Data
+Package**, dan **NAHPU Data Package**. Dua format terakhir menggunakan
+`datapackage.json` Frictionless; NAHPU Data Package mempertahankan seluruh
+database NAHPU.
+
+## Membuat paket
+
+{% steps %}
+
+1. Buka `Dasbor` dan menu proyek.
+2. Pilih `Gabungkan proyek` lalu `Format paket`.
+3. Pilih `TAR.GZ` atau `ZIP` jika format tersebut tersedia. TAR.GZ adalah
+   pilihan default untuk Data Package; Darwin Core Archive selalu memakai ZIP.
+4. Untuk Darwin Core, pilih `Semua takson` atau `Takson terpilih`.
+5. Masukkan `Nama file`, pilih `Direktori`, lalu periksa isi dan peringatannya.
+6. Klik `Ekspor`.
+
+{% /steps %}
+
+{% aside type="caution" title="Periksa sebelum berbagi" %}
+NAHPU Data Package berisi seluruh database dan pengaturan pengguna. Paket dapat
+memuat data personel, lokasi, media, font kustom, dan catatan dari proyek lain.
+{% /aside %}
+
+## Kontainer arsip
+
+### TAR.GZ
+
+TAR.GZ menggabungkan file menjadi arsip tar lalu mengompres alirannya dengan
+gzip. Contoh nama: `spesimen.dwc-dp.tar.gz` dan `nahpu-data.nahpu-dp.tar.gz`.
+Setelah diekstrak, `datapackage.json` berada di akar paket.
+
+### ZIP
+
+ZIP adalah kontainer yang didukung banyak alat. NAHPU Data Package mendukungnya
+secara normal. DwC-DP juga menyediakan ZIP sebagai pilihan kompatibilitas,
+meskipun panduan saat ini merekomendasikan gzip untuk seluruh paket.
+
+## Penjelasan mendalam
+
+### Darwin Core Archive
+
+Darwin Core Archive adalah paket pertukaran spesimen berdasarkan
+[Darwin Core Text Guidelines](https://dwc.tdwg.org/text/). Kelompok takson yang
+dipilih menentukan occurrence dan relasi ke event pengumpulan, bagian spesimen,
+pengukuran, media, serta personel. File utamanya adalah `meta.xml`, `eml.xml`,
+`occurrence.csv`, ekstensi yang tersedia, dan `media/`. Hasilnya
+`<nama>.dwca.zip`.
+
+### Darwin Core Data Package
+
+DwC-DP menyajikan data Darwin Core sebagai tabel berelasi dan mengikuti model
+Frictionless. `datapackage.json` menjelaskan setiap CSV, field, primary key,
+foreign key, dan relasinya. Paket dapat memuat `occurrence`, `event`, `material`,
+`occurrence-assertion`, `agent`, tabel peran, `media`, dan relasi media. TAR.GZ
+adalah default; ZIP tersedia sebagai kompatibilitas dan menampilkan peringatan.
+
+### NAHPU Data Package
+
+NAHPU Data Package adalah format pertukaran lengkap dan reproducible untuk
+NAHPU. Paket tidak dibatasi oleh takson terpilih dan berisi snapshot seluruh
+database aplikasi.
+
+#### Struktur
+
+```text
+datapackage.json
+nahpu.toml
+database/nahpu.sqlite3
+tables/                 (21 tabel NAHPU dalam CSV)
+configs/user_configs.json
+mappings/sqlite_enums.csv
+vocabularies/site.csv
+vocabularies/events.csv
+vocabularies/specimens.csv
+files/...
+```
+
+Semua 21 tabel disertakan, termasuk tabel kosong dengan header dan skema lengkap.
+
+#### Snapshot SQLite
+
+`database/nahpu.sqlite3` adalah salinan database yang konsisten dan lossless saat
+ekspor. File ini menjadi sumber utama untuk nilai persis, termasuk perbedaan
+antara `NULL` dan string kosong. CSV disediakan untuk pemeriksaan, analisis,
+dan alat Frictionless.
+
+#### Pemetaan enum SQLite
+
+`mappings/sqlite_enums.csv` menjelaskan integer yang disimpan sebagai indeks
+enum. Setiap baris mencatat tabel, kolom, tipe enum, indeks SQLite berbasis nol,
+nama enum stabil, dan nama tampilan. Konteks tabel dan kolom mencegah kekeliruan
+ketika tipe berbeda memiliki nama pendek dan urutan nilai yang sama. Pemetaan
+mencakup sex, confidence identifikasi, age dan field reproduksi mamalia, field
+reproduksi dan molting burung, age herpetofauna, serta kategori echolocation.
+Boolean dan pengukuran numerik bukan indeks enum.
+
+#### Kosakata terkontrol
+
+Paket mengambil nama tipe yang dapat dikendalikan pengguna dari `Pengaturan`:
+
+- `vocabularies/site.csv`: tipe situs dan tipe habitat.
+- `vocabularies/events.csv`: metode pengumpulan dan peran personel.
+- `vocabularies/specimens.csv`: tipe dan perlakuan spesimen.
+
+Setiap baris mencatat kunci konfigurasi, nama kosakata, posisi daftar berbasis
+nol, dan nilainya. Jika daftar belum disesuaikan, nilai default NAHPU yang
+berlaku saat ekspor akan digunakan.
+
+#### Descriptor dan manifest
+
+`datapackage.json` menggunakan profil `data-package` dan menyatakan setiap tabel
+serta CSV metadata sebagai resource tabular UTF-8 dengan tipe field, batasan,
+dan key. Database SQLite, konfigurasi, `nahpu.toml`, dan file media dinyatakan
+sebagai resource non-tabular.
+
+`nahpu.toml` mencatat nama dan versi format, waktu ekspor, aplikasi, nomor build,
+versi skema, jumlah resource, dan versi dependensi `nahpu_api`, termasuk
+`nahpu_dp`. `configs/user_configs.json` berisi konfigurasi berversi, preset, dan
+layout; `files/` berisi media dan font yang tersedia dengan path relatif aman.
+
+### Paket dan cadangan
+
+Paket Darwin Core adalah format pertukaran, bukan cadangan NAHPU yang dapat
+dipulihkan. NAHPU Data Package berisi snapshot yang dapat dipulihkan, tetapi
+gunakan [Cadangkan database](./#backup-database) untuk alur cadangan sederhana.
+
+### Validasi dan peringatan
+
+NAHPU memvalidasi tabel, relasi, dan metadata sebelum menulis, lalu membuka
+kembali arsip setelah selesai. Peringatan dapat menunjukkan media yang hilang
+atau mode ZIP kompatibilitas DwC-DP.

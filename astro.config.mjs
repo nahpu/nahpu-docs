@@ -6,6 +6,24 @@ import markdoc from "@astrojs/markdoc";
 // https://astro.build/config
 export default defineConfig({
   site: "https://nahpu.app",
+  redirects: {
+    "/usages/export": "/en/usages/export/",
+    "/usages/export-records": "/en/usages/export/export-records/",
+    "/usages/export-documents": "/en/usages/export/export-documents/",
+    "/usages/export-bundles": "/en/usages/export/export-bundles/",
+    "/en/usages/export-records": "/en/usages/export/export-records/",
+    "/en/usages/export-documents": "/en/usages/export/export-documents/",
+    "/en/usages/export-bundles": "/en/usages/export/export-bundles/",
+    "/es/usages/export-records": "/es/usages/export/export-records/",
+    "/es/usages/export-documents": "/es/usages/export/export-documents/",
+    "/es/usages/export-bundles": "/es/usages/export/export-bundles/",
+    "/id/usages/export-records": "/id/usages/export/export-records/",
+    "/id/usages/export-documents": "/id/usages/export/export-documents/",
+    "/id/usages/export-bundles": "/id/usages/export/export-bundles/",
+    "/pt/usages/export-records": "/pt/usages/export/export-records/",
+    "/pt/usages/export-documents": "/pt/usages/export/export-documents/",
+    "/pt/usages/export-bundles": "/pt/usages/export/export-bundles/",
+  },
   integrations: [
     starlight({
       title: {
@@ -103,7 +121,128 @@ export default defineConfig({
         },
         {
           label: "General Usages",
-          autogenerate: { directory: "usages" },
+          items: [
+            {
+              label: "Overview",
+              link: "usages",
+              translations: {
+                "pt-BR": "Visão Geral",
+                es: "Resumen",
+                id: "Ikhtisar",
+              },
+            },
+            {
+              label: "Events",
+              link: "usages/events",
+              translations: {
+                "pt-BR": "Eventos",
+                es: "Eventos",
+                id: "Peristiwa",
+              },
+            },
+
+            {
+              label: "Narrative",
+              link: "usages/narrative",
+              translations: {
+                "pt-BR": "Narrativa",
+                es: "Narrativa",
+                id: "Narasi",
+              },
+            },
+            {
+              label: "Personnel",
+              link: "usages/personnel",
+              translations: {
+                "pt-BR": "Pessoal",
+                es: "Personal",
+                id: "Personel",
+              },
+            },
+            {
+              label: "Projects",
+              link: "usages/projects",
+              translations: {
+                "pt-BR": "Projetos",
+                es: "Proyectos",
+                id: "Proyek",
+              },
+            },
+            {
+              label: "Sites",
+              link: "usages/sites",
+              translations: {
+                "pt-BR": "Locais",
+                es: "Sitios",
+                id: "Situs",
+              },
+            },
+            {
+              label: "Specimens",
+              link: "usages/specimens",
+              translations: {
+                "pt-BR": "Espécimes",
+                es: "Especímenes",
+                id: "Spesimen",
+              },
+            },
+            {
+              label: "Taxon",
+              link: "usages/taxon",
+              translations: {
+                "pt-BR": "Táxon",
+                es: "Taxón",
+                id: "Takson",
+              },
+            },
+            {
+              label: "Export",
+              collapsed: true,
+              translations: {
+                "pt-BR": "Exportar",
+                es: "Exportar",
+                id: "Ekspor",
+              },
+              items: [
+                {
+                  label: "Export",
+                  link: "usages/export",
+                  translations: {
+                    "pt-BR": "Exportar",
+                    es: "Exportar",
+                    id: "Ekspor",
+                  },
+                },
+                {
+                  label: "Export Records",
+                  link: "usages/export/export-records",
+                  translations: {
+                    "pt-BR": "Exportar Registros",
+                    es: "Exportar Registros",
+                    id: "Ekspor Catatan",
+                  },
+                },
+                {
+                  label: "Export Documents",
+                  link: "usages/export/export-documents",
+                  translations: {
+                    "pt-BR": "Exportar Documentos",
+                    es: "Exportar Documentos",
+                    id: "Ekspor Dokumen",
+                  },
+                },
+                {
+                  label: "Bundle Project",
+                  link: "usages/export/export-bundles",
+                  translations: {
+                    "pt-BR": "Agrupar Projeto",
+                    es: "Agrupar Proyecto",
+                    id: "Gabungkan Proyek",
+                  },
+                },
+              ],
+            },
+          ],
           translations: {
             "pt-BR": "Usos Gerais",
             es: "Usos Generales",
