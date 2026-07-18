@@ -120,7 +120,12 @@ export default defineConfig({
           },
         },
         {
-          label: "General Usages",
+          label: "Usages",
+          translations: {
+            "pt-BR": "Usos",
+            es: "Usos",
+            id: "Penggunaan",
+          },
           items: [
             {
               label: "Overview",
@@ -243,11 +248,7 @@ export default defineConfig({
               ],
             },
           ],
-          translations: {
-            "pt-BR": "Usos Gerais",
-            es: "Usos Generales",
-            id: "Penggunaan Umum",
-          },
+
         },
         {
           label: "Curatorial Guidelines",
