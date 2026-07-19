@@ -288,8 +288,8 @@ export default defineConfig({
                   link: "contributing/code/troubleshooting",
                 },
                 {
-                  label: "AI-assisted development",
-                  link: "contributing/code/ai-assisted-development",
+                  label: "LLM-assisted development",
+                  link: "contributing/code/llm-assisted-development",
                 },
               ],
             },
