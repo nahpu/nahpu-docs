@@ -21,11 +21,11 @@ NAHPU es una aplicación de catalogación basada en proyectos. Los datos se gest
 
     La aplicación lo llevará al panel de control (*dashboard*).
     
-    Después de crear un proyecto, la aplicación genera automáticamente un UUID de proyecto. Este identificador único se utiliza en toda la base de datos para distinguir registros de diferentes proyectos. Usamos [UUID versión 4](https://es.wikipedia.org/wiki/Identificador_%C3%BAnico_universal). Es casi imposible que dos UUID choquen.
+    Para un proyecto nuevo, la aplicación genera automáticamente un UUID de proyecto. Este identificador único se utiliza en toda la base de datos para distinguir registros de diferentes proyectos. Usamos [UUID versión 4](https://es.wikipedia.org/wiki/Identificador_%C3%BAnico_universal). Al importar información de proyecto desde otro dispositivo, NAHPU conserva el UUID importado.
 
     {% aside type="tip" %}
 
-    En algunos escenarios de campo, puede tener a varias personas usando su propio dispositivo para registrar datos de especímenes en NAHPU. Recomendamos que el líder del equipo cree el nuevo proyecto desde cero. Los demás miembros del equipo deben crear un nuevo proyecto escaneando el código QR en el panel de control de NAHPU del líder del equipo (consulte los detalles sobre el panel a continuación). Este enfoque transfiere toda la información del proyecto, incluido el UUID. La aplicación usa el UUID para identificar el mismo proyecto a partir de múltiples conjuntos de datos NAHPU, lo cual es esencial para nuestro [trabajo en curso para admitir la fusión de datos](https://github.com/nahpu/nahpu/issues/124).
+    En algunos escenarios de campo, puede tener a varias personas usando su propio dispositivo para registrar datos de especímenes en NAHPU. Recomendamos que el líder del equipo cree el nuevo proyecto desde cero. En el menú del proyecto de la pantalla de inicio, el líder puede seleccionar `Show QR`. Los demás miembros deben crear un nuevo proyecto y usar `Scan QR` en un dispositivo móvil o `Import JSON` en un equipo de escritorio. Este enfoque transfiere la información del proyecto y conserva el UUID.
     
     {% /aside %}
 
@@ -33,7 +33,7 @@ NAHPU es una aplicación de catalogación basada en proyectos. Los datos se gest
 
     El panel de control es la interfaz principal del proyecto. Se divide en cuatro paneles principales.
     
-    - **El panel superior izquierdo** es la información del proyecto. Incluye un código QR que otros usuarios pueden escanear al crear un nuevo proyecto.
+    - **El panel superior izquierdo** es la información del proyecto. Use los botones `Edit` y `Export info` en la parte inferior del panel. Para compartir el proyecto, use `Show QR` o `Export info` en el menú del proyecto de la pantalla de inicio.
     - **El panel superior derecho** son los datos del personal. Este panel le permite agregar y administrar la información del personal para el proyecto. El personal se mostrará como una lista en este panel una vez creado.
     - **El panel inferior izquierdo** es el registro numérico de taxones. Este panel le permite agregar y administrar información de taxones para el proyecto.
     - **El panel inferior derecho** son las estadísticas de los registros. Este panel muestra el número de registros agregados al proyecto. Puede ingresar a la ventana de pantalla completa para ver más estadísticas.
@@ -91,7 +91,8 @@ NAHPU es una aplicación de catalogación basada en proyectos. Los datos se gest
 
     {% aside type="note" %}
 
-    Las actualizaciones futuras de NAHPU le permitirán cambiar el término `Sitio` (*Site*) a `Localidad` (*Locality*), al tiempo que se asegura la retrocompatibilidad con bases de datos anteriores.
+    Esta documentación usa `Site`, que también es el nombre utilizado por la
+    aplicación y los campos actuales de la base de datos.
 
     {% /aside %}
 
@@ -114,7 +115,7 @@ NAHPU es una aplicación de catalogación basada en proyectos. Los datos se gest
     
     - **Fecha de finalización** = la mañana en que se revisaron las trampas y se recolectaron los especímenes.
 
-    Este enfoque captura con precisión el esfuerzo de captura y le permite realizar un seguimiento de los cambios en el número de trampas o el personal en todos los eventos. Las futuras actualizaciones de NAHPU incluirán estadísticas por evento, como el recuento de especies y resúmenes del esfuerzo de captura.
+    Este enfoque captura con precisión el esfuerzo de captura y le permite realizar un seguimiento de los cambios en el número de trampas o el personal en todos los eventos. Use el registro del evento y las estadísticas del proyecto para revisar el esfuerzo y el número de especímenes.
     {% /aside %}
 
 7. **Agregar registros de especímenes**
@@ -153,4 +154,3 @@ NAHPU es una aplicación de catalogación basada en proyectos. Los datos se gest
     {% /aside %}
 
 {% /steps %}
-

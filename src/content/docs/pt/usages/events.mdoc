@@ -64,3 +64,52 @@ As listas padrão do NAHPU para `Métodos de Coleta` e `Funções do Pessoal` s�
 {% /steps %}
 
 ## Adicionando pessoal de coleta
+
+Use a aba `Event Personnel` para registrar todas as pessoas que participaram do
+evento:
+
+1. Abra a aba de pessoal no painel inferior direito.
+2. Use `+ Add personnel`.
+3. Selecione uma entrada de `Personnel` do projeto.
+4. Selecione uma `Role`.
+
+As funções são configuradas nas configurações de eventos. Inclua coletores,
+líderes, ajudantes, motoristas, observadores, gravadores e quem ajudou na
+logística. Um registro de espécime pode selecionar depois um participante do
+evento como `Collector`.
+
+## Informações do evento
+
+- `Event ID`: gerado com `{Site ID}-{Start Date}`; acrescente um sufixo quando
+  houver vários eventos na mesma localidade e data.
+- `Site ID`: localidade onde o evento ocorreu.
+- `Start Date`, `End Date`, `Start Time` e `End Time`: intervalo do evento.
+- `Primary activity`: `Collecting`, `Recording`, `Observing` ou `Other`.
+- `Notes`: detalhes do protocolo, atividades secundárias ou contexto do trabalho.
+
+Cada esforço contém `Method`, `Brand and Model`, `Count`, `Size` e `Notes`. Um
+evento pode ter vários esforços, e um espécime pode escolher um deles como seu
+método.
+
+A aba de clima registra temperaturas diurnas e noturnas, umidade média, ponto
+de orvalho, nascer e pôr do sol, fase da lua e observações. Ao duplicar um
+evento, o novo registro de clima fica vazio para as condições da nova data.
+
+## Gerenciando eventos
+
+No menu de três pontos do evento, use:
+
+- `Edit`: alterar os campos do evento, esforços, pessoal ou clima.
+- `Duplicate event`: copiar localidade, horários, atividade, notas, esforços e
+  pessoal; as datas avançam um dia e o clima fica vazio.
+- `Show QR`: mostrar o evento para leitura em outro dispositivo móvel.
+- `Export event`: salvar o evento e seus dados relacionados como JSON.
+- `Scan QR`: criar ou substituir um evento a partir de um código QR.
+- `Import event`: criar ou substituir um evento a partir de um JSON exportado.
+- `Delete record`: excluir o evento, seus esforços, pessoal e clima. Primeiro
+  mova ou exclua os espécimes que fazem referência a ele.
+- `Delete all records`: excluir todos os eventos e seus esforços, pessoal e
+  clima no projeto.
+
+Ao importar, escolha se o registro criará um evento novo ou atualizará um evento
+existente e confirme a localidade e o pessoal relacionados.

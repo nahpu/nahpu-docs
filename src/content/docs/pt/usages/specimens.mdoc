@@ -6,8 +6,11 @@ sidebar:
 
 ## Configurando registros de espécimes
 
+Um registro de espécime reúne identificação, preparação, dados de captura e as
+partes físicas do espécime. O espécime se vincula a um evento de coleta; o
+evento fornece localidade, método, coletor e coordenada.
 
-## Configurando eventos
+## Configurando espécimes
 
 As listas padrão do NAHPU para `Partes do espécime` e `Tratamentos` são limitadas e não incluem todas as opções possíveis. Se este for o seu primeiro projeto NAHPU, recomendamos configurar as entradas primeiro. Você pode fazer isso acessando as configurações:
 
@@ -33,7 +36,9 @@ As listas padrão do NAHPU para `Partes do espécime` e `Tratamentos` são limit
 
 {% aside type="tip" %}
 
-Versões futuras do NAHPU permitirão que você compartilhe as configurações com outros dispositivos. Você pode usar as opções de compartilhamento de configurações para compartilhar todas as listas que criou.
+Os tipos de partes e tratamentos são configurações do usuário. Eles podem ser
+exportados e importados com pacotes do projeto para reutilizar a mesma
+terminologia e o mesmo comportamento de exportação.
 
 {% /aside %}
 
@@ -44,11 +49,14 @@ Versões futuras do NAHPU permitirão que você compartilhe as configurações c
 
 2. Clique no botão `+` para adicionar um novo registro de espécime.
 
-    Você também pode usar o ícone do menu de três pontos e tocar em `Criar localidade`.
+    Você também pode usar o menu de três pontos e escolher uma ação de
+    duplicação.
 
     {% aside type="tip" %}
 
-    Se você coletar a mesma `Parte do espécime` para cada novo espécime, poderá minimizar a digitação usando a opção `Duplicar parte`. Toque/clique no botão de menu de três pontos. Em seguida, `Duplicar localidade`. Isso criará uma nova localidade usando as informações da localidade atual, exceto que o `ID da Localidade` e as coordenadas estarão vazios. Em seguida, preencha o `ID da Localidade` e adicione as coordenadas.
+    Se você coletar a mesma `Parte do espécime` para cada novo espécime, use
+    `Duplicate part`. Revise IDs, datas, horários e tratamentos da cópia antes
+    de salvá-la.
 
     {% /aside %}
 
@@ -71,15 +79,37 @@ Versões futuras do NAHPU permitirão que você compartilhe as configurações c
 
 7. Selecione a `Condição` do espécime.
 
-8. Adicione a `Data de prep.` e `Hora de prep.`.
+8. Adicione a `Data de coleta`, `Hora de coleta`, `Data de prep.` e `Hora de
+   prep.` quando disponíveis.
 
 {% /steps %}
 
-## Registros de Coleta
+## Registros gerais
+
+O formulário geral inclui `Museum ID`, número de campo, `Cataloger`,
+`Preparator`, `Species`, `ID Confidence`, `ID Method`, `Condition` e as datas e
+horários de coleta e preparação.
 
 ## Taxonomia
 
+O cartão `Taxon Info` é preenchido a partir da espécie selecionada. Ele mostra a
+classificação e permite consultar o registro taxonômico, incluindo autores,
+nome comum, categoria da Lista Vermelha, status CITES e observações quando
+existentes.
+
 ## Registros de Captura
+
+Os registros de captura vinculam o espécime ao evento:
+
+- `Site ID` e `Event ID`: localidade e evento de coleta.
+- `Capture date` e `Capture time`: data e horário da captura; `Relative time`
+  pode usar Dawn, Morning, Afternoon, Dusk ou Night.
+- `Method` e `Method ID`: esforço e identificador do método do evento.
+- `Coordinate ID`: coordenada associada à localidade do evento.
+- `Collector`: coletor da lista de pessoal do evento.
+
+Ao mudar o evento, método, coletor e coordenada são limpos, enquanto a data e o
+horário da captura são preservados.
 
 ## Medições
 
@@ -96,14 +126,15 @@ Selecione a guia abaixo para visualizar as opções de medição para cada grupo
 
 {% /tabitem %}
 {% tabitem label="Aves" %}
-Trabalho em progresso.
+- `Peso (gramas)`, `Envergadura (mm)`, cores das partes moles, `Sexo`, placa de
+  incubação, bursa e ossificação do crânio.
 {% /tabitem %}
 {% tabitem label="Peixes" %}
 
-Trabalho em progresso.
+Os campos de medição disponíveis dependem do formato do catálogo.
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
-Trabalho em progresso.
+- `Sexo`, `Idade`, `Peso (gramas)`, `SVL (cm)` e observações.
 {% /tabitem %}
 
 
@@ -111,4 +142,33 @@ Trabalho em progresso.
 {% /tabs %}
 ## Partes do Espécime
 
+Cada espécime pode ter várias partes, como vouchers, tecidos, swabs ou
+parasitas. Uma parte pode conter `Tissue ID`, `QR/barcode ID`, `Preparation type`,
+`Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
+`Date taken`, `PMI`, museu permanente, museu de empréstimo e `Remarks`.
+
+## Dados associados
+
+Use `Associated Data` para links ou arquivos digitais relacionados, como
+acessões do GenBank, registros do MorphoSource ou arquivos de análise. Os campos
+incluem `Data Type`, `Name`, `Description`, `Date`, `URL` ou um arquivo.
+
 ## Mídia
+
+Use `Media` para imagens e outros arquivos de mídia associados ao espécime.
+
+## Gerenciando registros de espécimes
+
+No menu de três pontos do espécime, use:
+
+- `Edit`: atualizar o espécime, medições, partes, dados associados ou mídia.
+- `Duplicate part`: criar um espécime novo copiando as informações da parte.
+- `Export specimen`: salvar um JSON ou arquivo que inclua mídia.
+- `Import specimen`: escolher um espécime novo ou existente e relacionar seus
+  eventos, localidades e táxons ao projeto atual.
+- `Delete record`: excluir o espécime, medições, partes, dados e vínculos de
+  mídia. O número de campo não é reutilizado automaticamente.
+- `Delete all records`: excluir todos os espécimes, medições, partes, dados e
+  mídias de espécimes do projeto.
+
+Depois de importar, revise os relacionamentos e todos os identificadores gerados.

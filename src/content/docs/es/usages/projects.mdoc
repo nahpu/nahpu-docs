@@ -12,28 +12,55 @@ Para crear un nuevo proyecto, utilice el botón `+` en la esquina inferior derec
 - **La descripción del proyecto** debe ser de unas pocas frases que expliquen el propósito del proyecto.
 - **El formato principal del catálogo** es el formato del catálogo que se utilizará para generar las páginas del catálogo de especímenes. Puede cambiar esto más tarde. También puede mezclar diferentes tipos de formatos de catálogo en el mismo proyecto.
 
+## Gestionar proyectos desde la pantalla de inicio
+
+Cada proyecto de la lista de la pantalla de inicio tiene un menú de acciones. Las acciones están agrupadas en este orden:
+
+- **Edit info** - Abre el formulario del proyecto para actualizar la información del proyecto.
+- **Show QR** - Muestra el código QR de la información del proyecto para escanearlo desde otro dispositivo.
+- **Export info** - Exporta la información del proyecto como un archivo JSON. En el escritorio, elija un directorio en la configuración del archivo; en el móvil, use la acción de compartir después de exportar.
+- **Details** - Abre una vista de solo lectura de la información del proyecto.
+
 ## Conociendo el tablero (dashboard)
 
 Después de crear un proyecto, accederá al tablero del proyecto. El tablero está dividido en cuatro paneles principales:
 
-- **Resumen del proyecto** - Este panel proporciona una visión rápida del proyecto. Incluye el nombre del proyecto, la descripción, el [investigador principal](./projects#investigador-principal), la ubicación, la fecha de inicio, la fecha de finalización, la fecha de creación de la base de datos y la fecha del último acceso.
+- **Resumen del proyecto** - Este panel proporciona una visión rápida del proyecto. Incluye el nombre del proyecto, la descripción, el [investigador principal](./projects#investigador-principal), la ubicación, la fecha de inicio, la fecha de finalización, la fecha de creación de la base de datos y la fecha del último acceso. Use los botones de texto `Edit` y `Export info` en la parte inferior del panel para gestionar la información del proyecto.
 - **Personal** - Este panel enumera a todo el personal asociado con el proyecto. Puede agregar más personal haciendo clic en el botón `[+ Agregar personal]` en la parte inferior del panel.
 - **Registro de taxones** - Este panel enumera todos los taxones registrados en la base de datos. Puede agregar más taxones haciendo clic en el botón `[+ Agregar taxón]` en la parte inferior del panel. También puede importar taxones desde un archivo csv haciendo clic en el botón `[Importar desde archivo]`.
 - **Estadísticas de registros** - Gráfico que muestra estadísticas en tiempo real del número de registros en el proyecto.
 
 ## Actualización de la información del proyecto
 
-Puede agregar más información sobre el proyecto haciendo clic en el botón `lápiz` en la parte inferior derecha del resumen del proyecto.
+Desde el tablero, use el botón de texto `Edit` en la parte inferior del resumen del proyecto. Desde la pantalla de inicio, abra el menú de acciones del proyecto y seleccione `Edit info`.
+
+## Transferir información del proyecto
+
+La información del proyecto se puede transferir entre dispositivos NAHPU de dos maneras:
+
+1. **JSON** - En el dispositivo de origen, abra el menú de acciones del proyecto desde la pantalla de inicio y seleccione `Export info`. En el dispositivo receptor, seleccione `+` y elija `Import JSON` en el formulario de nuevo proyecto.
+2. **Código QR** - En el dispositivo de origen, seleccione `Show QR` en el menú de acciones del proyecto. En un dispositivo móvil receptor, seleccione `+` y use `Scan QR` en el formulario de nuevo proyecto.
+
+Ambos métodos conservan el UUID del proyecto. Mantenga el UUID al intercambiar
+información para que la identidad del proyecto permanezca estable entre
+dispositivos.
 
 ## Eliminar proyectos
 
-Hacemos deliberadamente difícil eliminar un proyecto. Si está seguro de que desea eliminar un proyecto, primero elimine todos los registros asociados con el proyecto siguiendo todos los pasos a continuación:
+Abra el menú lateral del proyecto y seleccione `Delete project`. NAHPU le
+pedirá escribir los primeros cinco caracteres del UUID del proyecto. Esta
+confirmación es necesaria porque la eliminación no se puede deshacer.
 
-1. Vaya al tablero del proyecto.
-2. Haga clic en el botón de narrativa en la barra de navegación inferior. Utilice el botón de menú (icono de tres puntos) en la esquina superior derecha para seleccionar `Eliminar todos los registros`.
-3. Repita el paso 2 para `Registros de especímenes`, `Eventos de recolección` y `Registros de sitios`. Se requiere el mismo orden exacto para eliminar los registros.
-4. Regrese al tablero del proyecto y elimine a todo el personal enumerado.
-5. Elimine el proyecto utilizando el botón de eliminar en el menú lateral.
+La eliminación borra los registros de especímenes y mediciones, los eventos de
+recolección y sus esfuerzos, el personal de los eventos, las narrativas, los
+sitios y coordenadas, los vínculos del personal del proyecto, los archivos
+multimedia y el registro del proyecto. También elimina los archivos guardados
+del proyecto. Si un archivo multimedia todavía está compartido con un registro
+taxonómico, se desvincula en lugar de borrarse. Si la limpieza de archivos falla,
+NAHPU muestra una advertencia después de eliminar los datos de la base de datos.
+
+Exporte un paquete del proyecto o una copia de seguridad de la base de datos
+antes de eliminarlo si puede necesitar los datos más adelante.
 
 
 

@@ -30,7 +30,9 @@ sidebar:
 
     {% aside type="tip" %}
 
-    Para un proyecto que involucra múltiples dispositivos, recomendamos crear el mismo `siteID` para un sitio idéntico. La [próxima función de fusión de datos](https://github.com/nahpu/nahpu/issues/124) utilizará el `siteID` para identificar y fusionar registros de diferentes dispositivos. Una futura actualización de NAHPU permitirá compartir la información del sitio con diferentes sitios de manera similar a como se comparte la información del proyecto. 
+    Para un proyecto que involucra varios dispositivos, use el mismo `Site ID`
+    para un sitio idéntico. Esto facilita hacer coincidir los registros de sitios
+    y eventos cuando se importan en otro dispositivo.
 
     {% /aside %}
 
@@ -40,7 +42,8 @@ sidebar:
 
 5. Agregue el tipo de sitio.
 
-    El tipo de sitio ayuda a categorizar el sitio según sus características o uso. Actualmente, no hay opción para editar la lista. Una próxima función de NAHPU le permitirá hacerlo.
+    El tipo de sitio ayuda a categorizar el sitio según sus características o
+    uso. Seleccione un valor de la lista de tipos configurada para el proyecto.
 
 6. Complete los detalles geográficos.
 
@@ -70,6 +73,38 @@ sidebar:
       ```
 
 {% /steps %}
+
+## Información del sitio
+
+El formulario registra el lugar y las personas responsables:
+
+- `Site ID`: identificador único del proyecto que usan los eventos y los
+  registros intercambiados.
+- `Site leader`: persona responsable del campamento, la línea de trampas u otro
+  sitio.
+- `Site type`: categoría configurada para el sitio.
+- Localidad y observaciones: texto de localidad precisa y notas sobre el uso
+  del sitio.
+- Tipo, condición y descripción del hábitat: entorno observado en el sitio.
+
+## Gestionar sitios
+
+Abra el menú de tres puntos en la página del sitio para usar estas acciones:
+
+- `Edit site`: actualizar el sitio y sus coordenadas.
+- `Duplicate site`: copiar los detalles a un registro nuevo con ID y
+  coordenadas vacíos.
+- `Show QR`: mostrar el registro para escanearlo desde otro dispositivo móvil.
+- `Export site`: guardar el registro como JSON.
+- `Scan QR`: crear o reemplazar un sitio desde un código QR.
+- `Import site`: crear o reemplazar un sitio desde un registro JSON exportado.
+- `Delete record`: eliminar el sitio actual. No se puede eliminar mientras un
+  evento lo utilice.
+- `Delete all records`: eliminar todos los sitios del proyecto. Primero quite
+  los eventos que los referencian.
+
+Al importar un sitio, elija si crea un sitio nuevo o actualiza uno existente.
+Revise el personal vinculado y las coordenadas después de importar.
 
 ## Agregar coordenadas
 

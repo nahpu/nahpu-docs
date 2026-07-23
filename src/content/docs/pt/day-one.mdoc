@@ -21,11 +21,11 @@ O NAHPU é um aplicativo de catalogação baseado em projetos. Os dados são ger
 
     O aplicativo o levará para o painel de controle (*dashboard*).
     
-    Após a criação de um projeto, o aplicativo gera automaticamente um UUID de projeto. Este identificador único é usado em todo o banco de dados para distinguir registros de diferentes projetos. Nós usamos o modelo de versão [UUID versão 4](https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal). É quase impossível que dois UUIDs se colidam.
+    Para um projeto novo, o aplicativo gera automaticamente um UUID de projeto. Este identificador único é usado em todo o banco de dados para distinguir registros de diferentes projetos. Nós usamos o modelo de versão [UUID versão 4](https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal). Ao importar informações de projeto de outro dispositivo, o NAHPU mantém o UUID importado.
 
     {% aside type="tip" %}
 
-    Em alguns cenários de campo, você pode ter várias pessoas usando seu próprio dispositivo para registrar os dados de espécimes no NAHPU. Recomendamos que o líder da equipe crie o novo projeto do zero. Os outros membros da equipe devem criar um novo projeto escaneando o código QR no painel de controle do líder da equipe do NAHPU (veja os detalhes sobre o painel abaixo). Esta abordagem transfere todas as informações do projeto, incluindo o UUID. O aplicativo usa o UUID para identificar o mesmo projeto a partir de múltiplos conjuntos de dados NAHPU, que é essencial para nosso [trabalho contínuo de suporte à fusão de dados](https://github.com/nahpu/nahpu/issues/124).
+    Em alguns cenários de campo, você pode ter várias pessoas usando seu próprio dispositivo para registrar os dados de espécimes no NAHPU. Recomendamos que o líder da equipe crie o novo projeto do zero. No menu do projeto na tela inicial, o líder pode selecionar `Show QR`. Os outros membros devem criar um novo projeto e usar `Scan QR` em um dispositivo móvel ou `Import JSON` em um computador. Esta abordagem transfere as informações do projeto e mantém o UUID.
     
     {% /aside %}
 
@@ -33,7 +33,7 @@ O NAHPU é um aplicativo de catalogação baseado em projetos. Os dados são ger
 
     O painel de controle é a interface principal do projeto. É dividido em quatro painéis principais.
     
-    - **O painel superior esquerdo** apresenta as informações do projeto. Inclui um código QR que os outros usuários podem verificar quando for da criação de um novo projeto.
+    - **O painel superior esquerdo** apresenta as informações do projeto. Use os botões `Edit` e `Export info` na parte inferior do painel. Para compartilhar o projeto, use `Show QR` ou `Export info` no menu do projeto na tela inicial.
     - **O painel superior direito** contém os dados do pessoal. Este painel permite que você adicione e gerencie as informações pessoais do projeto. A equipe será apresentada como uma lista neste painel após serem criadas.
     - **O painel inferior esquerdo** consiste no registro de táxons. Este painel permite que você adicione e gerencie informações relacionadas aos táxons do projeto.
     - **O painel inferior direito** exibe as estatísticas dos registros. Este painel mostra o acúmulo de números agregados de registros de números inseridos no projeto. Você pode entrar na tela inteira da janela para ter um acesso de visualização com mais dados na parte com as várias estatísticas adicionais das métricas daquele projeto.
@@ -81,4 +81,3 @@ O NAHPU é um aplicativo de catalogação baseado em projetos. Os dados são ger
     Backup dos projetos que é fundamental e exigido!
 
 {% /steps %}
-

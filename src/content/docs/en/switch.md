@@ -17,7 +17,7 @@ While paper-based field catalogs have traditionally been the go-to method for co
 
 - **Data Accessibility**: NAHPU enables you to access your data from any location and share it with collaborators, ensuring they receive an exact copy. In contrast, paper-based catalogs necessitate physically transporting the catalogs, sending scanned images of the pages, or inputting the records into a spreadsheet, which can delay access until you return from the field and digitize the data.
 
-- **Data Quality**: NAHPU aids in standardizing your data collection and helps prevent common secondary data entry errors that can occur when digitizing paper-based field catalogs. Future NAHPU updates will include automatic data validation features.
+- **Data Quality**: NAHPU aids in standardizing your data collection and helps prevent common secondary data entry errors that can occur when digitizing paper-based field catalogs. Configure controlled lists and review required fields before leaving the field.
 
 - **Data Association**: NAHPU allows you to link your data with other data sources, such as GPS coordinates, images, and audio recordings. You only need to enter a site once, which can be associated with multiple data entries. On the other hand, paper-based catalogs require you to write the same site multiple times, typically at the top of each page.
 

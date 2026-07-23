@@ -17,7 +17,7 @@ Meskipun katalog lapangan berbasis kertas secara tradisional telah menjadi metod
 
 - **Aksesibilitas Data**: NAHPU memungkinkan Anda mengakses data dari lokasi mana pun dan membagikannya dengan kolaborator, memastikan mereka menerima salinan yang tepat. Sebaliknya, katalog berbasis kertas mengharuskan transportasi fisik katalog, mengirim gambar hasil pemindaian halaman, atau memasukkan catatan ke dalam spreadsheet, yang dapat menunda akses sampai Anda kembali dari lapangan dan mendigitalkan data.
 
-- **Kualitas Data**: NAHPU membantu dalam menstandardisasi pengumpulan data Anda dan membantu mencegah kesalahan entri data sekunder yang umum terjadi ketika mendigitalkan katalog lapangan berbasis kertas. Pembaruan NAHPU di masa mendatang akan mencakup fitur validasi data otomatis.
+- **Kualitas Data**: NAHPU membantu menstandardisasi pengumpulan data dan mencegah kesalahan entri umum saat mendigitalkan katalog lapangan berbasis kertas. Konfigurasikan daftar terkontrol dan periksa bidang wajib sebelum berangkat ke lapangan.
 
 - **Asosiasi Data**: NAHPU memungkinkan Anda menautkan data Anda dengan sumber data lain, seperti koordinat GPS, gambar, dan rekaman audio. Anda hanya perlu memasukkan suatu lokasi satu kali, yang dapat dikaitkan dengan banyak entri data. Di sisi lain, katalog berbasis kertas mengharuskan Anda menulis lokasi yang sama berkali-kali, biasanya di bagian atas setiap halaman.
 

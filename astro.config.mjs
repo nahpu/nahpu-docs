@@ -252,13 +252,20 @@ export default defineConfig({
         },
         {
           label: "Curatorial Guidelines",
-          autogenerate: { directory: "curatorial-guideline" },
           translations: {
             "pt-BR": "Diretrizes Curatoriais",
             es: "Directrices Curatoriales",
             id: "Pedoman Kuratorial",
           },
           collapsed: true,
+          items: [
+            {
+              autogenerate: {
+                directory: "curatorial-guideline",
+                collapsed: true,
+              },
+            },
+          ],
         },
         {
           label: "Contributing",

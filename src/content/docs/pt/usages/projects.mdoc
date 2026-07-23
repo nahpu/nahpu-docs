@@ -12,28 +12,54 @@ Para criar um novo projeto, use o botão `+` no canto inferior direito da tela i
 - **A descrição do projeto** deve ser algumas frases explicando o propósito do projeto.
 - **O formato principal do catálogo** é o formato do catálogo que será usado para gerar as páginas do catálogo de espécimes. Você pode alterar isso mais tarde. Você também pode misturar diferentes tipos de formato de catálogo no mesmo projeto.
 
+## Gerenciando projetos na tela inicial
+
+Cada projeto na lista da tela inicial possui um menu de ações. As ações são agrupadas nesta ordem:
+
+- **Edit info** - Abre o formulário do projeto para atualizar as informações do projeto.
+- **Show QR** - Exibe o código QR das informações do projeto para ser escaneado em outro dispositivo.
+- **Export info** - Exporta as informações do projeto como um arquivo JSON. No computador, escolha um diretório nas configurações do arquivo; no celular, use a ação de compartilhamento após a exportação.
+- **Details** - Abre uma visualização somente leitura das informações do projeto.
+
 ## Conhecendo o painel (dashboard)
 
 Depois de criar um projeto, você irá para o painel do projeto. O painel é dividido em quatro painéis principais:
 
-- **Visão geral do projeto** - Este painel fornece uma visão rápida do projeto. Inclui o nome do projeto, descrição, [pesquisador principal](./projects#pesquisador-principal), localização, data de início, data de término, data de criação do banco de dados e data do último acesso.
+- **Visão geral do projeto** - Este painel fornece uma visão rápida do projeto. Inclui o nome do projeto, descrição, [pesquisador principal](./projects#pesquisador-principal), localização, data de início, data de término, data de criação do banco de dados e data do último acesso. Use os botões de texto `Edit` e `Export info` na parte inferior do painel para gerenciar as informações do projeto.
 - **Pessoal** - Este painel lista todo o pessoal associado ao projeto. Você pode adicionar mais pessoal clicando no botão `[+ Adicionar pessoal]` na parte inferior do painel.
 - **Registro de Táxon** - Este painel lista todos os táxons registrados no banco de dados. Você pode adicionar mais táxons clicando no botão `[+ Adicionar táxon]` na parte inferior do painel. Você também pode importar táxons de um arquivo csv clicando no botão `[Importar de arquivo]`.
 - **Estatísticas de registros** - Gráfico mostrando estatísticas em tempo real do número de registros no projeto.
 
 ## Atualizando as informações do projeto
 
-Você pode adicionar mais informações sobre o projeto clicando no botão `lápis` no canto inferior direito da visão geral do projeto.
+No painel, use o botão de texto `Edit` na parte inferior da visão geral do projeto. Na tela inicial, abra o menu de ações do projeto e selecione `Edit info`.
+
+## Transferindo informações do projeto
+
+As informações do projeto podem ser transferidas entre dispositivos NAHPU de duas maneiras:
+
+1. **JSON** - No dispositivo de origem, abra o menu de ações do projeto na tela inicial e selecione `Export info`. No dispositivo de destino, selecione `+` e escolha `Import JSON` no formulário de novo projeto.
+2. **Código QR** - No dispositivo de origem, selecione `Show QR` no menu de ações do projeto. Em um dispositivo móvel de destino, selecione `+` e use `Scan QR` no formulário de novo projeto.
+
+Os dois métodos mantêm o UUID do projeto. Mantenha o UUID ao trocar
+informações para que a identidade do projeto permaneça estável entre os
+dispositivos.
 
 ## Excluindo Projetos
 
-Nós deliberadamente tornamos difícil excluir um projeto. Se você tiver certeza de que deseja excluir um projeto, exclua todos os registros associados ao projeto primeiro, seguindo todas as etapas abaixo:
+Abra o menu lateral do projeto e selecione `Delete project`. O NAHPU pedirá que
+você digite os cinco primeiros caracteres do UUID do projeto. Essa confirmação
+é necessária porque a exclusão não pode ser desfeita.
 
-1. Vá para o painel do projeto
-2. Clique no botão de narrativa na barra de navegação inferior. Use o botão de menu (ícone de três pontos) no canto superior direito para selecionar `Excluir todos os registros`.
-3. Repita a etapa 2 para `Registros de Espécimes`, `Eventos de Coleta` e `Registros de Localidade`. Requer a mesma ordem exata para excluir os registros.
-4. Volte para o painel do projeto e exclua todo o pessoal listado.
-5. Exclua o projeto usando o botão de exclusão na gaveta do menu.
+A exclusão remove registros de espécimes e medições, eventos de coleta e seus
+esforços, pessoal dos eventos, narrativas, localidades e coordenadas, vínculos
+de pessoal do projeto, mídias e o registro do projeto. Ela também remove os
+arquivos armazenados do projeto. Uma mídia ainda compartilhada com um registro
+taxonômico é desvinculada em vez de excluída. Se a limpeza dos arquivos falhar,
+o NAHPU mostra um aviso depois de excluir os dados do banco.
+
+Exporte um pacote do projeto ou um backup do banco de dados antes de excluí-lo
+caso possa precisar dos dados mais tarde.
 
 
 

@@ -79,7 +79,7 @@ controlled lists and export behavior.
 
 6. Select `ID confidence`.
 
-    This tells future users how confident you are in the identification and
+    This tells later reviewers how confident you are in the identification and
     helps curators prioritize records that need review. The values are `Low`,
     `Medium`, and `High`.
 
@@ -194,7 +194,8 @@ Select the tab below to view measurement options for each taxonomic group.
 {% /tabitem %}
 {% tabitem label="Fish and fossils" %}
 
-Fish and fossil specimen measurement forms are not yet implemented.
+    Measurement fields depend on the catalog format and the tabs available in
+    your project. Record the fields shown for the selected format.
 
 {% /tabitem %}
 
@@ -248,3 +249,24 @@ Associated data fields include:
 Use `Media` for images or other media records associated with the specimen.
 Media records are stored in the shared media system and linked to the specimen
 through the specimen-media relationship.
+
+## Managing specimen records
+
+Open the three-dot menu on the specimen page to manage the current record:
+
+- `Edit`: update the specimen, measurements, parts, associated data, or media.
+- `Duplicate part`: create a new specimen using the current specimen's part
+  information. Review IDs, dates, times, and treatments before saving.
+- `Export specimen`: save a JSON record or an archive that includes specimen
+  media.
+- `Import specimen`: choose a new or existing target specimen, then map the
+  imported event, site, and taxon references to records in the current project.
+- `Delete record`: delete the specimen, its measurements, parts, associated
+  data, and media links. The field number is not reused automatically.
+- `Delete all records`: delete all specimens, measurements, parts, associated
+  data, and specimen media in the current project.
+
+Changing the event in `Capture Records` clears the event-dependent method,
+collector, and coordinate values. Capture date and time are preserved. When a
+record is imported, review these relationships and all generated identifiers
+before continuing your cataloging workflow.

@@ -17,7 +17,7 @@ Si bien los catálogos de campo en papel han sido tradicionalmente el método pr
 
 - **Accesibilidad de los Datos**: NAHPU le permite acceder a sus datos desde cualquier ubicación y compartirlos con colaboradores, asegurando que reciban una copia exacta. Por el contrario, los catálogos en papel requieren transportar físicamente los catálogos, enviar imágenes escaneadas de las páginas o ingresar los registros en una hoja de cálculo, lo que puede retrasar el acceso hasta que regrese del campo y digitalice los datos.
 
-- **Calidad de los Datos**: NAHPU ayuda a estandarizar la recopilación de datos y ayuda a prevenir errores comunes de entrada de datos secundarios que pueden ocurrir al digitalizar catálogos de campo en papel. Las futuras actualizaciones de NAHPU incluirán funciones automáticas de validación de datos.
+- **Calidad de los Datos**: NAHPU ayuda a estandarizar la recopilación de datos y a prevenir errores comunes de entrada al digitalizar catálogos de campo en papel. Configure listas controladas y revise los campos obligatorios antes de salir al campo.
 
 - **Asociación de Datos**: NAHPU le permite vincular sus datos con otras fuentes de datos, como coordenadas GPS, imágenes y grabaciones de audio. Solo necesita ingresar un sitio una vez, que puede estar asociado con múltiples entradas de datos. Por otro lado, los catálogos en papel requieren que escriba el mismo sitio varias veces, generalmente en la parte superior de cada página.
 

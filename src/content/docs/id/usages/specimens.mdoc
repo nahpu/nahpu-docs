@@ -6,8 +6,11 @@ sidebar:
 
 ## Menyiapkan catatan spesimen
 
+Catatan spesimen menggabungkan identifikasi, persiapan, data tangkapan, dan
+bagian fisik spesimen. Spesimen terhubung ke kegiatan pengumpulan; kegiatan
+tersebut menyediakan lokasi, metode, pengumpul, dan koordinat.
 
-## Menyiapkan kejadian
+## Menyiapkan spesimen
 
 Daftar bawaan NAHPU untuk `Bagian spesimen` (Specimen parts) dan `Perlakuan` (Treatments) terbatas dan tidak mencakup semua pilihan yang mungkin. Jika ini adalah proyek NAHPU pertama Anda, kami menyarankan untuk menyiapkan entri terlebih dahulu. Anda dapat melakukannya dengan masuk ke pengaturan:
 
@@ -33,7 +36,9 @@ Daftar bawaan NAHPU untuk `Bagian spesimen` (Specimen parts) dan `Perlakuan` (Tr
 
 {% aside type="tip" %}
 
-Versi NAHPU di masa mendatang akan memungkinkan Anda berbagi pengaturan ke perangkat lain. Anda dapat menggunakan opsi bagikan pengaturan untuk berbagi semua daftar yang telah Anda buat.
+Daftar tipe bagian dan perlakuan adalah konfigurasi pengguna. Daftar tersebut
+dapat diekspor dan diimpor bersama bundel proyek agar istilah dan perilaku
+ekspor tetap sama di instalasi NAHPU lain.
 
 {% /aside %}
 
@@ -44,11 +49,13 @@ Versi NAHPU di masa mendatang akan memungkinkan Anda berbagi pengaturan ke peran
 
 2. Klik tombol `+` untuk menambahkan catatan spesimen baru.
 
-    Anda juga dapat menggunakan ikon menu titik tiga dan mengetuk `Buat situs` (Create site).
+    Anda juga dapat menggunakan menu titik tiga dan memilih tindakan duplikasi.
 
     {% aside type="tip" %}
 
-    Jika Anda mengoleksi `Bagian spesimen` yang sama untuk setiap spesimen baru, Anda dapat meminimalkan pengetikan dengan menggunakan opsi `Duplikat bagian` (Duplicate part). Ketuk/klik pada tombol menu titik tiga. Kemudian, `Duplikat situs` (Duplicate site). Ini akan membuat situs baru menggunakan informasi dari situs saat ini, kecuali `ID Situs` (Site ID) dan koordinat yang kosong. Kemudian, isi `ID Situs` dan tambahkan koordinat.
+    Jika Anda mengoleksi `Bagian spesimen` yang sama untuk setiap spesimen baru,
+    gunakan `Duplicate part`. Periksa ID, tanggal, waktu, dan perlakuan pada
+    salinan sebelum menyimpannya.
 
     {% /aside %}
 
@@ -71,15 +78,36 @@ Versi NAHPU di masa mendatang akan memungkinkan Anda berbagi pengaturan ke peran
 
 7. Pilih `Kondisi` (Condition) spesimen.
 
-8. Tambahkan `Tanggal Persiapan` (Prep. date) dan `Waktu Persiapan` (Prep. time).
+8. Tambahkan `Tanggal Koleksi`, `Waktu Koleksi`, `Tanggal Persiapan`, dan
+   `Waktu Persiapan` jika tersedia.
 
 {% /steps %}
 
-## Catatan Koleksi
+## Catatan umum
+
+Formulir umum mencakup `Museum ID`, nomor lapangan, `Cataloger`, `Preparator`,
+`Species`, `ID Confidence`, `ID Method`, `Condition`, serta tanggal dan waktu
+koleksi dan persiapan.
 
 ## Taksonomi
 
+Panel `Taxon Info` diisi dari spesies yang dipilih. Panel ini menampilkan
+klasifikasi dan rincian taksonomi, termasuk penulis, nama umum, kategori Daftar
+Merah, status CITES, dan catatan jika tersedia.
+
 ## Catatan Tangkapan
+
+Catatan tangkapan menghubungkan spesimen dengan kegiatan:
+
+- `Site ID` dan `Event ID`: lokasi dan kegiatan pengumpulan.
+- `Capture date` dan `Capture time`: tanggal dan waktu tangkapan; `Relative time`
+  dapat menggunakan Dawn, Morning, Afternoon, Dusk, atau Night.
+- `Method` dan `Method ID`: upaya dan ID metode dari kegiatan.
+- `Coordinate ID`: koordinat yang terkait dengan lokasi kegiatan.
+- `Collector`: pengumpul dari daftar personel kegiatan.
+
+Jika kegiatan diubah, metode, pengumpul, dan koordinat akan dikosongkan,
+sedangkan tanggal dan waktu tangkapan tetap dipertahankan.
 
 ## Pengukuran
 
@@ -96,14 +124,15 @@ Pilih tab di bawah ini untuk melihat opsi pengukuran untuk setiap kelompok takso
 
 {% /tabitem %}
 {% tabitem label="Burung" %}
-Pekerjaan sedang berlangsung.
+- `Weight (grams)`, `Wingspan (mm)`, warna bagian lunak, `Sex`, brood patch,
+  bursa, dan osifikasi tengkorak.
 {% /tabitem %}
 {% tabitem label="Ikan" %}
 
-Pekerjaan sedang berlangsung.
+Bidang pengukuran yang tersedia bergantung pada format katalog.
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
-Pekerjaan sedang berlangsung.
+- `Sex`, `Age`, `Weight (grams)`, `SVL (cm)`, dan catatan.
 {% /tabitem %}
 
 
@@ -111,4 +140,35 @@ Pekerjaan sedang berlangsung.
 {% /tabs %}
 ## Bagian Spesimen
 
+Setiap spesimen dapat memiliki banyak bagian, seperti voucher, jaringan,
+swab, atau parasit. Bagian dapat berisi `Tissue ID`, `QR/barcode ID`,
+`Preparation type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`,
+`Preparator`, `Date taken`, `PMI`, museum permanen, museum pinjaman, dan
+`Remarks`.
+
+## Data terkait
+
+Gunakan `Associated Data` untuk tautan atau berkas digital yang terkait dengan
+spesimen, seperti akses GenBank, catatan MorphoSource, atau berkas analisis.
+Kolomnya mencakup `Data Type`, `Name`, `Description`, `Date`, `URL`, atau berkas.
+
 ## Media
+
+Gunakan `Media` untuk gambar dan berkas media lain yang terkait dengan
+spesimen.
+
+## Mengelola catatan spesimen
+
+Gunakan menu titik tiga pada spesimen untuk tindakan berikut:
+
+- `Edit`: memperbarui spesimen, pengukuran, bagian, data terkait, atau media.
+- `Duplicate part`: membuat spesimen baru dengan menyalin informasi bagian.
+- `Export specimen`: menyimpan JSON atau arsip yang menyertakan media.
+- `Import specimen`: memilih spesimen baru atau yang ada, lalu menghubungkan
+  kegiatan, lokasi, dan takson ke catatan dalam proyek saat ini.
+- `Delete record`: menghapus spesimen, pengukuran, bagian, data terkait, dan
+  tautan medianya. Nomor lapangan tidak digunakan ulang secara otomatis.
+- `Delete all records`: menghapus semua spesimen, pengukuran, bagian, data
+  terkait, dan media spesimen dalam proyek.
+
+Setelah mengimpor, periksa kembali semua hubungan dan ID yang dibuat otomatis.

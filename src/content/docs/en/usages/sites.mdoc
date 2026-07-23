@@ -6,16 +6,24 @@ sidebar:
 
 ## Creating a new Site
 
+A site is a reusable place record. Collecting events belong to a site, and
+specimen capture records reach the site through their collecting event. Create
+one site for each distinct camp, trap line, locality, or other place used by
+your project.
+
 {% steps %}
 1. Navigate to the site page using the bottom navigation bar.
 
 2. Use the `+` button at the top right corner to create a new site. 
     
-    You can also use the tree dot menu icon and tap on `Create site`.
+    You can also use the three-dot menu icon and tap `Create site`.
 
     {% aside type="tip" %}
 
-    You can minimize typing the same information by duplicating the site instead of creating a new one. Tap/click on the three dot menu botton. Then, `Duplicate site`. It will create a new site using information from the current site, except the `Site ID` and coordinates are empty. Then, fill in the `Site ID` and add coordinetes.
+    You can minimize repeated entry by duplicating a site instead of creating a
+    new one. Open the three-dot menu and choose `Duplicate site`. NAHPU copies
+    the site information, but leaves the `Site ID` and coordinates empty. Enter
+    a unique ID and add the correct coordinates before saving.
 
     {% /aside %}
 
@@ -32,7 +40,9 @@ sidebar:
 
     {% aside type="tip" %}
 
-    For a project involving multiple devices, we recommend creating the same `siteID` for an identical site. The [upcoming data merging feature](https://github.com/nahpu/nahpu/issues/124) will use the `siteID` to identify and merge records from different devices. Future NAHPU update will allow to share site info to different site in similar manner as sharing project information. 
+    For a project involving multiple devices, use the same `Site ID` for an
+    identical site. This makes exchanged site and event records easier to match
+    when they are imported into another project device.
 
     {% /aside %}
 
@@ -42,7 +52,8 @@ sidebar:
 
 5. Add the site type
 
-    The site type helps categorize the site based on its characteristics or usage. Currently, there is no option to edit the list. Upcoming NAHPU feature will allow you to do so.
+    The site type categorizes the site by its characteristics or use. Choose a
+    value from the project's configured site-type list.
 
 6. Fill in the geography details
 
@@ -73,6 +84,38 @@ sidebar:
 
 {% /steps %}
 
+## Site information
+
+The site form records the place and the people responsible for it:
+
+- `Site ID`: a project-unique identifier used by events and exchanged records.
+- `Site leader`: the person responsible for the camp, trap line, or other site.
+- `Site type`: the configured category for the site.
+- Locality and remarks: precise locality text and notes about how the site is
+  used or operated.
+- Habitat type, condition, and description: the environment observed at the
+  site.
+
+## Managing sites
+
+Open the three-dot menu on the site page for these actions:
+
+- `Edit site`: update the current site and its coordinates.
+- `Duplicate site`: copy the site details into a new record with a blank ID and
+  blank coordinates.
+- `Show QR`: display the site record for another mobile device to scan.
+- `Export site`: save the site record as JSON.
+- `Scan QR`: create or replace a site from a site QR code.
+- `Import site`: create or replace a site from an exported JSON record.
+- `Delete record`: delete the current site. A site cannot be deleted while an
+  event still references it.
+- `Delete all records`: delete all sites in the current project. Events that
+  reference those sites must be removed first.
+
+When importing a site, choose whether the imported record creates a new site or
+updates an existing site. Review linked personnel and coordinates after an
+import.
+
 ## Adding coordinates
 
 You can add coordinate manually from your GPS device or use the device coordinate.
@@ -87,7 +130,9 @@ You can add coordinate manually from your GPS device or use the device coordinat
 
 3. Fill in the rest of the fields. 
     
-    See the [manually adding coordinate](#adding-coordinates) section for details. Your GPS unit name should match the exact model of your device. For example: `iPad Mini 4`.
+    See the [manually adding coordinates](#manually-adding-coordinate) section
+    for details. Your GPS unit name should match the exact model of your
+    device. For example: `iPad Mini 4`.
 
 {% /steps %}
 
@@ -117,7 +162,7 @@ You can add coordinate manually from your GPS device or use the device coordinat
 
 3. Enter the latitude and longitude values.
 
-    Currently, NAHPU only support decimal coordinates.
+    NAHPU currently supports decimal coordinates.
 
 4. Add elevation in meters.
 
@@ -138,4 +183,3 @@ You can add coordinate manually from your GPS device or use the device coordinat
     Add additional information if any.
 
 {% /steps %}
-

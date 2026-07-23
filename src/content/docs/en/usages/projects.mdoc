@@ -12,28 +12,53 @@ To create a new project, use the `+` button in the bottom right corner of the ho
 - **The project description** should be a few sentences explaining the purpose of the project.
 - **The main catalog format** is the format of the catalog that will be used to generate the specimen catalog pages. You can change this later. You can also mix different catalog format types in the same project.
 
+## Managing projects from the home screen
+
+Each project in the home-screen list has an action menu. The actions are grouped in this order:
+
+- **Edit info** - Opens the project form so you can update the project information.
+- **Show QR** - Displays the project information QR code for another device to scan.
+- **Export info** - Exports the project information as a JSON file. On desktop, choose a directory in the file settings; on mobile, use the share action after exporting.
+- **Details** - Opens a read-only view of the project information.
+
 ## Getting to know the dashboard
 
 After you create a project, you will proceed to the project dashboard. The dashboard is divided into four main panels:
 
-- **Project overview** - This panel provides a quick overview of the project. It includes the project name, description, [principal investigator](./projects#principal-investigator), location, start date, end date, database creation date and last access date.
+- **Project overview** - This panel provides a quick overview of the project. It includes the project name, description, [principal investigator](./projects#principal-investigator), location, start date, end date, database creation date and last access date. Use the `Edit` and `Export info` text buttons at the bottom of the panel to manage the project information.
 - **Personnel** - This panel lists all the personnel associated with the project. You can add more personnel by clicking the `[+ Add personnel]` button in the bottom of the panel.
 - **Taxon registry** - This panel lists all the taxa registered in the database. You can add more taxa by clicking the `[+ Add taxon]` button in the bottom of the panel. You can also import taxa from a csv file by clicking the `[Import from file]` button.
 - **Record statistics** - Graph showing real-time statistics of the number of records in the project.
 
 ## Updating Project info
 
-You can add more information about the project by clicking the `pencil` button in the bottom right of the project overview.
+From the dashboard, use the `Edit` text button at the bottom of the project overview. From the home screen, open a project's action menu and select `Edit info`.
+
+## Transferring project information
+
+Project information can be transferred between NAHPU devices in two ways:
+
+1. **JSON** - On the source device, open the project's home-screen action menu and select `Export info`. On the receiving device, select `+`, then choose `Import JSON` in the new-project form.
+2. **QR code** - On the source device, select `Show QR` from the project's home-screen action menu. On a mobile receiving device, select `+` and use `Scan QR` in the new-project form.
+
+Both methods retain the project's UUID. Keep the UUID when exchanging project
+information so the project identity remains stable across devices.
 
 ## Deleting Projects
 
-We deliberately make it difficult to delete a project. If you are sure you want to delete a project, delete all the associated records with the project first by following all the steps below:
+Open the project menu drawer and choose `Delete project`. NAHPU asks you to
+enter the first five characters of the project's UUID before it proceeds. This
+confirmation is intentionally required because deletion cannot be undone.
 
-1. Go to the project dashboard
-2. Click the narrative button in the bottom navigation bar. Use the menu button (three dot icon) in the top right corner to select `Delete all records`.
-3. Repeat step 2 for `Specimen Records`, `Collecting Events`, and `Site Records`. It requires the same exact order to delete the records.
-4. Go back to the project dashboard and delete all the listed personnel.
-5. Delete the project using the delete button in the menu drawer.
+Deleting a project removes its specimen records and measurements, collecting
+events and their efforts, event personnel, narratives, sites and coordinates,
+project personnel links, and project media. It then removes the project record
+and the project's stored files. Media that is still shared with a taxonomy
+record is detached rather than deleted. If file cleanup fails, NAHPU reports a
+warning after the database records have been deleted.
+
+Export a project bundle or database backup before deleting if you may need the
+data later.
 
 
 ## Terminology

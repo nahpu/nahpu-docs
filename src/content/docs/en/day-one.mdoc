@@ -21,11 +21,11 @@ NAHPU is a project-based cataloging app. The data is managed and organized based
 
     The app will take you the dashboard.
     
-    After creating a project, the app automatically generates a project UUID. This unique identifier is used throughout the database to distinguish records from different projects. We used [UUID version 4](https://en.wikipedia.org/wiki/Universally_unique_identifier). It is almost impossible for two UUIDs to collide.
+    For a new project, the app automatically generates a project UUID. This unique identifier is used throughout the database to distinguish records from different projects. We use [UUID version 4](https://en.wikipedia.org/wiki/Universally_unique_identifier). When you import project information from another device, NAHPU retains the imported UUID.
 
     {% aside type="tip" %}
 
-    In some field scenarios, you may have multiple people using their own device to record specimen data on NAHPU. We recommend that the team leader create the new project from scratch. Other team members should create a new project by scanning the QR code in the team leader NAHPU dashboard (see details about the dashboard below). This approach transfers all project information including the UUID. The app uses the UUID to identify the same project from multiple NAHPU datasets, which is essential for our [ongoing work to support data merging](https://github.com/nahpu/nahpu/issues/124).
+    In some field scenarios, you may have multiple people using their own device to record specimen data on NAHPU. We recommend that the team leader create the new project from scratch. Other team members should open the team leader's project menu on the home screen and choose `Show QR`, then create a new project and use `Scan QR` on a mobile device or `Import JSON` on a desktop. This transfers the project information and retains the UUID. The app uses the UUID to identify the same project from multiple NAHPU datasets, which is essential for our [ongoing work to support data merging](https://github.com/nahpu/nahpu/issues/124).
     
     {% /aside %}
 
@@ -33,7 +33,7 @@ NAHPU is a project-based cataloging app. The data is managed and organized based
 
     The dashboard is the main project interface. It divides into four main panels.
     
-    - **The top left panel** is the project info. It includes a QR code that other users can scan when creating a new project.
+    - **The top left panel** is the project info. Use the `Edit` and `Export info` buttons at the bottom of the panel to manage project information. To share the project, use `Show QR` or `Export info` from the project's action menu on the home screen.
     - **The top right panel** is the personnel data. This panel allow you to add and manage personnel info for the project. The personnel will be shown as a list in this panel once created.
     - **The bottom left panel** is the taxon registry. This panel allow you to add and manage taxon info for the project.
     - **The bottom right panel** is the record statistic. This panel shows the number of records added to the project. You can enter the full screen window to see more statistics.
@@ -91,7 +91,8 @@ NAHPU is a project-based cataloging app. The data is managed and organized based
 
     {% aside type="note" %}
 
-    Future NAHPU updates will allow you the change the term `Site` to `Locality`, while ensuring backward compatibility with previous database.
+    This documentation uses `Site`, which is also the name used by the current
+    application and database fields.
 
     {% /aside %}
 
@@ -114,7 +115,9 @@ NAHPU is a project-based cataloging app. The data is managed and organized based
     
     - **End date** = the morning the traps were checked and specimens collected
 
-    This approach accurately captures the trapping effort and allows you to track changes in trap numbers or personnel across events. Future NAHPU updates will include per-event statistics such as species counts and trap effort summaries.
+    This approach accurately captures the trapping effort and allows you to track
+    changes in trap numbers or personnel across events. Use the event record and
+    the project statistics to review the resulting effort and specimen counts.
     {% /aside %}
 
 7. **Add specimen records**

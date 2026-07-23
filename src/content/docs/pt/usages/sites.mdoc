@@ -30,7 +30,9 @@ sidebar:
 
     {% aside type="tip" %}
 
-    Para um projeto envolvendo vários dispositivos, recomendamos criar o mesmo `siteID` para uma localidade idêntica. O [próximo recurso de mesclagem de dados](https://github.com/nahpu/nahpu/issues/124) usará o `siteID` para identificar e mesclar registros de diferentes dispositivos. Atualizações futuras do NAHPU permitirão compartilhar informações de localidade para diferentes localidades de maneira semelhante ao compartilhamento de informações de projeto.
+    Para um projeto que usa vários dispositivos, use o mesmo `Site ID` para uma
+    localidade idêntica. Isso facilita comparar registros de localidades e
+    eventos quando forem importados em outro dispositivo.
 
     {% /aside %}
 
@@ -40,7 +42,9 @@ sidebar:
 
 5. Adicione o tipo de localidade
 
-    O tipo de localidade ajuda a categorizar a localidade com base em suas características ou uso. Atualmente, não há opção para editar a lista. Um recurso futuro do NAHPU permitirá que você faça isso.
+    O tipo de localidade ajuda a categorizar a localidade com base em suas
+    características ou uso. Selecione um valor na lista de tipos configurada
+    para o projeto.
 
 6. Preencha os detalhes geográficos
 
@@ -69,6 +73,37 @@ sidebar:
       ```
 
 {% /steps %}
+
+## Informações da localidade
+
+O formulário registra o local e as pessoas responsáveis:
+
+- `Site ID`: identificador único do projeto usado por eventos e registros
+  trocados.
+- `Site leader`: pessoa responsável pelo acampamento, linha de armadilhas ou
+  outra localidade.
+- `Site type`: categoria configurada para a localidade.
+- Localidade e observações: texto da localidade precisa e notas sobre seu uso.
+- Tipo, condição e descrição do habitat: ambiente observado no local.
+
+## Gerenciando localidades
+
+Abra o menu de três pontos na página da localidade para usar estas ações:
+
+- `Edit site`: atualizar a localidade e suas coordenadas.
+- `Duplicate site`: copiar os detalhes para um novo registro com ID e
+  coordenadas vazios.
+- `Show QR`: mostrar o registro para leitura por outro dispositivo móvel.
+- `Export site`: salvar o registro como JSON.
+- `Scan QR`: criar ou substituir uma localidade a partir de um código QR.
+- `Import site`: criar ou substituir uma localidade a partir de um registro JSON.
+- `Delete record`: excluir a localidade atual. Ela não pode ser excluída
+  enquanto for usada por um evento.
+- `Delete all records`: excluir todas as localidades do projeto. Primeiro
+  remova os eventos que fazem referência a elas.
+
+Ao importar uma localidade, escolha se o registro criará uma nova localidade ou
+atualizará uma existente. Revise o pessoal e as coordenadas vinculados.
 
 ## Adicionando coordenadas
 
