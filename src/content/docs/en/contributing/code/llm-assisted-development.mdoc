@@ -4,43 +4,27 @@ sidebar:
   order: 10
 ---
 
-When you read this page, you may already using Large-Language Models (LLMs) to write code.
-The rapid adoption of LLMs through agentic coding tools has change the way we write code.
-NAHPU welcomes LLMs-assisted development when it helps a human contributor move
-faster without giving up engineering judgment. Coding agents are useful for
-finding relevant files, explaining unfamiliar code paths, drafting focused
-tests, checking edge cases, and making small implementation changes that the
-contributor reviews.
+When you read this page, you may already using Large-Language Models (LLMs) to assist you write code. LLM-assisted development has increasingly being adopted across the software industries (e.g., [Linux kernel](https://docs.kernel.org/process/coding-assistants.html) and [others](https://cloud.google.com/transform/101-real-world-generative-ai-use-cases-from-industry-leaders)) and bioinformatics (see, for example, [this training materials](https://www.ebi.ac.uk/training/events/large-language-models-and-their-applications-bioinformatics/) and [this review paper](https://academic.oup.com/bib/article/26/4/bbaf357/8212018)). Software development has come a long way from writing assembly code, writing higher-level code and rely on compiler and linker to generate machine code, to the rapid adoption of LLMs through agentic coding tools. Just as the introduction of a higher-level programming language did not eliminate the need for understanding the fundamentals of software engineering and problem solving, LLM-assisted development is not a substitute of that either. Like any tool, it is effectiveness depends on the skill of the person using it.
 
-The contributor is still responsible for the pull request. You must understand
-the change, test it, explain it, and maintain it.
+NAHPU welcomes LLM usage when it helps a human contributor solve problems within NAHPU. We also encourage the responsible use of LLMs in the development process. As it is a useful tool, excessive LLM usages carry [environmental impact](https://news.mit.edu/2025/explained-generative-ai-environmental-impact-0117). This page serves as a guide for responsible use of LLMs to assist contributors. It is also to provide transparency in the conduct of NAHPU development for the community. We hope NAHPU can continue to provide high-quality natural history software, while serving as an inter-disciplinary training platform for natural history work.
 
-{% aside type="caution" title="AI-assisted development is not vibe coding" %}
-We use AI as an assistant, not as an accountable developer. Merriam-Webster
-describes vibe coding as careless AI-assisted coding where a person tells AI
-what to build and may not understand how or why the code works. That is not
-acceptable for NAHPU. Vibe-coded contributions and pull requests submitted by
-AI agents or bot accounts will be rejected.
+{% aside type="caution" title="LLM-assisted development is not vibe coding" %}
+[Merriam-Webster](https://www.merriam-webster.com/slang/vibe-coding) describes vibe coding as careless AI-assisted coding where a person tells AI what to build and may not understand how or why the code works. That is not acceptable for NAHPU. Vibe-coded contributions and pull requests submitted by AI agents or bot accounts will be rejected.
+{% /aside %}
+
+{% aside type="note" title="Feedback is welcome" %}
+LLMs, agentic coding development, and generative AI in general are rapidly evolving technologies. We welcome any feedback on this page and the responsible use of LLMs in NAHPU development. Please submit an issue or pull request to improve this page.
 {% /aside %}
 
 ## Use `AGENTS.md` as context
 
-NAHPU includes an `AGENTS.md` file at the root of the app repository. This file
-is the project brief for AI coding tools. It tells agents how the repository is
-organized, which commands to run, where to put logic, and what boundaries not
-to cross.
-
-Many agents can read `AGENTS.md` automatically. If your tool does not, paste it
-into the model context before asking for code changes.
-
-Good prompts include:
-
-- "Read this `AGENTS.md` and summarize the constraints before editing."
-- "Use this `AGENTS.md` as the project instructions for the next task."
-- "Before changing files, identify which guideline from `AGENTS.md` applies."
-- "After the change, verify using the commands listed in `AGENTS.md`."
+NAHPU includes an `AGENTS.md` file at the root of [the app](https://github.com/nahpu/nahpu) and [API](https://github.com/nahpu/nahpu_api) repositories. This file is the project brief for LLM coding tools. It explains how each repository is organized, which commands to run, where different types of logic should be placed, and which architectural boundaries must not be crossed. These boundaries are based on the experience of developing NAHPU four years (~100k lines of code) before we began using LLMs. They also reflect established best practices for Flutter, Dart, and Rust.
 
 ## Current `AGENTS.md`
+
+This is an example of the current `AGENTS.md` file in the [app](https://github.com/nahpu/nahpu) repository. It is a living document and may change over time. Different repository has its own `AGENTS.md` file. Please check the latest version in the respective repository.
+
+`AGENTS.md` is useful for human contributors and LLM agents, as it helps both to understand the project structure, conventions, and the development workflow. Many agents can read `AGENTS.md` automatically. If your tool does not, paste it into the model context before asking for code changes.
 
 ```md
 # Repository Guidelines
@@ -54,8 +38,9 @@ NAHPU is a Flutter app with Rust via Flutter Rust Bridge. Dart lives in `lib/`: 
 - `flutter analyze`: analyze.
 - `flutter test`: test.
 - `flutter pub run build_runner build --delete-conflicting-outputs`: codegen.
-- `python scripts.py frb --generate`: bridge codegen.
-- `python scripts.py frb --check`: `cargo check` in `rust/`.
+- `flutter_rust_bridge_codegen generate`: bridge codegen.
+- `cargo check`: check rust code in `rust/`.
+- `cargo clippy`: Rust linting.
 
 ## Coding Style & Naming Conventions
 
@@ -67,70 +52,76 @@ Keep Rust code, comments, and docstrings to 100 characters per line; wrap long s
 
 ## Flutter Best Practices
 
-Keep screens as thin UI wrappers under `lib/screens/`. Put business logic in `lib/services/` and reusable UI in `lib/screens/shared/`. Do not place UI in services or return widgets from helpers; create widget classes. In widget classes, only `@override` methods go before `build`; keep `build` near the top and helpers below. Prefer `const`, immutable models, and Riverpod over mutable globals. Keep `build` side-effect free; do IO, database, and bridge work in services/providers. Guard async UI updates with `context.mounted`. Use theme values.
+Keep screens as thin UI wrappers under `lib/screens/`. Put business logic in `lib/services/` and reusable UI in `lib/screens/shared/`. Do not place UI in services or return widgets from helpers; create widget classes, no functions return widgets. In widget classes, only `@override` methods go before `build`; keep `build` near the top and helpers below. Prefer `const`, immutable models, and Riverpod over mutable globals. Keep `build` side-effect free; do IO, database, and bridge work in services/providers. Guard async UI updates with `context.mounted`. Use theme values.
 
 ## Testing Guidelines
 
 Add focused `*_test.dart` files in `test/`. Prefer service tests for import/export, persistence, validation, and migrations; add widget tests for regressions. Run integration tests for startup, navigation, IO, or bridge changes.
 
-## Commit & Pull Request Guidelines
-
-Git history uses short imperative commits such as `Fix overflow issues.` Keep commits scoped. PRs target `dev`, explain changes, list tests, and include UI screenshots.
-
 ## Agent-Specific Instructions
 
-Preserve user changes and avoid unrelated refactors. Always write the product name as `NAHPU`. Agents must not create commits, branches, pushes, or pull requests; leave Git under user control. After bridge API edits, regenerate bindings and verify analysis plus `cargo check`. Add assets to `pubspec.yaml` only when needed.
+Preserve user changes and avoid unrelated refactors. Always write the product name as `NAHPU`. Agents must not create commits, branches, pushes, or pull requests; leave Git under user control. After bridge API edits, regenerate bindings and verify analysis plus `cargo check` and `cargo clippy`. Add assets to `pubspec.yaml` only when needed.
 ```
 
 ## What the file does
 
-`AGENTS.md` gives different AI models the same operating rules:
+`AGENTS.md` gives different LLM agents the same operating rules:
 
-- it points agents to the important directories;
-- it tells agents which commands verify Dart, Flutter, and Rust changes;
-- it keeps UI logic, business logic, generated bridge files, and Rust wrappers
-  in the right places;
-- it reminds agents that NAHPU has generated code and bridge code that require
-  regeneration;
-- it prevents unsafe workflow actions such as committing, branching, pushing, or
+- It points agents to the important directories.
+- It tells agents which commands to verify Dart, Flutter, and Rust changes.
+- It keeps UI logic, business logic, generated bridge files, and Rust wrappers
+  in the right places.
+- It reminds agents that NAHPU has generated code and bridge code that require
+  regeneration.
+- It prevents unsafe workflow actions such as committing, branching, pushing, or
   opening pull requests on behalf of the contributor.
 
-This makes agent output more predictable across tools such as Codex, Claude
-Code, Cursor, Continue, Copilot Workspace, or other model-based coding systems.
-Even when a model does not support `AGENTS.md` as a special file, the text works
-as plain prompt context.
+This makes agent output more predictable across tools such as Codex, Claude Code, Cursor, Continue, Copilot Workspace, or other model-based coding systems. Even when a model does not support `AGENTS.md` as a special file, the text works as plain prompt context.
 
-## Recommended workflow
+## Workflow
 
 {% steps %}
 
-1. Start the agent in the NAHPU repository root.
-2. Make sure the agent has read `AGENTS.md`.
-3. Ask it to inspect relevant files before editing.
-4. Keep the task narrow: one bug, one feature slice, or one docs update.
-5. Review every generated change yourself.
-6. Run the relevant checks from `AGENTS.md`.
-7. Write the pull request yourself, including tests run and screenshots for UI
+1. Commit your changes to a branch before starting the agent.
+2. Start the agent in the repository root: [NAHPU](https://github.com/nahpu/nahpu), [API](https://github.com/nahpu_api), or the [documentation](https://github.com/nahpu/nahpu-docs), depending on the task.
+
+    {% aside type="tip"%}
+    Some feature addition or bug fix may require changes in both the [app](https://github.com/nahpu/nahpu) and [API](https://github.com/nahpu_api) repositories. In that case, include both repositories in the agent context. Please familiarize yourself with the [NAHPU architecture](./architecture) before asking the agent to make changes.
+    {% /aside %}
+
+3. Start with a plan mode and make sure the agent has read `AGENTS.md`.
+
+    This may seem obvious. Evaluating the plan thoroughly will save time and effort. If it does not make sense, ask it to revise the plan before generating code.
+
+    {% aside type="caution" title="Important"%}
+    Undersanding of the NAHPU architecture, project structure, and problem domain is paramount important for the agent to generate code that is maintainable and correct. Please reach out to the maintainers if you need help understanding the architecture or the problem domain.
+    {% /aside %}
+
+5. Keep the task narrow: one bug, one feature, or one docs update.
+6. Be strategic on which model to use: larger models for planning, smaller models for code generation. While larger models may excel at both planning and code generation, they are slower, more expensive, and use more energy.
+
+    {% aside type="note"%}
+
+    Not every task requires a state-of-the-art model. Smaller models may be sufficient for both planning and code generation, depending on the complexity of the task. Likewise, some small code changes or refactoring tasks may be faster and easier to perform manually.
+
+    {% /aside %}
+
+    {% aside type="tip"%}
+    Each model release often comes with a tier list. For example, [OpenAI GPT 5.6](https://openai.com/index/gpt-5-6/) has three tiers of models: `sol`, `terra`, and `luna`. Each of this tier has different capability settings: low, medium, high, extra high, and ultra. We recommend inspecting the third-party benchmark for each model and start with the balance between performance and cost.
+
+    Model is also not the sole factor to produce high-quality output. It may also depend on the harness and tools you use. Always evaluate the model's output and adjust your approach accordingly. This is an essential skill for responsible LLM-assisted development. It is a reminder for us that LLM usage is not a substitute for software engineering knowledge.
+    {% /aside %}
+
+7. Review every generated change following the checklist provided [below](#contributor-checklists-for-evaluating-agent-output).
+9. Write the pull request yourself, including tests run and screenshots for UI
    changes.
 
 {% /steps %}
 
-## Good agent tasks
+## Contributor checklists for evaluating agent output
 
-- "Find the service responsible for record export and explain the data flow."
-- "Add a focused widget test for this regression before changing the UI."
-- "Update this service without moving UI logic into services."
-- "Check whether this bridge API change needs generated bindings."
-- "Review this diff against `AGENTS.md` and list risks."
-
-## Tasks that are not acceptable
-
-- asking an agent to create a pull request for you;
-- submitting code you cannot explain;
-- accepting untested database migrations or export changes;
-- letting an agent invent scientific, taxonomic, or geographic facts;
-- using generated code that ignores the project structure in `AGENTS.md`.
-
-## References
-
-- [Merriam-Webster: vibe coding](https://www.merriam-webster.com/slang/vibe-coding)
+- Verify Dart files are in `snake_case.dart` and classes/widgets are in `PascalCase` and other rules in the `AGENTS.md`. Not every model follows the instructions.
+- Verify that no untested code is committed.
+- Ensure that the agent run `flutter analyze`, `flutter test`, `dart format` for Dart changes, and `cargo check` and `cargo clippy` for Rust changes.
+- Test manually.
+- Check changes in `table.drift`. Any change in it requires a schema migration. Do not commit untested migrations or export changes.
