@@ -1,0 +1,62 @@
+---
+title: Transferir um projeto
+sidebar:
+  order: 10
+---
+
+Use `Exportar projeto` e `Importar projeto` para combinar dados do mesmo
+projeto NAHPU inseridos em dispositivos diferentes. A transferência é um
+arquivo ZIP ou TAR.GZ com um `nahpu-project.json` versionado e os arquivos de
+mídia disponíveis.
+
+Ela é diferente de `Agrupar registros`. Os pacotes de registros servem para
+publicação, análise, arquivamento ou terceiros e não são aceitos por
+`Importar projeto`.
+
+## Exportar
+
+{% steps %}
+
+1. Abra o projeto no dispositivo de origem.
+2. No menu do painel, selecione `Exportar projeto`.
+3. Revise as contagens e os avisos de mídia ausente.
+4. Escolha `ZIP` ou `TAR.GZ`, informe o nome e, opcionalmente, o diretório.
+5. Selecione `Exportar projeto` e guarde ou compartilhe o arquivo com segurança.
+
+{% /steps %}
+
+Somente a taxonomia usada por espécimes do projeto ativo é exportada. Fotos
+da equipe e mídias vinculadas são incluídas quando disponíveis; arquivos
+ausentes são omitidos com um aviso.
+
+## Importar e resolver conflitos
+
+{% aside type="caution" title="Faça um backup primeiro" %}
+Crie um backup do banco de dados antes de importar. O assistente exige a
+confirmação desse lembrete e oferece a ação `Fazer backup agora`.
+{% /aside %}
+
+O assistente revisa informações do projeto, equipe, taxonomia, localidades,
+eventos, espécimes e narrativas, nessa ordem. Nada é gravado antes do resumo
+final. As mudanças são aplicadas em uma única transação; em caso de falha, o
+banco é revertido e os novos arquivos de mídia são removidos.
+
+Para cada conflito, escolha:
+
+- **Manter atual** - Preserva o registro atual e mapeia as dependências.
+- **Usar importado** - Substitui o registro correspondente e seus dados próprios.
+- **Importar como novo** - Cria outra identidade e remapeia dependências.
+- **Ignorar** - Não importa o registro nem dependências não resolvidas.
+
+A opção inicial mantém o registro atual. Equipe e taxonomia podem ser
+compartilhadas entre projetos; o assistente avisa antes de substituí-las. Um
+UUID de espécime usado por outro projeto só pode receber um novo UUID ou ser
+ignorado.
+
+## Forçar mesclagem
+
+Normalmente, o UUID do arquivo deve corresponder ao UUID do projeto ativo. Uma
+diferença bloqueia a importação. Se ambos realmente representam o mesmo
+projeto, ative `Forçar mesclagem` e digite o nome do projeto ativo. Os
+registros importados usarão o UUID ativo, mas cada conflito ainda exigirá uma
+decisão.

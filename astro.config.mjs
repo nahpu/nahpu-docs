@@ -237,12 +237,12 @@ export default defineConfig({
                   },
                 },
                 {
-                  label: "Bundle Project",
+                  label: "Bundle Records",
                   link: "usages/export/export-bundles",
                   translations: {
-                    "pt-BR": "Agrupar Projeto",
-                    es: "Agrupar Proyecto",
-                    id: "Gabungkan Proyek",
+                    "pt-BR": "Agrupar Registros",
+                    es: "Agrupar Registros",
+                    id: "Gabungkan Catatan",
                   },
                 },
               ],

@@ -1,0 +1,61 @@
+---
+title: Transferir un proyecto
+sidebar:
+  order: 10
+---
+
+Use `Exportar proyecto` e `Importar proyecto` para combinar datos introducidos
+para el mismo proyecto NAHPU en dispositivos diferentes. La transferencia es
+un archivo ZIP o TAR.GZ con `nahpu-project.json` versionado y los archivos
+multimedia disponibles.
+
+No es lo mismo que `Agrupar registros`. Esos paquetes son para publicación,
+análisis o terceros y `Importar proyecto` no los acepta.
+
+## Exportar
+
+{% steps %}
+
+1. Abra el proyecto en el dispositivo de origen.
+2. En el menú del panel, seleccione `Exportar proyecto`.
+3. Revise los conteos y las advertencias de archivos multimedia faltantes.
+4. Elija `ZIP` o `TAR.GZ`, indique el nombre y, si desea, el directorio.
+5. Seleccione `Exportar proyecto` y guarde o comparta el archivo de forma segura.
+
+{% /steps %}
+
+Solo se exporta la taxonomía usada por especímenes del proyecto activo. Se
+incluyen fotos del personal y multimedia vinculada cuando los archivos están
+disponibles; los archivos faltantes se omiten con una advertencia.
+
+## Importar y resolver conflictos
+
+{% aside type="caution" title="Cree un respaldo primero" %}
+Antes de importar, cree un respaldo de la base de datos. El asistente exige
+confirmar este recordatorio e incluye la acción `Respaldar ahora`.
+{% /aside %}
+
+El asistente revisa, en orden, la información del proyecto, personal,
+taxonomía, sitios, eventos, especímenes y narrativas. No escribe datos hasta
+el resumen final. La importación se confirma como una sola transacción; ante
+un fallo, revierte la base de datos y elimina los nuevos archivos copiados.
+
+Para cada conflicto puede elegir:
+
+- **Conservar actual** - Conserva el registro y enlaza sus dependencias.
+- **Usar importado** - Sustituye el registro coincidente y sus datos propios.
+- **Importar como nuevo** - Crea otra identidad y reasigna dependencias.
+- **Omitir** - No importa el registro ni dependencias sin resolver.
+
+La opción predeterminada es conservar el registro actual. El personal y la
+taxonomía pueden compartirse con otros proyectos, por lo que el asistente
+advierte antes de sustituirlos. Un UUID de espécimen usado por otro proyecto
+solo puede importarse con un UUID nuevo u omitirse.
+
+## Forzar una combinación
+
+Normalmente, el UUID del archivo debe coincidir con el UUID del proyecto
+activo. Si no coincide, la importación se bloquea. Si ambos representan
+realmente el mismo proyecto, active `Forzar combinación` y escriba el nombre
+del proyecto activo. Los registros importados usarán el UUID activo, pero cada
+conflicto seguirá requiriendo una decisión.

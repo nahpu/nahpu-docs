@@ -1,0 +1,60 @@
+---
+title: Transfer proyek
+sidebar:
+  order: 10
+---
+
+Gunakan `Ekspor proyek` dan `Impor proyek` untuk menggabungkan data proyek
+NAHPU yang sama dari perangkat berbeda. Transfer berupa arsip ZIP atau TAR.GZ
+dengan manifes `nahpu-project.json` berversi dan berkas media yang tersedia.
+
+Transfer ini berbeda dari `Paketkan catatan`. Paket catatan ditujukan untuk
+publikasi, analisis, arsip, atau pihak ketiga dan tidak diterima oleh
+`Impor proyek`.
+
+## Mengekspor
+
+{% steps %}
+
+1. Buka proyek pada perangkat sumber.
+2. Dari menu dasbor, pilih `Ekspor proyek`.
+3. Tinjau jumlah data dan peringatan media yang hilang.
+4. Pilih `ZIP` atau `TAR.GZ`, masukkan nama berkas, dan pilih direktori bila perlu.
+5. Pilih `Ekspor proyek`, lalu simpan atau bagikan arsip dengan aman.
+
+{% /steps %}
+
+Hanya taksonomi yang digunakan spesimen proyek aktif yang diekspor. Foto
+personel dan media terkait disertakan jika berkas sumber tersedia; berkas yang
+hilang diabaikan dan dilaporkan sebagai peringatan.
+
+## Mengimpor dan menangani konflik
+
+{% aside type="caution" title="Cadangkan terlebih dahulu" %}
+Buat cadangan database sebelum mengimpor. Wizard mewajibkan pengakuan atas
+pengingat ini dan menyediakan tombol `Cadangkan sekarang`.
+{% /aside %}
+
+Wizard meninjau info proyek, personel, taksonomi, lokasi, kegiatan, spesimen,
+dan narasi secara berurutan. Tidak ada data yang ditulis sebelum ringkasan
+akhir. Semua perubahan database diterapkan dalam satu transaksi; jika gagal,
+database dibatalkan dan berkas media baru dihapus.
+
+Setiap konflik menawarkan:
+
+- **Pertahankan saat ini** - Menjaga catatan aktif dan memetakan dependensi.
+- **Gunakan hasil impor** - Mengganti catatan yang cocok dan data turunannya.
+- **Impor sebagai baru** - Membuat identitas baru dan memetakan ulang dependensi.
+- **Lewati** - Tidak mengimpor catatan atau dependensi yang tidak terselesaikan.
+
+Pilihan awal adalah mempertahankan catatan saat ini. Personel dan taksonomi
+dapat digunakan bersama oleh beberapa proyek, sehingga wizard menampilkan
+peringatan sebelum penggantian. UUID spesimen milik proyek lain hanya dapat
+diimpor dengan UUID baru atau dilewati.
+
+## Paksa penggabungan
+
+Biasanya UUID arsip harus cocok dengan UUID proyek aktif. Ketidakcocokan akan
+diblokir. Jika keduanya benar-benar mewakili proyek yang sama, aktifkan
+`Paksa gabung` dan ketik nama proyek aktif. Catatan yang diimpor memakai UUID
+aktif, tetapi semua konflik tetap harus ditinjau.

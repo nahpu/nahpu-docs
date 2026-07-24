@@ -6,8 +6,10 @@ sidebar:
 
 NAHPU tiene estas acciones de exportación en el menú del proyecto:
 
+- **Importar proyecto** - Añade una transferencia NAHPU al proyecto activo mediante una revisión guiada de conflictos.
+- **Exportar proyecto** - Crea una transferencia ZIP o TAR.GZ para el mismo proyecto en otro dispositivo.
 - **Exportar registros** - Exporta un tipo de registro a CSV, TSV, Excel o JSON.
-- **Agrupar proyecto** - Exporta registros del proyecto, el reporte de especies y archivos multimedia en un archivo ZIP.
+- **Agrupar registros** - Crea paquetes de registros para publicación, análisis o uso por terceros.
 - **Exportar documentos** - Crea documentos PDF desde plantillas de documento y perfiles de diseño.
 - **Respaldar base de datos** - Exporta la base de datos como SQLite, o como ZIP cuando se incluyen datos del proyecto o ajustes de la app.
 - **Exportar ajustes** - Exporta los ajustes de la app como JSON o JSON Lines.
@@ -16,7 +18,8 @@ NAHPU tiene estas acciones de exportación en el menú del proyecto:
 
 - Para exportar datos tabulares del proyecto, consulte [Exportar registros](./export-records).
 - Para importar o exportar archivos de coordenadas GIS, consulte [Sitios](../sites#agregar-coordenadas).
-- Para crear un paquete Darwin Core o NAHPU Data Package reproducible, consulte [Agrupar proyecto](./export-bundles).
+- Para mover un proyecto entre dispositivos NAHPU, consulte [Transferir un proyecto](./project-transfer).
+- Para crear un paquete Darwin Core o NAHPU Data Package reproducible, consulte [Agrupar registros](./export-bundles).
 - Para exportar etiquetas, rótulos u otros documentos PDF imprimibles, consulte [Exportar documentos](./export-documents).
 
 Use esta página para exportar registros, paquetes de proyecto, respaldos de
@@ -25,14 +28,14 @@ el panel de coordenadas de un sitio, no desde el menú del proyecto. El flujo
 admite importaciones GeoJSON, KML, Shapefile comprimido y GPX, y exportaciones
 GeoJSON, KML y Shapefile comprimido.
 
-## Agrupar proyecto
+## Agrupar registros
 
-`Agrupar proyecto` crea un archivo ZIP que contiene exportaciones de registros del proyecto, el reporte de especies y archivos multimedia del proyecto. Los archivos de registros dentro del paquete se escriben como CSV.
+`Agrupar registros` crea paquetes para flujos de trabajo externos. No se puede importar mediante `Importar proyecto`.
 
 {% steps %}
 
 1. Navegue a la página `Panel de control`.
-2. Abra el menú del proyecto y seleccione `Agrupar proyecto`.
+2. Abra el menú del proyecto y seleccione `Agrupar registros`.
 3. Para registros de mamíferos, use `Inexacto entre corchetes` para elegir si las medidas inexactas se escriben entre corchetes.
 4. Añada el `Nombre de archivo` para el ZIP.
 5. Seleccione el `Directorio` donde desea guardarlo.
