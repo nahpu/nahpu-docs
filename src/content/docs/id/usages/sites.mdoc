@@ -108,19 +108,26 @@ lokasi yang ada. Periksa kembali personel dan koordinat yang terkait.
 
 ## Menambahkan koordinat
 
-Anda dapat menambahkan koordinat secara manual dari perangkat GPS Anda atau menggunakan koordinat perangkat.
+Satu lokasi dapat memiliki beberapa catatan koordinat untuk ujung jalur
+jebakan, titik pengumpulan yang berbeda, atau titik lain yang termasuk dalam
+lokasi yang sama. Anda dapat menambahkan koordinat secara manual, menggunakan
+GPS perangkat, atau mengimpor titik dari file GIS/GPS.
 
-### Mendapatkan koordinat dari perangkat saat ini
+### Menggunakan GPS perangkat saat menambahkan koordinat
 
 {% steps %}
 
-1. Ketuk/klik tombol `Titik GPS` di sebelah tombol `Tambah koordinat`.
+1. Pada halaman lokasi, buka panel koordinat lalu ketuk/klik `Add coordinate`.
 
-2. Ini akan membawa Anda ke halaman tambah koordinat dengan sebagian besar informasi sudah terisi.
+2. Pada halaman `Add coordinates`, gunakan kartu `Device GPS` lalu ketuk/klik
+   tombol lokasinya.
 
-3. Isi sisa bidang lainnya. 
-    
-    Lihat bagian [menambahkan koordinat secara manual](#menambahkan-koordinat-secara-manual) untuk detailnya. Nama unit GPS Anda harus sesuai dengan model persis perangkat Anda. Contoh: `iPad Mini 4`.
+3. NAHPU mengisi lintang desimal, bujur desimal, ketinggian, dan ketidakpastian
+   GPS jika disediakan oleh sistem operasi. Periksa nilainya, isi bidang lain,
+   lalu simpan koordinat.
+
+    Masukkan nama unit GPS secara terpisah menggunakan model perangkat yang
+    tepat, misalnya `iPad Mini 4`.
 
 {% /steps %}
 
@@ -148,7 +155,9 @@ Anda dapat menambahkan koordinat secara manual dari perangkat GPS Anda atau meng
 
 3. Masukkan nilai lintang (latitude) dan bujur (longitude).
 
-    Saat ini, NAHPU hanya mendukung koordinat desimal.
+    Masukkan derajat desimal. Lintang harus berada di antara `-90` dan `90`,
+    sedangkan bujur harus berada di antara `-180` dan `180`. Tampilan detail
+    koordinat juga menampilkan nilai dalam derajat, menit, dan detik (DMS).
 
 4. Tambahkan ketinggian (elevation) dalam meter.
 
@@ -169,3 +178,63 @@ Anda dapat menambahkan koordinat secara manual dari perangkat GPS Anda atau meng
     Tambahkan informasi tambahan jika ada.
 
 {% /steps %}
+
+### Mengimpor koordinat dari file
+
+Gunakan impor file ketika beberapa titik sudah tersedia dalam file GIS atau
+GPS. Impor koordinat tersedia melalui `Add coordinate → Import` pada suatu
+lokasi.
+
+{% steps %}
+
+1. Buka lokasi, ketuk/klik `Add coordinate`, lalu pilih mode `Import`.
+
+2. Pilih `Select coordinate file`, lalu pilih file GeoJSON/JSON, KML, Shapefile
+   terkompresi, atau GPX. Anda juga dapat memilih `Scan QR` untuk menambahkan
+   catatan koordinat dari perangkat NAHPU lain.
+
+3. Periksa titik yang diimpor dan teks peringatan apa pun. Peta menyoroti titik
+   yang sedang difokuskan, dan semua titik yang valid dipilih secara default.
+
+4. Gunakan `Select all`, `Clear all`, atau kotak centang individual untuk
+   memilih titik yang akan ditambahkan. Ketuk/klik `Add N selected` untuk
+   menyimpannya ke lokasi saat ini.
+
+{% /steps %}
+
+Impor file mempertahankan nama titik, catatan, lintang dan bujur desimal, serta
+ketinggian. Titik yang diimpor ditetapkan ke lokasi saat ini dan datum `WGS84`;
+alur ini tidak menyediakan informasi ketidakpastian atau unit GPS.
+
+Hanya titik yang diimpor. Fitur non-titik dalam GeoJSON atau Shapefile,
+geometri non-titik dalam KML, koordinat yang tidak valid, dan catatan lain yang
+tidak didukung akan dilewati dan dilaporkan saat peninjauan. Pada GPX, hanya
+waypoint yang diimpor; rute dan track diabaikan. Jika tidak ada titik valid yang
+tersisa, NAHPU menampilkan kesalahan dan tidak menambahkan catatan.
+
+### Mengelola dan mengekspor koordinat
+
+Tombol `Manage` pada panel koordinat lokasi membuka semua koordinat proyek.
+Anda dapat memfilter berdasarkan lokasi, memilih titik tertentu atau semua titik
+yang terlihat, memusatkan peta pada titik, dan membuka peta dalam layar penuh.
+
+{% steps %}
+
+1. Buka panel koordinat suatu lokasi dan ketuk/klik `Manage`.
+
+2. Filter berdasarkan lokasi jika diperlukan, lalu pilih koordinat yang akan
+   diekspor.
+
+3. Ketuk/klik `Export coordinates (N)`.
+
+4. Pilih `GeoJSON (.geojson)`, `KML (.kml)`, atau `Shapefile bundle (.zip)`.
+   Masukkan nama file, pilih direktori tujuan, lalu pilih `Export`.
+
+5. Setelah file dibuat, gunakan `Share` pada perangkat yang mendukung berbagi.
+
+{% /steps %}
+
+Setiap koordinat yang diekspor harus memiliki lintang dan bujur desimal yang
+valid. Ekspor GIS mencakup nama, catatan, lintang dan bujur desimal WGS84, serta
+ketinggian jika tersedia. Ekspor ini berbeda dari `Export records`, paket
+proyek, dan cadangan database.

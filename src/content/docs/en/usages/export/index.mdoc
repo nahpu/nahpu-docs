@@ -7,7 +7,6 @@ sidebar:
 NAHPU has these export-related actions in the project menu:
 
 - **Export records** - Exports one record type to CSV, TSV, Excel, or JSON.
-- **Create report** - Creates project reports. Species count and media data reports export to CSV; coordinate reports export to KML, GeoJSON, TopoJSON, or a zipped Shapefile.
 - **Bundle project** - Creates a Darwin Core Archive, Darwin Core Data Package, or complete NAHPU Data Package in ZIP or TAR.GZ as supported by the selected bundle.
 - **Export documents** - Creates PDF documents from document templates and layout profiles.
 - **Backup database** - Exports the database as SQLite, or as a ZIP file when project data or app settings are included.
@@ -16,35 +15,15 @@ NAHPU has these export-related actions in the project menu:
 ## Quick export paths
 
 - To export tabular project data, see [Export records](./export-records).
+- To import or export GIS coordinate files, see [Sites](../sites#adding-coordinates).
 - To create a standards-based specimen package or reproducible NAHPU Data Package, see [Bundle project](./export-bundles).
 - To export printable PDF labels, tags, or other documents, see [Export documents](./export-documents).
 
-Use this page for reports, database backups, and settings exports.
-
-## Creating reports
-
-NAHPU provides three report types:
-
-- **Species count** - A CSV report of the number of specimens for each species in the project.
-- **Media data** - A CSV report of media files and their metadata.
-- **Coordinates** - A spatial report of project coordinates.
-
-{% steps %}
-
-1. Navigate to the `Dashboard` page.
-2. Open the project menu and select `Create report`.
-3. Select the report `Type`.
-    - `Species count`
-    - `Media data`
-    - `Coordinates`
-4. Select the `Format`.
-    - Species count and media data reports use `Comma-separated (.csv)`.
-    - Coordinate reports can use `Keyhole Markup Language (.kml)`, `GeoJSON (.geojson)`, `TopoJSON (.topojson)`, or `Shapefile (.zip)`.
-5. Add `File name` for the report.
-6. Select the `Directory` where you want to save the report.
-7. Click `Save`.
-
-{% /steps %}
+Use this page for record exports, project packages, database backups, and
+settings exports. Coordinate GIS exchange is managed from a site's coordinate
+panel, not from the project menu. The coordinate workflow supports GeoJSON,
+KML, zipped Shapefile, and GPX imports, and GeoJSON, KML, and zipped Shapefile
+exports.
 
 ## Backup database
 

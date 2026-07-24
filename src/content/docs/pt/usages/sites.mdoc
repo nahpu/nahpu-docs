@@ -107,19 +107,27 @@ atualizará uma existente. Revise o pessoal e as coordenadas vinculados.
 
 ## Adicionando coordenadas
 
-Você pode adicionar coordenadas manualmente a partir do seu dispositivo GPS ou usar a coordenada do dispositivo.
+Uma localidade pode ter vários registros de coordenadas para as extremidades de
+uma linha de armadilhas, pontos de coleta separados ou outros pontos da mesma
+localidade. Você pode adicionar coordenadas manualmente, usar o GPS do
+dispositivo ou importar pontos de um arquivo GIS/GPS.
 
-### Obter coordenadas de um dispositivo atual
+### Usar o GPS do dispositivo ao adicionar uma coordenada
 
 {% steps %}
 
-1. Toque/clique no botão `Ponto GPS` ao lado do botão `Adicionar coordenada`.
+1. Na página da localidade, abra o painel de coordenadas e toque/clique em
+   `Add coordinate`.
 
-2. Ele o levará para a página de adição de coordenada com a maioria das informações já preenchidas.
+2. Na página `Add coordinates`, use o cartão `Device GPS` e toque/clique no
+   botão de localização.
 
-3. Preencha o restante dos campos.
+3. O NAHPU preenche a latitude decimal, a longitude decimal, a elevação e a
+   incerteza do GPS quando o sistema operacional as fornece. Revise os valores,
+   preencha os campos restantes e salve a coordenada.
 
-    Veja a seção [adicionando coordenadas manualmente](#adicionando-coordenadas-manualmente) para detalhes. O nome da sua unidade GPS deve corresponder ao modelo exato do seu dispositivo. Por exemplo: `iPad Mini 4`.
+    Insira o nome da unidade GPS separadamente, usando o modelo exato do
+    dispositivo, como `iPad Mini 4`.
 
 {% /steps %}
 
@@ -147,7 +155,9 @@ Você pode adicionar coordenadas manualmente a partir do seu dispositivo GPS ou 
 
 3. Insira os valores de latitude e longitude.
 
-    Atualmente, o NAHPU suporta apenas coordenadas decimais.
+    Insira graus decimais. A latitude deve estar entre `-90` e `90`, e a
+    longitude entre `-180` e `180`. A visualização de detalhes também mostra os
+    valores em graus, minutos e segundos (DMS).
 
 4. Adicione a elevação em metros.
 
@@ -168,3 +178,64 @@ Você pode adicionar coordenadas manualmente a partir do seu dispositivo GPS ou 
     Adicione informações adicionais, se houver.
 
 {% /steps %}
+
+### Importar coordenadas de um arquivo
+
+Use a importação de arquivos quando vários pontos já estiverem em um arquivo
+GIS ou GPS. A importação está disponível em `Add coordinate → Import` dentro de
+uma localidade.
+
+{% steps %}
+
+1. Abra uma localidade, toque/clique em `Add coordinate` e selecione o modo
+   `Import`.
+
+2. Escolha `Select coordinate file` e selecione um arquivo GeoJSON/JSON, KML,
+   Shapefile compactado ou GPX. Também é possível escolher `Scan QR` para
+   adicionar um registro de coordenada de outro dispositivo NAHPU.
+
+3. Revise os pontos importados e qualquer aviso. O mapa destaca o ponto em
+   foco, e todos os pontos válidos ficam selecionados por padrão.
+
+4. Use `Select all`, `Clear all` ou as caixas individuais para escolher os
+   pontos a adicionar. Toque/clique em `Add N selected` para salvá-los na
+   localidade atual.
+
+{% /steps %}
+
+A importação preserva o nome, as notas, a latitude e longitude decimais e a
+elevação. Os pontos importados recebem a localidade atual e o datum `WGS84`;
+este fluxo não fornece incerteza nem informações da unidade GPS.
+
+Apenas pontos são importados. Entidades que não sejam pontos em GeoJSON ou
+Shapefile, geometrias que não sejam pontos em KML, coordenadas inválidas e
+outros registros não compatíveis são ignorados e informados na revisão. No GPX,
+waypoints são importados; rotas e tracks são ignorados. Se não restarem pontos
+válidos, o NAHPU mostra um erro e não adiciona registros.
+
+### Gerenciar e exportar coordenadas
+
+O botão `Manage` no painel de coordenadas de uma localidade abre todas as
+coordenadas do projeto. Você pode filtrar por localidade, selecionar pontos
+individuais ou todos os visíveis, focar um ponto no mapa e abrir o mapa em tela
+cheia.
+
+{% steps %}
+
+1. Abra o painel de coordenadas de uma localidade e toque/clique em `Manage`.
+
+2. Filtre por localidade, se necessário, e selecione as coordenadas a exportar.
+
+3. Toque/clique em `Export coordinates (N)`.
+
+4. Escolha `GeoJSON (.geojson)`, `KML (.kml)` ou `Shapefile bundle (.zip)`. Digite
+   o nome do arquivo, escolha o diretório de destino e selecione `Export`.
+
+5. Depois que o arquivo for criado, use `Share` nos dispositivos compatíveis.
+
+{% /steps %}
+
+Cada coordenada exportada precisa ter latitude e longitude decimais válidas.
+As exportações GIS incluem nome, notas, latitude e longitude decimais WGS84 e
+elevação quando disponível. Essa exportação é diferente de `Export records`,
+pacotes do projeto e backups do banco de dados.

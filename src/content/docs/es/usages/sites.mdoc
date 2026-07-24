@@ -108,19 +108,27 @@ Revise el personal vinculado y las coordenadas después de importar.
 
 ## Agregar coordenadas
 
-Puede agregar coordenadas manualmente desde su dispositivo GPS o utilizar las coordenadas del dispositivo.
+Un sitio puede tener varios registros de coordenadas para los extremos de una
+línea de trampas, puntos de recolección separados u otros puntos del mismo
+sitio. Puede agregar coordenadas manualmente, usar el GPS del dispositivo o
+importar puntos desde un archivo GIS/GPS.
 
-### Obtener coordenadas del dispositivo actual
+### Usar el GPS del dispositivo al agregar una coordenada
 
 {% steps %}
 
-1. Toque/haga clic en el botón `punto GPS` junto al botón `Agregar coordenada`.
+1. En la página del sitio, abra el panel de coordenadas y toque/haga clic en
+   `Add coordinate`.
 
-2. Esto le llevará a la página de agregar coordenada con la mayor parte de la información ya completada.
+2. En la página `Add coordinates`, use la tarjeta `Device GPS` y toque/haga
+   clic en su botón de ubicación.
 
-3. Complete el resto de los campos. 
-    
-    Consulte la sección [agregar coordenadas manualmente](#agregar-coordenadas-manualmente) para obtener más detalles. El nombre de su unidad GPS debe coincidir con el modelo exacto de su dispositivo. Por ejemplo: `iPad Mini 4`.
+3. NAHPU completa la latitud decimal, la longitud decimal, la elevación y la
+   incertidumbre del GPS cuando el sistema operativo las proporciona. Revise
+   los valores, complete los campos restantes y guarde la coordenada.
+
+    Introduzca el nombre de la unidad GPS por separado, usando el modelo exacto
+    del dispositivo, como `iPad Mini 4`.
 
 {% /steps %}
 
@@ -148,7 +156,9 @@ Puede agregar coordenadas manualmente desde su dispositivo GPS o utilizar las co
 
 3. Ingrese los valores de latitud y longitud.
 
-    Actualmente, NAHPU solo admite coordenadas decimales.
+    Introduzca grados decimales. La latitud debe estar entre `-90` y `90` y la
+    longitud entre `-180` y `180`. La vista de detalles también muestra los
+    valores en grados, minutos y segundos (DMS).
 
 4. Agregue la elevación en metros.
 
@@ -169,3 +179,69 @@ Puede agregar coordenadas manualmente desde su dispositivo GPS o utilizar las co
     Agregue información adicional si la hay.
 
 {% /steps %}
+
+### Importar coordenadas desde un archivo
+
+Use la importación de archivos cuando varios puntos ya existan en un archivo
+GIS o GPS. La importación está disponible en `Add coordinate → Import` dentro
+de un sitio.
+
+{% steps %}
+
+1. Abra un sitio, toque/haga clic en `Add coordinate` y seleccione el modo
+   `Import`.
+
+2. Seleccione `Select coordinate file` y elija un archivo GeoJSON/JSON, KML,
+   Shapefile comprimido o GPX. También puede elegir `Scan QR` para agregar un
+   registro de coordenadas desde otro dispositivo NAHPU.
+
+3. Revise los puntos importados y cualquier advertencia. El mapa resalta el
+   punto enfocado y todos los puntos válidos aparecen seleccionados por
+   defecto.
+
+4. Use `Select all`, `Clear all` o las casillas individuales para elegir qué
+   puntos agregar. Toque/haga clic en `Add N selected` para guardarlos en el
+   sitio actual.
+
+{% /steps %}
+
+La importación conserva el nombre, las notas, la latitud y longitud decimales
+y la elevación. Los puntos importados se asignan al sitio actual y al datum
+`WGS84`; este flujo no proporciona incertidumbre ni información de la unidad
+GPS.
+
+Solo se importan puntos. Las entidades que no sean puntos en GeoJSON o
+Shapefile, las geometrías que no sean puntos en KML, las coordenadas inválidas
+y otros registros no compatibles se omiten y se informan en la revisión. En
+GPX se importan los waypoints; las rutas y tracks se ignoran. Si no quedan
+puntos válidos, NAHPU muestra un error y no agrega registros.
+
+### Gestionar y exportar coordenadas
+
+El botón `Manage` del panel de coordenadas de un sitio abre todas las
+coordenadas del proyecto. Puede filtrar por sitio, seleccionar puntos
+individuales o todos los visibles, enfocar un punto en el mapa y abrir el mapa
+en pantalla completa.
+
+{% steps %}
+
+1. Abra el panel de coordenadas de un sitio y toque/haga clic en `Manage`.
+
+2. Filtre por sitio si es necesario y seleccione las coordenadas que desea
+   exportar.
+
+3. Toque/haga clic en `Export coordinates (N)`.
+
+4. Elija `GeoJSON (.geojson)`, `KML (.kml)` o `Shapefile bundle (.zip)`. Escriba
+   el nombre del archivo, elija el directorio de destino y seleccione
+   `Export`.
+
+5. Cuando se cree el archivo, use `Share` en los dispositivos compatibles.
+
+{% /steps %}
+
+Cada coordenada exportada debe tener una latitud y longitud decimales válidas.
+Las exportaciones GIS incluyen el nombre, las notas, la latitud y longitud
+decimales WGS84 y la elevación cuando está disponible. Esta exportación es
+distinta de `Export records`, los paquetes del proyecto y las copias de
+seguridad de la base de datos.

@@ -48,7 +48,7 @@ your project.
 
 4. Add the Site leader
 
-    If this is a field camp, you can put the team leader name. If you it is a trap line, you can design a person in-charge of that trap line as the site leader.
+    If this is a field camp, you can put the team leader name. If it is a trap line, you can design a person in-charge of that trap line as the site leader.
 
 5. Add the site type
 
@@ -122,21 +122,25 @@ import.
 
 ## Adding coordinates
 
-You can add coordinate manually from your GPS device or use the device coordinate.
+Each site can have multiple coordinate records for trapline ends, separate
+collection points, or other points that belong to the same site. Add a
+coordinate manually, use the device GPS, or import points from a GIS/GPS file.
 
-### Get coordinates from a current device
+### Use device GPS while adding a coordinate
 
 {% steps %}
 
-1. Tap/click the `GPS point` button next to the `Add coordinate` button.
+1. On the site page, open the coordinate panel and tap/click `Add coordinate`.
 
-2. It will take you the add coordinate page with the most of the information already filled.
+2. On the `Add coordinates` page, use the `Device GPS` card and tap/click its
+   location button.
 
-3. Fill in the rest of the fields.
+3. NAHPU fills the decimal latitude, decimal longitude, elevation, and GPS
+   uncertainty when the operating system provides them. Review the values,
+   complete the remaining fields, and save the coordinate.
 
-    See the [manually adding coordinates](#manually-adding-coordinate) section
-    for details. Your GPS unit name should match the exact model of your
-    device. For example: `iPad Mini 4`.
+    Enter the GPS unit name separately, using the exact model of your device,
+    such as `iPad Mini 4`.
 
 {% /steps %}
 
@@ -160,13 +164,13 @@ You can add coordinate manually from your GPS device or use the device coordinat
       - If the trapline extends beyond the first start point, the coordinate at the new start is suffixed with `{number}`. For example, `KMHH-L1S2` for first extension, `KMHH-L1S3` for the next extension, and so on until the trapline are fully moved.
       - If the trapline extends beyond the first end point, the coordinate at the new end is suffixed with `{number}`. For example, `KMHH-L1E2` for first extension, and continue in a similar manner as the start line extension.
 
-
-
     {% /aside %}
 
 3. Enter the latitude and longitude values.
 
-    NAHPU currently supports decimal coordinates.
+    Enter decimal degrees. Latitude must be between `-90` and `90`; longitude
+    must be between `-180` and `180`. The coordinate details view also displays
+    the values in degrees, minutes, and seconds (DMS).
 
 4. Add elevation in meters.
 
@@ -187,3 +191,62 @@ You can add coordinate manually from your GPS device or use the device coordinat
     Add additional information if any.
 
 {% /steps %}
+
+### Import coordinates from a file
+
+Use file import when several points already exist in a GIS or GPS file.
+Coordinate import is available from `Add coordinate → Import` on a site.
+
+{% steps %}
+
+1. Open a site, tap/click `Add coordinate`, and select the `Import` mode.
+
+2. Choose `Select coordinate file` and select a GeoJSON/JSON file, KML file,
+   zipped Shapefile, or GPX file. You can also choose `Scan QR` to add a
+   coordinate QR record from another NAHPU device.
+
+3. Review the imported points and any warning text. The map highlights the
+   focused point, and all valid points are selected by default.
+
+4. Use `Select all`, `Clear all`, or the individual checkboxes to choose which
+   points to add. Tap/click `Add N selected` to save them to the current site.
+
+{% /steps %}
+
+File import transfers the point name, notes, decimal latitude, decimal
+longitude, and elevation. Imported points are assigned the current site and
+`WGS84` datum; uncertainty and GPS unit information are not supplied by this
+exchange flow.
+
+Only point coordinates are imported. Non-point GeoJSON or Shapefile features,
+non-point KML geometries, invalid coordinates, and other unsupported records
+are skipped and reported in the review. GPX waypoints are imported; GPX routes
+and tracks are ignored. If no valid points remain, NAHPU reports an import
+error instead of adding records.
+
+### Manage and export coordinates
+
+The `Manage` button in a site's coordinate panel opens all project coordinates.
+You can filter the list by site, select individual points or all visible
+points, focus a point on the map, and open the map in full screen.
+
+{% steps %}
+
+1. Open a site's coordinate panel and tap/click `Manage`.
+
+2. Filter by site if needed, then select the coordinates to export.
+
+3. Tap/click `Export coordinates (N)`.
+
+4. Choose `GeoJSON (.geojson)`, `KML (.kml)`, or `Shapefile bundle (.zip)`.
+   Enter a file name, choose a destination directory, and select `Export`.
+
+5. After the file is created, use `Share` on devices that support sharing.
+
+{% /steps %}
+
+Every exported coordinate must have a valid decimal latitude and longitude.
+GIS exports include the coordinate name, notes, WGS84 decimal latitude and
+longitude, and elevation when available. Coordinate export is separate from
+`Export records`, project bundles, and database backups; use those options when
+you need tabular records or a restorable NAHPU project copy.
