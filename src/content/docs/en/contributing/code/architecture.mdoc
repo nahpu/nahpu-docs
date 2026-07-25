@@ -81,10 +81,10 @@ database queries, validation, media files, templates, project transfers, record
 exports, bundle exports, GIS operations, and platform file IO. Screens should
 not contain these workflows.
 
-**Database services** use Drift over SQLite. The Drift schema currently has
-schema version 10 and is the authoritative store for projects, specimens,
-sites, collecting events, personnel, taxonomy, media metadata, measurements,
-narratives, and related records.
+**Database services** use Drift over SQLite. It is the authoritative store for
+projects, specimens, sites, collecting events, personnel, taxonomy, media
+metadata, measurements, narratives, and related records. See [Persistence
+data](./database) for the current schema version and migration workflow.
 
 **Bridge bindings** under `lib/src/rust/` are generated from the Rust wrapper
 crate. They are not hand-edited. Dart services use these bindings when the
@@ -112,51 +112,25 @@ Rust implementations:
 
 ## Persistence boundaries
 
-NAHPU separates data by ownership and reproducibility:
-
-- **Project SQLite data** is the canonical dataset. It is managed by Drift in
-  the Flutter app and includes the relational project records and media
-  metadata.
-- **SharedPreferences** stores installation-local UI and device state, such as
-  theme settings and migration markers. Values needed to reproduce exports or
-  documents belong in user configs instead.
-- **`redb` user configs** are managed through `nahpu_configs`. They include
-  custom option lists, field formatting choices, record export presets,
-  template presets, and document layouts. They can be exported with project or
-  data packages when reproducibility requires them.
-- **Files** are managed by Dart services. The application documents directory
-  contains the main database, backups, project media, personnel media, custom
-  fonts, and custom maps. Temporary archives and intermediate files use the
-  system temporary directory.
-
-The normal application storage layout is:
-
-```text
-Documents/nahpu/
-├── nahpu.db
-├── nahpu_configs.db
-├── backup/
-├── appMedia/personnel/
-├── UserConfigs/
-│   ├── fonts/
-│   └── maps/
-└── <project_uuid>/media/
-    ├── site/
-    ├── specimen/
-    └── narrative/
-```
+Persistence is divided between the canonical Drift/SQLite project database,
+reproducible `nahpu_configs` configuration, installation-local
+`SharedPreferences`, and app-managed files. The complete ownership model,
+storage layout, schema workflow, migration rules, and Darwin Core field mapping
+are maintained on the [Persistence data](./database) page.
 
 ## Important data flows
 
 **Record import/export** starts in Dart services, which read or assemble rows
 from the Drift database. The bridge delegates tabular reading and writing to
 `nahpu_db`; Dart services perform application-specific validation and database
-updates.
+updates. See [Persistence data](./database) for the persistence boundary and
+mapping details.
 
 **Bundle export** is planned and validated before writing. Dart services build
 the request from database records, configurations, vocabularies, and files.
 `nahpu_dwc` handles Darwin Core bundles, while `nahpu_dp` handles the complete
-NAHPU Data Package and records dependency versions in its metadata.
+NAHPU Data Package and records dependency versions in its metadata. The
+canonical field mapping is documented in [Persistence data](./database).
 
 **Document export** combines Dart-managed records, templates, layouts, and
 fonts. Dart services prepare the document input, while `nahpu_export` provides
@@ -195,7 +169,8 @@ database rows, media manifest, conflict handling, and import decisions.
 ## Design principles
 
 - Keep screens thin and keep workflows in providers and services.
-- Treat Drift SQLite as the canonical project-record store.
+- Treat Drift SQLite as the canonical project-record store; see
+  [Persistence data](./database) for all storage boundaries.
 - Keep reproducibility-related configuration in `nahpu_configs`, not local UI
   settings.
 - Keep Rust wrappers small and put reusable behavior in NAHPU API crates.

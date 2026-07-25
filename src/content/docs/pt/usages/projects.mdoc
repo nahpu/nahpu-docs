@@ -4,67 +4,134 @@ sidebar:
   order: 2
 ---
 
-## Criando um novo projeto
+Os projetos organizam os dados do NAHPU. Um projeto pode conter pessoal,
+taxons, locais, eventos de coleta, registros de espécimes, narrativas e mídias
+vinculadas.
 
-Para criar um novo projeto, use o botão `+` no canto inferior direito da tela inicial. Você será solicitado a inserir um nome de projeto, uma descrição de projeto e o formato principal do catálogo.
+## Criar um projeto
 
-- **O nome do projeto** deve ser curto e descritivo
-- **A descrição do projeto** deve ser algumas frases explicando o propósito do projeto.
-- **O formato principal do catálogo** é o formato do catálogo que será usado para gerar as páginas do catálogo de espécimes. Você pode alterar isso mais tarde. Você também pode misturar diferentes tipos de formato de catálogo no mesmo projeto.
+Na tela inicial, selecione `+` e escolha `Create project`. Informe um nome
+único com 3 a 25 caracteres. A descrição é opcional. Use `Show more` para
+adicionar o pesquisador principal, local, fuso horário, datas de início e fim.
+Ao criar o projeto, selecione também o formato do catálogo.
 
-## Gerenciando projetos na tela inicial
+O NAHPU gera um UUID para cada projeto. O UUID identifica o projeto quando as
+informações são trocadas entre dispositivos.
 
-Cada projeto na lista da tela inicial possui um menu de ações. As ações são agrupadas nesta ordem:
+## Fuso horário do projeto
 
-- **Edit info** - Abre o formulário do projeto para atualizar as informações do projeto.
-- **Show QR** - Exibe o código QR das informações do projeto para ser escaneado em outro dispositivo.
-- **Export info** - Exporta as informações do projeto como um arquivo JSON. No computador, escolha um diretório nas configurações do arquivo; no celular, use a ação de compartilhamento após a exportação.
-- **Details** - Abre uma visualização somente leitura das informações do projeto.
+O campo `Time zone` registra o local do fuso horário IANA onde o projeto é
+realizado, como `Asia/Jakarta` ou `America/New_York`. Selecione o local do
+trabalho de campo, e não o fuso horário do dispositivo usado para inserir os
+dados.
 
-## Conhecendo o painel (dashboard)
-
-Depois de criar um projeto, você irá para o painel do projeto. O painel é dividido em quatro painéis principais:
-
-- **Visão geral do projeto** - Este painel fornece uma visão rápida do projeto. Inclui o nome do projeto, descrição, [pesquisador principal](./projects#pesquisador-principal), localização, data de início, data de término, data de criação do banco de dados e data do último acesso. Use os botões de texto `Edit` e `Export info` na parte inferior do painel para gerenciar as informações do projeto.
-- **Pessoal** - Este painel lista todo o pessoal associado ao projeto. Você pode adicionar mais pessoal clicando no botão `[+ Adicionar pessoal]` na parte inferior do painel.
-- **Registro de Táxon** - Este painel lista todos os táxons registrados no banco de dados. Você pode adicionar mais táxons clicando no botão `[+ Adicionar táxon]` na parte inferior do painel. Você também pode importar táxons de um arquivo csv clicando no botão `[Importar de arquivo]`.
-- **Estatísticas de registros** - Gráfico mostrando estatísticas em tempo real do número de registros no projeto.
-
-## Atualizando as informações do projeto
-
-No painel, use o botão de texto `Edit` na parte inferior da visão geral do projeto. Na tela inicial, abra o menu de ações do projeto e selecione `Edit info`.
-
-## Transferindo informações do projeto
-
-As informações do projeto podem ser transferidas entre dispositivos NAHPU de duas maneiras:
-
-1. **JSON** - No dispositivo de origem, abra o menu de ações do projeto na tela inicial e selecione `Export info`. No dispositivo de destino, selecione `+` e escolha `Import JSON` no formulário de novo projeto.
-2. **Código QR** - No dispositivo de origem, selecione `Show QR` no menu de ações do projeto. Em um dispositivo móvel de destino, selecione `+` e use `Scan QR` no formulário de novo projeto.
-
-Os dois métodos mantêm o UUID do projeto. Mantenha o UUID ao trocar
-informações para que a identidade do projeto permaneça estável entre os
+O NAHPU armazena o fuso horário como metadado do projeto. Ele aparece em
+Project Overview, é incluído ao compartilhar as informações ou transferir o
+projeto e fica disponível como `project::timeZone` em modelos de documentos e
+exportações. Isso fornece contexto para interpretar datas e horas em outros
 dispositivos.
 
-## Excluindo Projetos
+O fuso horário não altera o relógio do dispositivo nem converte
+automaticamente horários existentes de narrativas, eventos ou espécimes. Esses
+horários continuam sendo os valores do relógio local informados nos registros.
+Use o fuso horário do projeto ao registrar o trabalho de campo e mantenha a
+mesma configuração em todos os dispositivos.
 
-Abra o menu lateral do projeto e selecione `Delete project`. O NAHPU pedirá que
-você digite os cinco primeiros caracteres do UUID do projeto. Essa confirmação
-é necessária porque a exclusão não pode ser desfeita.
+### Visualizar datas e horas em outro dispositivo
 
-A exclusão remove registros de espécimes e medições, eventos de coleta e seus
-esforços, pessoal dos eventos, narrativas, localidades e coordenadas, vínculos
-de pessoal do projeto, mídias e o registro do projeto. Ela também remove os
-arquivos armazenados do projeto. Uma mídia ainda compartilhada com um registro
-taxonômico é desvinculada em vez de excluída. Se a limpeza dos arquivos falhar,
-o NAHPU mostra um aviso depois de excluir os dados do banco.
+O NAHPU armazena datas e horas como valores simples, não como instantes
+associados a um fuso horário. Ao abrir o mesmo projeto em outro dispositivo, o
+NAHPU não altera a hora registrada com base no fuso horário desse dispositivo.
+O dispositivo pode formatar o mesmo valor de acordo com a sua localidade—por
+exemplo, mudar a ordem da data, o nome do mês ou o formato de 12/24 horas—mas
+o valor informado permanece igual.
 
-Exporte um pacote do projeto ou um backup do banco de dados antes de excluí-lo
-caso possa precisar dos dados mais tarde.
+Por exemplo, se o fuso horário do projeto for `Asia/Jakarta` e um evento de
+campo for registrado como **12 de maio, 08:30**, outro dispositivo pode exibir a
+data e a hora em um formato local diferente, mas não converterá
+automaticamente o valor para outro horário. `Asia/Jakarta` identifica o
+contexto em que `08:30` deve ser interpretado.
 
+### Por que isso é importante
 
+Manter correto o fuso horário do projeto ajuda a comparar eventos registrados
+em dispositivos diferentes, preserva o contexto temporal ao compartilhar ou
+transferir dados e apoia a interpretação reproduzível das exportações. Se a
+equipe trabalhar entre fusos horários ou inserir dados históricos de outro
+local, explique a exceção em uma narrativa ou em outro contexto apropriado do
+registro.
+
+## Gerenciar projetos na tela inicial
+
+Cada projeto tem um menu de ações:
+
+- **Edit info** - Atualiza o formulário do projeto.
+- **Show QR** - Exibe as informações do projeto para leitura em um celular.
+- **Export info** - Exporta as informações como JSON. Isso não inclui registros
+  nem mídias do projeto.
+- **Details** - Mostra as informações sem permitir edição.
+
+## Painel do projeto
+
+O painel contém quatro áreas:
+
+- **Project Overview** - Mostra nome, UUID, descrição, pesquisador principal,
+  local, fuso horário, datas, criação e último acesso.
+- **Personnel** - Lista o pessoal atribuído e permite usar `Add personnel` para
+  selecionar uma pessoa existente ou criar uma nova.
+- **Taxon Registry** - Lista os táxons registrados e permite adicioná-los ou
+  importá-los.
+- **Record Statistics** - Resume os registros e oferece estatísticas mais
+  detalhadas.
+
+O menu do projeto também contém ações para transferência, exportação, backup,
+configurações e exclusão.
+
+## Atualizar informações do projeto
+
+No painel, selecione `Edit` em Project Overview. Na tela inicial, abra o menu
+de ações e selecione `Edit info`.
+
+## Compartilhar informações do projeto
+
+Para copiar informações sem transferir registros:
+
+1. No dispositivo de origem, selecione `Export info` ou `Show QR`.
+2. No dispositivo receptor, selecione `Create project` e use `Import JSON` no
+   computador ou `Scan QR` no celular.
+
+Esses métodos mantêm o UUID e criam um projeto com as mesmas informações. Para
+transferir registros, mídias e outros dados, use [Transferir um
+projeto](./export/project-transfer).
+
+## Transferir dados do projeto
+
+Use `Export project` e `Import project` para combinar dados do mesmo projeto em
+dispositivos NAHPU diferentes. O guia [Transferir um projeto](./export/project-transfer)
+explica os arquivos ZIP/TAR.GZ, backups, verificação do UUID e resolução de
+conflitos.
+
+`Bundle records` é uma exportação separada para publicação, análise,
+arquivamento ou uso por terceiros. Ela não pode ser importada com `Import
+project`.
+
+## Excluir um projeto
+
+Abra o menu do projeto e selecione `Delete project`. O NAHPU solicita os cinco
+primeiros caracteres do UUID porque a exclusão não pode ser desfeita.
+
+A exclusão remove registros de espécimes e medições, eventos e esforços de
+coleta, pessoal dos eventos, narrativas, locais e coordenadas, vínculos de
+pessoal, mídias e o registro do projeto. Os arquivos armazenados também são
+removidos. Mídias ainda compartilhadas com um registro taxonômico são
+desvinculadas em vez de excluídas. Se a limpeza falhar, o NAHPU mostra um aviso
+após excluir os registros do banco.
+
+Exporte uma transferência do projeto ou um backup do banco antes de excluí-lo
+caso possa precisar dos dados depois.
 
 ## Terminologia
 
-### Pesquisador Principal
+### Pesquisador principal
 
-O pesquisador principal é a pessoa responsável pelo projeto.
+É a pessoa responsável pelo projeto.

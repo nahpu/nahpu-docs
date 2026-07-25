@@ -1,12 +1,52 @@
 ---
-title: "Database changes"
+title: "Persistence data"
 sidebar:
   order: 8
 ---
 
-NAHPU uses [Drift](https://drift.simonbinder.eu/) over SQLite. Database changes
-must preserve existing user data because NAHPU is used offline in field
-conditions where backups and app updates may happen far from reliable internet.
+This page is the canonical reference for NAHPU persistence boundaries, schema
+changes, migrations, storage locations, and Darwin Core field mappings. Other
+architecture and code-contribution pages should link here instead of
+duplicating these details.
+
+NAHPU is an offline-first application. Persistence changes must preserve
+existing user data because field teams may update the app or restore backups
+far from reliable internet access.
+
+## Persistence boundaries
+
+NAHPU uses separate stores because project data, reproducible configuration,
+installation-local state, and files have different ownership and backup needs.
+
+| Store | Owner | Contents | Reproducibility |
+|---|---|---|---|
+| Drift over SQLite | Flutter app | Projects, specimens, sites, collecting events, personnel, taxonomy, media metadata, measurements, narratives, and relationships | Canonical project dataset; included in database and NAHPU Data Package exports |
+| `redb` | `nahpu_configs` through Rust bridge | Custom option lists, record-export presets, document-template presets, and document layouts | Exportable when reproducing outputs on another installation |
+| `SharedPreferences` | Flutter app | Installation-local UI and device state such as theme settings and migration markers | Not project data; do not store export-relevant configuration here |
+| Documents directory | Dart services | SQLite databases, backups, project media, personnel media, custom fonts, and custom maps | Managed by app workflows and package/backup exporters |
+| Temporary directory | Dart/platform services | Staging snapshots, intermediate files, and temporary archives | Disposable; never the source of truth |
+
+The normal application storage layout is:
+
+```text
+Documents/nahpu/
+├── nahpu.db
+├── nahpu_configs.db
+├── backup/
+├── appMedia/personnel/
+├── UserConfigs/
+│   ├── fonts/
+│   └── maps/
+└── <project_uuid>/media/
+    ├── site/
+    ├── specimen/
+    └── narrative/
+```
+
+The Flutter Drift database remains the canonical project store. `nahpu_db`
+generates Rust-side models and tabular helpers from the Drift schema, but it
+does not own the app's SQLite connection. `nahpu_dwc` and `nahpu_dp` receive
+caller-prepared data and do not replace the project database.
 
 ## Schema workflow
 
@@ -72,3 +112,173 @@ conditions where backups and app updates may happen far from reliable internet.
 Import, export, backup, and migration changes can permanently affect user data.
 Favor small migrations, explicit tests, and clear pull request notes.
 {% /aside %}
+
+## Persistence data flows
+
+**Database-backed workflows** run from Dart services and providers. Screens
+render state and dispatch actions; they do not own database queries or
+migrations.
+
+**Record import and export** reads or assembles rows from Drift. Dart performs
+application-specific validation and database updates, while `nahpu_db` may
+provide reusable tabular readers and writers.
+
+**Bundle export** builds a transport-safe request from database records,
+configuration, vocabularies, and files. `nahpu_dwc` writes Darwin Core Archive
+and Darwin Core Data Package outputs. `nahpu_dp` writes the complete NAHPU Data
+Package, including the SQLite snapshot and reproducibility metadata.
+
+**Project transfer** remains coordinated by Dart because it owns database rows,
+media manifests, conflict handling, and import decisions. `nahpu_archive`
+provides the archive container operations.
+
+**Configuration persistence** belongs in `nahpu_configs` when values must be
+exported or reproduced. Installation-local preferences remain in
+`SharedPreferences`.
+
+## Darwin Core field mapping
+
+The following is the complete current mapping implemented by
+`nahpu_dwc::dwc::DwcMapper`. Source fields use the `table::field` notation used
+by NAHPU exports. Schema aliases such as `siteID`/`siteId` and
+`eventID`/`eventId` resolve to the same mapping. Unsupported legacy fields are
+not emitted.
+
+### Direct field mappings
+
+| NAHPU source field(s) | Darwin Core or Dublin Core term |
+|---|---|
+| `project::uuid` | `dcterms:identifier` |
+| `project::name` | `dwc:datasetName` |
+| `project::startDate`, `project::endDate` | `dwc:eventDate` |
+| `project::created` | `dcterms:created` |
+| `project::lastAccessed` | `dcterms:modified` |
+| `site::siteID`, `site::siteId` | `dwc:siteNumber` |
+| `site::projectUuid` | `dwc:datasetID` |
+| `site::siteType`, `site::remark` | `dwc:locationRemarks` |
+| `site::country` | `dwc:country` |
+| `site::stateProvince` | `dwc:stateProvince` |
+| `site::county` | `dwc:county` |
+| `site::municipality` | `dwc:municipality` |
+| `site::locality` | `dwc:verbatimLocality` |
+| `site::habitatType`, `site::habitatCondition`, `site::habitatDescription` | `dwc:habitat` |
+| `coordinate::siteID`, `coordinate::siteId` | `dwc:locationID` |
+| `coordinate::decimalLatitude` | `dwc:decimalLatitude` |
+| `coordinate::decimalLongitude` | `dwc:decimalLongitude` |
+| `coordinate::elevationInMeter` | `dwc:minimumElevationInMeters` in direct mapping; see composite mappings below |
+| `coordinate::datum` | `dwc:geodeticDatum` |
+| `coordinate::uncertaintyInMeters` | `dwc:coordinateUncertaintyInMeters` |
+| `coordinate::notes` | `dwc:georeferenceRemarks` |
+| `collEvent::id`, `event::id` | `dwc:eventID` |
+| `collEvent::projectUuid` | `dwc:datasetID` |
+| `collEvent::siteID`, `collEvent::siteId` | `dwc:locationID` |
+| `collEvent::startDate`, `collEvent::endDate` | `dwc:eventDate` |
+| `collEvent::startTime`, `collEvent::endTime` | `dwc:eventTime` |
+| `collEvent::primaryCollMethod` | `dwc:samplingProtocol` |
+| `collEvent::collMethodNotes` | `dwc:samplingEffort` |
+| `collEvent::personnel` | `dwc:recordedBy` |
+| `collPersonnel::eventID`, `collPersonnel::eventId`; `collEffort::eventID`, `collEffort::eventId`; `weather::eventID`, `weather::eventId` | `dwc:eventID` |
+| `collPersonnel::personnelId` | `dwc:recordedByID` |
+| `collPersonnel::name` | `dwc:recordedBy` |
+| `collEffort::method`, `collEffort::brand` | `dwc:samplingProtocol` |
+| `collEffort::notes` | `dwc:samplingEffort` |
+| `narrative::projectUuid` | `dwc:datasetID` |
+| `narrative::siteID`, `narrative::siteId` | `dwc:locationID` |
+| `narrative::date` | `dcterms:date` |
+| `narrative::narrative` | `dwc:eventRemarks` |
+| `media::primaryId`, `media::secondaryId` | `dcterms:identifier` |
+| `media::projectUuid` | `dwc:datasetID` |
+| `media::category` | `dcterms:type` |
+| `media::tag` | `dcterms:subject` |
+| `media::taken` | `dcterms:created` |
+| `media::camera`, `media::lenses`, `media::additionalExif` | `dcterms:description` |
+| `media::personnelId` | `dcterms:creator` |
+| `media::fileName` | `dcterms:title` |
+| `media::caption` | `dcterms:description` |
+| `associatedData::specimenUuid` | `dwc:occurrenceID` |
+| `associatedData::name` | `dcterms:title` |
+| `associatedData::type` | `dcterms:type` |
+| `associatedData::date` | `dcterms:created` |
+| `associatedData::description` | `dcterms:description` |
+| `associatedData::url` | `dcterms:identifier` |
+| `personnel::uuid` | `dcterms:identifier` |
+| `taxonomy::id` | `dwc:taxonID` |
+| `taxonomy::taxonClass` | `dwc:class` |
+| `taxonomy::taxonOrder` | `dwc:order` |
+| `taxonomy::taxonFamily` | `dwc:family` |
+| `taxonomy::genus` | `dwc:genus` |
+| `taxonomy::specificEpithet` | `dwc:specificEpithet` |
+| `taxonomy::authors` | `dwc:scientificNameAuthorship` |
+| `taxonomy::commonName` | `dwc:vernacularName` |
+| `taxonomy::notes` | `dwc:taxonRemarks` |
+| `specimen::uuid` | `dwc:occurrenceID` |
+| `specimen::projectUuid` | `dwc:datasetID` |
+| `specimen::speciesID`, `specimen::speciesId` | `dwc:taxonID` |
+| `specimen::scientificName` | `dwc:scientificName` |
+| `specimen::iDMethod` | `dwc:identificationType` |
+| `specimen::taxonGroup` | `dwc:higherClassification` |
+| `specimen::collectionDate`, `specimen::captureDate` | `dwc:eventDate` |
+| `specimen::collectionTime`, `specimen::captureTime` | `dwc:eventTime` |
+| `specimen::trapType`, `specimen::methodID`, `specimen::methodId`, `specimen::collMethodID`, `specimen::collMethodId` | `dwc:samplingProtocol` |
+| `specimen::coordinateID`, `specimen::coordinateId` | `dwc:locationID` |
+| `specimen::catalogerID`, `specimen::catalogerId`, `specimen::collPersonnelID`, `specimen::collPersonnelId`, `specimen::preparatorID`, `specimen::preparatorId` | `dwc:recordedBy` |
+| `specimen::fieldNumber` | `dwc:recordNumber` |
+| `specimen::collEventID`, `specimen::collEventId` | `dwc:eventID` |
+| `specimen::museumID`, `specimen::museumId` | `dwc:institutionCode` |
+| `specimenPart::specimenUuid` | `dwc:occurrenceID` |
+| `specimenPart::tissueID`, `specimenPart::tissueId` | `dwc:materialSampleID` |
+| `specimenPart::barcodeID`, `specimenPart::barcodeId` | `dwc:otherCatalogNumbers` |
+| `specimenPart::treatment`, `specimenPart::additionalTreatment` | `dwc:preparations` |
+| `specimenPart::dateTaken` | `dwc:eventDate` |
+| `specimenPart::timeTaken` | `dwc:eventTime` |
+| `specimenPart::remark`, `specimenPart::pmi` | `dwc:occurrenceRemarks` |
+| `narrativeMedia::narrativeId`, `narrativeMedia::mediaId` | `dcterms:identifier` |
+| `siteMedia::siteId` | `dwc:locationID` |
+| `siteMedia::mediaId` | `dcterms:identifier` |
+| `specimenMedia::specimenUuid` | `dwc:occurrenceID` |
+| `specimenMedia::mediaId` | `dcterms:identifier` |
+| `personnelList::projectUuid` | `dwc:datasetID` |
+| `personnelList::personnelUuid` | `dcterms:identifier` |
+| `weather::notes` | `dwc:eventRemarks` |
+| `mammalMeasurement::specimenUuid`, `avianMeasurement::specimenUuid` | `dwc:occurrenceID` |
+| `mammalMeasurement::sex`, `avianMeasurement::sex` | `dwc:sex` |
+| `mammalMeasurement::age` | `dwc:lifeStage` |
+| `mammalMeasurement::reproductiveStage` | `dwc:reproductiveCondition` |
+| `mammalMeasurement::remark`, `avianMeasurement::specimenRemark` | `dwc:occurrenceRemarks` |
+| `avianMeasurement::habitatRemark` | `dwc:habitat` |
+
+### Composite and measurement mappings
+
+Some fields cannot be represented by one direct header. The tabular mapping
+API expands them as follows:
+
+| NAHPU source field | Output headers or values | Explanation |
+|---|---|---|
+| `coordinate::elevationInMeter` | `dwc:minimumElevationInMeters`, `dwc:maximumElevationInMeters` | One elevation value is written to both bounds in a flat export. |
+| `specimenPart::type` | `dwc:materialEntityType`, `dwc:objectQuantityType` | The source value can describe both the material entity and its quantity type. |
+| `specimenPart::count` | `dwc:objectQuantity` | The part count is exported as a quantity. |
+| `mammalMeasurement::*`, `avianMeasurement::*`, `herpMeasurement::*`, `weather::*` measurement fields | `dwc:measurementType`, `dwc:measurementValue`, `dwc:measurementUnit` | Each populated measurement becomes a MeasurementOrFact row. The type and unit come from NAHPU's measurement definition. |
+
+Measurement definitions currently include mammal lengths, weight,
+echolocation, reproductive observations, embryo counts, avian morphometrics,
+color and molt observations, herpetofauna weight and snout-vent length, and
+weather temperature, humidity, sunrise, sunset, and moon-phase values. Their
+units are preserved where defined, including `mm`, `cm`, `g`, `kHz`, `s`, `%`,
+`°C`, and `hh:mm:ss`.
+
+### Bundle resource relationships
+
+The bundle writer uses these mapped concepts to create related resources:
+
+- specimen fields form the `occurrence` core;
+- collecting-event and site context form `event` fields or occurrence context;
+- specimen parts form `material` records;
+- measurements form `measurement_or_fact` or `occurrence-assertion` records;
+- media form `multimedia` or `media` records and are linked to occurrences;
+- people and their roles form agent and role resources;
+- DwC-DP adds internal primary and foreign keys while retaining the public
+  Darwin Core identifiers.
+
+The mapping is maintained with the `nahpu_dwc` implementation. When a mapper
+or bundle field changes, update this section and its verification checks in the
+same change.

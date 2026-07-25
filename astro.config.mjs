@@ -145,12 +145,12 @@ export default defineConfig({
               },
             },
             {
-              label: "Events",
-              link: "usages/events",
+              label: "Projects",
+              link: "usages/projects",
               translations: {
-                "pt-BR": "Eventos",
-                es: "Eventos",
-                id: "Peristiwa",
+                "pt-BR": "Projetos",
+                es: "Proyectos",
+                id: "Proyek",
               },
             },
             {
@@ -172,21 +172,21 @@ export default defineConfig({
               },
             },
             {
-              label: "Projects",
-              link: "usages/projects",
-              translations: {
-                "pt-BR": "Projetos",
-                es: "Proyectos",
-                id: "Proyek",
-              },
-            },
-            {
               label: "Sites",
               link: "usages/sites",
               translations: {
                 "pt-BR": "Locais",
                 es: "Sitios",
                 id: "Situs",
+              },
+            },
+            {
+              label: "Events",
+              link: "usages/events",
+              translations: {
+                "pt-BR": "Eventos",
+                es: "Eventos",
+                id: "Peristiwa",
               },
             },
             {

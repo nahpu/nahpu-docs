@@ -4,35 +4,51 @@ sidebar:
   order: 3
 ---
 
-## Menambahkan personel baru
+Data personel dibagikan dalam basis data NAHPU dan dapat ditugaskan ke
+beberapa proyek. Setiap proyek hanya menampilkan personel yang ditugaskan.
 
-Gunakan tombol `Tambah personel baru` untuk menambahkan personel baru. Anda akan diminta untuk memasukkan informasi berikut di bawah ini. Aplikasi secara default hanya menampilkan informasi penting. Klik tombol `Tampilkan lebih banyak` untuk menampilkan semua bidang.
+## Menambahkan personel ke proyek
 
-- **Nama (wajib)** - Nama personel.
-- **Email** - Email personel.
-- **Telepon** - Nomor telepon personel.
-- **Afiliasi** - Institusi personel.
-- **Peran perawatan spesimen (wajib)** - Peran personel dalam merawat spesimen. Lihat [Terminologi](./personnel#terminologi) untuk informasi lebih lanjut.
-- **Inisial lapangan (wajib jika peran perawatan spesimen adalah `Kataloger`)** - Inisial personel.
-- **Nomor lapangan (wajib jika peran perawatan spesimen adalah `Kataloger`)** - Nomor lapangan personel. Inisial dan nomor akan digunakan untuk ID lapangan. Aplikasi secara otomatis menambah nomor tersebut setiap kali Anda membuat spesimen baru. Misalnya, jika inisial lapangan adalah `ABC` dan nomor lapangan adalah `1`, spesimen pertama akan memiliki ID lapangan `ABC1`. Spesimen kedua akan memiliki ID lapangan `ABC2`, dan seterusnya.
-- **Catatan** - Catatan apa pun tentang personel.
+Pada panel Personnel di dasbor, pilih `Add personnel`. Jika personel sudah ada,
+pilih `Select from database`; jika belum, pilih `Add new personnel`.
 
-> **Penting:** Beberapa institusi mungkin menggunakan kombinasi ID proyek dan nomor untuk ID lapangan. Gunakan ID ini sebagai inisial, alih-alih memasukkan inisial sebenarnya dari orang tersebut. Misalnya, `ABC-1`. Dalam hal ini, Anda dapat memasukkan `ABC-` sebagai inisial lapangan dan `1` sebagai nomor lapangan.
+Formulir mencakup nama wajib, foto, afiliasi, email, telepon, peran perawatan
+spesimen (`Cataloger`, `Preparator only`, atau `None`), dan catatan. Gunakan
+`Show more` untuk menampilkan bidang opsional.
 
-## Mengedit informasi personel
+## Nomor lapangan kataloger
 
-Di dasbor, klik/ketuk tombol menu (ikon tiga titik) pada nama orang yang ingin Anda edit informasinya, lalu pilih edit. Anda akan dibawa ke halaman personel tempat Anda dapat mengedit informasi tersebut.
+Saat perannya `Cataloger`, aktifkan `Register personal field number` jika
+inisial dan nomor harus membuat ID lapangan spesimen. Masukkan inisial dan
+nomor awal; nomor akan bertambah saat spesimen dibuat.
+
+Anda dapat menggunakan kode proyek, misalnya `ABC-` dan `1` untuk menghasilkan
+`ABC-1`. Pendaftaran nomor bersifat opsional, dan peran kataloger tidak dapat
+diubah setelah personel dibuat.
+
+## Mengedit dan menghapus personel
+
+Gunakan menu tiga titik di samping personel untuk mengedit atau menghapusnya
+dari proyek. Menghapus dari proyek tidak menghapus data personel bersama.
+Personel tidak dapat dihapus jika masih digunakan oleh catatan proyek.
+
+Untuk mencari, mengedit, atau menghapus permanen data personel, buka `Settings`
+dan pilih `Personnel` atau `Manage personnel`. NAHPU mencegah penghapusan
+permanen jika personel masih ditugaskan ke proyek.
 
 ## Terminologi
 
-### Kataloger
+### Cataloger
 
-Seseorang yang membuat dan mengedit catatan dalam katalog. Ini termasuk membuat catatan baru, mengedit catatan yang sudah ada, dan menghapus catatan. Peran `kataloger` memerlukan inisial lapangan dan nomor lapangan mereka.
+Orang yang membuat dan mengedit catatan katalog spesimen.
 
-### Hanya preparator
+### Preparator only
 
-Seseorang yang membantu menyiapkan spesimen tetapi tidak membuat atau mengedit catatan dalam katalog.
+Orang yang membantu menyiapkan spesimen tetapi tidak membuat atau mengedit
+catatan katalog.
 
-### Tidak ada
+### None
 
-Dalam bidang peran perawatan spesimen, ini berarti orang tersebut tidak memiliki peran dalam merawat spesimen. Ini bisa berupa pemandu lapangan, pengemudi, atau siapa pun yang mendukung pengumpulan data tetapi tidak memiliki peran dalam merawat spesimen.
+Orang yang mendukung kerja lapangan tanpa peran perawatan spesimen, seperti
+pemandu, pengemudi, atau juru masak. Namanya tetap dapat dicatat sebagai
+personel pengumpulan.

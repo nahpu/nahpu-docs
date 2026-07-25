@@ -31,21 +31,11 @@ The reusable Rust logic comes from these NAHPU API crates:
 
 ## Data ownership
 
-The NAHPU API does not own every kind of persisted app data:
-
-- **Project records** stay in the Flutter app’s Drift-managed SQLite database.
-  `nahpu_db` mirrors the schema for Rust-side models and helpers, but the
-  SQLite database remains the canonical project store.
-- **Local app settings** stay in Flutter `SharedPreferences`. Do not route
-  theme state, transient flags, or other installation-local UI state through
-  the API crates.
-- **Reproducible user configuration** belongs in `nahpu_configs`. Its `redb`
-  tables store custom option lists, formatting choices, record export presets,
-  template presets, and document layouts. These values can be exported and
-  imported so another installation can reproduce the same outputs.
-- **Project files and media** remain coordinated by Dart services. Rust crates
-  provide archive, rendering, GIS, or package operations over caller-supplied
-  paths and data.
+The API does not own every kind of persisted app data. Project records remain
+in the Flutter app’s Drift-managed SQLite database, while configuration,
+installation-local state, and files follow separate ownership boundaries. See
+the canonical [Persistence data](./database) page for the complete storage
+model and the NAHPU-to-Darwin Core mapping.
 
 ## Wrapper modules
 

@@ -4,35 +4,67 @@ sidebar:
   order: 3
 ---
 
-## Adding new personnel
+Personnel records are shared in the NAHPU database and can be assigned to
+multiple projects. A project only displays the personnel assigned to it.
 
-Use the `Add new personnel` button to add new personnel. You will be asked to enter the following information below. The app by default only shows critical information. Click the `Show more` button to show all the fields.
+## Adding personnel to a project
 
-- **Name (required)** - The name of the personnel.
-- **Email** - The email of the personnel.
-- **Phone** - The phone number of the personnel.
-- **Affiliation** - The institution of the personnel.
-- **Specimen care role (required)** - The role of the personnel in taking care of the specimens. See [Terminology](./personnel#terminology) for more information.
-- **Field initials (required if the specimen care role is `Cataloger`)** - The initials of the personnel.
-- **Field number (required if the specimen care role is `Cataloger`)** - The field number of the personnel. The initial and the number will be used for the field ID. The app auto-increment the number each time you create a new specimen. For example, if the field initial is `ABC` and the field number is `1`, the first specimen will have the field ID `ABC1`. The second specimen will have the field ID `ABC2`, and so on.
-- **Notes** - Any notes about the personnel.
+From the Personnel panel on the project dashboard, select `Add personnel`.
+If personnel already exist in the database, choose `Select from database` and
+select the people to assign. Otherwise, choose `Add new personnel`.
 
-> **Important:** Some institutions may use a project ID and number combination for the field ID. Use this ID as the initial, instead of putting the actual initial of the person. For example, `ABC-1`. In this case, you can enter `ABC-` as the field initial and `1` as the field number.
+The form includes:
 
-## Editing person information
+- **Name (required)** - The person's name.
+- **Photo** - An avatar or personnel photo.
+- **Affiliation** - The person's institution.
+- **Email** - The person's email address.
+- **Phone** - The person's phone number.
+- **Specimen care role** - `Cataloger`, `Preparator only`, or `None`.
+- **Notes** - Additional information about the person.
 
-In the dashboard, click/tab the menu button (three dot icon) for the name of the person for which you want to edit information, then select edit. You will be taken to the personnel page where you can edit the information.
+Use `Show more` to reveal optional fields. Email addresses are normalized to
+lowercase and phone numbers accept digits.
+
+## Field numbers for catalogers
+
+When the role is `Cataloger`, NAHPU provides the `Register personal field
+number` option. Turn it on when the cataloger's initials and number should
+generate specimen field IDs. Enter the field initial and starting number; the
+number advances as specimens are created.
+
+Some institutions use a project code instead of a person's initials. For
+example, enter `ABC-` as the initial and `1` as the starting number to generate
+IDs such as `ABC-1`.
+
+Field-number registration is optional. A cataloger role cannot be changed
+after the person is created.
+
+## Editing and removing personnel
+
+Use the three-dot menu beside a person in the project Personnel panel to edit
+or remove that person from the project. Removing a person from a project does
+not delete the shared personnel record. A person cannot be removed while
+project records still use that person.
+
+To search, edit, or permanently delete database personnel, open `Settings` and
+choose `Personnel` or `Manage personnel`. NAHPU prevents permanent deletion
+when a person is still assigned to a project.
 
 ## Terminology
 
 ### Cataloger
 
-A person who creates and edits records in the catalog. This includes creating new records, editing existing records, and deleting records. A `cataloger` role requires their field initial and their field number.
+A person who creates and edits specimen catalog records. Catalogers can appear
+in cataloger, preparator, and collecting-personnel fields. Their role cannot be
+changed after creation.
 
 ### Preparator only
 
-A person who helps prepare the specimens but does not create or edit records in the catalog.
+A person who helps prepare specimens but does not create or edit catalog
+records.
 
 ### None
 
-In the specimen care role field, this means that the person does not have a role in taking care of the specimen. This can be a field guide, a driver, or anyone else who support data collection but does not have a role in taking care of the specimens.
+A person who supports fieldwork without a specimen-care role, such as a guide,
+driver, or cook. Their name can still be recorded as collecting personnel.

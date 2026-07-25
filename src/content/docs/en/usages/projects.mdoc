@@ -4,66 +4,136 @@ sidebar:
   order: 2
 ---
 
-## Creating a new project
+Projects keep NAHPU data organized. A project can contain personnel, taxa,
+sites, collecting events, specimen records, narratives, and linked media.
 
-To create a new project, use the `+` button in the bottom right corner of the home screen. You will be prompted to enter a project name, a project description, and main catalog format.
+## Creating a project
 
-- **The project name** should be short and descriptive
-- **The project description** should be a few sentences explaining the purpose of the project.
-- **The main catalog format** is the format of the catalog that will be used to generate the specimen catalog pages. You can change this later. You can also mix different catalog format types in the same project.
+From the home screen, select `+` and choose `Create project`. Enter a unique
+project name between 3 and 25 characters. A description is optional. Use
+`Show more` to add the principal investigator, location, time zone, start
+date, and end date. When creating a project, also choose its catalog format.
+
+NAHPU generates a UUID for each project. The UUID identifies the project when
+information is exchanged between devices.
+
+## Project time zone
+
+The `Time zone` field records the IANA time-zone location where the project is
+being conducted, such as `Asia/Jakarta` or `America/New_York`. Select the
+location that best represents the fieldwork rather than the time zone of a
+device used to enter data.
+
+NAHPU stores the selected time zone as project metadata. It is shown in the
+Project Overview, included when project information or a full project transfer
+is exchanged, and available as the `project::timeZone` value in document
+templates and exports. It provides context for interpreting dates and times
+when data is reviewed on another device or shared with collaborators.
+
+The time zone does not change the device clock or automatically convert
+existing narrative, event, or specimen times. Those times remain the local
+clock values entered in their records, so record the fieldwork time using the
+project's selected time zone and keep that setting consistent across devices.
+
+### Viewing dates and times on another device
+
+NAHPU stores record dates and times as plain values rather than as
+timezone-aware instants. When the same project is opened on another device,
+NAHPU does not shift a recorded time based on that device's time zone. The
+device may format the same value differently according to its locale—for
+example, changing the date order, month name, or 12-/24-hour clock—but the
+entered wall-clock value remains unchanged.
+
+For example, if the project time zone is `Asia/Jakarta` and a field event is
+entered as **12 May, 08:30**, another device may display the date and time in a
+different local format, but it will not automatically convert the value to a
+different clock time. `Asia/Jakarta` identifies the context in which `08:30`
+should be understood.
+
+### Why the project time zone matters
+
+Keeping the project time zone accurate helps collaborators compare field events
+entered on different devices, preserves temporal context when project data is
+shared or transferred, and supports reproducible interpretation of exported
+records. If a team works across time zones or enters historical data from
+another location, explain the exception in a narrative or other appropriate
+record context.
 
 ## Managing projects from the home screen
 
-Each project in the home-screen list has an action menu. The actions are grouped in this order:
+Each project has an action menu with these options:
 
-- **Edit info** - Opens the project form so you can update the project information.
-- **Show QR** - Displays the project information QR code for another device to scan.
-- **Export info** - Exports the project information as a JSON file. On desktop, choose a directory in the file settings; on mobile, use the share action after exporting.
-- **Details** - Opens a read-only view of the project information.
+- **Edit info** - Update the project form.
+- **Show QR** - Display project information for a mobile device to scan.
+- **Export info** - Export project information as JSON. This contains project
+  details, not the project's records and media.
+- **Details** - View project information without editing it.
 
-## Getting to know the dashboard
+## Project dashboard
 
-After you create a project, you will proceed to the project dashboard. The dashboard is divided into four main panels:
+The dashboard contains four panels:
 
-- **Project overview** - This panel provides a quick overview of the project. It includes the project name, description, [principal investigator](./projects#principal-investigator), location, start date, end date, database creation date and last access date. Use the `Edit` and `Export info` text buttons at the bottom of the panel to manage the project information.
-- **Personnel** - This panel lists all the personnel associated with the project. You can add more personnel by clicking the `[+ Add personnel]` button in the bottom of the panel.
-- **Taxon registry** - This panel lists all the taxa registered in the database. You can add more taxa by clicking the `[+ Add taxon]` button in the bottom of the panel. You can also import taxa from a csv file by clicking the `[Import from file]` button.
-- **Record statistics** - Graph showing real-time statistics of the number of records in the project.
+- **Project Overview** - Shows the project name, UUID, description, principal
+  investigator, location, time zone, dates, creation date, and last access.
+  Use `Edit` to change the project and `Export info` to share its information.
+- **Personnel** - Lists personnel assigned to the project. Use `Add personnel`
+  to select an existing database entry or create a new one.
+- **Taxon Registry** - Lists registered taxa and provides controls to add or
+  import taxa.
+- **Record Statistics** - Summarizes records in the project and provides
+  access to more detailed statistics.
 
-## Updating Project info
+The project menu also contains project transfer, export, backup, settings, and
+project deletion actions.
 
-From the dashboard, use the `Edit` text button at the bottom of the project overview. From the home screen, open a project's action menu and select `Edit info`.
+## Updating project information
 
-## Transferring project information
+From the dashboard, select `Edit` in the Project Overview panel. From the
+home screen, open a project's action menu and select `Edit info`.
 
-Project information can be transferred between NAHPU devices in two ways:
+## Sharing project information
 
-1. **JSON** - On the source device, open the project's home-screen action menu and select `Export info`. On the receiving device, select `+`, then choose `Import JSON` in the new-project form.
-2. **QR code** - On the source device, select `Show QR` from the project's home-screen action menu. On a mobile receiving device, select `+` and use `Scan QR` in the new-project form.
+Project information can be copied to another device without transferring
+records:
 
-Both methods retain the project's UUID. Keep the UUID when exchanging project
-information so the project identity remains stable across devices.
+1. On the source device, choose `Export info` or `Show QR` from the project's
+   home-screen action menu.
+2. On the receiving device, choose `Create project`, then use `Import JSON` on
+   desktop or `Scan QR` on a mobile device.
 
-## Deleting Projects
+These methods retain the source project's UUID and create a project with the
+same project information. To transfer records, media, and related data, use
+the [Transfer a Project](./export/project-transfer) workflow instead.
 
-Open the project menu drawer and choose `Delete project`. NAHPU asks you to
-enter the first five characters of the project's UUID before it proceeds. This
-confirmation is intentionally required because deletion cannot be undone.
+## Transferring project data
+
+Use `Export project` and `Import project` to combine data collected for the
+same project on different NAHPU devices. The transfer guide covers archive
+creation, backup, UUID checks, section-by-section conflict review, and the
+final import. Project transfers are ZIP or TAR.GZ archives and include
+available personnel, taxonomy, sites, events, specimens, narratives, and
+linked media.
+
+`Bundle records` is a separate export for publishing, analysis, archiving, or
+third-party data use. A bundle cannot be imported with `Import project`.
+
+## Deleting a project
+
+Open the project menu and choose `Delete project`. NAHPU asks you to enter the
+first five characters of the project's UUID because deletion cannot be undone.
 
 Deleting a project removes its specimen records and measurements, collecting
-events and their efforts, event personnel, narratives, sites and coordinates,
-project personnel links, and project media. It then removes the project record
-and the project's stored files. Media that is still shared with a taxonomy
-record is detached rather than deleted. If file cleanup fails, NAHPU reports a
-warning after the database records have been deleted.
+events and efforts, event personnel, narratives, sites and coordinates,
+project-personnel links, project media, and the project record. Stored project
+files are also removed. Media still shared with a taxonomy record is detached
+rather than deleted. If file cleanup fails, NAHPU reports a warning after the
+database records have been deleted.
 
 Export a project transfer or database backup before deleting if you may need
-the data later. `Bundle records` is intended for third-party data use and
-cannot be restored through `Import project`.
-
+the data later.
 
 ## Terminology
 
 ### Principal Investigator
 
-The principal investigator is the person who is responsible for the project.
+The principal investigator is the person responsible for the project.

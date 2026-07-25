@@ -4,35 +4,51 @@ sidebar:
   order: 3
 ---
 
-## Agregar nuevo personal
+Los registros de personal se comparten en la base de datos de NAHPU y pueden
+asignarse a varios proyectos. Cada proyecto solo muestra el personal asignado.
 
-Utilice el botón `Agregar nuevo personal` para agregar nuevo personal. Se le pedirá que ingrese la siguiente información. Por defecto, la aplicación solo muestra información crítica. Haga clic en el botón `Mostrar más` para mostrar todos los campos.
+## Añadir personal a un proyecto
 
-- **Nombre (obligatorio)** - El nombre de la persona.
-- **Correo electrónico** - El correo electrónico de la persona.
-- **Teléfono** - El número de teléfono de la persona.
-- **Afiliación** - La institución de la persona.
-- **Rol en el cuidado de especímenes (obligatorio)** - El rol de la persona en el cuidado de los especímenes. Consulte [Terminología](./personnel#terminología) para obtener más información.
-- **Iniciales de campo (obligatorio si el rol en el cuidado de especímenes es `Catalogador`)** - Las iniciales de la persona.
-- **Número de campo (obligatorio si el rol en el cuidado de especímenes es `Catalogador`)** - El número de campo de la persona. Las iniciales y el número se utilizarán para el ID de campo. La aplicación incrementa automáticamente el número cada vez que crea un nuevo espécimen. Por ejemplo, si la inicial de campo es `ABC` y el número de campo es `1`, el primer espécimen tendrá el ID de campo `ABC1`. El segundo espécimen tendrá el ID de campo `ABC2`, y así sucesivamente.
-- **Notas** - Cualquier nota sobre la persona.
+Desde la sección Personnel del panel, seleccione `Add personnel`. Si ya existe
+personal en la base de datos, elija `Select from database`; de lo contrario,
+elija `Add new personnel`.
 
-> **Importante:** Algunas instituciones pueden usar una combinación de ID de proyecto y número para el ID de campo. Utilice este ID como la inicial, en lugar de poner la inicial real de la persona. Por ejemplo, `ABC-1`. En este caso, puede ingresar `ABC-` como la inicial de campo y `1` como el número de campo.
+El formulario incluye nombre obligatorio, foto, afiliación, correo, teléfono,
+rol de cuidado de especímenes (`Cataloger`, `Preparator only` o `None`) y
+notas. Use `Show more` para ver los campos opcionales.
 
-## Editar información de la persona
+## Números de campo de catalogadores
 
-En el tablero, haga clic/toque el botón de menú (icono de tres puntos) junto al nombre de la persona cuya información desea editar y luego seleccione editar. Se le llevará a la página del personal donde puede editar la información.
+Cuando el rol es `Cataloger`, active `Register personal field number` si los
+iniciales y el número deben generar los ID de campo. Introduzca el inicial y
+el número inicial; el número avanza al crear especímenes.
+
+Puede usar un código de proyecto en lugar de iniciales personales, por ejemplo
+`ABC-` y `1` para generar `ABC-1`. El registro del número es opcional y el rol
+de catalogador no se puede cambiar después de crear la persona.
+
+## Editar y quitar personal
+
+Use el menú de tres puntos junto a una persona para editarla o quitarla del
+proyecto. Quitarla no elimina el registro compartido. No se puede quitar una
+persona mientras los registros del proyecto la utilicen.
+
+Para buscar, editar o eliminar permanentemente personal, abra `Settings` y
+seleccione `Personnel` o `Manage personnel`. NAHPU impide la eliminación
+permanente mientras la persona esté asignada a un proyecto.
 
 ## Terminología
 
-### Catalogador
+### Cataloger
 
-Una persona que crea y edita registros en el catálogo. Esto incluye crear nuevos registros, editar registros existentes y eliminar registros. Un rol de `catalogador` requiere su inicial de campo y su número de campo.
+Persona que crea y edita registros de catálogo de especímenes.
 
-### Solo preparador
+### Preparator only
 
-Una persona que ayuda a preparar los especímenes pero no crea ni edita registros en el catálogo.
+Persona que ayuda a preparar especímenes, pero no crea ni edita registros.
 
-### Ninguno
+### None
 
-En el campo del rol de cuidado del espécimen, esto significa que la persona no tiene un rol en el cuidado del espécimen. Puede ser un guía de campo, un conductor o cualquier otra persona que apoye la recolección de datos pero que no tenga un rol en el cuidado de los especímenes.
+Persona que apoya el trabajo de campo sin un rol de cuidado de especímenes,
+como un guía, conductor o cocinero. Aun así puede registrarse como personal de
+recolección.
