@@ -247,7 +247,6 @@ export default defineConfig({
           items: [
             { label: "Become a contributor", link: "contributing" },
             { label: "Documentation", link: "contributing/docs" },
-
             {
               label: "Code",
               collapsed: true,
