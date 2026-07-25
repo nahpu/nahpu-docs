@@ -145,6 +145,15 @@ export default defineConfig({
               },
             },
             {
+              label: "Device Requirements",
+              link: "usages/devices",
+              translations: {
+                "pt-BR": "Requisitos de Dispositivos",
+                es: "Requisitos del dispositivo",
+                id: "Persyaratan Perangkat",
+              },
+            },
+            {
               label: "Projects",
               link: "usages/projects",
               translations: {
