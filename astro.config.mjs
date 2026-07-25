@@ -56,6 +56,7 @@ export default defineConfig({
       defaultLocale: "en",
       components: {
         SiteTitle: "./src/components/SiteTitle.astro",
+        Footer: "./src/components/Footer.astro",
       },
       locales: {
         en: { label: "English (United States)", lang: "en-US" },

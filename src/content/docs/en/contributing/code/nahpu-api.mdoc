@@ -4,10 +4,7 @@ sidebar:
   order: 5
 ---
 
-The NAHPU app uses Rust through Flutter Rust Bridge, but the app repository is
-not where most reusable Rust behavior should live. The app’s `rust/` crate is
-the `rust_lib_nahpu` wrapper crate: it exposes bridge-facing functions and
-types, while the reusable implementations live in the `nahpu_api` workspace.
+The NAHPU app uses Rust through Flutter Rust Bridge. The app’s `rust/` crate is the `rust_lib_nahpu` wrapper crate: it exposes bridge-facing functions and types, while the reusable implementations live in the [NAHPU API](./nahpu_api) workspace.
 
 ## What the API layer means
 
@@ -96,7 +93,7 @@ or package writer, implement it in the appropriate NAHPU API crate first.
 
 {% steps %}
 
-1. Implement or update reusable behavior in the relevant `nahpu_api` crate.
+1. Implement or update reusable behavior in the relevant [`nahpu_api`](./nahpu_api) crate.
 2. Add a wrapper function or type in the appropriate `rust/src/api/*.rs` file.
 3. Export a new wrapper module from `rust/src/api/mod.rs` when necessary.
 4. Regenerate Flutter Rust Bridge bindings.
@@ -119,7 +116,7 @@ or package writer, implement it in the appropriate NAHPU API crate first.
 {% /steps %}
 
 {% aside type="note" title="Keep the two repositories aligned" %}
-The app wrapper’s dependency versions and the `nahpu_api` workspace crate
-versions must remain compatible. When a bridge feature changes both the app and
-API repositories, update and verify them together before regenerating bindings.
+
+The app wrapper’s dependency versions and the `nahpu_api` workspace crate versions must remain compatible. When a bridge feature changes both the app and API repositories, update and verify them together before regenerating bindings.
+
 {% /aside %}
