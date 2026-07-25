@@ -1,0 +1,116 @@
+---
+title: "Design approach"
+sidebar:
+  order: 6
+---
+
+NAHPU's interface is designed for scientists recording complex natural history
+data in the field and as a permanent data management in the lab. Some may use it as field recording only and reserve to using other museum database for permanent data management. Regardless, contributors should make each visual easy to understand at a glance, usable on a small device, and consistent with the rest of the application.
+
+## Design goals
+
+- **Clarity first.** Use plain labels, familiar controls, and a clear visual
+  hierarchy. A user should understand what a screen is for before entering
+  data.
+- **Support field conditions.** Prefer local, deterministic behavior and make
+  important actions, validation messages, and save states visible.
+- **Reveal complexity gradually.** Keep the primary workflow simple, and put
+  less common options in secondary panels, menus, or expandable sections.
+- **Use consistent patterns.** Reuse existing screens, shared widgets, theme
+  values, icons, spacing, and interaction patterns before introducing a new
+  visual treatment.
+- **Design for everyone.** Preserve readable text, adequate touch targets,
+  keyboard access, useful labels, and meaningful error messages.
+
+## Layout and responsive design
+
+NAHPU runs on phones, tablets, laptops, and desktop computers. Responsive
+design is therefore part of the feature.
+
+- Use `LayoutBuilder` or `MediaQuery.sizeOf(context)` to respond to available
+  width rather than checking a platform name.
+- Stack fields and actions vertically on narrow screens. On wider screens,
+  related fields may share a row when each control still has enough room.
+- Prefer flexible children such as `Expanded` and `Flexible` over fixed widths.
+- Constrain long-form content to a readable maximum width and allow the page
+  body to scroll vertically when content does not fit.
+- Keep controls usable with larger text settings. Do not rely on a single-line
+  row if its labels can wrap or become longer through localization.
+
+The app commonly uses a width of about 600 logical pixels as a transition
+between compact and wide layouts, but the available constraints and the
+content itself should determine the final arrangement. A layout that works at
+one breakpoint but overflows just above or below it is not responsive.
+
+## Dropdowns and bounded controls
+
+Dropdowns need an explicit width when they appear beside other controls. Set
+`isExpanded: true` so the selected value uses the available width instead of
+trying to size the dropdown to its contents:
+
+```dart
+DropdownButtonFormField<String>(
+  isExpanded: true,
+  decoration: const InputDecoration(labelText: 'Catalog format'),
+  items: formats
+      .map(
+        (format) => DropdownMenuItem(
+          value: format,
+          child: Text(format),
+        ),
+      )
+      .toList(),
+  onChanged: onFormatChanged,
+)
+```
+
+When a dropdown is a child of a `Row`, also give the widget a bounded layout
+slot with `Expanded` or `Flexible`:
+
+```dart
+Row(
+  children: [
+    Expanded(
+      child: DropdownButtonFormField<String>(
+        isExpanded: true,
+        decoration: const InputDecoration(labelText: 'Format'),
+        items: formatItems,
+        onChanged: onFormatChanged,
+      ),
+    ),
+    const SizedBox(width: 12),
+    Flexible(child: actionButton),
+  ],
+)
+```
+
+Use the same rule for long labels and localized values. If a row still cannot
+fit, switch to a vertical layout with `LayoutBuilder` instead of allowing a
+render overflow.
+
+## Flutter implementation patterns
+
+- Keep page-level widgets thin. Put reusable UI in `lib/screens/shared/` and
+  workflows in providers or services.
+- Keep `build` methods free of database, file, network, and bridge work.
+- Prefer `const` constructors and immutable values where possible.
+- Read colors, text styles, and other visual values from the active theme
+  instead of hard-coding them.
+- Represent loading, empty, error, disabled, and success states explicitly.
+- Guard asynchronous UI updates with `context.mounted`.
+
+## UI review checklist
+
+Before submitting a UI change, check that:
+
+- The primary task and next action are obvious.
+- The screen remains usable on a phone-width viewport and a wide desktop
+  viewport.
+- Rows use bounded, flexible children and do not overflow with long text.
+- Dropdowns use `isExpanded: true`; dropdowns inside rows use `Expanded` or
+  `Flexible` as appropriate.
+- Theme colors, typography, spacing, and shared controls are reused.
+- Keyboard navigation, text scaling, labels, validation, and error states are
+  usable.
+- The change has a focused widget or integration test when it changes user
+  interaction or layout behavior.

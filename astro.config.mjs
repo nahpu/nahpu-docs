@@ -92,15 +92,7 @@ export default defineConfig({
             id: "Hari 1",
           },
         },
-        {
-          label: "Best Practices",
-          link: "best-practices",
-          translations: {
-            "pt-BR": "Práticas Recomendadas",
-            es: "Prácticas Recomendadas",
-            id: "Praktik yang Direkomendasikan",
-          },
-        },
+
         {
           label: "Switch to NAHPU",
           link: "switch",
@@ -118,6 +110,21 @@ export default defineConfig({
             es: "Instalación",
             id: "Instalasi",
           },
+        },{
+          label: "Best Practices",
+          translations: {
+            "pt-BR": "Práticas Recomendadas",
+            es: "Prácticas Recomendadas",
+            id: "Praktik yang Direkomendasikan",
+          },
+          items: [
+            {
+              autogenerate: {
+                directory: "best-practices",
+                collapsed: true,
+              },
+            },
+          ],
         },
         {
           label: "Usages",
@@ -145,7 +152,6 @@ export default defineConfig({
                 id: "Peristiwa",
               },
             },
-
             {
               label: "Narrative",
               link: "usages/narrative",
@@ -210,45 +216,14 @@ export default defineConfig({
               },
               items: [
                 {
-                  label: "Export",
-                  link: "usages/export",
-                  translations: {
-                    "pt-BR": "Exportar",
-                    es: "Exportar",
-                    id: "Ekspor",
-                  },
-                },
-                {
-                  label: "Export Records",
-                  link: "usages/export/export-records",
-                  translations: {
-                    "pt-BR": "Exportar Registros",
-                    es: "Exportar Registros",
-                    id: "Ekspor Catatan",
-                  },
-                },
-                {
-                  label: "Export Documents",
-                  link: "usages/export/export-documents",
-                  translations: {
-                    "pt-BR": "Exportar Documentos",
-                    es: "Exportar Documentos",
-                    id: "Ekspor Dokumen",
-                  },
-                },
-                {
-                  label: "Bundle Records",
-                  link: "usages/export/export-bundles",
-                  translations: {
-                    "pt-BR": "Agrupar Registros",
-                    es: "Agrupar Registros",
-                    id: "Gabungkan Catatan",
+                  autogenerate: {
+                    directory: "usages/export",
+                    collapsed: true,
                   },
                 },
               ],
             },
           ],
-
         },
         {
           label: "Curatorial Guidelines",
@@ -271,37 +246,21 @@ export default defineConfig({
           label: "Contributing",
           items: [
             { label: "Become a contributor", link: "contributing" },
+            { label: "Documentation", link: "contributing/docs" },
+
             {
               label: "Code",
               collapsed: true,
               items: [
-                { label: "Overview", link: "contributing/code" },
-                { label: "Setup", link: "contributing/code/setup" },
                 {
-                  label: "Architecture",
-                  link: "contributing/code/architecture",
-                },
-                { label: "NAHPU API", link: "contributing/code/nahpu-api" },
-                {
-                  label: "Code conventions",
-                  link: "contributing/code/conventions",
-                },
-                {
-                  label: "Database changes",
-                  link: "contributing/code/database",
-                },
-                {
-                  label: "Troubleshooting",
-                  link: "contributing/code/troubleshooting",
-                },
-                {
-                  label: "LLM-assisted development",
-                  link: "contributing/code/llm-assisted-development",
+                  autogenerate: {
+                    directory: "contributing/code",
+                    collapsed: true,
+                  },
                 },
               ],
             },
-            { label: "Documentation", link: "contributing/docs" },
-            { label: "Tools", link: "contributing/tools" },
+
           ],
           collapsed: true,
         },

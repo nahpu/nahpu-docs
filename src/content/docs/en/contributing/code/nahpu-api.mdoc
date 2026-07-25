@@ -5,8 +5,9 @@ sidebar:
 ---
 
 The NAHPU app uses Rust through Flutter Rust Bridge, but the app repository is
-not where most Rust business logic should live. The app's `rust/` crate is a
-wrapper crate that exposes stable functions and types to Dart.
+not where most reusable Rust behavior should live. The app’s `rust/` crate is
+the `rust_lib_nahpu` wrapper crate: it exposes bridge-facing functions and
+types, while the reusable implementations live in the `nahpu_api` workspace.
 
 ## What the API layer means
 
@@ -14,101 +15,111 @@ In the app repository:
 
 - `rust/src/api/*.rs` defines bridge-facing wrapper modules.
 - `lib/src/rust/` contains generated Dart bindings.
-- `python scripts.py frb --generate` regenerates bridge code after wrapper API
-  changes.
-- `python scripts.py frb --check` runs Rust checks for the wrapper crate.
+- `rust/Cargo.toml` declares the API crates linked into the app.
+- `flutter_rust_bridge_codegen generate` regenerates bridge code after wrapper
+  API changes.
+- `cargo check` and `cargo clippy` verify the Rust wrapper and its integration.
 
-The reusable Rust logic comes from NAHPU API crates used by the app:
+The reusable Rust logic comes from these NAHPU API crates:
 
 | Crate | Used for |
 |---|---|
-| `nahpu_archive` | Creating and extracting ZIP archives |
-| `nahpu_db` | Record import/export helpers |
-| `nahpu_export` | Document export and PDF generation support |
-| `nahpu_gis` | GIS export formats such as KML, GeoJSON, TopoJSON, and Shapefile |
-| `nahpu_configs` | `redb` storage for reproducible user configuration, export presets, template presets, and document layouts |
+| `nahpu_archive` | ZIP, tar.gz, and gzip archive creation and extraction |
+| `nahpu_configs` | `redb` storage and export/import for user configs, record export presets, template presets, and document layouts |
+| `nahpu_db` | Drift-derived Rust record models plus CSV, TSV, Excel, and JSON import/export helpers |
+| `nahpu_dp` | Reproducible NAHPU Data Package planning, validation, and writing |
+| `nahpu_dwc` | Darwin Core mappings, Darwin Core Archive, and Darwin Core Data Package bundles |
+| `nahpu_export` | Markdown/Typst document rendering and PDF compilation |
+| `nahpu_gis` | Coordinate conversion, GIS import/export, and vector-layer normalization |
 
 ## Data ownership
 
-The NAHPU API does not own every kind of persisted app data. Keep these
-boundaries clear when adding Rust behavior:
+The NAHPU API does not own every kind of persisted app data:
 
-- **Project records** stay in the Flutter app's Drift-managed SQLite database.
-  The `nahpu_db` crate mirrors the Drift schema for Rust-side types and helpers,
-  but the SQLite database remains the canonical project store.
-- **App settings** that are not required for research reproducibility stay in
-  Flutter `SharedPreferences`. Do not route local UI preferences or transient
-  app flags through NAHPU API.
-- **User configs** that affect reproducible outputs belong in `nahpu_configs`.
-  This crate uses `redb` tables for custom option lists, field formatting
-  choices, record export presets, template presets, and document layouts. These
-  configs can be exported/imported with project archives so another
-  installation can reproduce the same export and document behavior.
+- **Project records** stay in the Flutter app’s Drift-managed SQLite database.
+  `nahpu_db` mirrors the schema for Rust-side models and helpers, but the
+  SQLite database remains the canonical project store.
+- **Local app settings** stay in Flutter `SharedPreferences`. Do not route
+  theme state, transient flags, or other installation-local UI state through
+  the API crates.
+- **Reproducible user configuration** belongs in `nahpu_configs`. Its `redb`
+  tables store custom option lists, formatting choices, record export presets,
+  template presets, and document layouts. These values can be exported and
+  imported so another installation can reproduce the same outputs.
+- **Project files and media** remain coordinated by Dart services. Rust crates
+  provide archive, rendering, GIS, or package operations over caller-supplied
+  paths and data.
 
 ## Wrapper modules
 
-The app exposes Rust behavior through modules in `rust/src/api/`:
+The app exposes Rust behavior through `rust/src/api/`:
 
 | Module | Purpose |
 |---|---|
-| `archive.rs` | Archive creation and extraction wrappers |
-| `config.rs` | User config, export preset, template preset, and document layout wrappers backed by `nahpu_configs` |
-| `export.rs` | Record, GIS, document, Typst, and PDF export wrappers |
-| `gis.rs` | GIS-related utility wrappers |
-| `import.rs` | Import wrappers |
-| `common.rs` | Shared bridge-facing types and helpers |
+| `archive.rs` | ZIP and tar.gz writer/extractor wrappers |
+| `common.rs` | Bridge initialization and shared sanity helpers |
+| `config.rs` | `nahpu_configs` models and configuration/preset operations |
+| `document.rs` | Markdown-to-Typst conversion and Typst-to-PDF compilation |
+| `dwc.rs` | Darwin Core header mapping and bundle plan/validate/write operations |
+| `export.rs` | General record and tabular export wrappers |
+| `gis.rs` | Coordinate conversion, coordinate exchange, and vector-layer wrappers |
+| `import.rs` | Delimited and Excel record-reading wrappers |
+| `nahpu_dp.rs` | NAHPU Data Package plan/validate/write operations |
+
+Generated files under `lib/src/rust/` and `rust/src/frb_generated.rs` must not
+be hand-edited. Change the wrapper API and regenerate the bindings instead.
 
 ## When to edit the app wrapper
 
 Edit `rust/src/api/` when you need to:
 
-- expose an existing crate function to Dart;
+- expose an existing API-crate function to Dart;
 - convert Dart-friendly inputs into crate-friendly Rust inputs;
-- map Rust errors into strings or simple result types that Flutter can display;
-- add simple structs/enums that Flutter Rust Bridge can serialize.
+- map Rust errors into bridge-friendly result types;
+- add simple structs or enums that Flutter Rust Bridge can serialize.
 
-Do not put durable domain logic in the wrapper. If the behavior should be reused
-outside the Flutter app, or if it is a core parser/exporter/validator, implement
-it in the appropriate NAHPU API crate and then call it from the wrapper.
+Do not put durable domain logic in the wrapper. If behavior should be reused
+outside the Flutter app, or is a core parser, exporter, validator, converter,
+or package writer, implement it in the appropriate NAHPU API crate first.
 
 ## Boundary rules
 
-- Keep wrapper functions small.
-- Return `Result<T, String>` or another bridge-friendly result instead of
-  panicking.
+- Keep wrapper functions and conversions small.
+- Prefer `Result<T, String>` or another bridge-friendly result over panics.
 - Avoid `.unwrap()` unless the invariant is local and documented.
 - Prefer primitive values, strings, byte lists, and simple structs at the Dart
   boundary.
-- Keep line lengths readable and run Rust formatting before submitting.
+- Keep generated code out of manual edits.
 - Regenerate bindings after changing any bridge-facing Rust signature.
 
 ## Adding a bridge API
 
 {% steps %}
 
-1. Implement or update the reusable Rust behavior in the relevant NAHPU API
-   crate if the logic does not already exist.
+1. Implement or update reusable behavior in the relevant `nahpu_api` crate.
 2. Add a wrapper function or type in the appropriate `rust/src/api/*.rs` file.
-3. Export the module from `rust/src/api/mod.rs` if it is a new module.
+3. Export a new wrapper module from `rust/src/api/mod.rs` when necessary.
 4. Regenerate Flutter Rust Bridge bindings.
 
    ```bash
-   python scripts.py frb --generate
+   flutter_rust_bridge_codegen generate
    ```
 
-5. Update the Dart service that calls the generated binding in `lib/src/rust/`.
-6. Add focused tests for the Dart service, Rust behavior, or integration path.
-7. Verify the bridge and app.
+5. Use the generated binding from the relevant Dart service.
+6. Add focused tests for the Rust behavior, Dart service, or integration path.
+7. Verify the change.
 
    ```bash
-   python scripts.py frb --check
    flutter analyze
    flutter test
+   cargo check
+   cargo clippy
    ```
 
 {% /steps %}
 
-{% aside type="note" title="Generated files" %}
-Files under `lib/src/rust/` and `rust/src/frb_generated.rs` are generated. Do
-not hand-edit them. Change the wrapper API and regenerate the bindings instead.
+{% aside type="note" title="Keep the two repositories aligned" %}
+The app wrapper’s dependency versions and the `nahpu_api` workspace crate
+versions must remain compatible. When a bridge feature changes both the app and
+API repositories, update and verify them together before regenerating bindings.
 {% /aside %}
