@@ -4,10 +4,9 @@ sidebar:
   order: 4
 ---
 
-NAHPU is an offline-first, cross-platform Flutter application. Flutter owns the
-user interface, application workflows, and canonical project database. Rust is
-used through Flutter Rust Bridge for reusable import, export, archive, GIS,
-document, and configuration capabilities provided by the NAHPU API workspace.
+This architecture page describes the NAHPU cross-platform app and the underlying technology stack. For guideline on the developing other supporting software and tools, please refer to the [Tools](./tools) page.
+
+The app is an offline-first, cross-platform application. Flutter owns the user interface, application workflows, and canonical project database. The Rust [NAHPU_API](https://github.com/nahpu/nahpu-api) is used through [Flutter Rust Bridge](https://github.com/fzyzcjy/flutter_rust_bridge) for high-performance solutions, and to extend libraries availabilities beyond Flutter.
 
 ## High-level architecture
 
@@ -61,10 +60,6 @@ document, and configuration capabilities provided by the NAHPU API workspace.
                               │ export · gis                          │
                               └───────────────────────────────────────┘
 ```
-
-The app also initializes a `SharedPreferences` instance for local settings and
-initializes the `nahpu_configs` `redb` database during startup. These stores are
-separate from the project SQLite database.
 
 ## Layers
 
@@ -122,15 +117,13 @@ are maintained on the [Persistence data](./database) page.
 
 **Record import/export** starts in Dart services, which read or assemble rows
 from the Drift database. The bridge delegates tabular reading and writing to
-`nahpu_db`; Dart services perform application-specific validation and database
-updates. See [Persistence data](./database) for the persistence boundary and
-mapping details.
+`nahpu_db`. Dart services perform application-specific validation and database
+updates.
 
 **Bundle export** is planned and validated before writing. Dart services build
 the request from database records, configurations, vocabularies, and files.
 `nahpu_dwc` handles Darwin Core bundles, while `nahpu_dp` handles the complete
-NAHPU Data Package and records dependency versions in its metadata. The
-canonical field mapping is documented in [Persistence data](./database).
+NAHPU Data Package and records dependency versions in its metadata.
 
 **Document export** combines Dart-managed records, templates, layouts, and
 fonts. Dart services prepare the document input, while `nahpu_export` provides
@@ -144,7 +137,11 @@ file selection.
 database rows, media manifest, conflict handling, and import decisions.
 `nahpu_archive` supplies the ZIP and tar.gz container operations.
 
+For detail on th data flows and field mapping, see the [Persistence data](./database) page.
+
 ## Directory map
+
+For most contributors, the main work is in the `lib/`, `assets/`, `tests/`, and `rust/` directories. The other directories contain platform-specific code and build configuration. It only needs to be modified when adding capabilities or changing the build configuration.
 
 {% filetree %}
 - android/ Android platform-specific code and build configuration
@@ -162,7 +159,6 @@ database rows, media manifest, conflict handling, and import decisions.
   - src/api/ Bridge-facing wrapper modules
 - scripts/ Development and automation scripts
 - test/ Unit and widget tests
-- web/ Web platform-specific code and build configuration
 - windows/ Windows platform-specific code and build configuration
 {% /filetree %}
 

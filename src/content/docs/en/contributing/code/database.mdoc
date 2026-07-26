@@ -48,6 +48,49 @@ generates Rust-side models and tabular helpers from the Drift schema, but it
 does not own the app's SQLite connection. `nahpu_dwc` and `nahpu_dp` receive
 caller-prepared data and do not replace the project database.
 
+## redb tables
+
+The [`nahpu_configs`](https://crates.io/crates/nahpu_configs) crate stores reproducible configuration and export
+presets in a `redb` database. The tables use string keys and serialized JSON
+values:
+
+| Table | Description |
+|---|---|
+| `user_configs` | Installation configuration values such as custom option lists. |
+| `record_export_presets` | Named record-export field mappings and combined-field definitions. |
+| `template_presets` | Named reusable document-template definitions. |
+| `document_layouts` | Named document layout settings, including page and template-block configuration. |
+
+## Drift tables
+
+The canonical project schema is defined in
+`lib/services/database/tables.drift` and is currently at schema version 10.
+Drift manages these tables over SQLite:
+
+| Table | Description |
+|---|---|
+| `project` | Project metadata and lifecycle dates. |
+| `site` | Collection sites, localities, habitat, and site-level metadata. |
+| `coordinate` | Coordinates and georeferencing details associated with sites. |
+| `collEvent` | Collecting events, dates, times, methods, and site associations. |
+| `weather` | Weather and astronomical observations for collecting events. |
+| `collPersonnel` | Personnel and collecting roles associated with events. |
+| `collEffort` | Collecting methods, equipment, counts, and effort notes for events. |
+| `narrative` | Project or site field narratives and their metadata. |
+| `media` | Media file metadata and project, personnel, and capture details. |
+| `narrativeMedia` | Links narratives to media files. |
+| `siteMedia` | Links sites to media files. |
+| `specimenMedia` | Links specimens to media files. |
+| `associatedData` | External or supplementary data associated with specimens. |
+| `personnelList` | Links personnel to projects. |
+| `personnel` | People, contact details, roles, and field-number settings. |
+| `taxonomy` | Taxonomic names, classifications, status, and notes. |
+| `specimen` | Core specimen records and their project, taxon, event, and personnel relationships. |
+| `mammalMeasurement` | Mammal measurements, reproductive observations, and bat or echolocation fields. |
+| `avianMeasurement` | Avian measurements, colors, molt, reproductive observations, and habitat remarks. |
+| `herpMeasurement` | Herpetofauna sex, age, weight, snout-vent length, and remarks. |
+| `specimenPart` | Specimen parts, tissues, barcodes, treatments, loans, and preparation details. |
+
 ## Schema workflow
 
 {% steps %}

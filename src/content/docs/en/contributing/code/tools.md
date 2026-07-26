@@ -4,8 +4,6 @@ sidebar:
   order: 5
 ---
 
-## Develop Tools to Parse and Validate NAHPU Data
+We welcome everyone to develop tools to support NAHPU. You are welcome to host your tool in your own repository and let us know about it to be listed here and in the [NAHPU GitHub Organization](https://github.com/nahpu). We also welcome you to contribute to the development of existing tools. Please contact us if you are interested in contributing.
 
-We are working toward full compliance to Darwin Core (DwC) standard and FAIR principles. This work will make NAHPU data more interoperable and reusable. This quideline will help you to develop tools, scripts, or applications to parse and validate NAHPU data.
-
-More details soon...
+Current NAHPU team focus is developing the [nahpu-taxonomy](https://github.com/nahpu/nahpu-taxonomy). This tool will provide standardize data-structure for NAHPU to access taxonomic libarary. It will sourced from the [Mammal Diversity Database](https://www.mammaldiversity.org/) for mammal taxonomy and [Catalog of Life](https://www.catalogueoflife.org/) for other supported taxa.
