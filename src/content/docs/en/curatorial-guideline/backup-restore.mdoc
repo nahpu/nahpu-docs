@@ -14,16 +14,19 @@ Good data management in NAHPU means keeping three things safe and portable:
   option lists, export presets, template presets, and document layout presets.
 
 NAHPU separates these data types so you can make small database-only backups
-for daily safety, fuller project archives when moving between devices, and
-settings/config backups when you want another installation to produce the same
-exports and documents.
+for daily safety, light project exports for limited-internet uploads, fuller
+project archives when moving between devices, and settings/config backups when
+you want another installation to produce the same exports and documents.
 
 ## Backup strategy
 
 Use more than one backup type during fieldwork.
 
 - **Daily database backup**: a compact `.sqlite3` file. Use this frequently
-  because it is small and easy to upload over limited internet.
+  for database recovery and daily safety.
+- **Light project export**: a compressed `JSON.GZ` file containing project
+  records without media. Use this for a limited-internet upload or a records-
+  only merge. It is not a complete project backup.
 - **Project archive backup**: a `.zip` file that includes the SQLite database
   plus project files such as media. Use this when you need a complete project
   copy for another device or long-term storage.
@@ -61,6 +64,16 @@ Use `Backup database` from the project menu.
 If `Include project data` or `Include app settings` is enabled, NAHPU writes a
 `.zip` archive instead of a plain `.sqlite3` file. When `Include app settings`
 is enabled, the archive includes exported user configs as `user_configs.json`.
+
+## Exporting a project
+
+Use `Export project` when you need to merge the same project with another NAHPU
+device. Turn on `Light export` to create `JSON.GZ` without media for a limited-
+internet upload. Use ZIP or TAR.GZ with `Light export` off when the receiving
+device needs media or a full project copy. Merge the export with `Merge project`.
+
+See [Transfer a project](../usages/export/project-transfer) for the review and
+conflict-resolution workflow.
 
 ## Restoring a database
 
@@ -188,8 +201,10 @@ document layout preset, regenerate the preview, and export again.
 Before sending NAHPU data to a museum, collaborator, or another device:
 
 - Create a fresh database backup.
-- Create a project archive if media or associated files need to move with the
-  project.
+- Use a light `JSON.GZ` project export only when the recipient needs records and
+  not media, especially over limited internet.
+- Create a ZIP or TAR.GZ project archive when media or a complete project copy
+  needs to move with the project.
 - Export user configs if the recipient needs the same controlled lists, export
   presets, templates, or document layouts.
 - Export record files or documents needed by the recipient.

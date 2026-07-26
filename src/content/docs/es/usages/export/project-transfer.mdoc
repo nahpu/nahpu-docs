@@ -4,13 +4,18 @@ sidebar:
   order: 10
 ---
 
-Use `Exportar proyecto` e `Importar proyecto` para combinar datos introducidos
-para el mismo proyecto NAHPU en dispositivos diferentes. La transferencia es
-un archivo ZIP o TAR.GZ con `nahpu-project.json` versionado y los archivos
-multimedia disponibles.
+Use `Export project` y `Merge project` para combinar datos del mismo proyecto
+NAHPU en dispositivos diferentes. Una transferencia completa es un archivo ZIP
+o TAR.GZ con `nahpu-project.json` versionado y los archivos multimedia
+disponibles.
+
+Para cargas con internet limitado, active `Light export` para crear un archivo
+`JSON.GZ` sin multimedia. JSON.GZ sirve para combinar registros, pero no es una
+copia de seguridad completa del proyecto. Use ZIP o TAR.GZ cuando necesite
+multimedia o una copia completa del proyecto.
 
 No es lo mismo que `Agrupar registros`. Esos paquetes son para publicación,
-análisis o terceros y `Importar proyecto` no los acepta.
+análisis o terceros y `Merge project` no los acepta.
 
 ## Exportar
 
@@ -19,7 +24,9 @@ análisis o terceros y `Importar proyecto` no los acepta.
 1. Abra el proyecto en el dispositivo de origen.
 2. En el menú del panel, seleccione `Exportar proyecto`.
 3. Revise los conteos y las advertencias de archivos multimedia faltantes.
-4. Elija `ZIP` o `TAR.GZ`, indique el nombre y, si desea, el directorio.
+4. Para una transferencia o copia de seguridad completa, deje `Light export`
+   desactivado y elija `ZIP` o `TAR.GZ`. Para una carga con internet limitado,
+   active `Light export` para usar `JSON.GZ` sin multimedia.
 5. Seleccione `Exportar proyecto` y guarde o comparta el archivo de forma segura.
 
 {% /steps %}
@@ -28,12 +35,16 @@ Solo se exporta la taxonomía usada por especímenes del proyecto activo. Se
 incluyen fotos del personal y multimedia vinculada cuando los archivos están
 disponibles; los archivos faltantes se omiten con una advertencia.
 
-## Importar y resolver conflictos
+## Combinar y resolver conflictos
 
 {% aside type="caution" title="Cree un respaldo primero" %}
 Antes de importar, cree un respaldo de la base de datos. El asistente exige
 confirmar este recordatorio e incluye la acción `Respaldar ahora`.
 {% /aside %}
+
+En el dispositivo receptor, abra el menú del panel y seleccione `Merge
+project`. Elija una exportación `JSON.GZ`, ZIP o TAR.GZ y revise los conflictos
+antes de confirmar la combinación.
 
 El asistente revisa, en orden, la información del proyecto, personal,
 taxonomía, sitios, eventos, especímenes y narrativas. No escribe datos hasta

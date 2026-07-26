@@ -2,14 +2,14 @@
 title: "LLMs-assisted development"
 authors:
   - Heru Handika
-lastUpdated: 2026-07-24
+lastUpdated: 2026-07-26
 sidebar:
   order: 10
 ---
 
-When you read this page, you may already using Large-Language Models (LLMs) to assist you write code. LLM-assisted development has increasingly being adopted across the software industries (e.g., [Linux kernel](https://docs.kernel.org/process/coding-assistants.html) and [others](https://cloud.google.com/transform/101-real-world-generative-ai-use-cases-from-industry-leaders)) and bioinformatics (see, for example, [this training materials](https://www.ebi.ac.uk/training/events/large-language-models-and-their-applications-bioinformatics/) and [this review paper](https://academic.oup.com/bib/article/26/4/bbaf357/8212018)). Software development has come a long way from writing assembly code, writing higher-level code and rely on compiler and linker to generate machine code, to the rapid adoption of LLMs through agentic coding tools. Just as the introduction of a higher-level programming language did not eliminate the need for understanding the fundamentals of software engineering and problem solving, LLM-assisted development is not a substitute of that either. Like any tool, it is effectiveness depends on the skill of the person using it.
+When you read this page, you may already use or have benefitted from the use of Large-Language Models (LLMs) to assist code writing. LLM-assisted development has increasingly being adopted across the software industries (e.g., [Linux kernel](https://docs.kernel.org/process/coding-assistants.html) and [others](https://cloud.google.com/transform/101-real-world-generative-ai-use-cases-from-industry-leaders)) and bioinformatics (see, for example, [this training materials](https://www.ebi.ac.uk/training/events/large-language-models-and-their-applications-bioinformatics/) and [this review paper](https://academic.oup.com/bib/article/26/4/bbaf357/8212018)). Software development has come a long way from writing assembly code, writing higher-level code and rely on compiler and linker to produce executable software, to the rapid adoption of LLMs through agentic coding tools. Just as the introduction of a higher-level programming language did not eliminate the need for understanding the fundamentals of computing, software engineering, and problem solving, LLM-assisted development is not a substitute of them either. Like any tool, it is effectiveness depends on the skill of the person using it.
 
-NAHPU welcomes LLM usage when it helps a human contributor solve problems within NAHPU. We also encourage the responsible use of LLMs in the development process. As it is a useful tool, excessive LLM usages carry [environmental impact](https://news.mit.edu/2025/explained-generative-ai-environmental-impact-0117). This page serves as a guide for responsible use of LLMs to assist contributors. It is also to provide transparency in the conduct of NAHPU development for the community. We hope NAHPU can continue to provide high-quality natural history software, while serving as an inter-disciplinary training platform for natural history work.
+We welcome LLM usage when it helps a human contributor to improve NAHPU. We also encourage the responsible use of LLMs in the development process. Our approach is strictly [human-in-the-loop](https://www.ibm.com/think/topics/human-in-the-loop), ensuring that humans remain responsible for all decisions and outputs. As it is a useful tool, excessive use of LLMs carries [environmental impact](https://news.mit.edu/2025/explained-generative-ai-environmental-impact-0117). This page serves as a guide for responsible use of LLMs within NAHPU. It is also to provide transparency in the conduct of NAHPU development for the community. We hope the project can continue to provide high-quality natural history software, while serving as an inter-disciplinary training platform.
 
 {% aside type="caution" title="LLM-assisted development is not vibe coding" %}
 [Merriam-Webster](https://www.merriam-webster.com/slang/vibe-coding) describes vibe coding as careless AI-assisted coding where a person tells AI what to build and may not understand how or why the code works. That is not acceptable for NAHPU. Vibe-coded contributions and pull requests submitted by AI agents or bot accounts will be rejected.
@@ -92,15 +92,15 @@ This makes agent output more predictable across tools such as Codex, Claude Code
     Some feature addition or bug fix may require changes in both the [app](https://github.com/nahpu/nahpu) and [API](https://github.com/nahpu_api) repositories. In that case, include both repositories in the agent context. Please familiarize yourself with the [NAHPU architecture](./architecture) before asking the agent to make changes.
     {% /aside %}
 
-3. Start with a plan mode and make sure the agent has read `AGENTS.md`.
+3. Keep the task narrow: one bug, one feature, or one docs update. This approach is easier to review, avoid excessive token usage, and the need for using state-of-the-art power hungry models.
 
-    This may seem obvious. Evaluating the plan thoroughly will save time and effort. If it does not make sense, ask it to revise the plan before generating code.
+4. Start with a plan mode and make sure the agent has read `AGENTS.md`.
+
+    This may be obvious. Evaluating the plan thoroughly will save time, effort, and token usage. If it does not make sense, ask it to revise the plan before generating code.
 
     {% aside type="caution" title="Important"%}
     Undersanding of the NAHPU architecture, project structure, and problem domain is paramount important for the agent to generate code that is maintainable and correct. Please reach out to the maintainers if you need help understanding the architecture or the problem domain.
     {% /aside %}
-
-5. Keep the task narrow: one bug, one feature, or one docs update.
 6. Be strategic on which model to use: larger models for planning, smaller models for code generation. While larger models may excel at both planning and code generation, they are slower, more expensive, and use more energy.
 
     {% aside type="note"%}
@@ -116,7 +116,8 @@ This makes agent output more predictable across tools such as Codex, Claude Code
 
     {% /aside %}
 
-7. Review every generated change following the checklist provided [below](#contributor-checklists-for-evaluating-agent-output).
+7. Review every generated change and revise as needed. For documentation update, it only helps to match the code implementation with the writing. Treat it as a draft. For code changes, follow the checklist [below](#contributor-checklists-for-evaluating-agent-output).
+8. Commit your changes to a branch.
 9. Write the pull request yourself, including tests run and screenshots for UI
    changes.
 
@@ -124,10 +125,10 @@ This makes agent output more predictable across tools such as Codex, Claude Code
 
 ## Contributor checklists for evaluating agent output
 
-- Verify Dart files are in `snake_case.dart` and classes/widgets are in `PascalCase` and other rules in the `AGENTS.md`. Not every model follows the instructions.
-- Verify that no untested code is committed.
-- Ensure that the agent run `flutter analyze`, `flutter test`, `dart format` for Dart changes, and `cargo check` and `cargo clippy` for Rust changes.
-- Test manually.
-- Check changes in `tables.drift`. Any change in it requires a schema migration.
-  Follow [Persistence data](./database) and do not commit untested migrations
-  or export changes.
+- Verify Dart files are in `snake_case.dart` and classes/widgets are in `PascalCase` and other rules in the `AGENTS.md`. Private classes and functions are prefixed with an underscore: `_ActionButton`, `_onValueChange()`. Not every model follows the instructions.
+- Check the module organization and ensure that the code is in the the directory that is consistent with NAHPU architecture and the `AGENTS.md` file. Ask to refactor if the code does not follow the architecture. Some small changes will be much easier to do manually than asking an agent to refactor it. Depending on the task complexity, you may need to ask a larger model to review the code and provide refactoring suggestions.
+- Prefer reusable components over duplicate code.
+- Ensure that the agent run `flutter analyze`, `flutter test`, `dart format` for Dart changes, and `cargo check` and `cargo clippy` for Rust changes. Some agents may only run a subset of the tests on files it makes the changes. Run the full test manually before committing the changes.
+- Test manually. Check for regressions, UI issues, and unexpected behavior.
+- Check changes in `tables.drift`. Any change in it requires a schema migration. Follow [Persistence data](./database) and do not commit untested migrations.
+- Run `git status` before committed changes and check for intermediate/temporary files. If the agent has created any, remove them before committing.

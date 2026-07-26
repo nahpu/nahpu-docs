@@ -4,14 +4,19 @@ sidebar:
   order: 10
 ---
 
-Use `Exportar projeto` e `Importar projeto` para combinar dados do mesmo
-projeto NAHPU inseridos em dispositivos diferentes. A transferência é um
+Use `Export project` e `Merge project` para combinar dados do mesmo projeto
+NAHPU inseridos em dispositivos diferentes. Uma transferência completa é um
 arquivo ZIP ou TAR.GZ com um `nahpu-project.json` versionado e os arquivos de
 mídia disponíveis.
 
+Para uploads com internet limitada, ative `Light export` para criar um arquivo
+`JSON.GZ` sem mídia. O JSON.GZ serve para mesclar registros, mas não é um
+backup completo do projeto. Use ZIP ou TAR.GZ quando precisar de mídia ou de
+uma cópia completa do projeto.
+
 Ela é diferente de `Agrupar registros`. Os pacotes de registros servem para
 publicação, análise, arquivamento ou terceiros e não são aceitos por
-`Importar projeto`.
+`Merge project`.
 
 ## Exportar
 
@@ -20,7 +25,9 @@ publicação, análise, arquivamento ou terceiros e não são aceitos por
 1. Abra o projeto no dispositivo de origem.
 2. No menu do painel, selecione `Exportar projeto`.
 3. Revise as contagens e os avisos de mídia ausente.
-4. Escolha `ZIP` ou `TAR.GZ`, informe o nome e, opcionalmente, o diretório.
+4. Para uma transferência ou backup completo, deixe `Light export` desativado
+   e escolha `ZIP` ou `TAR.GZ`. Para um upload com internet limitada, ative
+   `Light export` para usar `JSON.GZ` sem mídia.
 5. Selecione `Exportar projeto` e guarde ou compartilhe o arquivo com segurança.
 
 {% /steps %}
@@ -29,12 +36,16 @@ Somente a taxonomia usada por espécimes do projeto ativo é exportada. Fotos
 da equipe e mídias vinculadas são incluídas quando disponíveis; arquivos
 ausentes são omitidos com um aviso.
 
-## Importar e resolver conflitos
+## Mesclar e resolver conflitos
 
 {% aside type="caution" title="Faça um backup primeiro" %}
 Crie um backup do banco de dados antes de importar. O assistente exige a
 confirmação desse lembrete e oferece a ação `Fazer backup agora`.
 {% /aside %}
+
+No dispositivo receptor, abra o menu do painel e selecione `Merge project`.
+Escolha uma exportação `JSON.GZ`, ZIP ou TAR.GZ e revise os conflitos antes de
+confirmar a mesclagem.
 
 O assistente revisa informações do projeto, equipe, taxonomia, localidades,
 eventos, espécimes e narrativas, nessa ordem. Nada é gravado antes do resumo

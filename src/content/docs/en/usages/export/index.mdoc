@@ -6,8 +6,8 @@ sidebar:
 
 NAHPU has these export-related actions in the project menu:
 
-- **Import project** - Adds a NAHPU project transfer to the active project through a guided conflict review.
-- **Export project** - Creates a ZIP or TAR.GZ transfer archive for the same project on another device.
+- **Merge project** - Adds a NAHPU project export to the active project through a guided conflict review.
+- **Export project** - Creates a light JSON.GZ export without media, or a ZIP/TAR.GZ transfer archive with available media.
 - **Export records** - Exports one record type to CSV, TSV, Excel, or JSON.
 - **Bundle records** - Creates a third-party Darwin Core Archive, Darwin Core Data Package, or complete NAHPU Data Package.
 - **Export documents** - Creates PDF documents from document templates and layout profiles.
@@ -19,6 +19,8 @@ NAHPU has these export-related actions in the project menu:
 - To export tabular project data, see [Export records](./export-records).
 - To import or export GIS coordinate files, see [Sites](../sites#adding-coordinates).
 - To move one project between NAHPU devices, see [Transfer a project](./project-transfer).
+- For a compact records-only upload over limited internet, use the `JSON.GZ` light export described in [Transfer a project](./project-transfer).
+- For database recovery, see [Backup and Restore](../../curatorial-guideline/backup-restore).
 - To create a standards-based specimen package or reproducible NAHPU Data Package, see [Bundle records](./export-bundles).
 - To export printable PDF labels, tags, or other documents, see [Export documents](./export-documents).
 
@@ -27,6 +29,11 @@ settings exports. Coordinate GIS exchange is managed from a site's coordinate
 panel, not from the project menu. The coordinate workflow supports GeoJSON,
 KML, zipped Shapefile, and GPX imports, and GeoJSON, KML, and zipped Shapefile
 exports.
+
+For project exports, use `JSON.GZ` when the upload must be small and media is
+not needed. Use ZIP or TAR.GZ for a full project transfer or backup because
+those formats include available media. A JSON.GZ export is not a complete
+backup.
 
 ## Backup database
 

@@ -4,13 +4,18 @@ sidebar:
   order: 10
 ---
 
-Use `Export project` and `Import project` to combine data entered for the same
-NAHPU project on different devices. A transfer is a ZIP or TAR.GZ archive with
-a versioned `nahpu-project.json` manifest and its available media files.
+Use `Export project` and `Merge project` to combine data entered for the same
+NAHPU project on different devices. A full transfer is a ZIP or TAR.GZ archive
+with a versioned `nahpu-project.json` manifest and its available media files.
+
+For limited-internet uploads, turn on `Light export` to create a `JSON.GZ`
+export without media. JSON.GZ is suitable for merging project records, but it
+is not a full project backup. Use ZIP or TAR.GZ when media or a complete copy
+of the project is needed.
 
 This is different from `Bundle records`. Record bundles are for publishing,
 analysis, archiving, or other third-party workflows and are not accepted by
-`Import project`.
+`Merge project`.
 
 ## Export a project
 
@@ -20,8 +25,9 @@ analysis, archiving, or other third-party workflows and are not accepted by
 2. Open the dashboard menu and select `Export project`.
 3. Review the counts for personnel, taxonomy, sites, events, specimens,
    narratives, and media. Review warnings for missing media.
-4. Select `ZIP` or `TAR.GZ`, enter a file name, and optionally choose a
-   directory.
+4. For a full project transfer or backup, leave `Light export` off and select
+   `ZIP` or `TAR.GZ`. For a limited-internet upload, turn on `Light export` to
+   use `JSON.GZ` without media.
 5. Select `Export project`, then store or share the archive securely.
 
 {% /steps %}
@@ -31,10 +37,10 @@ Project personnel photos, project media, and linked taxonomy media are
 included when their source files are available. Missing files are reported as
 warnings and their broken links are omitted.
 
-## Import into the matching project
+## Merge into the matching project
 
 {% aside type="caution" title="Back up first" %}
-Create a database backup before importing. The wizard requires you to
+Create a database backup before merging. The wizard requires you to
 acknowledge this reminder and provides a `Back up now` shortcut so you can
 recover the previous database if needed.
 {% /aside %}
@@ -42,19 +48,19 @@ recover the previous database if needed.
 {% steps %}
 
 1. Open the receiving copy of the project.
-2. Open the dashboard menu and select `Import project`.
-3. Choose the project transfer ZIP or TAR.GZ archive.
+2. Open the dashboard menu and select `Merge project`.
+3. Choose a `JSON.GZ`, ZIP, or TAR.GZ project export.
 4. Confirm the backup reminder.
 5. Review project info, personnel, taxonomy, sites, events, specimens, and
    narratives one section at a time.
 6. Resolve each match or conflict.
-7. Review the final summary and select `Import project`.
+7. Review the final summary and select `Merge project`.
 
 {% /steps %}
 
-NAHPU checks the archive and its relationships before showing the review. No
+NAHPU checks the export and its relationships before showing the review. No
 records are written while you move through the wizard. At the final step,
-database changes are committed together. If the import fails, database changes
+database changes are committed together. If the merge fails, database changes
 are rolled back and newly copied media files are removed.
 
 ## Resolve conflicts
@@ -83,7 +89,7 @@ skip it.
 
 ## Force merge a different project UUID
 
-The normal workflow requires the archive project UUID to match the active
+The normal workflow requires the export project UUID to match the active
 project UUID. A mismatch is blocked because it usually means the wrong project
 is open.
 

@@ -4,13 +4,19 @@ sidebar:
   order: 10
 ---
 
-Gunakan `Ekspor proyek` dan `Impor proyek` untuk menggabungkan data proyek
-NAHPU yang sama dari perangkat berbeda. Transfer berupa arsip ZIP atau TAR.GZ
-dengan manifes `nahpu-project.json` berversi dan berkas media yang tersedia.
+Gunakan `Export project` dan `Merge project` untuk menggabungkan data proyek
+NAHPU yang sama dari perangkat berbeda. Transfer lengkap berupa arsip ZIP atau
+TAR.GZ dengan manifes `nahpu-project.json` berversi dan berkas media yang
+tersedia.
+
+Untuk unggahan dengan koneksi internet terbatas, aktifkan `Light export` untuk
+membuat file `JSON.GZ` tanpa media. JSON.GZ cocok untuk menggabungkan catatan,
+tetapi bukan cadangan proyek lengkap. Gunakan ZIP atau TAR.GZ jika memerlukan
+media atau salinan proyek lengkap.
 
 Transfer ini berbeda dari `Paketkan catatan`. Paket catatan ditujukan untuk
 publikasi, analisis, arsip, atau pihak ketiga dan tidak diterima oleh
-`Impor proyek`.
+`Merge project`.
 
 ## Mengekspor
 
@@ -19,7 +25,9 @@ publikasi, analisis, arsip, atau pihak ketiga dan tidak diterima oleh
 1. Buka proyek pada perangkat sumber.
 2. Dari menu dasbor, pilih `Ekspor proyek`.
 3. Tinjau jumlah data dan peringatan media yang hilang.
-4. Pilih `ZIP` atau `TAR.GZ`, masukkan nama berkas, dan pilih direktori bila perlu.
+4. Untuk transfer atau cadangan lengkap, biarkan `Light export` nonaktif lalu
+   pilih `ZIP` atau `TAR.GZ`. Untuk unggahan dengan internet terbatas, aktifkan
+   `Light export` untuk menggunakan `JSON.GZ` tanpa media.
 5. Pilih `Ekspor proyek`, lalu simpan atau bagikan arsip dengan aman.
 
 {% /steps %}
@@ -28,12 +36,16 @@ Hanya taksonomi yang digunakan spesimen proyek aktif yang diekspor. Foto
 personel dan media terkait disertakan jika berkas sumber tersedia; berkas yang
 hilang diabaikan dan dilaporkan sebagai peringatan.
 
-## Mengimpor dan menangani konflik
+## Menggabungkan dan menangani konflik
 
 {% aside type="caution" title="Cadangkan terlebih dahulu" %}
 Buat cadangan database sebelum mengimpor. Wizard mewajibkan pengakuan atas
 pengingat ini dan menyediakan tombol `Cadangkan sekarang`.
 {% /aside %}
+
+Pada perangkat penerima, buka menu dasbor dan pilih `Merge project`. Pilih
+ekspor `JSON.GZ`, ZIP, atau TAR.GZ, lalu tinjau konflik sebelum mengonfirmasi
+penggabungan.
 
 Wizard meninjau info proyek, personel, taksonomi, lokasi, kegiatan, spesimen,
 dan narasi secara berurutan. Tidak ada data yang ditulis sebelum ringkasan
