@@ -20,11 +20,11 @@ installation-local state, and files have different ownership and backup needs.
 
 | Store | Owner | Contents | Reproducibility |
 |---|---|---|---|
-| Drift over SQLite | Flutter app | Projects, specimens, sites, collecting events, personnel, taxonomy, media metadata, measurements, narratives, and relationships | Canonical project dataset; included in database and NAHPU Data Package exports |
+| Drift over SQLite | Flutter app | Projects, specimens, sites, collecting events, personnel, taxonomy, media metadata, biological attributes, narratives, custom fields, and relationships | Canonical project dataset, included in database and NAHPU Data Package exports |
 | `redb` | `nahpu_configs` through Rust bridge | Custom option lists, record-export presets, document-template presets, and document layouts | Exportable when reproducing outputs on another installation |
-| `SharedPreferences` | Flutter app | Installation-local UI and device state such as theme settings and migration markers | Not project data; do not store export-relevant configuration here |
-| Documents directory | Dart services | SQLite databases, backups, project media, personnel media, custom fonts, and custom maps | Managed by app workflows and package/backup exporters |
-| Temporary directory | Dart/platform services | Staging snapshots, intermediate files, and temporary archives | Disposable; never the source of truth |
+| `SharedPreferences` | Flutter app | Installation-local UI and device state such as theme settings and migration markers | Not project data, do not store export-relevant configuration here |
+| Documents directory | Dart services | SQLite databases, backups, project media, personnel media, custom fonts, and custom maps | Managed by app workflows and package and backup exporters |
+| Temporary directory | Dart and platform services | Staging snapshots, intermediate files, and temporary archives | Disposable, never the source of truth |
 
 The normal application storage layout is:
 
@@ -48,108 +48,210 @@ generates Rust-side models and tabular helpers from the Drift schema, but it
 does not own the app's SQLite connection. `nahpu_dwc` and `nahpu_dp` receive
 caller-prepared data and do not replace the project database.
 
+## Version responsibilities
+
+Keep these version concepts separate when reviewing a persistence change.
+
+| Version | Current value | Owner | Meaning |
+|---|---:|---|---|
+| Drift schema version | 13 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
+| SQLite user version | Set by Drift | Drift | On-disk marker used to select upgrade steps |
+| redb internal schema version | Not implemented | `nahpu_configs` | A future marker for redb table and value migrations |
+| Configuration export schema | 1 | `USER_CONFIG_SCHEMA_VERSION` | Compatibility version for exported configuration payloads |
+| Rust crate version | 0.6.0 | `crates/nahpu_configs/Cargo.toml` | Package release version, not a data migration marker |
+| redb engine version | 4.1.0 dependency | Cargo dependency resolution | Storage engine behavior, not NAHPU application schema |
+| Project transfer format | 4 | Transfer model and archive code | Version of project import and export payloads |
+
 ## redb tables
 
-The [`nahpu_configs`](https://crates.io/crates/nahpu_configs) crate stores reproducible configuration and export
-presets in a `redb` database. The tables use string keys and serialized JSON
-values:
+The [`nahpu_configs`](https://crates.io/crates/nahpu_configs) crate stores
+reproducible configuration and export presets in a `redb` database. The tables
+use string keys and serialized JSON values.
 
-| Table | Description |
-|---|---|
-| `user_configs` | Installation configuration values such as custom option lists. |
-| `record_export_presets` | Named record-export field mappings and combined-field definitions. |
-| `template_presets` | Named reusable document-template definitions. |
-| `document_layouts` | Named document layout settings, including page and template-block configuration. |
+| Table | Key | Value | Purpose |
+|---|---|---|---|
+| `user_configs` | Configuration name | Configuration JSON | Installation configuration values such as custom option lists |
+| `record_export_presets` | Preset name | Preset JSON | Named record-export field mappings and combined-field definitions |
+| `template_presets` | Preset name | Preset JSON | Named reusable document-template definitions |
+| `document_layouts` | Layout name | Layout JSON | Named document layout settings, including page and template-block configuration |
 
-## Drift tables
+`ConfigDb::init` opens all four tables and commits an initialization
+transaction. CRUD operations serialize model values directly to JSON bytes.
+The current implementation has no internal redb database migration runner.
+Existing databases without metadata are therefore treated as the only known
+layout and must be preserved by any future migration.
+
+### redb versioning and migration guidance
+
+Use a dedicated application schema version for redb. Do not use the crate
+version, the redb engine version, or `USER_CONFIG_SCHEMA_VERSION` as a
+replacement. The recommended implementation is:
+
+1. Add `CONFIG_DB_SCHEMA_VERSION` and table definitions in
+   `crates/nahpu_configs/src/schema.rs`.
+2. Add a metadata table with a reserved key such as `schema_version`. Treat a
+   database that has the four current tables but no metadata row as version 1.
+3. Add ordered migration functions in
+   `crates/nahpu_configs/src/migrations.rs`, such as `migrate_v1_to_v2`.
+4. Make `ConfigDb::init` run migrations before publishing the global database
+   handle. Reject a database with a future version instead of guessing.
+5. Run every step in order inside one redb write transaction. Update the
+   metadata row only in that transaction so a failed migration can roll back.
+6. Keep export schema migration separate. Validate an incoming
+   `UserConfigsExport.schema_version`, transform old payloads in memory, reject
+   future versions, then replace all tables atomically.
+7. Add a JSON Lines metadata record so parsing preserves the source schema
+   version instead of silently replacing it with the current version.
+
+Required tests cover a fresh database, a legacy database without metadata,
+each migration step, future-version rejection, rollback after a failed step,
+idempotent reopen, JSON export and import compatibility, JSON Lines version
+preservation, and corrupted input that must not partially clear stored data.
+
+## Drift table schema
 
 The canonical project schema is defined in
-`lib/services/database/tables.drift` and is currently at schema version 10.
-Drift manages these tables over SQLite:
+`lib/services/database/tables.drift` and is currently at schema version 13.
+Drift manages these tables over SQLite. The summary below describes the
+current table set and the important ownership relationships.
 
-| Table | Description |
+| Table | Role and important relationships |
 |---|---|
-| `project` | Project metadata and lifecycle dates. |
-| `site` | Collection sites, localities, habitat, and site-level metadata. |
-| `coordinate` | Coordinates and georeferencing details associated with sites. |
+| `project` | Project identity and lifecycle dates. Parent of project-scoped rows. |
+| `site` | Collection sites, localities, habitat, and site-level metadata. Belongs to `project`. |
+| `fossilSite` | Fossil-specific extension of `site` through `siteID`. Renamed from `paleontologySite` in v13. |
+| `coordinate` | Coordinates and georeferencing details associated with a site. |
 | `collEvent` | Collecting events, dates, times, methods, and site associations. |
 | `weather` | Weather and astronomical observations for collecting events. |
 | `collPersonnel` | Personnel and collecting roles associated with events. |
 | `collEffort` | Collecting methods, equipment, counts, and effort notes for events. |
 | `narrative` | Project or site field narratives and their metadata. |
-| `media` | Media file metadata and project, personnel, and capture details. |
+| `media` | Project media metadata. v13 adds nullable `uri`. |
 | `narrativeMedia` | Links narratives to media files. |
 | `siteMedia` | Links sites to media files. |
 | `specimenMedia` | Links specimens to media files. |
-| `associatedData` | External or supplementary data associated with specimens. |
+| `associatedData` | Project-scoped external data with `name`, `type`, `date`, `description`, and v13 `uri`. |
+| `specimenAssociatedData` | Composite link between specimens and associated data. Replaces `associatedData.specimenUuid`. |
+| `siteAssociatedData` | Composite link between sites and associated data. |
 | `personnelList` | Links personnel to projects. |
 | `personnel` | People, contact details, roles, and field-number settings. |
 | `taxonomy` | Taxonomic names, classifications, status, and notes. |
-| `specimen` | Core specimen records and their project, taxon, event, and personnel relationships. |
-| `mammalMeasurement` | Mammal measurements, reproductive observations, and bat or echolocation fields. |
-| `avianMeasurement` | Avian measurements, colors, molt, reproductive observations, and habitat remarks. |
-| `herpMeasurement` | Herpetofauna sex, age, weight, snout-vent length, and remarks. |
+| `specimen` | Core specimen records and project, taxon, event, coordinate, and personnel relationships. |
+| `mammalAttribute` | Mammal measurements, reproductive observations, and bat or echolocation attributes. |
+| `birdAttribute` | Bird measurements, colors, molt, reproductive observations, and habitat attributes. |
+| `herpAttribute` | Herpetofauna sex, age, weight, snout-vent length, and remark attributes. |
+| `arthropodAttribute` | Arthropod-specific specimen attributes. |
+| `fossilAttribute` | Fossil-specific specimen attributes. |
+| `parasiteDetection` | Detection records connecting specimens and parasite observations. |
+| `parasite` | Parasite taxonomy and observation details. |
 | `specimenPart` | Specimen parts, tissues, barcodes, treatments, loans, and preparation details. |
+| `customFieldDefinition` | Project-defined field names, types, and labels. Schema only, see note below. |
+| `customFieldValue` | Values for custom fields. v13 adds nullable `unit` and references the field definition and project. Schema only, see note below. |
+
+`customFieldDefinition` and `customFieldValue` are schema-only as of v13. They
+are created by the migration coordinator and exposed through generated Drift
+accessors, but no DAO/query file, provider, or screen currently creates,
+reads, or updates rows in either table, and the `FieldUISection` enum they
+reference is unused elsewhere in the app. Treat them as reserved for a future
+custom-fields feature, not a shipped one, until that layer is implemented.
+
+### Foreign keys, triggers, and indexes
+
+Project-owned tables use cascading foreign keys where deleting a project must
+remove dependent data. Composite link tables use cascading foreign keys and
+composite primary keys. In particular, `specimenAssociatedData` links a
+specimen to `associatedData`, and `siteAssociatedData` links a site to
+`associatedData`.
+
+The `specimen_associated_data_same_project` and
+`site_associated_data_same_project` triggers run before link inserts. They
+abort a link when the associated data row belongs to a different project.
+There is no trigger on `associatedData` itself. The v13 migration first moves
+legacy specimen links, then drops the old direct column, so an additional
+`associatedData` trigger is not needed.
+
+Current indexes cover project lookups and common joins, including project and
+species queries on `specimen`, project and site queries on `collEvent`, site
+and coordinate lookups, specimen part lookups, and associated-data link scans.
+Before adding a new index, measure the query and write path because every
+index increases migration and insert cost.
 
 ## Schema workflow
 
 {% steps %}
 
-1. Open or discuss a GitHub issue before making a schema change.
+1. Open or discuss a GitHub issue before making a schema change. Record the
+   data preservation rule and the expected upgrade path.
 2. Update the Drift schema in `lib/services/database/tables.drift`.
-3. Add comments at the top of `tables.drift` explaining the schema change.
-4. Bump `kSchemaVersion` in `lib/services/database/database.dart`.
-
-   ```dart
-   const int kSchemaVersion = 8;
-   ```
-
-5. Add migration steps in `Database.migration`.
-
-   ```dart
-   if (from < 8) {
-     await _migrateFromVersion7(m);
-   }
-   ```
-
-6. Add the migration helper in the same file or a migration utility file.
-
-   ```dart
-   Future<void> _migrateFromVersion7(Migrator m) async {
-     await m.addColumn(specimen, specimen.newColumn);
-   }
-   ```
-
-7. Regenerate Dart code.
+3. Add a dated comment at the top of `tables.drift` explaining the change.
+4. Bump `kSchemaVersion` in `lib/services/database/database.dart` by exactly
+   one version.
+5. Add the release step to `releaseSteps` in
+   `lib/services/database/migration_coordinator.dart`. Keep historical
+   migrations in place because an old database may skip directly to the new
+   release.
+6. Put reusable SQL and schema helpers in
+   `lib/services/database/migration_utilities.dart`. Keep the legacy v1 to v11
+   path in `database.dart` unchanged unless the change explicitly repairs
+   legacy behavior.
+7. Regenerate Drift code and schema artifacts.
 
    ```bash
    flutter pub run build_runner build --delete-conflicting-outputs
-   ```
-
-8. Dump the new schema snapshot.
-
-   ```bash
    dart run drift_dev schema dump \
      lib/services/database/database.dart \
-     db_schemas/drift_schema_v8.json
+     db_schemas/drift_schema_v14.json
    ```
 
-9. Copy the updated `tables.drift` snapshot to `db_schemas/drift_tables/` if
-   the schema workflow for that release requires it.
-10. Add or update migration tests for existing database versions.
-11. Run verification with `flutter test` and `flutter analyze`.
+8. Update the matching snapshot in `db_schemas/drift_tables/` when the
+   release workflow requires it. Keep generated files synchronized with
+   `tables.drift`.
+9. Add migration fixtures and tests in `test/migration_test.dart`. The test
+   suite currently upgrades fixtures from v6 through v12 to v13.
+10. Run `flutter test`, `flutter analyze`, `cargo check`, and `cargo clippy`
+    when generated Rust or bridge data is affected.
 
 {% /steps %}
 
-## Migration rules
+### Worked example: v12 to v13
+
+The v13 migration in
+`lib/services/database/migration_coordinator.dart` performs these operations
+in order.
+
+1. Find legacy `associatedData` rows with a non-null `specimenUuid`.
+2. Insert missing rows into `specimenAssociatedData` only when the specimen
+   and associated-data rows have the same `projectUuid`.
+3. Abort if any remaining legacy relationship cannot be represented safely.
+4. Rebuild `associatedData` with Drift `TableMigration`, copying old `url`
+   values into new `uri` values and dropping `specimenUuid`.
+5. Rename `paleontologySite` to `fossilSite` when the old table exists.
+6. Add `media.uri` and `customFieldValue.unit`.
+7. Validate that `fossilSite` exists, `paleontologySite` is absent,
+   `associatedData` has `uri` and no legacy columns, foreign keys pass, and
+   SQLite integrity checks succeed.
+
+The v12 migration creates historical `paleontologySite` and unit-less
+`customFieldValue` shapes with raw SQL because generated v13 accessors no
+longer expose those old definitions. This is why migration fixtures must use
+the historical schema rather than only current Drift table helpers.
+
+## Migration rules and test expectations
 
 - Never rely on users deleting their database to recover from a migration.
-- Keep migration steps idempotent when older development builds may already
-  have applied part of the change.
-- Use helper functions for multi-step migrations so `database.dart` remains
-  readable.
-- Test migrations with realistic old schemas when data shape matters.
-- Include migration risk in the pull request description.
+- Preserve rows and values unless the issue explicitly documents a lossy
+  conversion.
+- Keep each version step deterministic and safe when an older development
+  build may have partially applied the change.
+- Disable foreign keys only for the controlled migration transaction, then
+  restore them and run foreign-key and integrity checks.
+- Abort when project ownership or relationship data cannot be represented in
+  the new schema. Do not silently attach data to another project.
+- Test fresh creation, direct upgrades from every supported historical
+  version, populated rows, null values, duplicate links, invalid ownership,
+  rollback, and reopening the migrated database.
+- Include migration risk, backup expectations, generated artifacts, and test
+  coverage in the pull request description.
 
 {% aside type="caution" title="Data integrity" %}
 Import, export, backup, and migration changes can permanently affect user data.
@@ -159,7 +261,7 @@ Favor small migrations, explicit tests, and clear pull request notes.
 ## Persistence data flows
 
 **Database-backed workflows** run from Dart services and providers. Screens
-render state and dispatch actions; they do not own database queries or
+render state and dispatch actions, they do not own database queries or
 migrations.
 
 **Record import and export** reads or assembles rows from Drift. Dart performs
@@ -181,11 +283,12 @@ exported or reproduced. Installation-local preferences remain in
 
 ## Darwin Core field mapping
 
-The following is the complete current mapping implemented by
+The following documents the mapping surface used by
 `nahpu_dwc::dwc::DwcMapper`. Source fields use the `table::field` notation used
 by NAHPU exports. Schema aliases such as `siteID`/`siteId` and
-`eventID`/`eventId` resolve to the same mapping. Unsupported legacy fields are
-not emitted.
+`eventID`/`eventId` resolve to the same mapping. The v13 associated-data
+relationship is called out separately because the Rust mapper still needs a
+follow-up for the renamed `uri` field.
 
 ### Direct field mappings
 
@@ -208,7 +311,7 @@ not emitted.
 | `coordinate::siteID`, `coordinate::siteId` | `dwc:locationID` |
 | `coordinate::decimalLatitude` | `dwc:decimalLatitude` |
 | `coordinate::decimalLongitude` | `dwc:decimalLongitude` |
-| `coordinate::elevationInMeter` | `dwc:minimumElevationInMeters` in direct mapping; see composite mappings below |
+| `coordinate::elevationInMeter` | `dwc:minimumElevationInMeters` in direct mapping, see composite mappings below |
 | `coordinate::datum` | `dwc:geodeticDatum` |
 | `coordinate::uncertaintyInMeters` | `dwc:coordinateUncertaintyInMeters` |
 | `coordinate::notes` | `dwc:georeferenceRemarks` |
@@ -220,7 +323,7 @@ not emitted.
 | `collEvent::primaryCollMethod` | `dwc:samplingProtocol` |
 | `collEvent::collMethodNotes` | `dwc:samplingEffort` |
 | `collEvent::personnel` | `dwc:recordedBy` |
-| `collPersonnel::eventID`, `collPersonnel::eventId`; `collEffort::eventID`, `collEffort::eventId`; `weather::eventID`, `weather::eventId` | `dwc:eventID` |
+| `collPersonnel::eventID`, `collPersonnel::eventId`, `collEffort::eventID`, `collEffort::eventId`, `weather::eventID`, `weather::eventId` | `dwc:eventID` |
 | `collPersonnel::personnelId` | `dwc:recordedByID` |
 | `collPersonnel::name` | `dwc:recordedBy` |
 | `collEffort::method`, `collEffort::brand` | `dwc:samplingProtocol` |
@@ -238,12 +341,13 @@ not emitted.
 | `media::personnelId` | `dcterms:creator` |
 | `media::fileName` | `dcterms:title` |
 | `media::caption` | `dcterms:description` |
-| `associatedData::specimenUuid` | `dwc:occurrenceID` |
 | `associatedData::name` | `dcterms:title` |
 | `associatedData::type` | `dcterms:type` |
 | `associatedData::date` | `dcterms:created` |
 | `associatedData::description` | `dcterms:description` |
-| `associatedData::url` | `dcterms:identifier` |
+| `associatedData::uri` | `dcterms:identifier`, pending Rust mapper update |
+| `specimenAssociatedData::specimenUuid` | Relationship context for `dwc:occurrenceID`, pending Rust mapper update |
+| `associatedData::specimenUuid`, `associatedData::url` | Legacy v12 mapper keys, not v13 columns |
 | `personnel::uuid` | `dcterms:identifier` |
 | `taxonomy::id` | `dwc:taxonID` |
 | `taxonomy::taxonClass` | `dwc:class` |
@@ -283,12 +387,12 @@ not emitted.
 | `personnelList::projectUuid` | `dwc:datasetID` |
 | `personnelList::personnelUuid` | `dcterms:identifier` |
 | `weather::notes` | `dwc:eventRemarks` |
-| `mammalMeasurement::specimenUuid`, `avianMeasurement::specimenUuid` | `dwc:occurrenceID` |
-| `mammalMeasurement::sex`, `avianMeasurement::sex` | `dwc:sex` |
-| `mammalMeasurement::age` | `dwc:lifeStage` |
-| `mammalMeasurement::reproductiveStage` | `dwc:reproductiveCondition` |
-| `mammalMeasurement::remark`, `avianMeasurement::specimenRemark` | `dwc:occurrenceRemarks` |
-| `avianMeasurement::habitatRemark` | `dwc:habitat` |
+| `mammalAttribute::specimenUuid`, `birdAttribute::specimenUuid` | `dwc:occurrenceID` |
+| `mammalAttribute::sex`, `birdAttribute::sex` | `dwc:sex` |
+| `mammalAttribute::age` | `dwc:lifeStage` |
+| `mammalAttribute::reproductiveStage` | `dwc:reproductiveCondition` |
+| `mammalAttribute::remark`, `birdAttribute::specimenRemark` | `dwc:occurrenceRemarks` |
+| `birdAttribute::habitatRemark` | `dwc:habitat` |
 
 ### Composite and measurement mappings
 
@@ -300,9 +404,9 @@ API expands them as follows:
 | `coordinate::elevationInMeter` | `dwc:minimumElevationInMeters`, `dwc:maximumElevationInMeters` | One elevation value is written to both bounds in a flat export. |
 | `specimenPart::type` | `dwc:materialEntityType`, `dwc:objectQuantityType` | The source value can describe both the material entity and its quantity type. |
 | `specimenPart::count` | `dwc:objectQuantity` | The part count is exported as a quantity. |
-| `mammalMeasurement::*`, `avianMeasurement::*`, `herpMeasurement::*`, `weather::*` measurement fields | `dwc:measurementType`, `dwc:measurementValue`, `dwc:measurementUnit` | Each populated measurement becomes a MeasurementOrFact row. The type and unit come from NAHPU's measurement definition. |
+| `mammalAttribute::*`, `birdAttribute::*`, `herpAttribute::*`, `weather::*` attribute fields | `dwc:measurementType`, `dwc:measurementValue`, `dwc:measurementUnit` | Each populated measurement or biological attribute becomes a MeasurementOrFact row. The type and unit come from NAHPU's attribute definition. |
 
-Measurement definitions currently include mammal lengths, weight,
+Attribute definitions currently include mammal lengths, weight,
 echolocation, reproductive observations, embryo counts, avian morphometrics,
 color and molt observations, herpetofauna weight and snout-vent length, and
 weather temperature, humidity, sunrise, sunset, and moon-phase values. Their
@@ -313,15 +417,35 @@ units are preserved where defined, including `mm`, `cm`, `g`, `kHz`, `s`, `%`,
 
 The bundle writer uses these mapped concepts to create related resources:
 
-- specimen fields form the `occurrence` core;
-- collecting-event and site context form `event` fields or occurrence context;
-- specimen parts form `material` records;
-- measurements form `measurement_or_fact` or `occurrence-assertion` records;
-- media form `multimedia` or `media` records and are linked to occurrences;
-- people and their roles form agent and role resources;
+- specimen fields form the `occurrence` core.
+- collecting-event and site context form `event` fields or occurrence context.
+- specimen parts form `material` records.
+- measurements form `measurement_or_fact` or `occurrence-assertion` records.
+- media form `multimedia` or `media` records and are linked to occurrences.
+- people and their roles form agent and role resources.
 - DwC-DP adds internal primary and foreign keys while retaining the public
   Darwin Core identifiers.
 
 The mapping is maintained with the `nahpu_dwc` implementation. When a mapper
 or bundle field changes, update this section and its verification checks in the
 same change.
+
+## Missing improvements and follow-up work
+
+- Add the redb metadata table and ordered migrations described above. The
+  current crate has no internal redb migration path.
+- Add uniqueness constraints where the data model requires one. Several child
+  tables rely on application checks rather than database uniqueness.
+- Update `nahpu_dwc` to emit v13 `associatedData.uri` and to traverse
+  `specimenAssociatedData`. Decide and test the Darwin Core term for
+  `media.uri` before documenting it as a supported mapping.
+- Add a documentation check that compares the table inventory and schema
+  version here with generated Drift artifacts. This would catch stale table
+  names such as `paleontologySite`.
+- Reconcile export-bundle table counts with the actual v13 inventory and keep
+  backup and restore documentation tested against a real archive.
+- Add restore verification that opens a restored SQLite file, runs foreign-key
+  checks, and records the schema version before the file is offered to users.
+- Implement or explicitly deprecate `customFieldDefinition`/`customFieldValue`.
+  The tables and `FieldUISection` enum exist, but no DAO, provider, or screen
+  uses them, so the schema currently ships ahead of any working feature.
