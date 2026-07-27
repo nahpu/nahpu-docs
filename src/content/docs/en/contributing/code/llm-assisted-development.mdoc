@@ -19,15 +19,29 @@ We welcome LLM usage when it helps a human contributor to improve NAHPU. We also
 LLMs, agentic coding development, and generative AI in general are rapidly evolving technologies. We welcome any feedback on this page and the responsible use of LLMs in NAHPU development. Please submit an issue or pull request to improve this page.
 {% /aside %}
 
-## Use `AGENTS.md` as context
+## Guidelines
+
+### Use `AGENTS.md` as context
 
 NAHPU includes an `AGENTS.md` file at the root of [the app](https://github.com/nahpu/nahpu) and [API](https://github.com/nahpu/nahpu_api) repositories. This file is the project brief for LLM coding tools. It explains how each repository is organized, which commands to run, where different types of logic should be placed, and which architectural boundaries must not be crossed. These boundaries are based on the experience of developing NAHPU four years (~100k lines of code) before we began using LLMs. They also reflect established best practices for Flutter, Dart, and Rust.
 
-## Current `AGENTS.md`
+
+#### Current `AGENTS.md`
 
 This is an example of the current `AGENTS.md` file in the [app](https://github.com/nahpu/nahpu) repository. It is a living document and may change over time. Different repository has its own `AGENTS.md` file. Please check the latest version in the respective repository.
 
-`AGENTS.md` is useful for human contributors and LLM agents, as it helps both to understand the project structure, conventions, and the development workflow. Many agents can read `AGENTS.md` automatically. If your tool does not, paste it into the model context before asking for code changes.
+`AGENTS.md` is useful for LLM agents, as it helps it to understand the project structure, conventions, and the development workflow. Many agents can read `AGENTS.md` automatically. If your tool does not, paste it into the model context before asking for code changes.
+
+
+{% aside type="caution" title="Important" %}
+Each repository also includes a `CLAUDE.md` file next to `AGENTS.md`. Claude Code looks for `CLAUDE.md` and does not read `AGENTS.md` on its own. The file contains a single import line, so Claude Code loads the same content as every other agent:
+
+```md
+@AGENTS.md
+```
+
+The file is a pointer, not a second set of rules. Do not add guidance to it. Any change to the project brief belongs in `AGENTS.md`, which remains the single source of truth.
+{% /aside %}
 
 ```md
 # Repository Guidelines
@@ -66,7 +80,7 @@ Add focused `*_test.dart` files in `test/`. Prefer service tests for import/expo
 Preserve user changes and avoid unrelated refactors. Always write the product name as `NAHPU`. Agents must not create commits, branches, pushes, or pull requests; leave Git under user control. After bridge API edits, regenerate bindings and verify analysis plus `cargo check` and `cargo clippy`. Add assets to `pubspec.yaml` only when needed.
 ```
 
-## What the file does
+### What the file does
 
 `AGENTS.md` gives different LLM agents the same operating rules:
 
@@ -81,7 +95,7 @@ Preserve user changes and avoid unrelated refactors. Always write the product na
 
 This makes agent output more predictable across tools such as Codex, Claude Code, Cursor, Continue, Copilot Workspace, or other model-based coding systems. Even when a model does not support `AGENTS.md` as a special file, the text works as plain prompt context.
 
-## Workflow
+### Workflow
 
 {% steps %}
 
@@ -123,7 +137,7 @@ This makes agent output more predictable across tools such as Codex, Claude Code
 
 {% /steps %}
 
-## Contributor checklists for evaluating agent output
+### Contributor checklists for evaluating agent output
 
 - Verify Dart files are in `snake_case.dart` and classes/widgets are in `PascalCase` and other rules in the `AGENTS.md`. Private classes and functions are prefixed with an underscore: `_ActionButton`, `_onValueChange()`. Not every model follows the instructions.
 - Check the module organization and ensure that the code is in the the directory that is consistent with NAHPU architecture and the `AGENTS.md` file. Ask to refactor if the code does not follow the architecture. Some small changes will be much easier to do manually than asking an agent to refactor it. Depending on the task complexity, you may need to ask a larger model to review the code and provide refactoring suggestions.
