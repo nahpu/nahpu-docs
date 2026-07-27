@@ -103,6 +103,8 @@ Open the three-dot menu on the site page for these actions:
 - `Create site`: create a new site record.
 - `Duplicate site`: copy the site details into a new record with a blank ID and
   blank coordinates.
+- `Copy from project ...`: copy selected site information from a site in another
+  project into the current empty site.
 - `Show QR`: display the site record for another mobile device to scan.
 - `Export site`: save the site record as JSON or compresed in a ZIP/TAR.GZ file for records with media attachments.
     The exported file can be imported into another device or shared with other team members.
@@ -119,6 +121,57 @@ Open the three-dot menu on the site page for these actions:
 When importing a site, choose whether the imported record creates a new site or
 updates an existing site. Review linked personnel and coordinates after an
 import.
+
+## Copy site data from another project
+
+Use `Copy from project ...` when a site in another project has information that
+you want to reuse in the current project. This action fills the current site;
+it does not create a new site or change the source project.
+
+The current site must be empty before you begin. A site with information,
+coordinates, media, or linked data cannot receive copied data. At least two
+projects must exist, because the source must be a different project.
+
+{% steps %}
+
+1. Open the site that will receive the copied information. Make sure it is an
+   empty site record.
+
+2. Open the three-dot menu and select `Copy from project ...`.
+
+3. Select the source project by name, then select one of its sites.
+
+4. Select the data to copy. The available choices include:
+
+   - Site ID
+   - Site leader
+   - Site type
+   - Geography fields, including country, state/province, county, municipality,
+     and precise locality
+   - Remarks
+   - Habitat type, condition, and description
+   - Coordinates
+
+   Fields without data in the source site are unavailable. Selecting
+   `Coordinates` copies all coordinates belonging to the selected source site.
+
+5. Select `Copy` to fill the current site.
+
+{% /steps %}
+
+The source site remains unchanged. This action copies site fields and
+coordinates only; it does not copy site media, associated-data links,
+fossil-site records, collecting events, or other records linked to the source
+site.
+
+{% aside type="tip" title="If copying is unavailable" %}
+
+If NAHPU reports that multiple projects are required, create or import another
+project first. If it reports that the site is not empty, create a new site or
+remove the existing site information, coordinates, media, and linked data
+before trying again.
+
+{% /aside %}
 
 ## Adding coordinates
 
