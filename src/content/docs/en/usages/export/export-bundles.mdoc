@@ -14,8 +14,8 @@ NAHPU provides three bundle types:
   expect `meta.xml`.
 - **Darwin Core Data Package** for relational Darwin Core data described by a
   Frictionless `datapackage.json`.
-- **NAHPU Data Package** for a reproducible copy of the complete NAHPU database,
-  configuration, and available user files.
+- **NAHPU Data Package** for a reproducible copy of the active project,
+  configuration, and available related files.
 
 ## Create a bundle
 
@@ -42,10 +42,9 @@ NAHPU provides three bundle types:
 {% /steps %}
 
 {% aside type="caution" title="Review before sharing" %}
-NAHPU Data Packages contain the complete NAHPU database and user
+NAHPU Data Packages contain the complete active-project transfer data and user
 configuration. They can include personnel details, project locations, media,
-custom fonts, and records from projects other than the currently open project.
-Treat them as potentially sensitive files.
+and custom fonts. Treat them as potentially sensitive files.
 {% /aside %}
 
 ## Choose an archive container
@@ -201,15 +200,15 @@ NAHPU Data Package is NAHPU's reproducibility and complete-data exchange
 format. It is a Frictionless Data Package with additional NAHPU metadata.
 
 Unlike the Darwin Core formats, it is not restricted to selected specimen
-taxa. It includes the complete NAHPU application database snapshot.
+taxa. It includes the same complete active-project JSON used by `Export
+project`, matching tabular resources, and related files.
 
 #### Root layout
 
 {% filetree %}
 - datapackage.json
 - nahpu.toml
-- database/
-  - nahpu.sqlite3
+- nahpu-project.json
 - tables/
   - project.csv
   - site.csv
@@ -224,6 +223,8 @@ taxa. It includes the complete NAHPU application database snapshot.
   - siteMedia.csv
   - specimenMedia.csv
   - associatedData.csv
+  - specimenAssociatedData.csv
+  - siteAssociatedData.csv
   - personnelList.csv
   - personnel.csv
   - taxonomy.csv
@@ -242,20 +243,24 @@ taxa. It includes the complete NAHPU application database snapshot.
   - specimens.csv
 - files/
   - ...
+- media/
+  - ...
 {% /filetree %}
 
-All 21 NAHPU tables are included. An empty table is still represented by a CSV
-file with its complete header and schema.
+All 23 database tables represented by the project-transfer payload are
+included. An empty table is still represented by a CSV file with its complete
+header and schema.
 
-#### SQLite snapshot
+#### Project JSON
 
-`database/nahpu.sqlite3` is a consistent, lossless snapshot of the NAHPU
-database at export time. It is the authoritative resource for exact values,
-including distinctions that a CSV mirror cannot always preserve, such as SQL
-`NULL` versus an intentionally empty string.
+`nahpu-project.json` is the same versioned payload produced by a full `Export
+project` operation. It contains the active project, related records, media
+manifest, export metadata, and warnings. It preserves distinctions such as a
+null value versus an intentionally empty string without requiring SQLite.
 
 The CSV files are open, tool-independent representations for inspection,
-analysis, and Frictionless-compatible processing.
+analysis, and Frictionless-compatible processing. Their records are generated
+from the same payload so the JSON and tables remain scoped consistently.
 
 #### SQLite enum mappings
 
@@ -307,8 +312,8 @@ document.
 
 The descriptor also declares the enum mapping and three controlled-vocabulary
 CSVs as tabular resources with field schemas and composite primary keys. It
-lists the SQLite database, user configuration, manifest, and packaged user
-files as non-tabular resources.
+lists the project JSON, user configuration, manifest, and packaged user files
+as non-tabular resources.
 
 #### Reproducibility manifest
 
@@ -340,12 +345,13 @@ created the package.
 
 When available, NAHPU includes:
 
-- project media;
-- personnel media;
+- media referenced by the active project;
+- photos for personnel referenced by the active project;
 - custom user fonts.
 
-Packaged files keep safe relative paths below `files/`. Missing files produce
-warnings and are not silently represented as successfully bundled content.
+Project media keeps the transfer-compatible paths below `media/`; custom fonts
+keep safe relative paths below `files/`. Missing files produce warnings and
+are not silently represented as successfully bundled content.
 
 #### Archive options
 
@@ -359,10 +365,11 @@ The internal package contents are the same in both containers.
 Darwin Core bundles are exchange formats and are not restorable NAHPU
 backups.
 
-A NAHPU Data Package contains a restorable database snapshot and configuration,
-but its first purpose is a documented, interoperable package. Continue using
-[Backup database](./#backup-database) for the existing streamlined
-backup and replacement workflow.
+A NAHPU Data Package contains the full project-transfer payload and compatible
+media paths, so `Merge project` can open it directly. Its first purpose remains
+a documented, interoperable package. Continue using [Backup
+database](./#backup-database) when a restorable copy of the complete NAHPU
+database is required.
 
 ## Package validation and warnings
 

@@ -20,7 +20,7 @@ installation-local state, and files have different ownership and backup needs.
 
 | Store | Owner | Contents | Reproducibility |
 |---|---|---|---|
-| Drift over SQLite | Flutter app | Projects, specimens, sites, collecting events, personnel, taxonomy, media metadata, biological attributes, narratives, custom fields, and relationships | Canonical project dataset, included in database and NAHPU Data Package exports |
+| Drift over SQLite | Flutter app | Projects, specimens, sites, collecting events, personnel, taxonomy, media metadata, biological attributes, narratives, custom fields, and relationships | Canonical project dataset, exported as project-scoped JSON and CSV resources in NAHPU Data Packages |
 | `redb` | `nahpu_configs` through Rust bridge | Custom option lists, record-export presets, document-template presets, and document layouts | Exportable when reproducing outputs on another installation |
 | `SharedPreferences` | Flutter app | Installation-local UI and device state such as theme settings and migration markers | Not project data, do not store export-relevant configuration here |
 | Documents directory | Dart services | SQLite databases, backups, project media, personnel media, custom fonts, and custom maps | Managed by app workflows and package and backup exporters |
@@ -271,7 +271,8 @@ provide reusable tabular readers and writers.
 **Bundle export** builds a transport-safe request from database records,
 configuration, vocabularies, and files. `nahpu_dwc` writes Darwin Core Archive
 and Darwin Core Data Package outputs. `nahpu_dp` writes the complete NAHPU Data
-Package, including the SQLite snapshot and reproducibility metadata.
+Package, including the project-transfer JSON, matching CSV resources, and
+reproducibility metadata.
 
 **Project transfer** remains coordinated by Dart because it owns database rows,
 media manifests, conflict handling, and import decisions. `nahpu_archive`

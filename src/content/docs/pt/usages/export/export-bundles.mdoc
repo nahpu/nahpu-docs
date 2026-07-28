@@ -9,7 +9,8 @@ para intercâmbio, publicação, arquivamento ou reprodutibilidade.
 
 O NAHPU oferece três formatos: **Darwin Core Archive**, **Darwin Core Data
 Package** e **NAHPU Data Package**. Os dois últimos usam `datapackage.json` do
-Frictionless; o NAHPU Data Package preserva o banco de dados completo.
+Frictionless; o NAHPU Data Package preserva os dados completos do projeto ativo
+como JSON e CSV.
 
 ## Criar um pacote
 
@@ -27,9 +28,9 @@ Frictionless; o NAHPU Data Package preserva o banco de dados completo.
 {% /steps %}
 
 {% aside type="caution" title="Revise antes de compartilhar" %}
-NAHPU Data Package contém o banco de dados completo e as configurações do
-usuário. Pode incluir pessoas, localizações, mídia, fontes personalizadas e
-registros de outros projetos.
+NAHPU Data Package contém a transferência completa do projeto ativo e as
+configurações do usuário. Pode incluir pessoas, localizações, mídia e fontes
+personalizadas.
 {% /aside %}
 
 ## Contêineres de arquivo
@@ -68,32 +69,34 @@ TAR.GZ é o padrão; ZIP está disponível para compatibilidade e gera um aviso.
 ### NAHPU Data Package
 
 NAHPU Data Package é o formato completo e reprodutível do NAHPU. Ele não é
-limitado aos táxons selecionados: contém um snapshot de todo o banco de dados.
+limitado aos táxons selecionados: contém o mesmo JSON de um `Export project`
+completo para o projeto ativo.
 
 #### Estrutura
 
 ```text
 datapackage.json
 nahpu.toml
-database/nahpu.sqlite3
-tables/                 (as 21 tabelas NAHPU em CSV)
+nahpu-project.json
+tables/                 (as 23 tabelas do projeto NAHPU em CSV)
 configs/user_configs.json
 mappings/sqlite_enums.csv
 vocabularies/site.csv
 vocabularies/events.csv
 vocabularies/specimens.csv
 files/...
+media/...
 ```
 
-As 21 tabelas são incluídas mesmo quando vazias; o CSV mantém seu cabeçalho e
-esquema completo.
+As 23 tabelas representadas pela transferência são incluídas mesmo quando
+vazias; o CSV mantém seu cabeçalho e esquema completo.
 
-#### Snapshot SQLite
+#### JSON do projeto
 
-`database/nahpu.sqlite3` é a cópia consistente e sem perdas do banco no momento
-da exportação. É a fonte autoritativa para valores exatos, inclusive a
-diferença entre `NULL` e uma string vazia. Os CSVs são representações abertas
-para inspeção, análise e ferramentas Frictionless.
+`nahpu-project.json` é o mesmo payload versionado gerado por um `Export project`
+completo. Ele contém o projeto ativo, registros relacionados, manifesto de
+mídia, metadados e avisos. Os CSVs correspondentes permitem inspeção e análise
+sem incluir um banco SQLite.
 
 #### Mapeamentos de enums SQLite
 
@@ -121,7 +124,7 @@ predefinido do NAHPU vigente na exportação é usado.
 
 `datapackage.json` usa o perfil `data-package` e declara cada tabela e CSV de
 metadados como recurso tabular UTF-8 com tipos, restrições e chaves. O banco
-SQLite, a configuração, `nahpu.toml` e os arquivos de mídia são recursos não
+JSON do projeto, a configuração, `nahpu.toml` e os arquivos de mídia são recursos não
 tabulares.
 
 `nahpu.toml` registra formato e versão, data, aplicação, número de compilação,
@@ -132,9 +135,10 @@ disponíveis em caminhos relativos seguros.
 
 ### Pacote e backup
 
-Os pacotes Darwin Core são formatos de intercâmbio. O NAHPU Data Package contém
-um snapshot restaurável, mas use [Backup do banco de dados](./#backup-database)
-para o fluxo simplificado de backup.
+Os pacotes Darwin Core são formatos de intercâmbio e não podem ser importados
+como projetos. O NAHPU Data Package pode ser aberto diretamente em `Merge
+project` porque mantém o mesmo payload e os caminhos de mídia. Use [Backup do
+banco de dados](./#backup-database) para preservar todo o banco do NAHPU.
 
 ### Validação e avisos
 
