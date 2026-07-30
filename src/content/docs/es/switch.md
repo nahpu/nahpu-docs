@@ -37,7 +37,7 @@ Dos enfoques típicos para la transición a NAHPU desde los catálogos de campo 
 
 Varios factores a considerar al hacer la transición a NAHPU:
 
-- **Elección de dispositivo**. La aplicación está diseñada para funcionar en varios dispositivos, incluidos teléfonos inteligentes, tabletas, computadoras portátiles y de escritorio. Puede comenzar a usar su teléfono inteligente. Si tiene el presupuesto, le recomendamos utilizar una tableta y un teclado Bluetooth para una mejor experiencia. Dependiendo de las condiciones del campo, puede usar una computadora portátil. Para obtener más información, consulte la sección [Requisitos de Dispositivos](./usages/devices).
+- **Elección de dispositivo**. La aplicación está diseñada para funcionar en varios dispositivos, incluidos teléfonos inteligentes, tabletas, computadoras portátiles y de escritorio. Puede comenzar a usar su teléfono inteligente. Si tiene el presupuesto, le recomendamos utilizar una tableta y un teclado Bluetooth para una mejor experiencia. Dependiendo de las condiciones del campo, puede usar una computadora portátil. Para obtener más información, consulte la sección [Requisitos de Dispositivos](../usages/devices).
 
 — **Condiciones de campo**. NAHPU está diseñado para sitios de campo remotos sin acceso a Internet. Considere la durabilidad del dispositivo y la disponibilidad de electricidad. Algunos teléfonos inteligentes nuevos son resistentes al agua y al polvo. Las tabletas y computadoras portátiles pueden necesitar protección adicional. Utilice una funda resistente siempre que sea posible. Para áreas sin electricidad, un banco de energía de 20,000 a 25,000 mAh suele ser suficiente para una semana de trabajo de campo con un teléfono inteligente o una tableta.
 

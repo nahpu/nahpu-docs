@@ -103,7 +103,7 @@ This makes agent output more predictable across tools such as Codex, Claude Code
 2. Start the agent in the repository root: [NAHPU](https://github.com/nahpu/nahpu), [API](https://github.com/nahpu/nahpu_api), or the [documentation](https://github.com/nahpu/nahpu-docs), depending on the task.
 
     {% aside type="tip"%}
-    Some feature addition or bug fix may require changes in both the [app](https://github.com/nahpu/nahpu) and [API](https://github.com/nahpu/nahpu_api) repositories. In that case, include both repositories in the agent context. Please familiarize yourself with the [NAHPU architecture](./architecture) before asking the agent to make changes.
+    Some feature addition or bug fix may require changes in both the [app](https://github.com/nahpu/nahpu) and [API](https://github.com/nahpu/nahpu_api) repositories. In that case, include both repositories in the agent context. Please familiarize yourself with the [NAHPU architecture](../architecture) before asking the agent to make changes.
     {% /aside %}
 
 3. Keep the task narrow: one bug, one feature, or one docs update. This approach is easier to review, avoid excessive token usage, and the need for using state-of-the-art power hungry models.
@@ -144,5 +144,5 @@ This makes agent output more predictable across tools such as Codex, Claude Code
 - Prefer reusable components over duplicate code.
 - Ensure that the agent run `flutter analyze`, `flutter test`, `dart format` for Dart changes, and `cargo check` and `cargo clippy` for Rust changes. Some agents may only run a subset of the tests on files it makes the changes. Run the full test manually before committing the changes.
 - Test manually. Check for regressions, UI issues, and unexpected behavior.
-- Check changes in `tables.drift`. Any change in it requires a schema migration. Follow [Persistence data](./database) and do not commit untested migrations.
+- Check changes in `tables.drift`. Any change in it requires a schema migration. Follow [Persistence data](../database) and do not commit untested migrations.
 - Run `git status` before committed changes and check for intermediate/temporary files. If the agent has created any, remove them before committing.

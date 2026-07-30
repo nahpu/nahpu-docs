@@ -4,10 +4,10 @@ sidebar:
   order: 4
 ---
 
-This architecture page describes the NAHPU cross-platform app and the underlying technology stack. For guideline on the developing other supporting software and tools, please refer to the [Tools](./tools) page.
+This architecture page describes the NAHPU cross-platform app and the underlying technology stack. For guideline on the developing other supporting software and tools, please refer to the [Tools](../tools) page.
 
 For the complete feature-by-feature exchange inventory, see [Data import and
-export](./data-import-export-overview). This page keeps only the shared layer
+export](../data-import-export-overview). This page keeps only the shared layer
 model and the short version of each data flow.
 
 The app is an offline-first, cross-platform application. Flutter owns the user interface, application workflows, and canonical project database. The Rust [NAHPU_API](https://github.com/nahpu/nahpu_api) is used through [Flutter Rust Bridge](https://github.com/fzyzcjy/flutter_rust_bridge) for high-performance solutions, and to extend libraries availabilities beyond Flutter.
@@ -83,7 +83,7 @@ not contain these workflows.
 **Database services** use Drift over SQLite. It is the authoritative store for
 projects, specimens, sites, collecting events, personnel, taxonomy, media
 metadata, measurements, narratives, and related records. See [Persistence
-data](./database) for the current schema version and migration workflow.
+data](../database) for the current schema version and migration workflow.
 
 **Bridge bindings** under `lib/src/rust/` are generated from the Rust wrapper
 crate. They are not hand-edited. Dart services use these bindings when the
@@ -115,7 +115,7 @@ Persistence is divided between the canonical Drift/SQLite project database,
 reproducible `nahpu_configs` configuration, installation-local
 `SharedPreferences`, and app-managed files. The complete ownership model,
 storage layout, schema workflow, migration rules, and Darwin Core field mapping
-are maintained on the [Persistence data](./database) page.
+are maintained on the [Persistence data](../database) page.
 
 ## Important data flows
 
@@ -142,8 +142,8 @@ file selection.
 database rows, media manifest, conflict handling, and import decisions.
 `nahpu_archive` supplies the ZIP and tar.gz container operations.
 
-For detail on exchange workflows, see [Data import and export](./data-import-export-overview).
-For schema ownership and field mapping, see the [Persistence data](./database) page.
+For detail on exchange workflows, see [Data import and export](../data-import-export-overview).
+For schema ownership and field mapping, see the [Persistence data](../database) page.
 
 ## Directory map
 
@@ -172,7 +172,7 @@ For most contributors, the main work is in the `lib/`, `assets/`, `tests/`, and 
 
 - Keep screens thin and keep workflows in providers and services.
 - Treat Drift SQLite as the canonical project-record store; see
-  [Persistence data](./database) for all storage boundaries.
+  [Persistence data](../database) for all storage boundaries.
 - Keep reproducibility-related configuration in `nahpu_configs`, not local UI
   settings.
 - Keep Rust wrappers small and put reusable behavior in NAHPU API crates.

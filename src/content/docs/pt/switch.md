@@ -37,7 +37,7 @@ Existem duas abordagens típicas para a transição do catálogo de campo em pap
 
 Vários fatores devem ser considerados ao fazer a transição para o NAHPU:
 
-- **Escolha do dispositivo**. O aplicativo é projetado para funcionar em vários dispositivos, incluindo smartphones, tablets, laptops e computadores. Você pode começar a usar seu smartphone. Se você tiver orçamento, recomendamos o uso de um tablet e um teclado Bluetooth para uma melhor experiência. Dependendo das condições de campo, você pode usar um laptop. Para mais informações, consulte a seção [Requisitos de Dispositivo](./usages/devices).
+- **Escolha do dispositivo**. O aplicativo é projetado para funcionar em vários dispositivos, incluindo smartphones, tablets, laptops e computadores. Você pode começar a usar seu smartphone. Se você tiver orçamento, recomendamos o uso de um tablet e um teclado Bluetooth para uma melhor experiência. Dependendo das condições de campo, você pode usar um laptop. Para mais informações, consulte a seção [Requisitos de Dispositivo](../usages/devices).
 
 — **Condições de campo**. O NAHPU foi projetado para locais de campo remotos sem acesso à Internet. Considere a durabilidade do dispositivo e a disponibilidade de eletricidade. Alguns smartphones novos são resistentes a água e poeira. Tablets e laptops podem precisar de proteção extra. Use um estojo resistente sempre que possível. Para áreas sem eletricidade, um banco de baterias de 20.000 a 25.000 mAh geralmente é suficiente para uma semana de trabalho de campo usando um smartphone ou tablet.
 

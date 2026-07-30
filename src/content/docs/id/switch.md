@@ -37,7 +37,7 @@ Dua pendekatan umum untuk beralih ke NAHPU dari katalog lapangan berbasis kertas
 
 Beberapa faktor yang perlu dipertimbangkan saat beralih ke NAHPU:
 
-- **Pilihan perangkat**. Aplikasi dirancang untuk bekerja di berbagai perangkat, termasuk smartphone, tablet, laptop, dan desktop. Anda dapat mulai menggunakan smartphone Anda. Jika Anda memiliki anggaran, kami sarankan menggunakan tablet dan keyboard Bluetooth untuk pengalaman yang lebih baik. Tergantung pada kondisi lapangan, Anda dapat menggunakan laptop. Untuk informasi lebih lanjut, silakan lihat di bagian [Persyaratan Perangkat](./usages/devices).
+- **Pilihan perangkat**. Aplikasi dirancang untuk bekerja di berbagai perangkat, termasuk smartphone, tablet, laptop, dan desktop. Anda dapat mulai menggunakan smartphone Anda. Jika Anda memiliki anggaran, kami sarankan menggunakan tablet dan keyboard Bluetooth untuk pengalaman yang lebih baik. Tergantung pada kondisi lapangan, Anda dapat menggunakan laptop. Untuk informasi lebih lanjut, silakan lihat di bagian [Persyaratan Perangkat](../usages/devices).
 
 — **Kondisi lapangan**. NAHPU dirancang untuk lokasi lapangan terpencil tanpa akses internet. Pertimbangkan ketahanan perangkat dan ketersediaan listrik. Beberapa smartphone baru tahan air dan tahan debu. Tablet dan laptop mungkin membutuhkan perlindungan ekstra. Gunakan casing yang kokoh sebisa mungkin. Untuk area tanpa listrik, power bank sebesar 20.000 hingga 25.000 mAh biasanya cukup untuk kerja lapangan selama seminggu menggunakan smartphone atau tablet.
 

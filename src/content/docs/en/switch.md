@@ -37,7 +37,7 @@ Two typical approaches to transition to NAHPU from paper-based field catalogs:
 
 Several factors to consider when transitioning to NAHPU:
 
-- **Device choice**. The app is designed to work on various devices, including smartphones, tablets, laptops, and desktops. You can start using your smartphone. If you have the budget, we recommend using a tablet and a Bluetooth keyboard for a better experience. Depending on the field conditions, you can use a laptop. For more information, please look at the [Devices Requirements](./usages/devices) section.
+- **Device choice**. The app is designed to work on various devices, including smartphones, tablets, laptops, and desktops. You can start using your smartphone. If you have the budget, we recommend using a tablet and a Bluetooth keyboard for a better experience. Depending on the field conditions, you can use a laptop. For more information, please look at the [Devices Requirements](../usages/devices) section.
 
 — **Field conditions**. NAHPU is designed for remote field sites without internet access. Consider device durability and electricity availability. Some new smartphones are water—and dust-resistant. Tablets and laptops may need extra protection. Use a sturdy case whenever possible. For areas without electricity, a 20,000 to 25,000 mAh power bank is typically sufficient for a week of fieldwork using a smartphone or tablet.
 
