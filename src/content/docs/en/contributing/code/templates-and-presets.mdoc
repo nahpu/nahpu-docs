@@ -1,0 +1,138 @@
+---
+title: "Templates and presets"
+sidebar:
+  order: 11
+---
+
+Templates and presets are configuration, not project records. They determine
+how NAHPU selects fields and renders output. For the surrounding data flows,
+read [Export workflows](./data-export-workflows).
+
+## Four concepts
+
+| Concept | Controls | Persistent owner | Sharing path |
+|---|---|---|---|
+| Record export preset | Record type, field mappings, headers, repeated values | `record_export_presets` in `redb` | JSON, QR, or user-config transfer |
+| Document template preset | Content and visual elements for one record block | `template_presets` in `redb` | Individual JSON or user-config transfer |
+| Document layout preset | Page geometry, blocks, ordering, and pagination | `document_layouts` in `redb` | Individual JSON or user-config transfer |
+| Current selection | Which preset/layout the device opens | `SharedPreferences` | Not portable configuration |
+
+Bundled templates and layouts are shipped in app assets and seeded only when a
+name does not already exist. They do not overwrite user edits. A suppressed
+bundled template remains suppressed until the user restores it.
+
+## Record export presets
+
+`ExportPresetModel` is a versioned Dart model. The current record-export preset
+schema is version 10. It stores:
+
+- record type and specimen taxon selection;
+- header format;
+- ordered scalar, combined, list, and nested mappings;
+- null fallbacks, case/text formatting, conditional replacements, and
+  replacement rules;
+- list and nested-record expansion modes;
+- indexed-header style and separators.
+
+Source fields use canonical `table::field` keys. A mapping such as
+`[specimen::fieldNumber]` selects one field; an expression containing several
+bracketed fields combines values with literal text. Nested mappings select
+fields from repeated child namespaces such as `specimenPart` or `parasite`.
+
+The persisted preset does not own the output filename, destination, or selected
+CSV/TSV/Excel/JSON runtime format. Those belong to the export action.
+
+When a field or table is renamed, preserve old presets with an explicit alias
+or in-memory migration. Do not silently discard mappings or interpret an
+unknown namespace as another table.
+
+## Document templates
+
+Templates are serialized `Template` models. They describe one printable block:
+elements, positions, dimensions, colors, typography, images, placeholders,
+conditional text, nested lists, and dynamic layout behavior.
+
+`template_field_catalog.dart` derives the available field namespaces from the
+record type and selected taxon. A template can therefore expose project,
+personnel, site, event, specimen, taxonomy, coordinates, attributes, parts,
+and related records without hard-coding every field in the editor.
+
+`TemplateService` stores templates through the generated config bridge. An
+individual JSON import is parsed before saving and must resolve a name conflict
+explicitly. Exporting a template produces a reusable definition, not a copy of
+the selected specimen data.
+
+When adding a new placeholder, update the field catalog, value resolver,
+formatting behavior, editor picker, compatibility aliases, and document tests.
+
+## Document layouts
+
+`DocumentLayoutService` stores the active layout model in `document_layouts`.
+Layouts reference template names and store:
+
+- page size or custom dimensions;
+- orientation and page padding;
+- template blocks, rows, columns, and counts;
+- template padding and page breaks;
+- sort field and direction;
+- fill-page and continuous/tiled behavior.
+
+Renaming or deleting a template must inspect layout usages. A layout that
+references an unavailable template should be reported as incompatible rather
+than silently rendered with a different template.
+
+`DocumentPageSetupService` is an unreferenced legacy implementation. New work
+must use `DocumentLayoutService` and the Rust `DocumentLayoutPreset` model.
+
+## Configuration transfer
+
+`nahpu_configs` keeps reproducibility-related values separate from SQLite.
+Complete user-config export/import can select sections and replace them
+atomically. Individual record-preset, template, and layout actions may have
+different collision behavior, so document that behavior at the UI boundary.
+
+Keep these versions separate:
+
+- internal `redb` database schema;
+- exported user-config schema;
+- record-export preset schema;
+- template/layout model compatibility;
+- Rust crate release version.
+
+Never use a crate version as a data migration marker.
+
+## Change recipes
+
+### Adding a record-export field
+
+Update the source model/query, default export list, dynamic field-value map,
+preset picker, header resolver, and any Darwin Core mapping. Add a preset
+compatibility alias if the source key changes.
+
+### Adding a template field or element
+
+Update the field catalog, editor controls, resolver, formatting/conditional
+logic, preview, and PDF writer tests. Check all record types and taxon filters.
+
+### Adding a layout property
+
+Update the Rust bridge model, config persistence, JSON import/export, editor,
+preview, renderer, and compatibility behavior. Regenerate bindings after a
+bridge-facing signature change.
+
+### Adding a bundled default
+
+Add the asset, seed only missing names, preserve suppressed names, and test
+that existing user edits are not overwritten during startup or upgrade.
+
+## Preset test checklist
+
+- round-trip JSON serialization;
+- supported and future schema versions;
+- legacy source/table aliases;
+- duplicate-name import behavior;
+- missing template references in layouts;
+- bundled default seeding and suppression;
+- selected-section config replacement;
+- preview/export parity;
+- output with empty, long, repeated, and taxon-specific values.

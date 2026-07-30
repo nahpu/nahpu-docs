@@ -1,13 +1,17 @@
 ---
 title: "Persistence data"
 sidebar:
-  order: 8
+  order: 13
 ---
 
 This page is the canonical reference for NAHPU persistence boundaries, schema
 changes, migrations, storage locations, and Darwin Core field mappings. Other
 architecture and code-contribution pages should link here instead of
 duplicating these details.
+
+For the complete import/export feature inventory and service-to-crate data
+flows, see [Data import and export](./data-import-export-overview). Keep this
+page focused on storage ownership, schema compatibility, and field mappings.
 
 NAHPU is an offline-first application. Persistence changes must preserve
 existing user data because field teams may update the app or restore backups
@@ -54,11 +58,11 @@ Keep these version concepts separate when reviewing a persistence change.
 
 | Version | Current value | Owner | Meaning |
 |---|---:|---|---|
-| Drift schema version | 13 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
+| Drift schema version | 15 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
 | SQLite user version | Set by Drift | Drift | On-disk marker used to select upgrade steps |
 | redb internal schema version | Not implemented | `nahpu_configs` | A future marker for redb table and value migrations |
 | Configuration export schema | 1 | `USER_CONFIG_SCHEMA_VERSION` | Compatibility version for exported configuration payloads |
-| Rust crate version | 0.6.0 | `crates/nahpu_configs/Cargo.toml` | Package release version, not a data migration marker |
+| Rust crate version | 0.7.0 | `crates/nahpu_configs/Cargo.toml` | Package release version, not a data migration marker |
 | redb engine version | 4.1.0 dependency | Cargo dependency resolution | Storage engine behavior, not NAHPU application schema |
 | Project transfer format | 4 | Transfer model and archive code | Version of project import and export payloads |
 
@@ -111,7 +115,7 @@ preservation, and corrupted input that must not partially clear stored data.
 ## Drift table schema
 
 The canonical project schema is defined in
-`lib/services/database/tables.drift` and is currently at schema version 13.
+`lib/services/database/tables.drift` and is currently at schema version 15.
 Drift manages these tables over SQLite. The summary below describes the
 current table set and the important ownership relationships.
 
@@ -126,11 +130,11 @@ current table set and the important ownership relationships.
 | `collPersonnel` | Personnel and collecting roles associated with events. |
 | `collEffort` | Collecting methods, equipment, counts, and effort notes for events. |
 | `narrative` | Project or site field narratives and their metadata. |
-| `media` | Project media metadata. v13 adds nullable `uri`. |
+| `media` | Project media metadata. v13 introduced nullable `uri`. |
 | `narrativeMedia` | Links narratives to media files. |
 | `siteMedia` | Links sites to media files. |
 | `specimenMedia` | Links specimens to media files. |
-| `associatedData` | Project-scoped external data with `name`, `type`, `date`, `description`, and v13 `uri`. |
+| `associatedData` | Project-scoped external data with `name`, `type`, `date`, `description`, and the v13 `uri` field. |
 | `specimenAssociatedData` | Composite link between specimens and associated data. Replaces `associatedData.specimenUuid`. |
 | `siteAssociatedData` | Composite link between sites and associated data. |
 | `personnelList` | Links personnel to projects. |
@@ -146,9 +150,9 @@ current table set and the important ownership relationships.
 | `parasite` | Parasite taxonomy and observation details. |
 | `specimenPart` | Specimen parts, tissues, barcodes, treatments, loans, and preparation details. |
 | `customFieldDefinition` | Project-defined field names, types, and labels. Schema only, see note below. |
-| `customFieldValue` | Values for custom fields. v13 adds nullable `unit` and references the field definition and project. Schema only, see note below. |
+| `customFieldValue` | Values for custom fields. v13 introduced nullable `unit`; the table references the field definition and project. Schema only, see note below. |
 
-`customFieldDefinition` and `customFieldValue` are schema-only as of v13. They
+`customFieldDefinition` and `customFieldValue` are schema-only as of v15. They
 are created by the migration coordinator and exposed through generated Drift
 accessors, but no DAO/query file, provider, or screen currently creates,
 reads, or updates rows in either table, and the `FieldUISection` enum they
@@ -200,20 +204,36 @@ index increases migration and insert cost.
    flutter pub run build_runner build --delete-conflicting-outputs
    dart run drift_dev schema dump \
      lib/services/database/database.dart \
-     db_schemas/drift_schema_v14.json
+     db_schemas/drift_schema_v15.json
    ```
 
 8. Update the matching snapshot in `db_schemas/drift_tables/` when the
    release workflow requires it. Keep generated files synchronized with
    `tables.drift`.
 9. Add migration fixtures and tests in `test/migration_test.dart`. The test
-   suite currently upgrades fixtures from v6 through v12 to v13.
+   suite currently upgrades fixtures from v6 through v14 to v15.
 10. Run `flutter test`, `flutter analyze`, `cargo check`, and `cargo clippy`
     when generated Rust or bridge data is affected.
 
 {% /steps %}
 
-### Worked example: v12 to v13
+### Worked example: v14 to v15
+
+The v15 migration in `lib/services/database/migration_coordinator.dart`:
+
+1. Adds project accession and catalog-number fields.
+2. Adds taxonomy kingdom and phylum fields and backfills missing taxonomy
+   hierarchy values.
+3. Renames the parasite detection remark column when the legacy name exists.
+4. Adds parasite UUID, identifier, and display-ID fields when absent.
+5. Creates event media and event associated-data tables and indexes.
+6. Removes duplicate parasite-detection rows and adds parasite indexes.
+7. Runs foreign-key and SQLite integrity checks.
+
+The v12-to-v13 example below remains historical context. Keep both examples
+aligned with the migration code when future schema versions are added.
+
+### Historical example: v12 to v13
 
 The v13 migration in
 `lib/services/database/migration_coordinator.dart` performs these operations
@@ -264,7 +284,7 @@ Favor small migrations, explicit tests, and clear pull request notes.
 render state and dispatch actions, they do not own database queries or
 migrations.
 
-**Record import and export** reads or assembles rows from Drift. Dart performs
+**Taxonomy import and record export** reads or assembles rows from Drift. Dart performs
 application-specific validation and database updates, while `nahpu_db` may
 provide reusable tabular readers and writers.
 
@@ -443,7 +463,7 @@ same change.
 - Add a documentation check that compares the table inventory and schema
   version here with generated Drift artifacts. This would catch stale table
   names such as `paleontologySite`.
-- Reconcile export-bundle table counts with the actual v13 inventory and keep
+- Reconcile export-bundle table counts with the actual v15 inventory and keep
   backup and restore documentation tested against a real archive.
 - Add restore verification that opens a restored SQLite file, runs foreign-key
   checks, and records the schema version before the file is offered to users.

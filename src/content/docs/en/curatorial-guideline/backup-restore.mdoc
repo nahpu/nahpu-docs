@@ -27,17 +27,17 @@ Use more than one backup type during fieldwork.
 - **Light project export**: a compressed `JSON.GZ` file containing project
   records without media. Use this for a limited-internet upload or a records-
   only merge. It is not a complete project backup.
-- **Project archive backup**: a `.zip` file that includes the SQLite database
-  plus project files such as media. Use this when you need a complete project
-  copy for another device or long-term storage.
-- **User config backup**: a `.json` or `.json.nl` file containing user configs,
+- **Full database backup**: a `.zip` or `.tar.gz` archive that includes the
+  SQLite database, user configs, media, associated files, fonts, and maps. Use
+  this when you need complete installation recovery.
+- **User config backup**: a `.json` or `.json.gz` file containing user configs,
   export presets, template presets, and document layouts. Use this when you need
   another device to share the same controlled lists, export behavior, and
   document layouts.
 
 {% aside type="tip" title="Recommended practice" %}
-At the end of each field day, export a database-only backup to cloud storage if
-internet is available, and export a project archive to local storage such as a
+At the end of each field day, export a full database backup to cloud storage if
+internet is available, and export a project transfer to local storage such as a
 USB-C flash drive or a second device. Periodically restore a backup on another
 device to confirm the file is usable.
 {% /aside %}
@@ -50,20 +50,15 @@ Use `Backup database` from the project menu.
 
 1. Navigate to the `Dashboard` page.
 2. Open the project menu and select `Backup database`.
-3. Keep `Database (.sqlite3)` selected.
-4. Choose what to include.
-   - Leave both toggles off to export only the SQLite database as `.sqlite3`.
-   - Turn on `Include project data` to include media/project files.
-   - Turn on `Include app settings` to include user configs in the archive.
-5. Add a file name.
-6. Select the save directory.
-7. Click `Save`.
+3. Choose `TAR.GZ` or `ZIP`.
+4. Add a file name.
+5. Select the save directory.
+6. Click `Save`.
 
 {% /steps %}
 
-If `Include project data` or `Include app settings` is enabled, NAHPU writes a
-`.zip` archive instead of a plain `.sqlite3` file. When `Include app settings`
-is enabled, the archive includes exported user configs as `user_configs.json`.
+The archive includes the database as `nahpu.sqlite3` and user configs as
+`user_configs.json`, together with available managed files.
 
 ## Exporting a project
 
@@ -84,7 +79,7 @@ backup file.
 
 1. Open `Settings`.
 2. Select `Database`.
-3. Choose a `.sqlite3` database file or a NAHPU archive `.zip`.
+3. Choose a `.sqlite3` database file, ZIP archive, or TAR.GZ archive.
 4. Keep `Backup current database` enabled unless you are certain you do not need
    the current data.
 5. Click `Replace`.
@@ -92,8 +87,8 @@ backup file.
 
 {% /steps %}
 
-Restoring a database replaces the current project database. If you restore a
-`.zip` archive, NAHPU extracts the archive, copies included project files into
+Restoring a database replaces the current project database. If you restore an
+archive, NAHPU extracts the archive, copies included project files into
 the app documents directory, imports any included user configs, and then
 replaces the active SQLite database.
 
@@ -111,7 +106,7 @@ Use `Export settings` to back them up separately.
 2. Open the project menu and select `Export settings`.
 3. Select the settings format.
    - `JSON (.json)` is easiest to inspect and share.
-   - `JSON Lines (.json.nl)` is useful for line-based processing.
+   - `JSON.GZ (.json.gz)` is smaller for transfer.
 4. Add a file name.
 5. Select the save directory.
 6. Click `Save`.
@@ -127,7 +122,7 @@ configs from another device or backup.
 
 1. Open `Settings`.
 2. Select the settings import option.
-3. Choose a `.json` or `.json.nl` settings file.
+3. Choose a `.json` or `.json.gz` settings file.
 4. Click `Replace`.
 5. Confirm the warning.
 
@@ -135,8 +130,10 @@ configs from another device or backup.
 
 Restoring user configs updates the app's configuration store. It does not
 replace the project SQLite database by itself. To restore both project data and
-user configs together, restore a `.zip` database archive that includes app
-settings.
+user configs together, restore a ZIP or TAR.GZ database archive.
+
+For the contributor-level storage and compatibility model, see [Data import and
+export](../contributing/code/data-import-export-overview).
 
 ## Document layouts
 

@@ -11,8 +11,9 @@ NAHPU has these export-related actions in the project menu:
 - **Export records** - Exports one record type to CSV, TSV, Excel, or JSON.
 - **Bundle records** - Creates a third-party Darwin Core Archive, Darwin Core Data Package, or complete NAHPU Data Package.
 - **Export documents** - Creates PDF documents from document templates and layout profiles.
-- **Backup database** - Exports the database as SQLite, or as a ZIP file when project data or app settings are included.
-- **Export settings** - Exports app settings as JSON or JSON Lines.
+- **Backup database** - Creates a complete ZIP or TAR.GZ archive containing the
+  SQLite database, user configs, managed files, media, fonts, and maps.
+- **Export settings** - Exports selected user configs as JSON or JSON.GZ.
 
 ## Quick export paths
 
@@ -30,31 +31,32 @@ panel, not from the project menu. The coordinate workflow supports GeoJSON,
 KML, zipped Shapefile, and GPX imports, and GeoJSON, KML, and zipped Shapefile
 exports.
 
-For project exports, use `JSON.GZ` when the upload must be small and media is
-not needed. Use ZIP or TAR.GZ for a full project transfer or backup because
-those formats include available media. A JSON.GZ export is not a complete
-backup.
+For project transfers, use `JSON.GZ` when the upload must be small and media is
+not needed. Use ZIP or TAR.GZ when available media should travel with the
+project. A project transfer is not a raw SQLite backup; use `Backup database`
+for a restorable installation copy.
 
 ## Backup database
 
-`Backup database` exports the NAHPU database. If you do not include project data or app settings, the result is a `.sqlite3` file. If you include either option, NAHPU creates a `.zip` archive.
+`Backup database` creates a complete NAHPU backup archive. Choose ZIP or TAR.GZ;
+the archive contains the SQLite database, all user configs, managed media,
+associated files, fonts, and custom maps.
 
 {% steps %}
 
 1. Navigate to the `Dashboard` page.
 2. Open the project menu and select `Backup database`.
-3. Keep `Database (.sqlite3)` selected.
-4. Optional: turn on `Include project data` to include media files.
-5. Optional: turn on `Include app settings` to include settings in the backup.
-6. Add `File name`.
-7. Select the `Directory` where you want to save the backup.
-8. Click `Save`.
+3. Choose `TAR.GZ` or `ZIP`.
+4. Add `File name`.
+5. Select the `Directory` where you want to save the backup.
+6. Click `Save`.
 
 {% /steps %}
 
 ## Export settings
 
-`Export settings` writes app settings, including saved export and document presets, to a settings file.
+`Export settings` writes selected reproducibility-related user configs, including
+saved export and document presets, to a settings file.
 
 {% steps %}
 
@@ -62,7 +64,7 @@ backup.
 2. Open the project menu and select `Export settings`.
 3. Select the `Settings format`.
     - `JSON (.json)`
-    - `JSON Lines (.json.nl)`
+    - `JSON.GZ (.json.gz)`
 4. Add `File name`.
 5. Select the `Directory` where you want to save the file.
 6. Click `Save`.

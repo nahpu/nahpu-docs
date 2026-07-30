@@ -4,7 +4,13 @@ sidebar:
   order: 5
 ---
 
-The NAHPU app uses Rust through Flutter Rust Bridge. The app’s `rust/` crate is the `rust_lib_nahpu` wrapper crate: it exposes bridge-facing functions and types, while the reusable implementations live in the [NAHPU API](./nahpu_api) workspace.
+The NAHPU app uses Rust through Flutter Rust Bridge. The app’s `rust/` crate is
+the `rust_lib_nahpu` wrapper crate: it exposes bridge-facing functions and
+types, while reusable implementations live in the
+[NAHPU API workspace](https://github.com/nahpu/nahpu_api).
+
+Use [Data import and export](./data-import-export-overview) to see which
+workflows cross this boundary and which remain Dart-owned.
 
 ## What the API layer means
 
@@ -83,7 +89,7 @@ or package writer, implement it in the appropriate NAHPU API crate first.
 
 {% steps %}
 
-1. Implement or update reusable behavior in the relevant [`nahpu_api`](./nahpu_api) crate.
+1. Implement or update reusable behavior in the relevant [`nahpu_api`](https://github.com/nahpu/nahpu_api) crate.
 2. Add a wrapper function or type in the appropriate `rust/src/api/*.rs` file.
 3. Export a new wrapper module from `rust/src/api/mod.rs` when necessary.
 4. Regenerate Flutter Rust Bridge bindings.

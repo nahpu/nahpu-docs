@@ -6,7 +6,11 @@ sidebar:
 
 This architecture page describes the NAHPU cross-platform app and the underlying technology stack. For guideline on the developing other supporting software and tools, please refer to the [Tools](./tools) page.
 
-The app is an offline-first, cross-platform application. Flutter owns the user interface, application workflows, and canonical project database. The Rust [NAHPU_API](https://github.com/nahpu/nahpu-api) is used through [Flutter Rust Bridge](https://github.com/fzyzcjy/flutter_rust_bridge) for high-performance solutions, and to extend libraries availabilities beyond Flutter.
+For the complete feature-by-feature exchange inventory, see [Data import and
+export](./data-import-export-overview). This page keeps only the shared layer
+model and the short version of each data flow.
+
+The app is an offline-first, cross-platform application. Flutter owns the user interface, application workflows, and canonical project database. The Rust [NAHPU_API](https://github.com/nahpu/nahpu_api) is used through [Flutter Rust Bridge](https://github.com/fzyzcjy/flutter_rust_bridge) for high-performance solutions, and to extend libraries availabilities beyond Flutter.
 
 ## High-level architecture
 
@@ -115,10 +119,11 @@ are maintained on the [Persistence data](./database) page.
 
 ## Important data flows
 
-**Record import/export** starts in Dart services, which read or assemble rows
-from the Drift database. The bridge delegates tabular reading and writing to
-`nahpu_db`. Dart services perform application-specific validation and database
-updates.
+**Taxonomy import and tabular record export** start in Dart services, which read
+or assemble rows from Drift. The bridge delegates reusable table reading and
+writing to `nahpu_db`; Dart performs application-specific validation and
+database updates. Generic spreadsheet import for all record types is not a
+shipped app workflow.
 
 **Bundle export** is planned and validated before writing. Dart services build
 the request from database records, configurations, vocabularies, and files.
@@ -137,7 +142,8 @@ file selection.
 database rows, media manifest, conflict handling, and import decisions.
 `nahpu_archive` supplies the ZIP and tar.gz container operations.
 
-For detail on the data flows and field mapping, see the [Persistence data](./database) page.
+For detail on exchange workflows, see [Data import and export](./data-import-export-overview).
+For schema ownership and field mapping, see the [Persistence data](./database) page.
 
 ## Directory map
 

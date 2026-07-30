@@ -1,0 +1,112 @@
+---
+title: "Data import and export"
+sidebar:
+  order: 8
+---
+
+This page introduces the import and export architecture used by NAHPU. It is
+written for contributors who know basic programming concepts but are still
+learning the NAHPU codebase. Start here, then read the focused pages for
+[import workflows](./data-import-workflows), [export workflows](./data-export-workflows),
+[templates and presets](./templates-and-presets), and
+[adding a taxon group](./adding-a-taxon-group).
+
+## The short version
+
+NAHPU has three kinds of portable information:
+
+1. **Project data**: projects, specimens, sites, events, personnel, taxonomy,
+   media metadata, attributes, and relationships. Drift stores this data in
+   SQLite.
+2. **Reproducibility settings**: controlled lists, record-export presets,
+   document templates, document layouts, and related configuration. The
+   `nahpu_configs` Rust crate stores these values in `redb`.
+3. **Files**: media, fonts, maps, and associated files. Dart services manage
+   their paths and metadata in the app documents directory.
+
+`SharedPreferences` stores local UI choices, such as the currently selected
+layout. It is not a project-data store and should not be used for values that
+another installation must reproduce.
+
+## Architecture
+
+```text
+Flutter screen
+    │ user action and progress state
+    ▼
+Riverpod provider or Dart service
+    ├── Drift queries and validation ──► SQLite project database
+    ├── file and media services ───────► app documents directory
+    └── generated bridge binding
+            ▼
+        rust/src/api wrapper
+            ▼
+        reusable nahpu_api crate
+            ▼
+        parser, writer, archive, GIS, package, or PDF output
+```
+
+Screens select files and display previews; they should not own database
+queries, merge decisions, or serialization. Dart services assemble records,
+resolve project relationships, validate application rules, and decide what is
+safe to write. Rust wrappers convert Dart-friendly values to bridge-friendly
+types. Reusable parsing, writing, conversion, and package behavior belongs in
+the appropriate NAHPU API crate.
+
+Not every path uses every layer. Taxonomy import uses a Rust tabular reader,
+while project merge is coordinated almost entirely in Dart. A full database
+backup uses archive wrappers but does not convert project rows into a new wire
+format.
+
+## Feature map
+
+| Workflow | Direction | Main formats | What it is for | Restorable? |
+|---|---|---|---|---|
+| Taxonomy import | Import | XLSX, CSV, TSV | Add taxon registry rows | No |
+| Project information | Both | JSON, QR | Create or share project metadata | No |
+| Record exchange | Both | JSON, ZIP, TAR.GZ | Move one site, event, or specimen | Record-level |
+| Project transfer | Both | JSON.GZ, ZIP, TAR.GZ | Merge or copy one project | Importable/mergeable |
+| Database backup | Both | SQLite, ZIP, TAR.GZ | Restore the complete installation | Yes |
+| User configs | Both | JSON, JSON.GZ | Reproduce settings and presets | Config-only |
+| Record export | Export | CSV, TSV, XLSX, JSON | Spreadsheet, analysis, or database exchange | No |
+| Statistics export | Export | CSV, TSV, XLSX, JSON | Save calculated tables | No |
+| Publishing bundles | Export | DwC-A, DwC-DP, NAHPU DP | Standards exchange or reproducible package | Depends on format |
+| Document export | Export | PDF | Labels, tags, sheets, and reports | No |
+| Coordinate exchange | Both | GeoJSON, KML, GPX, Shapefile ZIP, QR | Move point coordinates | Record-level |
+| Map-layer import | Import | GeoJSON, Shapefile ZIP, PMTiles | Add reference layers to maps | Included in full backup |
+| Templates and presets | Both | JSON, QR where supported | Reuse output configuration | Config-only |
+
+The lower-level API crates may support formats that the current Flutter
+screens do not expose. Document the shipped UI behavior separately from crate
+capabilities; adding a crate function does not automatically add an app
+feature.
+
+## A safe exchange lifecycle
+
+Use this sequence when adding or changing an exchange workflow:
+
+1. Inspect the input or build an explicit output request.
+2. Check type markers, schema versions, required fields, project ownership,
+   and archive paths.
+3. Produce a preview, manifest, or import plan before mutating data.
+4. Stage archives and intermediate files in a unique temporary directory.
+5. Write the database transaction or final output file.
+6. Copy media and associated files only after their manifest entries validate.
+7. Invalidate affected providers and show warnings or errors to the user.
+8. Delete temporary files on both success and failure.
+
+Version markers must be rejected when they are newer than the current reader.
+Older versions need an explicit in-memory migration or compatibility adapter.
+Never silently attach a row to another project, fall back to another taxon
+group, or partially replace a database after a failed validation.
+
+## Where to read next
+
+- [Architecture](./architecture) explains the application layers.
+- [Persistence data](./database) is the canonical schema, storage, migration,
+  and Darwin Core mapping reference.
+- [NAHPU API](./nahpu-api) explains bridge wrappers and crate boundaries.
+- [Code conventions](./conventions) covers Dart, Rust, and testing style.
+- [Import workflows](./data-import-workflows) follows every shipped import and
+  restore path.
+- [Export workflows](./data-export-workflows) follows every shipped export.
