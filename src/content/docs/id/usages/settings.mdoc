@@ -1,0 +1,63 @@
+---
+title: Pengaturan
+---
+
+NAHPU memisahkan informasi proyek, catatan basis data bersama, konfigurasi
+pengguna yang dapat direproduksi, dan preferensi instalasi. Buka proyek, buka
+menu Dasbor, lalu pilih `Settings`.
+
+## Dampak setiap pengaturan
+
+| Jenis | Contoh | Perilaku transfer |
+| --- | --- | --- |
+| Informasi proyek | Nama, nomor akses, lokasi, zona waktu, tanggal, dan nilai ID lapangan proyek | Disertakan dalam info dan transfer proyek |
+| Catatan bersama | Takson dan personel | Disimpan dalam basis data dan dihubungkan ke proyek |
+| Konfigurasi pengguna | Daftar terkontrol serta preset ekspor atau dokumen | Dipindahkan dengan `Export user configs` dan `Import user configs` |
+| Status instalasi | Tema dan takson utama aktif | Tetap pada instalasi saat ini |
+
+## Catalogs
+
+`Format` memilih takson utama untuk formulir spesimen baru pada perangkat ini.
+Satu proyek tetap dapat memiliki beberapa kelompok takson. `Events` mengatur
+metode pengumpulan dan peran personel kegiatan; `Sites` mengatur jenis situs
+dan habitat.
+
+`Specimens` berisi visibilitas bidang, ID lapangan dan jaringan, jenis
+spesimen, perlakuan, kondisi, dan pengaturan parasit.
+
+Biarkan `Use project ID` mati untuk memakai inisial dan nomor lapangan pribadi
+Cataloger. Nyalakan untuk mengatur awalan, nomor katalog saat ini, akhiran, dan
+kenaikan otomatis. NAHPU menggabungkan nilainya tanpa menambah pemisah.
+
+{% aside type="caution" %}
+
+Mengubah awalan atau akhiran mengubah tampilan ID proyek yang telah ditetapkan.
+Periksa dengan cermat jika ID sudah diekspor atau ditulis pada label.
+
+{% /aside %}
+
+## Database
+
+- `Taxa` mengatur catatan taksonomi.
+- `Personnel` mengatur personel dan peran perawatan spesimen.
+- `Replace database` mengganti basis data SQLite aktif dari cadangan.
+
+Buat cadangan sebelum memakai `Replace database`.
+
+## Exports
+
+- `Tabular Data` mengatur preset ekspor data.
+- `Documents` mengatur templat dan tata letak cetak.
+- `Template Editor` membuat dan menyunting templat dokumen.
+
+## Applications
+
+`Theme` memilih `System`, `Light`, atau `Dark`. `Data usage` menampilkan ruang
+yang dipakai basis data, berkas, dan media tanpa menghapus data.
+
+## Memindahkan konfigurasi pengguna
+
+`Export user configs` dan `Import user configs` berada di menu Dasbor di
+samping `Settings`, bukan di dalam halaman pengaturan. Transfer konfigurasi
+tidak mengganti basis data proyek. Baca [Backup and
+restore](/en/curatorial-guideline/backup-restore/).

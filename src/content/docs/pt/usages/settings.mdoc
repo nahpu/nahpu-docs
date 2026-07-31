@@ -1,0 +1,64 @@
+---
+title: Configurações
+---
+
+O NAHPU separa informações do projeto, registros compartilhados do banco de
+dados, configurações reproduzíveis e preferências da instalação. Abra um
+projeto, abra o menu do painel e selecione `Settings`.
+
+## O que cada configuração afeta
+
+| Tipo | Exemplos | Transferência |
+| --- | --- | --- |
+| Informações do projeto | Nome, acesso, local, fuso horário, datas e valores de ID de campo do projeto | Incluídas na informação e transferência do projeto |
+| Registros compartilhados | Táxons e pessoal | Armazenados no banco e associados aos projetos |
+| Configurações do usuário | Listas controladas e predefinições de exportação ou documentos | Transferidas com `Export user configs` e `Import user configs` |
+| Estado da instalação | Tema e táxon principal atual | Permanece na instalação atual |
+
+## Catalogs
+
+`Format` seleciona o táxon principal para novos formulários de espécimes neste
+dispositivo. Um projeto ainda pode conter vários grupos de táxons. `Events`
+gerencia métodos de coleta e funções do pessoal; `Sites` gerencia tipos de
+local e habitat.
+
+`Specimens` contém visibilidade de campos, IDs de campo e tecido, tipos de
+espécime, tratamentos, condições e configurações de parasitas.
+
+Deixe `Use project ID` desativado para usar as iniciais e o número pessoal de
+um Cataloger. Ative-o para configurar prefixo, número atual, sufixo e incremento
+automático. O NAHPU concatena os valores sem adicionar separadores.
+
+{% aside type="caution" %}
+
+Alterar o prefixo ou sufixo muda a exibição dos IDs de projeto já atribuídos.
+Confirme cuidadosamente se esses identificadores já foram exportados ou
+escritos em etiquetas.
+
+{% /aside %}
+
+## Database
+
+- `Taxa` gerencia os registros taxonômicos.
+- `Personnel` gerencia pessoas e funções de cuidado dos espécimes.
+- `Replace database` substitui o banco SQLite ativo a partir de um backup.
+
+Faça um backup antes de usar `Replace database`.
+
+## Exports
+
+- `Tabular Data` gerencia predefinições de exportação.
+- `Documents` gerencia modelos e layouts de impressão.
+- `Template Editor` cria e edita modelos de documentos.
+
+## Applications
+
+`Theme` seleciona `System`, `Light` ou `Dark`. `Data usage` mostra o espaço
+usado pelo banco, arquivos e mídias sem excluir dados.
+
+## Transferir configurações do usuário
+
+`Export user configs` e `Import user configs` ficam no menu do painel, ao lado
+de `Settings`, e não dentro da página de configurações. A transferência não
+substitui o banco de dados do projeto. Consulte [Backup and
+restore](/en/curatorial-guideline/backup-restore/).

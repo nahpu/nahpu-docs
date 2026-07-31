@@ -163,6 +163,15 @@ export default defineConfig({
               },
             },
             {
+              label: "Settings",
+              link: "usages/settings",
+              translations: {
+                "pt-BR": "Configurações",
+                es: "Configuración",
+                id: "Pengaturan",
+              },
+            },
+            {
               label: "Narrative",
               link: "usages/narrative",
               translations: {

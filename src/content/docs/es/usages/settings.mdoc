@@ -1,0 +1,64 @@
+---
+title: Configuración
+---
+
+NAHPU separa la información del proyecto, los registros compartidos de la base
+de datos, las configuraciones reproducibles y las preferencias de la
+instalación. Abra un proyecto, abra el menú del panel y seleccione `Settings`.
+
+## Qué afecta cada opción
+
+| Tipo | Ejemplos | Transferencia |
+| --- | --- | --- |
+| Información del proyecto | Nombre, acceso, ubicación, zona horaria, fechas e ID de campo del proyecto | Se incluye en la información y transferencia del proyecto |
+| Registros compartidos | Taxones y personal | Se guardan en la base de datos y se asocian con proyectos |
+| Configuraciones de usuario | Listas controladas y ajustes de exportación o documentos | Se transfieren con `Export user configs` e `Import user configs` |
+| Estado de la instalación | Tema y taxón principal actual | Permanece en la instalación actual |
+
+## Catalogs
+
+`Format` selecciona el taxón principal de los nuevos formularios de
+especímenes en este dispositivo. Un proyecto puede contener varios grupos de
+taxones. `Events` administra los métodos de recolección y los roles del
+personal; `Sites` administra los tipos de sitio y hábitat.
+
+`Specimens` contiene la visibilidad de campos, los ID de campo y tejido, los
+tipos de espécimen, tratamientos, condiciones y opciones de parásitos.
+
+Deje desactivado `Use project ID` para usar las iniciales y el número personal
+de un Cataloger. Actívelo para definir prefijo, número actual, sufijo y avance
+automático. NAHPU concatena los valores sin añadir separadores.
+
+{% aside type="caution" %}
+
+Cambiar el prefijo o sufijo modifica la visualización de los ID de proyecto ya
+asignados. Revise el cambio si esos identificadores ya se exportaron o
+imprimieron.
+
+{% /aside %}
+
+## Database
+
+- `Taxa` administra los registros taxonómicos.
+- `Personnel` administra personas y roles de cuidado de especímenes.
+- `Replace database` sustituye la base SQLite activa desde una copia.
+
+Haga una copia de seguridad antes de usar `Replace database`.
+
+## Exports
+
+- `Tabular Data` administra ajustes reutilizables de exportación.
+- `Documents` administra plantillas y diseños de impresión.
+- `Template Editor` crea y edita plantillas de documentos.
+
+## Applications
+
+`Theme` selecciona `System`, `Light` o `Dark`. `Data usage` muestra el espacio
+usado por la base, los archivos y los medios sin eliminar datos.
+
+## Transferir configuraciones de usuario
+
+`Export user configs` e `Import user configs` están en el menú del panel, junto
+a `Settings`, no dentro de la página de configuración. Su transferencia no
+reemplaza por sí sola la base de datos del proyecto. Consulte [Backup and
+restore](/en/curatorial-guideline/backup-restore/).

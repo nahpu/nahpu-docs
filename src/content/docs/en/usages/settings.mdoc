@@ -1,0 +1,91 @@
+---
+title: Settings
+---
+
+NAHPU separates project records, shared database records, reproducible user
+configs, and installation-only preferences. Open a project, open the
+Dashboard menu, and select `Settings` to configure the current installation.
+
+## What each setting affects
+
+| Kind | Examples | Transfer behavior |
+| --- | --- | --- |
+| Project information | Name, accession, location, time zone, dates, project field-ID values | Included in project-info and project transfers |
+| Shared database records | Taxa and personnel | Stored in the NAHPU database and associated with projects |
+| User configs | Controlled lists and export or document presets | Transfer with `Export user configs` and `Import user configs` |
+| Installation state | Theme and current main taxon | Remains on the current installation |
+
+Changing a setting while one project is open can therefore affect other
+projects on the same installation. Review transferred user configs before
+replacing your current configuration.
+
+## Catalogs
+
+### Format
+
+`Format` selects the main taxon used for new specimen forms on this device. A
+project can contain more than one taxon group; this setting only controls the
+currently active specimen format and its measurement fields.
+
+### Events and sites
+
+Use `Events` to manage collection methods and event-personnel roles. Use
+`Sites` to manage controlled vocabularies for site and habitat types. Keep
+these lists consistent across field devices by transferring user configs.
+
+### Specimens
+
+`Specimens` contains capture-field visibility, field IDs, tissue IDs, specimen
+types, treatments, conditions, and taxon-dependent parasite settings.
+
+Under `Field ID`, leave `Use project ID` off to use a Cataloger's initials and
+personal field number. The Cataloger must have the `Cataloger` role, field
+registration enabled, initials, and a current field number.
+
+Turn on `Use project ID` to configure a prefix, current catalog number, suffix,
+and auto-increment behavior. NAHPU concatenates the three values directly. For
+example, `NAHPU-`, `120`, and `-M` produce `NAHPU-120-M`.
+
+{% aside type="caution" %}
+
+Changing a project-ID prefix or suffix changes how assigned project IDs are
+displayed. Confirm the change carefully if those identifiers have already
+been exported or written on labels.
+
+{% /aside %}
+
+## Database
+
+- `Taxa` manages taxonomy records available to projects.
+- `Personnel` manages people in the database and their specimen-care roles.
+- `Replace database` replaces the active SQLite database from a backup.
+
+{% aside type="caution" %}
+
+Make a current backup before using `Replace database`. Replacing the database
+is different from merging a project or importing user configs.
+
+{% /aside %}
+
+## Exports
+
+- `Tabular Data` manages reusable record-export presets.
+- `Documents` manages document templates and print-layout presets.
+- `Template Editor` creates and edits document templates.
+
+These presets are user configs. Export them when another installation must
+reproduce the same columns, labels, or layouts.
+
+## Applications
+
+Use `Theme` to select `System`, `Light`, or `Dark`. Theme choice is local to
+the installation. `Data usage` reports the space used by the database, files,
+and media; it does not delete anything.
+
+## Transferring user configs
+
+`Export user configs` and `Import user configs` are in the project Dashboard
+menu, next to `Settings`; they are not inside the Settings page. User-config
+transfer can reproduce controlled lists and presets without replacing the
+project database. See [Backup and restore](../../curatorial-guideline/backup-restore)
+before replacing configs or data.

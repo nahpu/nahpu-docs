@@ -9,13 +9,31 @@ kegiatan pengumpulan, catatan spesimen, narasi, dan media terkait.
 
 ## Membuat proyek
 
-Di layar beranda, pilih `+`, lalu `Create project`. Masukkan nama unik dengan
-panjang 3 hingga 25 karakter. Deskripsi bersifat opsional. Gunakan `Show more`
-untuk menambahkan peneliti utama, lokasi, zona waktu, tanggal mulai, dan
-tanggal selesai. Saat membuat proyek, pilih juga format katalog.
+Di layar beranda, pilih `+`, pilih `New project`, lalu tentukan apakah Anda
+akan membuat identitas baru atau memakai informasi dari perangkat lain.
 
-NAHPU membuat UUID untuk setiap proyek. UUID digunakan untuk mengenali proyek
-saat informasi dipertukarkan antarperangkat.
+{% steps %}
+
+1. Pada `Welcome`, pilih `Create new project`. Untuk memakai identitas yang
+   sama, gunakan `Import project-info JSON` atau `Scan project QR` di perangkat
+   seluler.
+2. Pada `Project information`, masukkan nama unik sepanjang 3–25 karakter.
+   Deskripsi, peneliti utama, nomor akses institusi, lokasi, zona waktu IANA,
+   dan tanggal bersifat opsional.
+3. Pada `Main taxon`, pilih takson untuk formulir spesimen baru di perangkat
+   ini. Langkah ini dapat dilewati dan diubah melalui `Settings` > `Format`.
+4. Pada `Field ID`, pilih `Personnel` atau `Project`. Mode personel memerlukan
+   Cataloger yang memenuhi syarat. Mode proyek menggabungkan awalan, nomor
+   katalog saat ini, dan akhiran tanpa menambah pemisah. Pengaturan ini juga
+   tersedia di `Settings` > `Specimens`.
+5. Pada `Review`, periksa identitas proyek, pengaturan perangkat, dan kesiapan
+   taksonomi, lalu pilih `Create project`.
+
+{% /steps %}
+
+NAHPU membuat UUID untuk proyek baru. Impor info atau pemindaian QR
+mempertahankan UUID sumber, tetapi hanya menyalin metadata—bukan catatan,
+personel, takson, media, atau pengaturan perangkat.
 
 ## Zona waktu proyek
 
@@ -73,7 +91,8 @@ Setiap proyek memiliki menu tindakan:
 Dasbor memiliki empat panel:
 
 - **Project Overview** - Menampilkan nama, UUID, deskripsi, peneliti utama,
-  lokasi, zona waktu, tanggal, tanggal pembuatan, dan akses terakhir.
+  nomor akses, lokasi, zona waktu, tanggal, tanggal pembuatan, dan akses
+  terakhir.
 - **Personnel** - Menampilkan personel yang ditugaskan dan menyediakan
   `Add personnel` untuk memilih data yang sudah ada atau membuat data baru.
 - **Taxon Registry** - Menampilkan takson terdaftar serta kontrol untuk
@@ -86,15 +105,17 @@ dan penghapusan proyek.
 ## Memperbarui informasi proyek
 
 Dari dasbor, pilih `Edit` pada Project Overview. Dari layar beranda, buka menu
-tindakan proyek dan pilih `Edit info`.
+tindakan proyek dan pilih `Edit info`. Formulir mengelompokkan detail, tempat
+dan waktu, serta tanggal proyek. Ubah takson utama atau ID lapangan melalui
+[Pengaturan](./settings).
 
 ## Berbagi informasi proyek
 
 Untuk menyalin informasi tanpa mentransfer catatan:
 
 1. Pada perangkat sumber, pilih `Export info` atau `Show QR`.
-2. Pada perangkat penerima, pilih `Create project`, lalu gunakan `Import JSON`
-   di desktop atau `Scan QR` di perangkat seluler.
+2. Pada perangkat penerima, pilih `New project`, lalu gunakan `Import
+   project-info JSON` atau `Scan project QR` di perangkat seluler.
 
 Metode ini mempertahankan UUID dan membuat proyek dengan informasi yang sama.
 Untuk mentransfer catatan, media, dan data lain, gunakan [Transfer

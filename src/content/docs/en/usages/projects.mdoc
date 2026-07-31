@@ -9,13 +9,41 @@ sites, collecting events, specimen records, narratives, and linked media.
 
 ## Creating a project
 
-From the home screen, select `+` and choose `Create project`. Enter a unique
-project name between 3 and 25 characters. A description is optional. Use
-`Show more` to add the principal investigator, location, time zone, start
-date, and end date. When creating a project, also choose its catalog format.
+From the home screen, select `+`, choose `New project`, and then choose whether
+to create a new identity or reuse project information from another device.
 
-NAHPU generates a UUID for each project. The UUID identifies the project when
-information is exchanged between devices.
+{% steps %}
+
+1. On `Welcome`, select `Create new project`. To reuse an existing project
+   identity instead, select `Import project-info JSON` or, on mobile, `Scan
+   project QR`.
+2. Under `Project information`, enter a unique project name between 3 and 25
+   characters. Optionally add a description, principal investigator,
+   institutional accession, location, IANA time zone, and start and end dates.
+3. Under `Main taxon`, choose the taxon that should control new specimen forms
+   on this device. A project can contain multiple taxon groups. This step can
+   be skipped and changed later in `Settings` > `Format`.
+4. Under `Field ID`, choose `Personnel` or `Project`. This step can also be
+   skipped and completed later in `Settings` > `Specimens`.
+   - `Personnel` uses an eligible Cataloger's initials and personal field
+     number. Select an existing Cataloger or create one when the conditional
+     `Cataloger` step appears.
+   - `Project` combines a prefix, current catalog number, and suffix. NAHPU
+     inserts no separators. Turn on auto-increment to advance the project
+     number when it is assigned.
+5. On `Review`, check the project identity, device setup, and taxonomy
+   readiness. Select `Create project` to open the dashboard.
+
+{% /steps %}
+
+NAHPU generates a UUID for a new project. On wide screens, the wizard displays
+its steps in a left rail; on narrower screens, the same steps appear as
+horizontal chips. The workflow and validation are the same in both layouts.
+
+Importing project-info JSON or scanning its QR preserves the source UUID and
+goes directly to review. It copies project metadata only—not records,
+personnel, taxa, media, or device settings. Use a full project transfer when
+those data must also move between devices.
 
 ## Project time zone
 
@@ -74,7 +102,9 @@ Each project has an action menu with these options:
 The dashboard contains four panels:
 
 - **Project Overview** - Shows the project name, UUID, description, principal
-  investigator, location, time zone, dates, creation date, and last access.
+  investigator, accession, location, time zone, dates, creation date, and last
+  access. Information is grouped as Identity, Description, Project details,
+  Schedule, and Record metadata.
   Use `Edit` to change the project and `Export info` to share its information.
 - **Personnel** - Lists personnel assigned to the project. Use `Add personnel`
   to select an existing database entry or create a new one.
@@ -89,7 +119,9 @@ project deletion actions.
 ## Updating project information
 
 From the dashboard, select `Edit` in the Project Overview panel. From the
-home screen, open a project's action menu and select `Edit info`.
+home screen, open a project's action menu and select `Edit info`. The edit form
+groups fields under Project details, Place and time, and Project dates. Change
+the main taxon or field-ID defaults in [Settings](./settings).
 
 ## Sharing project information
 
@@ -98,8 +130,8 @@ records:
 
 1. On the source device, choose `Export info` or `Show QR` from the project's
    home-screen action menu.
-2. On the receiving device, choose `Create project`, then use `Import JSON` on
-   desktop or `Scan QR` on a mobile device.
+2. On the receiving device, choose `New project`, then use `Import project-info
+   JSON` or `Scan project QR` on mobile.
 
 These methods retain the source project's UUID and create a project with the
 same project information. To transfer records, media, and related data, use

@@ -10,13 +10,30 @@ vinculadas.
 
 ## Criar um projeto
 
-Na tela inicial, selecione `+` e escolha `Create project`. Informe um nome
-único com 3 a 25 caracteres. A descrição é opcional. Use `Show more` para
-adicionar o pesquisador principal, local, fuso horário, datas de início e fim.
-Ao criar o projeto, selecione também o formato do catálogo.
+Na tela inicial, selecione `+`, escolha `New project` e decida se vai criar uma
+nova identidade ou reutilizar informações de outro dispositivo.
 
-O NAHPU gera um UUID para cada projeto. O UUID identifica o projeto quando as
-informações são trocadas entre dispositivos.
+{% steps %}
+
+1. Em `Welcome`, selecione `Create new project`. Para reutilizar uma
+   identidade, use `Import project-info JSON` ou `Scan project QR` no celular.
+2. Em `Project information`, informe um nome único com 3 a 25 caracteres.
+   Descrição, pesquisador principal, acesso institucional, local, fuso horário
+   IANA e datas são opcionais.
+3. Em `Main taxon`, escolha o táxon dos novos formulários neste dispositivo.
+   Esta etapa pode ser ignorada e alterada em `Settings` > `Format`.
+4. Em `Field ID`, escolha `Personnel` ou `Project`. O modo pessoal exige um
+   Cataloger qualificado. O modo do projeto combina prefixo, número atual e
+   sufixo sem inserir separadores. Também pode ser configurado em `Settings` >
+   `Specimens`.
+5. Em `Review`, confira a identidade, a configuração do dispositivo e a
+   prontidão da taxonomia. Selecione `Create project`.
+
+{% /steps %}
+
+O NAHPU gera um UUID para projetos novos. Importar informações ou ler o QR
+preserva o UUID de origem, mas copia apenas metadados—não inclui registros,
+pessoal, táxons, mídias ou configurações do dispositivo.
 
 ## Fuso horário do projeto
 
@@ -76,7 +93,7 @@ Cada projeto tem um menu de ações:
 O painel contém quatro áreas:
 
 - **Project Overview** - Mostra nome, UUID, descrição, pesquisador principal,
-  local, fuso horário, datas, criação e último acesso.
+  acesso, local, fuso horário, datas, criação e último acesso.
 - **Personnel** - Lista o pessoal atribuído e permite usar `Add personnel` para
   selecionar uma pessoa existente ou criar uma nova.
 - **Taxon Registry** - Lista os táxons registrados e permite adicioná-los ou
@@ -90,15 +107,17 @@ configurações e exclusão.
 ## Atualizar informações do projeto
 
 No painel, selecione `Edit` em Project Overview. Na tela inicial, abra o menu
-de ações e selecione `Edit info`.
+de ações e selecione `Edit info`. O formulário agrupa detalhes, local e tempo,
+e datas do projeto. Altere o táxon principal ou os IDs em
+[Configurações](./settings).
 
 ## Compartilhar informações do projeto
 
 Para copiar informações sem transferir registros:
 
 1. No dispositivo de origem, selecione `Export info` ou `Show QR`.
-2. No dispositivo receptor, selecione `Create project` e use `Import JSON` no
-   computador ou `Scan QR` no celular.
+2. No dispositivo receptor, selecione `New project` e use `Import project-info
+   JSON` ou `Scan project QR` no celular.
 
 Esses métodos mantêm o UUID e criam um projeto com as mesmas informações. Para
 transferir registros, mídias e outros dados, use [Transferir um
