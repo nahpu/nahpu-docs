@@ -4,44 +4,163 @@ sidebar:
   order: 12
 ---
 
-Use `Exportar documentos` quando precisar de PDFs imprimíveis a partir de registros da NAHPU. Esta exportação serve para etiquetas, rótulos, folhas e outros documentos formatados.
+Use `Export documents` para criar PDFs imprimíveis a partir dos registros do
+NAHPU. Esse fluxo serve para etiquetas, rótulos, folhas, relatórios e outros
+documentos formatados. Para dados tabulares, use [Export records](./export-records);
+presets de exportação de registros não controlam documentos PDF.
 
-## Forma rápida de exportar documentos
+## Como as partes se combinam
+
+```text
+Dados do registro + modelo = um bloco preenchido
+Blocos preenchidos + layout de impressão = páginas
+Páginas + pré-visualização/exportação = PDF
+```
+
+- Um **modelo** define o conteúdo e a aparência de um bloco.
+- Um **layout de impressão** define papel, margens, grade, ordem e paginação.
+- Os registros fornecem os valores inseridos nos campos do modelo.
+
+## Exportação rápida
 
 {% steps %}
 
-1. Navegue até a página `Painel de controle`.
-2. Abra o menu do projeto e selecione `Exportar documentos`.
-3. Selecione um perfil de `Layout de documento`.
-4. Revise ou ajuste a configuração da página, blocos de modelo e seleção de espécimes.
-5. Opcional: use o painel de pré-visualização para gerar uma prévia.
-6. Adicione o `Nome do arquivo`.
-7. Selecione o diretório de salvamento em plataformas desktop. No Android e iOS, a NAHPU usa o diretório de documentos do app.
-8. Clique em `Exportar documentos`.
+1. Navegue até `Dashboard`.
+2. Abra o menu do projeto e selecione `Export documents`.
+3. Selecione um `Layout profile`.
+4. Revise a configuração da página, os blocos e a seleção de registros.
+5. Selecione `Preview` e gere uma prévia.
+6. Informe `File name` e escolha o diretório de salvamento quando solicitado.
+7. Selecione `Export Documents`.
+8. No celular, use `Share` depois da exportação para enviar o PDF.
 
 {% /steps %}
 
-## Detalhes
+## Criar um modelo
 
-A exportação de documentos combina registros, modelos e layouts de documento. Os registros fornecem os dados. Os modelos definem o que aparece em cada etiqueta, rótulo ou bloco. Os layouts definem como esses blocos são posicionados em uma página.
+Abra `Settings` > `Document Presets`, mude para `Templates` e selecione `Create
+new template`.
+
+1. Informe um `Template name` único e uma `Description` útil.
+2. Escolha o `Record type` correto: `Specimen`, `Specimen Part`, `Site`,
+   `Collecting Event`, `Narrative` ou `None`.
+3. Escolha `1 sided` ou `2 sided`. Um modelo frente e verso tem desenhos
+   separados para Front e Back; o verso é preservado no modo de um lado, mas
+   não é impresso até o modo frente e verso ser ativado.
+4. Defina largura e altura para o tamanho de uma etiqueta, rótulo ou bloco,
+   não para o tamanho da folha.
+5. Adicione textos, imagens, linhas e formas. Selecione um elemento para ajustar
+   posição, tamanho, estilo, visibilidade, bloqueio e ordem de sobreposição.
+6. Salve com `Save`; use `Save as...` para criar uma variação.
+
+O tipo de registro controla os campos e registros disponíveis. Em modelos de
+espécimes, escolha o filtro de táxon antes de selecionar campos específicos.
+
+## Adicionar campos
+
+Insira campos pelo seletor do editor de texto. Em modelos reutilizáveis,
+prefira o formato completo `Table::Field`:
 
 ```text
-Registros do projeto
-    |
-    v
-Modelo de documento + layout de documento
-    |
-    v
-Previa
-    |
-    v
-Documento PDF
+Número de campo: [specimen::fieldNumber]
+Nome científico: [taxonomy::scientificName]
+Localidade: [site::specificLocality]
 ```
 
-Layouts são gerenciados em `Configurações`, em `Presets de documentos`. Um layout pode usar tamanhos de página padrão ou tamanho personalizado. Ele também salva margens, espaçamento, ordem de blocos, linhas, colunas e quebras de página.
+Formas curtas como `[fieldNumber]` funcionam, mas o nome completo é mais seguro
+quando tabelas diferentes possuem campos com o mesmo nome. Campos podem ser
+combinados com texto comum:
 
-Gere uma prévia antes de exportar quando o documento será impresso. A prévia ajuda a encontrar texto transbordando, quebras de página incorretas e posicionamento inesperado dos modelos.
+```text
+[taxonomy::genus] [taxonomy::specificEpithet] - [specimen::fieldNumber]
+```
 
-Layouts e modelos são configurações do app. Você pode compartilhá-los entre dispositivos exportando configurações ou incluindo configurações do app em um arquivo de banco de dados.
+Escolha o tipo de texto adequado: `Normal Text`, `Dates`, `Date and Time`,
+`Coordinates`, `Number`, `Sex`, `List Values`, `Nested List`, `Markdown` ou
+`Encoded Text`. Use fallback para campos opcionais e teste condições tanto
+quando coincidem quanto quando não coincidem.
 
-A exportação de documentos é para apresentação e impressão. Use [Exportar registros](../export-records) quando o destinatário precisar de dados estruturados.
+## Preparar para dados reais
+
+Faça a prévia com o maior texto esperado, listas repetidas grandes, valores
+ausentes, identificadores longos e ambos os lados de modelos frente e verso.
+Para narrativas e listas aninhadas, habilite texto dinâmico e `Auto-fill page`,
+reserve largura para quebra de linha e gere a prévia novamente após editar.
+
+Imagens usam um caminho local gerenciado pelo dispositivo. Um JSON de modelo
+descreve a definição, não uma cópia de cada arquivo de imagem externo; verifique
+as imagens depois de importar em outro dispositivo.
+
+## Criar um preset de layout de impressão
+
+Em `Settings` > `Document Presets`, mude para `Print layouts`. Crie um layout ou
+use `Save as...` antes de experimentar com um layout já aprovado.
+
+Escolha `Page size`, `Orientation`, dimensões personalizadas e espaçamento da
+página. Em `Template blocks`, configure para cada bloco:
+
+- `Template` e `Copies` (cópias por registro);
+- `Rows` e `Cols` para uma grade fixa;
+- `Auto-fill page` para medir a altura real do conteúdo;
+- espaçamento do modelo;
+- `Order by`, `Direction` e `Page break after`.
+
+Se aparecer `This template no longer exists`, selecione outro modelo antes de
+gerar a prévia ou exportar. O NAHPU não substitui um modelo silenciosamente.
+
+Para vários blocos, `Multiple blocks mode` oferece:
+
+- `Continuous (Block-by-block)`: todos os registros do bloco 1, depois os do
+  bloco 2;
+- `Alternate (Record-by-record)`: bloco 1 e bloco 2 do registro 1, depois os
+  dois blocos do registro 2.
+
+## Receitas práticas
+
+| Objetivo | Configuração recomendada |
+|---|---|
+| Documento de página inteira | Um bloco, uma linha e uma coluna |
+| Grade de etiquetas fixas | Linhas e colunas exatas, `Auto-fill page` desligado |
+| Folha narrativa variável | Texto dinâmico e `Auto-fill page` ligados |
+| Várias cópias | Aumente `Copies` |
+| Etiqueta frente e verso | Modelo `2 sided` e teste o espelhamento |
+| Pacote misto | Vários blocos e `Continuous (Block-by-block)` |
+| Saída de registros pareados | Vários blocos e `Alternate (Record-by-record)` |
+
+## Pré-visualizar, exportar e compartilhar
+
+A prévia usa o mesmo caminho de seleção, substituição, medição e paginação do
+PDF. Verifique registros longos, listas repetidas, primeira e última página,
+alinhamento da grade e ambos os lados. Gere uma nova prévia quando ela estiver
+desatualizada.
+
+Alterações feitas no layout selecionado pela tela de exportação são salvas no
+próprio layout. Use `Save as...` antes de testar uma nova disposição. Informe
+`File name`, selecione o diretório e use `Export Documents`. O PDF é um artefato
+de apresentação, não uma exportação estruturada nem um backup restaurável.
+
+## Importar e compartilhar
+
+Modelos podem ser exportados como JSON pelo `Template Editor`; layouts podem ser
+exportados em `Document Presets`. A importação de modelo pergunta se deve
+substituir ou usar outro nome; a importação de layout cria um nome disponível.
+Layouts referenciam modelos por nome, portanto transfira ambos juntos. Para uma
+cópia completa com dados e arquivos gerenciados, use `Backup database`.
+
+## Solução de problemas
+
+| Sintoma | Verifique |
+|---|---|
+| Placeholder aparece literalmente | Tipo de registro e chave completa `Table::Field`. |
+| Prévia vazia | Tipo do bloco e registros selecionados. |
+| Modelo ausente | Reatribua o bloco ou restaure/import o modelo. |
+| Texto sobreposto ou cortado | Texto dinâmico, `Auto-fill page`, largura e altura do bloco. |
+| Espaço vazio inesperado | Linhas fixas, tamanho do modelo e espaçamentos. |
+| Ordem incorreta | `Order by` e `Direction` do bloco. |
+| Repetição inesperada | `Copies` e a seleção de registros. |
+| Blocos na sequência errada | `Multiple blocks mode`. |
+| Verso ausente ou girado | `2 sided`, conteúdo Back e espelhamento. |
+| Prévia desatualizada | Gere a prévia novamente. |
+| Importação altera muitos presets | A transferência de uma seção substitui toda aquela seção. |
+
+Para detalhes de armazenamento e renderização, consulte [Templates and presets](../../../contributing/code/templates-and-presets) e [Export workflows](../../../contributing/code/data-export-workflows).

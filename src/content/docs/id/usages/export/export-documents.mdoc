@@ -4,44 +4,165 @@ sidebar:
   order: 12
 ---
 
-Gunakan `Ekspor dokumen` saat membutuhkan PDF siap cetak dari catatan NAHPU. Ekspor ini dipakai untuk label, tag, lembar, dan dokumen berformat lain.
+Gunakan `Export documents` untuk membuat PDF siap cetak dari catatan NAHPU.
+Alur ini digunakan untuk label, tag, lembar, laporan, dan dokumen berformat
+lain. Untuk data tabular, gunakan [Export records](./export-records); preset
+ekspor catatan tidak mengatur dokumen PDF.
 
-## Cara cepat mengekspor dokumen
+## Cara kerja komponennya
+
+```text
+Data catatan + templat = satu blok dokumen terisi
+Blok terisi + tata letak cetak = halaman
+Halaman + pratinjau/ekspor = PDF
+```
+
+- **Templat** menentukan isi dan tampilan satu blok.
+- **Tata letak cetak** menentukan kertas, margin, grid, urutan, dan paginasi.
+- Catatan menyediakan nilai yang dimasukkan ke dalam field templat.
+
+## Ekspor cepat
 
 {% steps %}
 
-1. Navigasi ke halaman `Dasbor`.
-2. Buka menu proyek dan pilih `Ekspor dokumen`.
-3. Pilih profil `Tata Letak Dokumen`.
-4. Tinjau atau sesuaikan pengaturan halaman, blok templat, dan pilihan spesimen.
-5. Opsional: gunakan panel pratinjau untuk membuat pratinjau.
-6. Tambahkan `Nama file`.
-7. Pilih direktori penyimpanan di platform desktop. Di Android dan iOS, NAHPU menggunakan direktori dokumen aplikasi.
-8. Klik `Ekspor Dokumen`.
+1. Buka halaman `Dashboard`.
+2. Buka menu proyek dan pilih `Export documents`.
+3. Pilih `Layout profile`.
+4. Periksa pengaturan halaman, blok templat, dan pilihan catatan.
+5. Pilih `Preview` lalu buat pratinjau.
+6. Masukkan `File name` dan pilih direktori penyimpanan saat diminta.
+7. Pilih `Export Documents`.
+8. Di perangkat seluler, gunakan `Share` setelah ekspor selesai untuk mengirim PDF.
 
 {% /steps %}
 
-## Penjelasan mendalam
+## Membuat templat
 
-Ekspor dokumen menggabungkan catatan, templat dokumen, dan tata letak dokumen. Catatan menyediakan data. Templat menentukan isi setiap label, tag, atau blok dokumen. Tata letak menentukan posisi blok pada halaman.
+Buka `Settings` > `Document Presets`, pilih `Templates`, lalu pilih `Create new
+template`.
+
+1. Masukkan `Template name` yang unik dan `Description` yang jelas.
+2. Pilih `Record type`: `Specimen`, `Specimen Part`, `Site`, `Collecting Event`,
+   `Narrative`, atau `None`.
+3. Pilih `1 sided` atau `2 sided`. Templat dua sisi memiliki desain Front dan
+   Back terpisah; desain belakang tetap tersimpan dalam mode satu sisi, tetapi
+   tidak dicetak sampai mode dua sisi diaktifkan.
+4. Atur lebar dan tinggi sesuai ukuran satu label, tag, atau blok, bukan ukuran
+   seluruh kertas.
+5. Tambahkan teks, gambar, garis, dan bentuk. Pilih elemen untuk mengatur
+   posisi, ukuran, gaya, visibilitas, penguncian, dan urutan tumpukan.
+6. Simpan dengan `Save`; gunakan `Save as...` untuk membuat variasi.
+
+Jenis catatan menentukan field dan catatan yang tersedia. Untuk templat
+spesimen, pilih filter takson sebelum memilih field khusus takson.
+
+## Menambahkan field catatan
+
+Masukkan field melalui pemilih pada editor teks. Untuk templat yang dipakai
+ulang, gunakan bentuk lengkap `Table::Field`:
 
 ```text
-Catatan proyek
-    |
-    v
-Templat dokumen + tata letak dokumen
-    |
-    v
-Pratinjau
-    |
-    v
-Dokumen PDF
+Nomor field: [specimen::fieldNumber]
+Nama ilmiah: [taxonomy::scientificName]
+Lokasi: [site::specificLocality]
 ```
 
-Tata letak dikelola di `Pengaturan` pada `Preset Dokumen`. Tata letak dapat memakai ukuran halaman standar atau ukuran khusus. Tata letak juga menyimpan margin, jarak, urutan blok, baris, kolom, dan pemisah halaman.
+Bentuk singkat seperti `[fieldNumber]` tersedia, tetapi nama lengkap lebih aman
+ketika beberapa tabel memiliki field dengan nama sama. Field dapat digabungkan
+dengan teks biasa:
 
-Buat pratinjau sebelum mengekspor dokumen yang akan dicetak. Pratinjau membantu menemukan teks yang meluap, pemisah halaman yang keliru, dan posisi templat yang tidak sesuai.
+```text
+[taxonomy::genus] [taxonomy::specificEpithet] - [specimen::fieldNumber]
+```
 
-Tata letak dan templat adalah pengaturan aplikasi. Keduanya dapat dibagikan antar perangkat dengan mengekspor pengaturan atau menyertakan pengaturan aplikasi dalam arsip database.
+Pilih jenis teks yang sesuai: `Normal Text`, `Dates`, `Date and Time`,
+`Coordinates`, `Number`, `Sex`, `List Values`, `Nested List`, `Markdown`, atau
+`Encoded Text`. Gunakan fallback untuk field opsional dan uji kondisi yang cocok
+maupun yang tidak cocok.
 
-Ekspor dokumen ditujukan untuk presentasi dan pencetakan. Gunakan [Ekspor catatan](../export-records) jika penerima membutuhkan data terstruktur.
+## Merancang untuk data nyata
+
+Buat pratinjau dengan teks terpanjang yang mungkin, daftar berulang terbesar,
+nilai kosong, identifier panjang, dan kedua sisi templat. Untuk narasi dan daftar
+bersarang, aktifkan teks dinamis dan `Auto-fill page`, sediakan ruang untuk
+pergantian baris, lalu buat ulang pratinjau setelah mengedit.
+
+Gambar menggunakan path lokal yang dikelola perangkat. JSON templat berisi
+definisi, bukan salinan setiap file gambar eksternal; periksa gambar setelah
+mengimpor templat ke perangkat lain.
+
+## Membuat preset tata letak cetak
+
+Di `Settings` > `Document Presets`, pilih `Print layouts`. Buat tata letak baru
+atau gunakan `Save as...` sebelum mencoba perubahan pada tata letak yang sudah
+dipakai.
+
+Pilih `Page size`, `Orientation`, ukuran khusus bila perlu, dan padding halaman.
+Di `Template blocks`, atur setiap blok berikut:
+
+- `Template` dan `Copies` (jumlah salinan tiap catatan);
+- `Rows` dan `Cols` untuk grid tetap;
+- `Auto-fill page` untuk mengukur tinggi isi sebenarnya;
+- padding templat;
+- `Order by`, `Direction`, dan `Page break after`.
+
+Jika muncul `This template no longer exists`, pilih templat pengganti sebelum
+melihat pratinjau atau mengekspor. NAHPU tidak mengganti templat secara diam-diam.
+
+Untuk beberapa blok, `Multiple blocks mode` menyediakan:
+
+- `Continuous (Block-by-block)`: semua catatan dari blok 1, lalu semua catatan
+  dari blok 2;
+- `Alternate (Record-by-record)`: blok 1 dan blok 2 untuk catatan 1, lalu kedua
+  blok untuk catatan 2.
+
+## Resep praktis
+
+| Tujuan | Pengaturan yang disarankan |
+|---|---|
+| Dokumen satu halaman penuh | Satu blok, satu baris, satu kolom |
+| Grid label tetap | Atur baris dan kolom, matikan `Auto-fill page` |
+| Lembar narasi berubah-ubah | Aktifkan teks dinamis dan `Auto-fill page` |
+| Banyak salinan | Naikkan `Copies` |
+| Tag dua sisi | Gunakan templat `2 sided` dan uji pencerminan |
+| Paket campuran | Beberapa blok dan `Continuous (Block-by-block)` |
+| Catatan berpasangan | Beberapa blok dan `Alternate (Record-by-record)` |
+
+## Pratinjau, ekspor, dan berbagi
+
+Pratinjau menggunakan alur pemilihan, substitusi, pengukuran, dan paginasi yang
+sama dengan PDF. Periksa catatan panjang, daftar berulang, halaman pertama dan
+terakhir, keselarasan grid, serta kedua sisi. Buat ulang pratinjau jika ditandai
+usang.
+
+Perubahan pada tata letak yang dipilih dari layar ekspor disimpan ke tata letak
+tersebut. Gunakan `Save as...` sebelum mencoba susunan baru. Masukkan `File name`,
+pilih direktori, lalu gunakan `Export Documents`. PDF adalah hasil presentasi,
+bukan ekspor data terstruktur atau cadangan database yang dapat dipulihkan.
+
+## Mengimpor dan berbagi
+
+Templat dapat diekspor sebagai JSON dari `Template Editor`; tata letak dapat
+diekspor dari `Document Presets`. Impor templat akan meminta pilihan untuk
+mengganti atau memakai nama baru; impor tata letak membuat nama yang tidak
+bertabrakan. Tata letak merujuk templat berdasarkan nama, jadi pindahkan
+keduanya bersama-sama. Untuk salinan lengkap dengan data dan file terkelola,
+gunakan `Backup database`.
+
+## Pemecahan masalah
+
+| Gejala | Yang perlu diperiksa |
+|---|---|
+| Placeholder tampil apa adanya | Jenis catatan dan key lengkap `Table::Field`. |
+| Pratinjau kosong | Jenis blok dan catatan yang dipilih. |
+| Templat hilang | Tetapkan ulang blok atau pulihkan/impor templat. |
+| Teks bertumpuk atau terpotong | Teks dinamis, `Auto-fill page`, lebar, dan tinggi blok. |
+| Ruang kosong tidak terduga | Baris tetap, ukuran templat, dan padding. |
+| Urutan catatan salah | `Order by` dan `Direction` pada blok. |
+| Pengulangan tidak terduga | `Copies` dan pilihan catatan. |
+| Urutan blok salah | `Multiple blocks mode`. |
+| Sisi belakang hilang atau berputar | `2 sided`, isi Back, dan pencerminan. |
+| Pratinjau usang | Buat pratinjau baru. |
+| Impor mengubah banyak preset | Impor satu bagian mengganti seluruh bagian tersebut. |
+
+Untuk detail penyimpanan dan rendering, lihat [Templates and presets](../../../contributing/code/templates-and-presets) dan [Export workflows](../../../contributing/code/data-export-workflows).

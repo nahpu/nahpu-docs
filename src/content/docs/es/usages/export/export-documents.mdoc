@@ -4,44 +4,167 @@ sidebar:
   order: 12
 ---
 
-Use `Exportar documentos` cuando necesite PDF imprimibles desde registros de NAHPU. Esta exportación sirve para etiquetas, rótulos, hojas y otros documentos con formato.
+Use `Export documents` para crear PDF imprimibles a partir de registros de
+NAHPU. Este flujo sirve para etiquetas, rótulos, hojas, informes y otros
+documentos con formato. Para datos tabulares, use [Export records](./export-records);
+los presets de exportación de registros no controlan los documentos PDF.
 
-## Forma rápida de exportar documentos
+## Cómo se combinan las partes
+
+```text
+Datos del registro + plantilla = un bloque rellenado
+Bloques rellenados + diseño de impresión = páginas
+Páginas + vista previa/exportación = PDF
+```
+
+- Una **plantilla** define el contenido y el aspecto de un bloque.
+- Un **diseño de impresión** define el papel, los márgenes, la cuadrícula, el
+  orden y la paginación.
+- Los registros proporcionan los valores de los campos.
+
+## Exportación rápida
 
 {% steps %}
 
-1. Navegue a la página `Panel de control`.
-2. Abra el menú del proyecto y seleccione `Exportar documentos`.
-3. Seleccione un perfil de `Diseño de documento`.
-4. Revise o ajuste la configuración de página, los bloques de plantilla y la selección de especímenes.
-5. Opcional: use el panel de vista previa para generar una previsualización.
-6. Añada el `Nombre de archivo`.
-7. Seleccione el directorio de guardado en plataformas de escritorio. En Android e iOS, NAHPU usa el directorio de documentos de la app.
-8. Haga clic en `Exportar documentos`.
+1. Navegue a `Dashboard`.
+2. Abra el menú del proyecto y seleccione `Export documents`.
+3. Seleccione un `Layout profile`.
+4. Revise la configuración de página, los bloques y la selección de registros.
+5. Seleccione `Preview` y genere una vista previa.
+6. Introduzca `File name` y elija el directorio de guardado cuando se solicite.
+7. Seleccione `Export Documents`.
+8. En el móvil, use `Share` después de exportar para enviar el PDF.
 
 {% /steps %}
 
-## Detalles
+## Crear una plantilla
 
-La exportación de documentos combina registros, plantillas y diseños de documento. Los registros aportan los datos. Las plantillas definen qué aparece en cada etiqueta, rótulo o bloque. Los diseños definen cómo se colocan esos bloques en una página.
+Abra `Settings` > `Document Presets`, cambie a `Templates` y seleccione `Create
+new template`.
+
+1. Introduzca un `Template name` único y una `Description` útil.
+2. Elija el `Record type` correcto: `Specimen`, `Specimen Part`, `Site`,
+   `Collecting Event`, `Narrative` o `None`.
+3. Elija `1 sided` o `2 sided`. Una plantilla a dos caras tiene diseños
+   separados para Front y Back; el reverso se conserva en modo de una cara,
+   pero no se imprime hasta activar el modo de dos caras.
+4. Defina el ancho y alto de una etiqueta, rótulo o bloque, no de toda la hoja.
+5. Añada textos, imágenes, líneas y formas. Seleccione un elemento para ajustar
+   posición, tamaño, estilo, visibilidad, bloqueo y orden de superposición.
+6. Guarde con `Save`; use `Save as...` para crear una variante.
+
+El tipo de registro controla los campos y registros disponibles. En plantillas
+de especímenes, elija el filtro de taxón antes de seleccionar campos propios de
+un taxón.
+
+## Añadir campos de registros
+
+Inserte campos desde el selector del editor de texto. En plantillas reutilizables
+prefiera el formato completo `Table::Field`:
 
 ```text
-Registros del proyecto
-    |
-    v
-Plantilla de documento + diseno de documento
-    |
-    v
-Vista previa
-    |
-    v
-Documento PDF
+Número de campo: [specimen::fieldNumber]
+Nombre científico: [taxonomy::scientificName]
+Localidad: [site::specificLocality]
 ```
 
-Los diseños se administran en `Configuración`, dentro de `Presets de documentos`. Un diseño puede usar tamaños de página estándar o un tamaño personalizado. También guarda márgenes, espaciado, orden de bloques, filas, columnas y saltos de página.
+Las formas cortas como `[fieldNumber]` funcionan, pero el nombre completo es
+más seguro cuando varias tablas contienen un campo con el mismo nombre. Puede
+combinar campos con texto normal:
 
-Genere una vista previa antes de exportar cuando el documento se vaya a imprimir. La vista previa ayuda a detectar texto desbordado, saltos de página incorrectos y ubicación inesperada de plantillas.
+```text
+[taxonomy::genus] [taxonomy::specificEpithet] - [specimen::fieldNumber]
+```
 
-Los diseños y plantillas son ajustes de la app. Puede compartirlos entre dispositivos exportando ajustes o incluyendo ajustes de la app en un archivo de base de datos.
+Elija el tipo de texto adecuado: `Normal Text`, `Dates`, `Date and Time`,
+`Coordinates`, `Number`, `Sex`, `List Values`, `Nested List`, `Markdown` o
+`Encoded Text`. Use valores de reserva para campos opcionales y pruebe las
+condiciones cuando coinciden y cuando no coinciden.
 
-La exportación de documentos es para presentación e impresión. Use [Exportar registros](../export-records) cuando el destinatario necesite datos estructurados.
+## Diseñar para datos reales
+
+Genere la vista previa con el texto más largo esperado, listas repetidas grandes,
+valores ausentes, identificadores largos y ambas caras de las plantillas. Para
+narrativas y listas anidadas, active el texto dinámico y `Auto-fill page`, deje
+espacio para los saltos de línea y vuelva a generar la vista previa después de
+editar.
+
+Las imágenes usan una ruta local administrada por el dispositivo. El JSON de
+una plantilla describe la definición, no una copia de cada imagen externa;
+compruebe las imágenes después de importar en otro dispositivo.
+
+## Crear un preset de diseño de impresión
+
+En `Settings` > `Document Presets`, cambie a `Print layouts`. Cree un diseño o
+use `Save as...` antes de experimentar con uno ya aprobado.
+
+Elija `Page size`, `Orientation`, dimensiones personalizadas y el espaciado de
+página. En `Template blocks`, configure para cada bloque:
+
+- `Template` y `Copies` (copias por registro);
+- `Rows` y `Cols` para una cuadrícula fija;
+- `Auto-fill page` para medir la altura real del contenido;
+- espaciado de la plantilla;
+- `Order by`, `Direction` y `Page break after`.
+
+Si aparece `This template no longer exists`, seleccione otra plantilla antes
+de generar la vista previa o exportar. NAHPU no sustituye plantillas en silencio.
+
+Para varios bloques, `Multiple blocks mode` ofrece:
+
+- `Continuous (Block-by-block)`: todos los registros del bloque 1 y después
+  todos los del bloque 2;
+- `Alternate (Record-by-record)`: los bloques 1 y 2 del registro 1, después
+  los dos bloques del registro 2.
+
+## Recetas prácticas
+
+| Objetivo | Configuración recomendada |
+|---|---|
+| Documento de página completa | Un bloque, una fila y una columna |
+| Cuadrícula fija de etiquetas | Filas y columnas exactas, `Auto-fill page` desactivado |
+| Hoja narrativa variable | Texto dinámico y `Auto-fill page` activados |
+| Varias copias | Aumente `Copies` |
+| Etiqueta a dos caras | Plantilla `2 sided` y prueba del espejado |
+| Paquete mixto | Varios bloques y `Continuous (Block-by-block)` |
+| Registros emparejados | Varios bloques y `Alternate (Record-by-record)` |
+
+## Vista previa, exportación y uso compartido
+
+La vista previa utiliza el mismo flujo de selección, sustitución, medición y
+paginación que el PDF. Compruebe registros largos, listas repetidas, primera y
+última página, alineación de la cuadrícula y ambas caras. Genere otra vista
+previa cuando aparezca como desactualizada.
+
+Los cambios realizados en el diseño seleccionado desde la pantalla de
+exportación se guardan en ese diseño. Use `Save as...` antes de probar una nueva
+disposición. Introduzca `File name`, seleccione el directorio y use `Export Documents`.
+El PDF es un resultado de presentación, no una exportación estructurada ni una
+copia de seguridad restaurable.
+
+## Importar y compartir plantillas y diseños
+
+Las plantillas se pueden exportar como JSON desde `Template Editor`; los diseños
+se pueden exportar desde `Document Presets`. La importación de plantillas
+pregunta si se debe reemplazar o usar otro nombre; la importación de diseños
+crea un nombre disponible. Los diseños referencian plantillas por nombre, por
+lo que deben transferirse juntos. Para una copia completa con datos y archivos,
+use `Backup database`.
+
+## Solución de problemas
+
+| Síntoma | Qué comprobar |
+|---|---|
+| El placeholder aparece literalmente | Tipo de registro y clave completa `Table::Field`. |
+| La vista previa está vacía | Tipo del bloque y registros seleccionados. |
+| Falta una plantilla | Reasigne el bloque o restaure/import la plantilla. |
+| El texto se superpone o se corta | Texto dinámico, `Auto-fill page`, ancho y alto del bloque. |
+| Hay espacio vacío inesperado | Filas fijas, tamaño de plantilla y espaciados. |
+| El orden es incorrecto | `Order by` y `Direction` del bloque. |
+| Hay repeticiones inesperadas | `Copies` y la selección de registros. |
+| Los bloques están en orden incorrecto | `Multiple blocks mode`. |
+| Falta o gira el reverso | `2 sided`, contenido de Back y espejado. |
+| La vista previa está desactualizada | Genere una vista previa nueva. |
+| La importación cambia muchos presets | La transferencia de una sección reemplaza toda esa sección. |
+
+Para detalles de almacenamiento y renderizado, consulte [Templates and presets](../../../contributing/code/templates-and-presets) y [Export workflows](../../../contributing/code/data-export-workflows).

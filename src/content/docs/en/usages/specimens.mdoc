@@ -16,18 +16,39 @@ that your team will use in the field or collection room.
 2. Tap/click the hamburger menu in the top left corner.
 3. Select `Settings`.
 4. Select `Specimens`.
-5. Add `Tissue ID` (optional).
+5. Configure the `Use project ID` toggle. It is off by default, which uses a
+   cataloger's initials and field number. At least one Cataloger must have
+   personal field-number registration enabled and a current number.
+
+    Turn on `Use project ID` to configure a prefix, the next catalog number,
+    and a suffix. NAHPU concatenates those values directly. Turn on
+    auto-increment to assign and advance the project number when a new specimen
+    uses this mode.
+
+    This choice is only the default. Open a specimen's field-ID editor to choose
+    Personnel or Project for that specimen. A project can contain both types,
+    but one specimen cannot have both identifiers.
+
+    {% aside type="caution" %}
+
+    Changing a prefix or suffix changes how existing project IDs display.
+    Those identifiers may already have been used in exports or written on
+    specimen labels. Double-check the values before confirming the change.
+
+    {% /aside %}
+
+6. Add `Tissue ID` (optional).
 
     Some museums assign separate tissue numbers for the same voucher specimen.
     You can set up a prefix and the next number here. NAHPU can then generate
     the next tissue number when you add a specimen part.
 
-6. Add `Specimen part types`.
+7. Add `Specimen part types`.
 
     Add all preparation and tissue types you expect to use, including types you
     may only collect occasionally.
 
-7. Add `Treatments`.
+8. Add `Treatments`.
 
     Treatments are used on specimen parts. Examples include `None`, `ETOH`,
     `Formalin`, `LN2`, and `DMSO`.
@@ -98,8 +119,10 @@ controlled lists and export behavior.
 The `General Records` card stores the core specimen metadata:
 
 - `Museum ID`: optional museum catalog or accession identifier.
-- Field ID: either the cataloger's field number or the project field number,
-  depending on the project field ID mode.
+- Field ID: either the cataloger's field number or a formatted project number.
+  Use the responsive field-ID editor to select the type for this specimen.
+  Switching types removes the previous identifier; consumed numbers are not
+  reused.
 - `Cataloger`: the person who catalogs the specimen.
 - `Preparator`: the person who prepares the specimen or voucher.
 - `Species`: the selected project taxon.
@@ -218,6 +241,8 @@ Part fields include:
 - `Counts`: number of parts or containers.
 - `Treatment`: preservation treatment.
 - `Additional treatment`: optional second treatment.
+- `Storage`: storage medium or method.
+- `Storage location`: freezer, cabinet, shelf, or container location.
 - `Time taken`: time the part was taken, recommended for fresh tissues.
 - `Preparator`: part-level preparator when different from the voucher preparator.
 - `Date taken`: date the part was taken.
@@ -228,6 +253,9 @@ Part fields include:
 
 The part list displays the part type, count, barcode ID, preparator, tissue ID,
 treatment, date/time, PMI, and whether a remark exists.
+
+Parasite curation records likewise provide `Storage` and `Storage location` so
+the preservation method and physical location can be recorded separately.
 
 ## Associated Data
 

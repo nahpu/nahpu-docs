@@ -21,15 +21,36 @@ Las listas predeterminadas de NAHPU para `Partes de especímenes` y `Tratamiento
 2. Toque/haga clic en el menú de hamburguesa en la esquina superior izquierda.
 3. Seleccione `Configuración`.
 4. Seleccione `Especímenes`. 
-5. Agregue `ID de tejido` (opcional).
+5. Configure el interruptor `Use project ID`. Está desactivado de forma
+   predeterminada y usa las iniciales y el número de campo de un catalogador.
+   Al menos un Catalogador debe tener activado el registro de número de campo
+   personal y un número actual.
+
+    Active `Use project ID` para definir un prefijo, el siguiente número de
+    catálogo y un sufijo. NAHPU concatena esos valores directamente. Active el
+    incremento automático para asignar y avanzar el número del proyecto.
+
+    Esta selección es solo el valor predeterminado. En el editor de ID de cada
+    espécimen puede elegir Personnel o Project. Un proyecto puede usar ambos
+    tipos, pero un espécimen no puede tener los dos.
+
+    {% aside type="caution" %}
+
+    Cambiar el prefijo o sufijo modifica cómo se muestran los ID de proyecto
+    existentes. Esos ID podrían haberse usado en exportaciones o escrito en
+    etiquetas de especímenes. Compruebe los valores antes de confirmar.
+
+    {% /aside %}
+
+6. Agregue `ID de tejido` (opcional).
 
     Algunos museos tienen números de tejido separados para el mismo espécimen. Puede configurar el prefijo y el número aquí. Se incrementará automáticamente cada vez que agregue un nuevo número de tejido.
 
-6. Agregue `Tipos de partes de espécimen`.
+7. Agregue `Tipos de partes de espécimen`.
 
     Agregue todas las posibilidades. Puede tener más de lo que recolectará.
 
-7. Agregue `Tratamientos`
+8. Agregue `Tratamientos`
 
     Puede hacerlo de manera similar a los `Tipos de partes de espécimen`.
 
@@ -91,6 +112,10 @@ El formulario general incluye `Museum ID`, el número de campo, `Cataloger`,
 `Preparator`, `Species`, `ID Confidence`, `ID Method`, `Condition`, y las fechas
 y horas de recolección y preparación.
 
+El editor adaptable de ID permite elegir Personnel o Project para cada
+espécimen. Al cambiar de tipo se elimina el identificador anterior y no se
+reutilizan los números ya consumidos.
+
 ## Taxonomía
 
 La tarjeta `Taxon Info` se completa desde la especie seleccionada. Muestra la
@@ -145,7 +170,9 @@ Los campos de medición disponibles dependen del formato del catálogo.
 Cada espécimen puede tener varias partes, como vouchers, tejidos, hisopos o
 parásitos. Una parte puede incluir `Tissue ID`, `QR/barcode ID`, `Preparation
 type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
-`Date taken`, `PMI`, museos permanente y de préstamo, y `Remarks`.
+`Storage`, `Storage location`, `Date taken`, `PMI`, museos permanente y de
+préstamo, y `Remarks`. Los registros de parásitos también separan el método de
+almacenamiento de la ubicación física.
 
 ## Datos asociados
 

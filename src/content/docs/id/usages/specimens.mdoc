@@ -20,15 +20,37 @@ Daftar bawaan NAHPU untuk `Bagian spesimen` (Specimen parts) dan `Perlakuan` (Tr
 2. Ketuk/klik menu hamburger di sudut kiri atas.
 3. Pilih `Pengaturan` (Settings).
 4. Pilih `Spesimen` (Specimens). 
-5. Tambahkan `ID Jaringan` (Tissue ID) (opsional).
+5. Atur sakelar `Use project ID`. Secara bawaan sakelar ini nonaktif dan
+   menggunakan inisial serta nomor lapangan kataloger. Setidaknya satu
+   Kataloger harus mengaktifkan pendaftaran nomor lapangan pribadi dan memiliki
+   nomor saat ini.
+
+    Aktifkan `Use project ID` untuk mengatur awalan, nomor katalog berikutnya,
+    dan akhiran. NAHPU menggabungkan nilai tersebut secara langsung. Aktifkan
+    penambahan otomatis agar nomor proyek diberikan lalu dilanjutkan ke nomor
+    berikutnya.
+
+    Pilihan ini hanya menjadi bawaan. Pada editor ID setiap spesimen, pilih
+    Personnel atau Project. Satu proyek dapat memakai kedua jenis, tetapi satu
+    spesimen tidak dapat memiliki keduanya.
+
+    {% aside type="caution" %}
+
+    Mengubah awalan atau akhiran akan mengubah tampilan ID proyek yang sudah
+    ada. ID tersebut mungkin sudah digunakan dalam ekspor atau ditulis pada
+    label spesimen. Periksa kembali nilainya sebelum mengonfirmasi.
+
+    {% /aside %}
+
+6. Tambahkan `ID Jaringan` (Tissue ID) (opsional).
 
     Beberapa museum memiliki nomor jaringan terpisah untuk spesimen yang sama. Anda dapat menyiapkan awalan dan nomor di sini. Nomor ini akan bertambah secara otomatis setiap kali Anda menambahkan nomor jaringan baru.
 
-6. Tambahkan `Tipe bagian spesimen` (Specimen part types).
+7. Tambahkan `Tipe bagian spesimen` (Specimen part types).
 
     Tambahkan semua kemungkinan. Anda dapat memiliki lebih banyak dari apa yang akan Anda koleksi.
 
-7. Tambahkan `Perlakuan` (Treatments)
+8. Tambahkan `Perlakuan` (Treatments)
 
     Anda dapat melakukannya dengan cara yang sama seperti `Tipe bagian spesimen`.
 
@@ -89,6 +111,10 @@ Formulir umum mencakup `Museum ID`, nomor lapangan, `Cataloger`, `Preparator`,
 `Species`, `ID Confidence`, `ID Method`, `Condition`, serta tanggal dan waktu
 koleksi dan persiapan.
 
+Editor ID responsif memungkinkan pemilihan Personnel atau Project untuk setiap
+spesimen. Mengganti jenis akan menghapus ID sebelumnya, dan nomor yang sudah
+dipakai tidak digunakan kembali.
+
 ## Taksonomi
 
 Panel `Taxon Info` diisi dari spesies yang dipilih. Panel ini menampilkan
@@ -143,8 +169,9 @@ Bidang pengukuran yang tersedia bergantung pada format katalog.
 Setiap spesimen dapat memiliki banyak bagian, seperti voucher, jaringan,
 swab, atau parasit. Bagian dapat berisi `Tissue ID`, `QR/barcode ID`,
 `Preparation type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`,
-`Preparator`, `Date taken`, `PMI`, museum permanen, museum pinjaman, dan
-`Remarks`.
+`Preparator`, `Storage`, `Storage location`, `Date taken`, `PMI`, museum
+permanen, museum pinjaman, dan `Remarks`. Catatan parasit juga memisahkan metode
+penyimpanan dari lokasi fisiknya.
 
 ## Data terkait
 
