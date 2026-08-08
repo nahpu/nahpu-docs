@@ -20,11 +20,18 @@ The form includes:
 - **Affiliation** - The person's institution.
 - **Email** - The person's email address.
 - **Phone** - The person's phone number.
-- **Specimen care role** - `Cataloger`, `Preparator only`, or `None`.
+- **ORCID** - An optional hyphenated ORCID iD with a valid checksum, such as
+  `0000-0002-1825-0097`.
+- **Specimen care role** - `Cataloger`, `Preparator only`, `Determiner only`,
+  or `None`.
 - **Notes** - Additional information about the person.
 
 Use `Show more` to reveal optional fields. Email addresses are normalized to
 lowercase and phone numbers accept digits.
+
+Darwin Core exports use the canonical `https://orcid.org/...` URL as the
+person's agent identifier when ORCID is present. Otherwise, they use the NAHPU
+personnel UUID.
 
 ## Field numbers for catalogers
 
@@ -63,6 +70,11 @@ changed after creation.
 
 A person who helps prepare specimens but does not create or edit catalog
 records.
+
+### Determiner only
+
+A person who identifies specimens but does not catalog or prepare them. Select
+this person in the specimen form's `Determiner` field.
 
 ### None
 

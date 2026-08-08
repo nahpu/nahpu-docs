@@ -58,7 +58,7 @@ Keep these version concepts separate when reviewing a persistence change.
 
 | Version | Current value | Owner | Meaning |
 |---|---:|---|---|
-| Drift schema version | 15 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
+| Drift schema version | 17 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
 | SQLite user version | Set by Drift | Drift | On-disk marker used to select upgrade steps |
 | redb internal schema version | Not implemented | `nahpu_configs` | A future marker for redb table and value migrations |
 | Configuration export schema | 3 | `USER_CONFIG_SCHEMA_VERSION` | Compatibility version for exported configuration payloads |
@@ -115,7 +115,7 @@ preservation, and corrupted input that must not partially clear stored data.
 ## Drift table schema
 
 The canonical project schema is defined in
-`lib/services/database/tables.drift` and is currently at schema version 15.
+`lib/services/database/tables.drift` and is currently at schema version 17.
 Drift manages these tables over SQLite. The summary below describes the
 current table set and the important ownership relationships.
 
@@ -304,34 +304,42 @@ exported or reproduced. Installation-local preferences remain in
 
 ## Darwin Core field mapping
 
-The following documents the mapping surface used by
-`nahpu_dwc::dwc::DwcMapper`. Source fields use the `table::field` notation used
-by NAHPU exports. Schema aliases such as `siteID`/`siteId` and
-`eventID`/`eventId` resolve to the same mapping. The v13 associated-data
-relationship is called out separately because the Rust mapper still needs a
-follow-up for the renamed `uri` field.
+The following documents the audited mapping surface in `nahpu_dwc` 0.4.0.
+Source fields use the `table::field` notation used by NAHPU exports. Every v17
+field is reviewed against the normative [Darwin Core List of
+Terms](https://dwc.tdwg.org/list/) and Dublin Core definitions.
+Only exact semantic matches use standard terms; other values retain a
+`nahpu:` header instead of being forced into an approximate term.
 
 ### Direct field mappings
 
 | NAHPU source field(s) | Darwin Core or Dublin Core term |
 |---|---|
-| `project::uuid` | `dcterms:identifier` |
-| `project::name` | `dwc:datasetName` |
-| `project::startDate`, `project::endDate` | `dwc:eventDate` |
+| `project::uuid` | `dwc:projectID` |
+| `project::name` | `dwc:projectTitle` |
 | `project::created` | `dcterms:created` |
 | `project::lastAccessed` | `dcterms:modified` |
-| `site::siteID`, `site::siteId` | `dwc:siteNumber` |
+| `site::siteID`, `site::siteId` | `dwc:locationID` |
 | `site::projectUuid` | `dwc:datasetID` |
-| `site::siteType`, `site::remark` | `dwc:locationRemarks` |
+| `site::remark` | `dwc:locationRemarks` |
 | `site::country` | `dwc:country` |
 | `site::stateProvince` | `dwc:stateProvince` |
 | `site::county` | `dwc:county` |
 | `site::municipality` | `dwc:municipality` |
 | `site::locality` | `dwc:verbatimLocality` |
 | `site::habitatType`, `site::habitatCondition`, `site::habitatDescription` | `dwc:habitat` |
+| `fossilSite::siteID`, `fossilSite::siteId` | `dwc:locationID` |
+| `fossilSite::formation` | `dwc:formation` |
+| `fossilSite::narrowerGeologicStage` | `dwc:latestAgeOrHighestStage` |
+| `fossilSite::broaderGeologicStage` | `dwc:earliestAgeOrLowestStage` |
+| `coordinate::nameId` | `dwc:locationID` |
 | `coordinate::siteID`, `coordinate::siteId` | `dwc:locationID` |
 | `coordinate::decimalLatitude` | `dwc:decimalLatitude` |
 | `coordinate::decimalLongitude` | `dwc:decimalLongitude` |
+| `coordinate::verbatimLatitude` | `dwc:verbatimLatitude` |
+| `coordinate::verbatimLongitude` | `dwc:verbatimLongitude` |
+| `coordinate::verbatimCoordinates` | `dwc:verbatimCoordinates` |
+| `coordinate::verbatimCoordinateSystem` | `dwc:verbatimCoordinateSystem` |
 | `coordinate::elevationInMeter` | `dwc:minimumElevationInMeters` in direct mapping, see composite mappings below |
 | `coordinate::datum` | `dwc:geodeticDatum` |
 | `coordinate::uncertaintyInMeters` | `dwc:coordinateUncertaintyInMeters` |
@@ -347,7 +355,7 @@ follow-up for the renamed `uri` field.
 | `collPersonnel::eventID`, `collPersonnel::eventId`, `collEffort::eventID`, `collEffort::eventId`, `weather::eventID`, `weather::eventId` | `dwc:eventID` |
 | `collPersonnel::personnelId` | `dwc:recordedByID` |
 | `collPersonnel::name` | `dwc:recordedBy` |
-| `collEffort::method`, `collEffort::brand` | `dwc:samplingProtocol` |
+| `collEffort::method` | `dwc:samplingProtocol` |
 | `collEffort::notes` | `dwc:samplingEffort` |
 | `narrative::projectUuid` | `dwc:datasetID` |
 | `narrative::siteID`, `narrative::siteId` | `dwc:locationID` |
@@ -361,21 +369,28 @@ follow-up for the renamed `uri` field.
 | `media::camera`, `media::lenses`, `media::additionalExif` | `dcterms:description` |
 | `media::personnelId` | `dcterms:creator` |
 | `media::fileName` | `dcterms:title` |
+| `media::uri` | `dcterms:identifier` |
 | `media::caption` | `dcterms:description` |
 | `associatedData::name` | `dcterms:title` |
 | `associatedData::type` | `dcterms:type` |
 | `associatedData::date` | `dcterms:created` |
 | `associatedData::description` | `dcterms:description` |
-| `associatedData::uri` | `dcterms:identifier`, pending Rust mapper update |
-| `specimenAssociatedData::specimenUuid` | Relationship context for `dwc:occurrenceID`, pending Rust mapper update |
-| `associatedData::specimenUuid`, `associatedData::url` | Legacy v12 mapper keys, not v13 columns |
-| `personnel::uuid` | `dcterms:identifier` |
+| `associatedData::primaryId`, `associatedData::uri` | `dcterms:identifier` |
+| `associatedData::projectUuid` | `dwc:datasetID` |
+| `specimenAssociatedData::specimenUuid` | `dwc:occurrenceID` relationship context |
+| `associatedData::url` | Legacy alias for `dcterms:identifier`, not a v17 column |
+| `personnel::uuid`, `personnel::orcid` | `dwc:agentID`; exports prefer the canonical ORCID URL |
+| `personnel::notes` | `dwc:agentRemarks` |
 | `taxonomy::id` | `dwc:taxonID` |
+| `taxonomy::taxonRank` | `dwc:taxonRank` |
+| `taxonomy::kingdom` | `dwc:kingdom` |
+| `taxonomy::phylum` | `dwc:phylum` |
 | `taxonomy::taxonClass` | `dwc:class` |
 | `taxonomy::taxonOrder` | `dwc:order` |
 | `taxonomy::taxonFamily` | `dwc:family` |
 | `taxonomy::genus` | `dwc:genus` |
 | `taxonomy::specificEpithet` | `dwc:specificEpithet` |
+| `taxonomy::subspecificEpithet` | `dwc:infraspecificEpithet` |
 | `taxonomy::authors` | `dwc:scientificNameAuthorship` |
 | `taxonomy::commonName` | `dwc:vernacularName` |
 | `taxonomy::notes` | `dwc:taxonRemarks` |
@@ -384,15 +399,17 @@ follow-up for the renamed `uri` field.
 | `specimen::speciesID`, `specimen::speciesId` | `dwc:taxonID` |
 | `specimen::scientificName` | `dwc:scientificName` |
 | `specimen::iDMethod` | `dwc:identificationType` |
+| `specimen::iDConfidence` | `dwc:identificationVerificationStatus` |
 | `specimen::taxonGroup` | `dwc:higherClassification` |
 | `specimen::collectionDate`, `specimen::captureDate` | `dwc:eventDate` |
 | `specimen::collectionTime`, `specimen::captureTime` | `dwc:eventTime` |
 | `specimen::trapType`, `specimen::methodID`, `specimen::methodId`, `specimen::collMethodID`, `specimen::collMethodId` | `dwc:samplingProtocol` |
 | `specimen::coordinateID`, `specimen::coordinateId` | `dwc:locationID` |
-| `specimen::catalogerID`, `specimen::catalogerId`, `specimen::collPersonnelID`, `specimen::collPersonnelId`, `specimen::preparatorID`, `specimen::preparatorId` | `dwc:recordedBy` |
+| `specimen::collPersonnelID`, `specimen::collPersonnelId` | `dwc:recordedByID` |
+| derived `specimen::determiner` | `dwc:identifiedBy` |
+| `specimen::determinerID`, `specimen::determinerId` | `dwc:identifiedByID` |
 | `specimen::fieldNumber` | `dwc:recordNumber` |
 | `specimen::collEventID`, `specimen::collEventId` | `dwc:eventID` |
-| `specimen::museumID`, `specimen::museumId` | `dwc:institutionCode` |
 | `specimenPart::specimenUuid` | `dwc:occurrenceID` |
 | `specimenPart::tissueID`, `specimenPart::tissueId` | `dwc:materialSampleID` |
 | `specimenPart::barcodeID`, `specimenPart::barcodeId` | `dwc:otherCatalogNumbers` |
@@ -406,14 +423,32 @@ follow-up for the renamed `uri` field.
 | `specimenMedia::specimenUuid` | `dwc:occurrenceID` |
 | `specimenMedia::mediaId` | `dcterms:identifier` |
 | `personnelList::projectUuid` | `dwc:datasetID` |
-| `personnelList::personnelUuid` | `dcterms:identifier` |
+| `personnelList::personnelUuid` | `dwc:agentID` |
 | `weather::notes` | `dwc:eventRemarks` |
-| `mammalAttribute::specimenUuid`, `birdAttribute::specimenUuid` | `dwc:occurrenceID` |
-| `mammalAttribute::sex`, `birdAttribute::sex` | `dwc:sex` |
-| `mammalAttribute::age` | `dwc:lifeStage` |
+| `mammalAttribute::specimenUuid`, `birdAttribute::specimenUuid`, `herpAttribute::specimenUuid`, `arthropodAttribute::specimenUuid` | `dwc:occurrenceID` |
+| `mammalAttribute::sex`, `birdAttribute::sex`, `herpAttribute::sex`, `arthropodAttribute::sex` | `dwc:sex` |
+| `mammalAttribute::age`, `herpAttribute::age` | `dwc:lifeStage` |
 | `mammalAttribute::reproductiveStage` | `dwc:reproductiveCondition` |
 | `mammalAttribute::remark`, `birdAttribute::specimenRemark` | `dwc:occurrenceRemarks` |
 | `birdAttribute::habitatRemark` | `dwc:habitat` |
+| `herpAttribute::remark`, `arthropodAttribute::remark` | `dwc:occurrenceRemarks` |
+| `arthropodAttribute::hostOrganism` | `dwc:associatedTaxa` |
+| `fossilAttribute::specimenUuid`, `parasiteDetection::specimenUuid`, `parasite::specimenUuid` | `dwc:occurrenceID` |
+| `fossilAttribute::fossilType` | `dwc:materialEntityType` |
+| `fossilAttribute::specimenDescription` | `dwc:materialEntityRemarks` |
+| `parasiteDetection::detectionRemark` | `dwc:occurrenceRemarks` |
+| `parasite::speciesID`, `parasite::speciesId` | `dwc:taxonID` |
+| `parasite::identifierID`, `parasite::identifierId` | `dwc:identifiedByID` |
+| `parasite::parasiteUuid` | `dwc:organismID` |
+| `parasite::count` | `dwc:organismQuantity` |
+| `parasite::preparationMethod`, `parasite::treatment` | `dwc:preparations` |
+| `parasite::lifeStage` | `dwc:lifeStage` |
+| `parasite::detectionMethod` | `dwc:samplingProtocol` |
+| `parasite::dateCollected`, `parasite::timeCollected` | `dwc:eventDate`, `dwc:eventTime` respectively |
+| `parasite::remark` | `dwc:occurrenceRemarks` |
+| `eventMedia::eventID`, `eventMedia::eventId`, `eventAssociatedData::eventID`, `eventAssociatedData::eventId` | `dwc:eventID` |
+| `siteAssociatedData::siteId` | `dwc:locationID` |
+| `eventMedia::mediaId`, `eventAssociatedData::associatedDataId`, `siteAssociatedData::associatedDataId`, `specimenAssociatedData::associatedDataId` | `dcterms:identifier` |
 
 ### Composite and measurement mappings
 
@@ -425,14 +460,30 @@ API expands them as follows:
 | `coordinate::elevationInMeter` | `dwc:minimumElevationInMeters`, `dwc:maximumElevationInMeters` | One elevation value is written to both bounds in a flat export. |
 | `specimenPart::type` | `dwc:materialEntityType`, `dwc:objectQuantityType` | The source value can describe both the material entity and its quantity type. |
 | `specimenPart::count` | `dwc:objectQuantity` | The part count is exported as a quantity. |
-| `mammalAttribute::*`, `birdAttribute::*`, `herpAttribute::*`, `weather::*` attribute fields | `dwc:measurementType`, `dwc:measurementValue`, `dwc:measurementUnit` | Each populated measurement or biological attribute becomes a MeasurementOrFact row. The type and unit come from NAHPU's attribute definition. |
+| `mammalAttribute::*`, `birdAttribute::*`, `herpAttribute::*`, `arthropodAttribute::*`, `parasiteDetection::*`, `weather::*` attribute fields | `dwc:measurementType`, `dwc:measurementValue`, `dwc:measurementUnit` | Each populated measurement or biological attribute becomes a MeasurementOrFact row. The type and unit come from NAHPU's attribute definition. |
 
 Attribute definitions currently include mammal lengths, weight,
 echolocation, reproductive observations, embryo counts, avian morphometrics,
 color and molt observations, herpetofauna weight and snout-vent length, and
 weather temperature, humidity, sunrise, sunset, and moon-phase values. Their
-units are preserved where defined, including `mm`, `cm`, `g`, `kHz`, `s`, `%`,
-`°C`, and `hh:mm:ss`.
+units are preserved where defined, including `mm`, `cm`, `kHz`, `s`, `%`,
+`°C`, and `hh:mm:ss`. Weight uses the row's selected `g`, `kg`, or `lbs` unit.
+
+Coordinate extent has no direct Darwin Core field. When populated with a
+positive value it is added to `coordinate::uncertaintyInMeters`; it is used
+alone when base uncertainty is empty. Empty, zero, negative, and non-finite
+extent values do not alter `dwc:coordinateUncertaintyInMeters`.
+
+### Intentional NAHPU namespace fields
+
+Internal primary keys, UI state, field-number counters, file-system paths,
+equipment brands, project lifecycle dates, storage workflow values, and other
+fields without an exact standard meaning remain under `nahpu:`. In particular,
+cataloger and preparator foreign keys are represented through agent-role bundle
+relationships rather than mislabeled as collectors, and specimen condition is
+not exported as disposition. Free-text stratigraphy and sedimentology remarks
+also stay in the NAHPU namespace because Darwin Core has no
+`geologicalContextRemarks` term.
 
 ### Bundle resource relationships
 
@@ -457,13 +508,10 @@ same change.
   current crate has no internal redb migration path.
 - Add uniqueness constraints where the data model requires one. Several child
   tables rely on application checks rather than database uniqueness.
-- Update `nahpu_dwc` to emit v13 `associatedData.uri` and to traverse
-  `specimenAssociatedData`. Decide and test the Darwin Core term for
-  `media.uri` before documenting it as a supported mapping.
 - Add a documentation check that compares the table inventory and schema
   version here with generated Drift artifacts. This would catch stale table
   names such as `paleontologySite`.
-- Reconcile export-bundle table counts with the actual v15 inventory and keep
+- Reconcile export-bundle table counts with the actual v17 inventory and keep
   backup and restore documentation tested against a real archive.
 - Add restore verification that opens a restored SQLite file, runs foreign-key
   checks, and records the schema version before the file is offered to users.

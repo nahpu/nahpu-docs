@@ -13,9 +13,14 @@ atribuído a ele.
 No painel Personnel, selecione `Add personnel`. Se a pessoa já existir no banco,
 escolha `Select from database`; caso contrário, escolha `Add new personnel`.
 
-O formulário inclui nome obrigatório, foto, afiliação, e-mail, telefone,
-função de cuidado de espécimes (`Cataloger`, `Preparator only` ou `None`) e
+O formulário inclui nome obrigatório, foto, afiliação, e-mail, telefone, ORCID
+opcional e função de cuidado de espécimes (`Cataloger`, `Preparator only`,
+`Determiner only` ou `None`) e
 notas. Use `Show more` para exibir os campos opcionais.
+
+Informe o ORCID como iD com hífens e checksum válido, por exemplo
+`0000-0002-1825-0097`. O Darwin Core o exporta como URL canônica e usa o UUID
+de pessoal do NAHPU quando não existe ORCID.
 
 ## Números de campo de catalogadores
 
@@ -48,6 +53,11 @@ Pessoa que cria e edita registros de catálogo de espécimes.
 
 Pessoa que ajuda a preparar espécimes, mas não cria nem edita registros de
 catálogo.
+
+### Determiner only
+
+Pessoa que identifica espécimes. Selecione-a no campo `Determiner` do
+formulário do espécime.
 
 ### None
 

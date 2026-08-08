@@ -108,7 +108,7 @@ terminologia e o mesmo comportamento de exportação.
 ## Registros gerais
 
 O formulário geral inclui `Museum ID`, número de campo, `Cataloger`,
-`Preparator`, `Species`, `ID Confidence`, `ID Method`, `Condition` e as datas e
+`Preparator`, `Determiner`, `Species`, `ID Confidence`, `ID Method`, `Condition` e as datas e
 horários de coleta e preparação.
 
 O editor responsivo de ID permite escolher Personnel ou Project para cada
@@ -131,7 +131,13 @@ Os registros de captura vinculam o espécime ao evento:
   pode usar Dawn, Morning, Afternoon, Dusk ou Night.
 - `Method` e `Method ID`: esforço e identificador do método do evento.
 - `Coordinate ID`: coordenada associada à localidade do evento.
+- `Coordinate extent (m)`: extensão positiva opcional do registro de captura;
+  aparece logo abaixo de `Coordinate ID`.
 - `Collector`: coletor da lista de pessoal do evento.
+
+Nas exportações Darwin Core, a extensão é somada à incerteza da coordenada. Se
+não houver incerteza válida, a extensão é usada sozinha. Valores vazios, zero
+ou negativos são ignorados.
 
 Ao mudar o evento, método, coletor e coordenada são limpos, enquanto a data e o
 horário da captura são preservados.
@@ -139,6 +145,8 @@ horário da captura são preservados.
 ## Medições
 
 Selecione a guia abaixo para visualizar as opções de medição para cada grupo taxonômico.
+O peso de mamíferos, aves e herpetofauna aceita `g`, `kg` e `lbs`, com `g` como
+padrão. Mudar a unidade não converte o número informado.
 
 {% tabs %}
 {% tabitem label="Mamíferos" %}
@@ -151,7 +159,7 @@ Selecione a guia abaixo para visualizar as opções de medição para cada grupo
 
 {% /tabitem %}
 {% tabitem label="Aves" %}
-- `Peso (gramas)`, `Envergadura (mm)`, cores das partes moles, `Sexo`, placa de
+- `Peso`, `Envergadura (mm)`, cores das partes moles, `Sexo`, placa de
   incubação, bursa e ossificação do crânio.
 {% /tabitem %}
 {% tabitem label="Peixes" %}
@@ -159,7 +167,7 @@ Selecione a guia abaixo para visualizar as opções de medição para cada grupo
 Os campos de medição disponíveis dependem do formato do catálogo.
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
-- `Sexo`, `Idade`, `Peso (gramas)`, `SVL (cm)` e observações.
+- `Sexo`, `Idade`, `Peso`, `SVL (cm)` e observações.
 {% /tabitem %}
 
 

@@ -93,6 +93,13 @@ the receiving system expects stable field names or when you need predictable
 headers for scripts. Leave it off when people will read the export directly in a
 spreadsheet.
 
+Darwin Core field mappings use standard headers only where the NAHPU field has
+the same meaning. Unmatched fields retain a `nahpu:` header. Derived exports use
+the specimen determiner for `identifiedBy`, prefer the determiner's canonical
+ORCID URL for `identifiedByID`, preserve verbatim coordinates, add positive
+coordinate extent to coordinate uncertainty, and retain the selected weight
+unit (`g`, `kg`, or `lbs`).
+
 Choose the output format based on the next tool:
 
 - CSV and TSV are the most portable spreadsheet and database-import formats.

@@ -219,11 +219,17 @@ coordinate manually, use the device GPS, or import points from a GIS/GPS file.
 
     {% /aside %}
 
-3. Enter the latitude and longitude values.
+3. Select a coordinate format and enter its values.
 
-    Enter decimal degrees. Latitude must be between `-90` and `90`; longitude
-    must be between `-180` and `180`. The coordinate details view also displays
-    the values in degrees, minutes, and seconds (DMS).
+    NAHPU accepts decimal degrees (DD), degrees and decimal minutes (DDM),
+    degrees-minutes-seconds (DMS), and a single UTM value in the form
+    `zone hemisphere easting northing`. UTM input uses WGS84. Latitude and
+    longitude directions must match their axes, and converted decimal values
+    must be within valid latitude and longitude ranges.
+
+    NAHPU saves decimal latitude and longitude for calculations and also keeps
+    the original text and coordinate system for Darwin Core verbatim fields.
+    Selecting DD clears older verbatim coordinate values.
 
 4. Add elevation in meters.
 

@@ -109,7 +109,7 @@ misma terminología y el mismo comportamiento de exportación.
 ## Registros generales
 
 El formulario general incluye `Museum ID`, el número de campo, `Cataloger`,
-`Preparator`, `Species`, `ID Confidence`, `ID Method`, `Condition`, y las fechas
+`Preparator`, `Determiner`, `Species`, `ID Confidence`, `ID Method`, `Condition`, y las fechas
 y horas de recolección y preparación.
 
 El editor adaptable de ID permite elegir Personnel o Project para cada
@@ -131,7 +131,13 @@ Los registros de captura vinculan el espécimen con su evento:
   permite usar Dawn, Morning, Afternoon, Dusk o Night.
 - `Method` y `Method ID`: esfuerzo y código del método del evento.
 - `Coordinate ID`: coordenada vinculada al sitio del evento.
+- `Coordinate extent (m)`: extensión positiva opcional del registro de captura;
+  aparece justo debajo de `Coordinate ID`.
 - `Collector`: persona del evento que realizó la recolección.
+
+En las exportaciones Darwin Core, la extensión se suma a la incertidumbre de
+la coordenada. Si no hay una incertidumbre válida, se usa solo la extensión.
+Los valores vacíos, cero o negativos se ignoran.
 
 Al cambiar el evento se borran el método, el colector y la coordenada, pero se
 conservan la fecha y la hora de captura.
@@ -139,6 +145,8 @@ conservan la fecha y la hora de captura.
 ## Mediciones
 
 Seleccione la pestaña a continuación para ver las opciones de medición para cada grupo taxonómico.
+El peso de mamíferos, aves y herpetofauna admite `g`, `kg` y `lbs`, con `g` como
+valor predeterminado. Cambiar la unidad no convierte el número introducido.
 
 {% tabs %}
 {% tabitem label="Mamíferos" %}
@@ -151,7 +159,7 @@ Seleccione la pestaña a continuación para ver las opciones de medición para c
 
 {% /tabitem %}
 {% tabitem label="Aves" %}
-- `Peso (gramos)`, `Envergadura (mm)`, colores de partes blandas, `Sexo`, placa
+- `Peso`, `Envergadura (mm)`, colores de partes blandas, `Sexo`, placa
   incubatriz, bursa y osificación del cráneo.
 {% /tabitem %}
 {% tabitem label="Peces" %}
@@ -159,7 +167,7 @@ Seleccione la pestaña a continuación para ver las opciones de medición para c
 Los campos de medición disponibles dependen del formato del catálogo.
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
-- `Sexo`, `Edad`, `Peso (gramos)`, `SVL (cm)` y observaciones.
+- `Sexo`, `Edad`, `Peso`, `SVL (cm)` y observaciones.
 {% /tabitem %}
 
 

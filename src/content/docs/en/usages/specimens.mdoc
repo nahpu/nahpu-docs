@@ -127,6 +127,7 @@ The `General Records` card stores the core specimen metadata:
   reused.
 - `Cataloger`: the person who catalogs the specimen.
 - `Preparator`: the person who prepares the specimen or voucher.
+- `Determiner`: the person who identified the specimen.
 - `Species`: the selected project taxon.
 - `ID Confidence`: confidence in the species identification.
 - `ID Method`: optional method or evidence used for identification.
@@ -159,11 +160,21 @@ method, and collector that produced it.
 - `Method`: the collecting effort/method from the selected event.
 - `Method ID`: an optional trap, net, or other method-specific identifier.
 - `Coordinate ID`: the coordinate record associated with the selected event.
+- `Coordinate extent (m)`: optional positive distance describing how far the
+  capture record extends beyond the coordinate point. It appears immediately
+  below `Coordinate ID`.
 - `Collector`: optional collector from the selected event personnel list.
+
+In Darwin Core exports, a positive coordinate extent is added to the saved
+coordinate uncertainty. If the coordinate has no valid uncertainty, the extent
+is used by itself. Empty, zero, and negative values are ignored.
 
 ## Measurements
 
 Select the tab below to view measurement options for each taxonomic group.
+Mammal, bird, and herpetofauna weight fields support `g`, `kg`, and `lbs` and
+default to `g`. Changing the unit only changes the label; it does not convert
+the entered number.
 
 {% tabs %}
 {% tabitem label="Mammals" %}
@@ -175,7 +186,7 @@ Select the tab below to view measurement options for each taxonomic group.
 - `Tail/HB length`: auto-calculated from `Tail length (mm) / Head and body length (mm)`.
 - `Hind foot length (mm)`: the length of the hind foot from the base to the tip of the claw.
 - `Ear length (mm)`: ear length.
-- `Weight (grams)`: specimen weight.
+- `Weight`: specimen weight in the selected unit.
 - `Accuracy`: measurement accuracy or reason measurements may be inaccurate.
 - `Sex`: `Male`, `Female`, or `Unknown`.
 - `Age`: `Adult`, `Subadult`, `Juvenile`, or `Unknown`.
@@ -191,7 +202,7 @@ Select the tab below to view measurement options for each taxonomic group.
 {% /tabitem %}
 {% tabitem label="Birds" %}
 
-- `Weight (grams)`: specimen weight.
+- `Weight`: specimen weight in the selected unit.
 - `Wingspan (mm)`: wingspan length.
 - Soft-part colors: bill color, iris color, foot color, and tarsus color.
 - `Sex`: `Male`, `Female`, or `Unknown`.
@@ -212,7 +223,7 @@ Select the tab below to view measurement options for each taxonomic group.
 
 - `Sex`: `Male`, `Female`, or `Unknown`.
 - `Age`: `Adult`, `Juvenile`, `Neonate`, `Metamorph`, or `Unknown`.
-- `Weight (grams)`: specimen weight.
+- `Weight`: specimen weight in the selected unit.
 - `SVL (cm)`: snout-vent length.
 - `Remarks`: additional information about the specimen.
 

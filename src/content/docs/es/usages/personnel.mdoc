@@ -14,8 +14,13 @@ personal en la base de datos, elija `Select from database`; de lo contrario,
 elija `Add new personnel`.
 
 El formulario incluye nombre obligatorio, foto, afiliación, correo, teléfono,
-rol de cuidado de especímenes (`Cataloger`, `Preparator only` o `None`) y
+ORCID opcional y rol de cuidado de especímenes (`Cataloger`, `Preparator only`,
+`Determiner only` o `None`) y
 notas. Use `Show more` para ver los campos opcionales.
+
+Introduzca ORCID como un iD con guiones y suma de verificación válida, por
+ejemplo `0000-0002-1825-0097`. Darwin Core lo exporta como URL canónica y usa
+el UUID de personal de NAHPU cuando no hay ORCID.
 
 ## Números de campo de catalogadores
 
@@ -46,6 +51,11 @@ Persona que crea y edita registros de catálogo de especímenes.
 ### Preparator only
 
 Persona que ayuda a preparar especímenes, pero no crea ni edita registros.
+
+### Determiner only
+
+Persona que identifica especímenes. Se selecciona en el campo `Determiner` del
+formulario del espécimen.
 
 ### None
 

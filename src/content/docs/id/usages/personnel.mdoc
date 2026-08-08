@@ -12,9 +12,14 @@ beberapa proyek. Setiap proyek hanya menampilkan personel yang ditugaskan.
 Pada panel Personnel di dasbor, pilih `Add personnel`. Jika personel sudah ada,
 pilih `Select from database`; jika belum, pilih `Add new personnel`.
 
-Formulir mencakup nama wajib, foto, afiliasi, email, telepon, peran perawatan
-spesimen (`Cataloger`, `Preparator only`, atau `None`), dan catatan. Gunakan
+Formulir mencakup nama wajib, foto, afiliasi, email, telepon, ORCID opsional,
+peran perawatan spesimen (`Cataloger`, `Preparator only`, `Determiner only`,
+atau `None`), dan catatan. Gunakan
 `Show more` untuk menampilkan bidang opsional.
+
+Masukkan ORCID sebagai iD bertanda hubung dengan checksum valid, misalnya
+`0000-0002-1825-0097`. Darwin Core mengekspornya sebagai URL kanonis dan
+menggunakan UUID personel NAHPU jika ORCID tidak tersedia.
 
 ## Nomor lapangan kataloger
 
@@ -46,6 +51,11 @@ Orang yang membuat dan mengedit catatan katalog spesimen.
 
 Orang yang membantu menyiapkan spesimen tetapi tidak membuat atau mengedit
 catatan katalog.
+
+### Determiner only
+
+Orang yang mengidentifikasi spesimen. Pilih orang ini pada field `Determiner`
+di formulir spesimen.
 
 ### None
 
