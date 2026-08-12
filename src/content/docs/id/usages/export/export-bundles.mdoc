@@ -76,7 +76,7 @@ dengan `Export project` lengkap untuk proyek aktif.
 datapackage.json
 nahpu.toml
 nahpu-project.json
-tables/                 (23 tabel proyek NAHPU dalam CSV)
+tables/                 (24 tabel wajib proyek NAHPU dalam CSV)
 configs/user_configs.json
 mappings/sqlite_enums.csv
 vocabularies/site.csv
@@ -86,7 +86,7 @@ files/...
 media/...
 ```
 
-Semua 23 tabel yang direpresentasikan oleh transfer proyek disertakan, termasuk
+Semua 24 tabel wajib yang direpresentasikan oleh transfer proyek disertakan, termasuk
 tabel kosong dengan header dan skema lengkap.
 
 #### JSON proyek
@@ -106,13 +106,17 @@ mencakup sex, confidence identifikasi, age dan field reproduksi mamalia, field
 reproduksi dan molting burung, age herpetofauna, serta kategori echolocation.
 Boolean dan pengukuran numerik bukan indeks enum.
 
+Baris sex menggunakan kode stabil eksplisit; kode lama `0`, `1`, dan `2`
+mempertahankan arti semula.
+
 #### Kosakata terkontrol
 
 Paket mengambil nama tipe yang dapat dikendalikan pengguna dari `Pengaturan`:
 
 - `vocabularies/site.csv`: tipe situs dan tipe habitat.
 - `vocabularies/events.csv`: metode pengumpulan dan peran personel.
-- `vocabularies/specimens.csv`: tipe dan perlakuan spesimen.
+- `vocabularies/specimens.csv`: tipe, perlakuan, kondisi, dan kosakata sex
+  spesimen yang diaktifkan.
 
 Setiap baris mencatat kunci konfigurasi, nama kosakata, posisi daftar berbasis
 nol, dan nilainya. Jika daftar belum disesuaikan, nilai default NAHPU yang
@@ -144,6 +148,11 @@ tepat; field lain tetap berada di namespace NAHPU. Paket mempertahankan
 koordinat DDM, DMS, atau UTM sebagai verbatim, menambahkan extent positif ke
 ketidakpastian, menyimpan `g`, `kg`, atau `lbs`, dan memilih URL ORCID kanonis
 untuk ID agen.
+
+Untuk artropoda, sex, asosiasi inang, dan catatan berada pada occurrence.
+Bagian inang, kanopi, parameter lingkungan, dan morfometrik opsional menjadi
+MeasurementOrFact dengan unit seperti mm, °C, %, mg/L, dan m/s. NAHPU Data
+Package juga memuat `arthropodAttribute.csv` dan pemetaan enum sex.
 
 NAHPU memvalidasi tabel, relasi, dan metadata sebelum menulis, lalu membuka
 kembali arsip setelah selesai. Peringatan dapat menunjukkan media yang hilang

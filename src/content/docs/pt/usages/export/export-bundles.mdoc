@@ -78,7 +78,7 @@ completo para o projeto ativo.
 datapackage.json
 nahpu.toml
 nahpu-project.json
-tables/                 (as 23 tabelas do projeto NAHPU em CSV)
+tables/                 (as 24 tabelas obrigatórias do projeto NAHPU em CSV)
 configs/user_configs.json
 mappings/sqlite_enums.csv
 vocabularies/site.csv
@@ -88,7 +88,7 @@ files/...
 media/...
 ```
 
-As 23 tabelas representadas pela transferência são incluídas mesmo quando
+As 24 tabelas obrigatórias representadas pela transferência são incluídas mesmo quando
 vazias; o CSV mantém seu cabeçalho e esquema completo.
 
 #### JSON do projeto
@@ -108,13 +108,17 @@ sexo, confiança de identificação, idade e campos reprodutivos de mamíferos,
 campos reprodutivos e de muda de aves, idade de herpetofauna e ecolocalização.
 Booleanos e medições numéricas não são índices de enum.
 
+As linhas de sexo usam códigos estáveis explícitos; os códigos legados `0`,
+`1` e `2` mantêm seus significados originais.
+
 #### Vocabulários controlados
 
 O pacote captura os nomes configuráveis em `Configurações`:
 
 - `vocabularies/site.csv`: tipos de local e de habitat.
 - `vocabularies/events.csv`: métodos de coleta e funções do pessoal.
-- `vocabularies/specimens.csv`: tipos e tratamentos de espécimes.
+- `vocabularies/specimens.csv`: tipos, tratamentos, condições e vocabulário de
+  sexo habilitado para espécimes.
 
 Cada linha registra a chave de configuração, o nome do vocabulário, a posição
 baseada em zero e o valor. Se uma lista ainda não foi personalizada, o valor
@@ -147,6 +151,11 @@ exatas; os outros campos permanecem no namespace do NAHPU. Os pacotes preservam
 coordenadas DDM, DMS ou UTM como verbatim, somam a extensão positiva à
 incerteza, mantêm `g`, `kg` ou `lbs` e preferem URLs ORCID canônicas para IDs de
 agentes.
+
+Para artrópodes, sexo, associação com o hospedeiro e observações ficam na
+ocorrência. Parte do hospedeiro, dossel, parâmetros ambientais e morfometria
+opcional são MeasurementOrFact com unidades como mm, °C, %, mg/L e m/s. O
+NAHPU Data Package também inclui `arthropodAttribute.csv` e o enum de sexo.
 
 O NAHPU valida tabelas, relações e metadados antes de gravar e reabre o arquivo
 depois. Os avisos podem indicar mídia ausente ou o modo ZIP de compatibilidade

@@ -176,6 +176,11 @@ Mammal, bird, and herpetofauna weight fields support `g`, `kg`, and `lbs` and
 default to `g`. Changing the unit only changes the label; it does not convert
 the entered number.
 
+Sex is a restricted controlled vocabulary shared by every taxon group. `Male`,
+`Female`, and `Unknown` are always available. In `Settings` > `Specimens`, add
+`Gynandromorph`, `Hermaphrodite`, `Female?`, or `Male?` to the dropdown. The
+question mark records that the examiner is uncertain.
+
 {% tabs %}
 {% tabitem label="Mammals" %}
 
@@ -188,7 +193,7 @@ the entered number.
 - `Ear length (mm)`: ear length.
 - `Weight`: specimen weight in the selected unit.
 - `Accuracy`: measurement accuracy or reason measurements may be inaccurate.
-- `Sex`: `Male`, `Female`, or `Unknown`.
+- `Sex`: select from the configured specimen-sex vocabulary.
 - `Age`: `Adult`, `Subadult`, `Juvenile`, or `Unknown`.
 - Male reproductive fields: testis position, testis length and width, and
   epididymis appearance.
@@ -205,7 +210,7 @@ the entered number.
 - `Weight`: specimen weight in the selected unit.
 - `Wingspan (mm)`: wingspan length.
 - Soft-part colors: bill color, iris color, foot color, and tarsus color.
-- `Sex`: `Male`, `Female`, or `Unknown`.
+- `Sex`: select from the configured specimen-sex vocabulary.
 - `Brood patch`: whether a brood patch is present.
 - `Bursa present`: whether a bursa is present. If present, record bursa length
   and width.
@@ -221,11 +226,30 @@ the entered number.
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
 
-- `Sex`: `Male`, `Female`, or `Unknown`.
+- `Sex`: select from the configured specimen-sex vocabulary.
 - `Age`: `Adult`, `Juvenile`, `Neonate`, `Metamorph`, or `Unknown`.
 - `Weight`: specimen weight in the selected unit.
 - `SVL (cm)`: snout-vent length.
 - `Remarks`: additional information about the specimen.
+
+{% /tabitem %}
+{% tabitem label="Arthropods" %}
+
+The ecological-interaction and environmental-parameter sections are visible by
+default. Use `Show specimen morphometrics` to reveal or hide the measurement
+fields; saved morphometric values automatically reopen that section.
+
+- `Sex`: a specimen attribute shown above the ecological and environmental
+  sections.
+- Ecological interactions: `Host organism`, `Host part`, and `Canopy affinity`.
+- Environmental parameters: `Canopy cover`, ambient and water temperature
+  (°C), ambient humidity (%), pH, dissolved oxygen (mg/L), and flow velocity
+  (m/s).
+- Optional morphometrics: head width, body length, upper wingspan, and lower
+  wingspan, all in millimetres.
+- `Remarks`: additional ecological or specimen notes.
+
+Arthropod catalogs do not show parasite-detection fields or the parasite tab.
 
 {% /tabitem %}
 {% tabitem label="Fish and fossils" %}
@@ -243,6 +267,9 @@ the entered number.
 Use `Specimen Parts` for voucher preparations, tissues, swabs, parasites, and
 other physical parts derived from the specimen. Each specimen can have multiple
 parts.
+
+The parasite tab is available for mammals, birds, and herpetofauna. It is not
+available for arthropod catalogs.
 
 Part fields include:
 

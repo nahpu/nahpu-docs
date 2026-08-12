@@ -157,9 +157,17 @@ GPS perangkat, atau mengimpor titik dari file GIS/GPS.
 
     NAHPU menerima derajat desimal (DD), derajat dan menit desimal (DDM),
     derajat-menit-detik (DMS), serta satu nilai UTM dalam format
-    `zona hemisfer timur utara`. UTM menggunakan WGS84. NAHPU menyimpan nilai
-    desimal untuk perhitungan dan mempertahankan teks serta sistem asli untuk
-    field verbatim Darwin Core. Memilih DD menghapus nilai verbatim lama.
+    `zona hemisfer timur utara`. UTM menggunakan WGS84.
+
+    Untuk DDM dan DMS, masukkan derajat, menit, dan detik pada field angka yang
+    terpisah. Kemudian pilih N/S untuk lintang dan E/W untuk bujur. NAHPU
+    menambahkan simbol koordinat dan menggabungkan bagian tersebut sebagai
+    nilai lintang dan bujur verbatim Darwin Core.
+
+    NAHPU menyimpan nilai desimal untuk perhitungan serta nilai gabungan dan
+    sistem koordinat untuk field verbatim. Jika nilai koordinat sudah diisi,
+    perubahan format meminta konfirmasi sebelum menghapusnya. Menyimpan
+    koordinat DD menghapus nilai verbatim lama.
 
 4. Tambahkan ketinggian (elevation) dalam meter.
 
@@ -191,7 +199,8 @@ lokasi.
 
 1. Buka lokasi, ketuk/klik `Add coordinate`, lalu pilih mode `Import`.
 
-2. Pilih `Select coordinate file`, lalu pilih file GeoJSON/JSON, KML, Shapefile
+2. Format yang didukung ditampilkan di atas tindakan impor. Pilih
+   `Select coordinate file`, lalu pilih file GeoJSON/JSON, KML, Shapefile
    terkompresi, atau GPX. Anda juga dapat memilih `Scan QR` untuk menambahkan
    catatan koordinat dari perangkat NAHPU lain.
 

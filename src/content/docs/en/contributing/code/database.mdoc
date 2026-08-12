@@ -144,7 +144,7 @@ current table set and the important ownership relationships.
 | `mammalAttribute` | Mammal measurements, reproductive observations, and bat or echolocation attributes. |
 | `birdAttribute` | Bird measurements, colors, molt, reproductive observations, and habitat attributes. |
 | `herpAttribute` | Herpetofauna sex, age, weight, snout-vent length, and remark attributes. |
-| `arthropodAttribute` | Arthropod-specific specimen attributes. |
+| `arthropodAttribute` | Arthropod sex, host and canopy interactions, environmental parameters, morphometrics, and remarks. |
 | `fossilAttribute` | Fossil-specific specimen attributes. |
 | `parasiteDetection` | Detection records connecting specimens and parasite observations. |
 | `parasite` | Parasite taxonomy and observation details. |
@@ -465,9 +465,11 @@ API expands them as follows:
 Attribute definitions currently include mammal lengths, weight,
 echolocation, reproductive observations, embryo counts, avian morphometrics,
 color and molt observations, herpetofauna weight and snout-vent length, and
-weather temperature, humidity, sunrise, sunset, and moon-phase values. Their
-units are preserved where defined, including `mm`, `cm`, `kHz`, `s`, `%`,
-`°C`, and `hh:mm:ss`. Weight uses the row's selected `g`, `kg`, or `lbs` unit.
+arthropod host-part and canopy observations, arthropod morphometrics and
+environmental parameters, and weather temperature, humidity, sunrise, sunset,
+and moon-phase values. Their units are preserved where defined, including
+`mm`, `cm`, `kHz`, `s`, `%`, `°C`, `mg/L`, `m/s`, and `hh:mm:ss`. Weight uses
+the row's selected `g`, `kg`, or `lbs` unit.
 
 Coordinate extent has no direct Darwin Core field. When populated with a
 positive value it is added to `coordinate::uncertaintyInMeters`; it is used

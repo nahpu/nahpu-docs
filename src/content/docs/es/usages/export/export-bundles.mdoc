@@ -79,7 +79,7 @@ completa de `Export project` para el proyecto activo.
 datapackage.json
 nahpu.toml
 nahpu-project.json
-tables/                 (las 23 tablas del proyecto NAHPU en CSV)
+tables/                 (las 24 tablas obligatorias del proyecto NAHPU en CSV)
 configs/user_configs.json
 mappings/sqlite_enums.csv
 vocabularies/site.csv
@@ -89,7 +89,7 @@ files/...
 media/...
 ```
 
-Las 23 tablas representadas por la transferencia se incluyen aunque estén
+Las 24 tablas obligatorias representadas por la transferencia se incluyen aunque estén
 vacías; el CSV conserva su encabezado y esquema.
 
 #### JSON del proyecto
@@ -109,13 +109,17 @@ sexo, confianza de identificación, edad y campos reproductivos de mamíferos,
 campos reproductivos y de muda de aves, edad de herpetofauna y ecolocalización.
 Booleanos y mediciones numéricas no son índices de enum.
 
+Las filas de sexo usan códigos estables explícitos; los códigos heredados `0`,
+`1` y `2` conservan su significado original.
+
 #### Vocabularios controlados
 
 El paquete captura los nombres configurables desde `Configuración`:
 
 - `vocabularies/site.csv`: tipos de sitio y hábitat.
 - `vocabularies/events.csv`: métodos de colecta y roles del personal.
-- `vocabularies/specimens.csv`: tipos y tratamientos de especímenes.
+- `vocabularies/specimens.csv`: tipos, tratamientos, condiciones y vocabulario
+  de sexo habilitado para especímenes.
 
 Cada fila registra la clave de configuración, nombre del vocabulario, posición
 de base cero y valor. Si una lista no se personalizó, se exporta el valor
@@ -148,6 +152,12 @@ exactas; los demás campos permanecen en el espacio de nombres de NAHPU. Los
 paquetes conservan coordenadas DDM, DMS o UTM verbatim, suman la extensión
 positiva a la incertidumbre, conservan `g`, `kg` o `lbs` y prefieren URL ORCID
 canónicas para identificar agentes.
+
+Para artrópodos, el sexo, la asociación con el hospedador y las observaciones
+se incluyen en la ocurrencia. La parte del hospedador, el dosel, los parámetros
+ambientales y la morfometría opcional son MeasurementOrFact con unidades como
+mm, °C, %, mg/L y m/s. NAHPU Data Package también incluye
+`arthropodAttribute.csv` y el enum de sexo.
 
 NAHPU valida tablas, relaciones y metadatos antes de escribir y vuelve a abrir
 el archivo después. Las advertencias pueden indicar multimedia faltante o el

@@ -227,9 +227,16 @@ coordinate manually, use the device GPS, or import points from a GIS/GPS file.
     longitude directions must match their axes, and converted decimal values
     must be within valid latitude and longitude ranges.
 
+    For DDM and DMS, enter degrees, minutes, and seconds in their separate
+    numeric fields, then choose N/S for latitude and E/W for longitude. NAHPU
+    adds the coordinate symbols and concatenates the parts for the Darwin Core
+    verbatim latitude and longitude values.
+
     NAHPU saves decimal latitude and longitude for calculations and also keeps
-    the original text and coordinate system for Darwin Core verbatim fields.
-    Selecting DD clears older verbatim coordinate values.
+    the concatenated value and coordinate system for Darwin Core verbatim
+    fields. If coordinate values are already entered, changing formats asks
+    for confirmation before clearing them. Selecting DD clears older verbatim
+    coordinate values after the coordinate is saved.
 
 4. Add elevation in meters.
 
@@ -260,9 +267,10 @@ Coordinate import is available from `Add coordinate → Import` on a site.
 
 1. Open a site, tap/click `Add coordinate`, and select the `Import` mode.
 
-2. Choose `Select coordinate file` and select a GeoJSON/JSON file, KML file,
-   zipped Shapefile, or GPX file. You can also choose `Scan QR` to add a
-   coordinate QR record from another NAHPU device.
+2. The supported formats appear above the import actions. Choose
+   `Select coordinate file` and select a GeoJSON/JSON file, KML file, zipped
+   Shapefile, or GPX file. You can also choose `Scan QR` to add a coordinate QR
+   record from another NAHPU device.
 
 3. Review the imported points and any warning text. The map highlights the
    focused point, and all valid points are selected by default.

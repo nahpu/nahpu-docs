@@ -23,9 +23,10 @@ the first UI switch.
 - Define behavior for records with an unknown or legacy group. Never silently
   fall back to mammals.
 
-The existing `arthropodAttribute` and `fossilAttribute` tables show why this
-decision matters: a table can exist in the schema without the group being a
-complete, user-selectable catalog format.
+The arthropod catalog is the reference implementation for promoting an existing
+attribute table into a complete, user-selectable catalog format. The
+`fossilAttribute` table still shows why this decision matters: a table can exist
+in the schema before the surrounding product support is complete.
 
 ## 2. Update persistence
 
@@ -117,6 +118,11 @@ Updating only the database schema will produce incomplete transfers.
 - Update manifests, controlled-vocabulary snapshots, and package warnings.
 - Confirm the new group appears in record export, project transfer, bundles,
   backups, and documents as intended.
+
+For the arthropod implementation, `sex`, host association, and remarks map to
+occurrence terms. Host-part, canopy, environmental, and morphometric values map
+to MeasurementOrFact rows; do not invent an OrganismInteraction row unless the
+schema can identify both interacting occurrence records.
 
 Keep [Persistence data](../database) as the authoritative mapping reference and
 link the user-facing bundle page when output changes.

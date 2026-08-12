@@ -67,11 +67,20 @@ Catatan spesimen memiliki opsi tambahan karena biasanya menjadi ekspor terbesar.
 - `Semua kolom` menulis semua kolom yang didukung.
 - `Kolom kustom` memungkinkan pemilihan kolom tertentu.
 
+Ekspor artropoda mencakup interaksi ekologi, parameter lingkungan,
+morfometrik, sex, dan catatan. Ekspor dan preset khusus artropoda tidak
+menawarkan kolom deteksi atau catatan parasit. `Semua takson` tetap memuat
+kolom tersebut untuk kelompok yang mendukung parasit.
+
 CSV dan TSV mudah dipakai untuk spreadsheet dan impor database. Excel nyaman untuk peninjauan manual. JSON mempertahankan data terstruktur untuk skrip dan perangkat lunak lain.
 
 Header Darwin Core hanya digunakan jika field NAHPU memiliki makna yang sama;
 field lain tetap memakai awalan `nahpu:`. Ekspor turunan menyertakan
 `Determiner` dan ORCID kanonisnya, koordinat verbatim, extent positif dalam
 ketidakpastian, serta unit berat yang dipilih.
+
+Untuk artropoda, pemetaan Darwin Core menempatkan sex, asosiasi inang, dan
+catatan pada occurrence. Morfometrik dan parameter lingkungan diekspor sebagai
+MeasurementOrFact dengan unit jika tersedia.
 
 Ekspor catatan bukan pengganti cadangan database. Gunakan [Cadangkan database](../#cadangkan-database) saat membutuhkan salinan database NAHPU yang dapat dipulihkan.

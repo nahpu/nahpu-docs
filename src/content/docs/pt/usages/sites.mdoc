@@ -157,9 +157,17 @@ dispositivo ou importar pontos de um arquivo GIS/GPS.
 
     O NAHPU aceita graus decimais (DD), graus e minutos decimais (DDM),
     graus-minutos-segundos (DMS) e um valor UTM no formato
-    `zona hemisfério leste norte`. UTM usa WGS84. O NAHPU guarda valores
-    decimais para cálculos e preserva o texto e o sistema originais nos campos
-    verbatim do Darwin Core. Selecionar DD limpa valores verbatim anteriores.
+    `zona hemisfério leste norte`. UTM usa WGS84.
+
+    Para DDM e DMS, insira graus, minutos e segundos em campos numéricos
+    separados. Em seguida, selecione N/S para latitude e E/W para longitude. O
+    NAHPU adiciona os símbolos e concatena as partes para os valores verbatim de
+    latitude e longitude do Darwin Core.
+
+    O NAHPU guarda os valores decimais para cálculos e preserva o valor
+    concatenado e o sistema de coordenadas nos campos verbatim. Se já houver
+    valores, a mudança de formato pede confirmação antes de apagá-los. Salvar
+    uma coordenada em DD limpa os valores verbatim anteriores.
 
 4. Adicione a elevação em metros.
 
@@ -192,7 +200,8 @@ uma localidade.
 1. Abra uma localidade, toque/clique em `Add coordinate` e selecione o modo
    `Import`.
 
-2. Escolha `Select coordinate file` e selecione um arquivo GeoJSON/JSON, KML,
+2. Os formatos compatíveis aparecem acima das ações de importação. Escolha
+   `Select coordinate file` e selecione um arquivo GeoJSON/JSON, KML,
    Shapefile compactado ou GPX. Também é possível escolher `Scan QR` para
    adicionar um registro de coordenada de outro dispositivo NAHPU.
 
