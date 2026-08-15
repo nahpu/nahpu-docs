@@ -111,7 +111,8 @@ export default defineConfig({
             es: "Instalación",
             id: "Instalasi",
           },
-        },{
+        },
+        {
           label: "Best Practices",
           translations: {
             "pt-BR": "Práticas Recomendadas",
@@ -278,7 +279,6 @@ export default defineConfig({
                 },
               ],
             },
-
           ],
           collapsed: true,
         },
