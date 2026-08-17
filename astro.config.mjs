@@ -93,7 +93,6 @@ export default defineConfig({
             id: "Hari 1",
           },
         },
-
         {
           label: "Switch to NAHPU",
           link: "switch",
@@ -242,6 +241,22 @@ export default defineConfig({
                   },
                 },
               ],
+            },
+          ],
+        },
+        {
+          label: "Cookbook",
+          translations: {
+            "pt-BR": "Guias práticos",
+            es: "Guías prácticas",
+            id: "Panduan praktis",
+          },
+          items: [
+            {
+              autogenerate: {
+                directory: "cookbook",
+                collapsed: true,
+              },
             },
           ],
         },
