@@ -317,6 +317,7 @@ export default defineConfig({
         },
       ],
     }),
+    markdoc(),
   ],
   vite: {
     plugins: [tailwindcss()],
