@@ -98,316 +98,327 @@ const sectionLeadClasses = cntl`
 `;
 
 const heroFacts = [
-  { label: "Works offline", detail: "No network needed in the field" },
-  { label: "Cross-platform", detail: "Desktop, tablet, and phone" },
-  { label: "Open standards", detail: "Darwin Core and FAIR principles" },
+    { label: "Works offline", detail: "No network needed in the field" },
+    { label: "Cross-platform", detail: "Desktop, tablet, and phone" },
+    { label: "Open standards", detail: "Darwin Core and FAIR principles" },
 ];
 
 const capabilities = [
-  {
-    color: "#2f9e7d",
-    title: "Digital asset management",
-    desc: "Attach photos of specimens, habitats, and field notes directly to your collection records.",
-  },
-  {
-    color: "#3f9fd6",
-    title: "Multi-taxon support",
-    desc: "Mix taxa in a single project — each specimen gets a catalog format tailored to its taxon.",
-  },
-  {
-    color: "#7c72d8",
-    title: "Write a site once, use it everywhere",
-    desc: "Create rich site profiles with unlimited coordinates and reuse them across specimens and events.",
-  },
-  {
-    color: "#e0913a",
-    title: "Collecting events",
-    desc: "Document collection date, method, effort, and personnel, then link them to multiple specimens.",
-  },
-  {
-    color: "#3c8fa8",
-    title: "Tissue sample management",
-    desc: "Track large sample sets with barcode and QR scanning via the device camera.",
-  },
-  {
-    color: "#b07a56",
-    title: "Real-time statistics",
-    desc: "Monitor activity and preservation resources to prevent over-collection at a glance.",
-  },
-  {
-    color: "#e2685f",
-    title: "Advanced sharing",
-    desc: "Share data with collaborators or pipe it automatically into a museum database.",
-  },
-  {
-    color: "var(--color-golden-grass-500)",
-    title: "Open source and open standards",
-    desc: "Built on open-source stacks, following Darwin Core and FAIR principles.",
-  },
+    {
+        color: "#2f9e7d",
+        title: "Digital asset management",
+        desc: "Attach photos of specimens, habitats, and field notes directly to your collection records.",
+    },
+    {
+        color: "#3f9fd6",
+        title: "Multi-taxon support",
+        desc: "Mix taxa in a single project —each specimen gets a catalog format tailored to its taxon.",
+    },
+    {
+        color: "#7c72d8",
+        title: "Write a site once, use it everywhere",
+        desc: "Create rich site profiles with unlimited coordinates and reuse them across specimens and events.",
+    },
+    {
+        color: "#e0913a",
+        title: "Collecting events",
+        desc: "Document collection date, method, effort, and personnel, then link them to multiple specimens.",
+    },
+    {
+        color: "#3c8fa8",
+        title: "Tissue sample management",
+        desc: "Track large sample sets with barcode and QR scanning via the device camera.",
+    },
+    {
+        color: "#b07a56",
+        title: "Real-time statistics",
+        desc: "Monitor activity to make decision on collecting strategy and prevent over-collection at a glance.",
+    },
+    {
+        color: "#e2685f",
+        title: "Advanced sharing",
+        desc: "Share data with collaborators or bulk import it into a museum database.",
+    },
+    {
+        color: "var(--color-golden-grass-500)",
+        title: "Open source and open standards",
+        desc: "Built on open-source stacks, following Darwin Core and FAIR principles.",
+    },
 ];
 ---
 
 <Layout
-  title="NAHPU — A digital field catalog for natural history collections"
-  description="Leveraging emerging digital technologies to accelerate biodiversity inventories."
-  overlayNav
+    title="NAHPU — A digital field catalog for natural history collections"
+    description="Leveraging emerging digital technologies to accelerate biodiversity inventories."
+    overlayNav
 >
-  <!-- Hero ---------------------------------------------------------------->
-  <section class={heroClasses}>
-    <HeroBackdrop />
+    <!-- Hero ---------------------------------------------------------------->
+    <section class={heroClasses}>
+        <HeroBackdrop />
 
-    <span class={eyebrowClasses}>Free · Open source · Field ready</span>
+        <span class={eyebrowClasses}>Free · Open source · Field ready</span>
 
-    <h1 class={wordmarkClasses}>
-      {
-        "NAHPU".split("").map((letter, index) => (
-          <span class="nh-letter" style={`animation-delay: ${index * 0.09}s`}>
-            {letter}
-          </span>
-        ))
-      }
-    </h1>
-    <p
-      class="mt-3 text-sm tracking-[0.3em] uppercase text-silver-tree-700 dark:text-silver-tree-400"
-    >
-      Natural History Project Utility
-    </p>
-
-    <p class={taglineClasses}>
-      Leveraging emerging digital technologies to accelerate biodiversity
-      inventories.
-    </p>
-
-    <p class={heroBodyClasses}>
-      NAHPU is a cross-platform digital field catalog for natural history
-      collections. Specimens, sites, collecting events, tissue samples, and field
-      photographs live in one project file — recorded on a phone at the trap line
-      and finished on a laptop back at camp.
-    </p>
-
-    <div class="mt-10 flex flex-wrap justify-center gap-4">
-      <a href="/en/installation" class={mainBtnClasses}>Install NAHPU</a>
-      <a href="/en" class={secondaryBtnClasses}>Read the documentation</a>
-    </div>
-
-    <dl
-      class="mt-16 grid w-full max-w-3xl grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-4"
-    >
-      {
-        heroFacts.map((fact) => (
-          <div class="flex flex-col gap-1">
-            <dt class="text-sm font-semibold text-silver-tree-900 dark:text-silver-tree-100">
-              {fact.label}
-            </dt>
-            <dd class="text-xs text-silver-tree-700 dark:text-silver-tree-400">
-              {fact.detail}
-            </dd>
-          </div>
-        ))
-      }
-    </dl>
-
-    <p
-      class="absolute inset-x-0 bottom-4 px-6 text-[11px] tracking-wide text-silver-tree-700 sm:inset-x-auto sm:right-6 sm:px-0 dark:text-silver-tree-400"
-    >
-      Taken on Mt. Bandahara by Heru Handika.
-    </p>
-
-    <a
-      href="#field-work"
-      aria-label="Skip to the overview"
-      class="mt-14 text-silver-tree-700 no-underline dark:text-silver-tree-400"
-    >
-      <svg
-        class="h-6 w-6 animate-bounce"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M12 5v14M6 13l6 6 6-6"></path>
-      </svg>
-    </a>
-  </section>
-
-  <!-- What NAHPU is for --------------------------------------------------->
-  <section
-    id="field-work"
-    class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
-  >
-    <div class={sectionInnerClasses}>
-      <header class="nh-reveal max-w-3xl">
-        <p class={kickerClasses}>Why it exists</p>
-        <h2 class={sectionTitleClasses}>
-          Inventories are limited by what gets written down
-        </h2>
-        <p class={sectionLeadClasses}>
-          Field notebooks, camera cards, and spreadsheets rarely reconcile
-          cleanly once an expedition ends. NAHPU keeps the record complete and
-          internally consistent from the moment the specimen is in hand.
-        </p>
-      </header>
-
-      <div class="mt-12">
-        <Pillars />
-      </div>
-    </div>
-  </section>
-
-  <!-- Screens ------------------------------------------------------------->
-  <section
-    id="screens"
-    class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
-  >
-    <div class={sectionInnerClasses}>
-      <header class="nh-reveal max-w-3xl">
-        <p class={kickerClasses}>Inside the catalog</p>
-        <h2 class={sectionTitleClasses}>Example views</h2>
-        <p class={sectionLeadClasses}>
-          One project seen from the specimen bench, the locality register, the
-          map, the media library, the statistics window, and the export desk.
-          The records shown come from a four-month expedition to three remote
-          mountains on Sumatra.
-        </p>
-      </header>
-
-      <div class="nh-reveal mt-12">
-        <AppShowcase />
-      </div>
-    </div>
-  </section>
-
-  <!-- Catalog formats ----------------------------------------------------->
-  <section
-    id="catalog-formats"
-    class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
-  >
-    <div class={sectionInnerClasses}>
-      <header class="nh-reveal max-w-3xl">
-        <p class={kickerClasses}>Catalog formats</p>
-        <h2 class={sectionTitleClasses}>Fields that match the discipline</h2>
-        <p class={sectionLeadClasses}>
-          Each format carries the measurements and preparation terms its
-          discipline expects, and a single project can hold more than one format.
-        </p>
-      </header>
-
-      <div class="mt-12">
-        <CatalogFormats />
-      </div>
-    </div>
-  </section>
-
-  <!-- Field gallery ------------------------------------------------------->
-  <section
-    id="from-the-field"
-    class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
-  >
-    <div class={sectionInnerClasses}>
-      <header class="nh-reveal max-w-3xl">
-        <p class={kickerClasses}>From the field</p>
-        <h2 class={sectionTitleClasses}>Where every record begins</h2>
-        <p class={sectionLeadClasses}>
-          Behind each catalog number is an animal, a locality, and a night of
-          fieldwork. NAHPU keeps the photographs with the specimen data they
-          belong to.
-        </p>
-      </header>
-
-      <div class="mt-12">
-        <FieldGallery />
-      </div>
-    </div>
-  </section>
-
-  <!-- Capabilities -------------------------------------------------------->
-  <section
-    id="capabilities"
-    class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
-  >
-    <div class={sectionInnerClasses}>
-      <header class="nh-reveal max-w-3xl">
-        <p class={kickerClasses}>Capabilities</p>
-        <h2 class={sectionTitleClasses}>What comes with the catalog</h2>
-      </header>
-
-      <div class="mt-12 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2">
-        {
-          capabilities.map((item, index) => (
-            <div
-              class="nh-reveal flex gap-4 border-t border-silver-tree-300/70 pt-5 dark:border-silver-tree-700/70"
-              style={`transition-delay: ${index * 50}ms`}
-            >
-              <span
-                class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full"
-                style={`background:${item.color}`}
-              />
-              <div>
-                <h3 class="text-base font-semibold text-silver-tree-900 dark:text-silver-tree-50">
-                  {item.title}
-                </h3>
-                <p class="mt-1 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
-                  {item.desc}
-                </p>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to action ------------------------------------------------------>
-  <section
-    class="relative overflow-hidden px-6 py-24 bg-silver-tree-200/60 dark:bg-silver-tree-900"
-  >
-    <div
-      class="nh-blob nh-blob-teal pointer-events-none opacity-30"
-      aria-hidden="true"
-    >
-    </div>
-    <div class="relative mx-auto max-w-3xl text-center">
-      <h2 class={sectionTitleClasses}>Take it to the field</h2>
-      <p class={`${sectionLeadClasses} mx-auto`}>
-        NAHPU is free to install and free to use. Start with the installation
-        guide, or follow the walkthrough that builds a project from the first
-        site to the first exported record set.
-      </p>
-      <div class="mt-10 flex flex-wrap justify-center gap-4">
-        <a href="/en/installation" class={mainBtnClasses}>Install NAHPU</a>
-        <a href="/get-started" class={secondaryBtnClasses}>Get started</a>
-        <a
-          href="https://github.com/nahpu"
-          target="_blank"
-          rel="noopener noreferrer"
-          class={secondaryBtnClasses}>Source on GitHub</a
+        <h1 class={wordmarkClasses}>
+            {
+                "NAHPU".split("").map((letter, index) => (
+                    <span
+                        class="nh-letter"
+                        style={`animation-delay: ${index * 0.09}s`}
+                    >
+                        {letter}
+                    </span>
+                ))
+            }
+        </h1>
+        <p
+            class="mt-3 text-sm tracking-[0.3em] uppercase text-silver-tree-700 dark:text-silver-tree-400"
         >
-      </div>
-    </div>
-  </section>
+            Natural History Project Utility
+        </p>
+
+        <p class={taglineClasses}>
+            Leveraging emerging digital technologies to accelerate biodiversity
+            inventories.
+        </p>
+
+        <p class={heroBodyClasses}>
+            NAHPU is a cross-platform digital field catalog for natural history
+            collections. Specimens, sites, collecting events, tissue samples,
+            and field photographs live in one project file, and easily share
+            exact same of data among collaborators.
+        </p>
+
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <a href="/en/installation" class={mainBtnClasses}>Install NAHPU</a>
+            <a href="/en" class={secondaryBtnClasses}>Read the documentation</a>
+        </div>
+
+        <dl
+            class="mt-16 grid w-full max-w-3xl grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-4"
+        >
+            {
+                heroFacts.map((fact) => (
+                    <div class="flex flex-col gap-1">
+                        <dt class="text-sm font-semibold text-silver-tree-900 dark:text-silver-tree-100">
+                            {fact.label}
+                        </dt>
+                        <dd class="text-xs text-silver-tree-700 dark:text-silver-tree-400">
+                            {fact.detail}
+                        </dd>
+                    </div>
+                ))
+            }
+        </dl>
+
+        <p
+            class="absolute inset-x-0 bottom-4 px-6 text-[11px] tracking-wide text-silver-tree-700 sm:inset-x-auto sm:right-6 sm:px-0 dark:text-silver-tree-400"
+        >
+            Photo taken on Mt. Bandahara by Heru Handika.
+        </p>
+
+        <a
+            href="#field-work"
+            aria-label="Skip to the overview"
+            class="mt-14 text-silver-tree-700 no-underline dark:text-silver-tree-400"
+        >
+            <svg
+                class="h-6 w-6 animate-bounce"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="M12 5v14M6 13l6 6 6-6"></path>
+            </svg>
+        </a>
+    </section>
+
+    <!-- What NAHPU is for --------------------------------------------------->
+    <section
+        id="field-work"
+        class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
+    >
+        <div class={sectionInnerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Why it exists</p>
+                <h2 class={sectionTitleClasses}>
+                    Inventories are limited by what gets written down
+                </h2>
+                <p class={sectionLeadClasses}>
+                    Field notebooks, camera cards, and spreadsheets rarely
+                    reconcile cleanly once an expedition ends. NAHPU keeps the
+                    record complete and internally consistent from the moment
+                    the specimen is in hand.
+                </p>
+            </header>
+
+            <div class="mt-12">
+                <Pillars />
+            </div>
+        </div>
+    </section>
+
+    <!-- Screens ------------------------------------------------------------->
+    <section
+        id="screens"
+        class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
+    >
+        <div class={sectionInnerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Inside the catalog</p>
+                <h2 class={sectionTitleClasses}>Example views</h2>
+                <p class={sectionLeadClasses}>
+                    One project seen from the specimen form, the locality
+                    register, the map, the media library, the statistics, and
+                    the export window. The records shown come from a four-month
+                    expedition to three remote mountains on Sumatra, Indonesia.
+                </p>
+            </header>
+
+            <div class="nh-reveal mt-12">
+                <AppShowcase />
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog formats ----------------------------------------------------->
+    <section
+        id="catalog-formats"
+        class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
+    >
+        <div class={sectionInnerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Catalog formats</p>
+                <h2 class={sectionTitleClasses}>
+                    Fields that match the discipline
+                </h2>
+                <p class={sectionLeadClasses}>
+                    Each format carries the measurements and preparation terms
+                    its discipline expects, and a single project can hold more
+                    than one format.
+                </p>
+            </header>
+
+            <div class="mt-12">
+                <CatalogFormats />
+            </div>
+        </div>
+    </section>
+
+    <!-- Field gallery ------------------------------------------------------->
+    <section
+        id="from-the-field"
+        class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
+    >
+        <div class={sectionInnerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>From the field</p>
+                <h2 class={sectionTitleClasses}>Where every record begins</h2>
+                <p class={sectionLeadClasses}>
+                    Behind each catalog number is an animal, a locality, and a
+                    night of fieldwork. NAHPU keeps the photographs with the
+                    specimen data they belong to.
+                </p>
+            </header>
+
+            <div class="mt-12">
+                <FieldGallery />
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities -------------------------------------------------------->
+    <section
+        id="capabilities"
+        class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
+    >
+        <div class={sectionInnerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Capabilities</p>
+                <h2 class={sectionTitleClasses}>What comes with the catalog</h2>
+            </header>
+
+            <div class="mt-12 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2">
+                {
+                    capabilities.map((item, index) => (
+                        <div
+                            class="nh-reveal flex gap-4 border-t border-silver-tree-300/70 pt-5 dark:border-silver-tree-700/70"
+                            style={`transition-delay: ${index * 50}ms`}
+                        >
+                            <span
+                                class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full"
+                                style={`background:${item.color}`}
+                            />
+                            <div>
+                                <h3 class="text-base font-semibold text-silver-tree-900 dark:text-silver-tree-50">
+                                    {item.title}
+                                </h3>
+                                <p class="mt-1 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
+                                    {item.desc}
+                                </p>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to action ------------------------------------------------------>
+    <section
+        class="relative overflow-hidden px-6 py-24 bg-silver-tree-200/60 dark:bg-silver-tree-900"
+    >
+        <div
+            class="nh-blob nh-blob-teal pointer-events-none opacity-30"
+            aria-hidden="true"
+        >
+        </div>
+        <div class="relative mx-auto max-w-3xl text-center">
+            <h2 class={sectionTitleClasses}>Take it to the field</h2>
+            <p class={`${sectionLeadClasses} mx-auto`}>
+                NAHPU is free to install and free to use. Start with the
+                installation guide, or follow the walkthrough that builds a
+                project from the first site to the first exported record set.
+            </p>
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                <a href="/en/installation" class={mainBtnClasses}
+                    >Install NAHPU</a
+                >
+                <a href="/get-started" class={secondaryBtnClasses}
+                    >Get started</a
+                >
+                <a
+                    href="https://github.com/nahpu"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={secondaryBtnClasses}>Source on GitHub</a
+                >
+            </div>
+        </div>
+    </section>
 </Layout>
 
 <script>
-  const revealed = document.querySelectorAll<HTMLElement>(".nh-reveal");
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
+    const revealed = document.querySelectorAll<HTMLElement>(".nh-reveal");
+    const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+    ).matches;
 
-  if (reduceMotion || !("IntersectionObserver" in window)) {
-    revealed.forEach((element) => element.classList.add("nh-in"));
-  } else {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("nh-in");
-          observer.unobserve(entry.target);
-        });
-      },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.1 },
-    );
-    revealed.forEach((element) => observer.observe(element));
-  }
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+        revealed.forEach((element) => element.classList.add("nh-in"));
+    } else {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add("nh-in");
+                    observer.unobserve(entry.target);
+                });
+            },
+            { rootMargin: "0px 0px -12% 0px", threshold: 0.1 },
+        );
+        revealed.forEach((element) => observer.observe(element));
+    }
 </script>

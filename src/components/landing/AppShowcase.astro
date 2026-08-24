@@ -2,7 +2,7 @@
 import { getImage } from "astro:assets";
 import AppShowcaseIsland, { type Shot } from "./AppShowcase.tsx";
 import specimenRecord from "../../assets/images/app-screenshots/specimen-record.png";
-import siteForm from "../../assets/images/app-screenshots/site-form.png";
+import siteForm from "../../assets/images/app-screenshots/sites.png";
 import siteFormQr from "../../assets/images/app-screenshots/site-form-qr.png";
 import coordinates from "../../assets/images/app-screenshots/coordinate-management.png";
 import mediaGallery from "../../assets/images/app-screenshots/media-gallery.png";
@@ -17,158 +17,158 @@ import scanQr from "../../assets/images/app-screenshots/phone-scan-qr.jpg";
 
 /// Screens of the app, prepared as optimised WebP before they reach the island.
 const sources = [
-  {
-    id: "specimens",
-    label: "Specimen records",
-    meta: "Identification, measurements, parts",
-    title: "Every specimen field on one screen",
-    description:
-      "Field number, collector, taxon, condition, and preparation stay beside the measurements. Outlier warnings mark values that fall outside the expected range for the taxon before the record is committed, on the tablet at the bench or the phone in your pocket.",
-    image: specimenRecord,
-    pairImage: phoneSpecimenPart,
-  },
-  {
-    id: "sites",
-    label: "Sites and localities",
-    meta: "Geography, habitat, site attributes",
-    title: "Describe a locality once, reuse it everywhere",
-    description:
-      "Country through precise locality, habitat type, and site condition are recorded once, then linked by every specimen and collecting event that belongs to that site. One person writes the site up; the rest of the team scans its QR code or imports it as JSON, so the same locality is never typed twice.",
-    image: siteForm,
-    pairImage: siteFormQr,
-  },
-  {
-    id: "coordinates",
-    label: "Coordinate management",
-    meta: "Unlimited points per site",
-    title: "Trap lines and camps, mapped as you go",
-    description:
-      "A site can carry as many coordinates as the sampling design requires, each with its own elevation, uncertainty, and datum. Review them on the map and export the set for permits and georeferencing.",
-    image: coordinates,
-  },
-  {
-    id: "media",
-    label: "Media gallery",
-    meta: "Photographs, audio, notes",
-    title: "Digital assets filed against the record",
-    description:
-      "Photographs of specimens, habitats, and camps are stored with the record they document and can be filtered by specimen, site, event, or narrative.",
-    image: mediaGallery,
-  },
-  {
-    id: "statistics",
-    label: "Record statistics",
-    meta: "Effort, parts, sex ratio",
-    title: "Watch the inventory take shape",
-    description:
-      "Specimens by method, part quantity by treatment, and sex ratios update as records are entered, so collecting effort and preservation supplies can be adjusted while the expedition is still running.",
-    image: statWindow,
-  },
-  {
-    id: "projects",
-    label: "Projects",
-    meta: "Multiple expeditions, one catalog",
-    title: "One catalog per expedition",
-    description:
-      "Each project holds its own personnel, sites, events, and specimens, and travels with you as a single file that can be backed up, archived, or handed to a collection manager.",
-    image: homeScreen,
-  },
-  {
-    id: "export",
-    label: "Rich export",
-    meta: "Labels, presets, templates, QR",
-    title: "A rich export function",
-    description:
-      "Any part of the catalog leaves NAHPU as a tabular file for analysis or bulk import into a museum database, a PDF for archiving, or a printed label for the specimen jar.",
-    image: exportLabels,
-    variants: [
-      {
-        id: "labels",
-        label: "Specimen labels",
-        title: "Print-ready specimen labels",
+    {
+        id: "specimens",
+        label: "Specimen records",
+        meta: "Identification, measurements, parts",
+        title: "Every specimen field on one screen",
         description:
-          "Choose a layout profile and NAHPU sets the page and the template blocks. Locality, coordinates, date, collector, preparation, and a QR code are filled from the record, and every page is previewed before it reaches the printer.",
+            "Field number, collector, taxon, condition, and preparation stay beside the measurements. Outlier warnings mark values that fall outside the expected range for the taxon before the record is committed, on the tablet at the bench or the phone in your pocket.",
+        image: specimenRecord,
+        pairImage: phoneSpecimenPart,
+    },
+    {
+        id: "sites",
+        label: "Sites and localities",
+        meta: "Geography, habitat, site attributes",
+        title: "Describe a locality once, reuse it everywhere",
+        description:
+            "Country through precise locality, habitat type, and site condition are recorded once, then linked by every specimen and collecting event that belongs to that site. One person writes the site up; the rest of the team scans its QR code or imports it as JSON, so the same locality is never typed twice.",
+        image: siteForm,
+        pairImage: siteFormQr,
+    },
+    {
+        id: "coordinates",
+        label: "Coordinate management",
+        meta: "Unlimited points per site",
+        title: "Trap lines and camps, mapped as you go",
+        description:
+            "A site can carry as many coordinates as the sampling design requires, each with its own elevation, uncertainty, and datum. Review them on the map and export the set for permits and georeferencing.",
+        image: coordinates,
+    },
+    {
+        id: "media",
+        label: "Media gallery",
+        meta: "Photographs, audio, notes",
+        title: "Digital assets filed against the record",
+        description:
+            "Photographs of specimens, habitats, and camps are stored with the record they document and can be filtered by specimen, site, event, or narrative.",
+        image: mediaGallery,
+    },
+    {
+        id: "statistics",
+        label: "Record statistics",
+        meta: "Effort, parts, sex ratio, and more",
+        title: "Watch the inventory take shape",
+        description:
+            "Specimens by method, part quantity by treatment, and sex ratios update as records are entered, so collecting effort and preservation supplies can be adjusted while the expedition is still running.",
+        image: statWindow,
+    },
+    {
+        id: "projects",
+        label: "Projects",
+        meta: "Multiple expeditions, one catalog",
+        title: "One catalog per expedition",
+        description:
+            "Each project holds its own personnel, sites, events, and specimens, and travels with you as a single file that can be backed up, archived, or handed to a collection manager.",
+        image: homeScreen,
+    },
+    {
+        id: "export",
+        label: "Rich export",
+        meta: "Labels, presets, templates, QR",
+        title: "A rich export function",
+        description:
+            "Any part of the catalog leaves NAHPU as a tabular file for analysis or bulk import into a museum database, a PDF for archiving, or a printed label for the voucher and specimen jar.",
         image: exportLabels,
-      },
-      {
-        id: "presets",
-        label: "Export presets",
-        title: "Build your own export presets",
-        description:
-          "Map any source field — project, personnel, site, coordinate, collecting event, taxonomy, or specimen attributes — onto the columns your institution expects, including combined and nested fields. Save the mapping as a preset and every tabular export matches it, whether the file is going to an analysis or straight into a museum database as a bulk import.",
-        image: presetMappings,
-      },
-      {
-        id: "templates",
-        label: "Label templates",
-        title: "Design the label itself",
-        description:
-          "The template editor places text, tables, images, and QR blocks on a page of any size, on a millimetre grid, so a label matches what your collection has always printed.",
-        image: templateEditor,
-      },
-      {
-        id: "settings",
-        label: "Export settings",
-        title: "Darwin Core and Frictionless Data",
-        description:
-          "Bundle records for all recorded taxa or a selected set, then write them out as a Darwin Core Archive, or as a Darwin Core or NAHPU data package in the Frictionless Data format.",
-        image: exportSettings,
-      },
-      {
-        id: "qr",
-        label: "Transfer by QR",
-        title: "Move presets between devices",
-        description:
-          "Presets and templates travel as QR codes. Show one on the laptop, scan it with the phone in camp, and both devices export the same way without a network.",
-        image: scanQr,
-      },
-    ],
-  },
+        variants: [
+            {
+                id: "labels",
+                label: "Specimen labels",
+                title: "Print-ready specimen labels",
+                description:
+                    "Choose a layout profile and NAHPU sets the page and the template blocks. Locality, coordinates, date, collector, preparation, and a QR code are filled from the record, and every page is previewed before it reaches the printer.",
+                image: exportLabels,
+            },
+            {
+                id: "presets",
+                label: "Export presets",
+                title: "Build your own export presets",
+                description:
+                    "Map any source field (e.g., project, personnel, site, coordinate, collecting event, taxonomy, or specimen attributes) onto the columns your institution expects, including combined and nested fields. Save the mapping as a preset and every tabular export matches it, whether the file is going to an analysis or straight into a museum database as a bulk import.",
+                image: presetMappings,
+            },
+            {
+                id: "templates",
+                label: "Document templates",
+                title: "Design your own templates for PDF and print",
+                description:
+                    "The template editor places text, tables, images, and QR blocks on a page of any size, on a millimetre grid, so a PDF matches what your collection has always printed.",
+                image: templateEditor,
+            },
+            {
+                id: "settings",
+                label: "Export settings",
+                title: "Darwin Core and Frictionless Data",
+                description:
+                    "Bundle records for all recorded taxa or a selected set, then write them out as a Darwin Core Archive, or as a Darwin Core or NAHPU data package in the Frictionless Data format.",
+                image: exportSettings,
+            },
+            {
+                id: "qr",
+                label: "Transfer by QR",
+                title: "Move presets between devices",
+                description:
+                    "Presets and templates travel as QR codes. Show one on the laptop, scan it with the phone in camp, and both devices export the same way without a network.",
+                image: scanQr,
+            },
+        ],
+    },
 ];
 
 /// Renders one screenshot at two widths so the panel can pick per viewport.
 async function optimise(image: ImageMetadata) {
-  const large = await getImage({
-    src: image,
-    width: Math.min(1200, image.width),
-    format: "webp",
-    quality: 72,
-  });
-  const small = await getImage({
-    src: image,
-    width: Math.min(640, image.width),
-    format: "webp",
-    quality: 68,
-  });
-  return {
-    src: large.src,
-    srcSet: `${small.src} 640w, ${large.src} 1200w`,
-    width: image.width,
-    height: image.height,
-  };
+    const large = await getImage({
+        src: image,
+        width: Math.min(1200, image.width),
+        format: "webp",
+        quality: 72,
+    });
+    const small = await getImage({
+        src: image,
+        width: Math.min(640, image.width),
+        format: "webp",
+        quality: 68,
+    });
+    return {
+        src: large.src,
+        srcSet: `${small.src} 640w, ${large.src} 1200w`,
+        width: image.width,
+        height: image.height,
+    };
 }
 
 const shots: Shot[] = await Promise.all(
-  sources.map(async (source) => ({
-    id: source.id,
-    label: source.label,
-    meta: source.meta,
-    title: source.title,
-    description: source.description,
-    ...(await optimise(source.image)),
-    pair: source.pairImage ? await optimise(source.pairImage) : undefined,
-    variants: source.variants
-      ? await Promise.all(
-          source.variants.map(async (variant) => ({
-            id: variant.id,
-            label: variant.label,
-            title: variant.title,
-            description: variant.description,
-            ...(await optimise(variant.image)),
-          })),
-        )
-      : undefined,
-  })),
+    sources.map(async (source) => ({
+        id: source.id,
+        label: source.label,
+        meta: source.meta,
+        title: source.title,
+        description: source.description,
+        ...(await optimise(source.image)),
+        pair: source.pairImage ? await optimise(source.pairImage) : undefined,
+        variants: source.variants
+            ? await Promise.all(
+                  source.variants.map(async (variant) => ({
+                      id: variant.id,
+                      label: variant.label,
+                      title: variant.title,
+                      description: variant.description,
+                      ...(await optimise(variant.image)),
+                  })),
+              )
+            : undefined,
+    })),
 );
 ---
 
