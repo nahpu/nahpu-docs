@@ -1,7 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import TeamMember from "../components/TeamMember.astro";
+import { Image } from "astro:assets";
+import cntl from "cntl";
+import snake from "../assets/images/animals/handika-snake.webp";
+
 import "../styles/global.css";
+import "../styles/landing.css";
+
+const kickerClasses = cntl`
+  text-xs font-semibold uppercase tracking-[0.2em]
+  text-silver-tree-600 dark:text-silver-tree-400
+`;
 const teamData = [
   {
     name: "Heru Handika",
@@ -111,25 +121,41 @@ const teamData = [
 <Layout
   title="NAHPU Team"
   description="Meet the team behind the NAHPU project."
+  overlayNav
 >
-  <div
-    class="mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-silver-tree-100 dark:bg-silver-tree-950"
+  <!-- Header -------------------------------------------------------------->
+  <section
+    class="nh-hero relative flex min-h-[46svh] items-end px-6 pt-32 pb-12"
   >
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16">
-        <h1
-          class="text-4xl md:text-5xl font-bold bg-linear-to-r from-silver-tree-400 via-silver-tree-500 to-golden-grass-400 bg-clip-text text-transparent mb-6"
-        >
-          NAHPU Team
-        </h1>
-        <p
-          class="text-xl text-silver-tree-600 dark:text-silver-tree-300 max-w-2xl mx-auto"
-        >
-          {teamData.length} dedicated scientists revolutionizing biodiversity fieldwork.
-        </p>
-      </div>
+    <div class="nh-hero-bg" aria-hidden="true">
+      <div class="nh-blob nh-blob-teal"></div>
+      <div class="nh-blob nh-blob-gold"></div>
+      <div class="nh-blob nh-blob-deep"></div>
+      <div class="nh-hero-scrim"></div>
+    </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="mx-auto w-full max-w-6xl">
+      <p class={kickerClasses}>The people behind it</p>
+      <h1
+        class="mt-3 text-4xl font-bold text-silver-tree-950 sm:text-5xl dark:text-silver-tree-50"
+      >
+        NAHPU Team
+      </h1>
+      <p
+        class="mt-5 max-w-2xl text-lg text-silver-tree-800 dark:text-silver-tree-200"
+      >
+        {teamData.length} collection managers, field biologists, and software engineers
+        building NAHPU across museums and universities.
+      </p>
+    </div>
+  </section>
+
+  <!-- Members -------------------------------------------------------------->
+  <section class="px-6 py-16 sm:py-20 bg-silver-tree-100 dark:bg-silver-tree-950">
+    <div class="mx-auto max-w-6xl">
+      <div
+        class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      >
         {
           teamData.map((member) => (
             <TeamMember
@@ -138,10 +164,93 @@ const teamData = [
               description={member.description}
               url={member.url}
               leader={member.leader || false}
+              featured={member.leader || false}
             />
           ))
         }
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- Join ----------------------------------------------------------------->
+  <section
+    class="px-6 py-16 sm:py-20 bg-silver-tree-200/60 dark:bg-silver-tree-900"
+  >
+    <div class="mx-auto max-w-6xl">
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
+        <div class="nh-reveal">
+          <p class={kickerClasses}>Contribute</p>
+          <h2
+            class="mt-3 text-3xl font-semibold text-silver-tree-950 sm:text-4xl dark:text-silver-tree-50"
+          >
+            The team is open
+          </h2>
+          <p
+            class="mt-4 max-w-xl text-base leading-relaxed text-silver-tree-700 dark:text-silver-tree-300"
+          >
+            NAHPU grows through collaboration with curators, collection
+            managers, and developers. New taxon formats, translations,
+            documentation, and code contributions are all welcome — as is a
+            conversation about what your collection needs.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a
+              href="/en/contributing"
+              class="rounded-xl bg-linear-to-r from-silver-tree-700 to-silver-tree-600 px-6 py-3.5 font-semibold text-silver-tree-50 no-underline shadow-lg shadow-silver-tree-700/20 transition-transform duration-300 hover:-translate-y-0.5 dark:from-silver-tree-400 dark:to-silver-tree-300 dark:text-silver-tree-950"
+              >How to contribute</a
+            >
+            <a
+              href="https://github.com/nahpu"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-xl border border-silver-tree-700/70 px-6 py-3.5 font-semibold text-silver-tree-800 no-underline transition-colors duration-300 hover:bg-silver-tree-700 hover:text-silver-tree-50 dark:border-silver-tree-400/70 dark:text-silver-tree-200 dark:hover:bg-silver-tree-400 dark:hover:text-silver-tree-950"
+              >Source on GitHub</a
+            >
+          </div>
+        </div>
+
+        <figure
+          class="nh-reveal nh-tile overflow-hidden rounded-2xl border border-silver-tree-300/60 shadow-lg dark:border-silver-tree-700/60"
+        >
+          <Image
+            src={snake}
+            alt="A patterned snake coiled on bare ground"
+            widths={[400, 800]}
+            sizes="(min-width: 1024px) 45vw, 92vw"
+            class="aspect-[3/2] w-full object-cover"
+            loading="lazy"
+          />
+          <figcaption
+            class="flex items-center justify-between gap-2 bg-silver-tree-200/70 px-4 py-2.5 text-xs text-silver-tree-800 dark:bg-silver-tree-900/70 dark:text-silver-tree-200"
+          >
+            <span>Colubrid snake, photographed by Heru Handika</span>
+            <span class="tracking-widest uppercase">Herpetology</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<script>
+  const revealed = document.querySelectorAll<HTMLElement>(".nh-reveal");
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    revealed.forEach((element) => element.classList.add("nh-in"));
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("nh-in");
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
+    );
+    revealed.forEach((element) => observer.observe(element));
+  }
+</script>

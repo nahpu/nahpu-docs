@@ -1,0 +1,302 @@
+---
+import cntl from "cntl";
+
+/// The three things NAHPU is built to do on an expedition.
+const cardClasses = cntl`
+  nh-reveal
+  group
+  relative
+  flex flex-col gap-4
+  rounded-2xl
+  border border-silver-tree-300/70 dark:border-silver-tree-700/70
+  bg-silver-tree-50/80 dark:bg-silver-tree-900/60
+  backdrop-blur-sm
+  p-6
+  transition-colors
+  hover:border-silver-tree-500 dark:hover:border-silver-tree-500
+`;
+
+const glyphClasses = cntl`
+  w-24 h-24 shrink-0
+`;
+
+const headingClasses = cntl`
+  text-lg font-semibold
+  text-silver-tree-900 dark:text-silver-tree-50
+`;
+
+const bodyClasses = cntl`
+  text-sm leading-relaxed
+  text-silver-tree-700 dark:text-silver-tree-200
+`;
+
+const tagClasses = cntl`
+  self-start rounded-full
+  px-3 py-1
+  text-[11px] font-semibold uppercase tracking-widest
+`;
+---
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <article class={cardClasses}>
+    <svg class={glyphClasses} viewBox="0 0 120 120" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="nh-card-1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="var(--color-silver-tree-200)"></stop>
+          <stop offset="100%" stop-color="var(--color-silver-tree-400)"></stop>
+        </linearGradient>
+        <linearGradient id="nh-scanline" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--color-golden-grass-400)" stop-opacity="0"
+          ></stop>
+          <stop offset="50%" stop-color="var(--color-golden-grass-400)"></stop>
+          <stop offset="100%" stop-color="var(--color-golden-grass-400)" stop-opacity="0"
+          ></stop>
+        </linearGradient>
+      </defs>
+
+      <rect
+        x="16"
+        y="18"
+        width="80"
+        height="86"
+        rx="14"
+        fill="url(#nh-card-1)"
+        fill-opacity="0.35"
+        stroke="var(--color-silver-tree-500)"
+        stroke-width="2"></rect>
+
+      <g fill="var(--color-silver-tree-500)" fill-opacity="0.55">
+        <rect x="28" y="34" width="34" height="5" rx="2.5"></rect>
+        <rect x="28" y="52" width="46" height="5" rx="2.5"></rect>
+        <rect x="28" y="70" width="28" height="5" rx="2.5"></rect>
+      </g>
+      <g fill="var(--color-silver-tree-600)">
+        <rect x="28" y="43" width="56" height="4" rx="2"></rect>
+        <rect x="28" y="79" width="40" height="4" rx="2"></rect>
+      </g>
+
+      <rect x="28" y="61" width="56" height="4" rx="2" fill="#e2685f"></rect>
+      <circle class="nh-flag" cx="88" cy="63" r="4" fill="#e2685f"></circle>
+
+      <rect class="nh-scan" x="18" y="30" width="76" height="3" fill="url(#nh-scanline)"
+      ></rect>
+
+      <circle
+        cx="92"
+        cy="94"
+        r="16"
+        fill="var(--color-silver-tree-500)"
+        stroke="var(--color-silver-tree-50)"
+        stroke-width="3"></circle>
+      <path
+        class="nh-draw"
+        d="M84 94 l6 6 l11 -13"
+        stroke="var(--color-silver-tree-50)"
+        stroke-width="3.4"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
+
+    <span
+      class={`${tagClasses} bg-silver-tree-200 text-silver-tree-800 dark:bg-silver-tree-800 dark:text-silver-tree-100`}
+      >Accuracy</span
+    >
+    <h3 class={headingClasses}>Fewer data entry errors</h3>
+    <p class={bodyClasses}>
+      Controlled vocabularies, taxon lookups, and outlier warnings flag typos and
+      implausible measurements while the specimen is still in hand — not months
+      later, during accessioning.
+    </p>
+  </article>
+
+  <article class={cardClasses}>
+    <svg class={glyphClasses} viewBox="0 0 120 120" fill="none" aria-hidden="true">
+      <defs>
+        <radialGradient id="nh-hub" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="var(--color-silver-tree-400)"></stop>
+          <stop offset="100%" stop-color="var(--color-silver-tree-700)"></stop>
+        </radialGradient>
+      </defs>
+
+      <g
+        stroke="var(--color-silver-tree-400)"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        opacity="0.75">
+        <path d="M 60 60 C 60 34, 44 26, 26 26"></path>
+        <path d="M 60 60 C 60 34, 76 26, 94 26"></path>
+        <path d="M 60 60 C 60 86, 44 94, 26 94"></path>
+        <path d="M 60 60 C 60 86, 76 94, 94 94"></path>
+      </g>
+
+      <!-- Photograph -->
+      <g transform="translate(26 26)">
+        <rect x="-13" y="-11" width="26" height="22" rx="5" fill="#f0a832"></rect>
+        <circle cx="-4" cy="-2" r="3.4" fill="#fff6e0"></circle>
+        <path d="M-12 8 l8 -8 l6 5 l5 -4 l6 7 z" fill="#8f5b10"></path>
+      </g>
+
+      <!-- Audio -->
+      <g transform="translate(94 26)">
+        <rect x="-13" y="-11" width="26" height="22" rx="5" fill="#7c72d8"></rect>
+        <g stroke="#efeeff" stroke-width="2.4" stroke-linecap="round">
+          <path d="M-7 -3 v6"></path>
+          <path d="M-2.5 -7 v14"></path>
+          <path d="M2 -4.5 v9"></path>
+          <path d="M6.5 -2 v4"></path>
+        </g>
+      </g>
+
+      <!-- Field note -->
+      <g transform="translate(26 94)">
+        <rect x="-13" y="-11" width="26" height="22" rx="5" fill="#3f9fd6"></rect>
+        <g stroke="#eaf6ff" stroke-width="2.2" stroke-linecap="round">
+          <path d="M-6 -4 h12"></path>
+          <path d="M-6 1 h12"></path>
+          <path d="M-6 6 h7"></path>
+        </g>
+      </g>
+
+      <!-- Tissue sample -->
+      <g transform="translate(94 94)">
+        <rect x="-13" y="-11" width="26" height="22" rx="5" fill="#2f9e7d"></rect>
+        <path
+          d="M-3 -7 v5 l-4 7 a5 5 0 0 0 4.4 7.2 h5.2 A5 5 0 0 0 7 -2 l-4 -5 v-5 z"
+          transform="translate(0 -1) scale(0.8)"
+          fill="#e4fff5"></path>
+      </g>
+
+      <circle cx="60" cy="60" r="19" fill="url(#nh-hub)"></circle>
+      <circle
+        class="nh-orbit"
+        cx="60"
+        cy="60"
+        r="25"
+        stroke="var(--color-golden-grass-400)"
+        stroke-width="1.6"
+        stroke-dasharray="6 12"
+        fill="none"></circle>
+      <g stroke="var(--color-silver-tree-50)" stroke-width="2.2" stroke-linecap="round">
+        <path d="M53 55 h14"></path>
+        <path d="M53 61 h14"></path>
+        <path d="M53 67 h8"></path>
+      </g>
+
+      <circle class="nh-packet nh-packet-a" cx="60" cy="60" r="3.2" fill="#f0a832"
+      ></circle>
+      <circle class="nh-packet nh-packet-b" cx="60" cy="60" r="3.2" fill="#7c72d8"
+      ></circle>
+      <circle class="nh-packet nh-packet-c" cx="60" cy="60" r="3.2" fill="#3f9fd6"
+      ></circle>
+      <circle class="nh-packet nh-packet-d" cx="60" cy="60" r="3.2" fill="#2f9e7d"
+      ></circle>
+    </svg>
+
+    <span
+      class={`${tagClasses} bg-golden-grass-200 text-golden-grass-900 dark:bg-golden-grass-900 dark:text-golden-grass-100`}
+      >Provenance</span
+    >
+    <h3 class={headingClasses}>Digital assets stay with the record</h3>
+    <p class={bodyClasses}>
+      Photographs, audio, and scanned notes attach to the specimen, site, event,
+      or narrative they document, so no asset ends up orphaned in a camera folder
+      with only a timestamp to identify it.
+    </p>
+  </article>
+
+  <article class={cardClasses}>
+    <svg class={glyphClasses} viewBox="0 0 120 120" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="nh-bar-1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--color-silver-tree-600)"></stop>
+          <stop offset="100%" stop-color="var(--color-silver-tree-400)"></stop>
+        </linearGradient>
+        <linearGradient id="nh-bar-2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--color-silver-tree-500)"></stop>
+          <stop offset="100%" stop-color="#3f9fd6"></stop>
+        </linearGradient>
+        <linearGradient id="nh-bar-3" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#2f9e7d"></stop>
+          <stop offset="100%" stop-color="var(--color-golden-grass-400)"></stop>
+        </linearGradient>
+        <linearGradient id="nh-bar-4" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="var(--color-golden-grass-500)"></stop>
+          <stop offset="100%" stop-color="#f0a832"></stop>
+        </linearGradient>
+      </defs>
+
+      <rect
+        x="14"
+        y="20"
+        width="92"
+        height="82"
+        rx="14"
+        stroke="var(--color-silver-tree-500)"
+        stroke-width="2"
+        stroke-opacity="0.6"></rect>
+
+      <g>
+        <circle cx="28" cy="38" r="4.5" fill="var(--color-silver-tree-600)"></circle>
+        <rect
+          class="nh-stack-bar"
+          x="38"
+          y="34"
+          width="56"
+          height="9"
+          rx="4.5"
+          fill="url(#nh-bar-1)"></rect>
+      </g>
+      <g>
+        <circle cx="28" cy="56" r="4.5" fill="#3f9fd6"></circle>
+        <rect
+          class="nh-stack-bar nh-stack-bar-2"
+          x="38"
+          y="52"
+          width="46"
+          height="9"
+          rx="4.5"
+          fill="url(#nh-bar-2)"></rect>
+      </g>
+      <g>
+        <circle cx="28" cy="74" r="4.5" fill="#2f9e7d"></circle>
+        <rect
+          class="nh-stack-bar nh-stack-bar-3"
+          x="38"
+          y="70"
+          width="58"
+          height="9"
+          rx="4.5"
+          fill="url(#nh-bar-3)"></rect>
+      </g>
+      <g>
+        <circle cx="28" cy="92" r="4.5" fill="var(--color-golden-grass-500)"></circle>
+        <rect
+          class="nh-stack-bar nh-stack-bar-4"
+          x="38"
+          y="88"
+          width="38"
+          height="9"
+          rx="4.5"
+          fill="url(#nh-bar-4)"></rect>
+      </g>
+
+      <path
+        d="M28 38 v54"
+        stroke="var(--color-silver-tree-500)"
+        stroke-width="1.6"
+        stroke-dasharray="3 5"
+        opacity="0.8"></path>
+    </svg>
+
+    <span
+      class={`${tagClasses} bg-silver-tree-200 text-silver-tree-800 dark:bg-silver-tree-800 dark:text-silver-tree-100`}
+      >Depth</span
+    >
+    <h3 class={headingClasses}>Extensive field data in one pass</h3>
+    <p class={bodyClasses}>
+      Localities with unlimited coordinates, collecting effort, preparation
+      details, and tissue samples are entered once and reused by every specimen
+      and event that shares them.
+    </p>
+  </article>
+</div>

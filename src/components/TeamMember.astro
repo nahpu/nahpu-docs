@@ -10,132 +10,137 @@ interface Props {
   url: string;
   photoSrc?: string | null;
   leader?: boolean;
+  featured?: boolean;
 }
 
-const { name, institution, description, url, photoSrc, leader } =
-  Astro.props as Props;
+const {
+  name,
+  institution,
+  description,
+  url,
+  photoSrc,
+  leader,
+  featured = false,
+} = Astro.props as Props;
 const hasPhoto = !!photoSrc;
+const initials = name
+  .split(" ")
+  .filter((part) => /[A-Za-zÀ-ÿ]/.test(part[0] ?? ""))
+  .map((part) => part[0])
+  .join("")
+  .slice(0, 3);
 
 const cardClasses = cntl`
-  rounded-2xl
-  p-4
-  md:p-6
-  h-6xl
-  bg-silver-tree-200
-  dark:bg-silver-tree-800
-  backdrop-blur-sm
-  hover:shadow-xl
-  transition-all
+  nh-reveal
   group
+  relative flex flex-col
+  rounded-2xl
+  border border-silver-tree-300/70 dark:border-silver-tree-700/70
+  bg-silver-tree-50/70 dark:bg-silver-tree-900/50
+  p-6
+  transition-all duration-300
+  hover:-translate-y-0.5
+  hover:border-silver-tree-500
+  hover:shadow-lg hover:shadow-silver-tree-500/10
+  focus-within:border-silver-tree-500
+`;
+
+const avatarClasses = cntl`
+  flex h-14 w-14 shrink-0 items-center justify-center
+  rounded-2xl
+  bg-linear-to-br from-silver-tree-400 via-silver-tree-500 to-golden-grass-400
+  text-base font-bold text-white
+  shadow-md
+  transition-transform duration-300
+  group-hover:scale-105
 `;
 
 const nameClasses = cntl`
-  text-xl md:text-2xl
-  font-bold
-  text-silver-tree-900
-  dark:text-silver-tree-50
-  group-hover:text-silver-tree-700
-  dark:group-hover:text-silver-tree-100
+  text-lg font-semibold
+  text-silver-tree-900 dark:text-silver-tree-50
   no-underline
 `;
 
 const institutionClasses = cntl`
-  text-sm
-  text-silver-tree-700 dark:text-silver-tree-100
-  no-underline
+  mt-0.5 text-sm
+  text-silver-tree-700 dark:text-silver-tree-300
 `;
 
 const descriptionClasses = cntl`
-  text-silver-tree-800 dark:text-silver-tree-200
-  text-sm
-  leading-relaxed
-  line-clamp-3
-  px-2
-  mt-6
-`;
-
-const avatarClasses = cntl`
-    w-24 
-    h-24 
-    md:w-28 
-    md:h-28 
-    rounded-full 
-    bg-linear-to-br 
-    from-silver-tree-400 
-    via-silver-tree-500 
-    to-golden-grass-400 
-    ring-4 
-    ring-silver-tree-100/50 
-    dark:ring-silver-tree-800/50 
-    group-hover:ring-silver-tree-300/80 
-    shadow-lg 
-    group-hover:scale-105 
-    transition-all 
-    duration-300 
-    flex 
-    items-center 
-    justify-center
+  mt-4 text-sm leading-relaxed
+  text-silver-tree-700 dark:text-silver-tree-300
 `;
 
 const leaderBadgeClasses = cntl`
-  inline-flex 
-  items-center 
-  px-2 
-  py-1 
-  text-xs 
-  font-medium 
-  tracking-wide 
-  text-golden-grass-900 
-  bg-golden-grass-200 
-  border 
-  border-golden-grass-400 
+  mt-3 inline-flex w-fit items-center gap-1.5
   rounded-full
+  bg-golden-grass-100 dark:bg-golden-grass-950
+  px-2.5 py-0.5
+  text-[11px] font-medium
+  text-golden-grass-900 dark:text-golden-grass-200
 `;
 ---
 
-<div class={cardClasses}>
-  <a
-    href={url}
-    class="block h-full focus:outline-none focus:ring-4 focus:ring-silver-tree-300/50 no-underline"
-  >
-    <!-- Avatar Circle -->
-    <div class="flex justify-center mb-4">
+<article class={`${cardClasses} ${featured ? "sm:col-span-2" : ""}`}>
+  <div class="flex items-start gap-4">
+    {
+      hasPhoto ? (
+        <Image
+          src={photoSrc!}
+          alt=""
+          width={112}
+          height={112}
+          class="h-14 w-14 shrink-0 rounded-2xl object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <span class={avatarClasses} aria-hidden="true">
+          {initials}
+        </span>
+      )
+    }
+
+    <div class="min-w-0">
+      <h3 class={nameClasses}>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-silver-tree-900 no-underline transition-colors after:absolute after:inset-0 focus:outline-none group-hover:text-silver-tree-700 dark:text-silver-tree-50 dark:group-hover:text-silver-tree-200"
+        >
+          {name}
+        </a>
+      </h3>
+      <p class={institutionClasses}>{institution}</p>
       {
-        hasPhoto ? (
-          <Image
-            src={photoSrc!}
-            alt={`${name}'s photo`}
-            width={120}
-            height={120}
-            class="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover"
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <div class={avatarClasses}>
-            <span class="text-2xl font-bold text-white drop-shadow">
-              {name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}
-            </span>
-          </div>
+        leader && (
+          <span class={leaderBadgeClasses}>
+            <span class="h-1.5 w-1.5 rounded-full bg-golden-grass-500" />
+            Principal Investigator
+          </span>
         )
       }
     </div>
+  </div>
 
-    <!-- Content -->
-    <div class="text-center">
-      <h3 class={nameClasses}>
-        {name}
-      </h3>
-      <p class={institutionClasses}>
-        {institution}
-      </p>
-      {leader && <span class={leaderBadgeClasses}>Principal Investigator</span>}
-      <p class={descriptionClasses}>
-        {description}
-      </p>
-    </div>
-  </a>
-</div>
+  <p class={descriptionClasses}>{description}</p>
+
+  <span
+    class="mt-auto flex items-center gap-1.5 pt-5 text-xs font-medium text-silver-tree-600 transition-colors group-hover:text-silver-tree-800 dark:text-silver-tree-400 dark:group-hover:text-silver-tree-200"
+  >
+    Profile
+    <svg
+      class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M7 17 17 7M9 7h8v8"></path>
+    </svg>
+  </span>
+</article>
