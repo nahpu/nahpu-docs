@@ -8,7 +8,10 @@ Kegiatan pengumpulan membantu Anda melacak upaya pengumpulan, personel, cuaca, d
 
 ## Menyiapkan kegiatan
 
-Daftar default NAHPU untuk `Metode Pengumpulan` dan `Peran Personel` terbatas dan tidak mencakup semua opsi yang mungkin. Jika ini adalah proyek NAHPU pertama Anda, kami menyarankan untuk menyiapkan entri-entri tersebut. Anda dapat melakukannya dengan membuka pengaturan:
+Daftar terkontrol aktivitas utama dimulai dengan `Collecting`, `Recording`,
+dan `Observing`. `Other` tidak disertakan secara default, tetapi dapat
+ditambahkan. Nilai lama yang sudah tersimpan tetap tersedia. Atur juga metode,
+peran, dan bidang lingkungan yang tampil:
 
 {% steps %}
 
@@ -17,6 +20,7 @@ Daftar default NAHPU untuk `Metode Pengumpulan` dan `Peran Personel` terbatas da
 3. Pilih `Pengaturan`.
 4. Pilih `Kegiatan`.
 5. Edit entri agar sesuai dengan skenario lapangan Anda.
+6. Di `Environmental data fields`, centang bidang yang ingin ditampilkan.
 
 {% /steps %}
 
@@ -83,17 +87,26 @@ Catatan spesimen nantinya dapat memilih anggota kegiatan sebagai `Collector`.
   beberapa kegiatan pada situs dan tanggal yang sama.
 - `Site ID`: lokasi kegiatan.
 - `Start Date`, `End Date`, `Start Time`, dan `End Time`: rentang kegiatan.
-- `Primary activity`: `Collecting`, `Recording`, `Observing`, atau `Other`.
+- `Primary activity`: pilih dari daftar terkontrol yang dapat diubah. Nilai
+  awalnya `Collecting`, `Recording`, dan `Observing`; tambahkan `Other` hanya
+  jika diperlukan.
 - `Notes`: rincian protokol, aktivitas tambahan, atau konteks kerja.
 
 Setiap upaya memiliki `Method`, `Brand and Model`, `Count`, `Size`, dan `Notes`.
 Satu kegiatan dapat memiliki beberapa upaya, dan spesimen dapat memilih salah
 satunya sebagai metodenya.
 
-Tab cuaca mencatat suhu siang dan malam, kelembapan rata-rata, titik embun,
-waktu matahari terbit dan terbenam, fase bulan, serta catatan. Saat kegiatan
-diduplikasi, catatan cuaca baru tetap kosong agar kondisi tanggal baru dapat
-dimasukkan.
+Bagian lingkungan secara default menampilkan suhu sekitar, kelembapan sekitar,
+tutupan awan, curah hujan, dan catatan. Di pengaturan kegiatan, bidang bawaan
+lain seperti suhu, titik embun, data perairan, dan astronomi dapat ditampilkan.
+Menyembunyikan bidang hanya mengubah formulir; nilai yang tersimpan tetap ada
+dan tetap diekspor.
+
+Tutupan awan memakai kode `0`–`8`, dari cerah hingga tertutup penuh, dan `9`
+untuk langit yang terhalang. Satu okta mewakili seperdelapan langit yang
+terlihat. Gunakan `Add custom field` dan `Manage custom fields` untuk bidang
+lingkungan global atau proyek; nilainya dimiliki tiap kegiatan dan tidak
+difilter menurut katalog spesimen.
 
 ## Mengelola kegiatan
 

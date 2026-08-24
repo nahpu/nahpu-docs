@@ -58,13 +58,14 @@ Keep these version concepts separate when reviewing a persistence change.
 
 | Version | Current value | Owner | Meaning |
 |---|---:|---|---|
-| Drift schema version | 17 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
+| Drift schema version | 20 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
 | SQLite user version | Set by Drift | Drift | On-disk marker used to select upgrade steps |
 | redb internal schema version | Not implemented | `nahpu_configs` | A future marker for redb table and value migrations |
-| Configuration export schema | 3 | `USER_CONFIG_SCHEMA_VERSION` | Compatibility version for exported configuration payloads |
-| Rust crate version | 0.7.0 | `crates/nahpu_configs/Cargo.toml` | Package release version, not a data migration marker |
+| Configuration export schema | 4 | `USER_CONFIG_SCHEMA_VERSION` | Compatibility version for exported configuration payloads |
+| Rust crate version | 0.7.1 | `crates/nahpu_configs/Cargo.toml` | Package release version, not a data migration marker |
 | redb engine version | 4.1.0 dependency | Cargo dependency resolution | Storage engine behavior, not NAHPU application schema |
-| Project transfer format | 4 | Transfer model and archive code | Version of project import and export payloads |
+| Record-exchange format | 5 | Record-exchange model | Version of individual record and QR payloads |
+| Project transfer format | 8 | Transfer model and archive code | Version of project import and export payloads |
 
 ## redb tables
 
@@ -115,18 +116,19 @@ preservation, and corrupted input that must not partially clear stored data.
 ## Drift table schema
 
 The canonical project schema is defined in
-`lib/services/database/tables.drift` and is currently at schema version 17.
+`lib/services/database/tables.drift` and is currently at schema version 20.
 Drift manages these tables over SQLite. The summary below describes the
 current table set and the important ownership relationships.
 
 | Table | Role and important relationships |
 |---|---|
 | `project` | Project identity and lifecycle dates. Parent of project-scoped rows. |
-| `site` | Collection sites, localities, habitat, and site-level metadata. Belongs to `project`. |
+| `site` | Collection sites, localities, and site-level identity. Belongs to `project`. |
+| `siteAttribute` | Habitat type, condition, description, and canopy cover for a site. Added in v19 when these columns moved out of `site`. |
 | `fossilSite` | Fossil-specific extension of `site` through `siteID`. Renamed from `paleontologySite` in v13. |
 | `coordinate` | Coordinates and georeferencing details associated with a site. |
 | `collEvent` | Collecting events, dates, times, methods, and site associations. |
-| `weather` | Weather and astronomical observations for collecting events. |
+| `environment` | Environmental and astronomical observations for collecting events. Renamed from `weather` in v19. |
 | `collPersonnel` | Personnel and collecting roles associated with events. |
 | `collEffort` | Collecting methods, equipment, counts, and effort notes for events. |
 | `narrative` | Project or site field narratives and their metadata. |
@@ -149,15 +151,15 @@ current table set and the important ownership relationships.
 | `parasiteDetection` | Detection records connecting specimens and parasite observations. |
 | `parasite` | Parasite taxonomy and observation details. |
 | `specimenPart` | Specimen parts, tissues, barcodes, treatments, loans, and preparation details. |
-| `customFieldDefinition` | Project-defined field names, types, and labels. Schema only, see note below. |
-| `customFieldValue` | Values for custom fields. v13 introduced nullable `unit`; the table references the field definition and project. Schema only, see note below. |
+| `customFieldDefinition` | Global and project custom-field definitions, types, placement, ordering, export mapping, and archive state. |
+| `customFieldValue` | Owner-specific custom values. A non-legacy row belongs to exactly one event, site, specimen, specimen part, or parasite. v20 added nullable `eventId` ownership. |
 
-`customFieldDefinition` and `customFieldValue` are schema-only as of v15. They
-are created by the migration coordinator and exposed through generated Drift
-accessors, but no DAO/query file, provider, or screen currently creates,
-reads, or updates rows in either table, and the `FieldUISection` enum they
-reference is unused elsewhere in the app. Treat them as reserved for a future
-custom-fields feature, not a shipped one, until that layer is implemented.
+The custom-field service validates definition scope, project ownership,
+placement, catalog applicability for specimen-related placements, and one value
+per definition and owner. Environmental custom fields use
+`FieldUISection.environmentalData`, belong to `collEvent`, and deliberately do
+not apply specimen catalog-format filtering. Archived definitions disappear
+from forms but remain available to exports so historical values are preserved.
 
 ### Foreign keys, triggers, and indexes
 
@@ -173,6 +175,12 @@ abort a link when the associated data row belongs to a different project.
 There is no trigger on `associatedData` itself. The v13 migration first moves
 legacy specimen links, then drops the old direct column, so an additional
 `associatedData` trigger is not needed.
+
+The `custom_field_value_validate_insert` and
+`custom_field_value_validate_update` triggers verify that each custom value's
+owner matches its definition placement and project. Partial unique indexes
+enforce one value per definition for each owner type, including
+`(fieldDefinitionId, eventId)` for environmental data.
 
 Current indexes cover project lookups and common joins, including project and
 species queries on `specimen`, project and site queries on `collEvent`, site
@@ -204,31 +212,30 @@ index increases migration and insert cost.
    flutter pub run build_runner build --delete-conflicting-outputs
    dart run drift_dev schema dump \
      lib/services/database/database.dart \
-     db_schemas/drift_schema_v15.json
+     db_schemas/drift_schema_v20.json
    ```
 
 8. Update the matching snapshot in `db_schemas/drift_tables/` when the
    release workflow requires it. Keep generated files synchronized with
    `tables.drift`.
-9. Add migration fixtures and tests in `test/migration_test.dart`. The test
-   suite currently upgrades fixtures from v6 through v14 to v15.
+9. Add migration fixtures and tests in `test/database/migration_test.dart`. The
+   suite currently upgrades fixtures from v6 through v19 to v20.
 10. Run `flutter test`, `flutter analyze`, `cargo check`, and `cargo clippy`
     when generated Rust or bridge data is affected.
 
 {% /steps %}
 
-### Worked example: v14 to v15
+### Worked example: v19 to v20
 
-The v15 migration in `lib/services/database/migration_coordinator.dart`:
+The v20 migration in `lib/services/database/migration_coordinator.dart`:
 
-1. Adds project accession and catalog-number fields.
-2. Adds taxonomy kingdom and phylum fields and backfills missing taxonomy
-   hierarchy values.
-3. Renames the parasite detection remark column when the legacy name exists.
-4. Adds parasite UUID, identifier, and display-ID fields when absent.
-5. Creates event media and event associated-data tables and indexes.
-6. Removes duplicate parasite-detection rows and adds parasite indexes.
-7. Runs foreign-key and SQLite integrity checks.
+1. Changes no columns in `collEvent` or `environment`.
+2. Rebuilds only `customFieldValue`, because SQLite cannot alter its owner
+   check constraint in place.
+3. Copies every v19 value unchanged while adding nullable `eventId`.
+4. Extends the exactly-one-owner check, validation triggers, foreign key, and
+   partial unique indexes for per-event environmental custom values.
+5. Verifies the new column and foreign-key integrity.
 
 The v12-to-v13 example below remains historical context. Keep both examples
 aligned with the migration code when future schema versions are added.
@@ -305,7 +312,7 @@ exported or reproduced. Installation-local preferences remain in
 ## Darwin Core field mapping
 
 The following documents the audited mapping surface in `nahpu_dwc` 0.4.0.
-Source fields use the `table::field` notation used by NAHPU exports. Every v17
+Source fields use the `table::field` notation used by NAHPU exports. Every v20
 field is reviewed against the normative [Darwin Core List of
 Terms](https://dwc.tdwg.org/list/) and Dublin Core definitions.
 Only exact semantic matches use standard terms; other values retain a
@@ -327,7 +334,7 @@ Only exact semantic matches use standard terms; other values retain a
 | `site::county` | `dwc:county` |
 | `site::municipality` | `dwc:municipality` |
 | `site::locality` | `dwc:verbatimLocality` |
-| `site::habitatType`, `site::habitatCondition`, `site::habitatDescription` | `dwc:habitat` |
+| `siteAttribute::habitatType`, `siteAttribute::habitatCondition`, `siteAttribute::habitatDescription` | `dwc:habitat` |
 | `fossilSite::siteID`, `fossilSite::siteId` | `dwc:locationID` |
 | `fossilSite::formation` | `dwc:formation` |
 | `fossilSite::narrowerGeologicStage` | `dwc:latestAgeOrHighestStage` |
@@ -352,7 +359,7 @@ Only exact semantic matches use standard terms; other values retain a
 | `collEvent::primaryCollMethod` | `dwc:samplingProtocol` |
 | `collEvent::collMethodNotes` | `dwc:samplingEffort` |
 | `collEvent::personnel` | `dwc:recordedBy` |
-| `collPersonnel::eventID`, `collPersonnel::eventId`, `collEffort::eventID`, `collEffort::eventId`, `weather::eventID`, `weather::eventId` | `dwc:eventID` |
+| `collPersonnel::eventID`, `collPersonnel::eventId`, `collEffort::eventID`, `collEffort::eventId`, `environment::eventID`, `environment::eventId` | `dwc:eventID` |
 | `collPersonnel::personnelId` | `dwc:recordedByID` |
 | `collPersonnel::name` | `dwc:recordedBy` |
 | `collEffort::method` | `dwc:samplingProtocol` |
@@ -378,7 +385,7 @@ Only exact semantic matches use standard terms; other values retain a
 | `associatedData::primaryId`, `associatedData::uri` | `dcterms:identifier` |
 | `associatedData::projectUuid` | `dwc:datasetID` |
 | `specimenAssociatedData::specimenUuid` | `dwc:occurrenceID` relationship context |
-| `associatedData::url` | Legacy alias for `dcterms:identifier`, not a v17 column |
+| `associatedData::url` | Legacy alias for `dcterms:identifier`, not a v20 column |
 | `personnel::uuid`, `personnel::orcid` | `dwc:agentID`; exports prefer the canonical ORCID URL |
 | `personnel::notes` | `dwc:agentRemarks` |
 | `taxonomy::id` | `dwc:taxonID` |
@@ -424,7 +431,7 @@ Only exact semantic matches use standard terms; other values retain a
 | `specimenMedia::mediaId` | `dcterms:identifier` |
 | `personnelList::projectUuid` | `dwc:datasetID` |
 | `personnelList::personnelUuid` | `dwc:agentID` |
-| `weather::notes` | `dwc:eventRemarks` |
+| `environment::notes` | `dwc:eventRemarks` |
 | `mammalAttribute::specimenUuid`, `birdAttribute::specimenUuid`, `herpAttribute::specimenUuid`, `arthropodAttribute::specimenUuid` | `dwc:occurrenceID` |
 | `mammalAttribute::sex`, `birdAttribute::sex`, `herpAttribute::sex`, `arthropodAttribute::sex` | `dwc:sex` |
 | `mammalAttribute::age`, `herpAttribute::age` | `dwc:lifeStage` |
@@ -460,14 +467,14 @@ API expands them as follows:
 | `coordinate::elevationInMeter` | `dwc:minimumElevationInMeters`, `dwc:maximumElevationInMeters` | One elevation value is written to both bounds in a flat export. |
 | `specimenPart::type` | `dwc:materialEntityType`, `dwc:objectQuantityType` | The source value can describe both the material entity and its quantity type. |
 | `specimenPart::count` | `dwc:objectQuantity` | The part count is exported as a quantity. |
-| `mammalAttribute::*`, `birdAttribute::*`, `herpAttribute::*`, `arthropodAttribute::*`, `parasiteDetection::*`, `weather::*` attribute fields | `dwc:measurementType`, `dwc:measurementValue`, `dwc:measurementUnit` | Each populated measurement or biological attribute becomes a MeasurementOrFact row. The type and unit come from NAHPU's attribute definition. |
+| `mammalAttribute::*`, `birdAttribute::*`, `herpAttribute::*`, `arthropodAttribute::*`, `parasiteDetection::*`, `environment::*` attribute fields | `dwc:measurementType`, `dwc:measurementValue`, `dwc:measurementUnit` | Each populated measurement or biological attribute becomes a MeasurementOrFact row. The type and unit come from NAHPU's attribute definition. |
 
 Attribute definitions currently include mammal lengths, weight,
 echolocation, reproductive observations, embryo counts, avian morphometrics,
 color and molt observations, herpetofauna weight and snout-vent length, and
 arthropod host-part and canopy observations, arthropod morphometrics and
-environmental parameters, and weather temperature, humidity, sunrise, sunset,
-and moon-phase values. Their units are preserved where defined, including
+environmental parameters, and event-environment temperature, humidity,
+sunrise, sunset, and moon-phase values. Their units are preserved where defined, including
 `mm`, `cm`, `kHz`, `s`, `%`, `°C`, `mg/L`, `m/s`, and `hh:mm:ss`. Weight uses
 the row's selected `g`, `kg`, or `lbs` unit.
 
@@ -513,10 +520,7 @@ same change.
 - Add a documentation check that compares the table inventory and schema
   version here with generated Drift artifacts. This would catch stale table
   names such as `paleontologySite`.
-- Reconcile export-bundle table counts with the actual v17 inventory and keep
+- Reconcile export-bundle table counts with the actual v20 inventory and keep
   backup and restore documentation tested against a real archive.
 - Add restore verification that opens a restored SQLite file, runs foreign-key
   checks, and records the schema version before the file is offered to users.
-- Implement or explicitly deprecate `customFieldDefinition`/`customFieldValue`.
-  The tables and `FieldUISection` enum exist, but no DAO, provider, or screen
-  uses them, so the schema currently ships ahead of any working feature.

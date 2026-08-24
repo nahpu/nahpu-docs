@@ -8,7 +8,10 @@ Los eventos de recolección le ayudan a realizar un seguimiento de los esfuerzos
 
 ## Configuración de eventos
 
-Las listas predeterminadas de NAHPU para `Métodos de recolección` (Collection Methods) y `Roles del personal` (Personnel Roles) son limitadas y no incluyen todas las opciones posibles. Si este es su primer proyecto en NAHPU, le recomendamos configurar las entradas. Puede hacerlo yendo a la configuración:
+La lista controlada de actividades principales empieza con `Collecting`,
+`Recording` y `Observing`. `Other` no se incluye de forma predeterminada, pero
+puede añadirse. Los valores antiguos ya guardados siguen disponibles. Configure
+también métodos, roles y los campos ambientales visibles:
 
 {% steps %}
 
@@ -17,6 +20,7 @@ Las listas predeterminadas de NAHPU para `Métodos de recolección` (Collection 
 3. Seleccione `Configuración`.
 4. Seleccione `Eventos`. 
 5. Edite las entradas para que coincidan con su escenario de campo.
+6. En `Environmental data fields`, marque los campos que desea mostrar.
 
 {% /steps %}
 
@@ -84,7 +88,9 @@ evento como `Collector`.
   varios eventos en el mismo sitio y fecha.
 - `Site ID`: sitio donde ocurrió el evento.
 - `Start Date`, `End Date`, `Start Time` y `End Time`: intervalo del evento.
-- `Primary activity`: `Collecting`, `Recording`, `Observing` u `Other`.
+- `Primary activity`: elija en la lista controlada editable. Los valores
+  iniciales son `Collecting`, `Recording` y `Observing`; añada `Other` solo si
+  lo necesita.
 - `Notes`: detalles del protocolo, actividades secundarias o contexto del
   trabajo.
 
@@ -92,10 +98,16 @@ Cada esfuerzo incluye `Method`, `Brand and Model`, `Count`, `Size` y `Notes`.
 Un evento puede tener varios esfuerzos, y un espécimen puede elegir uno de
 ellos como su método.
 
-La pestaña de clima registra temperaturas diurnas y nocturnas, humedad media,
-punto de rocío, salida y puesta del sol, fase lunar y observaciones. Al duplicar
-un evento, el nuevo registro de clima queda vacío para que se introduzcan las
-condiciones correctas.
+La sección ambiental muestra inicialmente temperatura ambiente, humedad
+ambiente, cobertura nubosa, lluvia y notas. En la configuración de eventos
+puede mostrar los demás campos integrados, incluidas temperaturas, punto de
+rocío, datos acuáticos y astronomía. Ocultar un campo solo cambia el formulario:
+los valores guardados se conservan y se exportan.
+
+La cobertura nubosa usa códigos `0`–`8`, desde cielo despejado hasta cubierto,
+y `9` para cielo oculto. Un okta representa un octavo del cielo visible. Use
+`Add custom field` y `Manage custom fields` para campos ambientales globales o
+del proyecto; cada valor pertenece al evento y no se filtra por catálogo.
 
 ## Gestionar eventos
 

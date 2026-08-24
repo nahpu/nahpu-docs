@@ -8,7 +8,10 @@ Eventos de coleta ajudam você a acompanhar os esforços de coleta, pessoal, cli
 
 ## Configurando eventos
 
-As listas padrão do NAHPU para `Métodos de Coleta` e `Funções do Pessoal` são limitadas e não incluem todas as opções possíveis. Se este for o seu primeiro projeto NAHPU, recomendamos configurar as entradas. Você pode fazer isso acessando as configurações:
+A lista controlada de atividades principais começa com `Collecting`,
+`Recording` e `Observing`. `Other` não vem por padrão, mas pode ser adicionado.
+Valores antigos já armazenados continuam disponíveis. Configure também métodos,
+funções e os campos ambientais exibidos no formulário:
 
 {% steps %}
 
@@ -17,6 +20,7 @@ As listas padrão do NAHPU para `Métodos de Coleta` e `Funções do Pessoal` s�
 3. Selecione `Configurações`.
 4. Selecione `Eventos`.
 5. Edite as entradas para corresponder ao seu cenário de campo.
+6. Em `Environmental data fields`, marque os campos que deseja mostrar.
 
 {% /steps %}
 
@@ -84,16 +88,24 @@ evento como `Collector`.
   houver vários eventos na mesma localidade e data.
 - `Site ID`: localidade onde o evento ocorreu.
 - `Start Date`, `End Date`, `Start Time` e `End Time`: intervalo do evento.
-- `Primary activity`: `Collecting`, `Recording`, `Observing` ou `Other`.
+- `Primary activity`: escolha na lista controlada editável. Os padrões são
+  `Collecting`, `Recording` e `Observing`; adicione `Other` somente se precisar.
 - `Notes`: detalhes do protocolo, atividades secundárias ou contexto do trabalho.
 
 Cada esforço contém `Method`, `Brand and Model`, `Count`, `Size` e `Notes`. Um
 evento pode ter vários esforços, e um espécime pode escolher um deles como seu
 método.
 
-A aba de clima registra temperaturas diurnas e noturnas, umidade média, ponto
-de orvalho, nascer e pôr do sol, fase da lua e observações. Ao duplicar um
-evento, o novo registro de clima fica vazio para as condições da nova data.
+A seção ambiental mostra por padrão temperatura ambiente, umidade ambiente,
+cobertura de nuvens, chuva e observações. Nas configurações de eventos, marque
+qualquer outro campo integrado, como temperaturas diurnas/noturnas, ponto de
+orvalho, dados aquáticos e astronomia. Ocultar um campo afeta apenas o
+formulário: o valor existente permanece armazenado e exportável.
+
+A cobertura de nuvens usa códigos `0`–`8`, de céu limpo a encoberto, e `9`
+para céu oculto. Um okta representa um oitavo do céu visível. Use `Add custom
+field` e `Manage custom fields` para campos ambientais globais ou do projeto;
+o valor pertence ao evento e não é filtrado pelo catálogo de espécimes.
 
 ## Gerenciando eventos
 

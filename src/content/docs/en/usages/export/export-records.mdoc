@@ -76,6 +76,13 @@ your team needs the same export shape across field days, devices, or projects.
 If a collaborator also needs the same presets, export user configs or include
 them in a full database archive.
 
+Event and specimen exports include stored environmental values even when their
+fields are hidden from the event form. Environmental custom fields are
+available to export presets and use stable headers in the form
+`customEnvironment::<definition UUID>`. These fields also flow into event
+documents, Darwin Core event output, event record exchange, and project
+transfer, so form visibility never acts as a data-deletion or export filter.
+
 Specimen records have extra filtering because they are usually the largest and
 most institution-specific export. The taxon group narrows the record set before
 the file is written. Field mode controls the columns:
