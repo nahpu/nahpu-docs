@@ -145,6 +145,21 @@ const capabilities = [
         desc: "Built on open-source stacks, following Darwin Core and FAIR principles.",
     },
 ];
+
+const spreadsheetSteps = [
+    {
+        title: "Start where the spreadsheet was",
+        desc: "Enter records in NAHPU instead of a sheet and export a tabular file whenever you need one. Everything downstream of the export — your scripts, your database, your collaborators — carries on unchanged.",
+    },
+    {
+        title: "Associations come with the record",
+        desc: "A specimen already points at its site, collecting event, personnel, parts, and photographs. No lookup formulas, no locality text copied between sheets, no coordinate flips, and no row that quietly refers to the wrong site.",
+    },
+    {
+        title: "One project instead of many sheets",
+        desc: "Sites, specimens, tissue samples, and photo logs stop living in separate files that drift apart between field seasons. They stay in step because they are the same catalog.",
+    },
+];
 ---
 
 <Layout
@@ -177,15 +192,15 @@ const capabilities = [
         </p>
 
         <p class={taglineClasses}>
-            Leveraging emerging digital technologies to accelerate biodiversity
-            inventories.
+            Rethinking biodiversity inventories in the digital age, from the
+            field to the museum.
         </p>
 
         <p class={heroBodyClasses}>
-            NAHPU is a cross-platform digital field catalog for natural history
-            collections. Specimens, sites, collecting events, tissue samples,
-            and field photographs live in one project file, and easily share
-            exact same of data among collaborators.
+            NAHPU is a cross-platform (mobile and desktop) digital field catalog
+            for natural history collections. Specimens, sites, collecting
+            events, tissue samples, and field photographs live in one project
+            file, and easily share exact same of data among collaborators.
         </p>
 
         <div class="mt-10 flex flex-wrap justify-center gap-4">
@@ -213,7 +228,8 @@ const capabilities = [
         <p
             class="absolute inset-x-0 bottom-4 px-6 text-[11px] tracking-wide text-silver-tree-700 sm:inset-x-auto sm:right-6 sm:px-0 dark:text-silver-tree-400"
         >
-            Photo taken on Mt. Bandahara by Heru Handika.
+            Background photograph taken on Mt. Bandahara, Indonesia, by Heru
+            Handika.
         </p>
 
         <a
@@ -271,9 +287,10 @@ const capabilities = [
                 <h2 class={sectionTitleClasses}>Example views</h2>
                 <p class={sectionLeadClasses}>
                     One project seen from the specimen form, the site register,
-                    map, media library, statistics, and export windows. The
-                    records shown come from a subset of a four-month expedition
-                    to three remote mountains on Sumatra, Indonesia.
+                    map, media library, statistics, narrative, and export
+                    windows. The records shown come from a subset of a
+                    four-month expedition to three remote mountains on Sumatra,
+                    Indonesia.
                 </p>
             </header>
 
@@ -370,9 +387,48 @@ const capabilities = [
         </div>
     </section>
 
+    <!-- Spreadsheet replacement --------------------------------------------->
+    <section
+        id="spreadsheet"
+        class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
+    >
+        <div class={sectionInnerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Not all at once</p>
+                <h2 class={sectionTitleClasses}>
+                    Or start as a spreadsheet replacement
+                </h2>
+                <p class={sectionLeadClasses}>
+                    Moving your collection workflows to a digital catalog does
+                    not have to be all or nothing. If you are not ready to
+                    convert everything, use NAHPU where the spreadsheet used to
+                    sit and keep the associations it gives you for free.
+                </p>
+            </header>
+
+            <div class="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+                {
+                    spreadsheetSteps.map((item, index) => (
+                        <article
+                            class="nh-reveal rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/70 p-6 dark:border-silver-tree-700/70 dark:bg-silver-tree-900/50"
+                            style={`transition-delay: ${index * 60}ms`}
+                        >
+                            <h3 class="text-lg font-semibold text-silver-tree-900 dark:text-silver-tree-50">
+                                {item.title}
+                            </h3>
+                            <p class="mt-3 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
+                                {item.desc}
+                            </p>
+                        </article>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
     <!-- Call to action ------------------------------------------------------>
     <section
-        class="relative overflow-hidden px-6 py-24 bg-silver-tree-200/60 dark:bg-silver-tree-900"
+        class="relative overflow-hidden px-6 py-24 bg-silver-tree-100 dark:bg-silver-tree-950"
     >
         <div
             class="nh-blob nh-blob-teal pointer-events-none opacity-30"

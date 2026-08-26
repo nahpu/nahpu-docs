@@ -10,10 +10,16 @@ import statWindow from "../../assets/images/app-screenshots/stat-window.png";
 import homeScreen from "../../assets/images/app-screenshots/home-screen.png";
 import exportLabels from "../../assets/images/app-screenshots/mac-label-export.png";
 import phoneSpecimenPart from "../../assets/images/app-screenshots/phone-specimen-part.png";
+import phoneCoordinates from "../../assets/images/app-screenshots/phone-coordinates.png";
+import phoneMediaInfo from "../../assets/images/app-screenshots/phone-media-info.png";
+import phoneStatExport from "../../assets/images/app-screenshots/phone-state-export.png";
+import phoneHomeScreen from "../../assets/images/app-screenshots/phone-home-screen.png";
 import presetMappings from "../../assets/images/app-screenshots/ipad-tabular.png";
 import templateEditor from "../../assets/images/app-screenshots/mac-template-design.png";
 import exportSettings from "../../assets/images/app-screenshots/phone-export-settings.png";
 import scanQr from "../../assets/images/app-screenshots/phone-scan-qr.jpg";
+import narrativeText from "../../assets/images/app-screenshots/ipad-narrative-text.png";
+import narrativeMarkdown from "../../assets/images/app-screenshots/ipad-narrative-markdown.png";
 
 /// Screens of the app, prepared as optimised WebP before they reach the island.
 const sources = [
@@ -45,6 +51,8 @@ const sources = [
         description:
             "A site can carry as many coordinates as the sampling design requires, each with its own elevation, uncertainty, and datum. Review them on the map and export the set for permits and georeferencing.",
         image: coordinates,
+        pairImage: phoneCoordinates,
+        pairAnchor: "coordinates",
     },
     {
         id: "media",
@@ -54,6 +62,8 @@ const sources = [
         description:
             "Photographs of specimens, habitats, and camps are stored with the record they document and can be filtered by specimen, site, event, or narrative.",
         image: mediaGallery,
+        pairImage: phoneMediaInfo,
+        pairAnchor: "media",
     },
     {
         id: "statistics",
@@ -61,8 +71,21 @@ const sources = [
         meta: "Effort, parts, sex ratio, and more",
         title: "Watch the inventory take shape",
         description:
-            "Specimens by method, part quantity by treatment, and sex ratios update as records are entered, so collecting effort and preservation supplies can be adjusted while the expedition is still running.",
+            "Specimens by method, part quantity by treatment, and sex ratios update as records are entered, so collecting effort and preservation supplies can be adjusted while the expedition is still running. Each category can be viewed as a table and exported as a CSV, TSV, Excel, or JSON.",
         image: statWindow,
+        pairImage: phoneStatExport,
+        pairAnchor: "stats",
+    },
+    {
+        id: "narrative",
+        label: "Field narrative",
+        meta: "A field journal, day by day",
+        title: "A field journal for the day",
+        description:
+            "A place to write your field journal: whatever happened that day belongs in it —weather that shut down a mistnet line, a flooded camp, getting delivery of durians to a camp, a permit meeting in town, an observation that never became a specimen, or simply summarizing trapping results. Each entry carries its own date, site, and writer. Write in plain text, or reach for Markdown when a passage needs emphasis: bold on the counts, italics on species names, headings through the day, and a table for the trap-line tallies.",
+        image: narrativeMarkdown,
+        pairImage: narrativeText,
+        pairSize: "large",
     },
     {
         id: "projects",
@@ -70,8 +93,10 @@ const sources = [
         meta: "Multiple expeditions, one catalog",
         title: "One catalog per expedition",
         description:
-            "Each project holds its own personnel, sites, events, and specimens, and travels with you as a single file that can be backed up, archived, or handed to a collection manager. The app stores project data in SQLite, known for its reliability and options to access it from other software.",
+            "Each project holds its own personnel, sites, events, and specimens, and travels with you as a single file that can be backed up, archived, share with a colleague, or handed to a collection manager. The app stores project data in SQLite, known for its reliability and options to access it from other software. Your data is yours to keep, and NAHPU will never lock it in a proprietary format.",
         image: homeScreen,
+        pairImage: phoneHomeScreen,
+        pairAnchor: "projects",
     },
     {
         id: "export",
@@ -157,6 +182,8 @@ const shots: Shot[] = await Promise.all(
         description: source.description,
         ...(await optimise(source.image)),
         pair: source.pairImage ? await optimise(source.pairImage) : undefined,
+        pairSize: "pairSize" in source ? source.pairSize : undefined,
+        pairAnchor: "pairAnchor" in source ? source.pairAnchor : undefined,
         variants: source.variants
             ? await Promise.all(
                   source.variants.map(async (variant) => ({

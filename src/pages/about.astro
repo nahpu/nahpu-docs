@@ -60,287 +60,315 @@ const linkClasses = cntl`
 `;
 
 const catalogFormats = [
-  { name: "Mammalogy", status: "Available" },
-  { name: "Ornithology", status: "Available" },
-  { name: "Herpetology", status: "Available" },
-  { name: "Entomology", status: "Available" },
-  { name: "Ichthyology", status: "In development" },
-  { name: "Paleontology", status: "In development" },
+    { name: "Mammalogy", status: "Available" },
+    { name: "Ornithology", status: "Available" },
+    { name: "Herpetology", status: "Available" },
+    { name: "Entomology", status: "Available" },
+    { name: "Ichthyology", status: "In development" },
+    { name: "Paleontology", status: "In development" },
 ];
 
 const mission = [
-  {
-    icon: "🛠️",
-    title: "Simplify complex fieldwork",
-    body: "NAHPU is designed with genomic studies and remote fieldwork in mind. It simplifies associating digital assets — such as photographs or audio recordings — and specimen parts — such as tissue or parasite samples — with voucher specimens. Built with high-performance programming languages and frameworks, NAHPU runs smoothly across a wide range of devices while minimizing battery usage.",
-  },
-  {
-    icon: "❤️",
-    title: "Support responsible and reproducible research",
-    body: "NAHPU records detailed information about collected specimens, including their origin, collection date, site, measurements, field personnel, and collection method. Real-time statistics help you monitor collecting activities and make informed decisions to prevent over-collection, keeping fieldwork both responsible and reproducible.",
-  },
-  {
-    icon: "🤝",
-    title: "Promote data sharing and collaboration",
-    body: "By adhering to open standards, NAHPU enables data sharing and supports automatic pipelines for transferring records from the field to museum databases.",
-  },
-  {
-    icon: "♿️",
-    title: "Accessible for everyone",
-    body: "NAHPU is free and open source on all major desktop and mobile platforms, and prioritizes usability for collectors and researchers. We are actively working on internationalization, including multi-language and locale support, and welcome contributors of all backgrounds.",
-  },
+    {
+        icon: "🛠️",
+        title: "Simplify complex fieldwork",
+        body: "NAHPU is designed with genomic studies and remote fieldwork in mind. It simplifies associating digital assets — such as photographs or audio recordings — and specimen parts — such as tissue or parasite samples — with voucher specimens. Built with high-performance programming languages and frameworks, NAHPU runs smoothly across a wide range of devices while minimizing battery usage.",
+    },
+    {
+        icon: "❤️",
+        title: "Support responsible and reproducible research",
+        body: "NAHPU records detailed information about collected specimens, including their origin, collection date, site, measurements, field personnel, and collection method. Real-time statistics help you monitor collecting activities and make informed decisions to prevent over-collection, keeping fieldwork both responsible and reproducible.",
+    },
+    {
+        icon: "🤝",
+        title: "Promote data sharing and collaboration",
+        body: "By adhering to open standards, NAHPU enables data sharing and supports automatic pipelines for transferring records from the field to museum databases.",
+    },
+    {
+        icon: "♿️",
+        title: "Accessible for everyone",
+        body: "NAHPU is free and open source on all major desktop and mobile platforms, and prioritizes usability for collectors and researchers. We are actively working on internationalization, including multi-language and locale support, and welcome contributors of all backgrounds.",
+    },
 ];
 
 const roadmap = [
-  {
-    icon: "⚡",
-    title: "Efficiency",
-    body: "We are integrating more Rust into the NAHPU codebase. Rust's performance characteristics and memory safety improve the robustness of the app, and its high-quality GIS libraries strengthen NAHPU's spatial data processing. Alongside this, we are refactoring existing code for speed and memory efficiency, and expanding developer documentation.",
-  },
-  {
-    icon: "🔁",
-    title: "Reproducibility",
-    body: "Our primary goal is full implementation of the Darwin Core standard and the FAIR principles, improving the interoperability and reusability of NAHPU data. We are also enhancing import and export, and building on QR and barcode scanning to streamline post-fieldwork inventory and specimen tag printing.",
-  },
-  {
-    icon: "🌍",
-    title: "Inclusivity",
-    body: "We are expanding localization to more languages and improving the experience for users with disabilities. The current version already supports voice input through the operating system's accessibility features; screen reader support and further assistive features are planned.",
-  },
+    {
+        icon: "⚡",
+        title: "Efficiency",
+        body: "We are integrating more Rust into the NAHPU codebase. Rust's performance characteristics and memory safety improve the robustness of the app, and its high-quality GIS libraries strengthen NAHPU's spatial data processing. Alongside this, we are refactoring existing code for speed and memory efficiency, and expanding developer documentation.",
+    },
+    {
+        icon: "🔁",
+        title: "Reproducibility",
+        body: "Our primary goal is full implementation of the Darwin Core standard and the FAIR principles, improving the interoperability and reusability of NAHPU data. We are also enhancing import and export, and building on QR and barcode scanning to streamline post-fieldwork inventory and specimen tag printing.",
+    },
+    {
+        icon: "🌍",
+        title: "Inclusivity",
+        body: "We are expanding localization to more languages and improving the experience for users with disabilities. The current version already supports voice input through the operating system's accessibility features; screen reader support and further assistive features are planned.",
+    },
 ];
 ---
 
 <Layout
-  title="About NAHPU"
-  description="Rethinking biodiversity inventories in the digital age."
-  overlayNav
+    title="About NAHPU"
+    description="Rethinking biodiversity inventories in the digital age."
+    overlayNav
 >
-  <!-- Header -------------------------------------------------------------->
-  <section class="nh-hero relative flex min-h-[60svh] items-end px-6 pt-32 pb-12">
-    <div class="nh-hero-bg" aria-hidden="true">
-      <div class="nh-blob nh-blob-teal"></div>
-      <div class="nh-blob nh-blob-gold"></div>
-      <Image
-        src={chevrotainHabitat}
-        alt=""
-        widths={[1200, 2400]}
-        sizes="100vw"
-        class="nh-hero-photo"
-        loading="eager"
-      />
-      <div class="nh-hero-scrim"></div>
-    </div>
-
-    <div class={`${innerClasses} w-full`}>
-      <p class={kickerClasses}>About the project</p>
-      <h1
-        class="mt-3 text-4xl font-bold text-silver-tree-950 sm:text-5xl dark:text-silver-tree-50"
-      >
-        Rethinking biodiversity inventories in the digital age
-      </h1>
-      <p
-        class="mt-5 max-w-2xl text-lg text-silver-tree-800 dark:text-silver-tree-200"
-      >
-        NAHPU — <strong>NA</strong>tural <strong>H</strong>istory <strong
-          >P</strong
-        >roject <strong>U</strong>tility — is a free, open-source digital field
-        catalog for natural history collections, supporting major desktop and
-        mobile operating systems.
-      </p>
-      <p
-        class="mt-6 text-[11px] tracking-wide text-silver-tree-700 dark:text-silver-tree-400"
-      >
-        Taken on Mt. Bandahara by Heru Handika.
-      </p>
-    </div>
-  </section>
-
-  <!-- What it catalogs ----------------------------------------------------->
-  <section class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}>
-    <div class={innerClasses}>
-      <div class="grid grid-cols-1 gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-start">
-        <div class="nh-reveal">
-          <p class={kickerClasses}>What NAHPU catalogs</p>
-          <h2 class={titleClasses}>Catalog formats by discipline</h2>
-          <p class={leadClasses}>
-            Specimen fields follow the conventions of each discipline, and a
-            single project can hold more than one format. Four formats ship
-            today, with two more in active development.
-          </p>
-
-          <ul class="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
-            {
-              catalogFormats.map((format) => (
-                <li class="flex items-center justify-between gap-3 rounded-xl border border-silver-tree-300/70 bg-silver-tree-50/60 px-4 py-2.5 dark:border-silver-tree-700/70 dark:bg-silver-tree-900/50">
-                  <span class="text-sm font-semibold text-silver-tree-900 dark:text-silver-tree-50">
-                    {format.name}
-                  </span>
-                  <span
-                    class={`rounded-full px-2.5 py-0.5 text-[11px] font-medium whitespace-nowrap ${
-                      format.status === "Available"
-                        ? "bg-silver-tree-200 text-silver-tree-800 dark:bg-silver-tree-800 dark:text-silver-tree-100"
-                        : "bg-golden-grass-100 text-golden-grass-900 dark:bg-golden-grass-950 dark:text-golden-grass-200"
-                    }`}
-                  >
-                    {format.status}
-                  </span>
-                </li>
-              ))
-            }
-          </ul>
-
-          <h3 class="mt-10 text-lg font-semibold text-silver-tree-900 dark:text-silver-tree-50">
-            Etymology
-          </h3>
-          <p class={leadClasses}>
-            The name NAHPU is derived from the Greater Malay Chevrotain, <a
-              class={linkClasses}
-              href="https://www.mammaldiversity.org/taxon/1006357/"
-              ><em>Tragulus napu</em></a
-            >, a small deer of the tropical forests of Southeast Asia.
-          </p>
+    <!-- Header -------------------------------------------------------------->
+    <section
+        class="nh-hero relative flex min-h-[60svh] items-end px-6 pt-32 pb-12"
+    >
+        <div class="nh-hero-bg" aria-hidden="true">
+            <div class="nh-blob nh-blob-teal"></div>
+            <div class="nh-blob nh-blob-gold"></div>
+            <Image
+                src={chevrotainHabitat}
+                alt=""
+                widths={[1200, 2400]}
+                sizes="100vw"
+                class="nh-hero-photo"
+                loading="eager"
+            />
+            <div class="nh-hero-scrim"></div>
         </div>
 
-        <figure class="nh-reveal nh-tile overflow-hidden rounded-2xl border border-silver-tree-300/60 shadow-lg dark:border-silver-tree-700/60">
-          <Image
-            src={pitViper}
-            alt="A green pit viper coiled on mossy branches"
-            widths={[400, 800]}
-            sizes="(min-width: 1024px) 30vw, 92vw"
-            class="aspect-[3/2] w-full object-cover"
-            loading="lazy"
-          />
-          <figcaption
-            class="flex items-center justify-between gap-2 bg-silver-tree-200/70 px-4 py-2.5 text-xs text-silver-tree-800 dark:bg-silver-tree-900/70 dark:text-silver-tree-200"
-          >
-            <span>Pit viper, Aceh, Indonesia</span>
-            <span class="tracking-widest uppercase">Herpetology</span>
-          </figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- Mission -------------------------------------------------------------->
-  <section
-    class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
-  >
-    <div class={innerClasses}>
-      <header class="nh-reveal max-w-3xl">
-        <p class={kickerClasses}>Our mission</p>
-        <h2 class={titleClasses}>Four commitments</h2>
-        <p class={leadClasses}>
-          NAHPU partially supports the <a
-            class={linkClasses}
-            href="https://dwc.tdwg.org/">Darwin Core</a
-          > standard and follows the <a
-            class={linkClasses}
-            href="https://www.go-fair.org/">FAIR principles</a
-          >, and uses the <a class={linkClasses} href="https://m3.material.io/"
-            >Material Design</a
-          > system for an interface that also accommodates users with disabilities.
-        </p>
-      </header>
-
-      <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
-        {
-          mission.map((item, index) => (
-            <article
-              class={cardClasses}
-              style={`transition-delay: ${index * 60}ms`}
+        <div class={`${innerClasses} w-full`}>
+            <p class={kickerClasses}>About the project</p>
+            <h1
+                class="mt-3 text-4xl font-bold text-silver-tree-950 sm:text-5xl dark:text-silver-tree-50"
             >
-              <span class="text-2xl" aria-hidden="true">
-                {item.icon}
-              </span>
-              <h3 class={`${cardTitleClasses} mt-2`}>{item.title}</h3>
-              <p class={cardBodyClasses}>{item.body}</p>
-            </article>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Roadmap -------------------------------------------------------------->
-  <section class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}>
-    <div class={innerClasses}>
-      <header class="nh-reveal max-w-3xl">
-        <p class={kickerClasses}>Looking ahead</p>
-        <h2 class={titleClasses}>Development roadmap for 2026</h2>
-      </header>
-
-      <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-        {
-          roadmap.map((item, index) => (
-            <article
-              class={cardClasses}
-              style={`transition-delay: ${index * 60}ms`}
+                Rethinking biodiversity inventories in the digital age
+            </h1>
+            <p
+                class="mt-5 max-w-2xl text-lg text-silver-tree-800 dark:text-silver-tree-200"
             >
-              <span class="text-2xl" aria-hidden="true">
-                {item.icon}
-              </span>
-              <h3 class={`${cardTitleClasses} mt-2`}>{item.title}</h3>
-              <p class={cardBodyClasses}>{item.body}</p>
-            </article>
-          ))
-        }
-      </div>
+                NAHPU — <strong>NA</strong>tural <strong>H</strong>istory <strong
+                    >P</strong
+                >roject <strong>U</strong>tility — is a free, open-source
+                digital field catalog for natural history collections,
+                supporting major desktop and mobile operating systems.
+            </p>
+            <p
+                class="mt-6 text-[11px] tracking-wide text-silver-tree-700 dark:text-silver-tree-400"
+            >
+                Taken on Mt. Bandahara by Heru Handika.
+            </p>
+        </div>
+    </section>
 
-      <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <figure class="nh-reveal nh-tile overflow-hidden rounded-2xl border border-silver-tree-300/60 shadow-lg sm:col-span-2 dark:border-silver-tree-700/60">
-          <Image
-            src={peromyscus}
-            alt="A deer mouse on a branch, whiskers lit by the sun"
-            widths={[400, 800]}
-            sizes="(min-width: 640px) 60vw, 92vw"
-            class="aspect-[3/2] w-full object-cover"
-            loading="lazy"
-          />
-        </figure>
-        <figure class="nh-reveal nh-tile overflow-hidden rounded-2xl border border-silver-tree-300/60 shadow-lg dark:border-silver-tree-700/60">
-          <Image
-            src={flyingFrog}
-            alt="A green flying frog gripping a thin branch at night"
-            widths={[400, 800]}
-            sizes="(min-width: 640px) 30vw, 92vw"
-            class="aspect-[3/2] w-full object-cover sm:aspect-auto sm:h-full"
-            loading="lazy"
-          />
-        </figure>
-      </div>
-      <p class="mt-4 text-xs text-silver-tree-600 dark:text-silver-tree-400">
-        Photographs by Heru Handika.
-      </p>
+    <!-- What it catalogs ----------------------------------------------------->
+    <section
+        class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
+    >
+        <div class={innerClasses}>
+            <div
+                class="grid grid-cols-1 gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-start"
+            >
+                <div class="nh-reveal">
+                    <p class={kickerClasses}>What NAHPU catalogs</p>
+                    <h2 class={titleClasses}>Catalog formats by discipline</h2>
+                    <p class={leadClasses}>
+                        Specimen fields follow the conventions of each
+                        discipline, and a single project can hold more than one
+                        format. Four formats ship today, with two more in active
+                        development.
+                    </p>
 
-      <div id="wcb" class="carbonbadge mt-10"></div>
-    </div>
-  </section>
+                    <ul class="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                        {
+                            catalogFormats.map((format) => (
+                                <li class="flex items-center justify-between gap-3 rounded-xl border border-silver-tree-300/70 bg-silver-tree-50/60 px-4 py-2.5 dark:border-silver-tree-700/70 dark:bg-silver-tree-900/50">
+                                    <span class="text-sm font-semibold text-silver-tree-900 dark:text-silver-tree-50">
+                                        {format.name}
+                                    </span>
+                                    <span
+                                        class={`rounded-full px-2.5 py-0.5 text-[11px] font-medium whitespace-nowrap ${
+                                            format.status === "Available"
+                                                ? "bg-silver-tree-200 text-silver-tree-800 dark:bg-silver-tree-800 dark:text-silver-tree-100"
+                                                : "bg-golden-grass-100 text-golden-grass-900 dark:bg-golden-grass-950 dark:text-golden-grass-200"
+                                        }`}
+                                    >
+                                        {format.status}
+                                    </span>
+                                </li>
+                            ))
+                        }
+                    </ul>
+
+                    <h3
+                        class="mt-10 text-lg font-semibold text-silver-tree-900 dark:text-silver-tree-50"
+                    >
+                        Etymology
+                    </h3>
+                    <p class={leadClasses}>
+                        The name NAHPU is derived from the Greater Malay
+                        Chevrotain, <a
+                            class={linkClasses}
+                            href="https://www.mammaldiversity.org/taxon/1006357/"
+                            ><em>Tragulus napu</em></a
+                        >, a small deer of the tropical forests of Southeast
+                        Asia.
+                    </p>
+                </div>
+
+                <figure
+                    class="nh-reveal nh-tile overflow-hidden rounded-2xl border border-silver-tree-300/60 shadow-lg dark:border-silver-tree-700/60"
+                >
+                    <Image
+                        src={pitViper}
+                        alt="A green pit viper coiled on mossy branches"
+                        widths={[400, 800]}
+                        sizes="(min-width: 1024px) 30vw, 92vw"
+                        class="aspect-[3/2] w-full object-cover"
+                        loading="lazy"
+                    />
+                    <figcaption
+                        class="flex items-center justify-between gap-2 bg-silver-tree-200/70 px-4 py-2.5 text-xs text-silver-tree-800 dark:bg-silver-tree-900/70 dark:text-silver-tree-200"
+                    >
+                        <span>Pit viper, Aceh, Indonesia</span>
+                        <span class="tracking-widest uppercase"
+                            >Herpetology</span
+                        >
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission -------------------------------------------------------------->
+    <section
+        class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
+    >
+        <div class={innerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Our mission</p>
+                <h2 class={titleClasses}>Four commitments</h2>
+                <p class={leadClasses}>
+                    NAHPU complies with the <a
+                        class={linkClasses}
+                        href="https://dwc.tdwg.org/">Darwin Core</a
+                    > standard and follows the <a
+                        class={linkClasses}
+                        href="https://www.go-fair.org/">FAIR principles</a
+                    >, and uses the <a
+                        class={linkClasses}
+                        href="https://m3.material.io/">Material Design</a
+                    > system for an interface that also accommodates users with disabilities.
+                </p>
+            </header>
+
+            <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+                {
+                    mission.map((item, index) => (
+                        <article
+                            class={cardClasses}
+                            style={`transition-delay: ${index * 60}ms`}
+                        >
+                            <span class="text-2xl" aria-hidden="true">
+                                {item.icon}
+                            </span>
+                            <h3 class={`${cardTitleClasses} mt-2`}>
+                                {item.title}
+                            </h3>
+                            <p class={cardBodyClasses}>{item.body}</p>
+                        </article>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -------------------------------------------------------------->
+    <section
+        class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
+    >
+        <div class={innerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Looking ahead</p>
+                <h2 class={titleClasses}>Development roadmap for 2026</h2>
+            </header>
+
+            <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+                {
+                    roadmap.map((item, index) => (
+                        <article
+                            class={cardClasses}
+                            style={`transition-delay: ${index * 60}ms`}
+                        >
+                            <span class="text-2xl" aria-hidden="true">
+                                {item.icon}
+                            </span>
+                            <h3 class={`${cardTitleClasses} mt-2`}>
+                                {item.title}
+                            </h3>
+                            <p class={cardBodyClasses}>{item.body}</p>
+                        </article>
+                    ))
+                }
+            </div>
+
+            <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <figure
+                    class="nh-reveal nh-tile overflow-hidden rounded-2xl border border-silver-tree-300/60 shadow-lg sm:col-span-2 dark:border-silver-tree-700/60"
+                >
+                    <Image
+                        src={peromyscus}
+                        alt="A deer mouse on a branch, whiskers lit by the sun"
+                        widths={[400, 800]}
+                        sizes="(min-width: 640px) 60vw, 92vw"
+                        class="aspect-[3/2] w-full object-cover"
+                        loading="lazy"
+                    />
+                </figure>
+                <figure
+                    class="nh-reveal nh-tile overflow-hidden rounded-2xl border border-silver-tree-300/60 shadow-lg dark:border-silver-tree-700/60"
+                >
+                    <Image
+                        src={flyingFrog}
+                        alt="A green flying frog gripping a thin branch at night"
+                        widths={[400, 800]}
+                        sizes="(min-width: 640px) 30vw, 92vw"
+                        class="aspect-[3/2] w-full object-cover sm:aspect-auto sm:h-full"
+                        loading="lazy"
+                    />
+                </figure>
+            </div>
+            <p
+                class="mt-4 text-xs text-silver-tree-600 dark:text-silver-tree-400"
+            >
+                Photographs by Heru Handika.
+            </p>
+
+            <div id="wcb" class="carbonbadge mt-10"></div>
+        </div>
+    </section>
 </Layout>
 
 <script>
-  const revealed = document.querySelectorAll<HTMLElement>(".nh-reveal");
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
+    const revealed = document.querySelectorAll<HTMLElement>(".nh-reveal");
+    const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+    ).matches;
 
-  if (reduceMotion || !("IntersectionObserver" in window)) {
-    revealed.forEach((element) => element.classList.add("nh-in"));
-  } else {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("nh-in");
-          observer.unobserve(entry.target);
-        });
-      },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.1 },
-    );
-    revealed.forEach((element) => observer.observe(element));
-  }
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+        revealed.forEach((element) => element.classList.add("nh-in"));
+    } else {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add("nh-in");
+                    observer.unobserve(entry.target);
+                });
+            },
+            { rootMargin: "0px 0px -12% 0px", threshold: 0.1 },
+        );
+        revealed.forEach((element) => observer.observe(element));
+    }
 </script>
 
 <script
-  src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js"
-  defer
-  is:inline></script>
+    src="https://unpkg.com/website-carbon-badges@1.1.3/b.min.js"
+    defer
+    is:inline></script>

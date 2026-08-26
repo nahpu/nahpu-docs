@@ -22,6 +22,10 @@ export type Shot = Picture & {
   meta: string;
   /// A second device shown alongside the main screenshot.
   pair?: Picture;
+  /// "large" gives the companion screen more room than the default.
+  pairSize?: "large";
+  /// Lays the companion over the lead, anchored to a named spot on the screen.
+  pairAnchor?: "coordinates" | "media" | "stats" | "projects";
   /// Screens within this one, switched by the reader.
   variants?: Variant[];
 };
@@ -200,7 +204,7 @@ export default function AppShowcase({ shots }: Props) {
               aria-labelledby={`shot-tab-${shot.id}`}
               aria-hidden={index !== active}
               class={`absolute inset-3 flex justify-center transition-all duration-700 ease-out sm:inset-6 ${
-                shot.pair ? "items-end" : "items-center"
+                shot.pair && !shot.pairAnchor ? "items-end" : "items-center"
               } ${
                 index === active
                   ? "scale-100 opacity-100"
@@ -236,13 +240,15 @@ export default function AppShowcase({ shots }: Props) {
                     loading={index === 0 ? "eager" : "lazy"}
                     decoding="async"
                     class={
-                      shot.pair
-                        ? `nh-shot ${
-                            shot.width > shot.height
-                              ? "nh-shot-lead-wide"
-                              : "nh-shot-lead"
-                          }`
-                        : "nh-shot"
+                      shot.pairAnchor
+                        ? "nh-shot nh-shot-lead-anchor"
+                        : shot.pair
+                          ? `nh-shot ${
+                              shot.width > shot.height
+                                ? "nh-shot-lead-wide"
+                                : "nh-shot-lead"
+                            }`
+                          : "nh-shot"
                     }
                   />
                   {shot.pair && (
@@ -255,9 +261,17 @@ export default function AppShowcase({ shots }: Props) {
                       alt=""
                       loading={index === 0 ? "eager" : "lazy"}
                       decoding="async"
-                      class={`nh-shot nh-shot-pair ${
-                        shot.width > shot.height ? "nh-shot-pair-small" : ""
-                      }`}
+                      class={
+                        shot.pairAnchor
+                          ? `nh-shot nh-shot-overlay nh-overlay-${shot.pairAnchor}`
+                          : `nh-shot nh-shot-pair ${
+                              shot.width > shot.height
+                                ? shot.pairSize === "large"
+                                  ? "nh-shot-pair-lg"
+                                  : "nh-shot-pair-small"
+                                : ""
+                            }`
+                      }
                     />
                   )}
                 </>
