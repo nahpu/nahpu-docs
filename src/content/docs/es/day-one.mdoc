@@ -5,64 +5,115 @@ sidebar:
     order: 2
 ---
 
-NAHPU es una aplicación de catalogación basada en proyectos. Los datos se gestionan y organizan en función de un proyecto. Cada proyecto puede tener múltiples personas, sitios, narrativas, eventos de recolección y registros de especímenes. La aplicación está diseñada para registrar especímenes de historia natural tanto en el laboratorio como en el campo, y está optimizada para pantallas de dispositivos móviles y computadoras. Si su equipo trabaja con múltiples taxones compatibles, como aves y mamíferos, puede tener ambos en el mismo proyecto.
+NAHPU está optimizado para pantallas móviles y de escritorio, y está diseñado para registrar especímenes de historia natural tanto en el laboratorio como en el campo.
 
-## Empezando
+## Conceptos clave
+
+### Cómo funcionan los proyectos
+
+NAHPU administra y organiza los datos por proyecto. Un proyecto puede ser una expedición de campo, una colección de especímenes preparados en un laboratorio para un año determinado o un proyecto de monitoreo a largo plazo. Puede pensar en un proyecto como una "carpeta" que contiene todos los datos y archivos multimedia de una investigación específica. Cada proyecto tiene su propio identificador único (UUID) y puede administrarse de forma independiente. Actualmente, las búsquedas, exportaciones, importaciones y estadísticas de datos se administran a nivel de proyecto. Este enfoque garantiza que los datos de una expedición o investigación permanezcan juntos y sean fáciles de encontrar. Si su institución utiliza números de acceso, puede asignar uno a un proyecto o utilizar el mismo número de acceso en varios proyectos.
+
+{% aside type="note" %}
+Las futuras actualizaciones de NAHPU ofrecerán búsquedas, exportaciones y estadísticas de datos globales entre varios proyectos.
+{% /aside %}
+
+### Relación entre sitios y eventos de recolección
+
+Si está acostumbrado a un catálogo en papel, este puede ser un concepto nuevo. Piense en un evento de recolección como la "sesión" durante la cual se recolectaron los especímenes, separada del sitio donde ocurrió. Un sitio contiene información geográfica, condiciones del hábitat y las coordenadas y hábitats asociados; es decir, información que normalmente no cambia en un período corto. Un evento de recolección, por otro lado, registra los detalles que cambian en un sitio específico y durante un período determinado, como el personal involucrado, el número de trampas, el clima y los datos astronómicos. Registra el esfuerzo y las condiciones ambientales asociadas en ese momento. Los registros de especímenes se vinculan a un evento de recolección y no directamente a un sitio.
+
+### Ubicación, localidad y alcance de los sitios
+
+Estos tres términos se utilizan a menudo indistintamente en la comunidad de los museos. Los términos ubicación, localidad y sitio—y las ontologías que los sustentan—pueden dar lugar a [un debate "agotador"](https://naomicleghorn.weebly.com/blog/site-vs-locality-and-the-paleocore-workshop). NAHPU reserva el término ubicación para un lugar amplio cuyo alcance cubre todo el proyecto. Estos detalles de ubicación se registran en la información del proyecto. En toda la aplicación, NAHPU utiliza el término sitio para un alcance más específico y reducido que el de localidad. El campamento, el hotel donde se hospeda durante una expedición, una línea de redes o trampas, etc., son sitios. Puede agregar cualquier cantidad de coordenadas a un solo sitio. Por ejemplo, al recolectar especímenes con trampas, puede registrar una coordenada para cada trampa y asignar un espécimen a esa coordenada. Esto proporciona información sobre la ubicación del espécimen con una precisión de GPS que, con un GPS moderno, puede alcanzar un radio de 3–5 metros. La aplicación también ofrece un campo de extensión de coordenadas para estimar la distancia desde la coordenada registrada.
+
+### Vocabularios controlados
+
+Los vocabularios controlados son listas predefinidas de términos que se utilizan para garantizar la coherencia y la estandarización durante la introducción de datos. Es una práctica común en los sistemas de gestión de datos. NAHPU permite personalizar los vocabularios controlados para su grupo de investigación y también proporciona algunos términos comunes de forma predeterminada. Al instalar NAHPU por primera vez, el asistente de configuración le guiará para seleccionar y agregar vocabularios controlados.
+
+### Identificadores de campo
+
+La práctica de asignar un identificador único a un espécimen en el campo puede clasificarse en tres tipos: identificadores de campo personales, institucionales y específicos del proyecto. NAHPU admite identificadores de campo personales al asignar a una persona el rol `cataloger`. Añada sus iniciales y el número de campo actual en el formulario de personal. La aplicación generará automáticamente un identificador de campo único combinando las iniciales del catalogador y el número de campo. El número se incrementa automáticamente y puede sobrescribirse manualmente. Para otras formas de identificadores de campo, NAHPU utiliza el término `project ID`. Puede establecer un prefijo, un sufijo y un número inicial en la configuración de especímenes. El asistente de configuración le guiará durante el proceso, o puede completarlo más tarde desde la configuración de especímenes.
+
+{% aside type="note" %}
+NAHPU asigna automáticamente un UUID a cada registro de espécimen. Esto garantiza que cada espécimen tenga siempre un identificador único en caso de conflicto entre identificadores de campo, por ejemplo, cuando dos catalogadores utilizan las mismas iniciales y rangos de números de campo similares.
+{% /aside %}
+
+### Roles de catalogador y recolector
+
+NAHPU limita el rol de recolector a la persona que recolecta el espécimen. Este es un campo específico del formulario de especímenes. Cualquier persona con un rol relacionado con el cuidado de especímenes puede ser asignada como recolector. Puede asignar este rol al guía de campo que le llevó el espécimen o a alguien que donó un espécimen sin preparar a la colección. Sin embargo, la persona que cataloga el espécimen es el catalogador. Este rol proporciona acceso a los identificadores de campo, y una persona con este rol puede asignarse como catalogador, preparador, recolector o en cualquier otro campo de personal.
+
+### Primeros pasos
 
 {% steps %}
 
-1. **Crear un nuevo proyecto**
+1. **Configurar NAHPU**
 
-    Use `+` en la esquina inferior derecha y seleccione `New project`. El
-    asistente solicita información del proyecto, ofrece el taxón principal y
-    los ID de campo, configura un Cataloger cuando sea necesario y termina con
-    una revisión. El nombre debe tener entre 3 y 25 caracteres. Consulte
-    [Proyectos](../usages/projects) y [Configuración](../usages/settings).
-    
+    Al instalar NAHPU por primera vez, el botón de configuración estará visible en la pantalla de inicio. Si no lo ve o necesita configurarlo más tarde, puede acceder a él desde el cajón de menú. Al seleccionarlo, el asistente de configuración le guiará para elegir un identificador de campo y todos los campos de vocabulario controlado que se pueden personalizar. También puede importarlos y exportarlos, por lo que la configuración solo debe completarse una vez para todo el equipo.
+
+2. **Crear un proyecto nuevo**
+
+    Use el botón `+` en la esquina inferior derecha de la pantalla de inicio y
+    seleccione `New project`. El asistente de configuración recopila la
+    información del proyecto, ofrece una configuración opcional para el taxón
+    principal y el identificador de campo, solicita un Cataloger cuando se
+    seleccionan identificadores de personal y finaliza con una revisión. El
+    nombre del proyecto debe tener entre 3 y 25 caracteres.
+
+    Puede omitir la configuración del dispositivo y completarla más tarde en
+    [Configuración](../usages/settings). Consulte [Proyectos](../usages/projects)
+    para ver el asistente completo y el flujo de importación de información del
+    proyecto.
+
     Después de la revisión, `Create project` abre el panel de control.
-    
-    Para un proyecto nuevo, la aplicación genera automáticamente un UUID de proyecto. Este identificador único se utiliza en toda la base de datos para distinguir registros de diferentes proyectos. Usamos [UUID versión 4](https://es.wikipedia.org/wiki/Identificador_%C3%BAnico_universal). Al importar información de proyecto desde otro dispositivo, NAHPU conserva el UUID importado.
+
+    Para un proyecto nuevo, la aplicación genera automáticamente un UUID de proyecto.
+    Utilizamos [UUID versión 4](https://en.wikipedia.org/wiki/Universally_unique_identifier).
+    Cuando importa información del proyecto desde otro dispositivo, NAHPU conserva
+    el UUID importado.
 
     {% aside type="tip" %}
 
-    Si varias personas usan dispositivos separados, utilice `Show QR` o `Export info` para crear proyectos coincidentes con el mismo UUID. Para combinar registros, use `Export project` y `Merge project` desde el menú del panel. Use JSON.GZ para cargas con internet limitado y sin multimedia, o ZIP/TAR.GZ para una copia completa. Consulte [Transferir un proyecto](../usages/export/project-transfer) y cree una copia de seguridad antes de combinar.
-    
+    Puede transferir la información del proyecto y su UUID mediante una exportación
+    QR o JSON. Esto resulta especialmente útil cuando varias personas catalogan el
+    mismo proyecto en sus propios dispositivos. La exportación QR o JSON transfiere
+    la información del proyecto, incluido su UUID, lo que simplifica la combinación
+    de datos posteriormente. Consulte [Transferir un proyecto](../usages/export/project-transfer)
+    para obtener más información.
+
     {% /aside %}
 
-2. **Conociendo el panel de control (*dashboard*)**
+3. **Conocer el panel de control**
 
-    El panel de control es la interfaz principal del proyecto. Se divide en cuatro paneles principales.
-    
-    - **El panel superior izquierdo** es la vista general del proyecto. Use `Edit` y `Export info` para administrar la información del proyecto. Use `Export project` para transferir registros y archivos multimedia.
-    - **El panel superior derecho** son los datos del personal. Este panel le permite agregar y administrar la información del personal para el proyecto. El personal se mostrará como una lista en este panel una vez creado.
-    - **El panel inferior izquierdo** es el registro numérico de taxones. Este panel le permite agregar y administrar información de taxones para el proyecto.
-    - **El panel inferior derecho** son las estadísticas de los registros. Este panel muestra el número de registros agregados al proyecto. Puede ingresar a la ventana de pantalla completa para ver más estadísticas.
+    El panel de control es la interfaz principal del proyecto. Está dividido en cuatro paneles principales.
+
+    - **El panel superior izquierdo** es la vista general del proyecto. Use `Edit` y `Export info` para administrar la información del proyecto. Use `Export project` cuando necesite transferir registros y archivos multimedia.
+    - **El panel superior derecho** contiene los datos del personal. Utilice este panel para agregar y administrar la información del personal del proyecto. El personal aparecerá como una lista en este panel una vez creado.
+    - **El panel inferior izquierdo** es el registro de taxones. Use este panel para agregar y administrar la información de taxones del proyecto.
+    - **El panel inferior derecho** contiene las estadísticas de registros. Muestra el número de registros agregados al proyecto. Puede entrar en modo de pantalla completa para ver más estadísticas.
 
     {% aside type="note" %}
 
-    En la pantalla de un teléfono inteligente, el panel está organizado en este orden: **información del proyecto**, **personal**, **registro numérico de taxones** y **estadísticas de registros**.
+    En la pantalla de un teléfono inteligente, los paneles aparecen en este orden: **información del proyecto**, **personal**, **registro de taxones** y **estadísticas de registros**.
     {% /aside %}
 
-3. **Agregar nuevo personal**
+4. **Agregar personal nuevo**
 
-    Necesita que al menos una persona asuma el papel de catalogador para el cuidado de los especímenes. Puede agregar más personas con diferentes roles.
+    Necesita al menos una persona que asuma el rol de catalogador encargado del cuidado de especímenes. Puede agregar más personas con diferentes roles.
 
-    - El **[Catalogador](../usages/personnel#cataloger)** (*Cataloger*) es responsable de catalogar el espécimen. En algunas instituciones, esto podría llamarse colector. En la aplicación, llamamos colector a cualquier persona que recolecte el espécimen, ya sea que participen en la catalogación en la aplicación o no. Su inicial y número de campo se usarán para generar el ID de Campo (*Field ID*) en la página del catálogo de especímenes. Su nombre también aparecerá cuando el formulario solicite el nombre de una persona, como el personal de recolección y el preparador. La aplicación no permite cambiar el rol del catalogador después de que se ha creado.
+    - **[Cataloger](../usages/personnel#cataloger)** es responsable de catalogar el espécimen. Sus iniciales y número de campo se utilizan para generar el identificador de campo en la página del catálogo de especímenes. Su nombre también aparece cuando un campo solicita personal, como en personal de recolección y preparador. La aplicación no permite cambiar el rol de catalogador una vez creado.
 
-    - El **[Solo preparador](../usages/personnel#preparator-only)** (*Preparator only*) es una persona que ayuda a preparar el espécimen pero no participa en la gestión de los datos. Sus nombres no aparecerán en el campo del catalogador de la página de especímenes, sino en algún otro lugar, como en los campos `Preparador` (*Preparator*) y `Personal de recolección` (*Collecting personnel*) en la página del espécimen.
+    - **[Preparator only](../usages/personnel#preparator-only)** es una persona que ayuda a preparar el espécimen, pero no participa en la gestión de datos. Su nombre no aparece en el campo de catalogador de la página del espécimen, pero puede aparecer en otros campos, como `Preparator` y `Collecting personnel`.
 
-    - El rol de **[Ninguno](../usages/personnel#none)** (*None*) está reservado para otro personal que no participa directamente en el cuidado de los especímenes. Uno de los objetivos de NAHPU es garantizar que todos los involucrados en el campo queden registrados en los datos de campo. Puede asignar esta función a su conductor, guías locales, cocineros, etc. Sus nombres solo aparecerán en el campo `Personal de recolección` (*Collecting personnel*). Si están involucrados en la obtención de un espécimen, puede asociarlos con él.
+    - **[None](../usages/personnel#none)** está reservado para el personal que no participa directamente en el cuidado de especímenes. NAHPU busca garantizar que todas las personas involucradas en el campo queden registradas en los datos de campo. Puede asignar este rol a su conductor, guías locales, cocineros y otras personas. Sus nombres solo aparecen en el campo `Collecting personnel`. Si participan en la obtención de un espécimen, también puede asociarlos como recolectores.
 
+5. **Agregar un taxón nuevo**
 
-4. **Agregar un nuevo taxón**
+    Puede agregar un taxón manualmente mediante el botón Add taxon o importarlo desde un archivo. Los formatos preferidos son `.xlsx`, `.csv` y `.tsv`. NAHPU hará todo lo posible por analizar otros tipos de archivo.
 
-    Puede agregar un taxón de forma manual mediante el botón agregar taxón o importar desde un archivo. Los formatos preferidos son `.xlsx`, `.csv` y `.tsv`. NAHPU hará su mejor esfuerzo para intentar analizar y cargar otros tipos de archivos.
+    - Para los archivos delimitados reconocidos, la aplicación selecciona el delimitador según la extensión (`.csv` = coma, `.tsv` = tabulación).
+    - Para las extensiones no reconocidas, la detección automática prueba primero Excel, coma, tabulación y punto y coma. Si falla, use la opción advanced parser override e introduzca un delimitador sin formato personalizado.
+    - `.xlsx` ofrece el mejor soporte; los formatos de Excel antiguos u otros formatos de Excel pueden fallar.
 
-    - Para los archivos delimitados reconocidos, la aplicación selecciona delimitadores por extensión (`.csv` = coma, `.tsv` = tabulación).
-    - Para extensiones no reconocidas, la función de detección automática intenta utilizar Excel, comas, tabulaciones y punto y coma primero. Si eso falla, use la anulación avanzada del analizador (*advanced parser override*) e ingrese un delimitador personalizado.
-    - El mejor soporte es para `.xlsx`; los formatos viejos/otros formatos de Excel podrían fallar.
-
-    Su archivo a importar requiere todas estas columnas: `class` (clase), `order` (orden), `family` (familia), `genus` (género), `epithet` (epíteto). Usted también puede incluir `scientific name` (nombre científico), `common name` (nombre común) y `notes` (notas). La aplicación detectará automáticamente los alias de los encabezados soportados (por ejemplo, `taxonClass`, `taxonOrder`, `taxonFamily`, `specificEpithet`). Puede seleccionar manualmente el tipo de columna desde el menú desplegable si la aplicación no asigna de forma automática la columna correcta para cada dato. Las demás columnas serán ignoradas.
+    Su archivo de importación debe incluir todas estas columnas: `class`, `order`, `family`, `genus` y `epithet`. También puede incluir `scientific name`, `common name` y `notes`. La aplicación detecta automáticamente los alias de encabezado compatibles, como `taxonClass`, `taxonOrder`, `taxonFamily` y `specificEpithet`. Puede seleccionar manualmente el tipo de columna mediante el menú desplegable si la aplicación no asigna automáticamente el tipo correcto a cada columna. Las demás columnas se ignoran.
 
     Ejemplo de tabla para importar taxones:
 
@@ -71,87 +122,77 @@ NAHPU es una aplicación de catalogación basada en proyectos. Los datos se gest
     | -------- | -------- | ------- | ------- | --------- | ----------------- | ------------------ | ----- |
     | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Bunomys coelestis | Heavenly hill rat  |       |
     | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Bunomys penitus   | Inland hill rat    |       |
-
     ```
 
-5. **Crear un sitio**
+6. **Crear un sitio**
 
-   En algunos catálogos en papel, este término se etiquetará como `Localidad` (*Locality*). Navegue a la página del sitio utilizando la barra de navegación inferior. Para crear un nuevo sitio, use el botón `+` en la esquina superior derecha del sitio. Rellene al menos la parte del `ID de sitio` (*Site ID*). La aplicación limita el ID del sitio a 20 caracteres y exige el formato de mayúsculas. Deberá referirse a este ID en todo el campo de registro siempre que se solicite un sitio.
-    
-    {% aside type="tip" %}
-
-    Recomendamos crear una convención única de ID de sitios para su equipo. Un ejemplo de convención de ID de sitios para trabajo de campo en mastozoología:
-    
-    - Ciudad, pueblo o aldea está identificado tal como es. Por ejemplo, la ciudad de Bogotá será `BOGOTA`.
-    - El sitio del campamento del equipo usa el formato `{abreviatura de la localidad de 2 letras}-CAMP{número de campamento}`. Por ejemplo, le campamento 1 en el Monte Gede-Pangrango es `GP-CAMP1`.
-    - La línea de trampas usa el formato `{abreviatura de la localidad de 2 letras}{inicial del líder de la línea de trampas}-L{número de línea}`. Por ejemplo, la línea 1 en Chingaza liderada por Heru Handika es `CGHH-L1`.
-    - La línea de trampas de caída (pitfall) usa el formato `{abreviatura de la localidad de 2 letras}{inicial del líder de la línea de caída}-P{número de línea}`. Por ejemplo, la línea 1 en Chingaza conducida por Heru Handika es `CGHH-P1`.
-
-    {% /aside %}
-
-    {% aside type="note" %}
-
-    Esta documentación usa `Site`, que también es el nombre utilizado por la
-    aplicación y los campos actuales de la base de datos.
-
-    {% /aside %}
-
-5. **Añadir una narrativa**
-
-    Este es su diario de campo. Navegue a la página Narrativa mediante la barra de navegación inferior y seleccione `+`. Añada la fecha, hora, sitio, autor y texto compatible con Markdown. También puede adjuntar archivos multimedia, buscar y previsualizar entradas. Consulte [Narrativa](../usages/narrative).
-
-6. **Agregar eventos de recolección**
-
-    Un evento de recolección, captura y rastrea los detalles de un solo esfuerzo de recolección, incluidos los datos sobre el personal, el clima y la información astronómica para un sitio y período de tiempo en específico. Los registros de especímenes van enlazados a un evento de recolección en lugar de a un sitio. Si viene de catálogos en papel, esto podría ser un nuevo concepto: piense en un evento de recolección como la "sesión" durante la cual se recolectaron los especímenes, separada del sitio donde ocurrió.
-
-    Para crear un evento de recolección, use el botón `+` en la esquina superior derecha del evento de recolección. Seleccione `ID de sitio`, `fecha de inicio`, `hora de inicio`, `fecha de finalización` y `hora de finalización`. Luego, complete el resto del formulario.
-
-    La aplicación combina la identificación del sitio y la fecha de inicio para crear una identificación única para cada evento de recolección. Por ejemplo, `GP-L1-March, 23 2023`. Usted utilizará este ID para referirse al evento de recolección en el registro del espécimen. En el raro caso de que ejecute múltiples eventos de recolección en el mismo sitio el mismo día, agregue un sufijo para distinguirlos, por ejemplo, `Line1-Mar 26, 2023-1`, `Line1-Mar 26, 2023-2`, o `Line1-Mar 26, 2023-day` y `Line1-Mar 26, 2023-night`.
-
-    {% aside type="tip"%}
-    A diferencia de los sitios, que usted crea una vez por cada nueva ubicación, le recomendamos que cree un nuevo evento de recolección para **cada esfuerzo de recolección individual**, incluso en el mismo sitio. Por ejemplo, al estudiar roedores nocturnos, las trampas suelen colocarse la noche anterior y revisarse a la mañana siguiente. En este caso:
-
-    - **Fecha de inicio** = la noche en que se colocaron las trampas.
-    
-    - **Fecha de finalización** = la mañana en que se revisaron las trampas y se recolectaron los especímenes.
-
-    Este enfoque captura con precisión el esfuerzo de captura y le permite realizar un seguimiento de los cambios en el número de trampas o el personal en todos los eventos. Use el registro del evento y las estadísticas del proyecto para revisar el esfuerzo y el número de especímenes.
-    {% /aside %}
-
-7. **Agregar registros de especímenes**
-
-    Para crear un registro de espécimen, utilice el botón `+` en la esquina superior derecha del registro de espécimen. El ícono de registro de espécimen en la barra de navegación le informa sobre el formato activo en ese momento. Al oprimir generará el formato coincidente para el catálogo actualmente activo. La única diferencia entre los diferentes formatos de catálogo son los campos de medición. Después de crear un nuevo registro de espécimen, complete la información relevante. Repita el proceso para los siguientes especímenes.
-
-    {% aside type="note" %}
-    NAHPU permite a los recolectores documentar múltiples grupos de taxones dentro de un solo proyecto. El ícono `Registro de Espécimen` (Specimen Record) en la barra de navegación, refleja el formato actualmente activo. Puede identificar el formato del catálogo en la página actual al observar el ícono en las partes del espécimen; por ejemplo, una `pata` (*paw*) representa el catálogo de mamíferos, mientras que una `cabeza de ave` (*bird head*) significa el catálogo de aves.
-    
-    **Pasos para probar:**
-    
-    - Vaya a configuración (settings)
-    - Formato (Format) > Seleccione un formato de catálogo diferente al formato actual
-    - Vuelva al Registro de Espécimen (Specimen Record)
-    - Cree un espécimen
-    {% /aside %}
-
-8. **Exportar registros**
-
-    Para exportar registros, vaya al menú del panel (indicado por el icono de hamburguesa/tres líneas horizontales en la esquina superior izquierda). Disponemos de múltiples opciones de exportación:
-
-    - Crear un reporte (Create a report). Genera una lista de especies, información multimedia y coordenadas del sitio en un formato delimitado (.csv o .tsv).
-
-    - Agrupar registros (Bundle records). Genera reportes disponibles, como el recuento de especies, narrativas, sitios, eventos de recolección y registros de especímenes. Todos están en un formato delimitado por comas (.csv). La aplicación generará un archivo .zip que contiene todos los archivos e información multimedia.
-
-    - Importar o exportar proyecto (Import/Export project). Transfiere un proyecto NAHPU completo entre dispositivos mediante un archivo ZIP o TAR.GZ. El asistente revisa el UUID, muestra conflictos sección por sección y permite decidir antes de importar. Haga una copia de seguridad antes de comenzar.
-
-    - Exportar registros (Export records). Puede elegir qué registros exportar. Admite exportación en formato delimitado (.csv o .tsv).
-
-9. **Crear copia de seguridad de la base de datos (Database Backup)**
-
-    Para hacer una copia de seguridad de la base de datos, vaya al menú en el panel de control y seleccione `hacer una copia de seguridad de la base de datos` (*backup database*). Por defecto, la base de datos será exportada como un archivo `sqlite3`. Use el botón de alternancia `incluir datos del proyecto` (*include project data*) para agregar los datos del proyecto a la copia de seguridad. La aplicación generará un archivo .zip que contiene la base de datos y la multimedia.
+    Navegue a la página de sitios mediante la barra de navegación. Para crear un sitio nuevo, use el botón `+` en la esquina superior derecha de la página del sitio. Complete al menos el `Site ID`. La aplicación limita el Site ID a 20 caracteres y exige el uso de mayúsculas. Deberá utilizar este identificador en todo el formulario de registros cuando se solicite un sitio.
 
     {% aside type="tip" %}
 
-    En un sitio de campo remoto, tener una conexión a Internet confiable puede ser un desafío. Recomendamos exportar solo los datos de `sqlite` para cargarlos a su cuenta en la nube, como [OneDrive](https://onedrive.live.com), [Google Drive](https://drive.google.com) o [Dropbox](https://www.dropbox.com). Guarde el archivo .zip de la configuración `incluir datos del proyecto` en el almacenamiento de su teléfono y una copia de seguridad secundaria en una unidad flash impermeable. También es una buena práctica realizar copias de seguridad entre dispositivos cuando tiene varios dispositivos que utilizan NAHPU.
+    Recomendamos crear una convención de Site ID única para su equipo. Este es un ejemplo para el trabajo de campo en mastozoología:
+
+    - Los nombres de ciudades, pueblos o aldeas se utilizan tal como son. Por ejemplo, la ciudad de Bogor es `BOGOR`.
+    - Un campamento utiliza el formato `{2-letter locality abbreviation}-CAMP{camp number}`. Por ejemplo, el campamento 1 en el monte Gede-Pangrango es `GP-CAMP1`.
+    - Una línea de trampas utiliza el formato `{2-letter locality abbreviation}{trapline leader initial}-L{line number}`. Por ejemplo, la línea 1 en el monte Gede-Pangrango, dirigida por Heru Handika, es `GPHH-L1`.
+    - Una línea de trampas de caída utiliza el formato `{2-letter locality abbreviation}{pitfall line leader initial}-P{line number}`. Por ejemplo, la línea 1 en el monte Gede-Pangrango, dirigida por Heru Handika, es `GPHH-P1`.
+
+    {% /aside %}
+
+7. **Agregar una narrativa**
+
+    Este es su diario de campo. Es una buena práctica escribir una narrativa todos los días. Puede escribir sobre cualquier cosa que haya sucedido ese día. Navegue a la página Narrative mediante la barra de navegación inferior y seleccione `+`. Agregue la fecha, hora, sitio, autor y texto narrativo compatible con Markdown. También puede adjuntar archivos multimedia y buscar o previsualizar las entradas más adelante. Consulte [Narrativa](../usages/narrative).
+
+8. **Agregar eventos de recolección**
+
+    Un evento de recolección registra los detalles de un esfuerzo de recolección, el personal involucrado y los datos ambientales de un sitio y período específicos. Los registros de especímenes se vinculan a un evento de recolección y no directamente a un sitio.
+
+    Para crear un evento de recolección, use el botón `+` en la esquina superior derecha de la página de eventos de recolección. Seleccione `site ID`, `start date`, `start time`, `end date` y `end time`. Luego, complete el resto del formulario.
+
+    La aplicación combina el Site ID y la fecha de inicio para crear un identificador único para cada evento de recolección. Por ejemplo, `GP-L1-March, 23 2023`. Utilizará este identificador para referirse al evento de recolección en el registro del espécimen. Si realiza varios eventos de recolección en el mismo sitio el mismo día, agregue un sufijo para distinguirlos, como `Line1-Mar 26, 2023-1`, `Line1-Mar 26, 2023-2`, `Line1-Mar 26, 2023-day` o `Line1-Mar 26, 2023-night`.
+
+    {% aside type="tip" %}
+    A diferencia de los sitios, que se crean una vez por cada nueva ubicación, recomendamos crear un nuevo evento de recolección para **cada esfuerzo de recolección individual** en el mismo sitio. Por ejemplo, al estudiar roedores nocturnos, las trampas suelen colocarse por la tarde o noche y revisarse a la mañana siguiente. En este caso:
+
+    - **Start date** = la noche en que se colocaron las trampas
+
+    - **End date** = la mañana en que se revisaron las trampas y se recolectaron los especímenes
+
+    Este enfoque registra con precisión el esfuerzo de captura y le permite hacer un seguimiento de los cambios en el número de trampas o el personal entre eventos. Utilice el registro del evento y las estadísticas del proyecto para revisar el esfuerzo resultante y el número de especímenes.
+    {% /aside %}
+
+9. **Agregar registros de especímenes**
+
+    Para crear un registro de espécimen, use el botón `+` en la esquina superior derecha de la página de registros de especímenes. El ícono de registros de especímenes en la barra de navegación muestra el formato activo. Genera el formato correspondiente al catálogo activo. La única diferencia entre los formatos de catálogo son los campos de medición. Después de crear un registro de espécimen, complete la información pertinente. Repita el proceso con el espécimen siguiente.
+
+    {% aside type="note" %}
+    NAHPU permite a los recolectores documentar varios grupos de taxones dentro de un mismo proyecto. El ícono `Specimen Record` de la barra de navegación refleja el formato activo. Puede identificar el formato del catálogo observando el ícono en las partes del espécimen. Por ejemplo, `paw` representa el catálogo de mamíferos, mientras que `bird head` representa el catálogo de aves.
+
+    **Pasos para probarlo:**
+
+    - Vaya a Settings.
+    - Seleccione **Format** y elija un formato de catálogo diferente del actual.
+    - Regrese a Specimen Record.
+    - Cree un espécimen.
+    {% /aside %}
+
+10. **Exportar registros**
+
+    Para exportar registros, vaya al menú del panel de control, indicado por el ícono de hamburguesa (tres líneas horizontales) en la esquina superior izquierda. Tiene varias opciones de exportación:
+
+    - Create a report. Genera una lista de especies, archivos multimedia y coordenadas de sitios en un formato delimitado (`.csv` o `.tsv`).
+
+    - Bundle records. Crea un Darwin Core Archive, un Darwin Core Data Package o un NAHPU Data Package completo. Los Data Packages pueden utilizar TAR.GZ o ZIP. Consulte [Bundle records](../usages/export/export-bundles).
+
+    - Export records. Permite elegir qué registros exportar. Esta opción admite formatos delimitados (`.csv` o `.tsv`).
+
+11. **Hacer una copia de seguridad de la base de datos**
+
+    Para hacer una copia de seguridad de la base de datos, vaya al menú del panel de control y seleccione `backup database`. De forma predeterminada, la base de datos se exporta como un archivo SQLite. Use el interruptor `include project data` para incluir los datos del proyecto en la copia de seguridad. La aplicación genera un archivo ZIP que contiene la base de datos y los archivos multimedia.
+
+    {% aside type="tip" %}
+
+    En un sitio de campo remoto, puede ser difícil contar con una conexión a Internet confiable. Use la exportación de proyecto ligera `JSON.GZ` para una carga pequeña que contenga solo registros y no incluya archivos multimedia. Use la copia de seguridad `sqlite`, que contiene solo la base de datos, para recuperarla; y guarde localmente un archivo de proyecto ZIP/TAR.GZ cuando necesite los archivos multimedia o una copia completa del proyecto. También es recomendable realizar copias de seguridad entre dispositivos cuando varios dispositivos utilizan NAHPU.
 
     {% /aside %}
 
