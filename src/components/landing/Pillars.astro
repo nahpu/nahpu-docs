@@ -1,7 +1,10 @@
 ---
 import cntl from "cntl";
 
-/// The three things NAHPU is built to do on an expedition.
+/// The four reasons NAHPU exists, from field accuracy to what the data makes
+/// possible afterwards. Every glyph shares the same 92x84 frame at x=14 y=18,
+/// and that frame is the only stroked box in a glyph; everything inside it is
+/// drawn with fills and lines.
 const cardClasses = cntl`
   nh-reveal
   group
@@ -20,7 +23,9 @@ const glyphClasses = cntl`
   w-24 h-24 shrink-0
 `;
 
+/// Two lines of `text-lg` so every card body starts at the same height.
 const headingClasses = cntl`
+  min-h-14
   text-lg font-semibold
   text-silver-tree-900 dark:text-silver-tree-50
 `;
@@ -35,9 +40,12 @@ const tagClasses = cntl`
   px-3 py-1
   text-[11px] font-semibold uppercase tracking-widest
 `;
+
+const frameFill = "var(--color-silver-tree-400)";
+const frameStroke = "var(--color-silver-tree-500)";
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
     <article class={cardClasses}>
         <svg
             class={glyphClasses}
@@ -46,13 +54,6 @@ const tagClasses = cntl`
             aria-hidden="true"
         >
             <defs>
-                <linearGradient id="nh-card-1" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="var(--color-silver-tree-200)"
-                    ></stop>
-                    <stop
-                        offset="100%"
-                        stop-color="var(--color-silver-tree-400)"></stop>
-                </linearGradient>
                 <linearGradient id="nh-scanline" x1="0" y1="0" x2="1" y2="0">
                     <stop
                         offset="0%"
@@ -69,51 +70,44 @@ const tagClasses = cntl`
             </defs>
 
             <rect
-                x="16"
+                x="14"
                 y="18"
-                width="80"
-                height="86"
+                width="92"
+                height="84"
                 rx="14"
-                fill="url(#nh-card-1)"
-                fill-opacity="0.35"
-                stroke="var(--color-silver-tree-500)"
-                stroke-width="2"></rect>
+                fill={frameFill}
+                fill-opacity="0.18"
+                stroke={frameStroke}
+                stroke-width="2"
+                stroke-opacity="0.7"></rect>
 
-            <g fill="var(--color-silver-tree-500)" fill-opacity="0.55">
-                <rect x="28" y="34" width="34" height="5" rx="2.5"></rect>
-                <rect x="28" y="52" width="46" height="5" rx="2.5"></rect>
-                <rect x="28" y="70" width="28" height="5" rx="2.5"></rect>
-            </g>
+            <!-- Entered values, one of them flagged -->
             <g fill="var(--color-silver-tree-600)">
-                <rect x="28" y="43" width="56" height="4" rx="2"></rect>
-                <rect x="28" y="79" width="40" height="4" rx="2"></rect>
+                <rect x="26" y="32" width="44" height="5" rx="2.5"></rect>
+                <rect x="26" y="44" width="56" height="5" rx="2.5"></rect>
+                <rect x="26" y="68" width="34" height="5" rx="2.5"></rect>
             </g>
-
-            <rect x="28" y="61" width="56" height="4" rx="2" fill="#e2685f"
+            <rect x="26" y="56" width="50" height="5" rx="2.5" fill="#e2685f"
             ></rect>
-            <circle class="nh-flag" cx="88" cy="63" r="4" fill="#e2685f"
+            <circle class="nh-flag" cx="84" cy="58.5" r="4" fill="#e2685f"
             ></circle>
 
             <rect
                 class="nh-scan"
                 x="18"
-                y="30"
-                width="76"
+                y="28"
+                width="84"
                 height="3"
                 fill="url(#nh-scanline)"></rect>
 
-            <circle
-                cx="92"
-                cy="94"
-                r="16"
-                fill="var(--color-silver-tree-500)"
-                stroke="var(--color-silver-tree-50)"
-                stroke-width="3"></circle>
+            <!-- Checked before it leaves the field -->
+            <circle cx="90" cy="88" r="13" fill="var(--color-silver-tree-600)"
+            ></circle>
             <path
                 class="nh-draw"
-                d="M84 94 l6 6 l11 -13"
+                d="M84 88 l4.5 4.5 l8.5 -10"
                 stroke="var(--color-silver-tree-50)"
-                stroke-width="3.4"
+                stroke-width="3"
                 stroke-linecap="round"
                 stroke-linejoin="round"></path>
         </svg>
@@ -124,10 +118,9 @@ const tagClasses = cntl`
         >
         <h3 class={headingClasses}>Fewer data entry errors</h3>
         <p class={bodyClasses}>
-            Controlled vocabularies and taxon lookups keep data consistent, and
-            our on-going work on outlier warnings flag typos and implausible
-            measurements while the specimen is still in hand, not months later
-            during accessioning.
+            Controlled vocabularies and taxon lookups keep entries consistent.
+            Outlier warnings, now in development, catch typos and implausible
+            measurements while the specimen is still in hand.
         </p>
     </article>
 
@@ -148,133 +141,144 @@ const tagClasses = cntl`
                 </radialGradient>
             </defs>
 
-            <g
-                stroke="var(--color-silver-tree-400)"
-                stroke-width="1.8"
-                stroke-linecap="round"
-                opacity="0.75"
-            >
-                <path d="M 60 60 C 60 34, 44 26, 26 26"></path>
-                <path d="M 60 60 C 60 34, 76 26, 94 26"></path>
-                <path d="M 60 60 C 60 86, 44 94, 26 94"></path>
-                <path d="M 60 60 C 60 86, 76 94, 94 94"></path>
-            </g>
+            <rect
+                x="14"
+                y="18"
+                width="92"
+                height="84"
+                rx="14"
+                fill={frameFill}
+                fill-opacity="0.18"
+                stroke={frameStroke}
+                stroke-width="2"
+                stroke-opacity="0.7"></rect>
 
-            <!-- Photograph -->
-            <g transform="translate(26 26)">
-                <rect
-                    x="-13"
-                    y="-11"
-                    width="26"
-                    height="22"
-                    rx="5"
-                    fill="#f0a832"></rect>
-                <circle cx="-4" cy="-2" r="3.4" fill="#fff6e0"></circle>
-                <path d="M-12 8 l8 -8 l6 5 l5 -4 l6 7 z" fill="#8f5b10"></path>
-            </g>
-
-            <!-- Audio -->
-            <g transform="translate(94 26)">
-                <rect
-                    x="-13"
-                    y="-11"
-                    width="26"
-                    height="22"
-                    rx="5"
-                    fill="#7c72d8"></rect>
-                <g stroke="#efeeff" stroke-width="2.4" stroke-linecap="round">
-                    <path d="M-7 -3 v6"></path>
-                    <path d="M-2.5 -7 v14"></path>
-                    <path d="M2 -4.5 v9"></path>
-                    <path d="M6.5 -2 v4"></path>
+            <!--
+                Drawn at full size, then scaled about the centre to sit inside
+                the shared frame. Stroke widths are pre-divided by 0.76 so the
+                lines match the other glyphs once scaled. The packet paths in
+                landing.css are expressed in this group's own coordinates, so
+                they scale with it.
+            -->
+            <g transform="translate(60 60) scale(0.76) translate(-60 -60)">
+                <g
+                    stroke="var(--color-silver-tree-400)"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    opacity="0.75"
+                >
+                    <path d="M 60 60 C 60 34, 44 26, 26 26"></path>
+                    <path d="M 60 60 C 60 34, 76 26, 94 26"></path>
+                    <path d="M 60 60 C 60 86, 44 94, 26 94"></path>
+                    <path d="M 60 60 C 60 86, 76 94, 94 94"></path>
                 </g>
-            </g>
 
-            <!-- Field note -->
-            <g transform="translate(26 94)">
-                <rect
-                    x="-13"
-                    y="-11"
-                    width="26"
-                    height="22"
-                    rx="5"
-                    fill="#3f9fd6"></rect>
-                <g stroke="#eaf6ff" stroke-width="2.2" stroke-linecap="round">
-                    <path d="M-6 -4 h12"></path>
-                    <path d="M-6 1 h12"></path>
-                    <path d="M-6 6 h7"></path>
+                <!-- Photograph -->
+                <g transform="translate(26 26)">
+                    <rect
+                        x="-13"
+                        y="-11"
+                        width="26"
+                        height="22"
+                        rx="5"
+                        fill="#f0a832"></rect>
+                    <circle cx="-4" cy="-2" r="3.4" fill="#fff6e0"></circle>
+                    <path d="M-12 8 l8 -8 l6 5 l5 -4 l6 7 z" fill="#8f5b10"
+                    ></path>
                 </g>
-            </g>
 
-            <!-- Tissue sample -->
-            <g transform="translate(94 94)">
-                <rect
-                    x="-13"
-                    y="-11"
-                    width="26"
-                    height="22"
-                    rx="5"
-                    fill="#2f9e7d"></rect>
-                <path
-                    d="M-3 -7 v5 l-4 7 a5 5 0 0 0 4.4 7.2 h5.2 A5 5 0 0 0 7 -2 l-4 -5 v-5 z"
-                    transform="translate(0 -1) scale(0.8)"
-                    fill="#e4fff5"></path>
-            </g>
+                <!-- Audio -->
+                <g transform="translate(94 26)">
+                    <rect
+                        x="-13"
+                        y="-11"
+                        width="26"
+                        height="22"
+                        rx="5"
+                        fill="#7c72d8"></rect>
+                    <g stroke="#efeeff" stroke-width="3.2" stroke-linecap="round">
+                        <path d="M-7 -3 v6"></path>
+                        <path d="M-2.5 -7 v14"></path>
+                        <path d="M2 -4.5 v9"></path>
+                        <path d="M6.5 -2 v4"></path>
+                    </g>
+                </g>
 
-            <circle cx="60" cy="60" r="19" fill="url(#nh-hub)"></circle>
-            <circle
-                class="nh-orbit"
-                cx="60"
-                cy="60"
-                r="25"
-                stroke="var(--color-golden-grass-400)"
-                stroke-width="1.6"
-                stroke-dasharray="6 12"
-                fill="none"></circle>
-            <g
-                stroke="var(--color-silver-tree-50)"
-                stroke-width="2.2"
-                stroke-linecap="round"
-            >
-                <path d="M53 55 h14"></path>
-                <path d="M53 61 h14"></path>
-                <path d="M53 67 h8"></path>
-            </g>
+                <!-- Field note -->
+                <g transform="translate(26 94)">
+                    <rect
+                        x="-13"
+                        y="-11"
+                        width="26"
+                        height="22"
+                        rx="5"
+                        fill="#3f9fd6"></rect>
+                    <g stroke="#eaf6ff" stroke-width="2.9" stroke-linecap="round">
+                        <path d="M-6 -4 h12"></path>
+                        <path d="M-6 1 h12"></path>
+                        <path d="M-6 6 h7"></path>
+                    </g>
+                </g>
 
-            <circle
-                class="nh-packet nh-packet-a"
-                cx="60"
-                cy="60"
-                r="3.2"
-                fill="#f0a832"></circle>
-            <circle
-                class="nh-packet nh-packet-b"
-                cx="60"
-                cy="60"
-                r="3.2"
-                fill="#7c72d8"></circle>
-            <circle
-                class="nh-packet nh-packet-c"
-                cx="60"
-                cy="60"
-                r="3.2"
-                fill="#3f9fd6"></circle>
-            <circle
-                class="nh-packet nh-packet-d"
-                cx="60"
-                cy="60"
-                r="3.2"
-                fill="#2f9e7d"></circle>
+                <!-- Tissue sample -->
+                <g transform="translate(94 94)">
+                    <rect
+                        x="-13"
+                        y="-11"
+                        width="26"
+                        height="22"
+                        rx="5"
+                        fill="#2f9e7d"></rect>
+                    <path
+                        d="M-3 -7 v5 l-4 7 a5 5 0 0 0 4.4 7.2 h5.2 A5 5 0 0 0 7 -2 l-4 -5 v-5 z"
+                        transform="translate(0 -1) scale(0.8)"
+                        fill="#e4fff5"></path>
+                </g>
+
+                <circle cx="60" cy="60" r="19" fill="url(#nh-hub)"></circle>
+                <circle
+                    class="nh-orbit"
+                    cx="60"
+                    cy="60"
+                    r="25"
+                    stroke="var(--color-golden-grass-400)"
+                    stroke-width="2.1"
+                    stroke-dasharray="6 12"
+                    fill="none"></circle>
+                <g
+                    stroke="var(--color-silver-tree-50)"
+                    stroke-width="2.9"
+                    stroke-linecap="round"
+                >
+                    <path d="M53 55 h14"></path>
+                    <path d="M53 61 h14"></path>
+                    <path d="M53 67 h8"></path>
+                </g>
+
+                <!--
+                    Kept at the origin: the offset-path in landing.css supplies
+                    the position, so a cx/cy here would be added to it and throw
+                    the packet off the spoke.
+                -->
+                <circle class="nh-packet nh-packet-a" r="3.2" fill="#f0a832"
+                ></circle>
+                <circle class="nh-packet nh-packet-b" r="3.2" fill="#7c72d8"
+                ></circle>
+                <circle class="nh-packet nh-packet-c" r="3.2" fill="#3f9fd6"
+                ></circle>
+                <circle class="nh-packet nh-packet-d" r="3.2" fill="#2f9e7d"
+                ></circle>
+            </g>
         </svg>
 
         <span
             class={`${tagClasses} bg-golden-grass-200 text-golden-grass-900 dark:bg-golden-grass-900 dark:text-golden-grass-100`}
             >Provenance</span
         >
-        <h3 class={headingClasses}>Digital assets stay with the record</h3>
+        <h3 class={headingClasses}>Media stays with the record</h3>
         <p class={bodyClasses}>
-            Photographs, audio, and videos attach to the specimen, site, event,
-            or narrative they document, so no asset ends up orphaned in a camera
+            Photographs, audio, and video attach to the specimen, site, event,
+            or narrative they document, so nothing is orphaned in a camera
             folder with only a timestamp to identify it.
         </p>
     </article>
@@ -314,46 +318,56 @@ const tagClasses = cntl`
 
             <rect
                 x="14"
-                y="20"
+                y="18"
                 width="92"
-                height="82"
+                height="84"
                 rx="14"
-                stroke="var(--color-silver-tree-500)"
+                fill={frameFill}
+                fill-opacity="0.18"
+                stroke={frameStroke}
                 stroke-width="2"
-                stroke-opacity="0.6"></rect>
+                stroke-opacity="0.7"></rect>
+
+            <!-- One site, reused by everything recorded against it -->
+            <path
+                d="M28 34.5 v54"
+                stroke="var(--color-silver-tree-500)"
+                stroke-width="1.6"
+                stroke-dasharray="3 5"
+                opacity="0.8"></path>
 
             <g>
                 <circle
                     cx="28"
-                    cy="38"
+                    cy="34.5"
                     r="4.5"
                     fill="var(--color-silver-tree-600)"></circle>
                 <rect
                     class="nh-stack-bar"
                     x="38"
-                    y="34"
+                    y="30"
                     width="56"
                     height="9"
                     rx="4.5"
                     fill="url(#nh-bar-1)"></rect>
             </g>
             <g>
-                <circle cx="28" cy="56" r="4.5" fill="#3f9fd6"></circle>
+                <circle cx="28" cy="52.5" r="4.5" fill="#3f9fd6"></circle>
                 <rect
                     class="nh-stack-bar nh-stack-bar-2"
                     x="38"
-                    y="52"
+                    y="48"
                     width="46"
                     height="9"
                     rx="4.5"
                     fill="url(#nh-bar-2)"></rect>
             </g>
             <g>
-                <circle cx="28" cy="74" r="4.5" fill="#2f9e7d"></circle>
+                <circle cx="28" cy="70.5" r="4.5" fill="#2f9e7d"></circle>
                 <rect
                     class="nh-stack-bar nh-stack-bar-3"
                     x="38"
-                    y="70"
+                    y="66"
                     width="58"
                     height="9"
                     rx="4.5"
@@ -362,36 +376,166 @@ const tagClasses = cntl`
             <g>
                 <circle
                     cx="28"
-                    cy="92"
+                    cy="88.5"
                     r="4.5"
                     fill="var(--color-golden-grass-500)"></circle>
                 <rect
                     class="nh-stack-bar nh-stack-bar-4"
                     x="38"
-                    y="88"
+                    y="84"
                     width="38"
                     height="9"
                     rx="4.5"
                     fill="url(#nh-bar-4)"></rect>
             </g>
-
-            <path
-                d="M28 38 v54"
-                stroke="var(--color-silver-tree-500)"
-                stroke-width="1.6"
-                stroke-dasharray="3 5"
-                opacity="0.8"></path>
         </svg>
 
         <span
             class={`${tagClasses} bg-silver-tree-200 text-silver-tree-800 dark:bg-silver-tree-800 dark:text-silver-tree-100`}
             >Depth</span
         >
-        <h3 class={headingClasses}>Extensive field data in one pass</h3>
+        <h3 class={headingClasses}>Rich field data, entered once</h3>
         <p class={bodyClasses}>
             Localities with unlimited coordinates, collecting effort,
-            preparation details, and habitat condition are entered once and
+            preparation details, and habitat condition are written once, then
             reused by every specimen and event that shares them.
+        </p>
+    </article>
+
+    <article class={cardClasses}>
+        <svg
+            class={glyphClasses}
+            viewBox="0 0 120 120"
+            fill="none"
+            aria-hidden="true"
+        >
+            <defs>
+                <radialGradient id="nh-model" cx="50%" cy="50%">
+                    <stop offset="0%" stop-color="var(--color-silver-tree-400)"
+                    ></stop>
+                    <stop
+                        offset="100%"
+                        stop-color="var(--color-silver-tree-700)"></stop>
+                </radialGradient>
+            </defs>
+
+            <rect
+                x="14"
+                y="18"
+                width="92"
+                height="84"
+                rx="14"
+                fill={frameFill}
+                fill-opacity="0.18"
+                stroke={frameStroke}
+                stroke-width="2"
+                stroke-opacity="0.7"></rect>
+
+            <!-- A specimen image, read as bands of color -->
+            <rect
+                x="24"
+                y="30"
+                width="33"
+                height="62"
+                rx="6"
+                fill="var(--color-silver-tree-500)"
+                fill-opacity="0.22"></rect>
+            <g>
+                <rect x="26" y="32" width="9" height="18" rx="3" fill="#f0a832"
+                ></rect>
+                <rect x="36" y="32" width="9" height="18" rx="3" fill="#e2685f"
+                ></rect>
+                <rect x="46" y="32" width="9" height="18" rx="3" fill="#8f5b10"
+                ></rect>
+                <rect x="26" y="52" width="9" height="18" rx="3" fill="#3f9fd6"
+                ></rect>
+                <rect x="36" y="52" width="9" height="18" rx="3" fill="#2f9e7d"
+                ></rect>
+                <rect x="46" y="52" width="9" height="18" rx="3" fill="#7c72d8"
+                ></rect>
+                <rect
+                    x="26"
+                    y="72"
+                    width="9"
+                    height="18"
+                    rx="3"
+                    fill="var(--color-silver-tree-600)"></rect>
+                <rect
+                    x="36"
+                    y="72"
+                    width="9"
+                    height="18"
+                    rx="3"
+                    fill="var(--color-golden-grass-500)"></rect>
+                <rect
+                    x="46"
+                    y="72"
+                    width="9"
+                    height="18"
+                    rx="3"
+                    fill="var(--color-silver-tree-400)"></rect>
+            </g>
+
+            <!-- Read by a model -->
+            <path
+                d="M59 60 h4"
+                stroke="var(--color-silver-tree-500)"
+                stroke-width="1.8"
+                stroke-dasharray="3 4"
+                stroke-linecap="round"></path>
+            <circle cx="74" cy="60" r="7" fill="url(#nh-model)"></circle>
+            <circle
+                class="nh-orbit"
+                cx="74"
+                cy="60"
+                r="11"
+                stroke="var(--color-golden-grass-400)"
+                stroke-width="1.6"
+                stroke-dasharray="5 10"
+                fill="none"></circle>
+
+            <!-- Resolving into a pattern -->
+            <g
+                stroke="var(--color-silver-tree-500)"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                opacity="0.85"
+            >
+                <path d="M81 60 h7"></path>
+                <path d="M88 36 V84"></path>
+                <path d="M88 36 h7"></path>
+                <path d="M88 60 h7"></path>
+                <path d="M88 84 h7"></path>
+            </g>
+            <circle class="nh-flag" cx="95" cy="36" r="4" fill="#f0a832"
+            ></circle>
+            <circle
+                class="nh-flag"
+                cx="95"
+                cy="60"
+                r="4"
+                fill="#3f9fd6"
+                style="animation-delay: 0.8s"></circle>
+            <circle
+                class="nh-flag"
+                cx="95"
+                cy="84"
+                r="4"
+                fill="#2f9e7d"
+                style="animation-delay: 1.6s"></circle>
+        </svg>
+
+        <span
+            class={`${tagClasses} bg-golden-grass-200 text-golden-grass-900 dark:bg-golden-grass-900 dark:text-golden-grass-100`}
+            >Advance</span
+        >
+        <h3 class={headingClasses}>More than a paper catalog</h3>
+        <p class={bodyClasses}>
+            Digital capture reaches beyond paper. Work underway on conventional
+            and machine learning methods will read a growing catalog in real
+            time, guide decisions in the field, and surface evolutionary
+            patterns in traits such as coloration.
         </p>
     </article>
 </div>
