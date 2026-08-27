@@ -48,7 +48,7 @@ your project.
 
 4. Add the Site leader
 
-    If this is a field camp, you can put the team leader name. If it is a trap line, you can design a person in-charge of that trap line as the site leader.
+    If this is a field camp, you can put the team leader name. If it is a trap line, you can designate the person in charge of that trap line as the site leader.
 
 5. Add the site type
 
@@ -57,7 +57,17 @@ your project.
 
 6. Fill in the geography details
 
-    We recommend to follow your museum convention for writing the precise locality and remarks.
+    Start with `Find existing locality`. It matches what you type against every
+    locality already saved in the project, and selecting a suggestion fills the
+    whole geography hierarchy at once. Each field also suggests values already
+    recorded for that field, so a country or state you have typed before comes
+    back as an option.
+
+    Localities are stored once and shared between sites, so reusing a saved
+    locality avoids creating a near-duplicate place record. Which geography
+    fields appear is configurable in Settings.
+
+    We recommend following your museum convention for writing the precise locality and remarks.
 
     {% aside type="tip" title="Writing remarks" %}
 
@@ -66,7 +76,7 @@ your project.
     For example:
 
     ```text
-    The trapline runs from Shelter I to Shelter IV along the trails betweeen the to camp sites.
+    The trapline runs from Shelter I to Shelter IV along the trails between the two camp sites.
     ```
 
     {% /aside %}
@@ -91,8 +101,11 @@ The site form records the place and the people responsible for it:
 - `Site ID`: a project-unique identifier used by events and exchanged records.
 - `Site leader`: the person responsible for the camp, trap line, or other site.
 - `Site type`: the configured category for the site.
-- Locality and remarks: precise locality text and notes about how the site is
-  used or operated.
+- Geography: `Country`, `Island group`, `State/Province`,
+  `County/Parish/District`, and `Municipality/City/Town`, shared between sites
+  that record the same place.
+- `Precise Locality` and `Remarks`: the specific named place below municipality
+  level, and notes about how the site is used or operated.
 - Habitat type, condition, and description: the environment observed at the
   site.
 
@@ -146,8 +159,8 @@ projects must exist, because the source must be a different project.
    - Site ID
    - Site leader
    - Site type
-   - Geography fields, including country, state/province, county, municipality,
-     and precise locality
+   - Geography fields, including country, island group, state/province,
+     county/parish/district, municipality/city/town, and precise locality
    - Remarks
    - Habitat type, condition, and description
    - Coordinates

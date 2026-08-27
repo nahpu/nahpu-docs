@@ -1,0 +1,221 @@
+---
+title: Pencadangan dan Pemulihan
+sidebar:
+  order: 4
+---
+
+Pengelolaan data yang baik di NAHPU berarti menjaga tiga hal tetap aman dan
+mudah dipindahkan:
+
+- **Basis data proyek**: spesimen, lokasi, kegiatan pengumpulan, personel,
+  taksonomi, narasi, metadata media, dan catatan proyek lain yang disimpan dalam
+  SQLite.
+- **Berkas proyek**: media dan berkas lain yang disimpan di direktori dokumen
+  aplikasi NAHPU.
+- **Konfigurasi pengguna**: pengaturan yang berkaitan dengan reproduksibilitas,
+  seperti daftar pilihan terkontrol, prasetel ekspor, prasetel templat, dan tata
+  letak dokumen.
+
+NAHPU memisahkan jenis data ini agar Anda dapat membuat cadangan kecil berisi
+basis data saja untuk keamanan harian, ekspor proyek ringan untuk unggahan
+dengan internet terbatas, arsip proyek yang lebih lengkap saat berpindah
+perangkat, dan cadangan konfigurasi bila Anda ingin instalasi lain menghasilkan
+ekspor dan dokumen yang sama.
+
+## Strategi pencadangan
+
+Gunakan lebih dari satu jenis cadangan selama kerja lapangan.
+
+- **Cadangan basis data harian**: berkas `.sqlite3` yang ringkas. Gunakan sering
+  untuk pemulihan basis data dan keamanan harian.
+- **Ekspor proyek ringan**: berkas `JSON.GZ` terkompresi berisi catatan proyek
+  tanpa media. Gunakan untuk unggahan dengan internet terbatas atau penggabungan
+  yang hanya berisi catatan. Ini bukan cadangan proyek yang lengkap.
+- **Cadangan basis data lengkap**: arsip `.zip` atau `.tar.gz` yang memuat basis
+  data SQLite, konfigurasi pengguna, media, berkas terkait, fon, dan peta.
+  Gunakan bila Anda memerlukan pemulihan instalasi secara utuh.
+- **Cadangan konfigurasi pengguna**: berkas `.json` atau `.json.gz` berisi
+  konfigurasi pengguna, prasetel ekspor, prasetel templat, dan tata letak
+  dokumen. Gunakan bila perangkat lain perlu memakai daftar terkontrol,
+  perilaku ekspor, dan tata letak dokumen yang sama.
+
+{% aside type="tip" title="Praktik yang dianjurkan" %}
+Di akhir setiap hari kerja lapangan, ekspor cadangan basis data lengkap ke
+penyimpanan awan bila ada internet, dan ekspor transfer proyek ke penyimpanan
+lokal seperti flash disk USB-C atau perangkat kedua. Secara berkala, pulihkan
+sebuah cadangan di perangkat lain untuk memastikan berkasnya dapat digunakan.
+{% /aside %}
+
+## Mencadangkan basis data
+
+Gunakan `Backup database` dari menu proyek.
+
+{% steps %}
+
+1. Buka halaman `Dashboard`.
+2. Buka menu proyek lalu pilih `Backup database`.
+3. Pilih `TAR.GZ` atau `ZIP`.
+4. Masukkan nama berkas.
+5. Pilih direktori penyimpanan.
+6. Klik `Save`.
+
+{% /steps %}
+
+Arsip tersebut memuat basis data sebagai `nahpu.sqlite3` dan konfigurasi
+pengguna sebagai `user_configs.json`, beserta berkas terkelola yang tersedia.
+
+## Mengekspor proyek
+
+Gunakan `Export project` bila Anda perlu menggabungkan proyek yang sama dengan
+perangkat NAHPU lain. Aktifkan `Light export` untuk membuat `JSON.GZ` tanpa
+media, untuk unggahan dengan internet terbatas. Gunakan ZIP atau TAR.GZ dengan
+`Light export` dimatikan bila perangkat penerima memerlukan media atau salinan
+proyek yang lengkap. Gabungkan hasil ekspor dengan `Merge project`.
+
+Lihat [Transfer proyek](../../usages/export/project-transfer) untuk alur
+peninjauan dan penyelesaian konflik.
+
+## Memulihkan basis data
+
+Gunakan pemulihan basis data bila Anda perlu mengganti basis data NAHPU saat ini
+dengan berkas cadangan.
+
+{% steps %}
+
+1. Buka `Settings`.
+2. Di bagian `Database`, pilih `Replace database` untuk membuka
+   `Database Settings`.
+3. Gunakan `Choose database` untuk memilih berkas `.sqlite3`, arsip ZIP, atau
+   arsip TAR.GZ.
+4. Biarkan `Back up current data first` tetap aktif kecuali Anda yakin tidak
+   memerlukan data saat ini.
+5. Pilih `Replace`.
+6. Konfirmasi peringatan yang muncul.
+
+{% /steps %}
+
+Memulihkan basis data akan mengganti basis data proyek saat ini. Bila Anda
+memulihkan sebuah arsip, NAHPU mengekstraknya, menyalin berkas proyek yang
+disertakan ke direktori dokumen aplikasi, mengimpor konfigurasi pengguna yang
+ada di dalamnya, lalu mengganti basis data SQLite yang aktif.
+
+## Mencadangkan konfigurasi pengguna
+
+Konfigurasi pengguna menyimpan pilihan yang memengaruhi reproduksibilitas tetapi
+bukan merupakan catatan proyek. Isinya mencakup daftar pilihan terkontrol,
+pilihan format kolom, prasetel ekspor catatan, prasetel templat, dan tata letak
+dokumen.
+
+Gunakan `Export user configs` untuk mencadangkannya secara terpisah.
+
+{% steps %}
+
+1. Buka halaman `Dashboard`.
+2. Buka menu proyek lalu pilih `Export user configs`.
+3. Pilih format konfigurasi.
+   - `JSON (.json)` paling mudah diperiksa dan dibagikan.
+   - `JSON.GZ (.json.gz)` berukuran lebih kecil untuk dipindahkan.
+4. Masukkan nama berkas.
+5. Pilih direktori penyimpanan.
+6. Klik `Save`.
+
+{% /steps %}
+
+## Memulihkan konfigurasi pengguna
+
+Gunakan pemulihan konfigurasi bila Anda ingin mengganti konfigurasi pengguna
+saat ini dengan konfigurasi dari perangkat atau cadangan lain.
+
+{% steps %}
+
+1. Buka menu `Dashboard` proyek.
+2. Pilih `Import user configs`.
+3. Pilih berkas konfigurasi `.json` atau `.json.gz`.
+4. Klik `Replace`.
+5. Konfirmasi peringatan yang muncul.
+
+{% /steps %}
+
+Memulihkan konfigurasi pengguna memperbarui penyimpanan konfigurasi aplikasi.
+Tindakan ini sendiri tidak mengganti basis data SQLite proyek. Untuk memulihkan
+data proyek dan konfigurasi pengguna sekaligus, pulihkan arsip basis data ZIP
+atau TAR.GZ.
+
+Untuk model penyimpanan dan kompatibilitas pada tingkat kontributor kode, lihat
+[Impor dan ekspor data](../../contributing/code/data-import-export-overview).
+
+## Tata letak dokumen
+
+Tata letak dokumen menentukan cara templat yang tersimpan ditempatkan pada
+halaman. Gunakan untuk lembar label, label gulungan menerus, tag, dan dokumen
+cetak lainnya.
+
+Tata letak dokumen dikelola di `Settings`, pada bagian `Documents`.
+
+{% steps %}
+
+1. Buka `Settings`.
+2. Pilih `Documents`.
+3. Pada tab `Presets`, buat prasetel baru atau pilih prasetel yang sudah ada.
+4. Pilih sebuah `Layout profile`. Profil ini menentukan pengaturan halaman dan
+   blok templat untuk prasetel tersebut.
+5. Atur penyiapan halaman.
+   - Pilih `Page size`, misalnya A4, A5, Letter, atau `Custom`.
+   - Tentukan `Orientation`.
+   - Sesuaikan margin dan jarak isi seperlunya.
+   - Gunakan `Multiple blocks mode` untuk memilih antara
+     `Continuous (Block-by-block)` dan `Alternate (Record-by-record)` bila
+     prasetel memiliki lebih dari satu blok.
+6. Atur blok templat.
+   - Pilih templat untuk setiap blok.
+   - Tentukan jumlah templat, baris, dan kolom.
+   - Sesuaikan jarak isi templat.
+   - Tambahkan pemenggalan halaman setelah sebuah blok bila diperlukan.
+7. Gunakan `Preview` untuk memeriksa tata letak terhadap catatan yang dipilih.
+8. Simpan prasetel.
+
+{% /steps %}
+
+Anda dapat mengimpor dan mengekspor prasetel tata letak dokumen sebagai JSON
+dari layar `Document Presets`. Ini berguna untuk berbagi tata letak label
+antarperangkat atau antarproyek. Tata letak dokumen juga disertakan dalam ekspor
+konfigurasi pengguna.
+
+## Mengekspor dokumen
+
+Gunakan `Export documents` untuk membuat PDF dari tata letak dokumen dan
+prasetel templat yang dipilih.
+
+{% steps %}
+
+1. Buka halaman `Dashboard`.
+2. Buka menu proyek lalu pilih `Export documents`.
+3. Pilih profil `Document Layout`.
+4. Tinjau atau sesuaikan penyiapan halaman dan blok templat.
+5. Pilih catatan yang akan disertakan bila pemilihan catatan tersedia.
+6. Buat pratinjau dan pastikan teks, pemenggalan halaman, serta penempatan
+   templat sudah benar.
+7. Masukkan nama berkas.
+8. Pilih direktori penyimpanan di komputer. Di Android dan iOS, NAHPU memakai
+   direktori dokumen aplikasi.
+9. Klik `Export documents`.
+
+{% /steps %}
+
+Dokumen hasil ekspor berupa PDF. Bila hasilnya belum tepat, ubah templat atau
+prasetel tata letak dokumen, buat pratinjau lagi, lalu ekspor ulang.
+
+## Sebelum membagikan data
+
+Sebelum mengirim data NAHPU ke museum, kolaborator, atau perangkat lain:
+
+- Buat cadangan basis data yang baru.
+- Gunakan ekspor proyek ringan `JSON.GZ` hanya bila penerima memerlukan catatan
+  dan bukan media, terutama pada internet terbatas.
+- Buat arsip proyek ZIP atau TAR.GZ bila media atau salinan proyek yang lengkap
+  perlu ikut berpindah.
+- Ekspor konfigurasi pengguna bila penerima memerlukan daftar terkontrol,
+  prasetel ekspor, templat, atau tata letak dokumen yang sama.
+- Ekspor berkas catatan atau dokumen yang dibutuhkan penerima.
+- Pastikan setidaknya satu jalur pemulihan berhasil sebelum menghapus data dari
+  perangkat asal.

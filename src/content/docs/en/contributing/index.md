@@ -7,18 +7,18 @@ sidebar:
 NAHPU is a collaborative natural-history project. Contributions can improve
 the software, the data workflows, or the experience of the people who use it
 in the field, laboratory, museum, and archive. You do not need to be a
-programmer to contribute: practical domain knowledge and careful testing are
+programmer to contribute. Practical domain knowledge and careful testing are
 just as valuable as code.
 
 ## Choose your contribution path
 
-| Contributor | Useful contributions | Coding required | First step |
-| --- | --- | :---: | --- |
-| Scientist or domain expert | Field testing, taxonomy review, data-model feedback, and workflow validation | No | Use NAHPU with a realistic workflow and report your findings |
-| Programmer | Flutter, Rust API, documentation tooling, bug fixes, and features | Usually | Choose the repository and read its setup guide |
-| Documentation contributor | Corrections, examples, and usage guidance | No | Follow the [documentation contribution guide](./docs) |
-| Tester or reviewer | Platform testing, regression reports, sample files, and accessibility feedback | No | Test a supported workflow and report reproducible results |
-| Tool or design contributor | Utilities, integrations, and UI or accessibility improvements | Varies | Open a proposal before building a separate tool |
+| Contributor                | Useful contributions                                                           | Coding required | First step                                                   |
+| -------------------------- | ------------------------------------------------------------------------------ | :-------------: | ------------------------------------------------------------ |
+| Scientist or domain expert | Field testing, taxonomy review, data-model feedback, and workflow validation   |       No        | Use NAHPU with a realistic workflow and report your findings |
+| Programmer                 | Flutter, Rust API, documentation tooling, bug fixes, and features              |     Usually     | Choose the repository and read its setup guide               |
+| Documentation contributor  | Corrections, examples, and usage guidance                                      |       No        | Follow the [documentation contribution guide](./docs)        |
+| Tester or reviewer         | Platform testing, regression reports, sample files, and accessibility feedback |       No        | Test a supported workflow and report reproducible results    |
+| Tool or design contributor | Utilities, integrations, and UI or accessibility improvements                  |     Varies      | Open a proposal before building a separate tool              |
 
 ## Scientists, curators, and domain experts
 
@@ -28,14 +28,14 @@ tell us where the software matches—or fails to match—your real workflow.
 
 Useful contributions include:
 
-- reviewing terminology, taxonomy, required fields, units, controlled
-  vocabularies, and specimen workflows;
-- validating exports, backups, templates, Darwin Core mappings, and data-import
-  behavior;
-- providing synthetic or anonymized sample datasets and realistic workflow
-  scenarios;
-- proposing new taxon groups or domain-specific workflows; and
-- identifying confusing screens, missing information, or steps that are hard
+- Reviewing terminology, taxonomy, required fields, units, controlled
+  vocabularies, and specimen workflows.
+- Validating exports, backups, templates, Darwin Core mappings, and data-import
+  behavior.
+- Providing synthetic or anonymized sample datasets and realistic workflow
+  scenarios.
+- Proposing new taxon groups or domain-specific workflows.
+- Identifying confusing screens, missing information, or steps that are hard
   to complete in the field.
 
 Start with the [usage guides](../usages), [curatorial guidelines](../curatorial-guideline),
@@ -102,9 +102,8 @@ development, and review. This contributor guidance is intentionally English-only
 ### Translation
 
 Translation contributions should target usage documentation so that people can
-learn to use NAHPU in their preferred language. Keep contributor guidance in
-English; do not translate this contributor hub or create localized contributor
-pages as part of a translation contribution.
+learn to use NAHPU in their preferred language. We only use English for contributor guidance,
+mainly because the section will often changes due to code refactoring and new feature addition.
 
 ### Testing and review
 

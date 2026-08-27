@@ -1,0 +1,228 @@
+---
+title: Backup e Restauração
+sidebar:
+  order: 4
+---
+
+Um bom gerenciamento de dados no NAHPU significa manter três coisas seguras e
+portáteis:
+
+- **Banco de dados do projeto**: espécimes, locais, eventos de coleta, pessoal,
+  taxonomia, narrativas, metadados de mídia e demais registros do projeto,
+  armazenados em SQLite.
+- **Arquivos do projeto**: mídias e outros arquivos guardados no diretório de
+  documentos do aplicativo NAHPU.
+- **Configurações de usuário**: configurações ligadas à reprodutibilidade, como
+  listas de opções controladas, predefinições de exportação, predefinições de
+  modelo e layouts de documento.
+
+O NAHPU separa esses tipos de dados para que você possa fazer backups pequenos,
+somente do banco de dados, para a segurança do dia a dia; exportações leves do
+projeto para envios com internet limitada; arquivos de projeto mais completos ao
+mudar de dispositivo; e backups de configurações quando quiser que outra
+instalação produza as mesmas exportações e documentos.
+
+## Estratégia de backup
+
+Use mais de um tipo de backup durante o trabalho de campo.
+
+- **Backup diário do banco de dados**: um arquivo `.sqlite3` compacto. Use com
+  frequência para recuperação do banco e segurança diária.
+- **Exportação leve do projeto**: um arquivo `JSON.GZ` comprimido com os
+  registros do projeto, sem mídia. Use para envio com internet limitada ou para
+  uma mesclagem somente de registros. Não é um backup completo do projeto.
+- **Backup completo do banco de dados**: um arquivo `.zip` ou `.tar.gz` que
+  inclui o banco SQLite, as configurações de usuário, mídias, arquivos
+  associados, fontes e mapas. Use quando precisar da recuperação completa da
+  instalação.
+- **Backup das configurações de usuário**: um arquivo `.json` ou `.json.gz` com
+  as configurações de usuário, predefinições de exportação, predefinições de
+  modelo e layouts de documento. Use quando outro dispositivo precisar das
+  mesmas listas controladas, do mesmo comportamento de exportação e dos mesmos
+  layouts.
+
+{% aside type="tip" title="Prática recomendada" %}
+Ao final de cada dia de campo, exporte um backup completo do banco de dados para
+o armazenamento em nuvem, se houver internet, e exporte uma transferência do
+projeto para armazenamento local, como um pendrive USB-C ou um segundo
+dispositivo. Periodicamente, restaure um backup em outro dispositivo para
+confirmar que o arquivo é utilizável.
+{% /aside %}
+
+## Fazendo backup do banco de dados
+
+Use `Backup database` no menu do projeto.
+
+{% steps %}
+
+1. Vá para a página `Dashboard`.
+2. Abra o menu do projeto e selecione `Backup database`.
+3. Escolha `TAR.GZ` ou `ZIP`.
+4. Adicione um nome de arquivo.
+5. Selecione o diretório de destino.
+6. Clique em `Save`.
+
+{% /steps %}
+
+O arquivo inclui o banco de dados como `nahpu.sqlite3` e as configurações de
+usuário como `user_configs.json`, junto com os arquivos gerenciados disponíveis.
+
+## Exportando um projeto
+
+Use `Export project` quando precisar mesclar o mesmo projeto com outro
+dispositivo NAHPU. Ative `Light export` para criar um `JSON.GZ` sem mídia, para
+envio com internet limitada. Use ZIP ou TAR.GZ com `Light export` desligado
+quando o dispositivo receptor precisar das mídias ou de uma cópia completa do
+projeto. Mescle a exportação com `Merge project`.
+
+Consulte [Transferir um projeto](../../usages/export/project-transfer) para o
+fluxo de revisão e resolução de conflitos.
+
+## Restaurando um banco de dados
+
+Use a restauração do banco de dados quando precisar substituir o banco atual do
+NAHPU por um arquivo de backup.
+
+{% steps %}
+
+1. Abra `Settings`.
+2. Em `Database`, selecione `Replace database` para abrir `Database Settings`.
+3. Use `Choose database` para selecionar um arquivo `.sqlite3`, um arquivo ZIP
+   ou um arquivo TAR.GZ.
+4. Mantenha `Back up current data first` ativado, a menos que você tenha certeza
+   de que não precisa dos dados atuais.
+5. Selecione `Replace`.
+6. Confirme o aviso.
+
+{% /steps %}
+
+Restaurar um banco de dados substitui o banco de dados atual do projeto. Se você
+restaurar um arquivo compactado, o NAHPU o extrai, copia os arquivos de projeto
+incluídos para o diretório de documentos do aplicativo, importa as configurações
+de usuário incluídas e, por fim, substitui o banco SQLite ativo.
+
+## Fazendo backup das configurações de usuário
+
+As configurações de usuário guardam escolhas que afetam a reprodutibilidade mas
+não são registros do projeto. Elas incluem listas de opções controladas,
+escolhas de formatação de campos, predefinições de exportação de registros,
+predefinições de modelo e layouts de documento.
+
+Use `Export user configs` para fazer backup delas separadamente.
+
+{% steps %}
+
+1. Vá para a página `Dashboard`.
+2. Abra o menu do projeto e selecione `Export user configs`.
+3. Selecione o formato das configurações.
+   - `JSON (.json)` é mais fácil de inspecionar e compartilhar.
+   - `JSON.GZ (.json.gz)` é menor para transferir.
+4. Adicione um nome de arquivo.
+5. Selecione o diretório de destino.
+6. Clique em `Save`.
+
+{% /steps %}
+
+## Restaurando as configurações de usuário
+
+Use a restauração de configurações quando quiser substituir as configurações de
+usuário atuais pelas de outro dispositivo ou backup.
+
+{% steps %}
+
+1. Abra o menu `Dashboard` do projeto.
+2. Selecione `Import user configs`.
+3. Escolha um arquivo de configurações `.json` ou `.json.gz`.
+4. Clique em `Replace`.
+5. Confirme o aviso.
+
+{% /steps %}
+
+Restaurar as configurações de usuário atualiza o armazenamento de configuração
+do aplicativo. Isso não substitui, por si só, o banco SQLite do projeto. Para
+restaurar dados do projeto e configurações de usuário ao mesmo tempo, restaure
+um arquivo ZIP ou TAR.GZ do banco de dados.
+
+Para o modelo de armazenamento e compatibilidade no nível de quem contribui com
+o código, consulte [Importação e exportação de dados](../../contributing/code/data-import-export-overview).
+
+## Layouts de documento
+
+Os layouts de documento definem como os modelos salvos são dispostos nas
+páginas. Use-os para folhas de etiquetas, etiquetas em rolo contínuo, tags e
+outros documentos imprimíveis.
+
+Os layouts de documento são gerenciados em `Settings`, dentro de `Documents`.
+
+{% steps %}
+
+1. Abra `Settings`.
+2. Selecione `Documents`.
+3. Na aba `Presets`, crie uma nova predefinição ou selecione uma existente.
+4. Selecione um `Layout profile`. O perfil define as configurações de página e
+   os blocos de modelo da predefinição.
+5. Configure a página.
+   - Selecione `Page size`, como A4, A5, Letter ou `Custom`.
+   - Defina a `Orientation`.
+   - Ajuste as margens e o espaçamento conforme necessário.
+   - Use `Multiple blocks mode` para escolher entre
+     `Continuous (Block-by-block)` e `Alternate (Record-by-record)` quando a
+     predefinição tiver mais de um bloco.
+6. Configure os blocos de modelo.
+   - Selecione o modelo de cada bloco.
+   - Defina a quantidade de modelos, as linhas e as colunas.
+   - Ajuste o espaçamento do modelo.
+   - Adicione uma quebra de página depois de um bloco quando necessário.
+7. Use `Preview` para conferir o layout com os registros selecionados.
+8. Salve a predefinição.
+
+{% /steps %}
+
+Você pode importar e exportar predefinições de layout de documento em JSON pela
+tela `Document Presets`. Isso é útil para compartilhar layouts de etiqueta entre
+dispositivos ou projetos. Os layouts de documento também são incluídos nas
+exportações de configurações de usuário.
+
+## Exportando documentos
+
+Use `Export documents` para criar PDFs a partir do layout de documento e das
+predefinições de modelo selecionados.
+
+{% steps %}
+
+1. Vá para a página `Dashboard`.
+2. Abra o menu do projeto e selecione `Export documents`.
+3. Selecione um perfil de `Document Layout`.
+4. Revise ou ajuste a configuração da página e os blocos de modelo.
+5. Selecione os registros a incluir quando a seleção de registros estiver
+   disponível.
+6. Gere uma pré-visualização e verifique se o texto, as quebras de página e o
+   posicionamento dos modelos estão corretos.
+7. Adicione um nome de arquivo.
+8. Selecione o diretório de destino no computador. No Android e no iOS, o NAHPU
+   usa o diretório de documentos do aplicativo.
+9. Clique em `Export documents`.
+
+{% /steps %}
+
+Os documentos exportados são PDFs. Se o resultado não estiver correto, edite o
+modelo ou a predefinição de layout, gere a pré-visualização novamente e exporte
+outra vez.
+
+## Antes de compartilhar dados
+
+Antes de enviar dados do NAHPU a um museu, a um colaborador ou a outro
+dispositivo:
+
+- Crie um novo backup do banco de dados.
+- Use uma exportação leve `JSON.GZ` do projeto apenas quando o destinatário
+  precisar dos registros e não das mídias, especialmente com internet limitada.
+- Crie um arquivo ZIP ou TAR.GZ do projeto quando as mídias ou uma cópia
+  completa precisarem acompanhar o projeto.
+- Exporte as configurações de usuário se o destinatário precisar das mesmas
+  listas controladas, predefinições de exportação, modelos ou layouts de
+  documento.
+- Exporte os arquivos de registros ou os documentos de que o destinatário
+  precisa.
+- Verifique pelo menos um caminho de restauração antes de apagar os dados do
+  dispositivo original.

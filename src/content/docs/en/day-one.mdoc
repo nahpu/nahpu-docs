@@ -99,6 +99,8 @@ NAHPU limits the collector role to someone who collects the specimen. This is a 
 
     - **[Cataloger](../usages/personnel#cataloger)** is responsible for cataloging the specimen. Their initials and field number are used to generate the Field ID on the specimen catalog page. Their name also appears whenever a field asks for personnel, such as collecting personnel and preparator. The app does not allow you to change the cataloger role after it is created.
 
+    - **[Determiner only](../usages/personnel#determiner-only)** is a person who identifies specimens but does not catalog or prepare them. Select them in the specimen form's `Determiner` field.
+
     - **[Preparator only](../usages/personnel#preparator-only)** is a person who helps prepare the specimen but is not involved in managing the data. Their name does not appear in the cataloger field on the specimen page, but it can appear elsewhere, such as in the `Preparator` and `Collecting personnel` fields.
 
     - **[None](../usages/personnel#none)** is reserved for personnel who are not directly involved in specimen care. NAHPU aims to ensure that everyone involved in the field is recorded in the field data. You can assign this role to your driver, local guides, cooks, and others. Their names appear only in the `Collecting personnel` field. If they are involved in obtaining a specimen, you can also associate them as a collector.
@@ -107,19 +109,21 @@ NAHPU limits the collector role to someone who collects the specimen. This is a 
 
     You can add a taxon manually using the Add taxon button or import it from a file. The preferred formats are `.xlsx`, `.csv`, and `.tsv`. NAHPU will make a best-effort attempt to parse other file types.
 
+    Adding a taxon manually lets you pick the `Taxon rank`, so you can register a family or a genus for material that is not yet identified to species. File import always registers species-rank records.
+
     - For recognized delimited files, the app selects the delimiter by extension (`.csv` = comma, `.tsv` = tab).
     - For unrecognized extensions, auto-detect tries Excel, comma, tab, and semicolon first. If that fails, use the advanced parser override and enter a custom raw delimiter.
     - `.xlsx` has the best support; older or other Excel formats may fail.
 
-    Your import file requires all of these columns: `class`, `order`, `family`, `genus`, and `epithet`. You can also include `scientific name`, `common name`, and `notes`. The app automatically detects supported header aliases, such as `taxonClass`, `taxonOrder`, `taxonFamily`, and `specificEpithet`. You can manually select the column type using the dropdown menu if the app does not automatically assign the correct type to each column. Other columns are ignored.
+    Your import file requires all of these columns: `class`, `order`, `family`, `genus`, and `epithet`. You can also include `authors`, `common name`, `IUCN Category`, `CITES status`, `country status`, `sorting order`, and `notes`. The app automatically detects supported header aliases, such as `taxonClass`, `taxonOrder`, `taxonFamily`, and `specificEpithet`. You can manually select the column type using the dropdown menu if the app does not automatically assign the correct type to each column. Other columns are ignored.
 
     Example taxon import table:
 
     ```text
-    | class    | order    | family  | genus   | epithet   | scientific name   | common name        | notes |
-    | -------- | -------- | ------- | ------- | --------- | ----------------- | ------------------ | ----- |
-    | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Bunomys coelestis | Heavenly hill rat  |       |
-    | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Bunomys penitus   | Inland hill rat    |       |
+    | class    | order    | family  | genus   | epithet   | common name        | notes |
+    | -------- | -------- | ------- | ------- | --------- | ------------------ | ----- |
+    | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Heavenly hill rat  |       |
+    | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Inland hill rat    |       |
     ```
 
 6. **Create a site**

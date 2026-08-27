@@ -23,7 +23,7 @@ NAHPU is an open-source application. The source code is freely available and can
 
 The MIT License is a permissive free software license originating at the Massachusetts Institute of Technology (MIT). It puts only very limited restriction on reuse and has, therefore, high license compatibility.
 
-By using NAHPU, you acknowledge that you understand and agree to comply with the terms and conditions of the MIT License. You can view the full MIT License text at: [https://github.com/hhandika/nahpu/blob/main/LICENSE](https://github.com/hhandika/nahpu/blob/main/LICENSE)
+By using NAHPU, you acknowledge that you understand and agree to comply with the terms and conditions of the MIT License. You can view the full MIT License text at: [https://github.com/nahpu/nahpu/blob/main/LICENSE](https://github.com/nahpu/nahpu/blob/main/LICENSE)
 
 ## Third-Party Libraries
 

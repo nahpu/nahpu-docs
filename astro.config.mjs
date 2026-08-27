@@ -57,6 +57,7 @@ export default defineConfig({
     components: {
       SiteTitle: "./src/components/SiteTitle.astro",
       Footer: "./src/components/Footer.astro",
+      PageTitle: "./src/components/PageTitle.astro",
     },
     locales: {
       en: { label: "English (United States)", lang: "en-US" },
@@ -340,6 +341,10 @@ export default defineConfig({
         items: [
           { label: "Become a contributor", link: "contributing" },
           { label: "Documentation", link: "contributing/docs" },
+          {
+            label: "Translation glossary",
+            link: "contributing/translation-glossary",
+          },
           {
             label: "Code",
             collapsed: true,

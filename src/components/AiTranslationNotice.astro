@@ -1,0 +1,126 @@
+---
+interface Props {
+  authors?: string | string[];
+}
+
+const { authors } = Astro.props;
+const reviewers = (Array.isArray(authors) ? authors : authors ? [authors] : [])
+  .map((name) => name.trim())
+  .filter(Boolean);
+const isReviewed = reviewers.length > 0;
+const reviewedBy = new Intl.ListFormat("en", {
+  style: "long",
+  type: "conjunction",
+}).format(reviewers);
+---
+
+<aside
+  class="nh-ai-notice"
+  data-state={isReviewed ? "reviewed" : "unreviewed"}
+  aria-label="Translation notice"
+>
+  {
+    isReviewed ? (
+      <svg
+        class="nh-ai-notice__icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M20 6 9 17l-5-5" />
+      </svg>
+    ) : (
+      <svg
+        class="nh-ai-notice__icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="9" />
+        <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" />
+      </svg>
+    )
+  }
+  <span class="nh-ai-notice__text">
+    <strong>AI-assisted translation.</strong>{" "}
+    {isReviewed ? `Human-checked and revised by ${reviewedBy}.` : "Check for accuracy"}
+  </span>
+</aside>
+
+<style>
+  @layer components {
+    .nh-ai-notice {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      padding: 0.375rem 0.875rem;
+      border: 1px solid var(--nh-ai-notice-border);
+      border-radius: 999px;
+      background-color: var(--nh-ai-notice-bg);
+      color: var(--nh-ai-notice-fg);
+      font-size: var(--sl-text-xs);
+      line-height: 1.4;
+      text-wrap: balance;
+    }
+
+    .nh-ai-notice[data-state="unreviewed"] {
+      --nh-ai-notice-fg: var(--color-golden-grass-200);
+      --nh-ai-notice-bg: color-mix(
+        in srgb,
+        var(--color-golden-grass-500) 16%,
+        transparent
+      );
+      --nh-ai-notice-border: color-mix(
+        in srgb,
+        var(--color-golden-grass-400) 45%,
+        transparent
+      );
+    }
+
+    .nh-ai-notice[data-state="reviewed"] {
+      --nh-ai-notice-fg: var(--color-silver-tree-200);
+      --nh-ai-notice-bg: color-mix(
+        in srgb,
+        var(--color-silver-tree-500) 16%,
+        transparent
+      );
+      --nh-ai-notice-border: color-mix(
+        in srgb,
+        var(--color-silver-tree-400) 45%,
+        transparent
+      );
+    }
+
+    :root[data-theme="light"] .nh-ai-notice[data-state="unreviewed"] {
+      --nh-ai-notice-fg: var(--color-golden-grass-900);
+      --nh-ai-notice-bg: var(--color-golden-grass-50);
+      --nh-ai-notice-border: var(--color-golden-grass-300);
+    }
+
+    :root[data-theme="light"] .nh-ai-notice[data-state="reviewed"] {
+      --nh-ai-notice-fg: var(--color-silver-tree-900);
+      --nh-ai-notice-bg: var(--color-silver-tree-50);
+      --nh-ai-notice-border: var(--color-silver-tree-300);
+    }
+
+    .nh-ai-notice__icon {
+      flex: none;
+      width: 1rem;
+      height: 1rem;
+      opacity: 0.9;
+    }
+
+    .nh-ai-notice__text strong {
+      font-weight: 600;
+    }
+  }
+</style>

@@ -23,7 +23,7 @@ NAHPU adalah aplikasi sumber terbuka (open-source). Kode sumber tersedia secara 
 
 Lisensi MIT adalah lisensi perangkat lunak bebas yang permisif yang berasal dari Institut Teknologi Massachusetts (MIT). Lisensi ini hanya memberikan batasan yang sangat terbatas pada penggunaan kembali dan oleh karena itu, memiliki kompatibilitas lisensi yang tinggi.
 
-Dengan menggunakan NAHPU, Anda menyatakan bahwa Anda memahami dan setuju untuk mematuhi syarat dan ketentuan Lisensi MIT. Anda dapat melihat teks lengkap Lisensi MIT di: [https://github.com/hhandika/nahpu/blob/main/LICENSE](https://github.com/hhandika/nahpu/blob/main/LICENSE)
+Dengan menggunakan NAHPU, Anda menyatakan bahwa Anda memahami dan setuju untuk mematuhi syarat dan ketentuan Lisensi MIT. Anda dapat melihat teks lengkap Lisensi MIT di: [https://github.com/nahpu/nahpu/blob/main/LICENSE](https://github.com/nahpu/nahpu/blob/main/LICENSE)
 
 ## Pustaka Pihak Ketiga
 

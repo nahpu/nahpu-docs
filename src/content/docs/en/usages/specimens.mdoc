@@ -61,7 +61,7 @@ Specimen types and treatments are user configs. They can be exported and
 imported with project archives so another NAHPU installation can use the same
 controlled lists and export behavior.
 
-See [Settings](./settings) for the complete configuration map.
+See [Settings](../settings) for the complete configuration map.
 
 {% /aside %}
 
@@ -95,12 +95,15 @@ See [Settings](./settings) for the complete configuration map.
     NAHPU defaults the preparator to the cataloger. If a different person
     prepares the voucher or part, update the preparator field.
 
-5. Select `Species`.
+5. Select the `Taxon`.
 
-    Start typing to search the project's taxonomy list, then select the matching
-    species. NAHPU populates the `Taxon Info` panel from that taxon record.
+    Start typing to search the project's taxon registry, then select the
+    matching record from the list. NAHPU populates the `Taxon Info` panel from
+    that taxon record. Because the registry holds records at any rank, material
+    that is not yet identified to species can be linked to its family or genus
+    and refined later.
 
-6. Select `ID confidence`.
+6. Select `ID Confidence`.
 
     This tells later reviewers how confident you are in the identification and
     helps curators prioritize records that need review. The values are `Low`,
@@ -116,9 +119,9 @@ See [Settings](./settings) for the complete configuration map.
 
 {% /steps %}
 
-## General Records
+## Collection and Identification
 
-The `General Records` card stores the core specimen metadata:
+The `Collection & Identification` card stores the core specimen metadata:
 
 - `Museum ID`: optional museum catalog or accession identifier.
 - Field ID: either the cataloger's field number or a formatted project number.
@@ -128,21 +131,24 @@ The `General Records` card stores the core specimen metadata:
 - `Cataloger`: the person who catalogs the specimen.
 - `Preparator`: the person who prepares the specimen or voucher.
 - `Determiner`: the person who identified the specimen.
-- `Species`: the selected project taxon.
-- `ID Confidence`: confidence in the species identification.
-- `ID Method`: optional method or evidence used for identification.
+- `Taxon`: the selected record from the project taxon registry.
+- `ID Confidence`: confidence in the identification.
+- `Identification Method`: optional method or evidence used for identification.
 - `Condition`: condition of the specimen.
 - `Collection date` and `Collection time`: when the specimen was collected.
 - `Prep. date` and `Prep. time`: when the specimen was prepared.
 
 ## Taxonomy
 
-The `Taxon Info` card is read from the species selected in `General Records`.
+The `Taxon Info` card is read from the taxon selected in `Collection & Identification`.
 It shows class, order, and family in the specimen form. Select `View details` to
 review the full taxonomy record, including:
 
-- kingdom and phylum inferred from class;
-- class, order, family, genus, species, authors, and common name;
+- the record's `Rank`;
+- kingdom and phylum, taken from the registry when recorded and inferred from
+  class otherwise;
+- class, order, family, genus, and — when the record reaches those ranks —
+  species and subspecies, plus authors and common name;
 - Red List category, CITES status, country status, and notes when present.
 
 ## Capture Records
@@ -215,7 +221,7 @@ question mark records that the examiner is uncertain.
 - `Bursa present`: whether a bursa is present. If present, record bursa length
   and width.
 - `Skull ossification (%)`: selected from the available percentage list.
-- `Fat`: fat category from `No Fat` through `Extremely Heavy`.
+- `Fat`: fat category from `None` through `Extremely Heavy`.
 - `Stomach contents`: notes on stomach contents.
 - Male gonad fields: testis length, width, and remarks.
 - Female gonad fields: ovary length, ovary width, ovary appearance, ova sizes,
@@ -235,19 +241,20 @@ question mark records that the examiner is uncertain.
 {% /tabitem %}
 {% tabitem label="Arthropods" %}
 
-The ecological-interaction and environmental-parameter sections are visible by
-default. Use `Show specimen morphometrics` to reveal or hide the measurement
-fields; saved morphometric values automatically reopen that section.
+The ecological-interaction section is visible by default. Use
+`Show specimen morphometrics` to reveal or hide the measurement fields; saved
+morphometric values automatically reopen that section.
 
-- `Sex`: a specimen attribute shown above the ecological and environmental
-  sections.
-- Ecological interactions: `Host organism`, `Host part`, and `Canopy affinity`.
-- Environmental parameters: `Canopy cover`, ambient and water temperature
-  (°C), ambient humidity (%), pH, dissolved oxygen (mg/L), and flow velocity
-  (m/s).
-- Optional morphometrics: head width, body length, upper wingspan, and lower
-  wingspan, all in millimetres.
+- `Sex`: select from the configured specimen-sex vocabulary.
+- `Caste`: the caste of a social insect, when applicable.
+- Ecological interactions: `Host organism` and `Host part`.
+- Optional morphometrics: `Head width (mm)`, `Body length (mm)`,
+  `Upper wingspan (mm)`, and `Lower wingspan (mm)`.
 - `Remarks`: additional ecological or specimen notes.
+
+Environmental conditions are not specimen attributes. Record canopy cover on
+the site under `Site Attributes`, and temperature, humidity, pH, dissolved
+oxygen, and flow velocity on the collecting event's environmental data.
 
 Arthropod catalogs do not show parasite-detection fields or the parasite tab.
 
@@ -305,7 +312,7 @@ MorphoSource records, analysis files, or external database links.
 
 Associated data fields include:
 
-- `Data Type`: `Link` or `File`.
+- `Data type`: `Link` or `File`.
 - `Name`: source or dataset name, such as `GenBank`.
 - `Description`: accession number or description of the data.
 - `Date`: date associated with the data.

@@ -12,36 +12,58 @@ group to the application. Contributors implementing a new group should follow
 
 ## Register a new taxon
 
+A registry entry does not have to be a species. `Taxon rank` sets the rank the
+record represents, and the form shows the name fields down to that rank:
+
+- **Class**
+- **Order**
+- **Family**
+- **Genus**
+- **Species**
+- **Subspecies**
+
+Choosing `Family`, for example, shows Kingdom, Phylum, Class, Order, and Family,
+and leaves the lower ranks out. This lets you register a taxon that has not been
+identified to species, which is common for material still awaiting
+determination.
+
 ### Required fields
 
-- **Class**: The class of the taxon.
-- **Order**: The order of the taxon.
-- **Family**: The family of the taxon.
-- **Genus**: The genus of the taxon.
-- **Specific epithet**: The specific epithet of the taxon.
+- **Taxon rank**: the rank this record represents.
+- **The name field for that rank**: `Family` for a family-rank record,
+  `Specific epithet` for a species, `Subspecific epithet` for a subspecies, and
+  so on. The app will not save the record until both are filled in.
 
-### Optional fields
+### Classification fields
 
-- **Author**: The author of the taxon and the year of the publication.
+- **Kingdom** and **Phylum**: always available, whatever the rank.
+- **Class**, **Order**, **Family**, **Genus**, **Specific epithet**, and
+  **Subspecific epithet**: shown when the selected rank reaches them. Epithets
+  are stored in lowercase.
+
+### Additional details
+
+- **Authors**: The author of the taxon and the year of the publication.
 - **Common name**: The common name of the taxon.
 - **IUCN Red List category**: The IUCN Red List status of the taxon.
 - **CITES status**: The CITES status of the taxon.
 - **Country conservation status**: The conservation status of the taxon in a specific country.
-- **Sorting order**: Arbitrary order to sort the taxon. It is mostly use when you export the record. For example, you can use the phylogenetic order.
+- **Sorting order**: Arbitrary order to sort the taxon. It is mostly used when you export the record. For example, you can use the phylogenetic order.
 - **Notes**: Any additional information about the taxon.
 
 ### Manual registration
 
 1. Go to the project dashboard.
-2. At the taxon panel, click on the `+ Add taxon` button.
-3. Fill in the taxon information.
+2. At the taxon panel, select `Add taxon`, then choose the `Manual` mode.
+3. Select the `Taxon rank`.
+4. Fill in the taxon information.
 
 ### Import from file
 
 1. Prepare your import file. Preferred formats are `.xlsx`, `.csv`, and `.tsv`.
 2. Go to the project dashboard.
-3. At the taxon panel, click on the `Import from file` button.
-4. Use the `Select file` button to add the file. The app will automatically map the columns to the correct fields.
+3. At the taxon panel, select `Add taxon`, then choose the `Import` mode.
+4. Use the `Select file` button to add the file. The app will automatically map the columns to the correct fields. On a narrow screen, use the `Setup` and `Preview` tabs to configure the import and review the detected rows.
 
 Delimiter behavior:
 
@@ -49,14 +71,20 @@ Delimiter behavior:
 - `.tsv` uses tab.
 - Excel files are parsed as spreadsheets.
 - For other file types, NAHPU makes a best-effort parsing attempt.
-- If a file extension is not recognized, auto detect first tries Excel, comma, tab, and semicolon.
-- If auto detect still fails, enter a custom raw delimiter in advanced parser override.
+- If a file extension is not recognized, auto-detect first tries Excel, comma, tab, and semicolon.
+- If auto-detect still fails, enter a custom raw delimiter in the advanced parser override.
 
 Recommended import template columns:
 
-- `class`, `order`, `family`, `genus`, `epithet`, `scientific name`, `common name`
+- `class`, `order`, `family`, `genus`, `epithet`, `common name`, `notes`
 - Required import fields are `class`, `order`, `family`, `genus`, and `epithet`.
-- Header matching is flexible, so aliases such as `taxonClass`, `taxonOrder`, `taxonFamily`, and `specificEpithet` are also accepted.
+  File import always registers species-rank records; use manual registration for
+  a taxon above species.
+- Header matching is flexible, so aliases such as `taxonClass`, `taxonOrder`,
+  `taxonFamily`, `specificEpithet`, `species`, `vernacularName`, `iucnStatus`,
+  and `appendixStatus` are also accepted.
+- Columns the app does not recognize are left unmapped. Use the dropdown above
+  each column to assign it, or leave it as `Ignore`.
 
 {% aside type="note" %}
 
@@ -67,5 +95,5 @@ Best support is `.xlsx`. Older/other Excel formats may fail. If needed, re-save 
 ## Edit a taxon
 
 1. Go to the project dashboard.
-2. At the taxon panel inside the registered taxon, click on the `View all` button.
+2. At the taxon panel, select `Manage` to open the full registry.
 3. Click on the pencil icon to edit the taxon.
