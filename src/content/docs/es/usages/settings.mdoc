@@ -2,71 +2,114 @@
 title: Configuración
 ---
 
-NAHPU separa la información del proyecto, los registros compartidos de la base
-de datos, las configuraciones reproducibles y las preferencias de la
-instalación. Abra un proyecto, abra el menú del panel y seleccione `Settings`.
+NAHPU separa los registros del proyecto, los registros compartidos de la base de
+datos, las configuraciones de usuario reproducibles y las preferencias que solo
+viven en la instalación. Abra un proyecto, abra el menú `Dashboard` y seleccione
+`Settings` para configurar la instalación actual.
 
-## Qué afecta cada opción
+## Qué afecta cada configuración
 
-| Tipo | Ejemplos | Transferencia |
+| Tipo | Ejemplos | Comportamiento en la transferencia |
 | --- | --- | --- |
-| Información del proyecto | Nombre, acceso, ubicación, zona horaria, fechas e ID de campo del proyecto | Se incluye en la información y transferencia del proyecto |
-| Registros compartidos | Taxones y personal | Se guardan en la base de datos y se asocian con proyectos |
-| Configuraciones de usuario | Listas controladas y ajustes de exportación o documentos | Se transfieren con `Export user configs` e `Import user configs` |
+| Información del proyecto | Nombre, número de acceso, ubicación, zona horaria, fechas, valores de Field ID del proyecto | Se incluyen en las transferencias de información y de proyecto |
+| Registros compartidos de la base | Taxones y personal | Se almacenan en la base de datos de NAHPU y se asocian a proyectos |
+| Configuraciones de usuario | Listas controladas y preajustes de exportación o de documento | Se transfieren con `Export user configs` e `Import user configs` |
 | Estado de la instalación | Tema y taxón principal actual | Permanece en la instalación actual |
 
-## Catalogs
+Cambiar una configuración con un proyecto abierto puede, por tanto, afectar a
+otros proyectos de la misma instalación. Revise las configuraciones de usuario
+transferidas antes de reemplazar su configuración actual.
 
-`Format` selecciona el taxón principal de los nuevos formularios de
-especímenes en este dispositivo. Un proyecto puede contener varios grupos de
-taxones. `Events` administra la lista controlada de actividades principales,
-los métodos de recolección, los roles del personal y la visibilidad de campos
-ambientales. Las actividades iniciales son `Collecting`, `Recording` y
-`Observing`, sin `Other`. Por defecto se muestran temperatura ambiente,
-humedad ambiente, cobertura nubosa, lluvia y notas; como en Geografía, ocultar
-otros campos no borra ni excluye sus valores de la exportación. `Sites`
-administra los tipos de sitio y hábitat.
+## Catálogos
 
-`Specimens` contiene la visibilidad de campos, los ID de campo y tejido, sexo,
-tipos de espécimen, tratamientos, condiciones y opciones de parásitos. `Male`,
-`Female` y `Unknown` siempre están disponibles; los chips `+` añaden
-`Gynandromorph`, `Hermaphrodite`, `Female?` o `Male?`. Una opción adicional no
-puede eliminarse mientras algún espécimen de la base de datos la utilice.
+### Format
 
-Deje desactivado `Use project ID` para usar las iniciales y el número personal
-de un Cataloger. Actívelo para definir prefijo, número actual, sufijo y avance
-automático. NAHPU concatena los valores sin añadir separadores.
+`Format` selecciona el taxón principal que se usa en los formularios de
+espécimen nuevos de este dispositivo. Un proyecto puede contener más de un grupo
+taxonómico; esta configuración solo controla el formato de espécimen activo y
+sus campos de medición.
+
+### Events y Sites
+
+Use `Events` para gestionar la lista controlada de actividades principales, los
+métodos de recolecta, los roles del personal del evento y los campos ambientales
+que se muestran en los formularios de evento. Las actividades principales
+comienzan con `Collecting`, `Recording` y `Observing`; `Other` no se incluye a
+menos que usted lo agregue. Los formularios ambientales muestran inicialmente
+temperatura ambiente, humedad ambiente, nubosidad, lluvia y notas. Al igual que
+en la configuración de Geografía, los demás campos integrados pueden mostrarse u
+ocultarse sin borrar los valores almacenados. Use `Sites` para gestionar los
+vocabularios controlados de tipos de sitio y de hábitat. Mantenga estas
+configuraciones coherentes entre los dispositivos de campo transfiriendo las
+configuraciones de usuario.
+
+### Specimens
+
+`Specimens` contiene la visibilidad de los campos de captura, los Field IDs, los
+tissue IDs, los sexos de espécimen, los tipos de espécimen, los tratamientos,
+las condiciones y las configuraciones de parásitos que dependen del taxón.
+
+El vocabulario de sexo del espécimen es restringido. `Male`, `Female` y
+`Unknown` siguen disponibles para cualquier taxón. Use los chips `+` para
+agregar `Gynandromorph`, `Hermaphrodite`, `Female?` o `Male?` a los menús
+desplegables del espécimen. Los chips opcionales solo pueden quitarse cuando
+ningún registro de espécimen de la base de datos usa ese valor.
+
+En `Field ID`, deje `Use project ID` desactivado para usar las iniciales y el
+número de campo personal de un Cataloger. El Cataloger debe tener el rol
+`Cataloger`, el registro de campo habilitado, las iniciales y un número de campo
+actual.
+
+Active `Use project ID` para configurar prefijo, número de catálogo actual,
+sufijo y el comportamiento de incremento automático. NAHPU concatena los tres
+valores directamente. Por ejemplo, `NAHPU-`, `120` y `-M` producen
+`NAHPU-120-M`.
 
 {% aside type="caution" %}
 
-Cambiar el prefijo o sufijo modifica la visualización de los ID de proyecto ya
-asignados. Revise el cambio si esos identificadores ya se exportaron o
-imprimieron.
+Cambiar el prefijo o el sufijo de un Field ID de proyecto cambia cómo se
+muestran los ID ya asignados. Confirme el cambio con cuidado si esos
+identificadores ya se exportaron o se escribieron en etiquetas.
 
 {% /aside %}
 
 ## Database
 
-- `Taxa` administra los registros taxonómicos.
-- `Personnel` administra personas y roles de cuidado de especímenes.
-- `Replace database` sustituye la base SQLite activa desde una copia.
+- `Taxa` gestiona los registros de taxonomía disponibles para los proyectos.
+- `Personnel` gestiona a las personas de la base de datos y sus roles de cuidado
+  del espécimen.
+- `Replace database` reemplaza la base SQLite activa a partir de una copia de
+  seguridad.
 
-Haga una copia de seguridad antes de usar `Replace database`.
+{% aside type="caution" %}
+
+Haga una copia de seguridad reciente antes de usar `Replace database`.
+Reemplazar la base de datos es distinto de fusionar un proyecto o importar
+configuraciones de usuario.
+
+{% /aside %}
 
 ## Exports
 
-- `Tabular Data` administra ajustes reutilizables de exportación.
-- `Documents` administra plantillas y diseños de impresión.
-- `Template Editor` crea y edita plantillas de documentos.
+- `Tabular Data` gestiona los preajustes reutilizables de exportación de
+  registros.
+- `Documents` gestiona las plantillas de documento y los preajustes de diseño de
+  impresión.
+- `Template Editor` crea y edita plantillas de documento.
+
+Estos preajustes son configuraciones de usuario. Expórtelos cuando otra
+instalación deba reproducir las mismas columnas, etiquetas o diseños.
 
 ## Applications
 
-`Theme` selecciona `System`, `Light` o `Dark`. `Data usage` muestra el espacio
-usado por la base, los archivos y los medios sin eliminar datos.
+Use `Theme` para elegir `System`, `Light` o `Dark`. La elección de tema es local
+a la instalación. `Data usage` informa el espacio que ocupan la base de datos,
+los archivos y los medios; no elimina nada.
 
 ## Transferir configuraciones de usuario
 
-`Export user configs` e `Import user configs` están en el menú del panel, junto
-a `Settings`, no dentro de la página de configuración. Su transferencia no
-reemplaza por sí sola la base de datos del proyecto. Consulte [Backup and
-restore](/en/curatorial-guideline/backup-restore/).
+`Export user configs` e `Import user configs` están en el menú `Dashboard` del
+proyecto, junto a `Settings`; no están dentro de la página de configuración. La
+transferencia de configuraciones de usuario puede reproducir listas controladas
+y preajustes sin reemplazar la base de datos del proyecto. Consulte
+[Exportar](../export) antes de reemplazar configuraciones o datos.

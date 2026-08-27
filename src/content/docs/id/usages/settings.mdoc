@@ -2,69 +2,109 @@
 title: Pengaturan
 ---
 
-NAHPU memisahkan informasi proyek, catatan basis data bersama, konfigurasi
-pengguna yang dapat direproduksi, dan preferensi instalasi. Buka proyek, buka
-menu Dasbor, lalu pilih `Settings`.
+NAHPU memisahkan catatan proyek, catatan bersama di basis data, konfigurasi
+pengguna yang dapat direproduksi, dan preferensi yang hanya berlaku pada
+instalasi. Buka sebuah proyek, buka menu `Dashboard`, lalu pilih `Settings`
+untuk mengatur instalasi saat ini.
 
-## Dampak setiap pengaturan
+## Cakupan setiap pengaturan
 
-| Jenis | Contoh | Perilaku transfer |
+| Jenis | Contoh | Perilaku saat dipindahkan |
 | --- | --- | --- |
-| Informasi proyek | Nama, nomor akses, lokasi, zona waktu, tanggal, dan nilai ID lapangan proyek | Disertakan dalam info dan transfer proyek |
-| Catatan bersama | Takson dan personel | Disimpan dalam basis data dan dihubungkan ke proyek |
-| Konfigurasi pengguna | Daftar terkontrol serta preset ekspor atau dokumen | Dipindahkan dengan `Export user configs` dan `Import user configs` |
-| Status instalasi | Tema dan takson utama aktif | Tetap pada instalasi saat ini |
+| Informasi proyek | Nama, nomor akses, lokasi, zona waktu, tanggal, nilai Field ID proyek | Ikut serta dalam transfer informasi dan transfer proyek |
+| Catatan bersama basis data | Takson dan personel | Tersimpan di basis data NAHPU dan dikaitkan dengan proyek |
+| Konfigurasi pengguna | Daftar terkontrol serta prasetel ekspor atau dokumen | Dipindahkan dengan `Export user configs` dan `Import user configs` |
+| Status instalasi | Tema dan takson utama saat ini | Tetap pada instalasi saat ini |
 
-## Catalogs
+Karena itu, mengubah sebuah pengaturan saat satu proyek terbuka dapat
+memengaruhi proyek lain pada instalasi yang sama. Tinjau konfigurasi pengguna
+yang dipindahkan sebelum menggantikan konfigurasi Anda saat ini.
 
-`Format` memilih takson utama untuk formulir spesimen baru pada perangkat ini.
-Satu proyek tetap dapat memiliki beberapa kelompok takson. `Events` mengatur
-daftar terkontrol aktivitas utama, metode pengumpulan, peran personel, dan
-visibilitas bidang lingkungan. Aktivitas awalnya `Collecting`, `Recording`,
-dan `Observing`, tanpa `Other`. Suhu sekitar, kelembapan sekitar, tutupan awan,
-curah hujan, dan catatan tampil secara default; seperti Geografi,
-menyembunyikan bidang lain tidak menghapus atau mengecualikan nilainya dari
-ekspor. `Sites` mengatur jenis situs dan habitat.
+## Katalog
 
-`Specimens` berisi visibilitas bidang, ID lapangan dan jaringan, sex, jenis
-spesimen, perlakuan, kondisi, dan pengaturan parasit. `Male`, `Female`, dan
-`Unknown` selalu tersedia; chip `+` menambahkan `Gynandromorph`,
-`Hermaphrodite`, `Female?`, atau `Male?`. Opsi tambahan tidak dapat dihapus
-selama masih digunakan oleh catatan spesimen di basis data.
+### Format
 
-Biarkan `Use project ID` mati untuk memakai inisial dan nomor lapangan pribadi
-Cataloger. Nyalakan untuk mengatur awalan, nomor katalog saat ini, akhiran, dan
-kenaikan otomatis. NAHPU menggabungkan nilainya tanpa menambah pemisah.
+`Format` memilih takson utama yang dipakai pada formulir spesimen baru di
+perangkat ini. Sebuah proyek dapat memuat lebih dari satu grup takson;
+pengaturan ini hanya mengatur format spesimen yang sedang aktif beserta kolom
+pengukurannya.
+
+### Events dan Sites
+
+Gunakan `Events` untuk mengelola daftar terkontrol aktivitas utama, metode
+pengumpulan, peran personel kegiatan, dan kolom lingkungan yang muncul pada
+formulir kegiatan. Aktivitas utama dimulai dengan `Collecting`, `Recording`, dan
+`Observing`; `Other` tidak disertakan kecuali Anda menambahkannya. Formulir
+lingkungan pada awalnya menampilkan suhu udara, kelembapan udara, tutupan awan,
+curah hujan, dan catatan. Seperti pada pengaturan Geografi, kolom bawaan lainnya
+dapat ditampilkan atau disembunyikan tanpa menghapus nilai yang tersimpan.
+Gunakan `Sites` untuk mengelola kosakata terkontrol tipe lokasi dan tipe
+habitat. Jaga agar pengaturan ini seragam di semua perangkat lapangan dengan
+memindahkan konfigurasi pengguna.
+
+### Specimens
+
+`Specimens` memuat kemunculan kolom tangkapan, Field ID, tissue ID, jenis
+kelamin spesimen, tipe spesimen, perlakuan, kondisi, dan pengaturan parasit yang
+bergantung pada takson.
+
+Kosakata jenis kelamin spesimen bersifat terbatas. `Male`, `Female`, dan
+`Unknown` tetap tersedia untuk semua takson. Gunakan cip `+` untuk menambahkan
+`Gynandromorph`, `Hermaphrodite`, `Female?`, atau `Male?` ke menu pilihan
+spesimen. Cip opsional hanya dapat dihapus bila tidak ada catatan spesimen di
+basis data yang memakai nilai tersebut.
+
+Pada `Field ID`, biarkan `Use project ID` nonaktif untuk memakai inisial dan
+nomor lapangan pribadi seorang Cataloger. Cataloger tersebut harus memiliki
+peran `Cataloger`, pendaftaran nomor lapangan yang aktif, inisial, dan nomor
+lapangan saat ini.
+
+Aktifkan `Use project ID` untuk mengatur awalan, nomor katalog saat ini,
+akhiran, dan perilaku penambahan otomatis. NAHPU menyambung ketiga nilai itu
+secara langsung. Misalnya, `NAHPU-`, `120`, dan `-M` menghasilkan
+`NAHPU-120-M`.
 
 {% aside type="caution" %}
 
-Mengubah awalan atau akhiran mengubah tampilan ID proyek yang telah ditetapkan.
-Periksa dengan cermat jika ID sudah diekspor atau ditulis pada label.
+Mengubah awalan atau akhiran Field ID proyek akan mengubah cara ID yang sudah
+diberikan ditampilkan. Pastikan perubahan itu memang dikehendaki bila pengenal
+tersebut sudah diekspor atau ditulis pada label.
 
 {% /aside %}
 
 ## Database
 
-- `Taxa` mengatur catatan taksonomi.
-- `Personnel` mengatur personel dan peran perawatan spesimen.
-- `Replace database` mengganti basis data SQLite aktif dari cadangan.
+- `Taxa` mengelola catatan taksonomi yang tersedia bagi proyek.
+- `Personnel` mengelola orang di basis data beserta peran perawatan spesimennya.
+- `Replace database` mengganti basis data SQLite yang aktif dari sebuah
+  cadangan.
 
-Buat cadangan sebelum memakai `Replace database`.
+{% aside type="caution" %}
+
+Buat cadangan terbaru sebelum memakai `Replace database`. Mengganti basis data
+berbeda dari menggabungkan proyek atau mengimpor konfigurasi pengguna.
+
+{% /aside %}
 
 ## Exports
 
-- `Tabular Data` mengatur preset ekspor data.
-- `Documents` mengatur templat dan tata letak cetak.
+- `Tabular Data` mengelola prasetel ekspor catatan yang dapat digunakan ulang.
+- `Documents` mengelola templat dokumen dan prasetel tata letak cetak.
 - `Template Editor` membuat dan menyunting templat dokumen.
+
+Prasetel ini termasuk konfigurasi pengguna. Ekspor prasetel bila instalasi lain
+harus menghasilkan kolom, label, atau tata letak yang sama.
 
 ## Applications
 
-`Theme` memilih `System`, `Light`, atau `Dark`. `Data usage` menampilkan ruang
-yang dipakai basis data, berkas, dan media tanpa menghapus data.
+Gunakan `Theme` untuk memilih `System`, `Light`, atau `Dark`. Pilihan tema hanya
+berlaku pada instalasi ini. `Data usage` melaporkan ruang yang dipakai basis
+data, berkas, dan media; menu ini tidak menghapus apa pun.
 
 ## Memindahkan konfigurasi pengguna
 
-`Export user configs` dan `Import user configs` berada di menu Dasbor di
-samping `Settings`, bukan di dalam halaman pengaturan. Transfer konfigurasi
-tidak mengganti basis data proyek. Baca [Backup and
-restore](/en/curatorial-guideline/backup-restore/).
+`Export user configs` dan `Import user configs` berada di menu `Dashboard`
+proyek, bersebelahan dengan `Settings`; keduanya tidak berada di dalam halaman
+pengaturan. Pemindahan konfigurasi pengguna dapat menghasilkan daftar terkontrol
+dan prasetel yang sama tanpa mengganti basis data proyek. Lihat
+[Ekspor](../export) sebelum mengganti konfigurasi atau data.

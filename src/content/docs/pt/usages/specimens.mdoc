@@ -105,11 +105,12 @@ terminologia e o mesmo comportamento de exportação.
 
 {% /steps %}
 
-## Registros gerais
+## Coleta e identificação
 
-O formulário geral inclui `Museum ID`, número de campo, `Cataloger`,
-`Preparator`, `Determiner`, `Species`, `ID Confidence`, `ID Method`, `Condition` e as datas e
-horários de coleta e preparação.
+O cartão `Collection & Identification` inclui `Museum ID`, o número de campo,
+`Cataloger`, `Preparator`, `Determiner`, `Taxon`, `ID Confidence`,
+`Identification Method`, `Condition` e as datas e horários de coleta e
+preparação.
 
 O editor responsivo de ID permite escolher Personnel ou Project para cada
 espécime. A troca remove o identificador anterior, e números já consumidos não
@@ -176,19 +177,21 @@ Os campos de medição disponíveis dependem do formato do catálogo.
 {% /tabitem %}
 {% tabitem label="Artrópodes" %}
 
-As seções de interações ecológicas e parâmetros ambientais ficam visíveis por
-padrão. Use `Show specimen morphometrics` para exibir ou ocultar as medições;
-valores salvos reabrem essa seção automaticamente.
+A seção de interações ecológicas fica visível por padrão. Use
+`Show specimen morphometrics` para exibir ou ocultar as medições; valores
+morfométricos salvos reabrem essa seção automaticamente.
 
-- `Sexo`: atributo do espécime exibido acima das seções ecológica e ambiental.
-- Interações ecológicas: organismo hospedeiro, parte do hospedeiro e afinidade
-  com o dossel.
-- Parâmetros ambientais: cobertura do dossel, temperaturas ambiente e da água
-  (°C), umidade ambiente (%), pH, oxigênio dissolvido (mg/L) e velocidade do
-  fluxo (m/s).
-- Morfometria opcional: largura da cabeça, comprimento do corpo e envergaduras
-  superior e inferior, todas em milímetros.
+- `Sex`: selecionado no vocabulário controlado de sexo do espécime.
+- `Caste`: a casta de um inseto social, quando aplicável.
+- Interações ecológicas: `Host organism` e `Host part`.
+- Morfometria opcional: `Head width (mm)`, `Body length (mm)`,
+  `Upper wingspan (mm)` e `Lower wingspan (mm)`.
 - `Remarks`: observações ecológicas ou do espécime.
+
+As condições ambientais não são atributos do espécime. Registre a cobertura do
+dossel no local, em `Site Attributes`, e a temperatura, a umidade, o pH, o
+oxigênio dissolvido e a velocidade do fluxo nos dados ambientais do evento de
+coleta.
 
 Catálogos de artrópodes não exibem campos de detecção nem a guia de parasitas.
 
@@ -197,7 +200,7 @@ Catálogos de artrópodes não exibem campos de detecção nem a guia de parasit
 
 
 {% /tabs %}
-## Partes do Espécime
+## Partes do Espécime {% #specimen-parts %}
 
 Cada espécime pode ter várias partes, como vouchers, tecidos, swabs ou
 parasitas. Uma parte pode conter `Tissue ID`, `QR/barcode ID`, `Preparation type`,
@@ -209,7 +212,7 @@ armazenamento da localização física.
 A guia de parasitas está disponível para mamíferos, aves e herpetofauna, mas
 não para catálogos de artrópodes.
 
-## Dados associados
+## Dados associados {% #associated-data %}
 
 Use `Associated Data` para links ou arquivos digitais relacionados, como
 acessões do GenBank, registros do MorphoSource ou arquivos de análise. Os campos

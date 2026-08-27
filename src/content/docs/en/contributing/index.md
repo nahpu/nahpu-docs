@@ -38,7 +38,7 @@ Useful contributions include:
 - Identifying confusing screens, missing information, or steps that are hard
   to complete in the field.
 
-Start with the [usage guides](../usages), [curatorial guidelines](../curatorial-guideline),
+Start with the [usage guides](../usages), [best practices](../best-practices),
 and [data import and export contributor guidance](./code/data-import-export-overview).
 Domain experts who are collaborating on a new catalog format should also read
 [Adding a taxon group](./code/adding-a-taxon-group).

@@ -6,78 +6,205 @@ sidebar:
 
 NAHPU tiene estas acciones de exportación en el menú del proyecto:
 
-- **Merge project** - Añade una exportación NAHPU al proyecto activo mediante una revisión guiada de conflictos.
-- **Export project** - Crea una exportación JSON.GZ sin multimedia o una transferencia ZIP/TAR.GZ con la multimedia disponible.
-- **Exportar registros** - Exporta un tipo de registro a CSV, TSV, Excel o JSON.
-- **Agrupar registros** - Crea paquetes de registros para publicación, análisis o uso por terceros.
-- **Exportar documentos** - Crea documentos PDF desde plantillas de documento y perfiles de diseño.
-- **Respaldar base de datos** - Exporta la base de datos como SQLite, o como ZIP cuando se incluyen datos del proyecto o ajustes de la app.
-- **Export user configs** - Exporta configuraciones de usuario como JSON o JSON.GZ.
+- **Merge project** - Agrega una exportación de proyecto NAHPU al proyecto activo mediante una revisión guiada de conflictos.
+- **Export project** - Crea una exportación ligera en JSON.GZ sin medios, o un archivo de transferencia ZIP/TAR.GZ con los medios disponibles.
+- **Export records** - Exporta un tipo de registro a CSV, TSV, Excel o JSON.
+- **Bundle records** - Crea un Darwin Core Archive, un Darwin Core Data Package o un NAHPU Data Package completo para uso por terceros.
+- **Export documents** - Crea documentos PDF a partir de plantillas de documento y perfiles de diseño.
+- **Backup database** - Crea un archivo ZIP o TAR.GZ completo que contiene la
+  base de datos SQLite, las configuraciones de usuario, los archivos
+  gestionados, los medios, las fuentes y los mapas.
+- **Export user configs** - Exporta las configuraciones de usuario seleccionadas como JSON o JSON.GZ.
 
 ## Rutas rápidas de exportación
 
 - Para exportar datos tabulares del proyecto, consulte [Exportar registros](./export-records).
-- Para importar o exportar archivos de coordenadas GIS, consulte [Sitios](../sites#agregar-coordenadas).
+- Para importar o exportar archivos GIS de coordenadas, consulte [Sitios](../sites#adding-coordinates).
 - Para mover un proyecto entre dispositivos NAHPU, consulte [Transferir un proyecto](./project-transfer).
-- Para crear un paquete Darwin Core o NAHPU Data Package reproducible, consulte [Agrupar registros](./export-bundles).
-- Para exportar etiquetas, rótulos u otros documentos PDF imprimibles, consulte [Exportar documentos](./export-documents).
+- Para una carga compacta, solo de registros, con internet limitada, use la exportación ligera `JSON.GZ` descrita en [Transferir un proyecto](./project-transfer).
+- Para la recuperación de la base de datos, consulte [Restaurar una base de datos](#restoring-a-database).
+- Para crear un paquete de especímenes basado en estándares o un NAHPU Data Package reproducible, consulte [Empaquetar registros](./export-bundles).
+- Para exportar etiquetas, marbetes u otros documentos en PDF, consulte [Exportar documentos](./export-documents).
 
-Use esta página para exportar registros, paquetes de proyecto, respaldos de
-base de datos y ajustes. El intercambio GIS de coordenadas se gestiona desde
-el panel de coordenadas de un sitio, no desde el menú del proyecto. El flujo
-admite importaciones GeoJSON, KML, Shapefile comprimido y GPX, y exportaciones
-GeoJSON, KML y Shapefile comprimido.
+Use esta página para exportaciones de registros, paquetes de proyecto, copias de
+seguridad de la base de datos y exportaciones de configuraciones. El intercambio
+GIS de coordenadas se gestiona desde el panel de coordenadas de un sitio, no
+desde el menú del proyecto. El flujo de coordenadas admite importaciones en
+GeoJSON, KML, Shapefile comprimido y GPX, y exportaciones en GeoJSON, KML y
+Shapefile comprimido.
 
-Use `JSON.GZ` para una carga pequeña y sin multimedia cuando el acceso a
-internet sea limitado. Use ZIP o TAR.GZ para una transferencia o copia de
-seguridad completa con la multimedia disponible. JSON.GZ no es una copia de
-seguridad completa.
+Para las transferencias de proyecto, use `JSON.GZ` cuando la carga deba ser
+pequeña y no se necesiten los medios. Use ZIP o TAR.GZ cuando los medios
+disponibles deban viajar con el proyecto. Una transferencia de proyecto no es
+una copia de seguridad SQLite en bruto; use `Backup database` para obtener una
+copia restaurable de la instalación.
 
-## Agrupar registros
+## Estrategia de copias de seguridad {% #backup-strategy %}
 
-`Agrupar registros` crea paquetes para flujos de trabajo externos. No se puede importar mediante `Merge project`.
+Use más de un tipo de copia durante el trabajo de campo. Protegen cosas
+distintas y no son intercambiables.
+
+- **Copia diaria de la base de datos**: un archivo `.sqlite3` compacto. Úsela con
+  frecuencia para la recuperación de la base de datos y la seguridad diaria.
+- **Exportación ligera del proyecto**: un archivo `JSON.GZ` comprimido con los
+  registros del proyecto, sin medios. Úsela para una carga con internet limitada
+  o una fusión de solo registros. No es una copia completa del proyecto.
+- **Copia completa de la base de datos**: un archivo `.zip` o `.tar.gz` que
+  incluye la base SQLite, las configuraciones de usuario, los medios, los
+  archivos asociados, las fuentes y los mapas. Úsela cuando necesite la
+  recuperación completa de la instalación.
+- **Copia de las configuraciones de usuario**: un archivo `.json` o `.json.gz`
+  con las configuraciones de usuario, los preajustes de exportación, los
+  preajustes de plantilla y los diseños de documento. Úsela cuando otro
+  dispositivo necesite las mismas listas controladas, el mismo comportamiento de
+  exportación y los mismos diseños.
+
+{% aside type="tip" title="Práctica recomendada" %}
+Al final de cada día de campo, exporte una copia completa de la base de datos al
+almacenamiento en la nube si hay internet, y exporte una transferencia del
+proyecto a un almacenamiento local, como una memoria USB-C o un segundo
+dispositivo. Periódicamente, restaure una copia en otro dispositivo para
+confirmar que el archivo es utilizable.
+{% /aside %}
+
+## Copia de seguridad de la base de datos {% #backup-database %}
+
+`Backup database` crea un archivo de copia de seguridad completo de NAHPU. Elija
+ZIP o TAR.GZ; el archivo contiene la base SQLite, todas las configuraciones de
+usuario, los medios gestionados, los archivos asociados, las fuentes y los mapas
+personalizados.
 
 {% steps %}
 
-1. Navegue a la página `Panel de control`.
-2. Abra el menú del proyecto y seleccione `Agrupar registros`.
-3. Para registros de mamíferos, use `Inexacto entre corchetes` para elegir si las medidas inexactas se escriben entre corchetes.
-4. Añada el `Nombre de archivo` para el ZIP.
-5. Seleccione el `Directorio` donde desea guardarlo.
-6. Haga clic en `Agrupar`.
+1. Vaya a la página `Dashboard`.
+2. Abra el menú del proyecto y seleccione `Backup database`.
+3. Elija `TAR.GZ` o `ZIP`.
+4. Agregue el `File name`.
+5. Seleccione el `Directory` donde quiere guardar la copia.
+6. Haga clic en `Save`.
 
 {% /steps %}
 
-## Respaldar base de datos
+## Exportar configuraciones de usuario {% #export-user-configs %}
 
-`Respaldar base de datos` exporta la base de datos de NAHPU. Si no incluye datos del proyecto ni ajustes de la app, el resultado es un archivo `.sqlite3`. Si incluye cualquiera de esas opciones, NAHPU crea un archivo `.zip`.
-
-{% steps %}
-
-1. Navegue a la página `Panel de control`.
-2. Abra el menú del proyecto y seleccione `Respaldar base de datos`.
-3. Mantenga seleccionado `Base de datos (.sqlite3)`.
-4. Opcional: active `Incluir datos del proyecto` para incluir archivos multimedia.
-5. Opcional: active `Incluir ajustes de la app` para incluir ajustes en el respaldo.
-6. Añada el `Nombre de archivo`.
-7. Seleccione el `Directorio` donde desea guardar el respaldo.
-8. Haga clic en `Guardar`.
-
-{% /steps %}
-
-## Export user configs
-
-`Export user configs` escribe las configuraciones reproducibles, incluidos los presets de exportación y documentos, en un archivo.
+`Export user configs` escribe en un archivo de configuraciones las
+configuraciones de usuario relacionadas con la reproducibilidad, incluidos los
+preajustes guardados de exportación y de documento.
 
 {% steps %}
 
-1. Navegue a la página `Panel de control`.
+1. Vaya a la página `Dashboard`.
 2. Abra el menú del proyecto y seleccione `Export user configs`.
-3. Seleccione el `Formato de ajustes`.
+3. Seleccione el formato de las configuraciones.
     - `JSON (.json)`
     - `JSON.GZ (.json.gz)`
-4. Añada el `Nombre de archivo`.
-5. Seleccione el `Directorio` donde desea guardar el archivo.
-6. Haga clic en `Guardar`.
+4. Agregue el `File name`.
+5. Seleccione el `Directory` donde quiere guardar el archivo.
+6. Haga clic en `Save`.
 
 {% /steps %}
+
+## Restaurar una base de datos {% #restoring-a-database %}
+
+Use la restauración de la base de datos cuando necesite reemplazar la base de
+datos actual de NAHPU por un archivo de copia de seguridad.
+
+{% steps %}
+
+1. Abra `Settings`.
+2. En `Database`, seleccione `Replace database` para abrir `Database Settings`.
+3. Use `Choose database` para seleccionar un archivo `.sqlite3`, un archivo ZIP
+   o un archivo TAR.GZ.
+4. Mantenga `Back up current data first` activado, a menos que esté seguro de
+   que no necesita los datos actuales.
+5. Seleccione `Replace`.
+6. Confirme la advertencia.
+
+{% /steps %}
+
+Restaurar una base de datos reemplaza la base de datos actual del proyecto. Si
+restaura un archivo comprimido, NAHPU lo extrae, copia los archivos de proyecto
+incluidos en el directorio de documentos de la aplicación, importa las
+configuraciones de usuario incluidas y luego reemplaza la base SQLite activa.
+
+## Restaurar las configuraciones de usuario {% #restoring-user-configs %}
+
+Use la restauración de configuraciones cuando quiera reemplazar las
+configuraciones de usuario actuales por las de otro dispositivo o copia de
+seguridad.
+
+{% steps %}
+
+1. Abra el menú `Dashboard` del proyecto.
+2. Seleccione `Import user configs`.
+3. Elija un archivo de configuraciones `.json` o `.json.gz`.
+4. Haga clic en `Replace`.
+5. Confirme la advertencia.
+
+{% /steps %}
+
+Restaurar las configuraciones de usuario actualiza el almacén de configuración
+de la aplicación. Por sí solo, no reemplaza la base SQLite del proyecto. Para
+restaurar los datos del proyecto y las configuraciones de usuario a la vez,
+restaure un archivo ZIP o TAR.GZ de la base de datos.
+
+Para el modelo de almacenamiento y compatibilidad a nivel de quienes contribuyen
+con el código, consulte [Importación y exportación de datos](../../contributing/code/data-import-export-overview).
+
+## Archivar un proyecto {% #archiving-a-project %}
+
+El archivo conserva un proyecto revisado y las exportaciones necesarias para
+entenderlo, restaurarlo y usarlo más adelante. Archive la exportación del
+proyecto junto con el contexto suficiente para identificar su contenido, su
+fecha, el software usado y la institución responsable.
+
+Antes de archivar:
+
+- Complete la curaduría de datos y resuelva o documente los problemas conocidos.
+  Consulte [Gestión de Datos](../../best-practices/data-management).
+- Cree una copia de seguridad reciente de la base de datos.
+- Exporte las configuraciones de usuario cuando se necesiten valores
+  controlados, preajustes de exportación, plantillas o diseños de documento para
+  reproducir el flujo de trabajo.
+- Elija el formato de exportación que corresponda al uso futuro. Use una
+  exportación completa del proyecto en ZIP o TAR.GZ cuando el archivo deba
+  incluir los medios disponibles.
+- Exporte registros estructurados o un paquete de datos cuando se necesiten para
+  análisis, publicación o reutilización independiente.
+
+Use `Export project` con `Light export` desactivado para crear una copia
+completa del proyecto. Revise el número de registros y las advertencias de
+medios faltantes antes de guardar. Use un nombre descriptivo que incluya el
+proyecto, el tipo de exportación y la fecha, como
+`BorneoMammals_project_20241015.tar.gz`.
+
+Mantenga juntos la exportación del proyecto, la copia de seguridad de la base de
+datos, la exportación de configuraciones y un breve archivo léame cuando sirvan
+a distintos fines de recuperación o reproducibilidad. Guarde al menos dos copias
+en lugares separados y conserve el original hasta que el archivo se haya
+verificado en otro dispositivo.
+
+Registre la fecha del archivo, su contenido, los lugares de almacenamiento y las
+restricciones de acceso. Periódicamente, abra una exportación o restáurela en un
+dispositivo de prueba para confirmar que los archivos siguen siendo legibles y
+que el proyecto es utilizable. Conserve las exportaciones digitales y los
+documentos impresos de acuerdo con las políticas institucionales de retención y
+conservación.
+
+## Antes de compartir datos {% #before-sharing-data %}
+
+Antes de enviar datos de NAHPU a un museo, a un colaborador o a otro
+dispositivo:
+
+- Cree una copia de seguridad reciente de la base de datos.
+- Use una exportación ligera `JSON.GZ` del proyecto solo cuando el destinatario
+  necesite los registros y no los medios, especialmente con internet limitada.
+- Cree un archivo ZIP o TAR.GZ del proyecto cuando los medios o una copia
+  completa deban acompañar al proyecto.
+- Exporte las configuraciones de usuario si el destinatario necesita las mismas
+  listas controladas, preajustes de exportación, plantillas o diseños de
+  documento.
+- Exporte los archivos de registros o los documentos que el destinatario
+  necesite.
+- Verifique al menos una ruta de restauración antes de eliminar los datos del
+  dispositivo original.

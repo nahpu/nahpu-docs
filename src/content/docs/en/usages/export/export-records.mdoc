@@ -91,10 +91,10 @@ the file is written. Field mode controls the columns:
 - `All fields` writes every supported specimen field.
 - `Custom fields` lets you choose a smaller or institution-specific column set.
 
-Arthropod record exports include ecological interactions, environmental
-parameters, morphometrics, sex, and remarks. Arthropod-only exports and presets
-do not offer parasite-detection or parasite columns. `All taxa` exports retain
-those columns for the catalog groups that support parasites.
+Arthropod record exports include sex, life stage, caste, the host organism and
+host part, the optional morphometrics, and remarks. Arthropod-only exports and
+presets do not offer parasite-detection or parasite columns. `All taxa` exports
+retain those columns for the catalog groups that support parasites.
 
 Repeated values can be written as separate values or concatenated into one cell.
 Concatenation is useful for spreadsheets and quick review, while keeping entries
@@ -112,9 +112,10 @@ ORCID URL for `identifiedByID`, preserve verbatim coordinates, add positive
 coordinate extent to coordinate uncertainty, and retain the selected weight
 unit (`g`, `kg`, or `lbs`).
 
-For arthropods, Darwin Core mappings place sex, host association, and remarks
-on the occurrence. Morphometrics and environmental observations become
-MeasurementOrFact values with units where defined.
+For arthropods, Darwin Core mappings place sex, life stage, caste, the host
+association, and remarks on the occurrence. Host part and the morphometrics
+become MeasurementOrFact values with units where defined. Environmental
+observations belong to the collecting event, not to the specimen.
 
 Choose the output format based on the next tool:
 

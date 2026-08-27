@@ -106,14 +106,58 @@ Abra el menú de tres puntos en la página del sitio para usar estas acciones:
 Al importar un sitio, elija si crea un sitio nuevo o actualiza uno existente.
 Revise el personal vinculado y las coordenadas después de importar.
 
-## Agregar coordenadas
+## Copiar datos de sitio desde otro proyecto
+
+Use `Copy from project ...` cuando un sitio de otro proyecto tenga información
+que quiera reutilizar en el proyecto actual. Esta acción rellena el sitio
+actual; no crea un sitio nuevo ni modifica el proyecto de origen.
+
+El sitio actual debe estar vacío antes de comenzar. Un sitio con información,
+coordenadas, medios o datos vinculados no puede recibir datos copiados. Deben
+existir al menos dos proyectos, porque el origen debe ser un proyecto distinto.
+
+{% steps %}
+
+1. Abra el sitio que recibirá la información copiada. Confirme que es un
+   registro de sitio vacío.
+
+2. Abra el menú de tres puntos y seleccione `Copy from project ...`.
+
+3. Seleccione el proyecto de origen por su nombre y luego seleccione uno de sus
+   sitios.
+
+4. Seleccione los datos que se copiarán. Las opciones disponibles incluyen:
+
+   - Site ID
+   - Site leader
+   - Site type
+   - Campos de geografía, incluidos país, grupo de islas, estado/provincia,
+     condado/parroquia/distrito, municipio/ciudad y localidad precisa
+   - Remarks
+   - Tipo, condición y descripción del hábitat
+   - Coordenadas
+
+   Los campos sin datos en el sitio de origen no están disponibles. Seleccionar
+   `Coordinates` copia todas las coordenadas que pertenecen al sitio de origen
+   seleccionado.
+
+5. Seleccione `Copy` para rellenar el sitio actual.
+
+{% /steps %}
+
+El sitio de origen permanece sin cambios. Esta acción copia solo campos del
+sitio y coordenadas; no copia medios del sitio, enlaces de datos asociados,
+registros de sitio fosilífero, eventos de recolecta ni otros registros
+vinculados al sitio de origen.
+
+## Agregar coordenadas {% #adding-coordinates %}
 
 Un sitio puede tener varios registros de coordenadas para los extremos de una
 línea de trampas, puntos de recolección separados u otros puntos del mismo
 sitio. Puede agregar coordenadas manualmente, usar el GPS del dispositivo o
 importar puntos desde un archivo GIS/GPS.
 
-### Usar el GPS del dispositivo al agregar una coordenada
+### Usar el GPS del dispositivo al agregar una coordenada {% #use-device-gps-while-adding-a-coordinate %}
 
 {% steps %}
 
@@ -132,7 +176,7 @@ importar puntos desde un archivo GIS/GPS.
 
 {% /steps %}
 
-### Agregar coordenadas manualmente
+### Agregar coordenadas manualmente {% #manually-adding-coordinate %}
 
 {% steps %}
 

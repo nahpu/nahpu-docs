@@ -4,88 +4,149 @@ sidebar:
   order: 10
 ---
 
-Gunakan `Ekspor catatan` saat membutuhkan data proyek dalam CSV, TSV, Excel, atau JSON. Ekspor ini cocok untuk peninjauan di spreadsheet, impor database, analisis, dan berbagi data terstruktur.
+Gunakan `Export records` bila Anda memerlukan data proyek dalam bentuk CSV, TSV,
+Excel, atau JSON. Ini adalah ekspor terbaik untuk peninjauan di lembar kerja,
+impor ke basis data, analisis, dan berbagi data terstruktur dengan kolaborator.
 
 ## Cara cepat mengekspor catatan
 
 {% steps %}
 
-1. Navigasi ke halaman `Dasbor`.
-2. Buka menu proyek dan pilih `Ekspor catatan`.
-3. Opsional: pilih preset ekspor dari `Gunakan Preset`.
-4. Jika tidak menggunakan preset, pilih `Tipe catatan`.
-    - `Naratif`
-    - `Situs`
-    - `Aktivitas`
-    - `Catatan spesimen`
-    - `Bagian spesimen`
-5. Untuk catatan spesimen, pilih kelompok takson. Ekspor mamalia dapat dibatasi ke non-kelelawar, kelelawar, atau semua mamalia.
+1. Buka halaman `Dashboard`.
+2. Buka menu proyek lalu pilih `Export records`.
+3. Opsional: pilih prasetel pada `Export preset`.
+4. Bila tidak memakai prasetel, pilih `Record type`.
+    - `Narrative`
+    - `Sites`
+    - `Events`
+    - `Specimen records`
+    - `Specimen parts`
+5. Untuk catatan spesimen, pilih grup taksonnya. Ekspor mamalia dapat dibatasi
+   pada bukan kelelawar, kelelawar saja, atau seluruh mamalia.
 6. Pilih mode kolom spesimen.
-    - `Standar`
-    - `Semua kolom`
-    - `Kolom kustom`
-7. Opsional: aktifkan `Gabungkan entri ganda` untuk menggabungkan nilai berulang dalam satu sel.
-8. Opsional: aktifkan `Gunakan nama kolom saja` untuk memakai ID kolom, bukan label tampilan.
-9. Pilih `Format`.
-    - `Berbatas koma (.csv)`
-    - `Berbatas tab (.tsv)`
+    - `Standard`
+    - `All fields`
+    - `Custom fields`
+7. Opsional: aktifkan `Concatenate multi-entry` untuk menggabungkan nilai
+   berulang dalam satu sel.
+8. Opsional: aktifkan `Field names only for headers` untuk memakai ID kolom
+   alih-alih label tampilan.
+9. Pilih `Format` berkas.
+    - `Comma-separated (.csv)`
+    - `Tab-separated (.tsv)`
     - `Excel (.xlsx)`
     - `JSON (.json)`
-10. Tambahkan `Nama file`.
-11. Pilih `Direktori` tempat file akan disimpan.
-12. Klik `Simpan`.
+10. Masukkan `File name` untuk berkas hasil ekspor.
+11. Pilih `Directory` tempat berkas hasil ekspor akan disimpan.
+12. Klik `Save`.
 
 {% /steps %}
 
-{% aside type="tip" title="Membagikan file tersimpan" %}
-Setelah file disimpan, tombol `Simpan` berubah menjadi `Bagikan`. Gunakan `Bagikan` di perangkat seluler untuk mengirim file ke aplikasi lain atau menyimpannya melalui pemilih file sistem.
+{% aside type="tip" title="Membagikan berkas tersimpan" %}
+Setelah berkas tersimpan, tombol `Save` berubah menjadi `Share`. Gunakan `Share`
+pada perangkat seluler untuk mengirim berkas ke aplikasi lain atau menyimpannya
+melalui pemilih berkas sistem.
 {% /aside %}
 
-## Penjelasan mendalam
+## Penjelasan mendalam {% #deep-dive %}
 
-Ekspor catatan membaca data dari proyek aktif dan menulis satu tipe catatan setiap kali ekspor. Tipe catatan menentukan bagian proyek yang diekspor: naratif, situs, aktivitas, catatan spesimen, atau bagian spesimen.
+Ekspor catatan membaca data dari proyek aktif dan menuliskan satu jenis catatan
+pada satu waktu. Pilih jenis catatan yang sesuai dengan tabel atau alur kerja
+yang ingin Anda periksa: narasi, lokasi, kegiatan, catatan spesimen, atau bagian
+spesimen.
 
 ```text
-Database proyek
+Basis data proyek
     |
     v
-Tipe catatan + filter + mode kolom
+Jenis catatan + penyaring + mode kolom
     |
     v
-Eksportir
+Pengekspor
     |
     +--> CSV / TSV
     +--> Excel
     +--> JSON
 ```
 
-Preset menyimpan pilihan yang dapat dipakai ulang, seperti tipe catatan, mode kolom, format, dan perilaku label kolom. Gunakan preset saat tim membutuhkan bentuk ekspor yang sama antar hari lapangan, perangkat, atau proyek.
+Prasetel ekspor menyimpan pilihan yang dapat diulang, seperti jenis catatan,
+pemilihan takson, pemetaan kolom, gaya tajuk, dan perilaku untuk nilai berulang.
+Format keluaran, nama berkas, dan tujuan penyimpanan dipilih saat ekspor
+dijalankan. Gunakan prasetel bila tim Anda memerlukan bentuk ekspor yang sama
+antarhari lapangan, antarperangkat, atau antarproyek. Bila kolaborator juga
+memerlukan prasetel yang sama, ekspor konfigurasi pengguna atau sertakan dalam
+arsip basis data yang lengkap.
 
-Nilai lingkungan tersimpan tetap diekspor walaupun bidangnya disembunyikan
-dari formulir. Bidang lingkungan kustom dapat dipilih dalam preset dan memakai
-header stabil `customEnvironment::<UUID definisi>`. Nilai tersebut juga masuk
-ke dokumen, keluaran Darwin Core, pertukaran kegiatan, dan transfer proyek.
+Ekspor kegiatan dan spesimen menyertakan nilai lingkungan yang tersimpan,
+bahkan ketika kolomnya disembunyikan dari formulir kegiatan. Kolom lingkungan
+khusus tersedia bagi prasetel ekspor dan memakai tajuk yang stabil dengan bentuk
+`customEnvironment::<UUID definisi>`. Kolom ini juga mengalir ke dokumen
+kegiatan, keluaran Darwin Core kegiatan, pertukaran catatan kegiatan, dan
+transfer proyek, sehingga kemunculannya pada formulir tidak pernah berfungsi
+sebagai penghapus data maupun penyaring ekspor.
 
-Catatan spesimen memiliki opsi tambahan karena biasanya menjadi ekspor terbesar. Kelompok takson membatasi catatan sebelum file ditulis. Mode kolom mengatur kolom yang diekspor:
+Catatan spesimen memiliki penyaringan tambahan karena biasanya merupakan ekspor
+terbesar dan paling khas bagi setiap institusi. Grup takson mempersempit
+kumpulan catatan sebelum berkas ditulis. Mode kolom mengatur kolom mana yang
+disertakan:
 
-- `Standar` menulis kolom bawaan untuk sebagian besar alur kerja.
-- `Semua kolom` menulis semua kolom yang didukung.
-- `Kolom kustom` memungkinkan pemilihan kolom tertentu.
+- `Standard` menulis kolom bawaan yang dipakai kebanyakan alur kerja.
+- `All fields` menulis seluruh kolom spesimen yang didukung.
+- `Custom fields` memungkinkan Anda memilih kumpulan kolom yang lebih ringkas
+  atau khas institusi.
 
-Ekspor artropoda mencakup interaksi ekologi, parameter lingkungan,
-morfometrik, sex, dan catatan. Ekspor dan preset khusus artropoda tidak
-menawarkan kolom deteksi atau catatan parasit. `Semua takson` tetap memuat
-kolom tersebut untuk kelompok yang mendukung parasit.
+Ekspor catatan artropoda memuat jenis kelamin, tahap hidup, kasta, organisme
+inang dan bagian inang, morfometri opsional, serta keterangan. Ekspor dan
+prasetel yang hanya untuk artropoda tidak menyediakan kolom deteksi parasit
+maupun kolom parasit. Ekspor `All taxa` mempertahankan kolom tersebut untuk grup
+katalog yang mendukung parasit.
 
-CSV dan TSV mudah dipakai untuk spreadsheet dan impor database. Excel nyaman untuk peninjauan manual. JSON mempertahankan data terstruktur untuk skrip dan perangkat lunak lain.
+Nilai berulang dapat ditulis sebagai nilai terpisah atau digabung dalam satu
+sel. Penggabungan berguna untuk lembar kerja dan peninjauan cepat, sedangkan
+memisahkan entri lebih baik bila berkasnya akan diurai oleh basis data lain.
 
-Header Darwin Core hanya digunakan jika field NAHPU memiliki makna yang sama;
-field lain tetap memakai awalan `nahpu:`. Ekspor turunan menyertakan
-`Determiner` dan ORCID kanonisnya, koordinat verbatim, extent positif dalam
-ketidakpastian, serta unit berat yang dipilih.
+`Field names only for headers` menulis ID kolom alih-alih label tampilan.
+Gunakan opsi ini bila sistem penerima mengharapkan nama kolom yang stabil atau
+bila Anda memerlukan tajuk yang mudah ditebak untuk skrip. Biarkan nonaktif bila
+hasil ekspor akan dibaca langsung orang di lembar kerja.
 
-Untuk artropoda, pemetaan Darwin Core menempatkan sex, asosiasi inang, dan
-catatan pada occurrence. Morfometrik dan parameter lingkungan diekspor sebagai
-MeasurementOrFact dengan unit jika tersedia.
+Pemetaan kolom Darwin Core memakai tajuk baku hanya bila kolom NAHPU memiliki
+makna yang sama. Kolom yang tidak bersesuaian mempertahankan tajuk `nahpu:`.
+Ekspor turunan memakai determiner spesimen untuk `identifiedBy`, mengutamakan
+URL ORCID kanonis determiner untuk `identifiedByID`, mempertahankan koordinat
+verbatim, menambahkan rentang koordinat positif ke ketidakpastian, serta
+mempertahankan satuan berat yang dipilih (`g`, `kg`, atau `lbs`).
 
-Ekspor catatan bukan pengganti cadangan database. Gunakan [Cadangkan database](../#cadangkan-database) saat membutuhkan salinan database NAHPU yang dapat dipulihkan.
+Untuk artropoda, pemetaan Darwin Core menempatkan jenis kelamin, tahap hidup,
+kasta, hubungan dengan inang, dan keterangan pada kejadian. Bagian inang dan
+morfometri menjadi nilai MeasurementOrFact, dengan satuan bila telah
+didefinisikan. Pengamatan lingkungan menjadi milik kegiatan pengumpulan, bukan
+milik spesimen.
+
+Pilih format keluaran berdasarkan perkakas berikutnya:
+
+- CSV dan TSV adalah format paling mudah dipindahkan untuk lembar kerja dan
+  impor basis data.
+- Excel praktis untuk peninjauan manual dan berbagi dengan pengguna lembar
+  kerja.
+- JSON mempertahankan data terstruktur untuk skrip dan perangkat lunak lanjutan.
+
+Ekspor catatan tidak menggantikan cadangan basis data. Gunakan untuk pertukaran
+data, peninjauan, dan analisis. Gunakan
+[Mencadangkan basis data](../#backup-database) bila Anda memerlukan salinan
+basis data NAHPU yang dapat dipulihkan, dan gunakan
+[Paket catatan](../export-bundles) bila Anda memerlukan paket spesimen berbasis
+standar beserta catatan terkait dan medianya.
+
+Untuk memindahkan data proyek antarperangkat, gunakan `Merge project` atau
+`Export project` pada menu dasbor proyek. Gunakan JSON.GZ untuk unggahan berisi
+catatan saja pada internet terbatas; format ini tidak menyertakan media. Gunakan
+ZIP atau TAR.GZ untuk salinan proyek lengkap beserta media yang tersedia.
+Penggabungan memeriksa UUID proyek, memandu Anda melalui setiap bagian, dan
+menampilkan konflik sebelum menuliskan apa pun. Cadangkan basis data terlebih
+dahulu; penggabungan paksa baru tersedia setelah Anda mengakui bahwa
+ketidakcocokan UUID akan memakai UUID proyek aktif.
+
+Kontributor kode dapat membaca detail implementasinya di
+[Templat dan prasetel](../../../contributing/code/templates-and-presets) dan
+[Alur ekspor](../../../contributing/code/data-export-workflows).

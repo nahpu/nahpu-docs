@@ -5,49 +5,67 @@ sidebar:
 ---
 
 Os registros de pessoal são compartilhados no banco de dados do NAHPU e podem
-ser atribuídos a vários projetos. Cada projeto mostra apenas o pessoal
-atribuído a ele.
+ser atribuídos a vários projetos. Um projeto exibe apenas o pessoal atribuído a
+ele.
 
 ## Adicionar pessoal a um projeto
 
-No painel Personnel, selecione `Add personnel`. Se a pessoa já existir no banco,
-escolha `Select from database`; caso contrário, escolha `Add new personnel`.
+No painel Pessoal do painel do projeto, selecione `Add personnel`. Se já
+houver pessoas no banco de dados, escolha `Select from database` e selecione
+quem deseja atribuir. Caso contrário, escolha `Add new personnel`.
 
-O formulário inclui nome obrigatório, foto, afiliação, e-mail, telefone, ORCID
-opcional e função de cuidado de espécimes (`Cataloger`, `Preparator only`,
-`Determiner only` ou `None`) e
-notas. Use `Show more` para exibir os campos opcionais.
+O formulário inclui:
 
-Informe o ORCID como iD com hífens e checksum válido, por exemplo
-`0000-0002-1825-0097`. O Darwin Core o exporta como URL canônica e usa o UUID
-de pessoal do NAHPU quando não existe ORCID.
+- **Name (obrigatório)** - o nome da pessoa.
+- **Photo** - um avatar ou uma foto do pessoal.
+- **Affiliation** - a instituição da pessoa.
+- **Email** - o endereço de e-mail da pessoa.
+- **Phone** - o telefone da pessoa.
+- **ORCID** - um ORCID iD opcional, com hifens e dígito verificador válido, como
+  `0000-0002-1825-0097`.
+- **Specimen care role** - `Cataloger`, `Preparator only`, `Determiner only` ou
+  `None`.
+- **Notes** - informações adicionais sobre a pessoa.
 
-## Números de campo de catalogadores
+Use `Show more` para exibir os campos opcionais. Os e-mails são normalizados
+para minúsculas e os telefones aceitam dígitos.
 
-Quando a função é `Cataloger`, ative `Register personal field number` se as
-iniciais e o número deverão gerar os IDs de campo dos espécimes. Informe as
-iniciais e o número inicial; o número avançará conforme os espécimes forem
-criados.
+As exportações Darwin Core usam a URL canônica `https://orcid.org/...` como
+identificador de agente da pessoa quando há ORCID. Caso contrário, usam o UUID
+de pessoal do NAHPU.
 
-Você pode usar um código do projeto no lugar das iniciais pessoais, como `ABC-`
-e `1` para gerar `ABC-1`. O registro do número é opcional e a função de
-catalogador não pode ser alterada depois que a pessoa é criada.
+## Números de campo para catalogadores
+
+Quando a função é `Cataloger`, o NAHPU oferece a opção
+`Register personal field number`. Ative-a quando as iniciais e o número da
+pessoa devem gerar os Field IDs dos espécimes. Informe a inicial de campo e o
+número inicial; o número avança conforme os espécimes são criados.
+
+Algumas instituições usam um código de projeto em vez das iniciais de uma
+pessoa. Por exemplo, informe `ABC-` como inicial e `1` como número inicial para
+gerar IDs como `ABC-1`.
+
+O registro do número de campo é opcional. A função de catalogador não pode ser
+alterada depois que a pessoa é criada.
 
 ## Editar e remover pessoal
 
-Use o menu de três pontos ao lado de uma pessoa para editá-la ou removê-la do
-projeto. A remoção do projeto não exclui o registro compartilhado. Não é
-possível remover uma pessoa enquanto os registros do projeto a utilizarem.
+Use o menu de três pontos ao lado de uma pessoa no painel Pessoal do projeto
+para editá-la ou removê-la do projeto. Remover uma pessoa de um projeto não
+exclui o registro compartilhado de pessoal. Uma pessoa não pode ser removida
+enquanto registros do projeto ainda a utilizarem.
 
-Para pesquisar, editar ou excluir permanentemente registros de pessoal, abra
-`Settings` e escolha `Personnel` ou `Manage personnel`. O NAHPU impede a
-exclusão permanente enquanto a pessoa estiver atribuída a um projeto.
+Para pesquisar, editar ou excluir permanentemente o pessoal do banco de dados,
+abra `Settings` e escolha `Personnel` ou `Manage personnel`. O NAHPU impede a
+exclusão permanente quando a pessoa ainda está atribuída a um projeto.
 
 ## Terminologia
 
 ### Cataloger
 
-Pessoa que cria e edita registros de catálogo de espécimes.
+Pessoa que cria e edita os registros de catálogo dos espécimes. Catalogadores
+podem aparecer nos campos de catalogador, preparador e pessoal de coleta. A sua
+função não pode ser alterada depois da criação.
 
 ### Preparator only
 
@@ -56,11 +74,11 @@ catálogo.
 
 ### Determiner only
 
-Pessoa que identifica espécimes. Selecione-a no campo `Determiner` do
-formulário do espécime.
+Pessoa que identifica espécimes, mas não os cataloga nem os prepara. Selecione
+essa pessoa no campo `Determiner` do formulário do espécime.
 
 ### None
 
-Pessoa que apoia o trabalho de campo sem uma função de cuidado de espécimes,
-como guia, motorista ou cozinheiro. Seu nome ainda pode ser registrado como
+Pessoa que apoia o trabalho de campo sem uma função de cuidado com o espécime,
+como guia, motorista ou cozinheiro. O nome dela ainda pode ser registrado como
 pessoal de coleta.

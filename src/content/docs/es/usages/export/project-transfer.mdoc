@@ -1,80 +1,109 @@
 ---
-title: Transferir un proyecto
+title: Transferir un Proyecto
 sidebar:
   order: 10
 ---
 
-Use `Export project` y `Merge project` para combinar datos del mismo proyecto
-NAHPU en dispositivos diferentes. Una transferencia completa es un archivo ZIP
-o TAR.GZ con `nahpu-project.json` versionado y los archivos multimedia
-disponibles.
+Use `Export project` y `Merge project` para combinar los datos ingresados para
+el mismo proyecto NAHPU en dispositivos distintos. Una transferencia completa es
+un archivo ZIP o TAR.GZ con un manifiesto versionado `nahpu-project.json` y sus
+archivos de medios disponibles.
 
-Para cargas con internet limitado, active `Light export` para crear un archivo
-`JSON.GZ` sin multimedia. JSON.GZ sirve para combinar registros, pero no es una
-copia de seguridad completa del proyecto. Use ZIP o TAR.GZ cuando necesite
-multimedia o una copia completa del proyecto.
+Para cargas con internet limitada, active `Light export` para crear una
+exportación `JSON.GZ` sin medios. JSON.GZ sirve para fusionar registros del
+proyecto, pero no es una copia de seguridad completa. Use ZIP o TAR.GZ cuando se
+necesiten los medios o una copia completa del proyecto.
 
-No es lo mismo que los paquetes Darwin Core, que son para publicación, análisis
-o terceros y `Merge project` no acepta. NAHPU Data Package usa el mismo payload
-y diseño multimedia que una transferencia completa, por lo que sí puede
-seleccionarse para combinar.
+Esto es distinto de los paquetes Darwin Core, que sirven para publicación,
+análisis, archivo u otros flujos de terceros y no son aceptados por
+`Merge project`. Un NAHPU Data Package contiene el mismo contenido de proyecto y
+la misma disposición de medios que una exportación completa, así que también
+puede seleccionarse para fusionar.
 
-## Exportar
+## Exportar un proyecto {% #export-a-project %}
 
 {% steps %}
 
 1. Abra el proyecto en el dispositivo de origen.
-2. En el menú del panel, seleccione `Exportar proyecto`.
-3. Revise los conteos y las advertencias de archivos multimedia faltantes.
+2. Abra el menú del panel y seleccione `Export project`.
+3. Revise los conteos de personal, taxonomía, sitios, eventos, especímenes,
+   narrativas y medios. Revise las advertencias por medios faltantes.
 4. Para una transferencia o copia de seguridad completa, deje `Light export`
-   desactivado y elija `ZIP` o `TAR.GZ`. Para una carga con internet limitado,
-   active `Light export` para usar `JSON.GZ` sin multimedia.
-5. Seleccione `Exportar proyecto` y guarde o comparta el archivo de forma segura.
+   desactivado y seleccione `ZIP` o `TAR.GZ`. Para una carga con internet
+   limitada, active `Light export` para usar `JSON.GZ` sin medios.
+5. Seleccione `Export project` y luego guarde o comparta el archivo de forma
+   segura.
 
 {% /steps %}
 
-Solo se exporta la taxonomía usada por especímenes del proyecto activo. Se
-incluyen fotos del personal y multimedia vinculada cuando los archivos están
-disponibles; los archivos faltantes se omiten con una advertencia.
+Solo se exporta la taxonomía referenciada por especímenes del proyecto activo.
+Las fotos del personal del proyecto, los medios del proyecto y los medios de
+taxonomía vinculados se incluyen cuando sus archivos de origen están
+disponibles. Los archivos faltantes se informan como advertencias y sus enlaces
+rotos se omiten.
 
-La transferencia incluye los atributos específicos del grupo taxonómico. Para
-artrópodos, abarca interacciones ecológicas, parámetros ambientales,
-morfometría opcional, sexo y observaciones. Sustituir un espécimen importado
-también sustituye sus atributos de artrópodo; no se crean registros de
-parásitos para él.
+## Fusionar con el proyecto correspondiente {% #merge-into-the-matching-project %}
 
-## Combinar y resolver conflictos
-
-{% aside type="caution" title="Cree un respaldo primero" %}
-Antes de importar, cree un respaldo de la base de datos. El asistente exige
-confirmar este recordatorio e incluye la acción `Respaldar ahora`.
+{% aside type="caution" title="Haga una copia primero" %}
+Cree una copia de seguridad de la base de datos antes de fusionar. El asistente
+exige que confirme este recordatorio y ofrece un atajo `Back up now`, para que
+pueda recuperar la base anterior si es necesario.
 {% /aside %}
 
-En el dispositivo receptor, abra el menú del panel y seleccione `Merge
-project`. Elija una exportación `JSON.GZ`, ZIP, TAR.GZ o NAHPU Data Package y
-revise los conflictos antes de confirmar la combinación.
+{% steps %}
 
-El asistente revisa, en orden, la información del proyecto, personal,
-taxonomía, sitios, eventos, especímenes y narrativas. No escribe datos hasta
-el resumen final. La importación se confirma como una sola transacción; ante
-un fallo, revierte la base de datos y elimina los nuevos archivos copiados.
+1. Abra la copia del proyecto que recibirá los datos.
+2. Abra el menú del panel y seleccione `Merge project`.
+3. Elija una exportación de proyecto `JSON.GZ`, ZIP o TAR.GZ, o un NAHPU Data
+   Package.
+4. Confirme el recordatorio de copia de seguridad.
+5. Revise la información del proyecto, el personal, la taxonomía, los sitios,
+   los eventos, los especímenes y las narrativas, una sección a la vez.
+6. Resuelva cada coincidencia o conflicto.
+7. Revise el resumen final y seleccione `Merge project`.
 
-Para cada conflicto puede elegir:
+{% /steps %}
 
-- **Conservar actual** - Conserva el registro y enlaza sus dependencias.
-- **Usar importado** - Sustituye el registro coincidente y sus datos propios.
-- **Importar como nuevo** - Crea otra identidad y reasigna dependencias.
-- **Omitir** - No importa el registro ni dependencias sin resolver.
+NAHPU verifica la exportación y sus relaciones antes de mostrar la revisión. No
+se escribe ningún registro mientras usted avanza por el asistente. En el paso
+final, los cambios en la base de datos se confirman en conjunto. Si la fusión
+falla, los cambios se revierten y los archivos de medios recién copiados se
+eliminan.
 
-La opción predeterminada es conservar el registro actual. El personal y la
-taxonomía pueden compartirse con otros proyectos, por lo que el asistente
-advierte antes de sustituirlos. Un UUID de espécimen usado por otro proyecto
-solo puede importarse con un UUID nuevo u omitirse.
+## Resolver conflictos
 
-## Forzar una combinación
+Al encontrar un conflicto, NAHPU conserva inicialmente el registro actual. Usted
+puede elegir:
 
-Normalmente, el UUID del archivo debe coincidir con el UUID del proyecto
-activo. Si no coincide, la importación se bloquea. Si ambos representan
-realmente el mismo proyecto, active `Forzar combinación` y escriba el nombre
-del proyecto activo. Los registros importados usarán el UUID activo, pero cada
-conflicto seguirá requiriendo una decisión.
+- **Keep current** - conservar el registro actual y asignarle las dependencias
+  importadas.
+- **Use imported** - reemplazar el registro coincidente y sus datos propios
+  importados.
+- **Import as new** - crear un registro separado y reasignar sus dependencias.
+  Se genera un UUID nuevo cuando hace falta, y los ID de sitio duplicados
+  reciben un sufijo de importación único.
+- **Skip** - no importar el registro. Los registros dependientes que no puedan
+  reasignarse también se omiten.
+
+La información del proyecto se revisa campo por campo. Los UUID de personal y de
+espécimen se usan como identidad; la taxonomía se compara por género y epíteto
+específico normalizados. Los sitios usan un ID de sitio no vacío. Los eventos y
+las narrativas usan su sitio resuelto más su fecha, hora y campos de
+identificación.
+
+El personal y la taxonomía se comparten entre proyectos en la base de datos. El
+asistente advierte cuando reemplazar uno de ellos podría afectar a otro
+proyecto. Un UUID de espécimen que ya usa otro proyecto no puede reemplazarse;
+impórtelo con un UUID nuevo u omítalo.
+
+## Forzar la fusión de un UUID de proyecto distinto
+
+El flujo normal exige que el UUID del proyecto exportado coincida con el UUID
+del proyecto activo. Una discrepancia se bloquea porque suele significar que el
+proyecto abierto es el equivocado.
+
+Si los proyectos realmente representan el mismo trabajo de campo, active
+`Force merge` y escriba el nombre del proyecto activo para confirmar. NAHPU
+asigna entonces el UUID del proyecto activo a los registros importados con
+alcance de proyecto. Forzar la fusión no sobrescribe conflictos
+automáticamente; siguen aplicándose todas las opciones normales de conflicto.

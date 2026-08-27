@@ -6,53 +6,87 @@ sidebar:
 
 Você pode registrar um novo táxon manualmente ou importando um arquivo.
 
+Importar um táxon adiciona dados ao registro. Isso não adiciona um novo grupo de
+catálogo de espécimes ao aplicativo. Quem contribui implementando um novo grupo
+deve seguir [Adicionar um grupo taxonômico](../../contributing/code/adding-a-taxon-group).
+
 ## Registrar um novo táxon
+
+Uma entrada do registro não precisa ser uma espécie. `Taxon rank` define a
+categoria taxonômica que o registro representa, e o formulário exibe os campos
+de nome até essa categoria:
+
+- **Class**
+- **Order**
+- **Family**
+- **Genus**
+- **Species**
+- **Subspecies**
+
+Escolher `Family`, por exemplo, exibe reino, filo, classe, ordem e família, e
+deixa de fora as categorias inferiores. Isso permite registrar um táxon que
+ainda não foi identificado até a espécie, algo comum para material que aguarda
+determinação.
 
 ### Campos obrigatórios
 
-- **Classe**: A classe do táxon.
-- **Ordem**: A ordem do táxon.
-- **Família**: A família do táxon.
-- **Gênero**: O gênero do táxon.
-- **Epíteto específico**: O epíteto específico do táxon.
+- **Taxon rank**: a categoria taxonômica que este registro representa.
+- **O campo de nome dessa categoria**: `Family` para um registro de nível
+  família, `Specific epithet` para uma espécie, `Subspecific epithet` para uma
+  subespécie, e assim por diante. O aplicativo não salva o registro enquanto os
+  dois não estiverem preenchidos.
 
-### Campos opcionais
+### Campos de classificação
 
-- **Autor**: O autor do táxon e o ano da publicação.
-- **Nome comum**: O nome comum do táxon.
-- **Categoria da Lista Vermelha da IUCN**: O status da Lista Vermelha da IUCN do táxon.
-- **Status CITES**: O status CITES do táxon.
-- **Status de conservação no país**: O status de conservação do táxon em um país específico.
-- **Ordem de classificação**: Ordem arbitrária para classificar o táxon. É usado principalmente quando você exporta o registro. Por exemplo, você pode usar a ordem filogenética.
-- **Notas**: Qualquer informação adicional sobre o táxon.
+- **Kingdom** e **Phylum**: sempre disponíveis, qualquer que seja a categoria.
+- **Class**, **Order**, **Family**, **Genus**, **Specific epithet** e
+  **Subspecific epithet**: exibidos quando a categoria selecionada os alcança.
+  Os epítetos são armazenados em minúsculas.
+
+### Detalhes adicionais
+
+- **Authors**: o autor do táxon e o ano da publicação.
+- **Common name**: o nome comum do táxon.
+- **IUCN Red List category**: o status do táxon na Lista Vermelha da IUCN.
+- **CITES status**: o status CITES do táxon.
+- **Country conservation status**: o status de conservação do táxon em um país específico.
+- **Sorting order**: ordem arbitrária para classificar o táxon. É usada principalmente na exportação dos registros. Você pode usar a ordem filogenética, por exemplo.
+- **Notes**: qualquer informação adicional sobre o táxon.
 
 ### Registro manual
 
 1. Vá para o painel do projeto.
-2. No painel de táxons, clique no botão `+ Adicionar táxon`.
-3. Preencha as informações do táxon.
+2. No painel de táxons, selecione `Add taxon` e escolha o modo `Manual`.
+3. Selecione a `Taxon rank`.
+4. Preencha as informações do táxon.
 
-### Importar de arquivo
+### Importar de arquivo {% #import-from-file %}
 
-1. Prepare seu arquivo de importação. Os formatos preferidos são `.xlsx`, `.csv` e `.tsv`.
+1. Prepare o arquivo de importação. Os formatos preferidos são `.xlsx`, `.csv` e `.tsv`.
 2. Vá para o painel do projeto.
-3. No painel de táxons, clique no botão `Importar de arquivo`.
-4. Use o botão `Selecionar arquivo` para adicionar o arquivo. O aplicativo mapeará automaticamente as colunas para os campos corretos.
+3. No painel de táxons, selecione `Add taxon` e escolha o modo `Import`.
+4. Use o botão `Select file` para adicionar o arquivo. O aplicativo mapeia automaticamente as colunas para os campos corretos. Em telas estreitas, use as abas `Setup` e `Preview` para configurar a importação e revisar as linhas detectadas.
 
 Comportamento do delimitador:
 
 - `.csv` usa vírgula.
 - `.tsv` usa tabulação.
-- Arquivos Excel são analisados como planilhas.
-- Para outros tipos de arquivo, o NAHPU faz uma tentativa de análise de melhor esforço.
-- Se uma extensão de arquivo não for reconhecida, a detecção automática tenta primeiro Excel, vírgula, tabulação e ponto e vírgula.
-- Se a detecção automática ainda falhar, insira um delimitador bruto personalizado na sobreposição do analisador avançado.
+- Arquivos Excel são lidos como planilhas.
+- Para outros tipos de arquivo, o NAHPU faz uma tentativa de leitura da melhor forma possível.
+- Se a extensão do arquivo não for reconhecida, a detecção automática tenta primeiro Excel, vírgula, tabulação e ponto e vírgula.
+- Se a detecção automática ainda falhar, informe um delimitador personalizado na substituição avançada do analisador.
 
 Colunas recomendadas para o modelo de importação:
 
-- `class`, `order`, `family`, `genus`, `epithet`, `scientific name`, `common name`
-- Os campos de importação obrigatórios são `class`, `order`, `family`, `genus` e `epithet`.
-- A correspondência de cabeçalho é flexível, portanto, aliases como `taxonClass`, `taxonOrder`, `taxonFamily` e `specificEpithet` também são aceitos.
+- `class`, `order`, `family`, `genus`, `epithet`, `common name`, `notes`
+- Os campos obrigatórios da importação são `class`, `order`, `family`, `genus` e
+  `epithet`. A importação de arquivo sempre registra entradas de nível espécie;
+  use o registro manual para um táxon acima de espécie.
+- O reconhecimento de cabeçalhos é flexível, então aliases como `taxonClass`,
+  `taxonOrder`, `taxonFamily`, `specificEpithet`, `species`, `vernacularName`,
+  `iucnStatus` e `appendixStatus` também são aceitos.
+- As colunas que o aplicativo não reconhece ficam sem mapeamento. Use o menu
+  suspenso acima de cada coluna para atribuí-la, ou deixe-a como `Ignore`.
 
 {% aside type="note" %}
 
@@ -63,5 +97,5 @@ O melhor suporte é para `.xlsx`. Formatos Excel mais antigos ou diferentes pode
 ## Editar um táxon
 
 1. Vá para o painel do projeto.
-2. No painel de táxons dentro do táxon registrado, clique no botão `Ver tudo`.
+2. No painel de táxons, selecione `Manage` para abrir o registro completo.
 3. Clique no ícone de lápis para editar o táxon.

@@ -4,61 +4,81 @@ sidebar:
   order: 3
 ---
 
-Data personel dibagikan dalam basis data NAHPU dan dapat ditugaskan ke
-beberapa proyek. Setiap proyek hanya menampilkan personel yang ditugaskan.
+Catatan personel dipakai bersama di basis data NAHPU dan dapat ditugaskan ke
+beberapa proyek. Sebuah proyek hanya menampilkan personel yang ditugaskan
+padanya.
 
 ## Menambahkan personel ke proyek
 
-Pada panel Personnel di dasbor, pilih `Add personnel`. Jika personel sudah ada,
-pilih `Select from database`; jika belum, pilih `Add new personnel`.
+Pada panel Personel di dasbor proyek, pilih `Add personnel`. Bila sudah ada
+orang di basis data, pilih `Select from database` lalu pilih siapa yang akan
+ditugaskan. Bila belum, pilih `Add new personnel`.
 
-Formulir mencakup nama wajib, foto, afiliasi, email, telepon, ORCID opsional,
-peran perawatan spesimen (`Cataloger`, `Preparator only`, `Determiner only`,
-atau `None`), dan catatan. Gunakan
-`Show more` untuk menampilkan bidang opsional.
+Formulirnya memuat:
 
-Masukkan ORCID sebagai iD bertanda hubung dengan checksum valid, misalnya
-`0000-0002-1825-0097`. Darwin Core mengekspornya sebagai URL kanonis dan
-menggunakan UUID personel NAHPU jika ORCID tidak tersedia.
+- **Name (wajib)** - nama orang tersebut.
+- **Photo** - avatar atau foto personel.
+- **Affiliation** - institusi orang tersebut.
+- **Email** - alamat surel orang tersebut.
+- **Phone** - nomor telepon orang tersebut.
+- **ORCID** - ORCID iD opsional bertanda hubung dengan digit pemeriksa yang
+  sahih, misalnya `0000-0002-1825-0097`.
+- **Specimen care role** - `Cataloger`, `Preparator only`, `Determiner only`,
+  atau `None`.
+- **Notes** - informasi tambahan tentang orang tersebut.
 
-## Nomor lapangan kataloger
+Gunakan `Show more` untuk menampilkan kolom opsional. Alamat surel dibakukan
+menjadi huruf kecil dan nomor telepon hanya menerima angka.
 
-Saat perannya `Cataloger`, aktifkan `Register personal field number` jika
-inisial dan nomor harus membuat ID lapangan spesimen. Masukkan inisial dan
-nomor awal; nomor akan bertambah saat spesimen dibuat.
+Ekspor Darwin Core memakai URL kanonis `https://orcid.org/...` sebagai pengenal
+agen orang tersebut bila ORCID tersedia. Bila tidak, dipakai UUID personel
+NAHPU.
 
-Anda dapat menggunakan kode proyek, misalnya `ABC-` dan `1` untuk menghasilkan
-`ABC-1`. Pendaftaran nomor bersifat opsional, dan peran kataloger tidak dapat
-diubah setelah personel dibuat.
+## Nomor lapangan untuk pengatalog
 
-## Mengedit dan menghapus personel
+Bila perannya `Cataloger`, NAHPU menyediakan opsi
+`Register personal field number`. Aktifkan bila inisial dan nomor orang tersebut
+harus menghasilkan Field ID spesimen. Masukkan inisial lapangan dan nomor awal;
+nomornya bertambah seiring pembuatan spesimen.
 
-Gunakan menu tiga titik di samping personel untuk mengedit atau menghapusnya
-dari proyek. Menghapus dari proyek tidak menghapus data personel bersama.
-Personel tidak dapat dihapus jika masih digunakan oleh catatan proyek.
+Sebagian institusi memakai kode proyek alih-alih inisial seseorang. Misalnya,
+masukkan `ABC-` sebagai inisial dan `1` sebagai nomor awal untuk menghasilkan ID
+seperti `ABC-1`.
 
-Untuk mencari, mengedit, atau menghapus permanen data personel, buka `Settings`
-dan pilih `Personnel` atau `Manage personnel`. NAHPU mencegah penghapusan
-permanen jika personel masih ditugaskan ke proyek.
+Pendaftaran nomor lapangan bersifat opsional. Peran pengatalog tidak dapat
+diubah setelah orang tersebut dibuat.
 
-## Terminologi
+## Menyunting dan mengeluarkan personel
+
+Gunakan menu tiga titik di samping seseorang pada panel Personel proyek untuk
+menyunting atau mengeluarkannya dari proyek. Mengeluarkan seseorang dari proyek
+tidak menghapus catatan personel bersama. Seseorang tidak dapat dikeluarkan
+selama catatan proyek masih memakainya.
+
+Untuk mencari, menyunting, atau menghapus personel basis data secara permanen,
+buka `Settings` lalu pilih `Personnel` atau `Manage personnel`. NAHPU mencegah
+penghapusan permanen bila orang tersebut masih ditugaskan pada suatu proyek.
+
+## Peristilahan
 
 ### Cataloger
 
-Orang yang membuat dan mengedit catatan katalog spesimen.
+Orang yang membuat dan menyunting catatan katalog spesimen. Pengatalog dapat
+muncul pada kolom pengatalog, preparator, dan personel pengumpul. Perannya tidak
+dapat diubah setelah dibuat.
 
 ### Preparator only
 
-Orang yang membantu menyiapkan spesimen tetapi tidak membuat atau mengedit
+Orang yang membantu mempreparasi spesimen, tetapi tidak membuat atau menyunting
 catatan katalog.
 
 ### Determiner only
 
-Orang yang mengidentifikasi spesimen. Pilih orang ini pada field `Determiner`
-di formulir spesimen.
+Orang yang mengidentifikasi spesimen, tetapi tidak mengatalog atau
+mempreparasinya. Pilih orang ini pada kolom `Determiner` di formulir spesimen.
 
 ### None
 
-Orang yang mendukung kerja lapangan tanpa peran perawatan spesimen, seperti
+Orang yang mendukung kerja lapangan tanpa peran perawatan spesimen, misalnya
 pemandu, pengemudi, atau juru masak. Namanya tetap dapat dicatat sebagai
-personel pengumpulan.
+personel pengumpul.

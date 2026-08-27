@@ -32,12 +32,12 @@ Páginas + vista previa/exportación = PDF
 4. Revise la configuración de página, los bloques y la selección de registros.
 5. Seleccione `Preview` y genere una vista previa.
 6. Introduzca `File name` y elija el directorio de guardado cuando se solicite.
-7. Seleccione `Export Documents`.
+7. Seleccione `Export documents`.
 8. En el móvil, use `Share` después de exportar para enviar el PDF.
 
 {% /steps %}
 
-## Crear una plantilla
+## Crear una plantilla {% #create-a-template %}
 
 Abra `Settings` > `Documents`, cambie a `Templates` y seleccione `Create
 new template`.
@@ -98,29 +98,45 @@ Las imágenes usan una ruta local administrada por el dispositivo. El JSON de
 una plantilla describe la definición, no una copia de cada imagen externa;
 compruebe las imágenes después de importar en otro dispositivo.
 
-## Crear un preset de diseño de impresión
+## Crear un preset de diseño de impresión {% #create-a-print-layout-preset %}
 
 En `Settings` > `Documents`, cambie a `Print layouts`. Cree un diseño o
 use `Save as...` antes de experimentar con uno ya aprobado.
 
-Elija `Page size`, `Orientation`, dimensiones personalizadas y el espaciado de
-página. En `Template blocks`, configure para cada bloque:
+### Configuración de la página
 
-- `Template` y `Copies` (copias por registro);
-- `Rows` y `Cols` para una cuadrícula fija;
-- `Auto-fill page` para medir la altura real del contenido;
-- espaciado de la plantilla;
-- `Order by`, `Direction` y `Page break after`.
+Elija `Page size`, `Orientation`, dimensiones personalizadas cuando haga falta y
+el espaciado de página. La configuración de página describe la hoja; la
+plantilla describe un bloque.
 
-Si aparece `This template no longer exists`, seleccione otra plantilla antes
-de generar la vista previa o exportar. NAHPU no sustituye plantillas en silencio.
+### Bloques de plantilla
 
-Para varios bloques, `Multiple blocks mode` ofrece:
+Agregue uno o más `Template blocks`. Para cada bloque, elija:
 
-- `Continuous (Block-by-block)`: todos los registros del bloque 1 y después
-  todos los del bloque 2;
-- `Alternate (Record-by-record)`: los bloques 1 y 2 del registro 1, después
-  los dos bloques del registro 2.
+- `Template` — la definición reutilizable del bloque;
+- `Copies` — cuántas copias hacer por registro;
+- `Rows` y `Cols` — la cuadrícula fija de una hoja;
+- `Auto-fill page` — medir la altura renderizada de cada bloque en lugar de
+  imponer una altura de fila fija;
+- espaciado de la plantilla — el espacio alrededor de cada bloque;
+- `Order by` y `Direction` — ordenamiento determinista de los registros;
+- `Page break after` — forzar un salto después del bloque.
+
+Si un bloque del diseño muestra `This template no longer exists`, seleccione una
+plantilla de reemplazo disponible antes de generar la vista previa o exportar.
+NAHPU no sustituye plantillas en silencio.
+
+### Varios bloques
+
+Cuando un diseño tiene varios bloques, `Multiple blocks mode` controla su orden:
+
+- `Continuous (Block-by-block)` imprime todos los registros del bloque 1 y
+  después todos los del bloque 2.
+- `Alternate (Record-by-record)` imprime el bloque 1 y el bloque 2 del registro
+  1 y, a continuación, el bloque 1 y el bloque 2 del registro 2.
+
+Use el primer modo para secciones separadas de un paquete y el segundo para
+salidas emparejadas que deben permanecer juntas.
 
 ## Recetas prácticas
 
@@ -143,7 +159,7 @@ previa cuando aparezca como desactualizada.
 
 Los cambios realizados en el diseño seleccionado desde la pantalla de
 exportación se guardan en ese diseño. Use `Save as...` antes de probar una nueva
-disposición. Introduzca `File name`, seleccione el directorio y use `Export Documents`.
+disposición. Introduzca `File name`, seleccione el directorio y use `Export documents`.
 El PDF es un resultado de presentación, no una exportación estructurada ni una
 copia de seguridad restaurable.
 
@@ -155,6 +171,79 @@ pregunta si se debe reemplazar o usar otro nombre; la importación de diseños
 crea un nombre disponible. Los diseños referencian plantillas por nombre, por
 lo que deben transferirse juntos. Para una copia completa con datos y archivos,
 use `Backup database`.
+
+## Impresión de etiquetas de especímenes {% #printing-specimen-tags %}
+
+Las etiquetas impresas son el motivo más común para usar la exportación de
+documentos. Generarlas a partir de los datos de NAHPU, en lugar de escribirlas a
+mano, tiene varias ventajas.
+
+- **Ahorra tiempo en el campo.** En lugar de escribir etiquetas completas, lo
+  que puede tomar fácilmente 10 minutos o más por etiqueta, una alternativa más
+  rápida es usar etiquetas pequeñas con identificadores como el número de tejido
+  (por ejemplo, "B-729113") y el número de campo (por ejemplo, "JPO 7299").
+  Después, ya en el museo, puede imprimir las etiquetas finales y completas de
+  los especímenes.
+- **Etiquetas más limpias y estandarizadas.** Algunas personas tienen el don de
+  la letra clara; otras, no tanto. Imprimir las etiquetas garantiza que todos
+  los datos sean fáciles de leer.
+- **Evita errores en tareas repetitivas y tediosas.** Escribir el nombre
+  detallado de una localidad con coordenadas y datos de elevación decenas de
+  veces en el campo es tedioso, y el error humano es común. Con NAHPU, esa
+  información solo debe ingresarse una vez y luego puede asociarse a cada
+  espécimen mediante un menú desplegable de sitios. Si es necesario, los
+  detalles de la localidad también pueden actualizarse fácilmente dentro de la
+  aplicación.
+- **Permite una fase de limpieza de datos.** Antes de imprimir, es fácil usar
+  una hoja de cálculo final para corregir coordenadas extrañas, elevaciones,
+  errores de terminología, ortografía, etcétera.
+
+### Flujo de impresión de etiquetas
+
+NAHPU puede imprimir etiquetas directamente desde una plantilla y un preajuste
+de diseño. Cuando necesite una composición que los diseños integrados no
+cubren, una herramienta externa de etiquetas sigue siendo una opción:
+
+{% steps %}
+
+1. Exporte los datos de especímenes de NAHPU como un archivo `.csv`.
+2. Haga la limpieza final de los datos: revisión ortográfica, corrección de
+   errores varios y organización, combinación o división de columnas según sea
+   necesario.
+3. Cargue la hoja de cálculo en Entomolabels. Con el
+   [software Entomolabels](https://labels.entomo.pl/) (lamentablemente solo
+   disponible para computadoras con Windows) y plantillas de etiqueta
+   personalizadas, puede dar formato a los datos en la etiqueta del espécimen.
+4. Exporte los PDF finales para el frente y el reverso de las etiquetas y
+   combínelos, alternando las páginas.
+5. Use una impresora con dúplex automático para imprimir las etiquetas finales.
+
+{% /steps %}
+
+### Equipo de impresión
+
+- **Impresora.** Para imprimir etiquetas, el equipo de NAHPU ha usado la
+  [Epson WorkForce Pro WF-3820](https://epson.com/For-Work/Printers/Inkjet/WorkForce-Pro-WF-3820-Wireless-All-in-One-Printer/p/C11CJ07201)
+  con [tinta pigmentada de secado instantáneo DURABrite® Ultra](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1).
+  Con esta impresora, esta tinta y el papel que se indica abajo, imprimimos
+  recientemente (primavera de 2024) más de 1000 etiquetas de especímenes de aves
+  para el Louisiana State University Museum of Natural Science.
+- **Papel.** Hemos usado [papel 100% algodón, libre de ácido](https://www.redrivercatalog.com/browse/aurora-art-white-250.html)
+  con un gramaje de 250 g/m². Como es un papel relativamente grueso y rígido,
+  nos resultó muy útil flexionarlo un poco antes de imprimir. De lo contrario,
+  la impresora puede tener problemas para voltear la página internamente.
+
+### Archive el material impreso
+
+Guarde el PDF digital junto con el archivo del proyecto y conserve los
+preajustes de diseño y de plantilla cuando el documento deba volver a
+generarse. Revise la impresión antes de producir un lote completo e imprima en
+papel adecuado y duradero. Conserve la copia impresa junto con los registros de
+colección correspondientes.
+
+No considere los documentos impresos como un reemplazo de la base de datos, la
+exportación del proyecto o la exportación estructurada de registros. Consulte
+[Archivar un proyecto](../#archiving-a-project).
 
 ## Solución de problemas
 

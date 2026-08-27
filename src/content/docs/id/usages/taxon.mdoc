@@ -6,62 +6,96 @@ sidebar:
 
 Anda dapat mendaftarkan takson baru secara manual atau dengan mengimpor berkas.
 
+Mengimpor takson menambahkan data ke registri. Tindakan ini tidak menambahkan
+grup katalog spesimen baru ke aplikasi. Kontributor yang menambahkan grup baru
+sebaiknya mengikuti [Menambahkan grup takson](../../contributing/code/adding-a-taxon-group).
+
 ## Mendaftarkan takson baru
 
-### Bidang wajib
+Sebuah entri registri tidak harus berupa spesies. `Taxon rank` menetapkan
+tingkat takson yang diwakili catatan tersebut, dan formulir akan menampilkan
+kolom nama sampai tingkat itu:
 
-- **Kelas**: Kelas takson.
-- **Ordo**: Ordo takson.
-- **Famili**: Famili takson.
-- **Genus**: Genus takson.
-- **Epiteta spesifik**: Epiteta spesifik takson.
+- **Class**
+- **Order**
+- **Family**
+- **Genus**
+- **Species**
+- **Subspecies**
 
-### Bidang opsional
+Memilih `Family`, misalnya, menampilkan kerajaan, filum, kelas, ordo, dan
+famili, serta tidak menampilkan tingkat di bawahnya. Dengan begitu Anda dapat
+mendaftarkan takson yang belum teridentifikasi sampai spesies, hal yang lazim
+pada material yang masih menunggu determinasi.
 
-- **Penulis**: Penulis takson dan tahun publikasi.
-- **Nama umum**: Nama umum takson.
-- **Kategori Daftar Merah IUCN**: Status Daftar Merah IUCN takson.
-- **Status CITES**: Status CITES takson.
-- **Status konservasi negara**: Status konservasi takson di negara tertentu.
-- **Urutan penyortiran**: Urutan sewenang-wenang untuk menyortir takson. Ini sebagian besar digunakan saat Anda mengekspor catatan. Misalnya, Anda dapat menggunakan urutan filogenetik.
-- **Catatan**: Informasi tambahan apa pun tentang takson.
+### Kolom wajib
+
+- **Taxon rank**: tingkat takson yang diwakili catatan ini.
+- **Kolom nama untuk tingkat tersebut**: `Family` untuk catatan tingkat famili,
+  `Specific epithet` untuk spesies, `Subspecific epithet` untuk subspesies, dan
+  seterusnya. Aplikasi tidak akan menyimpan catatan sebelum keduanya diisi.
+
+### Kolom klasifikasi
+
+- **Kingdom** dan **Phylum**: selalu tersedia, apa pun tingkatnya.
+- **Class**, **Order**, **Family**, **Genus**, **Specific epithet**, dan
+  **Subspecific epithet**: muncul bila tingkat yang dipilih mencapainya. Epitet
+  disimpan dalam huruf kecil.
+
+### Detail tambahan
+
+- **Authors**: pengarang takson dan tahun publikasinya.
+- **Common name**: nama umum takson.
+- **IUCN Red List category**: status takson pada Daftar Merah IUCN.
+- **CITES status**: status CITES takson.
+- **Country conservation status**: status konservasi takson di suatu negara.
+- **Sorting order**: urutan bebas untuk menyortir takson. Umumnya dipakai saat mengekspor catatan. Misalnya, Anda dapat memakai urutan filogenetik.
+- **Notes**: informasi tambahan apa pun tentang takson.
 
 ### Pendaftaran manual
 
 1. Buka dasbor proyek.
-2. Pada panel takson, klik tombol `+ Tambah takson`.
-3. Isi informasi takson.
+2. Pada panel takson, pilih `Add taxon` lalu pilih mode `Manual`.
+3. Pilih `Taxon rank`.
+4. Isi informasi takson.
 
-### Impor dari berkas
+### Impor dari berkas {% #import-from-file %}
 
-1. Siapkan berkas impor Anda. Format yang disukai adalah `.xlsx`, `.csv`, dan `.tsv`.
+1. Siapkan berkas impor Anda. Format yang disarankan adalah `.xlsx`, `.csv`, dan `.tsv`.
 2. Buka dasbor proyek.
-3. Pada panel takson, klik tombol `Impor dari berkas`.
-4. Gunakan tombol `Pilih berkas` untuk menambahkan berkas. Aplikasi akan secara otomatis memetakan kolom ke bidang yang benar.
+3. Pada panel takson, pilih `Add taxon` lalu pilih mode `Import`.
+4. Gunakan tombol `Select file` untuk menambahkan berkas. Aplikasi akan memetakan kolom ke kolom yang sesuai secara otomatis. Pada layar sempit, gunakan tab `Setup` dan `Preview` untuk mengatur impor dan meninjau baris yang terdeteksi.
 
-Perilaku pembatas (delimiter):
+Perilaku pemisah:
 
-- `.csv` menggunakan koma.
-- `.tsv` menggunakan tab.
-- Berkas Excel diurai sebagai lembar sebar (spreadsheet).
-- Untuk jenis berkas lainnya, NAHPU melakukan upaya terbaik untuk mengurai.
-- Jika ekstensi berkas tidak dikenali, deteksi otomatis mencoba Excel, koma, tab, dan titik koma terlebih dahulu.
-- Jika deteksi otomatis masih gagal, masukkan pembatas mentah khusus di pengabaian pengurai tingkat lanjut (advanced parser override).
+- `.csv` memakai koma.
+- `.tsv` memakai tab.
+- Berkas Excel dibaca sebagai lembar kerja.
+- Untuk jenis berkas lain, NAHPU berupaya sebaik mungkin membacanya.
+- Bila ekstensi berkas tidak dikenali, deteksi otomatis mencoba Excel, koma, tab, dan titik koma terlebih dahulu.
+- Bila deteksi otomatis tetap gagal, masukkan pemisah khusus pada penggantian pengurai lanjutan.
 
-Kolom templat impor yang disarankan:
+Kolom yang disarankan untuk templat impor:
 
-- `class`, `order`, `family`, `genus`, `epithet`, `scientific name`, `common name`
-- Bidang impor yang wajib adalah `class`, `order`, `family`, `genus`, dan `epithet`.
-- Pencocokan header bersifat fleksibel, sehingga alias seperti `taxonClass`, `taxonOrder`, `taxonFamily`, dan `specificEpithet` juga diterima.
+- `class`, `order`, `family`, `genus`, `epithet`, `common name`, `notes`
+- Kolom wajib untuk impor adalah `class`, `order`, `family`, `genus`, dan
+  `epithet`. Impor berkas selalu mendaftarkan catatan tingkat spesies; gunakan
+  pendaftaran manual untuk takson di atas spesies.
+- Pencocokan tajuk bersifat lentur, sehingga alias seperti `taxonClass`,
+  `taxonOrder`, `taxonFamily`, `specificEpithet`, `species`, `vernacularName`,
+  `iucnStatus`, dan `appendixStatus` juga diterima.
+- Kolom yang tidak dikenali aplikasi dibiarkan tanpa pemetaan. Gunakan menu
+  pilihan di atas setiap kolom untuk menetapkannya, atau biarkan sebagai
+  `Ignore`.
 
 {% aside type="note" %}
 
-Dukungan terbaik adalah `.xlsx`. Format Excel yang lebih lama/lainnya mungkin gagal. Jika perlu, simpan ulang sebagai `.xlsx`, `.csv`, atau `.tsv`.
+Dukungan terbaik adalah `.xlsx`. Format Excel yang lebih lama atau berbeda dapat gagal. Bila perlu, simpan ulang sebagai `.xlsx`, `.csv`, atau `.tsv`.
 
 {% /aside %}
 
 ## Mengedit takson
 
 1. Buka dasbor proyek.
-2. Pada panel takson di dalam takson terdaftar, klik tombol `Lihat semua`.
-3. Klik pada ikon pensil untuk mengedit takson.
+2. Pada panel takson, pilih `Manage` untuk membuka registri lengkap.
+3. Klik ikon pensil untuk mengedit takson.

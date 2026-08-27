@@ -105,14 +105,58 @@ Abra o menu de três pontos na página da localidade para usar estas ações:
 Ao importar uma localidade, escolha se o registro criará uma nova localidade ou
 atualizará uma existente. Revise o pessoal e as coordenadas vinculados.
 
-## Adicionando coordenadas
+## Copiar dados de local de outro projeto
+
+Use `Copy from project ...` quando um local de outro projeto tiver informações
+que você queira reutilizar no projeto atual. Essa ação preenche o local atual;
+ela não cria um novo local nem altera o projeto de origem.
+
+O local atual precisa estar vazio antes de começar. Um local com informações,
+coordenadas, mídia ou dados vinculados não pode receber dados copiados. É
+preciso haver pelo menos dois projetos, porque a origem deve ser um projeto
+diferente.
+
+{% steps %}
+
+1. Abra o local que vai receber as informações copiadas. Confirme que é um
+   registro de local vazio.
+
+2. Abra o menu de três pontos e selecione `Copy from project ...`.
+
+3. Selecione o projeto de origem pelo nome e depois selecione um de seus locais.
+
+4. Selecione os dados a copiar. As opções disponíveis incluem:
+
+   - Site ID
+   - Site leader
+   - Site type
+   - Campos de geografia, incluindo país, grupo de ilhas, estado/província,
+     condado/paróquia/distrito, município/cidade e localidade precisa
+   - Remarks
+   - Tipo, condição e descrição do habitat
+   - Coordenadas
+
+   Campos sem dados no local de origem ficam indisponíveis. Selecionar
+   `Coordinates` copia todas as coordenadas pertencentes ao local de origem
+   selecionado.
+
+5. Selecione `Copy` para preencher o local atual.
+
+{% /steps %}
+
+O local de origem permanece inalterado. Essa ação copia apenas campos do local e
+coordenadas; ela não copia mídia do local, links de dados associados, registros
+de sítio fossilífero, eventos de coleta ou outros registros vinculados ao local
+de origem.
+
+## Adicionando coordenadas {% #adding-coordinates %}
 
 Uma localidade pode ter vários registros de coordenadas para as extremidades de
 uma linha de armadilhas, pontos de coleta separados ou outros pontos da mesma
 localidade. Você pode adicionar coordenadas manualmente, usar o GPS do
 dispositivo ou importar pontos de um arquivo GIS/GPS.
 
-### Usar o GPS do dispositivo ao adicionar uma coordenada
+### Usar o GPS do dispositivo ao adicionar uma coordenada {% #use-device-gps-while-adding-a-coordinate %}
 
 {% steps %}
 
@@ -131,7 +175,7 @@ dispositivo ou importar pontos de um arquivo GIS/GPS.
 
 {% /steps %}
 
-### Adicionando coordenadas manualmente
+### Adicionando coordenadas manualmente {% #manually-adding-coordinate %}
 
 {% steps %}
 

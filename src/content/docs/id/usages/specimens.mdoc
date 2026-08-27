@@ -105,11 +105,12 @@ ekspor tetap sama di instalasi NAHPU lain.
 
 {% /steps %}
 
-## Catatan umum
+## Pengumpulan dan identifikasi
 
-Formulir umum mencakup `Museum ID`, nomor lapangan, `Cataloger`, `Preparator`, `Determiner`,
-`Species`, `ID Confidence`, `ID Method`, `Condition`, serta tanggal dan waktu
-koleksi dan persiapan.
+Kartu `Collection & Identification` memuat `Museum ID`, nomor lapangan,
+`Cataloger`, `Preparator`, `Determiner`, `Taxon`, `ID Confidence`,
+`Identification Method`, `Condition`, serta tanggal dan waktu pengumpulan dan
+preparasi.
 
 Editor ID responsif memungkinkan pemilihan Personnel atau Project untuk setiap
 spesimen. Mengganti jenis akan menghapus ID sebelumnya, dan nomor yang sudah
@@ -175,18 +176,20 @@ Bidang pengukuran yang tersedia bergantung pada format katalog.
 {% /tabitem %}
 {% tabitem label="Artropoda" %}
 
-Bagian interaksi ekologi dan parameter lingkungan tampil secara default.
-Gunakan `Show specimen morphometrics` untuk menampilkan atau menyembunyikan
-pengukuran; nilai morfometrik yang tersimpan akan membuka bagian itu kembali.
+Bagian interaksi ekologi tampil secara bawaan. Gunakan
+`Show specimen morphometrics` untuk menampilkan atau menyembunyikan pengukuran;
+nilai morfometri yang tersimpan akan membuka bagian itu kembali.
 
-- `Sex`: atribut spesimen yang ditampilkan di atas bagian ekologi dan
-  lingkungan.
-- Interaksi ekologi: organisme inang, bagian inang, dan afinitas kanopi.
-- Parameter lingkungan: tutupan kanopi, suhu udara dan air (°C), kelembapan
-  udara (%), pH, oksigen terlarut (mg/L), dan kecepatan aliran (m/s).
-- Morfometrik opsional: lebar kepala, panjang tubuh, rentang sayap atas, dan
-  rentang sayap bawah, semuanya dalam milimeter.
+- `Sex`: dipilih dari kosakata terkontrol jenis kelamin spesimen.
+- `Caste`: kasta serangga sosial, bila berlaku.
+- Interaksi ekologi: `Host organism` dan `Host part`.
+- Morfometri opsional: `Head width (mm)`, `Body length (mm)`,
+  `Upper wingspan (mm)`, dan `Lower wingspan (mm)`.
 - `Remarks`: catatan ekologi atau spesimen tambahan.
+
+Kondisi lingkungan bukan atribut spesimen. Catat tutupan tajuk pada lokasi di
+`Site Attributes`, serta suhu, kelembapan, pH, oksigen terlarut, dan kecepatan
+aliran pada data lingkungan kegiatan pengumpulan.
 
 Katalog artropoda tidak menampilkan field deteksi atau tab parasit.
 
@@ -195,7 +198,7 @@ Katalog artropoda tidak menampilkan field deteksi atau tab parasit.
 
 
 {% /tabs %}
-## Bagian Spesimen
+## Bagian Spesimen {% #specimen-parts %}
 
 Setiap spesimen dapat memiliki banyak bagian, seperti voucher, jaringan,
 swab, atau parasit. Bagian dapat berisi `Tissue ID`, `QR/barcode ID`,
@@ -207,7 +210,7 @@ penyimpanan dari lokasi fisiknya.
 Tab parasit tersedia untuk mamalia, burung, dan herpetofauna, tetapi tidak
 untuk katalog artropoda.
 
-## Data terkait
+## Data terkait {% #associated-data %}
 
 Gunakan `Associated Data` untuk tautan atau berkas digital yang terkait dengan
 spesimen, seperti akses GenBank, catatan MorphoSource, atau berkas analisis.

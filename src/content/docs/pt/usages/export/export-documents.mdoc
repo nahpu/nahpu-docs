@@ -31,12 +31,12 @@ Páginas + pré-visualização/exportação = PDF
 4. Revise a configuração da página, os blocos e a seleção de registros.
 5. Selecione `Preview` e gere uma prévia.
 6. Informe `File name` e escolha o diretório de salvamento quando solicitado.
-7. Selecione `Export Documents`.
+7. Selecione `Export documents`.
 8. No celular, use `Share` depois da exportação para enviar o PDF.
 
 {% /steps %}
 
-## Criar um modelo
+## Criar um modelo {% #create-a-template %}
 
 Abra `Settings` > `Documents`, mude para `Templates` e selecione `Create
 new template`.
@@ -95,29 +95,46 @@ Imagens usam um caminho local gerenciado pelo dispositivo. Um JSON de modelo
 descreve a definição, não uma cópia de cada arquivo de imagem externo; verifique
 as imagens depois de importar em outro dispositivo.
 
-## Criar um preset de layout de impressão
+## Criar um preset de layout de impressão {% #create-a-print-layout-preset %}
 
 Em `Settings` > `Documents`, mude para `Print layouts`. Crie um layout ou
 use `Save as...` antes de experimentar com um layout já aprovado.
 
-Escolha `Page size`, `Orientation`, dimensões personalizadas e espaçamento da
-página. Em `Template blocks`, configure para cada bloco:
+### Configuração da página
 
-- `Template` e `Copies` (cópias por registro);
-- `Rows` e `Cols` para uma grade fixa;
-- `Auto-fill page` para medir a altura real do conteúdo;
-- espaçamento do modelo;
-- `Order by`, `Direction` e `Page break after`.
+Escolha `Page size`, `Orientation`, dimensões personalizadas quando necessário e
+o espaçamento da página. As configurações de página descrevem a folha; o modelo
+descreve um bloco.
 
-Se aparecer `This template no longer exists`, selecione outro modelo antes de
-gerar a prévia ou exportar. O NAHPU não substitui um modelo silenciosamente.
+### Blocos de modelo
 
-Para vários blocos, `Multiple blocks mode` oferece:
+Adicione um ou mais `Template blocks`. Para cada bloco, escolha:
 
-- `Continuous (Block-by-block)`: todos os registros do bloco 1, depois os do
-  bloco 2;
-- `Alternate (Record-by-record)`: bloco 1 e bloco 2 do registro 1, depois os
-  dois blocos do registro 2.
+- `Template` — a definição de bloco reutilizável;
+- `Copies` — quantas cópias fazer para cada registro;
+- `Rows` e `Cols` — a grade fixa de uma folha;
+- `Auto-fill page` — medir a altura renderizada de cada bloco em vez de impor
+  uma altura de linha fixa;
+- espaçamento do modelo — o espaço ao redor de cada bloco;
+- `Order by` e `Direction` — ordenação determinística dos registros;
+- `Page break after` — forçar uma quebra depois do bloco.
+
+Se um bloco do layout exibir `This template no longer exists`, selecione um
+modelo substituto disponível antes de gerar a prévia ou exportar. O NAHPU não
+substitui um modelo silenciosamente.
+
+### Vários blocos
+
+Quando um layout tem vários blocos, `Multiple blocks mode` controla a ordem
+deles:
+
+- `Continuous (Block-by-block)` imprime todos os registros do bloco 1 e depois
+  todos os registros do bloco 2.
+- `Alternate (Record-by-record)` imprime o bloco 1 e o bloco 2 do registro 1 e,
+  em seguida, o bloco 1 e o bloco 2 do registro 2.
+
+Use o primeiro modo para seções separadas de um conjunto e o segundo para saídas
+pareadas que devem permanecer juntas.
 
 ## Receitas práticas
 
@@ -140,7 +157,7 @@ desatualizada.
 
 Alterações feitas no layout selecionado pela tela de exportação são salvas no
 próprio layout. Use `Save as...` antes de testar uma nova disposição. Informe
-`File name`, selecione o diretório e use `Export Documents`. O PDF é um artefato
+`File name`, selecione o diretório e use `Export documents`. O PDF é um artefato
 de apresentação, não uma exportação estruturada nem um backup restaurável.
 
 ## Importar e compartilhar
@@ -150,6 +167,79 @@ exportados em `Documents`. A importação de modelo pergunta se deve
 substituir ou usar outro nome; a importação de layout cria um nome disponível.
 Layouts referenciam modelos por nome, portanto transfira ambos juntos. Para uma
 cópia completa com dados e arquivos gerenciados, use `Backup database`.
+
+## Imprimindo etiquetas de espécimes {% #printing-specimen-tags %}
+
+Etiquetas impressas são o motivo mais comum para usar a exportação de
+documentos. Gerá-las a partir dos dados do NAHPU, em vez de escrevê-las à mão,
+tem várias vantagens.
+
+- **Economiza tempo no campo.** Em vez de escrever etiquetas completas, o que
+  pode levar facilmente 10 minutos ou mais por etiqueta, uma alternativa mais
+  rápida é usar etiquetas pequenas com identificadores como o número de tecido
+  (por exemplo, "B-729113") e o número de campo (por exemplo, "JPO 7299").
+  Depois, já no museu, você pode imprimir as etiquetas finais e completas dos
+  espécimes.
+- **Etiquetas mais limpas e padronizadas.** Algumas pessoas têm o dom da letra
+  legível; outras, nem tanto. Imprimir as etiquetas garante que todos os dados
+  sejam fáceis de ler.
+- **Evita erros em tarefas repetitivas e tediosas.** Escrever o nome detalhado
+  de uma localidade com coordenadas e altitude dezenas de vezes no campo é
+  cansativo, e o erro humano é comum. Com o NAHPU, essa informação precisa ser
+  digitada apenas uma vez e pode então ser associada a cada espécime por um menu
+  suspenso de locais. Se necessário, os detalhes da localidade também podem ser
+  atualizados com facilidade dentro do aplicativo.
+- **Permite uma fase de limpeza dos dados.** Antes da impressão, é fácil usar
+  uma planilha final para corrigir coordenadas estranhas, altitudes, erros de
+  terminologia, ortografia e assim por diante.
+
+### Fluxo de impressão de etiquetas
+
+O NAHPU pode imprimir etiquetas diretamente de um modelo e de uma predefinição
+de layout. Quando você precisar de uma composição tipográfica que os layouts
+internos não cobrem, uma ferramenta externa de etiquetas continua sendo uma
+opção:
+
+{% steps %}
+
+1. Exporte os dados de espécimes do NAHPU como um arquivo `.csv`.
+2. Faça a limpeza final dos dados: revisão ortográfica, correção de erros
+   diversos e organização, combinação ou divisão de colunas conforme necessário.
+3. Envie a planilha para o Entomolabels. Com o
+   [software Entomolabels](https://labels.entomo.pl/) (infelizmente disponível
+   apenas para computadores Windows) e modelos de etiqueta personalizados, você
+   pode formatar os dados na etiqueta do espécime.
+4. Exporte os PDFs finais para a frente e o verso das etiquetas e combine-os,
+   alternando as páginas de frente e verso.
+5. Use uma impressora com duplex automático para imprimir as etiquetas finais.
+
+{% /steps %}
+
+### Equipamento de impressão
+
+- **Impressora.** Para imprimir etiquetas, a equipe do NAHPU usou a
+  [Epson WorkForce Pro WF-3820](https://epson.com/For-Work/Printers/Inkjet/WorkForce-Pro-WF-3820-Wireless-All-in-One-Printer/p/C11CJ07201)
+  com [tinta pigmentada de secagem instantânea DURABrite® Ultra](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1).
+  Com essa impressora, essa tinta e o papel indicado abaixo, imprimimos
+  recentemente (primavera de 2024) mais de 1000 etiquetas de espécimes de aves
+  para o Louisiana State University Museum of Natural Science.
+- **Papel.** Usamos [papel 100% algodão, livre de ácido](https://www.redrivercatalog.com/browse/aurora-art-white-250.html)
+  com gramatura de 250 g/m². Como é um papel relativamente espesso e rígido,
+  achamos muito útil flexionar um pouco as folhas antes de imprimir. Caso
+  contrário, a impressora pode ter dificuldade para virar a página
+  internamente.
+
+### Arquive o material impresso
+
+Guarde o PDF digital junto com o arquivo do projeto e preserve as predefinições
+de layout e de modelo caso o documento precise ser gerado novamente. Revise a
+impressão antes de produzir um lote completo e imprima em papel adequado e
+durável. Mantenha a cópia impressa junto aos registros de coleção
+correspondentes.
+
+Não trate documentos impressos como substitutos do banco de dados, da
+exportação do projeto ou da exportação estruturada de registros. Consulte
+[Arquivando um projeto](../#archiving-a-project).
 
 ## Solução de problemas
 

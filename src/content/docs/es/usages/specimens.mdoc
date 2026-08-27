@@ -106,11 +106,12 @@ misma terminología y el mismo comportamiento de exportación.
 
 {% /steps %}
 
-## Registros generales
+## Recolecta e identificación
 
-El formulario general incluye `Museum ID`, el número de campo, `Cataloger`,
-`Preparator`, `Determiner`, `Species`, `ID Confidence`, `ID Method`, `Condition`, y las fechas
-y horas de recolección y preparación.
+La tarjeta `Collection & Identification` incluye `Museum ID`, el número de
+campo, `Cataloger`, `Preparator`, `Determiner`, `Taxon`, `ID Confidence`,
+`Identification Method`, `Condition`, y las fechas y horas de recolecta y
+preparación.
 
 El editor adaptable de ID permite elegir Personnel o Project para cada
 espécimen. Al cambiar de tipo se elimina el identificador anterior y no se
@@ -177,20 +178,21 @@ Los campos de medición disponibles dependen del formato del catálogo.
 {% /tabitem %}
 {% tabitem label="Artrópodos" %}
 
-Las secciones de interacciones ecológicas y parámetros ambientales se muestran
-de forma predeterminada. Use `Show specimen morphometrics` para mostrar u
-ocultar las mediciones; los valores guardados vuelven a abrir esa sección.
+La sección de interacciones ecológicas se muestra de forma predeterminada. Use
+`Show specimen morphometrics` para mostrar u ocultar las mediciones; los valores
+morfométricos guardados vuelven a abrir esa sección.
 
-- `Sexo`: atributo del espécimen situado encima de las secciones ecológica y
-  ambiental.
-- Interacciones ecológicas: organismo hospedador, parte del hospedador y
-  afinidad con el dosel.
-- Parámetros ambientales: cobertura del dosel, temperaturas ambiental y del
-  agua (°C), humedad ambiental (%), pH, oxígeno disuelto (mg/L) y velocidad del
-  flujo (m/s).
-- Morfometría opcional: ancho de la cabeza, longitud del cuerpo y envergaduras
-  superior e inferior, todas en milímetros.
+- `Sex`: se elige del vocabulario controlado de sexo del espécimen.
+- `Caste`: la casta de un insecto social, cuando corresponda.
+- Interacciones ecológicas: `Host organism` y `Host part`.
+- Morfometría opcional: `Head width (mm)`, `Body length (mm)`,
+  `Upper wingspan (mm)` y `Lower wingspan (mm)`.
 - `Remarks`: notas ecológicas o del espécimen.
+
+Las condiciones ambientales no son atributos del espécimen. Registre la
+cobertura del dosel en el sitio, en `Site Attributes`, y la temperatura, la
+humedad, el pH, el oxígeno disuelto y la velocidad del flujo en los datos
+ambientales del evento de recolecta.
 
 Los catálogos de artrópodos no muestran campos de detección ni la pestaña de
 parásitos.
@@ -200,7 +202,7 @@ parásitos.
 
 
 {% /tabs %}
-## Partes de especímenes
+## Partes de especímenes {% #specimen-parts %}
 
 Cada espécimen puede tener varias partes, como vouchers, tejidos, hisopos o
 parásitos. Una parte puede incluir `Tissue ID`, `QR/barcode ID`, `Preparation
@@ -212,7 +214,7 @@ almacenamiento de la ubicación física.
 La pestaña de parásitos está disponible para mamíferos, aves y herpetofauna,
 pero no para catálogos de artrópodos.
 
-## Datos asociados
+## Datos asociados {% #associated-data %}
 
 Use `Associated Data` para enlaces o archivos digitales relacionados, como
 accesiones de GenBank, registros de MorphoSource o archivos de análisis. Los

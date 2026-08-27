@@ -106,14 +106,58 @@ Buka menu tiga titik pada halaman lokasi untuk menggunakan tindakan berikut:
 Saat mengimpor lokasi, pilih apakah catatan membuat lokasi baru atau memperbarui
 lokasi yang ada. Periksa kembali personel dan koordinat yang terkait.
 
-## Menambahkan koordinat
+## Menyalin data lokasi dari proyek lain
+
+Gunakan `Copy from project ...` bila sebuah lokasi pada proyek lain memuat
+informasi yang ingin Anda pakai ulang di proyek saat ini. Tindakan ini mengisi
+lokasi yang sedang dibuka; tindakan ini tidak membuat lokasi baru dan tidak
+mengubah proyek sumbernya.
+
+Lokasi saat ini harus kosong sebelum Anda mulai. Lokasi yang sudah berisi
+informasi, koordinat, media, atau data tertaut tidak dapat menerima data
+salinan. Harus ada setidaknya dua proyek, karena sumbernya wajib berupa proyek
+yang berbeda.
+
+{% steps %}
+
+1. Buka lokasi yang akan menerima informasi salinan. Pastikan catatan lokasi itu
+   masih kosong.
+
+2. Buka menu tiga titik lalu pilih `Copy from project ...`.
+
+3. Pilih proyek sumber berdasarkan namanya, lalu pilih salah satu lokasinya.
+
+4. Pilih data yang akan disalin. Pilihan yang tersedia mencakup:
+
+   - Site ID
+   - Site leader
+   - Site type
+   - Kolom geografi, meliputi negara, gugus pulau, negara bagian/provinsi,
+     kabupaten/paroki/distrik, kotamadya/kota, dan lokalitas rinci
+   - Remarks
+   - Tipe, kondisi, dan deskripsi habitat
+   - Koordinat
+
+   Kolom yang tidak berisi data pada lokasi sumber tidak dapat dipilih. Memilih
+   `Coordinates` akan menyalin seluruh koordinat milik lokasi sumber terpilih.
+
+5. Pilih `Copy` untuk mengisi lokasi saat ini.
+
+{% /steps %}
+
+Lokasi sumber tetap tidak berubah. Tindakan ini hanya menyalin kolom lokasi dan
+koordinat; tindakan ini tidak menyalin media lokasi, tautan data terkait,
+catatan situs fosil, kegiatan pengumpulan, atau catatan lain yang tertaut pada
+lokasi sumber.
+
+## Menambahkan koordinat {% #adding-coordinates %}
 
 Satu lokasi dapat memiliki beberapa catatan koordinat untuk ujung jalur
 jebakan, titik pengumpulan yang berbeda, atau titik lain yang termasuk dalam
 lokasi yang sama. Anda dapat menambahkan koordinat secara manual, menggunakan
 GPS perangkat, atau mengimpor titik dari file GIS/GPS.
 
-### Menggunakan GPS perangkat saat menambahkan koordinat
+### Menggunakan GPS perangkat saat menambahkan koordinat {% #use-device-gps-while-adding-a-coordinate %}
 
 {% steps %}
 
@@ -131,7 +175,7 @@ GPS perangkat, atau mengimpor titik dari file GIS/GPS.
 
 {% /steps %}
 
-### Menambahkan koordinat secara manual
+### Menambahkan koordinat secara manual {% #manually-adding-coordinate %}
 
 {% steps %}
 

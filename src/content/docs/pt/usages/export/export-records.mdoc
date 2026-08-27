@@ -4,46 +4,56 @@ sidebar:
   order: 10
 ---
 
-Use `Exportar registros` quando precisar dos dados do projeto em CSV, TSV, Excel ou JSON. Esta é a exportação indicada para revisão em planilhas, importação em bancos de dados, análise e compartilhamento de dados estruturados.
+Use `Export records` quando precisar dos dados do projeto em CSV, TSV, Excel ou
+JSON. Essa é a melhor exportação para revisão em planilha, importação em banco
+de dados, análise e compartilhamento de dados estruturados com colaboradores.
 
 ## Forma rápida de exportar registros
 
 {% steps %}
 
-1. Navegue até a página `Painel de controle`.
-2. Abra o menu do projeto e selecione `Exportar registros`.
-3. Opcional: escolha um preset em `Usar preset`.
-4. Se não estiver usando um preset, selecione o `Tipo de registro`.
-    - `Narrativa`
-    - `Locais`
-    - `Eventos`
-    - `Registros de espécimes`
-    - `Partes de espécimes`
-5. Para registros de espécimes, selecione o grupo taxonômico. Exportações de mamíferos podem ser limitadas a não morcegos, morcegos ou todos os mamíferos.
-6. Selecione o modo de campos de espécime.
-    - `Padrão`
-    - `Todos os campos`
-    - `Campos personalizados`
-7. Opcional: ative `Concatenar múltiplas entradas` para combinar valores repetidos em uma célula.
-8. Opcional: ative `Usar apenas nomes de campos` para usar IDs de campo em vez de rótulos de exibição.
-9. Selecione o `Formato`.
-    - `Separado por vírgulas (.csv)`
-    - `Separado por tabulações (.tsv)`
+1. Vá para a página `Dashboard`.
+2. Abra o menu do projeto e selecione `Export records`.
+3. Opcional: escolha uma predefinição em `Export preset`.
+4. Se não estiver usando uma predefinição, selecione o `Record type`.
+    - `Narrative`
+    - `Sites`
+    - `Events`
+    - `Specimen records`
+    - `Specimen parts`
+5. Para registros de espécimes, selecione o grupo taxonômico. As exportações de
+   mamíferos podem ser limitadas a não morcegos, morcegos ou todos os mamíferos.
+6. Selecione o modo de campos do espécime.
+    - `Standard`
+    - `All fields`
+    - `Custom fields`
+7. Opcional: ative `Concatenate multi-entry` para combinar valores repetidos em
+   uma única célula.
+8. Opcional: ative `Field names only for headers` para usar IDs de campo em vez
+   de rótulos de exibição.
+9. Selecione o `Format` do arquivo.
+    - `Comma-separated (.csv)`
+    - `Tab-separated (.tsv)`
     - `Excel (.xlsx)`
     - `JSON (.json)`
-10. Adicione o `Nome do arquivo`.
-11. Selecione o `Diretório` onde deseja salvar o arquivo.
-12. Clique em `Salvar`.
+10. Adicione o `File name` do arquivo exportado.
+11. Selecione o `Directory` onde deseja salvar o arquivo exportado.
+12. Clique em `Save`.
 
 {% /steps %}
 
 {% aside type="tip" title="Compartilhar arquivos salvos" %}
-Depois que o arquivo é salvo, o botão `Salvar` muda para `Compartilhar`. Use `Compartilhar` em dispositivos móveis para enviar o arquivo para outro app ou salvá-lo pelo seletor de arquivos do sistema.
+Depois que o arquivo é salvo, o botão `Save` muda para `Share`. Use `Share` em
+dispositivos móveis para enviar o arquivo a outro aplicativo ou salvá-lo pelo
+seletor de arquivos do sistema.
 {% /aside %}
 
-## Detalhes
+## Detalhes {% #deep-dive %}
 
-A exportação de registros lê dados do projeto ativo e grava um tipo de registro por vez. O tipo de registro define qual parte do projeto será exportada: narrativa, locais, eventos, registros de espécimes ou partes de espécimes.
+A exportação de registros lê os dados do projeto ativo e grava um tipo de
+registro por vez. Escolha o tipo que corresponde à tabela ou ao fluxo de
+trabalho que você quer inspecionar: narrativas, locais, eventos, registros de
+espécimes ou partes de espécime.
 
 ```text
 Banco de dados do projeto
@@ -59,34 +69,89 @@ Exportador
     +--> JSON
 ```
 
-Presets salvam escolhas repetíveis, como tipo de registro, modo de campos, formato e comportamento dos rótulos. Use presets quando a equipe precisar da mesma estrutura de exportação entre dias de campo, dispositivos ou projetos.
+As predefinições de exportação salvam escolhas repetíveis, como tipo de
+registro, seleção de táxons, mapeamentos de campo, estilo de cabeçalho e
+comportamento para valores repetidos. O formato de saída, o nome do arquivo e o
+destino são escolhidos na hora da exportação. Use uma predefinição quando a sua
+equipe precisar do mesmo formato de exportação entre dias de campo, dispositivos
+ou projetos. Se um colaborador também precisar das mesmas predefinições, exporte
+as configurações de usuário ou inclua-as em um arquivo completo do banco de
+dados.
 
-Valores ambientais armazenados são exportados mesmo quando seus campos estão
-ocultos no formulário. Campos ambientais personalizados podem ser escolhidos
-nos presets e usam cabeçalhos estáveis
-`customEnvironment::<UUID da definição>`. Eles também seguem para documentos,
-Darwin Core, intercâmbio de eventos e transferência de projetos.
+As exportações de evento e de espécime incluem os valores ambientais
+armazenados, mesmo quando os seus campos estão ocultos no formulário do evento.
+Os campos ambientais personalizados ficam disponíveis para as predefinições de
+exportação e usam cabeçalhos estáveis no formato
+`customEnvironment::<UUID da definição>`. Esses campos também alimentam os
+documentos de evento, a saída Darwin Core de eventos, o intercâmbio de registros
+de evento e a transferência de projeto, de modo que a visibilidade no formulário
+nunca funciona como exclusão de dados nem como filtro de exportação.
 
-Registros de espécimes têm opções adicionais porque geralmente formam a maior exportação. O grupo taxonômico limita os registros antes da gravação do arquivo. O modo de campos controla as colunas:
+Os registros de espécimes têm filtros adicionais porque costumam ser a
+exportação maior e mais específica de cada instituição. O grupo taxonômico
+reduz o conjunto de registros antes de o arquivo ser gravado. O modo de campos
+controla as colunas:
 
-- `Padrão` grava os campos usados pela maioria dos fluxos de trabalho.
-- `Todos os campos` grava todos os campos compatíveis.
-- `Campos personalizados` permite escolher um conjunto específico de colunas.
+- `Standard` grava os campos padrão usados pela maioria dos fluxos.
+- `All fields` grava todos os campos de espécime suportados.
+- `Custom fields` permite escolher um conjunto de colunas menor ou específico da
+  instituição.
 
-As exportações de artrópodes incluem interações ecológicas, parâmetros
-ambientais, morfometria, sexo e observações. Exportações e presets somente de
-artrópodes não oferecem colunas de detecção ou registros de parasitas. A opção
-`Todos os táxons` mantém essas colunas para os grupos compatíveis.
+As exportações de registros de artrópodes incluem sexo, estágio de vida, casta,
+o organismo hospedeiro e a parte do hospedeiro, as morfometrias opcionais e as
+observações. Exportações e predefinições restritas a artrópodes não oferecem
+colunas de detecção de parasitas nem de parasitas. As exportações com
+`All taxa` mantêm essas colunas para os grupos de catálogo que suportam
+parasitas.
 
-CSV e TSV são formatos portáteis para planilhas e importação. Excel é conveniente para revisão manual. JSON preserva dados estruturados para scripts e softwares posteriores.
+Os valores repetidos podem ser gravados como valores separados ou concatenados
+em uma única célula. A concatenação é útil para planilhas e revisão rápida,
+enquanto manter as entradas separadas é melhor quando outro banco de dados vai
+analisar o arquivo.
 
-Os cabeçalhos Darwin Core só são usados quando o campo do NAHPU tem o mesmo
-significado; os demais mantêm o prefixo `nahpu:`. As exportações derivadas
-incluem `Determiner` e seu ORCID canônico, coordenadas verbatim, extensão
-positiva na incerteza e a unidade de peso selecionada.
+`Field names only for headers` grava IDs de campo em vez de rótulos de exibição.
+Use essa opção quando o sistema receptor esperar nomes de campo estáveis ou
+quando você precisar de cabeçalhos previsíveis para scripts. Deixe-a desligada
+quando as pessoas forem ler a exportação diretamente em uma planilha.
 
-Para artrópodes, os mapeamentos Darwin Core colocam sexo, associação com o
-hospedeiro e observações na ocorrência. Morfometria e parâmetros ambientais
-são exportados como MeasurementOrFact, com unidades quando definidas.
+Os mapeamentos de campos Darwin Core usam cabeçalhos padronizados apenas quando
+o campo do NAHPU tem o mesmo significado. Os campos sem correspondência mantêm
+um cabeçalho `nahpu:`. As exportações derivadas usam o determinador do espécime
+para `identifiedBy`, preferem a URL ORCID canônica do determinador para
+`identifiedByID`, preservam as coordenadas verbatim, somam a extensão positiva
+da coordenada à incerteza e mantêm a unidade de peso selecionada (`g`, `kg` ou
+`lbs`).
 
-Exportações de registros não substituem backups de banco de dados. Use [Backup do banco de dados](../#backup-do-banco-de-dados) quando precisar de uma cópia restaurável da NAHPU.
+Para artrópodes, os mapeamentos Darwin Core colocam sexo, estágio de vida,
+casta, a associação com o hospedeiro e as observações na ocorrência. A parte do
+hospedeiro e as morfometrias tornam-se valores MeasurementOrFact, com unidades
+onde estiverem definidas. As observações ambientais pertencem ao evento de
+coleta, não ao espécime.
+
+Escolha o formato de saída conforme a próxima ferramenta:
+
+- CSV e TSV são os formatos mais portáveis para planilhas e importação em bancos
+  de dados.
+- Excel é conveniente para revisão manual e compartilhamento com quem usa
+  planilhas.
+- JSON preserva os dados estruturados para scripts e softwares posteriores.
+
+As exportações de registros não substituem os backups do banco de dados. Use-as
+para intercâmbio, revisão e análise. Use
+[Backup do banco de dados](../#backup-database) quando precisar de uma cópia
+restaurável do banco do NAHPU, e use [Empacotar registros](../export-bundles)
+quando precisar de um pacote de espécimes baseado em padrões, com registros
+relacionados e mídia.
+
+Para mover dados do projeto entre dispositivos, use `Merge project` ou
+`Export project` no menu do painel do projeto. Use JSON.GZ para envios somente
+de registros com internet limitada; ele não inclui mídia. Use ZIP ou TAR.GZ para
+uma cópia completa do projeto com as mídias disponíveis. As mesclagens verificam
+o UUID do projeto, guiam você por cada seção e mostram os conflitos antes de
+gravar qualquer coisa. Faça backup do banco de dados primeiro; a mesclagem
+forçada só fica disponível depois que você confirmar que uma divergência de UUID
+usará o UUID do projeto ativo.
+
+Quem contribui com o código pode ler os detalhes de implementação em
+[Modelos e predefinições](../../../contributing/code/templates-and-presets) e
+[Fluxos de exportação](../../../contributing/code/data-export-workflows).

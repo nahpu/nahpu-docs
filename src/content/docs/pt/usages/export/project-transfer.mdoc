@@ -1,80 +1,108 @@
 ---
-title: Transferir um projeto
+title: Transferir um Projeto
 sidebar:
   order: 10
 ---
 
-Use `Export project` e `Merge project` para combinar dados do mesmo projeto
-NAHPU inseridos em dispositivos diferentes. Uma transferência completa é um
-arquivo ZIP ou TAR.GZ com um `nahpu-project.json` versionado e os arquivos de
-mídia disponíveis.
+Use `Export project` e `Merge project` para combinar os dados inseridos para o
+mesmo projeto NAHPU em dispositivos diferentes. Uma transferência completa é um
+arquivo ZIP ou TAR.GZ com um manifesto versionado `nahpu-project.json` e as
+mídias disponíveis.
 
-Para uploads com internet limitada, ative `Light export` para criar um arquivo
-`JSON.GZ` sem mídia. O JSON.GZ serve para mesclar registros, mas não é um
-backup completo do projeto. Use ZIP ou TAR.GZ quando precisar de mídia ou de
-uma cópia completa do projeto.
+Para envios com internet limitada, ative `Light export` para criar uma
+exportação `JSON.GZ` sem mídia. O JSON.GZ serve para mesclar registros do
+projeto, mas não é um backup completo. Use ZIP ou TAR.GZ quando as mídias ou uma
+cópia completa do projeto forem necessárias.
 
-Ela é diferente dos pacotes Darwin Core, que servem para publicação, análise,
-arquivamento ou terceiros e não são aceitos por `Merge project`. O NAHPU Data
-Package usa o mesmo payload e layout de mídia de uma transferência completa e
-pode ser selecionado para mesclagem.
+Isso é diferente dos pacotes Darwin Core, que servem para publicação, análise,
+arquivamento ou outros fluxos de terceiros e não são aceitos por
+`Merge project`. Um NAHPU Data Package contém o mesmo conteúdo de projeto e a
+mesma organização de mídia de uma exportação completa, então também pode ser
+selecionado para mesclagem.
 
-## Exportar
+## Exportar um projeto {% #export-a-project %}
 
 {% steps %}
 
 1. Abra o projeto no dispositivo de origem.
-2. No menu do painel, selecione `Exportar projeto`.
-3. Revise as contagens e os avisos de mídia ausente.
-4. Para uma transferência ou backup completo, deixe `Light export` desativado
-   e escolha `ZIP` ou `TAR.GZ`. Para um upload com internet limitada, ative
+2. Abra o menu do painel e selecione `Export project`.
+3. Revise as contagens de pessoal, taxonomia, locais, eventos, espécimes,
+   narrativas e mídia. Revise os avisos de mídia ausente.
+4. Para uma transferência ou backup completo, deixe `Light export` desligado e
+   selecione `ZIP` ou `TAR.GZ`. Para um envio com internet limitada, ative
    `Light export` para usar `JSON.GZ` sem mídia.
-5. Selecione `Exportar projeto` e guarde ou compartilhe o arquivo com segurança.
+5. Selecione `Export project` e depois guarde ou compartilhe o arquivo com
+   segurança.
 
 {% /steps %}
 
-Somente a taxonomia usada por espécimes do projeto ativo é exportada. Fotos
-da equipe e mídias vinculadas são incluídas quando disponíveis; arquivos
-ausentes são omitidos com um aviso.
+Somente a taxonomia referenciada por espécimes do projeto ativo é exportada. As
+fotos do pessoal do projeto, as mídias do projeto e as mídias de taxonomia
+vinculadas são incluídas quando os arquivos de origem estão disponíveis. Os
+arquivos ausentes são informados como avisos e os seus links quebrados são
+omitidos.
 
-A transferência inclui os atributos específicos do grupo taxonômico. Para
-artrópodes, isso abrange interações ecológicas, parâmetros ambientais,
-morfometria opcional, sexo e observações. Substituir um espécime importado
-também substitui seus atributos de artrópode; registros de parasitas não são
-criados para ele.
+## Mesclar no projeto correspondente {% #merge-into-the-matching-project %}
 
-## Mesclar e resolver conflitos
-
-{% aside type="caution" title="Faça um backup primeiro" %}
-Crie um backup do banco de dados antes de importar. O assistente exige a
-confirmação desse lembrete e oferece a ação `Fazer backup agora`.
+{% aside type="caution" title="Faça backup primeiro" %}
+Crie um backup do banco de dados antes de mesclar. O assistente exige que você
+confirme esse lembrete e oferece um atalho `Back up now`, para que seja possível
+recuperar o banco anterior se necessário.
 {% /aside %}
 
-No dispositivo receptor, abra o menu do painel e selecione `Merge project`.
-Escolha uma exportação `JSON.GZ`, ZIP, TAR.GZ ou NAHPU Data Package e revise os
-conflitos antes de confirmar a mesclagem.
+{% steps %}
 
-O assistente revisa informações do projeto, equipe, taxonomia, localidades,
-eventos, espécimes e narrativas, nessa ordem. Nada é gravado antes do resumo
-final. As mudanças são aplicadas em uma única transação; em caso de falha, o
-banco é revertido e os novos arquivos de mídia são removidos.
+1. Abra a cópia do projeto que vai receber os dados.
+2. Abra o menu do painel e selecione `Merge project`.
+3. Escolha uma exportação de projeto `JSON.GZ`, ZIP ou TAR.GZ, ou um NAHPU Data
+   Package.
+4. Confirme o lembrete de backup.
+5. Revise informações do projeto, pessoal, taxonomia, locais, eventos,
+   espécimes e narrativas, uma seção por vez.
+6. Resolva cada correspondência ou conflito.
+7. Revise o resumo final e selecione `Merge project`.
 
-Para cada conflito, escolha:
+{% /steps %}
 
-- **Manter atual** - Preserva o registro atual e mapeia as dependências.
-- **Usar importado** - Substitui o registro correspondente e seus dados próprios.
-- **Importar como novo** - Cria outra identidade e remapeia dependências.
-- **Ignorar** - Não importa o registro nem dependências não resolvidas.
+O NAHPU verifica a exportação e as suas relações antes de mostrar a revisão.
+Nenhum registro é gravado enquanto você percorre o assistente. Na etapa final, as
+alterações do banco de dados são confirmadas em conjunto. Se a mesclagem falhar,
+as alterações são revertidas e os arquivos de mídia recém-copiados são removidos.
 
-A opção inicial mantém o registro atual. Equipe e taxonomia podem ser
-compartilhadas entre projetos; o assistente avisa antes de substituí-las. Um
-UUID de espécime usado por outro projeto só pode receber um novo UUID ou ser
-ignorado.
+## Resolver conflitos
 
-## Forçar mesclagem
+Ao encontrar um conflito, o NAHPU mantém inicialmente o registro atual. Você
+pode escolher:
 
-Normalmente, o UUID do arquivo deve corresponder ao UUID do projeto ativo. Uma
-diferença bloqueia a importação. Se ambos realmente representam o mesmo
-projeto, ative `Forçar mesclagem` e digite o nome do projeto ativo. Os
-registros importados usarão o UUID ativo, mas cada conflito ainda exigirá uma
-decisão.
+- **Keep current** - preservar o registro atual e mapear para ele as
+  dependências importadas.
+- **Use imported** - substituir o registro correspondente e os dados próprios
+  importados.
+- **Import as new** - criar um registro separado e remapear as suas
+  dependências. Um novo UUID é gerado quando necessário, e IDs de local
+  duplicados recebem um sufixo de importação único.
+- **Skip** - não importar o registro. Registros dependentes que não puderem ser
+  remapeados também são ignorados.
+
+As informações do projeto são revisadas campo a campo. Os UUIDs de pessoal e de
+espécime são usados como identidade; a taxonomia é comparada por gênero e
+epíteto específico normalizados. Os locais usam um ID de local não vazio. Eventos
+e narrativas usam o local resolvido mais a data, a hora e os campos de
+identificação.
+
+O pessoal e a taxonomia são compartilhados entre projetos no banco de dados. O
+assistente avisa quando substituir um deles pode afetar outro projeto. Um UUID
+de espécime já usado por outro projeto não pode ser substituído; importe-o com
+um novo UUID ou ignore-o.
+
+## Forçar a mesclagem de um UUID de projeto diferente
+
+O fluxo normal exige que o UUID do projeto exportado corresponda ao UUID do
+projeto ativo. Uma divergência é bloqueada porque, em geral, significa que o
+projeto aberto é o errado.
+
+Se os projetos realmente representam o mesmo trabalho de campo, ative
+`Force merge` e digite o nome do projeto ativo para confirmar. O NAHPU então
+atribui o UUID do projeto ativo aos registros importados com escopo de projeto.
+Forçar a mesclagem não sobrescreve conflitos automaticamente; todas as escolhas
+normais de conflito continuam valendo.

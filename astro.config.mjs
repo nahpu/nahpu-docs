@@ -9,6 +9,26 @@ export default defineConfig({
   site: "https://nahpu.app",
   redirects: {
     "/usages/export": "/en/usages/export/",
+    "/en/curatorial-guideline": "/en/usages/export/",
+    "/en/curatorial-guideline/backup-restore": "/en/usages/export/",
+    "/en/curatorial-guideline/archiving": "/en/usages/export/",
+    "/en/curatorial-guideline/tag-printing": "/en/usages/export/export-documents/",
+    "/en/curatorial-guideline/data-curation": "/en/best-practices/data-management/",
+    "/pt/curatorial-guideline": "/pt/usages/export/",
+    "/pt/curatorial-guideline/backup-restore": "/pt/usages/export/",
+    "/pt/curatorial-guideline/archiving": "/pt/usages/export/",
+    "/pt/curatorial-guideline/tag-printing": "/pt/usages/export/export-documents/",
+    "/pt/curatorial-guideline/data-curation": "/pt/best-practices/data-management/",
+    "/es/curatorial-guideline": "/es/usages/export/",
+    "/es/curatorial-guideline/backup-restore": "/es/usages/export/",
+    "/es/curatorial-guideline/archiving": "/es/usages/export/",
+    "/es/curatorial-guideline/tag-printing": "/es/usages/export/export-documents/",
+    "/es/curatorial-guideline/data-curation": "/es/best-practices/data-management/",
+    "/id/curatorial-guideline": "/id/usages/export/",
+    "/id/curatorial-guideline/backup-restore": "/id/usages/export/",
+    "/id/curatorial-guideline/archiving": "/id/usages/export/",
+    "/id/curatorial-guideline/tag-printing": "/id/usages/export/export-documents/",
+    "/id/curatorial-guideline/data-curation": "/id/best-practices/data-management/",
     "/usages/export-records": "/en/usages/export/export-records/",
     "/usages/export-documents": "/en/usages/export/export-documents/",
     "/usages/export-bundles": "/en/usages/export/export-bundles/",
@@ -270,7 +290,7 @@ export default defineConfig({
             translations: {
               "pt-BR": "Locais",
               es: "Sitios",
-              id: "Situs",
+              id: "Lokasi",
             },
           },
           {
@@ -279,7 +299,7 @@ export default defineConfig({
             translations: {
               "pt-BR": "Eventos",
               es: "Eventos",
-              id: "Peristiwa",
+              id: "Kegiatan Pengumpulan",
             },
           },
           {
@@ -316,23 +336,6 @@ export default defineConfig({
                 },
               },
             ],
-          },
-        ],
-      },
-      {
-        label: "Curatorial Guidelines",
-        translations: {
-          "pt-BR": "Diretrizes Curatoriais",
-          es: "Directrices Curatoriales",
-          id: "Pedoman Kuratorial",
-        },
-        collapsed: true,
-        items: [
-          {
-            autogenerate: {
-              directory: "curatorial-guideline",
-              collapsed: true,
-            },
           },
         ],
       },
