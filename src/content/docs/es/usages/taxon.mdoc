@@ -77,13 +77,19 @@ Comportamiento del delimitador:
 
 Columnas recomendadas para la plantilla de importación:
 
-- `class`, `order`, `family`, `genus`, `epithet`, `common name`, `notes`
-- Los campos obligatorios de la importación son `class`, `order`, `family`,
-  `genus` y `epithet`. La importación de archivos siempre registra entradas de
-  nivel especie; use el registro manual para un taxón por encima de especie.
+- `taxon rank`, `class`, `order`, `family`, `genus`, `epithet`,
+  `subspecific epithet`, `common name`, `notes`
+- Los valores de categoría son `class`, `order`, `family`, `genus`, `species` y
+  `subspecies`. Una categoría ausente o vacía se interpreta como `species` solo
+  si la clase, el orden, la familia, el género y el epíteto específico están
+  completos; de lo contrario, agregue una categoría.
+- Cada fila requiere todos los campos de clasificación desde clase hasta la
+  categoría seleccionada. Una fila de subespecie, por ejemplo, requiere clase,
+  orden, familia, género, epíteto específico y epíteto subespecífico.
 - El reconocimiento de encabezados es flexible, así que también se aceptan alias
-  como `taxonClass`, `taxonOrder`, `taxonFamily`, `specificEpithet`, `species`,
-  `vernacularName`, `iucnStatus` y `appendixStatus`.
+  como `taxonClass`, `taxonOrder`, `taxonFamily`, `specificEpithet`,
+  `infraspecificEpithet`, `species`, `subspecies`, `vernacularName`,
+  `iucnStatus` y `appendixStatus`.
 - Las columnas que la aplicación no reconoce quedan sin asignar. Use el menú
   desplegable sobre cada columna para asignarla, o déjela como `Ignore`.
 

@@ -109,19 +109,21 @@ NAHPU limita el rol de recolector a la persona que recolecta el espécimen. Este
 
     Puede agregar un taxón manualmente mediante el botón Add taxon o importarlo desde un archivo. Los formatos preferidos son `.xlsx`, `.csv` y `.tsv`. NAHPU hará todo lo posible por analizar otros tipos de archivo.
 
+    Tanto la entrada manual como la importación admiten registros de clase, orden, familia, género, especie y subespecie. En un archivo de importación, agregue una columna `taxon rank`. Puede omitirla solo si la clase, el orden, la familia, el género y el epíteto específico están completos; en ese caso, la fila se interpreta como especie.
+
     - Para los archivos delimitados reconocidos, la aplicación selecciona el delimitador según la extensión (`.csv` = coma, `.tsv` = tabulación).
     - Para las extensiones no reconocidas, la detección automática prueba primero Excel, coma, tabulación y punto y coma. Si falla, use la opción advanced parser override e introduzca un delimitador sin formato personalizado.
     - `.xlsx` ofrece el mejor soporte; los formatos de Excel antiguos u otros formatos de Excel pueden fallar.
 
-    Su archivo de importación debe incluir todas estas columnas: `class`, `order`, `family`, `genus` y `epithet`. También puede incluir `scientific name`, `common name` y `notes`. La aplicación detecta automáticamente los alias de encabezado compatibles, como `taxonClass`, `taxonOrder`, `taxonFamily` y `specificEpithet`. Puede seleccionar manualmente el tipo de columna mediante el menú desplegable si la aplicación no asigna automáticamente el tipo correcto a cada columna. Las demás columnas se ignoran.
+    Cada fila requiere las columnas de clasificación desde `class` hasta la categoría seleccionada. Por tanto, una fila de subespecie también necesita `subspecific epithet`. También puede incluir `common name` y `notes`. La aplicación detecta automáticamente alias compatibles como `taxonRank`, `taxonClass`, `taxonOrder`, `taxonFamily`, `specificEpithet` e `infraspecificEpithet`. Puede seleccionar manualmente el tipo de columna mediante el menú desplegable si la aplicación no asigna automáticamente el tipo correcto a cada columna. Las demás columnas se ignoran.
 
     Ejemplo de tabla para importar taxones:
 
     ```text
-    | class    | order    | family  | genus   | epithet   | scientific name   | common name        | notes |
-    | -------- | -------- | ------- | ------- | --------- | ----------------- | ------------------ | ----- |
-    | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Bunomys coelestis | Heavenly hill rat  |       |
-    | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Bunomys penitus   | Inland hill rat    |       |
+    | taxon rank | class    | order    | family  | genus   | epithet   | common name       |
+    | ---------- | -------- | -------- | ------- | ------- | --------- | ----------------- |
+    | species    | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Heavenly hill rat |
+    | species    | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Inland hill rat   |
     ```
 
 6. **Crear un sitio**

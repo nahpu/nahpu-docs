@@ -78,13 +78,19 @@ Comportamento do delimitador:
 
 Colunas recomendadas para o modelo de importação:
 
-- `class`, `order`, `family`, `genus`, `epithet`, `common name`, `notes`
-- Os campos obrigatórios da importação são `class`, `order`, `family`, `genus` e
-  `epithet`. A importação de arquivo sempre registra entradas de nível espécie;
-  use o registro manual para um táxon acima de espécie.
+- `taxon rank`, `class`, `order`, `family`, `genus`, `epithet`,
+  `subspecific epithet`, `common name`, `notes`
+- Os valores de categoria são `class`, `order`, `family`, `genus`, `species` e
+  `subspecies`. Uma categoria ausente ou vazia é tratada como `species` somente
+  quando classe, ordem, família, gênero e epíteto específico estão completos;
+  caso contrário, adicione uma categoria.
+- Cada linha requer todos os campos de classificação desde classe até a
+  categoria selecionada. Uma linha de subespécie, por exemplo, requer classe,
+  ordem, família, gênero, epíteto específico e epíteto subespecífico.
 - O reconhecimento de cabeçalhos é flexível, então aliases como `taxonClass`,
-  `taxonOrder`, `taxonFamily`, `specificEpithet`, `species`, `vernacularName`,
-  `iucnStatus` e `appendixStatus` também são aceitos.
+  `taxonOrder`, `taxonFamily`, `specificEpithet`, `infraspecificEpithet`,
+  `species`, `subspecies`, `vernacularName`, `iucnStatus` e `appendixStatus`
+  também são aceitos.
 - As colunas que o aplicativo não reconhece ficam sem mapeamento. Use o menu
   suspenso acima de cada coluna para atribuí-la, ou deixe-a como `Ignore`.
 

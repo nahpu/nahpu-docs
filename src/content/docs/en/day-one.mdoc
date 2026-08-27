@@ -109,21 +109,21 @@ NAHPU limits the collector role to someone who collects the specimen. This is a 
 
     You can add a taxon manually using the Add taxon button or import it from a file. The preferred formats are `.xlsx`, `.csv`, and `.tsv`. NAHPU will make a best-effort attempt to parse other file types.
 
-    Adding a taxon manually lets you pick the `Taxon rank`, so you can register a family or a genus for material that is not yet identified to species. File import always registers species-rank records.
+    Manual entry and file import both support class, order, family, genus, species, and subspecies records. In an import file, add a `taxon rank` column. You may omit it only when class, order, family, genus, and specific epithet are all present, in which case the row defaults to species.
 
     - For recognized delimited files, the app selects the delimiter by extension (`.csv` = comma, `.tsv` = tab).
     - For unrecognized extensions, auto-detect tries Excel, comma, tab, and semicolon first. If that fails, use the advanced parser override and enter a custom raw delimiter.
     - `.xlsx` has the best support; older or other Excel formats may fail.
 
-    Your import file requires all of these columns: `class`, `order`, `family`, `genus`, and `epithet`. You can also include `authors`, `common name`, `IUCN Category`, `CITES status`, `country status`, `sorting order`, and `notes`. The app automatically detects supported header aliases, such as `taxonClass`, `taxonOrder`, `taxonFamily`, and `specificEpithet`. You can manually select the column type using the dropdown menu if the app does not automatically assign the correct type to each column. Other columns are ignored.
+    Each row requires the classification columns from `class` through its selected rank. A subspecies row therefore also needs `subspecific epithet`. You can include `authors`, `common name`, `IUCN Category`, `CITES status`, `country status`, `sorting order`, and `notes`. The app automatically detects supported header aliases, such as `taxonRank`, `taxonClass`, `taxonOrder`, `taxonFamily`, `specificEpithet`, and `infraspecificEpithet`. You can manually select the column type using the dropdown menu if the app does not automatically assign the correct type to each column. Other columns are ignored.
 
     Example taxon import table:
 
     ```text
-    | class    | order    | family  | genus   | epithet   | common name        | notes |
-    | -------- | -------- | ------- | ------- | --------- | ------------------ | ----- |
-    | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Heavenly hill rat  |       |
-    | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Inland hill rat    |       |
+    | taxon rank | class    | order    | family  | genus   | epithet   | common name       |
+    | ---------- | -------- | -------- | ------- | ------- | --------- | ----------------- |
+    | species    | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Heavenly hill rat |
+    | species    | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Inland hill rat   |
     ```
 
 6. **Create a site**

@@ -77,13 +77,19 @@ Perilaku pemisah:
 
 Kolom yang disarankan untuk templat impor:
 
-- `class`, `order`, `family`, `genus`, `epithet`, `common name`, `notes`
-- Kolom wajib untuk impor adalah `class`, `order`, `family`, `genus`, dan
-  `epithet`. Impor berkas selalu mendaftarkan catatan tingkat spesies; gunakan
-  pendaftaran manual untuk takson di atas spesies.
+- `taxon rank`, `class`, `order`, `family`, `genus`, `epithet`,
+  `subspecific epithet`, `common name`, `notes`
+- Nilai tingkat yang diterima adalah `class`, `order`, `family`, `genus`,
+  `species`, dan `subspecies`. Tingkat yang tidak ada atau kosong dianggap
+  sebagai `species` hanya jika kelas, ordo, famili, genus, dan epitet spesifik
+  lengkap; jika tidak, tambahkan tingkat.
+- Setiap baris memerlukan semua kolom klasifikasi dari kelas sampai tingkat yang
+  dipilih. Baris subspesies, misalnya, memerlukan kelas, ordo, famili, genus,
+  epitet spesifik, dan epitet subspesifik.
 - Pencocokan tajuk bersifat lentur, sehingga alias seperti `taxonClass`,
-  `taxonOrder`, `taxonFamily`, `specificEpithet`, `species`, `vernacularName`,
-  `iucnStatus`, dan `appendixStatus` juga diterima.
+  `taxonOrder`, `taxonFamily`, `specificEpithet`, `infraspecificEpithet`,
+  `species`, `subspecies`, `vernacularName`, `iucnStatus`, dan `appendixStatus`
+  juga diterima.
 - Kolom yang tidak dikenali aplikasi dibiarkan tanpa pemetaan. Gunakan menu
   pilihan di atas setiap kolom untuk menetapkannya, atau biarkan sebagai
   `Ignore`.

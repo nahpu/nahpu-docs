@@ -11,7 +11,7 @@ first.
 ## Taxonomy spreadsheets
 
 The taxon registry accepts `.xlsx`, `.csv`, and `.tsv` files. The UI in
-`lib/screens/projects/taxonomy/import_taxa.dart` delegates file reading to
+`lib/screens/projects/taxonomy/add_taxon.dart` delegates file reading to
 `lib/services/import/taxon_reader.dart`. The reader uses the generated import
 binding, whose Rust wrapper calls `nahpu_db::io::import::RecordImporter`.
 
@@ -22,9 +22,13 @@ file picker → delimiter/sheet inspection → flexible header mapping
            → required-field validation → preview/counts → Drift inserts
 ```
 
-Required columns are class, order, family, genus, and epithet. Header aliases
-such as `taxonClass`, `taxonOrder`, `taxonFamily`, `specificEpithet`,
-`scientific name`, and `common name` are normalized by the Dart import types.
+Taxon rows may represent class, order, family, genus, species, or subspecies.
+The optional rank column defaults to species when absent or blank only if all
+species fields are complete; otherwise the row must provide a rank. Each row
+requires the classification fields from class through that rank. Header aliases
+such as `taxonRank`, `taxonClass`, `taxonOrder`, `taxonFamily`,
+`specificEpithet`, `infraspecificEpithet`, and `common name` are normalized by
+the Dart import types.
 Excel files are read as sheets. CSV and TSV use their normal delimiters; an
 unknown extension receives best-effort Excel, comma, tab, and semicolon
 detection, with a custom delimiter override as a last resort.

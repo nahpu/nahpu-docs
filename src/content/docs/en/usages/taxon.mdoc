@@ -58,7 +58,7 @@ determination.
 3. Select the `Taxon rank`.
 4. Fill in the taxon information.
 
-### Import from file
+### Import from file {% #import-from-file %}
 
 1. Prepare your import file. Preferred formats are `.xlsx`, `.csv`, and `.tsv`.
 2. Go to the project dashboard.
@@ -76,13 +76,18 @@ Delimiter behavior:
 
 Recommended import template columns:
 
-- `class`, `order`, `family`, `genus`, `epithet`, `common name`, `notes`
-- Required import fields are `class`, `order`, `family`, `genus`, and `epithet`.
-  File import always registers species-rank records; use manual registration for
-  a taxon above species.
+- Supported fields: `taxon rank`, `class`, `order`, `family`, `genus`, `epithet`,
+  `subspecific epithet`, `common name`, `notes`.
+- Rank values are `class`, `order`, `family`, `genus`, `species`, and
+  `subspecies`. A missing or blank rank defaults to `species` only when class,
+  order, family, genus, and specific epithet are complete; otherwise add a rank.
+- Each row requires every classification field from class through its selected
+  rank. A subspecies row, for example, requires class, order, family, genus,
+  specific epithet, and subspecific epithet.
 - Header matching is flexible, so aliases such as `taxonClass`, `taxonOrder`,
-  `taxonFamily`, `specificEpithet`, `species`, `vernacularName`, `iucnStatus`,
-  and `appendixStatus` are also accepted.
+  `taxonFamily`, `specificEpithet`, `infraspecificEpithet`, `species`,
+  `subspecies`, `vernacularName`, `iucnStatus`, and `appendixStatus` are also
+  accepted.
 - Columns the app does not recognize are left unmapped. Use the dropdown above
   each column to assign it, or leave it as `Ignore`.
 

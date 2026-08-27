@@ -107,19 +107,21 @@ NAHPU membatasi peran collector untuk orang yang mengumpulkan spesimen. Peran in
 
     Anda dapat menambahkan takson secara manual menggunakan tombol Add taxon atau mengimpornya dari file. Format yang disarankan adalah `.xlsx`, `.csv`, dan `.tsv`. NAHPU akan berusaha sebaik mungkin untuk membaca jenis file lainnya.
 
+    Entri manual dan impor berkas sama-sama mendukung catatan kelas, ordo, famili, genus, spesies, dan subspesies. Dalam berkas impor, tambahkan kolom `taxon rank`. Kolom ini hanya boleh dihilangkan jika kelas, ordo, famili, genus, dan epitet spesifik lengkap; dalam hal itu, baris dianggap sebagai spesies.
+
     - Untuk file terdelimitasi yang dikenali, aplikasi memilih delimiter berdasarkan ekstensi (`.csv` = koma, `.tsv` = tab).
     - Untuk ekstensi yang tidak dikenali, deteksi otomatis akan mencoba Excel, koma, tab, dan titik koma terlebih dahulu. Jika gagal, gunakan advanced parser override dan masukkan delimiter mentah khusus.
     - Dukungan terbaik tersedia untuk `.xlsx`; format Excel lama atau format Excel lainnya mungkin gagal.
 
-    File impor Anda wajib memiliki semua kolom berikut: `class`, `order`, `family`, `genus`, dan `epithet`. Anda juga dapat menyertakan `scientific name`, `common name`, dan `notes`. Aplikasi secara otomatis mendeteksi alias header yang didukung, seperti `taxonClass`, `taxonOrder`, `taxonFamily`, dan `specificEpithet`. Anda dapat memilih jenis kolom secara manual melalui menu dropdown jika aplikasi tidak menetapkan jenis yang benar secara otomatis. Kolom lainnya akan diabaikan.
+    Setiap baris memerlukan kolom klasifikasi dari `class` sampai tingkat yang dipilih. Karena itu, baris subspesies juga memerlukan `subspecific epithet`. Anda juga dapat menyertakan `common name` dan `notes`. Aplikasi secara otomatis mendeteksi alias header yang didukung, seperti `taxonRank`, `taxonClass`, `taxonOrder`, `taxonFamily`, `specificEpithet`, dan `infraspecificEpithet`. Anda dapat memilih jenis kolom secara manual melalui menu dropdown jika aplikasi tidak menetapkan jenis yang benar secara otomatis. Kolom lainnya akan diabaikan.
 
     Contoh tabel impor takson:
 
     ```text
-    | class    | order    | family  | genus   | epithet   | scientific name   | common name        | notes |
-    | -------- | -------- | ------- | ------- | --------- | ----------------- | ------------------ | ----- |
-    | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Bunomys coelestis | Heavenly hill rat  |       |
-    | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Bunomys penitus   | Inland hill rat    |       |
+    | taxon rank | class    | order    | family  | genus   | epithet   | common name       |
+    | ---------- | -------- | -------- | ------- | ------- | --------- | ----------------- |
+    | species    | Mammalia | Rodentia | Muridae | Bunomys | coelestis | Heavenly hill rat |
+    | species    | Mammalia | Rodentia | Muridae | Bunomys | penitus   | Inland hill rat   |
     ```
 
 6. **Membuat site**
