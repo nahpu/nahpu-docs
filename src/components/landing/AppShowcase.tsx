@@ -1,3 +1,4 @@
+import type { VNode } from "preact";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 
 type Picture = {
@@ -35,6 +36,38 @@ type Props = {
 };
 
 const ROTATION_MS = 8000;
+
+const LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
+
+const linkClasses =
+  "text-silver-tree-800 underline underline-offset-2 decoration-silver-tree-400 hover:text-silver-tree-900 dark:text-silver-tree-100 dark:hover:text-silver-tree-50";
+
+/// Descriptions are plain prose, with Markdown-style links as the one
+/// exception, so a claim can carry its source.
+function withLinks(text: string): (string | VNode)[] {
+  const nodes: (string | VNode)[] = [];
+  let cursor = 0;
+
+  for (const match of text.matchAll(LINK_PATTERN)) {
+    const start = match.index ?? 0;
+    if (start > cursor) nodes.push(text.slice(cursor, start));
+    nodes.push(
+      <a
+        key={`${match[2]}-${start}`}
+        href={match[2]}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={linkClasses}
+      >
+        {match[1]}
+      </a>,
+    );
+    cursor = start + match[0].length;
+  }
+
+  if (cursor < text.length) nodes.push(text.slice(cursor));
+  return nodes;
+}
 
 function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
@@ -285,7 +318,7 @@ export default function AppShowcase({ shots }: Props) {
             {current.title}
           </h3>
           <p class="mt-1 max-w-2xl text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
-            {current.description}
+            {withLinks(current.description)}
           </p>
 
           {current.variants && (
@@ -326,7 +359,7 @@ export default function AppShowcase({ shots }: Props) {
               <span class="font-semibold text-silver-tree-900 dark:text-silver-tree-50">
                 {currentVariant.title}.
               </span>{" "}
-              {currentVariant.description}
+              {withLinks(currentVariant.description)}
             </p>
           )}
         </div>

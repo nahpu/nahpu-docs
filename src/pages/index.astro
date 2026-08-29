@@ -146,6 +146,34 @@ const capabilities = [
     },
 ];
 
+const linkClasses = cntl`
+  text-silver-tree-800 dark:text-silver-tree-100
+  underline underline-offset-2
+  decoration-silver-tree-400
+  hover:text-silver-tree-950 dark:hover:text-silver-tree-50
+`;
+
+const fieldOrigins = [
+    {
+        color: "#2f9e7d",
+        climate: "Humid",
+        place: "Mountains of Southeast Asia",
+        desc: "Humid montane forest, weather that turns without warning, and no electricity to fall back on. The catalog has to open offline, hold up on a partly charged device, and still be there the next morning.",
+    },
+    {
+        color: "#3f9fd6",
+        climate: "Humid to temperate",
+        place: "The Andes and the Amazon",
+        desc: "High elevations in the tall Andes and riverine habitat deep in the Amazon, where a specimen, its site, and its samples stay tied together through days of travel between camps. Work recorded on separate devices merges back into one project once the team regroups.",
+    },
+    {
+        color: "#e0913a",
+        climate: "Dry",
+        place: "The North American desert",
+        desc: "Dry, dusty air and long collecting days, where specimens are prepared in the dust rather than at a clean bench. When a connection turns up, a backup is a few taps away — a light, media-free copy over a thin signal, or the whole project with its photographs when bandwidth allows.",
+    },
+];
+
 const spreadsheetSteps = [
     {
         title: "Start where the spreadsheet was",
@@ -422,6 +450,93 @@ const spreadsheetSteps = [
                         </article>
                     ))
                 }
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaboration -------------------------------------------------------->
+    <section
+        id="collaboration"
+        class={`${sectionClasses} bg-silver-tree-50 dark:bg-silver-tree-800`}
+    >
+        <div class={sectionInnerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Collaboration</p>
+                <h2 class={sectionTitleClasses}>
+                    We are the users of our own software
+                </h2>
+                <p class={sectionLeadClasses}>
+                    NAHPU is built by the people who carry it into the field.
+                    From the humidity, unpredictable weather, and lack of
+                    electricity in the mountains of Southeast Asia to the tall
+                    Andes and the riverine habitat deep in the Amazon in South
+                    America, and the dry climate of the North American desert,
+                    we poured this experience into building NAHPU. It is
+                    designed for fieldwork across humid to dry climates, and
+                    everything in between.
+                </p>
+            </header>
+
+            <div class="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+                {
+                    fieldOrigins.map((item, index) => (
+                        <article
+                            class="nh-reveal rounded-2xl border border-silver-tree-300/70 bg-silver-tree-100/70 p-6 dark:border-silver-tree-700/70 dark:bg-silver-tree-950/50"
+                            style={`transition-delay: ${index * 60}ms`}
+                        >
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="block h-2.5 w-2.5 rounded-full"
+                                    style={`background:${item.color}`}
+                                />
+                                <span class="text-[11px] font-semibold tracking-widest text-silver-tree-600 uppercase dark:text-silver-tree-400">
+                                    {item.climate}
+                                </span>
+                            </div>
+                            <h3 class="mt-4 text-lg font-semibold text-silver-tree-900 dark:text-silver-tree-50">
+                                {item.place}
+                            </h3>
+                            <p class="mt-3 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
+                                {item.desc}
+                            </p>
+                        </article>
+                    ))
+                }
+            </div>
+
+            <div
+                class="nh-reveal mt-6 rounded-2xl border border-silver-tree-300/70 bg-silver-tree-100/70 p-6 sm:p-8 dark:border-silver-tree-700/70 dark:bg-silver-tree-950/50"
+            >
+                <div
+                    class="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_auto] lg:items-center"
+                >
+                    <div>
+                        <p class={kickerClasses}>Interdisciplinary by design</p>
+                        <h3
+                            class="mt-3 text-xl font-semibold text-silver-tree-900 sm:text-2xl dark:text-silver-tree-50"
+                        >
+                            Field experience meets software industry practice
+                        </h3>
+                        <p
+                            class="mt-3 max-w-2xl text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300"
+                        >
+                            Through collaboration with the <a
+                                class={linkClasses}
+                                href="https://sites.gatech.edu/human-augmented-analytics-group/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >Human Augmented Analytics Group</a
+                            >, we brought software industry experience to
+                            NAHPU, effectively turning it into an
+                            interdisciplinary research project with real-world
+                            application.
+                        </p>
+                    </div>
+
+                    <a href="/teams" class={secondaryBtnClasses}
+                        >Meet the team</a
+                    >
+                </div>
             </div>
         </div>
     </section>
