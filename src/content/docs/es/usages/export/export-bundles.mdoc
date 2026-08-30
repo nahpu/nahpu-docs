@@ -230,6 +230,12 @@ espécimen seleccionados. Incluye el mismo JSON completo del proyecto activo que
 usa `Export project`, los recursos tabulares correspondientes y los archivos
 relacionados.
 
+Sus recursos CSV relacionales y tipados, las asignaciones de enums y las
+instantáneas de vocabularios controlados lo hacen adecuado para análisis
+posteriores en Python, R y otras herramientas compatibles con Frictionless.
+Use Darwin Core Data Package cuando un flujo de trabajo requiera tablas y
+términos Darwin Core estandarizados.
+
 #### Estructura de la raíz
 
 {% filetree %}
@@ -238,29 +244,7 @@ relacionados.
 - nahpu-project.json
 - tables/
   - project.csv
-  - site.csv
-  - coordinate.csv
-  - collEvent.csv
-  - weather.csv
-  - collPersonnel.csv
-  - collEffort.csv
-  - narrative.csv
-  - media.csv
-  - narrativeMedia.csv
-  - siteMedia.csv
-  - specimenMedia.csv
-  - associatedData.csv
-  - specimenAssociatedData.csv
-  - siteAssociatedData.csv
-  - personnelList.csv
-  - personnel.csv
-  - taxonomy.csv
-  - specimen.csv
-  - mammalAttribute.csv
-  - birdAttribute.csv
-  - herpAttribute.csv
-  - arthropodAttribute.csv
-  - specimenPart.csv
+  - ...
 - configs/
   - user_configs.json
 - mappings/
@@ -269,15 +253,18 @@ relacionados.
   - site.csv
   - events.csv
   - specimens.csv
+  - parasites.csv
 - files/
   - ...
 - media/
   - ...
 {% /filetree %}
 
-Se incluyen las 24 tablas de base de datos requeridas que representa el
-contenido de transferencia del proyecto. Una tabla vacía sigue representándose
-mediante un archivo CSV con su encabezado y su esquema completos.
+Se incluyen `project.csv` y todas las demás tablas de la base de datos que
+contengan registros. Las tablas vacías del proyecto se omiten tanto de
+`tables/` como de `datapackage.json`, por lo que la lista exacta varía según el
+proyecto. Los recursos de metadatos, incluidas las asignaciones de enums y los
+CSV de vocabularios controlados, permanecen aunque no tengan filas.
 
 #### JSON del proyecto
 
@@ -290,7 +277,9 @@ intencionalmente vacía, sin necesidad de SQLite.
 Los archivos CSV son representaciones abiertas e independientes de la
 herramienta, para inspección, análisis y procesamiento compatible con
 Frictionless. Sus registros se generan a partir del mismo contenido, así que el
-JSON y las tablas mantienen el mismo alcance.
+JSON y las tablas mantienen el mismo alcance. Las colecciones vacías permanecen
+en `nahpu-project.json` para la transferencia de proyectos aunque no se exporte
+el recurso CSV correspondiente.
 
 #### Asignaciones de enums SQLite
 
@@ -311,16 +300,16 @@ de aves, la edad de herpetofauna y las categorías de ecolocalización. Los ente
 booleanos y las mediciones numéricas no son índices de enum y, por tanto, no se
 listan.
 
-El archivo de asignación también incluye el enum de sexo de artrópodos. Los
-atributos de artrópodos permanecen en `tables/arthropodAttribute.csv` incluso
-cuando la tabla no tiene filas. Las filas de sexo del espécimen usan códigos
-estables explícitos en lugar de derivarlos del orden del enum; los códigos
-heredados `0`, `1` y `2` conservan sus significados originales.
+El archivo de asignación también incluye el enum de sexo de artrópodos. Las
+filas de sexo del espécimen usan códigos estables explícitos en lugar de
+derivarlos del orden del enum; los códigos heredados `0`, `1` y `2` conservan
+sus significados originales. La asignación permanece disponible aunque la
+tabla correspondiente del proyecto esté vacía y, por tanto, se omita.
 
 #### Vocabularios controlados
 
 El paquete guarda una instantánea de los nombres de tipo controlados por el
-usuario desde la configuración de NAHPU en tres recursos CSV:
+usuario desde la configuración de NAHPU en cuatro recursos CSV:
 
 - `vocabularies/site.csv` contiene los tipos de sitio y los tipos de hábitat;
 - `vocabularies/events.csv` contiene los métodos de recolecta y los roles del
@@ -328,6 +317,9 @@ usuario desde la configuración de NAHPU en tres recursos CSV:
 - `vocabularies/specimens.csv` contiene los tipos de espécimen, los tratamientos,
   las condiciones y el vocabulario restringido de sexo del espécimen que esté
   habilitado.
+- `vocabularies/parasites.csv` contiene las categorías de parásitos, los métodos
+  de detección y preparación, las ubicaciones anatómicas, el almacenamiento y
+  los tratamientos.
 
 Cada fila registra la clave de configuración de usuario, el nombre del
 vocabulario, la posición en la lista con base cero y el valor configurado. Si una
@@ -339,8 +331,8 @@ el documento de configuración completo.
 
 #### Descriptor Frictionless
 
-`datapackage.json` usa el perfil estándar `data-package`. Cada tabla es un
-`tabular-data-resource` con:
+`datapackage.json` usa el perfil estándar `data-package`. Cada tabla de proyecto
+con registros es un `tabular-data-resource` con:
 
 - orden de columnas;
 - tipos de datos de los campos;
@@ -349,10 +341,51 @@ el documento de configuración completo.
 - referencias de clave foránea;
 - codificación CSV en UTF-8.
 
-El descriptor también declara la asignación de enums y los tres CSV de
+El descriptor también declara la asignación de enums y los cuatro CSV de
 vocabulario controlado como recursos tabulares, con esquemas de campo y claves
 primarias compuestas. Enumera el JSON del proyecto, la configuración de usuario,
 el manifiesto y los archivos de usuario empaquetados como recursos no tabulares.
+
+#### Analizar con Frictionless
+
+Extraiga el archivo ZIP o TAR.GZ antes de cargar `datapackage.json`, porque el
+descriptor usa rutas relativas a la raíz del paquete. Como se omiten las tablas
+vacías del proyecto, inspeccione o compruebe los nombres de los recursos antes
+de leer una tabla opcional.
+
+Los usuarios de Python pueden instalar
+[Frictionless Framework](https://framework.frictionlessdata.io/docs/getting-started.html)
+y leer la tabla de especímenes cuando esté disponible:
+
+```python
+from collections import Counter
+
+from frictionless import Package
+
+package = Package("/ruta/al-paquete-extraido/datapackage.json")
+print(package.resource_names)
+
+if package.has_resource("specimen"):
+    specimens = package.get_resource("specimen").read_rows()
+    counts = Counter(row["taxonGroup"] or "Sin especificar" for row in specimens)
+    print(counts)
+```
+
+Los usuarios de R pueden instalar el
+[paquete frictionless](https://docs.ropensci.org/frictionless/) y realizar la
+misma inspección y resumen:
+
+```r
+library(frictionless)
+
+package <- read_package("/ruta/al-paquete-extraido/datapackage.json")
+resource_names(package)
+
+if ("specimen" %in% resource_names(package)) {
+  specimens <- read_resource(package, "specimen")
+  print(table(specimens$taxonGroup, useNA = "ifany"))
+}
+```
 
 #### Manifiesto de reproducibilidad
 

@@ -58,7 +58,7 @@ Keep these version concepts separate when reviewing a persistence change.
 
 | Version | Current value | Owner | Meaning |
 |---|---:|---|---|
-| Drift schema version | 20 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
+| Drift schema version | 21 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
 | SQLite user version | Set by Drift | Drift | On-disk marker used to select upgrade steps |
 | redb internal schema version | Not implemented | `nahpu_configs` | A future marker for redb table and value migrations |
 | Configuration export schema | 4 | `USER_CONFIG_SCHEMA_VERSION` | Compatibility version for exported configuration payloads |
@@ -116,14 +116,15 @@ preservation, and corrupted input that must not partially clear stored data.
 ## Drift table schema
 
 The canonical project schema is defined in
-`lib/services/database/tables.drift` and is currently at schema version 20.
+`lib/services/database/tables.drift` and is currently at schema version 21.
 Drift manages these tables over SQLite. The summary below describes the
 current table set and the important ownership relationships.
 
 | Table | Role and important relationships |
 |---|---|
 | `project` | Project identity and lifecycle dates. Parent of project-scoped rows. |
-| `site` | Collection sites, localities, and site-level identity. Belongs to `project`. |
+| `geography` | Shared, project-independent locality fields deduplicated by `matchKey`. Added in v21. |
+| `site` | Collection-site identity. Belongs to `project` and references shared `geography`. |
 | `siteAttribute` | Habitat type, condition, description, and canopy cover for a site. Added in v19 when these columns moved out of `site`. |
 | `fossilSite` | Fossil-specific extension of `site` through `siteID`. Renamed from `paleontologySite` in v13. |
 | `coordinate` | Coordinates and georeferencing details associated with a site. |
@@ -135,17 +136,19 @@ current table set and the important ownership relationships.
 | `media` | Project media metadata. v13 introduced nullable `uri`. |
 | `narrativeMedia` | Links narratives to media files. |
 | `siteMedia` | Links sites to media files. |
+| `eventMedia` | Links collecting events to media files. |
 | `specimenMedia` | Links specimens to media files. |
 | `associatedData` | Project-scoped external data with `name`, `type`, `date`, `description`, and the v13 `uri` field. |
 | `specimenAssociatedData` | Composite link between specimens and associated data. Replaces `associatedData.specimenUuid`. |
 | `siteAssociatedData` | Composite link between sites and associated data. |
+| `eventAssociatedData` | Composite link between collecting events and associated data. |
 | `personnelList` | Links personnel to projects. |
 | `personnel` | People, contact details, roles, and field-number settings. |
 | `taxonomy` | Taxonomic names, classifications, status, and notes. |
 | `specimen` | Core specimen records and project, taxon, event, coordinate, and personnel relationships. |
 | `mammalAttribute` | Mammal measurements, reproductive observations, and bat or echolocation attributes. |
 | `birdAttribute` | Bird measurements, colors, molt, reproductive observations, and habitat attributes. |
-| `herpAttribute` | Herpetofauna sex, age, weight, snout-vent length, and remark attributes. |
+| `herpAttribute` | Herpetofauna sex, life stage, weight, snout-vent length, and remark attributes. |
 | `arthropodAttribute` | Arthropod sex, host and canopy interactions, environmental parameters, morphometrics, and remarks. |
 | `fossilAttribute` | Fossil-specific specimen attributes. |
 | `parasiteDetection` | Detection records connecting specimens and parasite observations. |
@@ -165,12 +168,12 @@ from forms but remain available to exports so historical values are preserved.
 
 Project-owned tables use cascading foreign keys where deleting a project must
 remove dependent data. Composite link tables use cascading foreign keys and
-composite primary keys. In particular, `specimenAssociatedData` links a
-specimen to `associatedData`, and `siteAssociatedData` links a site to
-`associatedData`.
+composite primary keys. `specimenAssociatedData`, `siteAssociatedData`, and
+`eventAssociatedData` link their respective owner records to `associatedData`.
 
-The `specimen_associated_data_same_project` and
-`site_associated_data_same_project` triggers run before link inserts. They
+The `specimen_associated_data_same_project`,
+`site_associated_data_same_project`, and
+`event_associated_data_same_project` triggers run before link inserts. They
 abort a link when the associated data row belongs to a different project.
 There is no trigger on `associatedData` itself. The v13 migration first moves
 legacy specimen links, then drops the old direct column, so an additional
@@ -212,30 +215,32 @@ index increases migration and insert cost.
    flutter pub run build_runner build --delete-conflicting-outputs
    dart run drift_dev schema dump \
      lib/services/database/database.dart \
-     db_schemas/drift_schema_v20.json
+     db_schemas/drift_schema_v21.json
    ```
 
 8. Update the matching snapshot in `db_schemas/drift_tables/` when the
    release workflow requires it. Keep generated files synchronized with
    `tables.drift`.
 9. Add migration fixtures and tests in `test/database/migration_test.dart`. The
-   suite currently upgrades fixtures from v6 through v19 to v20.
+   suite currently upgrades fixtures from v6 through v20 to v21.
 10. Run `flutter test`, `flutter analyze`, `cargo check`, and `cargo clippy`
     when generated Rust or bridge data is affected.
 
 {% /steps %}
 
-### Worked example: v19 to v20
+### Worked example: v20 to v21
 
-The v20 migration in `lib/services/database/migration_coordinator.dart`:
+The v21 migration in `lib/services/database/migration_coordinator.dart`:
 
-1. Changes no columns in `collEvent` or `environment`.
-2. Rebuilds only `customFieldValue`, because SQLite cannot alter its owner
-   check constraint in place.
-3. Copies every v19 value unchanged while adding nullable `eventId`.
-4. Extends the exactly-one-owner check, validation triggers, foreign key, and
-   partial unique indexes for per-event environmental custom values.
-5. Verifies the new column and foreign-key integrity.
+1. Creates the shared `geography` table.
+2. Normalizes the six former site-locality fields into a stable `matchKey` and
+   inserts one geography row per distinct non-empty locality.
+3. Rebuilds `site`, replacing those six columns with nullable `geographyId`,
+   then restores every migrated relationship.
+4. Adds `site_geography_idx`, verifies that no legacy geography columns remain,
+   rejects duplicate match keys, and runs foreign-key and integrity checks.
+5. Leaves sites with no locality values unlinked instead of creating blank
+   geography rows.
 
 The v12-to-v13 example below remains historical context. Keep both examples
 aligned with the migration code when future schema versions are added.
@@ -311,205 +316,317 @@ exported or reproduced. Installation-local preferences remain in
 
 ## Darwin Core field mapping
 
-The following documents the audited mapping surface in `nahpu_dwc` 0.4.0.
-Source fields use the `table::field` notation used by NAHPU exports. Every v20
-field is reviewed against the normative [Darwin Core List of
-Terms](https://dwc.tdwg.org/list/) and Dublin Core definitions.
-Only exact semantic matches use standard terms; other values retain a
-`nahpu:` header instead of being forced into an approximate term.
+This is the audited schema-v21 mapping surface for `nahpu_dwc` 0.5.0. It uses
+the 2026-05-26 [Darwin Core List of Terms](https://dwc.tdwg.org/list/) and the
+[Darwin Core Data Package 1.0](https://dwc.tdwg.org/dp/) profile. Source fields
+use `table::field` notation.
 
-### Direct field mappings
+Every persisted column has exactly one status:
 
-| NAHPU source field(s) | Darwin Core or Dublin Core term |
+- **Mapped**: one exact Darwin Core or Dublin Core term.
+- **Composite/measurement**: combined with other values or emitted as an
+  assertion or MeasurementOrFact row.
+- **Relationship**: represented by a DwC-DP relationship or agent-role row.
+- **Dynamic**: custom-field configuration decides its exported representation.
+- **Unmapped**: no exact current standard representation; tabular output keeps
+  the value under the shown `nahpu:<table>.<column>` header.
+
+When a generic JSON or XML conversion finds multiple populated source fields
+that target the same standard term, it preserves each value under its NAHPU
+header instead of overwriting data. Structured bundle builders may combine
+those fields where the combination rule is explicit.
+
+The table audit is grouped by data domain:
+
+| Category | Tables |
 |---|---|
-| `project::uuid` | `dwc:projectID` |
-| `project::name` | `dwc:projectTitle` |
-| `project::created` | `dcterms:created` |
-| `project::lastAccessed` | `dcterms:modified` |
-| `site::siteID`, `site::siteId` | `dwc:locationID` |
-| `site::projectUuid` | `dwc:datasetID` |
-| `site::remark` | `dwc:locationRemarks` |
-| `site::country` | `dwc:country` |
-| `site::stateProvince` | `dwc:stateProvince` |
-| `site::county` | `dwc:county` |
-| `site::municipality` | `dwc:municipality` |
-| `site::locality` | `dwc:verbatimLocality` |
-| `siteAttribute::habitatType`, `siteAttribute::habitatCondition`, `siteAttribute::habitatDescription` | `dwc:habitat` |
-| `fossilSite::siteID`, `fossilSite::siteId` | `dwc:locationID` |
-| `fossilSite::formation` | `dwc:formation` |
-| `fossilSite::narrowerGeologicStage` | `dwc:latestAgeOrHighestStage` |
-| `fossilSite::broaderGeologicStage` | `dwc:earliestAgeOrLowestStage` |
-| `coordinate::nameId` | `dwc:locationID` |
-| `coordinate::siteID`, `coordinate::siteId` | `dwc:locationID` |
-| `coordinate::decimalLatitude` | `dwc:decimalLatitude` |
-| `coordinate::decimalLongitude` | `dwc:decimalLongitude` |
-| `coordinate::verbatimLatitude` | `dwc:verbatimLatitude` |
-| `coordinate::verbatimLongitude` | `dwc:verbatimLongitude` |
-| `coordinate::verbatimCoordinates` | `dwc:verbatimCoordinates` |
-| `coordinate::verbatimCoordinateSystem` | `dwc:verbatimCoordinateSystem` |
-| `coordinate::elevationInMeter` | `dwc:minimumElevationInMeters` in direct mapping, see composite mappings below |
-| `coordinate::datum` | `dwc:geodeticDatum` |
-| `coordinate::uncertaintyInMeters` | `dwc:coordinateUncertaintyInMeters` |
-| `coordinate::notes` | `dwc:georeferenceRemarks` |
-| `collEvent::id`, `event::id` | `dwc:eventID` |
-| `collEvent::projectUuid` | `dwc:datasetID` |
-| `collEvent::siteID`, `collEvent::siteId` | `dwc:locationID` |
-| `collEvent::startDate`, `collEvent::endDate` | `dwc:eventDate` |
-| `collEvent::startTime`, `collEvent::endTime` | `dwc:eventTime` |
-| `collEvent::primaryCollMethod` | `dwc:samplingProtocol` |
-| `collEvent::collMethodNotes` | `dwc:samplingEffort` |
-| `collEvent::personnel` | `dwc:recordedBy` |
-| `collPersonnel::eventID`, `collPersonnel::eventId`, `collEffort::eventID`, `collEffort::eventId`, `environment::eventID`, `environment::eventId` | `dwc:eventID` |
-| `collPersonnel::personnelId` | `dwc:recordedByID` |
-| `collPersonnel::name` | `dwc:recordedBy` |
-| `collEffort::method` | `dwc:samplingProtocol` |
-| `collEffort::notes` | `dwc:samplingEffort` |
-| `narrative::projectUuid` | `dwc:datasetID` |
-| `narrative::siteID`, `narrative::siteId` | `dwc:locationID` |
-| `narrative::date` | `dcterms:date` |
-| `narrative::narrative` | `dwc:eventRemarks` |
-| `media::primaryId`, `media::secondaryId` | `dcterms:identifier` |
-| `media::projectUuid` | `dwc:datasetID` |
-| `media::category` | `dcterms:type` |
-| `media::tag` | `dcterms:subject` |
-| `media::taken` | `dcterms:created` |
-| `media::camera`, `media::lenses`, `media::additionalExif` | `dcterms:description` |
-| `media::personnelId` | `dcterms:creator` |
-| `media::fileName` | `dcterms:title` |
-| `media::uri` | `dcterms:identifier` |
-| `media::caption` | `dcterms:description` |
-| `associatedData::name` | `dcterms:title` |
-| `associatedData::type` | `dcterms:type` |
-| `associatedData::date` | `dcterms:created` |
-| `associatedData::description` | `dcterms:description` |
-| `associatedData::primaryId`, `associatedData::uri` | `dcterms:identifier` |
-| `associatedData::projectUuid` | `dwc:datasetID` |
-| `specimenAssociatedData::specimenUuid` | `dwc:occurrenceID` relationship context |
-| `associatedData::url` | Legacy alias for `dcterms:identifier`, not a v20 column |
-| `personnel::uuid`, `personnel::orcid` | `dwc:agentID`; exports prefer the canonical ORCID URL |
-| `personnel::notes` | `dwc:agentRemarks` |
-| `taxonomy::id` | `dwc:taxonID` |
-| `taxonomy::taxonRank` | `dwc:taxonRank` |
-| `taxonomy::kingdom` | `dwc:kingdom` |
-| `taxonomy::phylum` | `dwc:phylum` |
-| `taxonomy::taxonClass` | `dwc:class` |
-| `taxonomy::taxonOrder` | `dwc:order` |
-| `taxonomy::taxonFamily` | `dwc:family` |
-| `taxonomy::genus` | `dwc:genus` |
-| `taxonomy::specificEpithet` | `dwc:specificEpithet` |
-| `taxonomy::subspecificEpithet` | `dwc:infraspecificEpithet` |
-| `taxonomy::authors` | `dwc:scientificNameAuthorship` |
-| `taxonomy::commonName` | `dwc:vernacularName` |
-| `taxonomy::notes` | `dwc:taxonRemarks` |
-| `specimen::uuid` | `dwc:occurrenceID` |
-| `specimen::projectUuid` | `dwc:datasetID` |
-| `specimen::speciesID`, `specimen::speciesId` | `dwc:taxonID` |
-| `specimen::scientificName` | `dwc:scientificName` |
-| `specimen::iDMethod` | `dwc:identificationType` |
-| `specimen::iDConfidence` | `dwc:identificationVerificationStatus` |
-| `specimen::taxonGroup` | `dwc:higherClassification` |
-| `specimen::collectionDate`, `specimen::captureDate` | `dwc:eventDate` |
-| `specimen::collectionTime`, `specimen::captureTime` | `dwc:eventTime` |
-| `specimen::trapType`, `specimen::methodID`, `specimen::methodId`, `specimen::collMethodID`, `specimen::collMethodId` | `dwc:samplingProtocol` |
-| `specimen::coordinateID`, `specimen::coordinateId` | `dwc:locationID` |
-| `specimen::collPersonnelID`, `specimen::collPersonnelId` | `dwc:recordedByID` |
-| derived `specimen::determiner` | `dwc:identifiedBy` |
-| `specimen::determinerID`, `specimen::determinerId` | `dwc:identifiedByID` |
-| `specimen::fieldNumber` | `dwc:recordNumber` |
-| `specimen::collEventID`, `specimen::collEventId` | `dwc:eventID` |
-| `specimenPart::specimenUuid` | `dwc:occurrenceID` |
-| `specimenPart::tissueID`, `specimenPart::tissueId` | `dwc:materialSampleID` |
-| `specimenPart::barcodeID`, `specimenPart::barcodeId` | `dwc:otherCatalogNumbers` |
-| `specimenPart::treatment`, `specimenPart::additionalTreatment` | `dwc:preparations` |
-| `specimenPart::dateTaken` | `dwc:eventDate` |
-| `specimenPart::timeTaken` | `dwc:eventTime` |
-| `specimenPart::remark`, `specimenPart::pmi` | `dwc:occurrenceRemarks` |
-| `narrativeMedia::narrativeId`, `narrativeMedia::mediaId` | `dcterms:identifier` |
-| `siteMedia::siteId` | `dwc:locationID` |
-| `siteMedia::mediaId` | `dcterms:identifier` |
-| `specimenMedia::specimenUuid` | `dwc:occurrenceID` |
-| `specimenMedia::mediaId` | `dcterms:identifier` |
-| `personnelList::projectUuid` | `dwc:datasetID` |
-| `personnelList::personnelUuid` | `dwc:agentID` |
-| `environment::notes` | `dwc:eventRemarks` |
-| `mammalAttribute::specimenUuid`, `birdAttribute::specimenUuid`, `herpAttribute::specimenUuid`, `arthropodAttribute::specimenUuid` | `dwc:occurrenceID` |
-| `mammalAttribute::sex`, `birdAttribute::sex`, `herpAttribute::sex`, `arthropodAttribute::sex` | `dwc:sex` |
-| `mammalAttribute::age`, `herpAttribute::age` | `dwc:lifeStage` |
-| `mammalAttribute::reproductiveStage` | `dwc:reproductiveCondition` |
-| `mammalAttribute::remark`, `birdAttribute::specimenRemark` | `dwc:occurrenceRemarks` |
-| `birdAttribute::habitatRemark` | `dwc:habitat` |
-| `herpAttribute::remark`, `arthropodAttribute::remark` | `dwc:occurrenceRemarks` |
-| `arthropodAttribute::hostOrganism` | `dwc:associatedTaxa` |
-| `fossilAttribute::specimenUuid`, `parasiteDetection::specimenUuid`, `parasite::specimenUuid` | `dwc:occurrenceID` |
-| `fossilAttribute::fossilType` | `dwc:materialEntityType` |
-| `fossilAttribute::specimenDescription` | `dwc:materialEntityRemarks` |
-| `parasiteDetection::detectionRemark` | `dwc:occurrenceRemarks` |
-| `parasite::speciesID`, `parasite::speciesId` | `dwc:taxonID` |
-| `parasite::identifierID`, `parasite::identifierId` | `dwc:identifiedByID` |
-| `parasite::parasiteUuid` | `dwc:organismID` |
-| `parasite::count` | `dwc:organismQuantity` |
-| `parasite::preparationMethod`, `parasite::treatment` | `dwc:preparations` |
-| `parasite::lifeStage` | `dwc:lifeStage` |
-| `parasite::detectionMethod` | `dwc:samplingProtocol` |
-| `parasite::dateCollected`, `parasite::timeCollected` | `dwc:eventDate`, `dwc:eventTime` respectively |
-| `parasite::remark` | `dwc:occurrenceRemarks` |
-| `eventMedia::eventID`, `eventMedia::eventId`, `eventAssociatedData::eventID`, `eventAssociatedData::eventId` | `dwc:eventID` |
-| `siteAssociatedData::siteId` | `dwc:locationID` |
-| `eventMedia::mediaId`, `eventAssociatedData::associatedDataId`, `siteAssociatedData::associatedDataId`, `specimenAssociatedData::associatedDataId` | `dcterms:identifier` |
+| Projects and locations | `project`, `geography`, `site`, `siteAttribute`, `fossilSite`, `coordinate` |
+| Collecting events | `collEvent`, `environment`, `collPersonnel`, `collEffort` |
+| Narratives and linked resources | `narrative`, `media`, media link tables, `associatedData`, associated-data link tables |
+| People and taxonomy | `personnelList`, `personnel`, `taxonomy` |
+| Specimens and attributes | `specimen`, `mammalAttribute`, `birdAttribute`, `herpAttribute`, `arthropodAttribute`, `fossilAttribute` |
+| Parasites and specimen material | `parasiteDetection`, `parasite`, `specimenPart` |
+| Custom fields | `customFieldDefinition`, `customFieldValue` |
 
-### Composite and measurement mappings
+### Projects and locations
 
-Some fields cannot be represented by one direct header. The tabular mapping
-API expands them as follows:
+#### `project`
 
-| NAHPU source field | Output headers or values | Explanation |
+| Fields | Status | Darwin Core or export handling |
 |---|---|---|
-| `coordinate::elevationInMeter` | `dwc:minimumElevationInMeters`, `dwc:maximumElevationInMeters` | One elevation value is written to both bounds in a flat export. |
-| `specimenPart::type` | `dwc:materialEntityType`, `dwc:objectQuantityType` | The source value can describe both the material entity and its quantity type. |
-| `specimenPart::count` | `dwc:objectQuantity` | The part count is exported as a quantity. |
-| `mammalAttribute::*`, `birdAttribute::*`, `herpAttribute::*`, `arthropodAttribute::*`, `parasiteDetection::*`, `environment::*` attribute fields | `dwc:measurementType`, `dwc:measurementValue`, `dwc:measurementUnit` | Each populated measurement or biological attribute becomes a MeasurementOrFact row. The type and unit come from NAHPU's attribute definition. |
+| `uuid`; `name`; `created`; `lastAccessed` | Mapped | `dwc:projectID`; `dwc:projectTitle`; `dcterms:created`; `dcterms:modified` |
+| `description`; `principalInvestigator`; `accession`; `catalogNumberPrefix`; `currentCatalogNumber`; `catalogNumberSuffix`; `location`; `timeZone`; `startDate`; `endDate` | Unmapped | `nahpu:project.description`; `nahpu:project.principalInvestigator`; `nahpu:project.accession`; `nahpu:project.catalogNumberPrefix`; `nahpu:project.currentCatalogNumber`; `nahpu:project.catalogNumberSuffix`; `nahpu:project.location`; `nahpu:project.timeZone`; `nahpu:project.startDate`; `nahpu:project.endDate`. These are project configuration or lifecycle values without one exact row-level term. |
 
-Attribute definitions currently include mammal lengths, weight,
-echolocation, reproductive observations, embryo counts, avian morphometrics,
-color and molt observations, herpetofauna weight and snout-vent length, and
-arthropod host-part and canopy observations, arthropod morphometrics and
-environmental parameters, and event-environment temperature, humidity,
-sunrise, sunset, and moon-phase values. Their units are preserved where defined, including
-`mm`, `cm`, `kHz`, `s`, `%`, `°C`, `mg/L`, `m/s`, and `hh:mm:ss`. Weight uses
-the row's selected `g`, `kg`, or `lbs` unit.
+#### `geography`
 
-Coordinate extent has no direct Darwin Core field. When populated with a
-positive value it is added to `coordinate::uncertaintyInMeters`; it is used
-alone when base uncertainty is empty. Empty, zero, negative, and non-finite
-extent values do not alter `dwc:coordinateUncertaintyInMeters`.
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `country`; `islandGroup`; `stateProvince`; `county`; `municipality`; `locality` | Mapped | `dwc:country`; `dwc:islandGroup`; `dwc:stateProvince`; `dwc:county`; `dwc:municipality`; `dwc:verbatimLocality` |
+| `id`; `matchKey` | Unmapped | `nahpu:geography.id`; `nahpu:geography.matchKey`. Internal identity and normalized deduplication key. |
 
-### Intentional NAHPU namespace fields
+#### `site`
 
-Internal primary keys, UI state, field-number counters, file-system paths,
-equipment brands, project lifecycle dates, storage workflow values, and other
-fields without an exact standard meaning remain under `nahpu:`. In particular,
-cataloger and preparator foreign keys are represented through agent-role bundle
-relationships rather than mislabeled as collectors, and specimen condition is
-not exported as disposition. Free-text stratigraphy and sedimentology remarks
-also stay in the NAHPU namespace because Darwin Core has no
-`geologicalContextRemarks` term.
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `siteID`; `projectUuid`; `remark` | Mapped | `dwc:locationID`; `dwc:datasetID`; `dwc:locationRemarks` |
+| `geographyId` | Relationship | Resolved to the shared location fields in structured bundles. |
+| `id`; `leadStaffId`; `siteType`; `mediaID` | Unmapped | `nahpu:site.id`; `nahpu:site.leadStaffId`; `nahpu:site.siteType`; `nahpu:site.mediaID`. Internal identity and site workflow links are not currently represented by an exact bundle relationship. |
 
-### Bundle resource relationships
+#### `siteAttribute`
 
-The bundle writer uses these mapped concepts to create related resources:
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `siteID`; `habitatType`; `habitatCondition`; `habitatDescription` | Mapped | `dwc:locationID`; the three habitat fields target `dwc:habitat` and are joined with ` | ` in structured rows. |
+| `canopyCover` | Composite/measurement | Assertion with type `canopy cover`; no unit is imposed. |
 
-- specimen fields form the `occurrence` core.
-- collecting-event and site context form `event` fields or occurrence context.
-- specimen parts form `material` records.
-- measurements form `measurement_or_fact` or `occurrence-assertion` records.
-- media form `multimedia` or `media` records and are linked to occurrences.
-- people and their roles form agent and role resources.
-- DwC-DP adds internal primary and foreign keys while retaining the public
-  Darwin Core identifiers.
+#### `fossilSite`
 
-The mapping is maintained with the `nahpu_dwc` implementation. When a mapper
-or bundle field changes, update this section and its verification checks in the
-same change.
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `siteID`; `formation`; `narrowerGeologicStage`; `broaderGeologicStage` | Mapped | `dwc:locationID`; `dwc:formation`; `dwc:latestAgeOrHighestStage`; `dwc:earliestAgeOrLowestStage` |
+| `geologicEra`; `geologicPeriod`; `geologicSeries`; `geologicEpoch`; `biozone`; `rockType`; `depositionalEnvironmentType`; `depositionalContinent`; `depositionalMarine`; `standardPreservationType`; `stratigraphyRemark`; `stratigraphicSource`; `sedimentologyRemark` | Unmapped | `nahpu:fossilSite.geologicEra`; `nahpu:fossilSite.geologicPeriod`; `nahpu:fossilSite.geologicSeries`; `nahpu:fossilSite.geologicEpoch`; `nahpu:fossilSite.biozone`; `nahpu:fossilSite.rockType`; `nahpu:fossilSite.depositionalEnvironmentType`; `nahpu:fossilSite.depositionalContinent`; `nahpu:fossilSite.depositionalMarine`; `nahpu:fossilSite.standardPreservationType`; `nahpu:fossilSite.stratigraphyRemark`; `nahpu:fossilSite.stratigraphicSource`; `nahpu:fossilSite.sedimentologyRemark`. Enum indices, free-text geology, and sedimentology are not forced into approximate terms. |
+
+#### `coordinate`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `nameId`; `siteID`; `decimalLatitude`; `decimalLongitude`; `verbatimLatitude`; `verbatimLongitude`; `verbatimCoordinates`; `verbatimCoordinateSystem`; `datum`; `uncertaintyInMeters`; `notes` | Mapped | `dwc:locationID`; `dwc:locationID`; `dwc:decimalLatitude`; `dwc:decimalLongitude`; `dwc:verbatimLatitude`; `dwc:verbatimLongitude`; `dwc:verbatimCoordinates`; `dwc:verbatimCoordinateSystem`; `dwc:geodeticDatum`; `dwc:coordinateUncertaintyInMeters`; `dwc:georeferenceRemarks` |
+| `elevationInMeter` | Composite/measurement | Written to both `dwc:minimumElevationInMeters` and `dwc:maximumElevationInMeters`. |
+| `id`; `gpsUnit` | Unmapped | `nahpu:coordinate.id`; `nahpu:coordinate.gpsUnit`. Internal key and device label. |
+
+### Collecting events
+
+#### `collEvent`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `id`; `projectUuid`; `siteID`; `startDate`; `endDate`; `startTime`; `endTime`; `primaryCollMethod`; `collMethodNotes` | Mapped | `dwc:eventID`; `dwc:datasetID`; `dwc:locationID`; date values target `dwc:eventDate`; time values target `dwc:eventTime`; `dwc:samplingProtocol`; `dwc:samplingEffort` |
+| `idSuffix` | Unmapped | `nahpu:collEvent.idSuffix`. NAHPU display suffix rather than a complete event identifier. |
+
+#### `environment`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `eventID`; `notes` | Mapped | `dwc:eventID`; `dwc:eventRemarks` |
+| `lowestDayTempC`; `highestDayTempC`; `lowestNightTempC`; `highestNightTempC`; `averageHumidity`; `dewPointTemp`; `sunriseTime`; `sunsetTime`; `moonPhase`; `cloudCover`; `rainfallInMm`; `ambientTemperature`; `ambientHumidity`; `waterTemperature`; `pH`; `dissolvedOxygen`; `flowVelocity` | Composite/measurement | Event assertions with explicit measurement types and defined units where available. |
+
+#### `collPersonnel`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `eventID`; `personnelId`; `name` | Mapped | `dwc:eventID`; `dwc:recordedByID`; `dwc:recordedBy` |
+| `role` | Relationship | Event agent-role value in DwC-DP. |
+| `id` | Unmapped | `nahpu:collPersonnel.id`. Internal relationship key. |
+
+#### `collEffort`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `eventID`; `method`; `notes` | Mapped | `dwc:eventID`; `dwc:samplingProtocol`; `dwc:samplingEffort` |
+| `id`; `brand`; `count`; `size` | Unmapped | `nahpu:collEffort.id`; `nahpu:collEffort.brand`; `nahpu:collEffort.count`; `nahpu:collEffort.size`. Internal identity and equipment details lack exact standalone terms. |
+
+### Narratives and linked resources
+
+#### `narrative`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `projectUuid`; `date`; `siteID` | Mapped | `dwc:datasetID`; `dcterms:date`; `dwc:locationID` |
+| `id`; `time`; `writerId`; `narrative`; `mediaID` | Unmapped | `nahpu:narrative.id`; `nahpu:narrative.time`; `nahpu:narrative.writerId`; `nahpu:narrative.narrative`; `nahpu:narrative.mediaID`. Narratives are not a DwC-DP resource, and a narrative can belong to a project or site, so its text is not forced into event remarks. |
+
+#### `media`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `primaryId`; `secondaryId`; `projectUuid`; `category`; `tag`; `taken`; `camera`; `lenses`; `additionalExif`; `personnelId`; `fileName`; `uri`; `caption` | Mapped | Identifiers use `dcterms:identifier`; project uses `dwc:datasetID`; category `dcterms:type`; tag `dcterms:subject`; taken `dcterms:created`; camera/lenses/EXIF/caption `dcterms:description`; personnel `dcterms:creator`; file name `dcterms:title`. Structured bundles preserve media relationships separately. |
+
+#### `narrativeMedia`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `narrativeId`; `mediaId` | Relationship | Narrative-to-media relationship; identifiers use `dcterms:identifier` in flat output. |
+
+#### `siteMedia`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `siteId`; `mediaId` | Relationship | Location-to-media relationship; `dwc:locationID` and `dcterms:identifier` in flat output. |
+
+#### `eventMedia`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `eventID`; `mediaId` | Relationship | Event-to-media relationship; `dwc:eventID` and `dcterms:identifier` in flat output. |
+
+#### `specimenMedia`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `specimenUuid`; `mediaId` | Relationship | Occurrence-to-media relationship; `dwc:occurrenceID` and `dcterms:identifier` in flat output. |
+
+#### `associatedData`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `primaryId`; `projectUuid`; `name`; `type`; `date`; `description`; `uri` | Mapped | `dcterms:identifier`; `dwc:datasetID`; `dcterms:title`; `dcterms:type`; `dcterms:created`; `dcterms:description`; `dcterms:identifier` |
+
+#### `specimenAssociatedData`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `specimenUuid`; `associatedDataId` | Relationship | Occurrence-to-associated-data relationship; `dwc:occurrenceID` and `dcterms:identifier` in flat output. |
+
+#### `siteAssociatedData`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `siteId`; `associatedDataId` | Relationship | Location-to-associated-data relationship; `dwc:locationID` and `dcterms:identifier` in flat output. |
+
+#### `eventAssociatedData`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `eventID`; `associatedDataId` | Relationship | Event-to-associated-data relationship; `dwc:eventID` and `dcterms:identifier` in flat output. |
+
+### People and taxonomy
+
+#### `personnelList`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `projectUuid`; `personnelUuid` | Relationship | Dataset-to-agent relationship; `dwc:datasetID` and `dwc:agentID` in flat output. |
+
+#### `personnel`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `uuid`; `orcid`; `name`; `notes` | Mapped | `dwc:agentID`; canonical ORCID also uses `dwc:agentID`; `dwc:preferredAgentName`; `dwc:agentRemarks` |
+| `initial`; `email`; `phone`; `affiliation`; `role`; `currentFieldNumber`; `photoPath`; `isRegisterField` | Unmapped | `nahpu:personnel.initial`; `nahpu:personnel.email`; `nahpu:personnel.phone`; `nahpu:personnel.affiliation`; `nahpu:personnel.role`; `nahpu:personnel.currentFieldNumber`; `nahpu:personnel.photoPath`; `nahpu:personnel.isRegisterField`. Contact data, project roles, counters, paths, and UI state are not agent type fields. |
+
+#### `taxonomy`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `id`; `taxonRank`; `kingdom`; `phylum`; `taxonClass`; `taxonOrder`; `taxonFamily`; `genus`; `specificEpithet`; `subspecificEpithet`; `authors`; `commonName`; `notes` | Mapped | `dwc:taxonID`; `dwc:taxonRank`; `dwc:kingdom`; `dwc:phylum`; `dwc:class`; `dwc:order`; `dwc:family`; `dwc:genus`; `dwc:specificEpithet`; `dwc:infraspecificEpithet`; `dwc:scientificNameAuthorship`; `dwc:vernacularName`; `dwc:taxonRemarks` |
+| `citesStatus`; `redListCategory`; `countryStatus`; `sortingOrder`; `mediaId` | Unmapped | `nahpu:taxonomy.citesStatus`; `nahpu:taxonomy.redListCategory`; `nahpu:taxonomy.countryStatus`; `nahpu:taxonomy.sortingOrder`; `nahpu:taxonomy.mediaId`. Conservation classifications require vocabularies and provenance; sorting and the local media link are not currently represented in the bundle. |
+
+### Specimens and attributes
+
+#### `specimen`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `uuid`; `projectUuid`; `speciesID`; `iDConfidence`; `iDMethod`; `taxonGroup`; `collectionDate`; `captureDate`; `collectionTime`; `captureTime`; `trapType`; `methodID`; `coordinateID`; `fieldNumber`; `collEventID`; `collPersonnelID`; `collMethodID`; `determinerID` | Mapped | `dwc:occurrenceID`; `dwc:datasetID`; `dwc:taxonID`; `dwc:identificationVerificationStatus`; `dwc:identificationType`; `dwc:higherClassification`; dates use `dwc:eventDate`; times use `dwc:eventTime`; collection methods use `dwc:samplingProtocol`; coordinate `dwc:locationID`; field number `dwc:recordNumber`; event `dwc:eventID`; collector `dwc:recordedByID`; determiner `dwc:identifiedByID`. |
+| `condition`; `coordinateExtentMeters`; `projectFieldNumber` | Composite/measurement | Condition derives `dwc:basisOfRecord`; positive coordinate extent contributes to `dwc:coordinateUncertaintyInMeters`; project field number participates in the bundle catalog number. |
+| `catalogerID`; `preparatorID` | Relationship | Occurrence agent-role relationships. |
+| `prepDate`; `prepTime`; `isRelativeTime`; `relativeCaptureTime`; `isMultipleCollector`; `museumID` | Unmapped | `nahpu:specimen.prepDate`; `nahpu:specimen.prepTime`; `nahpu:specimen.isRelativeTime`; `nahpu:specimen.relativeCaptureTime`; `nahpu:specimen.isMultipleCollector`; `nahpu:specimen.museumID`. Preparation workflow, relative-time state, UI flags, and unqualified museum identifiers remain NAHPU fields. |
+
+#### `mammalAttribute`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `specimenUuid`; `sex`; `lifeStage`; `reproductiveStage`; `remark` | Mapped | `dwc:occurrenceID`; `dwc:sex`; `dwc:lifeStage`; `dwc:reproductiveCondition`; `dwc:occurrenceRemarks` |
+| `totalLength`; `tailLength`; `hindFootLength`; `earLength`; `forearm`; `tibia`; `echolocation`; `frequencyMax`; `frequencyMin`; `frequencyAtMaxEnergy`; `duration`; `weight`; `weightUnit`; `testisPosition`; `testisLength`; `testisWidth`; `epididymisAppearance`; `leftPlacentalScars`; `rightPlacentalScars`; `mammaeCondition`; `mammaeInguinalCount`; `mammaeAxillaryCount`; `mammaeAbdominalCount`; `vaginaOpening`; `pubicSymphysis`; `embryoLeftCount`; `embryoRightCount`; `embryoCR` | Composite/measurement | MeasurementOrFact rows with field-specific types and units; `weightUnit` supplies the row-level weight unit. |
+| `showBatFields`; `showEchoFields`; `accuracy`; `accuracySpecify` | Unmapped | `nahpu:mammalAttribute.showBatFields`; `nahpu:mammalAttribute.showEchoFields`; `nahpu:mammalAttribute.accuracy`; `nahpu:mammalAttribute.accuracySpecify`. UI visibility and NAHPU measurement-quality state. |
+
+#### `birdAttribute`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `specimenUuid`; `sex`; `lifeStage`; `specimenRemark`; `habitatRemark` | Mapped | `dwc:occurrenceID`; `dwc:sex`; `dwc:lifeStage`; `dwc:occurrenceRemarks`; `dwc:habitat` |
+| `weight`; `weightUnit`; `wingspan`; `irisColor`; `irisHex`; `billColor`; `billHex`; `maxillaColor`; `maxillaHex`; `mandibleColor`; `mandibleHex`; `toeColor`; `toeHex`; `tarsusColor`; `tarsusHex`; `broodPatch`; `skullOssification`; `hasBursa`; `bursaWidth`; `bursaLength`; `fat`; `stomachContent`; `testisLength`; `testisWidth`; `testisRemark`; `ovaryLength`; `ovaryWidth`; `oviductWidth`; `ovaryAppearance`; `firstOvaSize`; `secondOvaSize`; `thirdOvaSize`; `oviductAppearance`; `ovaryRemark`; `wingIsMolt`; `wingMolt`; `tailIsMolt`; `tailMolt`; `bodyMolt`; `moltRemark` | Composite/measurement | MeasurementOrFact rows with field-specific types and units; `weightUnit` supplies the row-level weight unit. |
+
+#### `herpAttribute`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `specimenUuid`; `sex`; `lifeStage`; `remark` | Mapped | `dwc:occurrenceID`; `dwc:sex`; `dwc:lifeStage`; `dwc:occurrenceRemarks` |
+| `weight`; `weightUnit`; `svl` | Composite/measurement | Weight and snout-vent-length MeasurementOrFact rows; `weightUnit` supplies the row-level weight unit. |
+
+#### `arthropodAttribute`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `specimenUuid`; `sex`; `lifeStage`; `caste`; `hostOrganism`; `remark` | Mapped | `dwc:occurrenceID`; `dwc:sex`; `dwc:lifeStage`; `dwc:caste`; `dwc:associatedTaxa`; `dwc:occurrenceRemarks` |
+| `headWidth`; `bodyLength`; `wingspanUpper`; `wingspanLower`; `hostPart` | Composite/measurement | MeasurementOrFact rows with field-specific types and units. |
+
+#### `fossilAttribute`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `specimenUuid`; `fossilType`; `sex`; `ontogeneticStage`; `specimenDescription`; `remark` | Mapped | `dwc:occurrenceID`; `dwc:materialEntityType`; `dwc:sex`; `dwc:lifeStage`; descriptions and remarks use `dwc:materialEntityRemarks`. |
+| `weight`; `weightUnit` | Composite/measurement | Weight MeasurementOrFact row with its selected unit. |
+
+### Parasites and specimen material
+
+#### `parasiteDetection`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `specimenUuid`; `detectionRemark` | Mapped | `dwc:occurrenceID`; `dwc:occurrenceRemarks` |
+| `parasiteExamined`; `parasiteDetected` | Composite/measurement | MeasurementOrFact rows describing examination and detection. |
+
+#### `parasite`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `speciesID`; `identifierID`; `parasiteID`; `parasiteUuid`; `count`; `preparationMethod`; `treatment`; `lifeStage`; `detectionMethod`; `dateCollected`; `timeCollected`; `remark` | Mapped | `dwc:taxonID`; `dwc:identifiedByID`; `dwc:catalogNumber`; `dwc:occurrenceID`; `dwc:individualCount`; preparation values use `dwc:preparations`; `dwc:lifeStage`; `dwc:samplingProtocol`; `dwc:eventDate`; `dwc:eventTime`; `dwc:occurrenceRemarks` |
+| `specimenUuid`; `anatomicalLocation`; `category`; `associationStatus` | Relationship | Host occurrence and organism-interaction fields; structured bundles emit subject/related occurrence links, interaction type, related organism part, and description. |
+| `id`; `storage`; `storageLocation`; `datePreserved`; `timePreserved`; `museumPermanent`; `museumLoan` | Unmapped | `nahpu:parasite.id`; `nahpu:parasite.storage`; `nahpu:parasite.storageLocation`; `nahpu:parasite.datePreserved`; `nahpu:parasite.timePreserved`; `nahpu:parasite.museumPermanent`; `nahpu:parasite.museumLoan`. Internal identity and preservation, storage, and museum workflow values need a material-record model before standard mapping. |
+
+#### `specimenPart`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `specimenUuid`; `personnelId` | Relationship | Material-to-occurrence and preparator agent-role relationships. Flat output exposes the occurrence identifier for `specimenUuid`. |
+| `tissueID`; `barcodeID`; `count`; `treatment`; `additionalTreatment`; `dateTaken`; `timeTaken`; `remark` | Mapped | `dwc:materialSampleID`; `dwc:otherCatalogNumbers`; `dwc:objectQuantity`; preparation values use `dwc:preparations`; `dwc:eventDate`; `dwc:eventTime`; `dwc:materialEntityRemarks` |
+| `type` | Composite/measurement | `dwc:materialEntityType` and `dwc:objectQuantityType` |
+| `id`; `storage`; `storageLocation`; `pmi`; `museumPermanent`; `museumLoan` | Unmapped | `nahpu:specimenPart.id`; `nahpu:specimenPart.storage`; `nahpu:specimenPart.storageLocation`; `nahpu:specimenPart.pmi`; `nahpu:specimenPart.museumPermanent`; `nahpu:specimenPart.museumLoan`. Internal, storage, PMI, and museum workflow values have no exact current representation. |
+
+### Custom fields
+
+#### `customFieldDefinition`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `id`; `uuid`; `sourceTemplateUuid`; `name`; `type`; `uiSection`; `options`; `scope`; `projectUuid`; `catalogFormat`; `sortOrder`; `isArchived`; `dwcTarget`; `dwcField`; `dwcMode`; `allowDwcConflict`; `createdAt`; `updatedAt` | Dynamic | Configuration determines whether a value targets an exact field, an assertion, or `dynamicProperties`. Definition metadata is not itself statically mapped. |
+
+#### `customFieldValue`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `id`; `fieldDefinitionId`; `projectUuid`; `value`; `unit`; `eventId`; `siteId`; `specimenUuid`; `specimenPartId`; `parasiteId`; `isLegacy` | Dynamic | The referenced definition and owner select the target resource and representation. |
+
+### Legacy source aliases
+
+The mapper retains `event::` for `collEvent::`, `weather::` for
+`environment::`, and the historical `mammalMeasurement::`,
+`avianMeasurement::`, and `herpMeasurement::` namespaces. Site geography keys
+remain aliases for records created before v21, while current exports use
+`geography::`. `associatedData::url` remains an alias for the current `uri`
+column.
+
+## Unmapped-field follow-ups
+
+These fields remain **Unmapped** until their persisted semantics support an
+exact representation:
+
+- Convert fossil era, period, series, epoch, and biozone values from stored
+  enum indices into controlled labels before creating GeologicalContext rows.
+- Define controlled vocabularies and provenance for rock, depositional,
+  preservation, stratigraphy, sedimentology, and conservation-status fields.
+- Give narratives an explicit resource owner before choosing `dwc:fieldNotes`
+  or a resource-specific remarks field.
+- Model specimen-part PMI with a defined measurement type and unit, and model
+  preparation or preservation dates as explicit events when appropriate.
+- Define whether museum and storage identifiers describe material entities,
+  collections, loans, or installation-local workflow before mapping them.
+- Resolve the product distinction between specimen `fieldNumber`, derived
+  project field numbers, `dwc:recordNumber`, and `dwc:catalogNumber` before
+  changing the established bundle contract.
+
+The mapping is maintained with `nahpu_dwc`. A schema, mapper, or bundle change
+must update this audit and the schema-classification tests in the same change.
 
 ## Missing improvements and follow-up work
 
@@ -520,7 +637,7 @@ same change.
 - Add a documentation check that compares the table inventory and schema
   version here with generated Drift artifacts. This would catch stale table
   names such as `paleontologySite`.
-- Reconcile export-bundle table counts with the actual v20 inventory and keep
+- Reconcile export-bundle table counts with the actual v21 inventory and keep
   backup and restore documentation tested against a real archive.
 - Add restore verification that opens a restored SQLite file, runs foreign-key
   checks, and records the schema version before the file is offered to users.

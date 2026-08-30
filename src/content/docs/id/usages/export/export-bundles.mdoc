@@ -223,6 +223,12 @@ yang dipilih. Paket ini memuat JSON proyek aktif yang lengkap dan sama dengan
 yang dipakai `Export project`, sumber daya tabel yang bersesuaian, dan berkas
 terkaitnya.
 
+Sumber daya CSV yang bertipe dan relasional, pemetaan enum, serta cuplikan
+kosakata terkontrol membuat paket ini cocok untuk analisis lanjutan dengan
+Python, R, dan perkakas lain yang kompatibel dengan Frictionless. Gunakan
+Darwin Core Data Package bila alur kerja memerlukan tabel dan istilah Darwin
+Core yang terstandardisasi.
+
 #### Tata letak akar
 
 {% filetree %}
@@ -231,29 +237,7 @@ terkaitnya.
 - nahpu-project.json
 - tables/
   - project.csv
-  - site.csv
-  - coordinate.csv
-  - collEvent.csv
-  - weather.csv
-  - collPersonnel.csv
-  - collEffort.csv
-  - narrative.csv
-  - media.csv
-  - narrativeMedia.csv
-  - siteMedia.csv
-  - specimenMedia.csv
-  - associatedData.csv
-  - specimenAssociatedData.csv
-  - siteAssociatedData.csv
-  - personnelList.csv
-  - personnel.csv
-  - taxonomy.csv
-  - specimen.csv
-  - mammalAttribute.csv
-  - birdAttribute.csv
-  - herpAttribute.csv
-  - arthropodAttribute.csv
-  - specimenPart.csv
+  - ...
 - configs/
   - user_configs.json
 - mappings/
@@ -262,15 +246,18 @@ terkaitnya.
   - site.csv
   - events.csv
   - specimens.csv
+  - parasites.csv
 - files/
   - ...
 - media/
   - ...
 {% /filetree %}
 
-Seluruh 24 tabel basis data yang diwajibkan dan diwakili oleh muatan transfer
-proyek disertakan. Tabel yang kosong tetap diwakili oleh berkas CSV dengan tajuk
-dan skema yang lengkap.
+`project.csv` dan setiap tabel basis data lain yang berisi catatan disertakan.
+Tabel proyek yang kosong dihilangkan dari `tables/` dan `datapackage.json`,
+sehingga daftar tepatnya bergantung pada proyek. Sumber daya metadata, termasuk
+pemetaan enum dan CSV kosakata terkontrol, tetap tersedia meskipun tidak berisi
+baris.
 
 #### JSON proyek
 
@@ -283,7 +270,8 @@ memerlukan SQLite.
 Berkas CSV merupakan penyajian terbuka yang tidak bergantung perkakas, untuk
 pemeriksaan, analisis, dan pemrosesan yang kompatibel dengan Frictionless.
 Catatannya dihasilkan dari muatan yang sama, sehingga cakupan JSON dan tabelnya
-tetap selaras.
+tetap selaras. Koleksi kosong tetap berada di `nahpu-project.json` untuk
+transfer proyek meskipun sumber daya CSV yang bersesuaian tidak diekspor.
 
 #### Pemetaan enum SQLite
 
@@ -303,22 +291,24 @@ dan kolom reproduksi mamalia, kolom reproduksi serta pergantian bulu burung,
 umur herpetofauna, dan kategori ekolokasi. Bilangan bulat boolean dan pengukuran
 numerik bukan indeks enum sehingga tidak dicantumkan.
 
-Berkas pemetaan juga memuat enum jenis kelamin artropoda. Atribut artropoda
-tetap berada di `tables/arthropodAttribute.csv` meskipun tabel itu tidak berisi
-baris. Baris jenis kelamin spesimen memakai kode stabil yang tersurat alih-alih
-menurunkannya dari urutan enum; kode lama `0`, `1`, dan `2` mempertahankan makna
-aslinya.
+Berkas pemetaan juga memuat enum jenis kelamin artropoda. Baris jenis kelamin
+spesimen memakai kode stabil yang tersurat alih-alih menurunkannya dari urutan
+enum; kode lama `0`, `1`, dan `2` mempertahankan makna aslinya. Pemetaan tetap
+tersedia meskipun tabel proyek yang bersesuaian kosong dan karena itu
+dihilangkan.
 
 #### Kosakata terkontrol
 
 Paket ini mengambil cuplikan nama tipe yang dikendalikan pengguna dari
-pengaturan NAHPU ke dalam tiga sumber daya CSV:
+pengaturan NAHPU ke dalam empat sumber daya CSV:
 
 - `vocabularies/site.csv` memuat tipe lokasi dan tipe habitat;
 - `vocabularies/events.csv` memuat metode pengumpulan dan peran personel
   pengumpul;
 - `vocabularies/specimens.csv` memuat tipe spesimen, perlakuan, kondisi, dan
   kosakata jenis kelamin spesimen terbatas yang diaktifkan.
+- `vocabularies/parasites.csv` memuat kategori parasit, metode deteksi dan
+  preparasi, lokasi anatomi, penyimpanan, dan perlakuan.
 
 Setiap baris mencatat kunci konfigurasi pengguna, nama kosakata, posisi dalam
 daftar berbasis nol, dan nilai yang dikonfigurasi. Bila sebuah pengaturan belum
@@ -329,8 +319,8 @@ konfigurasi yang lengkap.
 
 #### Descriptor Frictionless
 
-`datapackage.json` memakai profil baku `data-package`. Setiap tabel merupakan
-`tabular-data-resource` dengan:
+`datapackage.json` memakai profil baku `data-package`. Setiap tabel proyek yang
+berisi catatan merupakan `tabular-data-resource` dengan:
 
 - urutan kolom;
 - tipe data kolom;
@@ -339,10 +329,50 @@ konfigurasi yang lengkap.
 - rujukan kunci asing;
 - pengodean CSV UTF-8.
 
-Descriptor juga mendeklarasikan pemetaan enum dan ketiga CSV kosakata terkontrol
+Descriptor juga mendeklarasikan pemetaan enum dan keempat CSV kosakata terkontrol
 sebagai sumber daya tabel, lengkap dengan skema kolom dan kunci utama gabungan.
 Descriptor mencantumkan JSON proyek, konfigurasi pengguna, manifes, dan berkas
 pengguna yang dikemas sebagai sumber daya nontabel.
+
+#### Analisis dengan Frictionless
+
+Ekstrak arsip ZIP atau TAR.GZ sebelum memuat `datapackage.json` karena
+descriptor memakai jalur relatif terhadap akar paket. Karena tabel proyek yang
+kosong dihilangkan, periksa nama sumber daya sebelum membaca tabel opsional.
+
+Pengguna Python dapat memasang
+[Frictionless Framework](https://framework.frictionlessdata.io/docs/getting-started.html)
+dan membaca tabel spesimen bila tersedia:
+
+```python
+from collections import Counter
+
+from frictionless import Package
+
+package = Package("/jalur/ke/paket-yang-diekstrak/datapackage.json")
+print(package.resource_names)
+
+if package.has_resource("specimen"):
+    specimens = package.get_resource("specimen").read_rows()
+    counts = Counter(row["taxonGroup"] or "Tidak ditentukan" for row in specimens)
+    print(counts)
+```
+
+Pengguna R dapat memasang
+[paket frictionless](https://docs.ropensci.org/frictionless/) dan melakukan
+pemeriksaan serta ringkasan yang sama:
+
+```r
+library(frictionless)
+
+package <- read_package("/jalur/ke/paket-yang-diekstrak/datapackage.json")
+resource_names(package)
+
+if ("specimen" %in% resource_names(package)) {
+  specimens <- read_resource(package, "specimen")
+  print(table(specimens$taxonGroup, useNA = "ifany"))
+}
+```
 
 #### Manifes reproduksibilitas
 

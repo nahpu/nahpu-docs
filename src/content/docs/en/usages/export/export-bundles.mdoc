@@ -216,6 +216,11 @@ Unlike the Darwin Core formats, it is not restricted to selected specimen
 taxa. It includes the same complete active-project JSON used by `Export
 project`, matching tabular resources, and related files.
 
+Its typed, relational CSV resources, enum mappings, and controlled-vocabulary
+snapshots make it suitable for downstream analysis in Python, R, and other
+Frictionless-compatible tools. Use Darwin Core Data Package instead when a
+workflow requires standardized Darwin Core tables and terms.
+
 #### Root layout
 
 {% filetree %}
@@ -224,29 +229,7 @@ project`, matching tabular resources, and related files.
 - nahpu-project.json
 - tables/
   - project.csv
-  - site.csv
-  - coordinate.csv
-  - collEvent.csv
-  - weather.csv
-  - collPersonnel.csv
-  - collEffort.csv
-  - narrative.csv
-  - media.csv
-  - narrativeMedia.csv
-  - siteMedia.csv
-  - specimenMedia.csv
-  - associatedData.csv
-  - specimenAssociatedData.csv
-  - siteAssociatedData.csv
-  - personnelList.csv
-  - personnel.csv
-  - taxonomy.csv
-  - specimen.csv
-  - mammalAttribute.csv
-  - birdAttribute.csv
-  - herpAttribute.csv
-  - arthropodAttribute.csv
-  - specimenPart.csv
+  - ...
 - configs/
   - user_configs.json
 - mappings/
@@ -255,15 +238,18 @@ project`, matching tabular resources, and related files.
   - site.csv
   - events.csv
   - specimens.csv
+  - parasites.csv
 - files/
   - ...
 - media/
   - ...
 {% /filetree %}
 
-All 24 required database tables represented by the project-transfer payload are
-included. An empty table is still represented by a CSV file with its complete
-header and schema.
+`project.csv` and every other database table containing records are included.
+Empty project tables are omitted from both `tables/` and `datapackage.json`, so
+the exact list varies with the project. Metadata resources, including enum
+mappings and controlled-vocabulary CSVs, remain present even when they have no
+rows.
 
 #### Project JSON
 
@@ -274,7 +260,9 @@ null value versus an intentionally empty string without requiring SQLite.
 
 The CSV files are open, tool-independent representations for inspection,
 analysis, and Frictionless-compatible processing. Their records are generated
-from the same payload so the JSON and tables remain scoped consistently.
+from the same payload so the JSON and tables remain scoped consistently. Empty
+collections remain in `nahpu-project.json` for project transfer even when no
+corresponding CSV resource is exported.
 
 #### SQLite enum mappings
 
@@ -294,21 +282,23 @@ fields, avian reproductive and molt fields, herpetofauna age, and
 echolocation categories. Boolean integers and numeric measurements are not
 enum indexes and are therefore not listed.
 
-The mapping file also includes the arthropod sex enum. Arthropod attributes
-remain in `tables/arthropodAttribute.csv` even when the table has no rows.
-Specimen-sex rows use explicit stable codes rather than deriving codes from
-enum order; legacy codes `0`, `1`, and `2` retain their original meanings.
+The mapping file also includes the arthropod sex enum. Specimen-sex rows use
+explicit stable codes rather than deriving codes from enum order; legacy codes
+`0`, `1`, and `2` retain their original meanings. The mapping remains available
+even when the corresponding project table is empty and therefore omitted.
 
 #### Controlled vocabularies
 
 The package snapshots the current user-controlled type names from NAHPU
-Settings into three CSV resources:
+Settings into four CSV resources:
 
 - `vocabularies/site.csv` contains site types and habitat types;
 - `vocabularies/events.csv` contains collecting methods and collecting
   personnel roles;
 - `vocabularies/specimens.csv` contains specimen types, treatments, conditions,
   and the enabled restricted specimen-sex vocabulary.
+- `vocabularies/parasites.csv` contains parasite categories, detection and
+  preparation methods, anatomical locations, storage, and treatments.
 
 Each row records the user configuration key, vocabulary name, zero-based list
 position, and configured value. If a setting has not yet been customized, the
@@ -319,8 +309,8 @@ document.
 
 #### Frictionless descriptor
 
-`datapackage.json` uses the standard `data-package` profile. Each table is a
-`tabular-data-resource` with:
+`datapackage.json` uses the standard `data-package` profile. Each populated
+project table is a `tabular-data-resource` with:
 
 - column order;
 - field data types;
@@ -329,10 +319,51 @@ document.
 - foreign-key references;
 - UTF-8 CSV encoding.
 
-The descriptor also declares the enum mapping and three controlled-vocabulary
+The descriptor also declares the enum mapping and four controlled-vocabulary
 CSVs as tabular resources with field schemas and composite primary keys. It
 lists the project JSON, user configuration, manifest, and packaged user files
 as non-tabular resources.
+
+#### Analyze with Frictionless
+
+Extract the ZIP or TAR.GZ archive before loading `datapackage.json`, because
+the descriptor uses paths relative to the package root. Since empty project
+tables are omitted, inspect or test the resource names before reading an
+optional table.
+
+Python users can install the
+[Frictionless Framework](https://framework.frictionlessdata.io/docs/getting-started.html)
+and read the specimen table when it is available:
+
+```python
+from collections import Counter
+
+from frictionless import Package
+
+package = Package("/path/to/extracted-package/datapackage.json")
+print(package.resource_names)
+
+if package.has_resource("specimen"):
+    specimens = package.get_resource("specimen").read_rows()
+    counts = Counter(row["taxonGroup"] or "Unspecified" for row in specimens)
+    print(counts)
+```
+
+R users can install the
+[frictionless package](https://docs.ropensci.org/frictionless/) and perform the
+same inspection and summary:
+
+```r
+library(frictionless)
+
+package <- read_package("/path/to/extracted-package/datapackage.json")
+resource_names(package)
+
+if ("specimen" %in% resource_names(package)) {
+  specimens <- read_resource(package, "specimen")
+  print(table(specimens$taxonGroup, useNA = "ifany"))
+}
+```
 
 #### Reproducibility manifest
 
