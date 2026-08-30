@@ -2,8 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 import TeamMember from "../components/TeamMember.astro";
 import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
 import cntl from "cntl";
 import snake from "../assets/images/animals/handika-snake.webp";
+import { byName, byOrderThenName, primaryUrl } from "../data/team";
+import { acknowledgments } from "../data/acknowledgments";
 
 import "../styles/global.css";
 import "../styles/landing.css";
@@ -12,110 +15,38 @@ const kickerClasses = cntl`
   text-xs font-semibold uppercase tracking-[0.2em]
   text-silver-tree-600 dark:text-silver-tree-400
 `;
-const teamData = [
-  {
-    name: "Heru Handika",
-    institution: "Florida Museum of Natural History",
-    description:
-      "Responsible for the overall project and the main developer of the app.",
-    url: "https://hhandika.com/",
-    leader: true,
-  },
-  {
-    name: "Ada Chornelia",
-    institution: "School of BioSciences, The University of Melbourne",
-    description: "Key contributor to NAHPU development.",
-    url: "https://scholar.google.com/citations?user=DRDqstQAAAAJ&hl=en&oi=ao",
-  },
-  {
-    name: "Andre E. Moncrieff",
-    institution: "Sam Noble Oklahoma Museum of Natural History",
-    description:
-      "Conceives new app features, designs bird taxon format, writes documentation, and tests the app.",
-    url: "https://www.moncriefflab.org/",
-  },
-  {
-    name: "Austin S. Chipps",
-    institution: "U.S. National Museum of Natural History",
-    description: "Key contributor to NAHPU development.",
-    url: "https://scholar.google.com/citations?user=5w8sJyIAAAAJ&hl=en&oi=ao",
-  },
-  {
-    name: "Cody Henderson",
-    institution: "College of Computing, Georgia Institute of Technology",
-    description:
-      "He is responsible for developing support for new taxon formats within NAHPU via collaboration with research partners.",
-    url: "https://github.com/cody-henderson",
-  },
-  {
-    name: "Danté Evangelista",
-    institution: "College of Computing, Georgia Institute of Technology",
-    description:
-      "AI/ML Researcher discovering + building AI features for the app",
-    url: "https://www.linkedin.com/in/danteorbit",
-  },
-  {
-    name: "Glaucia Del-Rio",
-    institution: "Florida Museum of Natural History",
-    description: "Key contributor to NAHPU development.",
-    url: "https://www.gdel-rio.com/",
-  },
-  {
-    name: "Gregory Thom",
-    institution: "LSU Museum of Natural Science",
-    description: "Key contributor to NAHPU development.",
-    url: "https://www.thom-lab.org/",
-  },
-  {
-    name: "Jacob A. Esselstyn",
-    institution: "LSU Museum of Natural Science",
-    description: "Key contributor to NAHPU development.",
-    url: "https://esselstyn.github.io/",
-  },
-  {
-    name: "Lawrence Gan",
-    institution: "College of Computing, Georgia Institute of Technology",
-    description: "Key contributor to NAHPU development.",
-    url: "https://www.linkedin.com/in/larry-gan/",
-  },
-  {
-    name: "Lauren Vonnahme",
-    institution: "The American Museum of Natural History",
-    description: "Key contributor to NAHPU development.",
-    url: "https://www.amnh.org/research/staff-directory/lauren-vonnahme",
-  },
-  {
-    name: "Marco Rego",
-    institution: "Florida Museum of Natural History",
-    description: "Key contributor to NAHPU development.",
-    url: "http://www.ornithologymaps.com",
-  },
-  {
-    name: "Natalia Pérez-Amaya",
-    institution: "Sam Noble Oklahoma Museum of Natural History",
-    description:
-      "Colombian ornithologist and Collection Manager of Birds at the Sam Noble Museum. Her research interests are focused on the phylogeography and ecomorphology of Neotropical birds.​",
-    url: "https://www.nperez-amaya.com",
-  },
-  {
-    name: "Nurul Inayah",
-    institution: "Museum Zoologicum Bogoriense",
-    description: "Key contributor to NAHPU development.",
-    url: "https://www.researchgate.net/profile/Nurul-Brin?ev=hdr_xprf",
-  },
-  {
-    name: "Roberta Canton",
-    institution: "Clemson University",
-    description: "Key contributor to NAHPU development.",
-    url: "https://robertacanton.com/",
-  },
-  {
-    name: "Samantha L. Rutledge",
-    institution: "LSU Museum of Natural Science",
-    description: "Key contributor to NAHPU development.",
-    url: "https://slrutledge.wordpress.com/",
-  },
-];
+
+const sectionTitleClasses = cntl`
+  mt-3 text-3xl sm:text-4xl font-semibold
+  text-silver-tree-950 dark:text-silver-tree-50
+`;
+
+const sectionLeadClasses = cntl`
+  mt-4 max-w-2xl
+  text-base leading-relaxed
+  text-silver-tree-700 dark:text-silver-tree-300
+`;
+
+const inlineLinkClasses = cntl`
+  text-silver-tree-800 dark:text-silver-tree-100
+  underline underline-offset-2
+  decoration-silver-tree-400
+  hover:text-silver-tree-950 dark:hover:text-silver-tree-50
+`;
+
+const members = await getCollection("team");
+const past = members.filter((member) => member.data.group === "past").sort(byName);
+
+/// Markdown bodies render asynchronously, so resolve them before the template.
+const core = await Promise.all(
+  members
+    .filter((member) => member.data.group === "core")
+    .sort(byOrderThenName)
+    .map(async (member) => ({
+      ...member,
+      Bio: (await render(member)).Content,
+    })),
+);
 ---
 
 <Layout
@@ -144,31 +75,116 @@ const teamData = [
       <p
         class="mt-5 max-w-2xl text-lg text-silver-tree-800 dark:text-silver-tree-200"
       >
-        {teamData.length} collection managers, field biologists, and software engineers
-        building NAHPU across museums and universities.
+        {core.length} curators, collection managers, field biologists, and software
+        engineers building NAHPU across museums and universities.
       </p>
     </div>
   </section>
 
-  <!-- Members -------------------------------------------------------------->
-  <section class="px-6 py-16 sm:py-20 bg-silver-tree-100 dark:bg-silver-tree-950">
+  <!-- Core members --------------------------------------------------------->
+  <section
+    class="px-6 py-16 sm:py-20 bg-silver-tree-100 dark:bg-silver-tree-950"
+  >
     <div class="mx-auto max-w-6xl">
       <div
         class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3"
       >
         {
-          teamData.map((member) => (
-            <TeamMember
-              name={member.name}
-              institution={member.institution}
-              description={member.description}
-              url={member.url}
-              leader={member.leader || false}
-              featured={member.leader || false}
-            />
+          core.map(({ data, Bio }) => (
+            <TeamMember data={data}>
+              <Bio />
+            </TeamMember>
           ))
         }
       </div>
+    </div>
+  </section>
+
+  <!-- Past members --------------------------------------------------------->
+  <section
+    class="px-6 py-16 sm:py-20 bg-silver-tree-200/60 dark:bg-silver-tree-900"
+  >
+    <div class="mx-auto max-w-6xl">
+      <header class="nh-reveal">
+        <p class={kickerClasses}>Credit where it is due</p>
+        <h2 class={sectionTitleClasses}>Past members and key contributors</h2>
+        <p class={sectionLeadClasses}>
+          People who sustained their contribution to build NAHPU, through
+          feedback and code that is still part of the app today.
+        </p>
+      </header>
+
+      <dl
+        class="nh-reveal mt-10 grid grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {
+          past.map((member) => {
+            const href = primaryUrl(member.data);
+            return (
+              <div class="border-t border-silver-tree-300/70 pt-4 dark:border-silver-tree-700/70">
+                <dt class="text-base font-semibold text-silver-tree-900 dark:text-silver-tree-50">
+                  {href ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-silver-tree-900 no-underline transition-colors hover:text-silver-tree-600 dark:text-silver-tree-50 dark:hover:text-silver-tree-300"
+                    >
+                      {member.data.name}
+                    </a>
+                  ) : (
+                    member.data.name
+                  )}
+                </dt>
+                <dd class="mt-1 ml-0 text-sm text-silver-tree-700 dark:text-silver-tree-300">
+                  {member.data.institution}
+                </dd>
+              </div>
+            );
+          })
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Acknowledgments ------------------------------------------------------>
+  <section
+    class="px-6 py-16 sm:py-20 bg-silver-tree-100 dark:bg-silver-tree-950"
+  >
+    <div class="mx-auto max-w-6xl">
+      <header class="nh-reveal">
+        <p class={kickerClasses}>Acknowledgments</p>
+        <h2 class={sectionTitleClasses}>Thank you for the feedback</h2>
+        <p class={sectionLeadClasses}>
+          NAHPU is a collaborative project among museum and computer scientists.
+          Many thanks to the following people for their contributions and
+          feedback:
+        </p>
+      </header>
+
+      <p
+        class="nh-reveal mt-6 max-w-4xl text-base leading-loose text-silver-tree-700 dark:text-silver-tree-300"
+      >
+        {
+          acknowledgments.map((person, index) => (
+            <>
+              {index > 0 && ", "}
+              {person.url ? (
+                <a
+                  href={person.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class={inlineLinkClasses}
+                >
+                  {person.name}
+                </a>
+              ) : (
+                person.name
+              )}
+            </>
+          ))
+        }.
+      </p>
     </div>
   </section>
 

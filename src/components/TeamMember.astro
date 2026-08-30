@@ -2,26 +2,19 @@
 import { Image } from "astro:assets";
 import "../styles/global.css";
 import cntl from "cntl";
+import ProfileLinks from "./ProfileLinks.astro";
+import { primaryUrl } from "../data/team";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  name: string;
-  institution: string;
-  description: string;
-  url: string;
+  data: CollectionEntry<"team">["data"];
   photoSrc?: string | null;
-  leader?: boolean;
-  featured?: boolean;
 }
 
-const {
-  name,
-  institution,
-  description,
-  url,
-  photoSrc,
-  leader,
-  featured = false,
-} = Astro.props as Props;
+const { data, photoSrc } = Astro.props as Props;
+const { name, institution, featured } = data;
+const roles = data.role ? [data.role].flat() : [];
+const href = primaryUrl(data);
 const hasPhoto = !!photoSrc;
 const initials = name
   .split(" ")
@@ -61,17 +54,27 @@ const nameClasses = cntl`
   no-underline
 `;
 
+const nameLinkClasses = cntl`
+  text-silver-tree-900 dark:text-silver-tree-50
+  no-underline
+  transition-colors
+  hover:text-silver-tree-700 dark:hover:text-silver-tree-200
+`;
+
 const institutionClasses = cntl`
   mt-0.5 text-sm
   text-silver-tree-700 dark:text-silver-tree-300
 `;
 
-const descriptionClasses = cntl`
+const bioClasses = cntl`
   mt-4 text-sm leading-relaxed
   text-silver-tree-700 dark:text-silver-tree-300
+  [&_p]:m-0 [&_p+p]:mt-3
+  [&_a]:text-silver-tree-800 dark:[&_a]:text-silver-tree-100
+  [&_a]:underline [&_a]:underline-offset-2
 `;
 
-const leaderBadgeClasses = cntl`
+const roleBadgeClasses = cntl`
   mt-3 inline-flex w-fit items-center gap-1.5
   rounded-full
   bg-golden-grass-100 dark:bg-golden-grass-950
@@ -103,44 +106,40 @@ const leaderBadgeClasses = cntl`
 
     <div class="min-w-0">
       <h3 class={nameClasses}>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-silver-tree-900 no-underline transition-colors after:absolute after:inset-0 focus:outline-none group-hover:text-silver-tree-700 dark:text-silver-tree-50 dark:group-hover:text-silver-tree-200"
-        >
-          {name}
-        </a>
+        {
+          href ? (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={nameLinkClasses}
+            >
+              {name}
+            </a>
+          ) : (
+            name
+          )
+        }
       </h3>
       <p class={institutionClasses}>{institution}</p>
       {
-        leader && (
-          <span class={leaderBadgeClasses}>
-            <span class="h-1.5 w-1.5 rounded-full bg-golden-grass-500" />
-            Principal Investigator
-          </span>
+        roles.length > 0 && (
+          <div class="flex flex-wrap gap-1.5">
+            {roles.map((label) => (
+              <span class={roleBadgeClasses}>
+                <span class="h-1.5 w-1.5 rounded-full bg-golden-grass-500" />
+                {label}
+              </span>
+            ))}
+          </div>
         )
       }
     </div>
   </div>
 
-  <p class={descriptionClasses}>{description}</p>
+  <div class={bioClasses}>
+    <slot />
+  </div>
 
-  <span
-    class="mt-auto flex items-center gap-1.5 pt-5 text-xs font-medium text-silver-tree-600 transition-colors group-hover:text-silver-tree-800 dark:text-silver-tree-400 dark:group-hover:text-silver-tree-200"
-  >
-    Profile
-    <svg
-      class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M7 17 17 7M9 7h8v8"></path>
-    </svg>
-  </span>
+  <ProfileLinks data={data} ownerName={name} />
 </article>
