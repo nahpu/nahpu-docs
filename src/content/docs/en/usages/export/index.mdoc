@@ -24,40 +24,56 @@ NAHPU has these export-related actions in the project menu:
 - For database recovery, see [Restoring a database](#restoring-a-database).
 - To create a standards-based specimen package or reproducible NAHPU Data Package, see [Bundle records](./export-bundles).
 - To export printable PDF labels, tags, or other documents, see [Export documents](./export-documents).
+- To export a summary count table instead of full records, see [Export statistics](./export-statistics).
+- To export photographs on their own, see [Export images](./export-images).
 
 Use this page for record exports, project packages, database backups, and
-settings exports. Coordinate GIS exchange is managed from a site's coordinate
-panel, not from the project menu. The coordinate workflow supports GeoJSON,
-KML, zipped Shapefile, and GPX imports, and GeoJSON, KML, and zipped Shapefile
-exports.
+settings exports. Statistics tables and media are exported from the screens
+that show them rather than from the project menu. Coordinate GIS exchange is
+managed from a site's coordinate panel, not from the project menu. The
+coordinate workflow supports GeoJSON, KML, zipped Shapefile, and GPX imports,
+and GeoJSON, KML, and zipped Shapefile exports.
 
 For project transfers, use `JSON.GZ` when the upload must be small and media is
 not needed. Use ZIP or TAR.GZ when available media should travel with the
-project. A project transfer is not a raw SQLite backup; use `Backup database`
-for a restorable installation copy.
+project. A project export is also the recommended daily field backup, because
+`Merge project` can read it back on another device. It is not a raw SQLite
+backup, though: use `Backup database` weekly, and before any merge, for a
+restorable copy of the whole installation.
 
-## Backup strategy
+## Backup strategy {% #backup-strategy %}
 
 Use more than one backup type during fieldwork. They protect different things
 and are not interchangeable.
 
-- **Daily database backup**: a compact `.sqlite3` file. Use it frequently for
-  database recovery and day-to-day safety.
-- **Light project export**: a compressed `JSON.GZ` file containing project
-  records without media. Use it for a limited-internet upload or a records-only
-  merge. It is not a complete project backup.
-- **Full database backup**: a `.zip` or `.tar.gz` archive that includes the
-  SQLite database, user configs, media, associated files, fonts, and maps. Use
-  it when you need complete installation recovery.
+**In the field, export the project every day and back up the database every
+week.** A project export is the smaller, faster, and less battery-hungry of the
+two, and `Merge project` brings it back into NAHPU on a replacement device if
+one is lost, broken, or stolen. A database backup copies the whole
+installation, so it belongs at a weekly checkpoint and immediately before any
+merge.
+
+- **Project export (daily in the field)**: a ZIP or TAR.GZ archive with the
+  project records and available media, or a `JSON.GZ` light export without
+  media when the upload must be small. `Merge project` accepts all three, which
+  is what makes this a recovery path and not only a transfer.
+- **Full database backup (weekly, and before merging)**: a `.zip` or `.tar.gz`
+  archive that includes the SQLite database, user configs, media, associated
+  files, fonts, and maps. Use it for complete installation recovery, before a
+  merge that could go wrong, and when several projects must be preserved
+  together.
+- **Database-only backup**: a compact `.sqlite3` file. Use it when the records
+  must be restorable but the managed files do not need to travel.
 - **User config backup**: a `.json` or `.json.gz` file containing user configs,
   export presets, template presets, and document layouts. Use it when another
   device needs the same controlled lists, export behavior, and document layouts.
 
 {% aside type="tip" title="Recommended practice" %}
-At the end of each field day, export a full database backup to cloud storage if
-internet is available, and export a project transfer to local storage such as a
-USB-C flash drive or a second device. Periodically restore a backup on another
-device to confirm the file is usable.
+At the end of each field day, export the project to storage separate from the
+working device, such as a USB-C flash drive or a teammate's device, and upload
+it as well if internet is available. Keep the full database backup for the end
+of the week and for the moment before you merge. Periodically restore or merge
+a file on another device to confirm it is usable.
 {% /aside %}
 
 ## Backup database

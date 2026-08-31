@@ -4,7 +4,7 @@ sidebar:
   order: 4
 ---
 
-Anda dapat mendaftarkan takson baru secara manual atau dengan mengimpor berkas.
+Anda dapat mendaftarkan takson secara manual, mengimpor berkas, atau memindai kode QR takson NAHPU.
 
 Mengimpor takson menambahkan data ke registri. Tindakan ini tidak menambahkan
 grup katalog spesimen baru ke aplikasi. Kontributor yang menambahkan grup baru
@@ -77,12 +77,13 @@ Perilaku pemisah:
 
 Kolom yang disarankan untuk templat impor:
 
-- `taxon rank`, `class`, `order`, `family`, `genus`, `epithet`,
+- `taxon rank`, `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `epithet`,
   `subspecific epithet`, `common name`, `notes`
 - Nilai tingkat yang diterima adalah `class`, `order`, `family`, `genus`,
-  `species`, dan `subspecies`. Tingkat yang tidak ada atau kosong dianggap
-  sebagai `species` hanya jika kelas, ordo, famili, genus, dan epitet spesifik
-  lengkap; jika tidak, tambahkan tingkat.
+  `species`, dan `subspecies`. Tanpa tingkat takson, kelas (dipetakan atau
+  dipilih), ordo, famili, genus, dan epitet spesifik harus lengkap. Tingkatnya
+  `species`, atau `subspecies` jika epitet subspesifik tersedia. Selain itu,
+  tambahkan tingkat takson.
 - Setiap baris memerlukan semua kolom klasifikasi dari kelas sampai tingkat yang
   dipilih. Baris subspesies, misalnya, memerlukan kelas, ordo, famili, genus,
   epitet spesifik, dan epitet subspesifik.
@@ -94,11 +95,28 @@ Kolom yang disarankan untuk templat impor:
   pilihan di atas setiap kolom untuk menetapkannya, atau biarkan sebagai
   `Ignore`.
 
+Berkas boleh tidak menyertakan `Taxon rank`, `Kingdom`, `Phylum`, dan `Class`. Jika `Class` belum dipetakan, pilih kelas yang didukung dan sama untuk semua baris melalui `Select the class shared by all rows`. NAHPU mengisi kerajaan dan filum yang kosong untuk kelas yang dikenali serta mempertahankan nilai yang disediakan. Tanpa tingkat takson, ordo, famili, genus, dan epitet spesifik harus lengkap; tingkatnya spesies, atau subspesies jika epitet subspesifik tersedia. Untuk kelas lain, sertakan `Taxon rank`, `Kingdom`, `Phylum`, `Class`, dan semua kolom klasifikasi sampai tingkat yang dipilih, dengan nilai pada setiap sel wajib. Berkas yang berisi beberapa kelas memerlukan kolom `Class`.
+
 {% aside type="note" %}
 
 Dukungan terbaik adalah `.xlsx`. Format Excel yang lebih lama atau berbeda dapat gagal. Bila perlu, simpan ulang sebagai `.xlsx`, `.csv`, atau `.tsv`.
 
 {% /aside %}
+
+Kontrol pemisah dan detail penguraian berada di `Advanced options`, yang terbuka otomatis setelah kesalahan penguraian. Pilih `Review taxa`, periksa pratinjau, lalu impor takson yang dipilih. Takson yang sudah terdaftar dinonaktifkan dan tidak pernah ditimpa.
+
+### Impor dari QR {% #import-from-qr %}
+
+1. Buka takson di `Taxon Registry`, lalu pilih kode QR-nya untuk ditampilkan dan dibagikan.
+2. Pada perangkat penerima, pilih `Add taxon` → `Import` → `Scan QR`.
+3. Pilih `Single taxon` untuk membuka pratinjau setelah pemindaian valid pertama, atau `Multiple taxa` untuk terus memindai. Pemindai beberapa takson menampilkan hasil terakhir dan jumlah takson yang siap diimpor; pilih `Done` untuk meninjaunya.
+4. Periksa pratinjau, pilih takson yang ingin disimpan, lalu konfirmasi dengan tombol impor. Tidak ada data yang disimpan sebelum konfirmasi.
+
+Setiap takson berbeda hanya dimasukkan sekali. Takson yang sudah terdaftar tidak dapat dipilih dan tidak pernah ditimpa. Kode tidak valid atau tidak terkait menampilkan pesan kesalahan tanpa menutup kamera. Pembatalan mempertahankan impor sebelumnya; menyelesaikan sesi QR menggantikan impor berkas atau QR yang tertunda.
+
+Impor QR mempertahankan klasifikasi, penulis, nama umum, dan status konservasi yang dibawa kode. Tingkat takson yang didukung dan namanya sudah cukup; klasifikasi yang lebih tinggi boleh kosong. Untuk kode lama tanpa tingkat takson, NAHPU menggunakan kolom nama paling spesifik yang terisi. Impor QR tidak memerlukan pemetaan kolom atau pemilihan kelas. Kode QR takson tidak membawa urutan pengurutan maupun catatan.
+
+Pemindaian menggunakan kamera pada Android, iOS, macOS, dan peramban web yang mendukungnya. Jika akses kamera ditolak, izinkan melalui pengaturan perangkat lalu coba lagi. Berkas gambar QR dan teks yang ditempel tidak didukung; gunakan impor berkas jika pemindaian kamera tidak tersedia.
 
 ## Mengedit takson
 

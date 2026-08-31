@@ -91,9 +91,46 @@ references, checks project UUIDs, builds a conflict plan, remaps IDs, writes
 rows in dependency order, and then copies media. The review UI exposes **Keep
 current**, **Use imported**, **Import as new**, and **Skip**.
 
+### Record matching
+
+Records are matched on the identity the app presents, so a conflict card names
+the same thing the user sees elsewhere:
+
+- sites match on `siteID`;
+- events match on site, `startDate`, and `idSuffix` — the parts of
+  `formatCollEventId`, not `startTime`;
+- specimens match on `uuid`;
+- taxonomy matches on genus and specific epithet;
+- narratives match on site, date, time, and writer.
+
+When two destination records share one identifier, the match is ambiguous and
+becomes a blocking conflict instead of silently importing another copy.
+
+### Blocking conflicts
+
+A conflict with `requiresChoice` has no safe default: the wizard leaves its
+action empty, refuses to advance past the section, and `importProject` throws
+before opening its transaction. `unresolvedConflicts` in
+`project_transfer_models.dart` is the single gate both sides call.
+
+Duplicate identifiers are always blocking, because they reach physical labels
+and published exports and must never be renumbered silently:
+
+- specimen field IDs and project IDs, compared as the rendered string so two
+  catalogers sharing initials still collide;
+- `tissueID` and `barcodeID` on specimen parts;
+- `specimen.uuid` already owned by another project;
+- `parasite.parasiteUuid` already in the database.
+
+Local rows the archive also carries are left out of the comparison — they are
+the same record, not a new duplicate — which keeps detection independent of the
+actions chosen later. `parentConflictIds` retires a child conflict once its
+parent record is kept or skipped.
+
 Do not use light JSON.GZ as a complete backup. Do not bypass the plan when
 adding a new table: update collection, parsing, row insertion, cleanup, and
-reference validation together.
+reference validation together. A new user-facing identifier needs a uniqueness
+check in `_findSpecimenConflicts` and a claim in `_IdentifierIndex`.
 
 ## Full database restore
 

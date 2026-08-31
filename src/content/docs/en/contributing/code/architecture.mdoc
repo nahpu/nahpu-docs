@@ -90,11 +90,11 @@ crate. They are not hand-edited. Dart services use these bindings when the
 operation is implemented in the NAHPU API workspace.
 
 **Rust wrappers** under `rust/src/api/` define the Flutter-facing boundary.
-They adapt Dart-friendly values and errors to the reusable Rust crates. The
-wrapper crate is `rust_lib_nahpu`; it is not the main home for domain logic.
+They adapt Dart-friendly values and errors to the reusable Rust crates.
+This a wrapper layer for the Rust NAHPU API and intentionally thin.
 
-**NAHPU API crates** under the separate `nahpu_api` repository provide reusable
-Rust implementations:
+**NAHPU API crates** under the separate `nahpu_api` repository provide a growing
+list of reusable Rust implementations:
 
 - `nahpu_archive` creates and extracts ZIP, tar.gz, and gzip archives.
 - `nahpu_configs` stores reproducible user configuration and document presets
@@ -147,7 +147,9 @@ For schema ownership and field mapping, see the [Persistence data](../database) 
 
 ## Directory map
 
-For most contributors, the main work is in the `lib/`, `assets/`, `tests/`, and `rust/` directories. The other directories contain platform-specific code and build configuration. It only needs to be modified when adding capabilities or changing the build configuration.
+For most contributors, the main work is in the `lib/`, `assets/`, `tests/`, and `rust/` directories.
+The other directories contain platform-specific code and build configuration.
+It only needs to be modified when adding capabilities or changing the build configuration.
 
 {% filetree %}
 - android/ Android platform-specific code and build configuration
@@ -171,8 +173,8 @@ For most contributors, the main work is in the `lib/`, `assets/`, `tests/`, and 
 ## Design principles
 
 - Keep screens thin and keep workflows in providers and services.
-- Treat Drift SQLite as the canonical project-record store; see
-  [Persistence data](../database) for all storage boundaries.
+- Treat Drift SQLite as the canonical project-record persistence storage (see
+  [Persistence data](../database) for all storage boundaries).
 - Keep reproducibility-related configuration in `nahpu_configs`, not local UI
   settings.
 - Keep Rust wrappers small and put reusable behavior in NAHPU API crates.

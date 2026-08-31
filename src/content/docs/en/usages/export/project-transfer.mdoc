@@ -13,6 +13,13 @@ export without media. JSON.GZ is suitable for merging project records, but it
 is not a full project backup. Use ZIP or TAR.GZ when media or a complete copy
 of the project is needed.
 
+`Export project` is also the recommended daily field backup. It is smaller
+and faster than a database backup and easier on the battery, and because
+`Merge project` reads it back, one export per field day limits the loss from a
+broken or missing device to a single day. Keep `Backup database` for the weekly
+checkpoint and for the moment before a merge. See
+[Backup strategy](./#backup-strategy).
+
 This is different from Darwin Core bundles, which are for publishing,
 analysis, archiving, or other third-party workflows and are not accepted by
 `Merge project`. A NAHPU Data Package contains the same project payload and
@@ -46,7 +53,7 @@ replaces its arthropod attributes; parasite records are not created for it.
 ## Merge into the matching project
 
 {% aside type="caution" title="Back up first" %}
-Create a database backup before merging. The wizard requires you to
+A merge is one of the two moments a full database backup is for. Create one before merging. The wizard requires you to
 acknowledge this reminder and provides a `Back up now` shortcut so you can
 recover the previous database if needed.
 {% /aside %}

@@ -4,7 +4,7 @@ sidebar:
   order: 4
 ---
 
-Você pode registrar um novo táxon manualmente ou importando um arquivo.
+Você pode registrar um táxon manualmente, importar um arquivo ou escanear um código QR de táxon do NAHPU.
 
 Importar um táxon adiciona dados ao registro. Isso não adiciona um novo grupo de
 catálogo de espécimes ao aplicativo. Quem contribui implementando um novo grupo
@@ -78,12 +78,13 @@ Comportamento do delimitador:
 
 Colunas recomendadas para o modelo de importação:
 
-- `taxon rank`, `class`, `order`, `family`, `genus`, `epithet`,
+- `taxon rank`, `kingdom`, `phylum`, `class`, `order`, `family`, `genus`, `epithet`,
   `subspecific epithet`, `common name`, `notes`
 - Os valores de categoria são `class`, `order`, `family`, `genus`, `species` e
-  `subspecies`. Uma categoria ausente ou vazia é tratada como `species` somente
-  quando classe, ordem, família, gênero e epíteto específico estão completos;
-  caso contrário, adicione uma categoria.
+  `subspecies`. Sem categoria, classe (mapeada ou selecionada), ordem, família,
+  gênero e epíteto específico devem estar completos. A categoria será `species`,
+  ou `subspecies` quando houver epíteto subespecífico. Caso contrário, informe
+  uma categoria.
 - Cada linha requer todos os campos de classificação desde classe até a
   categoria selecionada. Uma linha de subespécie, por exemplo, requer classe,
   ordem, família, gênero, epíteto específico e epíteto subespecífico.
@@ -94,11 +95,28 @@ Colunas recomendadas para o modelo de importação:
 - As colunas que o aplicativo não reconhece ficam sem mapeamento. Use o menu
   suspenso acima de cada coluna para atribuí-la, ou deixe-a como `Ignore`.
 
+O arquivo pode omitir `Taxon rank`, `Kingdom`, `Phylum` e `Class`. Se `Class` não estiver mapeada, escolha a classe compatível comum a todas as linhas em `Select the class shared by all rows`. O NAHPU preenche reino e filo ausentes para classes conhecidas e preserva os valores fornecidos. Sem categoria, ordem, família, gênero e epíteto específico devem estar completos; a categoria será espécie, ou subespécie quando houver epíteto subespecífico. Para outras classes, inclua `Taxon rank`, `Kingdom`, `Phylum`, `Class` e todas as colunas de classificação até a categoria selecionada, com valores em cada célula obrigatória. Arquivos com várias classes precisam de uma coluna `Class`.
+
 {% aside type="note" %}
 
 O melhor suporte é para `.xlsx`. Formatos Excel mais antigos ou diferentes podem falhar. Se necessário, salve novamente como `.xlsx`, `.csv` ou `.tsv`.
 
 {% /aside %}
+
+Os controles de delimitador e os detalhes da análise ficam em `Advanced options`, que abre automaticamente após um erro de análise. Selecione `Review taxa`, confira a prévia e importe os táxons selecionados. Táxons já registrados ficam desabilitados e nunca são sobrescritos.
+
+### Importar de QR {% #import-from-qr %}
+
+1. Abra um táxon no `Taxon Registry` e selecione seu código QR para exibi-lo e compartilhá-lo.
+2. No dispositivo que receberá os dados, escolha `Add taxon` → `Import` → `Scan QR`.
+3. Escolha `Single taxon` para abrir a prévia após o primeiro escaneamento válido, ou `Multiple taxa` para continuar escaneando. O leitor em lote mostra o último resultado e quantos táxons estão prontos para importar; selecione `Done` para revisá-los.
+4. Confira a prévia, selecione os táxons que deseja manter e confirme com o botão de importação. Nada é salvo antes da confirmação.
+
+Cada táxon distinto é adicionado uma única vez. Táxons já registrados não podem ser selecionados e nunca são sobrescritos. Códigos inválidos ou de outro tipo mostram um erro sem fechar a câmera. Cancelar preserva a importação anterior; concluir uma sessão QR substitui a importação pendente, seja de arquivo ou QR.
+
+A importação QR preserva a classificação, os autores, o nome comum e os estados de conservação incluídos no código. Bastam uma categoria compatível e seu nome; a classificação superior pode estar ausente. Em códigos antigos sem categoria, o NAHPU usa o campo de nome mais específico preenchido. Não é necessário mapear colunas nem selecionar uma classe. Códigos QR de táxon não incluem a ordem de classificação nem as notas.
+
+O escaneamento usa a câmera no Android, iOS, macOS e em navegadores compatíveis. Se o acesso for negado, permita-o nas configurações do dispositivo e tente novamente. Imagens QR e texto colado não são aceitos; use a importação de arquivos onde o escaneamento por câmera não estiver disponível.
 
 ## Editar um táxon
 

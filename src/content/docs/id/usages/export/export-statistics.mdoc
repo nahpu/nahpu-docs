@@ -1,0 +1,111 @@
+---
+title: Ekspor Statistik
+sidebar:
+  order: 13
+---
+
+Gunakan ekspor statistik bila Anda memerlukan tabel ringkasan, bukan catatan
+lengkapnya. Tabel ini berisi hitungan dan persentase per kategori, yang
+umumnya diminta oleh laporan hibah, laporan izin, dan laporan kemajuan. Setiap
+tabel yang tampil di layar statistik dapat ditulis ke CSV, TSV, Excel, atau
+JSON.
+
+Statistik dihitung hanya untuk proyek yang sedang aktif.
+
+## Membuka layar statistik
+
+Buka panel statistik catatan di dashboard proyek lalu pilih
+`Explore more stats`. Layar ini terdiri dari tiga bagian:
+
+- **Summary** menampilkan total proyek dan lima hitungan terbesar per kategori.
+- **Detailed statistics** menyusun satu tabel atau grafik dari measure,
+  pengelompokan, rincian, dan filter yang Anda pilih.
+- **Spatial statistics** menghitung catatan per koordinat lokasi, dalam bentuk
+  peta atau tabel.
+
+Ekspor tersedia pada tampilan tabel. Ubah panel dari `Chart` atau `Map` ke
+`Table`, lalu gunakan tombol `Export table` di atas tabel.
+
+## Statistik terperinci
+
+Pilih `Measure` lebih dulu, karena pilihan ini menentukan pengelompokan yang
+tersedia.
+
+| Measure | Kelompokkan menurut |
+| --- | --- |
+| Specimens | Species, Family, Site, Date, Method, Sex, Life stage |
+| Species | Family, Site, Date, Method, Sex, Life stage |
+| Part quantity | Part type, Treatment |
+
+`Life stage` hanya muncul bila proyek mencatatnya. Dua kontrol tambahan muncul
+bila relevan:
+
+- **Breakdown** memecah hitungan spesimen per spesies menjadi `Sex` atau
+  `Life stage`. Rincian ini menjadi kolom tambahan pada tabel yang diekspor.
+- **Filter** mempersempit tabel ke satu lokasi saat menghitung spesimen per
+  spesies, atau ke satu spesies saat menghitung jumlah bagian spesimen. Filter
+  yang dipilih ikut masuk ke nama berkas bawaan.
+
+Tabel yang diekspor mengulang isi tabel di layar, satu baris per kategori:
+
+```text
+| Rank | Species          | Specimens | Percent (%) |
+| ---- | ---------------- | --------- | ----------- |
+| 1    | Bunomys coelestis| 24        | 40.00       |
+| 2    | Bunomys penitus  | 18        | 30.00       |
+```
+
+Judul kolom kedua mengikuti pengelompokan yang dipilih, dan judul kolom hitungan
+mengikuti measure. Bila rincian aktif, kolom seri berada di antara keduanya, dan
+kategori tanpa nilai tercatat diekspor sebagai `Not recorded`.
+
+## Statistik spasial
+
+Panel spasial menghitung `Specimens`, `Species`, atau `Family` per koordinat
+lokasi. `Coordinates by species` meminta Anda memilih satu spesies lebih dulu,
+lalu menghitung spesies tersebut di setiap koordinat.
+
+Tabel spasial mengekspor satu baris per koordinat berisi nama tempat, lokalitas,
+lintang, bujur, ketinggian, hitungan, dan persentase. Ini cara tercepat
+mendapatkan daftar koordinat beserta upayanya untuk laporan izin atau untuk
+program GIS.
+
+## Menulis berkas
+
+Kotak ekspor sama untuk kedua panel. Di ponsel kotak ini terbuka sebagai lembar
+bawah, dan di layar lebar sebagai dialog.
+
+{% steps %}
+
+1. Periksa nama berkas. NAHPU mengusulkan nama dari nama proyek, measure dan
+   pengelompokan, filter yang aktif, serta tanggal hari ini.
+
+2. Aktifkan `Append date` bila Anda ingin menambahkan tanggal saat ini ke nama
+   berkas. Ini membantu ketika tabel yang sama diekspor berulang kali selama satu
+   musim lapangan.
+
+3. Pilih formatnya. `CSV` dan `TSV` paling aman untuk analisis, `Excel` menulis
+   buku kerja `.xlsx`, dan `JSON` mempertahankan nama header sebagai kunci.
+
+4. Pilih folder tujuan. Di desktop berkas ditulis ke folder pilihan Anda; di
+   ponsel NAHPU memakai folder ekspor aplikasi.
+
+5. Pilih `Export`. Setelah berkas ditulis, tombolnya berubah menjadi `Share`
+   sehingga tabel dapat langsung dikirim ke aplikasi lain.
+
+{% /steps %}
+
+{% aside type="note" %}
+
+Ekspor menulis baris yang sedang ada di tabel, sehingga measure, pengelompokan,
+rincian, dan filter semuanya ikut ke berkas. Ubah kontrolnya lalu ekspor lagi
+bila Anda memerlukan potongan data yang berbeda.
+
+{% /aside %}
+
+## Halaman terkait
+
+- [Statistik catatan di dashboard](../projects)
+- [Ekspor catatan](./export-records) untuk data spesimen, lokasi, dan kegiatan
+  pengumpulan yang mendasari hitungan tersebut
+- [Paket catatan](./export-bundles) untuk paket berbasis standar

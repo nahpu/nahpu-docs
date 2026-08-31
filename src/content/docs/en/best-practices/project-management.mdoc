@@ -14,11 +14,17 @@ Consistent project management keeps field records understandable, recoverable, a
 
 In the field, record observations as soon as practical, review required fields before moving to the next specimen, and keep a paper log only as a deliberate fallback. In the lab, review records, normalize names and identifiers, attach or inspect media, and resolve errors before publishing or archiving. Keep a written handoff when more than one person curates the same project.
 
-## Back up every day
+## Back up on a field cadence
 
-Back up after each field day and before making large edits. Apply the 3-2-1 rule: keep at least three copies, on two different media, with one copy off-site or in the cloud. Use a project name and date in each filename, for example `BorneoMammals_backup_20241015`.
+**Export the project at the end of every field day. Back up the database once a week, and always before merging.** The two are not the same job, and using the heavier one daily is the most common mistake we see.
 
-Do not assume that a file exists merely because it was copied. Periodically open a backup or restore it to a test device and confirm that the project, records, and media are usable. Keep one backup on a separate physical device in case cloud access is unavailable.
+A project export is small, quick, and undemanding on a battery you may not be able to recharge for days. It carries the project records and its available media, and `Merge project` reads it back into NAHPU, so a lost, broken, or stolen device costs you at most one day of work. A `JSON.GZ` light export drops the media and gets small enough to upload over a weak connection.
+
+A database backup copies the whole installation: every project, user configs, presets, managed files, fonts, and maps. That is what you want when the goal is to rebuild a device exactly, or when a merge could go wrong and you need a point to return to. It is also slower and much larger, which is why it belongs at a weekly checkpoint rather than at the end of a long day in the field.
+
+Apply the 3-2-1 rule to whichever file you just made: keep at least three copies, on two different media, with one copy off-site or in the cloud. Use a project name and date in each filename, for example `BorneoMammals_20241015.zip`.
+
+Do not assume that a file exists merely because it was copied. Periodically merge a project export or restore a database backup on a second device and confirm that the records and media are usable. Keep one copy on a separate physical device in case cloud access is unavailable.
 
 ## Transfer projects safely
 

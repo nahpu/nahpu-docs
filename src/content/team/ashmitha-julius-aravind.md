@@ -5,4 +5,6 @@ group: core
 ---
 
 Ashmitha Julius Aravind is a researcher in the College of Computing at the
-Georgia Institute of Technology and a key contributor to NAHPU development.
+Georgia Institute of Technology. Aravind works on integrating computer vision
+into NAHPU for parasite detection and identification,
+and assist in feature implementation and bug fixing of the app.

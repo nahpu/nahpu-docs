@@ -14,11 +14,17 @@ Um gerenciamento consistente mantém os registros de campo compreensíveis, recu
 
 No campo, registre os dados assim que possível e revise os campos obrigatórios antes do próximo espécime. No laboratório, revise os registros, padronize nomes e identificadores, inspecione as mídias e resolva erros antes de publicar ou arquivar. Registre a transferência quando várias pessoas fizerem a curadoria do projeto.
 
-## Faça backup diariamente
+## Faça backup em uma cadência de campo
 
-Faça backup ao fim de cada dia de campo e antes de grandes alterações. Aplique a regra 3-2-1: pelo menos três cópias, em dois tipos de mídia, com uma cópia fora do local ou na nuvem. Inclua projeto e data no nome, por exemplo `MamiferosBorneo_backup_20241015`.
+**Exporte o projeto ao final de cada dia de campo. Faça o backup do banco de dados uma vez por semana e sempre antes de mesclar.** Os dois não cumprem a mesma função, e usar o mais pesado todos os dias é o erro mais comum que vemos.
 
-Verifique os backups abrindo um arquivo ou restaurando-o periodicamente em um dispositivo de teste. Mantenha uma cópia em um dispositivo físico separado caso a nuvem não esteja disponível.
+A exportação de projeto é pequena, rápida e pouco exigente para uma bateria que talvez você não consiga recarregar por dias. Ela leva os registros do projeto e a mídia disponível, e o `Merge project` a lê de volta no NAHPU, então um dispositivo perdido, quebrado ou roubado custa no máximo um dia de trabalho. Uma exportação leve `JSON.GZ` descarta a mídia e fica pequena o bastante para ser enviada por uma conexão fraca.
+
+O backup do banco de dados copia a instalação inteira: todos os projetos, configurações de usuário, predefinições, arquivos gerenciados, fontes e mapas. É o que você quer quando o objetivo é reconstruir um dispositivo exatamente como estava, ou quando uma mesclagem pode dar errado e você precisa de um ponto de retorno. Ele também é mais lento e bem maior, e por isso cabe em um checkpoint semanal, e não ao fim de um longo dia em campo.
+
+Aplique a regra 3-2-1 ao arquivo que você acabou de gerar: mantenha pelo menos três cópias, em duas mídias diferentes, com uma cópia fora do local ou na nuvem. Use o nome do projeto e a data em cada nome de arquivo, por exemplo `BorneoMammals_20241015.zip`.
+
+Não presuma que um arquivo existe apenas porque foi copiado. Periodicamente, mescle uma exportação de projeto ou restaure um backup do banco de dados em um segundo dispositivo e confirme que os registros e a mídia estão utilizáveis. Mantenha uma cópia em um dispositivo físico separado, caso o acesso à nuvem não esteja disponível.
 
 ## Transfira projetos com segurança
 

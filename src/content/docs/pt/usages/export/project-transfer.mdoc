@@ -14,6 +14,13 @@ exportação `JSON.GZ` sem mídia. O JSON.GZ serve para mesclar registros do
 projeto, mas não é um backup completo. Use ZIP ou TAR.GZ quando as mídias ou uma
 cópia completa do projeto forem necessárias.
 
+O `Export project` também é o backup diário de campo recomendado. Ele é menor
+e mais rápido que um backup do banco de dados e consome menos bateria, e, como o
+`Merge project` o lê de volta, uma exportação por dia de campo limita a perda de
+um dispositivo quebrado ou extraviado a um único dia. Reserve o
+`Backup database` para o checkpoint semanal e para o momento anterior a uma
+mesclagem. Consulte [Estratégia de backup](./#backup-strategy).
+
 Isso é diferente dos pacotes Darwin Core, que servem para publicação, análise,
 arquivamento ou outros fluxos de terceiros e não são aceitos por
 `Merge project`. Um NAHPU Data Package contém o mesmo conteúdo de projeto e a
@@ -45,7 +52,7 @@ omitidos.
 ## Mesclar no projeto correspondente {% #merge-into-the-matching-project %}
 
 {% aside type="caution" title="Faça backup primeiro" %}
-Crie um backup do banco de dados antes de mesclar. O assistente exige que você
+Uma mesclagem é um dos dois momentos para os quais existe o backup completo do banco de dados. Crie um antes de mesclar. O assistente exige que você
 confirme esse lembrete e oferece um atalho `Back up now`, para que seja possível
 recuperar o banco anterior se necessário.
 {% /aside %}

@@ -1,0 +1,107 @@
+---
+title: Exportar Imagens
+sidebar:
+  order: 14
+---
+
+Use a exportação de mídia quando precisar das fotografias em si, e não dos
+registros que as descrevem. É o jeito mais rápido de tirar um conjunto de
+imagens de campo de um projeto para um relatório de financiamento, um relatório
+de licença, uma apresentação ou um colega que não usa o NAHPU.
+
+Há duas formas de exportar. Exporte um arquivo quando quiser controle total
+sobre tamanho e qualidade, ou exporte uma seleção como um único pacote quando
+precisar de muitos arquivos de uma vez. Áudio e vídeo entram na seleção, mas as
+opções de imagem descritas abaixo valem apenas para imagens.
+
+## Exportar um único arquivo
+
+Abra o item de mídia e escolha `Export`.
+
+{% steps %}
+
+1. Confira o nome do arquivo. O NAHPU propõe o nome atual do arquivo, e você
+   pode ativar `Append date` para acrescentar a data de hoje.
+
+2. Escolha o formato. `Original` sempre funciona. `JPEG`, `PNG` e `WebP` são
+   oferecidos quando o NAHPU consegue ler a imagem, o que cobre origens `.jpg`,
+   `.jpeg`, `.png` e `.webp`.
+
+3. Ative `Resize image` se o arquivo for maior do que você precisa. A proporção
+   fica travada, então digitar uma largura atualiza a altura, e nenhum dos dois
+   valores pode passar das dimensões originais mostradas acima do controle.
+
+4. Ajuste `JPEG quality` ao exportar em JPEG. O padrão de 85 por cento equilibra
+   bem tamanho e detalhe. Reduza para envio por e-mail ou upload em conexão
+   lenta.
+
+5. Selecione a pasta de destino e depois `Export`. Quando o arquivo é gravado, o
+   botão passa a `Share`.
+
+{% /steps %}
+
+{% aside type="note" %}
+
+Formatos que o NAHPU não consegue decodificar, como arquivos RAW de câmera,
+ainda podem ser exportados no formato original. A caixa de diálogo informa isso
+em vez de oferecer as opções de conversão.
+
+{% /aside %}
+
+## Exportar uma seleção como pacote
+
+Abra a galeria de mídia a partir do painel de mídia de qualquer registro, ou use
+o painel de mídia do próprio registro. Ative a seleção, escolha os arquivos e
+selecione `Export`. Isso abre a tela `Export selected media`.
+
+O resumo lista quantos arquivos foram selecionados, quantos foram encontrados em
+disco, quantos são imagens, áudio, vídeo ou outros, e o tamanho total de origem.
+Arquivos que não podem ser encontrados aparecem como avisos, em vez de serem
+descartados em silêncio.
+
+O painel de configurações tem:
+
+- **Archive format**. `TAR.GZ` gera um arquivo menor e é a melhor escolha para
+  upload. O macOS, o Linux e o Windows 11 o abrem sem nenhum programa adicional.
+  Escolha `ZIP` quando o arquivo for para uma máquina Windows mais antiga,
+  porque o Windows 10 e versões anteriores precisam de uma ferramenta separada
+  para abrir `.tar.gz`.
+- **Image format**. `Original` copia os arquivos sem alteração. `JPEG`, `PNG` ou
+  `WebP` converte todas as imagens legíveis da seleção.
+- **Limit image dimensions**. Disponível quando há conversão. Informe a largura
+  ou altura máxima em pixels e o NAHPU limita o lado mais longo. Imagens já
+  menores que o limite não são ampliadas.
+- **JPEG quality**. Vale quando o formato de imagem é JPEG.
+- **File name**, **Append date** e a pasta de destino.
+
+Dentro do pacote, os arquivos são agrupados nas pastas `specimen`, `site`,
+`event`, `narrative` e `other`, para que você saiba de onde veio cada arquivo.
+Áudio e vídeo são copiados sem alteração, qualquer que seja o formato de imagem.
+
+{% aside type="caution" %}
+
+Uma seleção grande pode levar vários minutos, especialmente com conversão. A
+tela mostra o progresso e um botão `Cancel` enquanto executa. Mantenha o NAHPU
+aberto até terminar e confira as contagens de exportados e ignorados, além de
+qualquer aviso no resumo, antes de enviar o pacote adiante.
+
+{% /aside %}
+
+## Escolhendo as configurações
+
+- Para um relatório ou uma apresentação, converta para `JPEG` e limite o lado
+  mais longo a cerca de 2000 px. Isso costuma reduzir o pacote em uma ordem de
+  grandeza sem perda visível.
+- Para upload em uma conexão de campo, use `TAR.GZ`, `JPEG` e um valor de
+  qualidade menor.
+- Para arquivamento ou para um colega que vai processar as imagens, mantenha
+  `Original` para que nada seja recomprimido.
+
+## Páginas relacionadas
+
+- [Anexe dados e mídia](../../how-to-recipes/collect/attach-data-and-media)
+  para adicionar mídia a um registro
+- [Transferir um projeto](./project-transfer) quando a mídia deve viajar junto
+  com os registros
+- [Empacotar registros](./export-bundles) para pacotes que incluem mídia ao lado
+  de tabelas baseadas em padrões

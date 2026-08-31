@@ -12,19 +12,19 @@ just as valuable as code.
 
 ## Choose your contribution path
 
-| Contributor                | Useful contributions                                                           | Coding required | First step                                                   |
-| -------------------------- | ------------------------------------------------------------------------------ | :-------------: | ------------------------------------------------------------ |
-| Scientist or domain expert | Field testing, taxonomy review, data-model feedback, and workflow validation   |       No        | Use NAHPU with a realistic workflow and report your findings |
-| Programmer                 | Flutter, Rust API, documentation tooling, bug fixes, and features              |     Usually     | Choose the repository and read its setup guide               |
-| Documentation contributor  | Corrections, examples, and usage guidance                                      |       No        | Follow the [documentation contribution guide](./docs)        |
-| Tester or reviewer         | Platform testing, regression reports, sample files, and accessibility feedback |       No        | Test a supported workflow and report reproducible results    |
-| Tool or design contributor | Utilities, integrations, and UI or accessibility improvements                  |     Varies      | Open a proposal before building a separate tool              |
+| Contributor                | Useful contributions                                                           | Coding required | First step                                                         |
+| -------------------------- | ------------------------------------------------------------------------------ | :-------------: | ------------------------------------------------------------------ |
+| Scientist or domain expert | Field testing, taxonomy review, data-model feedback, and workflow validation   |       No        | Use NAHPU with a realistic workflow and report your findings       |
+| Programmer                 | Flutter, Rust API, documentation tooling, bug fixes, and features              |     Usually     | Choose the repository and read its setup guide                     |
+| Documentation contributor  | Corrections, examples, and usage guidance                                      |       No        | Follow the [documentation contribution guide](./contributing/docs) |
+| Tester or reviewer         | Platform testing, regression reports, sample files, and accessibility feedback |       No        | Test a supported workflow and report reproducible results          |
+| Tool or design contributor | Utilities, integrations, and UI or accessibility improvements                  |     Varies      | Open a proposal before building a separate tool                    |
 
 ## Scientists, curators, and domain experts
 
 Your knowledge of natural-history work can shape NAHPU even if you never write
 code. Try NAHPU during fieldwork, laboratory cataloging, or museum curation and
-tell us where the software matches—or fails to match—your real workflow.
+tell us where the software matches (or fails to match) your real workflow.
 
 Useful contributions include:
 

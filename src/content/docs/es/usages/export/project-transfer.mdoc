@@ -14,6 +14,14 @@ exportación `JSON.GZ` sin medios. JSON.GZ sirve para fusionar registros del
 proyecto, pero no es una copia de seguridad completa. Use ZIP o TAR.GZ cuando se
 necesiten los medios o una copia completa del proyecto.
 
+`Export project` es también la copia de campo diaria recomendada. Es más
+pequeña y rápida que una copia de la base de datos y consume menos batería y,
+como `Merge project` la vuelve a leer, una exportación por jornada de campo
+limita la pérdida por un dispositivo roto o extraviado a un solo día. Reserve
+`Backup database` para el punto de control semanal y para el momento previo a
+una fusión. Consulte
+[Estrategia de copias de seguridad](./#backup-strategy).
+
 Esto es distinto de los paquetes Darwin Core, que sirven para publicación,
 análisis, archivo u otros flujos de terceros y no son aceptados por
 `Merge project`. Un NAHPU Data Package contiene el mismo contenido de proyecto y
@@ -45,7 +53,7 @@ rotos se omiten.
 ## Fusionar con el proyecto correspondiente {% #merge-into-the-matching-project %}
 
 {% aside type="caution" title="Haga una copia primero" %}
-Cree una copia de seguridad de la base de datos antes de fusionar. El asistente
+Una fusión es uno de los dos momentos para los que existe la copia completa de la base de datos. Cree una antes de fusionar. El asistente
 exige que confirme este recordatorio y ofrece un atajo `Back up now`, para que
 pueda recuperar la base anterior si es necesario.
 {% /aside %}

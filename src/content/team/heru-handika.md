@@ -1,5 +1,5 @@
 ---
-name: Heru Handika
+name: Dr. Heru Handika
 institution: Florida Museum of Natural History
 featured: true
 group: core
@@ -16,5 +16,5 @@ diversification, biodiversity informatics, and artificial intelligence. That
 work has two halves: polyglot, high-performance scientific programming that
 produces open tools leveraging emerging AI and scaling from a phone in the field
 up to computing clusters, and field expeditions across more than 30 localities,
-mainly in the remote mountains of Southeast Asia. Responsible for the overall
-NAHPU project and the main developer of the app.
+mainly in the remote mountains of Southeast Asia. Dr. Handika is responsible for the overall
+NAHPU project, app architecture, and key features.

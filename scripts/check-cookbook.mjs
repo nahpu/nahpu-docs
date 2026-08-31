@@ -32,8 +32,8 @@ const english = metadataByLocale.get("en");
 const englishRecipes = [...english.keys()].filter(
   (path) => !isIndexPath(path),
 );
-if (englishRecipes.length !== 29) {
-  errors.push(`en: expected 29 recipes, found ${englishRecipes.length}`);
+if (englishRecipes.length !== 31) {
+  errors.push(`en: expected 31 recipes, found ${englishRecipes.length}`);
 }
 for (const [path, order] of Object.entries({
   "prepare/index.md": 1,
@@ -145,11 +145,17 @@ function checkRecipe(locale, path, body) {
   if (/^\|/m.test(body) || body.includes("![")) {
     errors.push(`${label}: tables and screenshots are not Cookbook content`);
   }
-  const links = [...body.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)].map(
+  const prose = body.replace(/```[\s\S]*?```/g, "");
+  const links = [...prose.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)].map(
     (match) => match[1],
   );
-  if (links.length !== 1 || !links[0].startsWith(`https://nahpu.app/${locale}/`)) {
-    errors.push(`${label}: expected one locale-matched detailed-guide link`);
+  if (links.length === 0) {
+    errors.push(`${label}: expected at least one detailed-guide link`);
+  }
+  for (const link of links) {
+    if (!link.startsWith(`https://nahpu.app/${locale}/`)) {
+      errors.push(`${label}: link is not locale-matched: ${link}`);
+    }
   }
 }
 

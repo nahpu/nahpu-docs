@@ -24,6 +24,8 @@ NAHPU memiliki tindakan ekspor berikut pada menu proyek:
 - Untuk pemulihan basis data, lihat [Memulihkan basis data](#restoring-a-database).
 - Untuk membuat paket spesimen berbasis standar atau NAHPU Data Package yang dapat direproduksi, lihat [Paket catatan](./export-bundles).
 - Untuk mengekspor label, tag, atau dokumen cetak lain dalam PDF, lihat [Ekspor dokumen](./export-documents).
+- Untuk mengekspor tabel ringkasan hitungan alih-alih catatan lengkap, lihat [Ekspor statistik](./export-statistics).
+- Untuk mengekspor fotonya saja, lihat [Ekspor gambar](./export-images).
 
 Gunakan halaman ini untuk ekspor catatan, paket proyek, pencadangan basis data,
 dan ekspor konfigurasi. Pertukaran koordinat GIS dikelola dari panel koordinat
@@ -33,32 +35,47 @@ terkompresi.
 
 Untuk transfer proyek, gunakan `JSON.GZ` bila unggahan harus kecil dan media
 tidak diperlukan. Gunakan ZIP atau TAR.GZ bila media yang tersedia harus ikut
-berpindah bersama proyek. Transfer proyek bukan cadangan SQLite mentah; gunakan
-`Backup database` untuk salinan instalasi yang dapat dipulihkan.
+berpindah bersama proyek. Ekspor proyek juga merupakan cadangan lapangan harian
+yang dianjurkan, karena `Merge project` dapat membacanya kembali di perangkat
+lain. Meski begitu, ini bukan cadangan SQLite mentah: gunakan `Backup database`
+setiap minggu, dan sebelum penggabungan apa pun, untuk salinan seluruh instalasi
+yang dapat dipulihkan.
 
 ## Strategi pencadangan {% #backup-strategy %}
 
 Gunakan lebih dari satu jenis cadangan selama kerja lapangan. Masing-masing
 melindungi hal yang berbeda dan tidak saling menggantikan.
 
-- **Cadangan basis data harian**: berkas `.sqlite3` yang ringkas. Gunakan sering
-  untuk pemulihan basis data dan keamanan sehari-hari.
-- **Ekspor proyek ringan**: berkas `JSON.GZ` terkompresi berisi catatan proyek
-  tanpa media. Gunakan untuk unggahan dengan internet terbatas atau penggabungan
-  yang hanya berisi catatan. Ini bukan cadangan proyek yang lengkap.
-- **Cadangan basis data lengkap**: arsip `.zip` atau `.tar.gz` yang memuat basis
-  data SQLite, konfigurasi pengguna, media, berkas terkait, fon, dan peta.
-  Gunakan bila Anda memerlukan pemulihan instalasi secara utuh.
+**Di lapangan, ekspor proyek setiap hari dan cadangkan basis data setiap
+minggu.** Ekspor proyek adalah yang lebih kecil, lebih cepat, dan lebih hemat
+baterai di antara keduanya, dan `Merge project` mengembalikannya ke NAHPU pada
+perangkat pengganti bila satu perangkat hilang, rusak, atau dicuri. Cadangan
+basis data menyalin seluruh instalasi, sehingga tempatnya adalah pemeriksaan
+mingguan dan tepat sebelum penggabungan apa pun.
+
+- **Ekspor proyek (harian di lapangan)**: arsip ZIP atau TAR.GZ berisi catatan
+  proyek dan media yang tersedia, atau ekspor ringan `JSON.GZ` tanpa media bila
+  unggahannya harus kecil. `Merge project` menerima ketiganya, dan itulah yang
+  menjadikannya jalur pemulihan, bukan sekadar pemindahan.
+- **Cadangan basis data lengkap (mingguan, dan sebelum menggabungkan)**: arsip
+  `.zip` atau `.tar.gz` yang memuat basis data SQLite, konfigurasi pengguna,
+  media, berkas terkait, fon, dan peta. Gunakan untuk pemulihan instalasi secara
+  utuh, sebelum penggabungan yang berisiko gagal, dan ketika beberapa proyek
+  harus dipertahankan bersama.
+- **Cadangan basis data saja**: berkas `.sqlite3` yang ringkas. Gunakan ketika
+  catatan harus dapat dipulihkan tetapi managed file tidak perlu ikut.
 - **Cadangan konfigurasi pengguna**: berkas `.json` atau `.json.gz` berisi
   konfigurasi pengguna, prasetel ekspor, prasetel templat, dan tata letak
   dokumen. Gunakan bila perangkat lain perlu memakai daftar terkontrol, perilaku
   ekspor, dan tata letak dokumen yang sama.
 
 {% aside type="tip" title="Praktik yang dianjurkan" %}
-Di akhir setiap hari kerja lapangan, ekspor cadangan basis data lengkap ke
-penyimpanan awan bila ada internet, dan ekspor transfer proyek ke penyimpanan
-lokal seperti flash disk USB-C atau perangkat kedua. Secara berkala, pulihkan
-sebuah cadangan di perangkat lain untuk memastikan berkasnya dapat digunakan.
+Di akhir setiap hari kerja lapangan, ekspor proyek ke penyimpanan yang terpisah
+dari perangkat kerja, misalnya flash drive USB-C atau perangkat rekan tim, dan
+unggah juga bila ada internet. Simpan cadangan basis data lengkap untuk akhir
+pekan dan untuk saat sebelum Anda menggabungkan. Sesekali pulihkan atau
+gabungkan satu berkas di perangkat lain untuk memastikan berkasnya dapat
+dipakai.
 {% /aside %}
 
 ## Mencadangkan basis data {% #backup-database %}

@@ -45,6 +45,13 @@ Write the English page first, then update translations for shared guidance,
 navigation, or terminology. Verify links, images, and desktop/mobile rendering
 locally. Do not modify generated `dist/` output.
 
+`how-to-recipes/` and `day-one.mdoc` are bundled in the NAHPU app as its
+Cookbook. Run `bun run check:cookbook` after editing a recipe, and re-run
+`dart run tool/sync_cookbook.dart --docs-root <this repo> --write` from the app
+repository so the bundled copies stay current. Day One links to the site with
+root-absolute paths such as `/en/usages/settings/`; the sync converts them to
+`https://nahpu.app/...` for the app, so relative `../` links break that step.
+
 Recent commits use short, imperative summaries, for example `Add disclaimer.`
 or `Fix specimen records.` Keep commits focused. Pull requests target
 `release`, the deployment branch; explain changes, link issues, include visual

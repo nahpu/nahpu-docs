@@ -25,6 +25,8 @@ NAHPU tiene estas acciones de exportación en el menú del proyecto:
 - Para la recuperación de la base de datos, consulte [Restaurar una base de datos](#restoring-a-database).
 - Para crear un paquete de especímenes basado en estándares o un NAHPU Data Package reproducible, consulte [Empaquetar registros](./export-bundles).
 - Para exportar etiquetas, marbetes u otros documentos en PDF, consulte [Exportar documentos](./export-documents).
+- Para exportar una tabla resumida de conteos en lugar de los registros completos, consulte [Exportar estadísticas](./export-statistics).
+- Para exportar solo las fotografías, consulte [Exportar imágenes](./export-images).
 
 Use esta página para exportaciones de registros, paquetes de proyecto, copias de
 seguridad de la base de datos y exportaciones de configuraciones. El intercambio
@@ -35,24 +37,37 @@ Shapefile comprimido.
 
 Para las transferencias de proyecto, use `JSON.GZ` cuando la carga deba ser
 pequeña y no se necesiten los medios. Use ZIP o TAR.GZ cuando los medios
-disponibles deban viajar con el proyecto. Una transferencia de proyecto no es
-una copia de seguridad SQLite en bruto; use `Backup database` para obtener una
-copia restaurable de la instalación.
+disponibles deban viajar con el proyecto. La exportación de proyecto es también
+la copia de campo diaria recomendada, porque `Merge project` puede volver a
+leerla en otro dispositivo. Aun así, no es una copia de seguridad SQLite en
+bruto: use `Backup database` cada semana, y antes de cualquier fusión, para
+obtener una copia restaurable de toda la instalación.
 
 ## Estrategia de copias de seguridad {% #backup-strategy %}
 
 Use más de un tipo de copia durante el trabajo de campo. Protegen cosas
 distintas y no son intercambiables.
 
-- **Copia diaria de la base de datos**: un archivo `.sqlite3` compacto. Úsela con
-  frecuencia para la recuperación de la base de datos y la seguridad diaria.
-- **Exportación ligera del proyecto**: un archivo `JSON.GZ` comprimido con los
-  registros del proyecto, sin medios. Úsela para una carga con internet limitada
-  o una fusión de solo registros. No es una copia completa del proyecto.
-- **Copia completa de la base de datos**: un archivo `.zip` o `.tar.gz` que
-  incluye la base SQLite, las configuraciones de usuario, los medios, los
-  archivos asociados, las fuentes y los mapas. Úsela cuando necesite la
-  recuperación completa de la instalación.
+**En el campo, exporte el proyecto todos los días y respalde la base de datos
+una vez por semana.** La exportación de proyecto es la más pequeña, la más
+rápida y la que menos batería consume de las dos, y `Merge project` la devuelve
+a NAHPU en un dispositivo de reemplazo si uno se pierde, se rompe o se lo roban.
+La copia de la base de datos duplica toda la instalación, así que corresponde a
+un punto de control semanal y al momento inmediatamente anterior a una fusión.
+
+- **Exportación de proyecto (diaria en el campo)**: un archivo ZIP o TAR.GZ con
+  los registros del proyecto y los medios disponibles, o una exportación ligera
+  `JSON.GZ` sin medios cuando la subida deba ser pequeña. `Merge project` acepta
+  las tres, y eso es lo que convierte esta opción en una vía de recuperación y
+  no solo de transferencia.
+- **Copia completa de la base de datos (semanal y antes de fusionar)**: un
+  archivo `.zip` o `.tar.gz` que incluye la base SQLite, las configuraciones de
+  usuario, los medios, los archivos asociados, las fuentes y los mapas. Úsela
+  para la recuperación completa de la instalación, antes de una fusión que
+  pueda salir mal y cuando varios proyectos deban preservarse juntos.
+- **Copia solo de la base de datos**: un archivo `.sqlite3` compacto. Úsela
+  cuando los registros deban ser restaurables pero los archivos administrados no
+  necesiten viajar.
 - **Copia de las configuraciones de usuario**: un archivo `.json` o `.json.gz`
   con las configuraciones de usuario, los preajustes de exportación, los
   preajustes de plantilla y los diseños de documento. Úsela cuando otro
@@ -60,11 +75,12 @@ distintas y no son intercambiables.
   exportación y los mismos diseños.
 
 {% aside type="tip" title="Práctica recomendada" %}
-Al final de cada día de campo, exporte una copia completa de la base de datos al
-almacenamiento en la nube si hay internet, y exporte una transferencia del
-proyecto a un almacenamiento local, como una memoria USB-C o un segundo
-dispositivo. Periódicamente, restaure una copia en otro dispositivo para
-confirmar que el archivo es utilizable.
+Al final de cada día de campo, exporte el proyecto a un almacenamiento separado
+del dispositivo de trabajo, como una memoria USB-C o el dispositivo de un
+colega, y súbalo también si hay internet. Reserve la copia completa de la base
+de datos para el fin de semana y para el momento previo a una fusión.
+Periódicamente, restaure o fusione un archivo en otro dispositivo para confirmar
+que es utilizable.
 {% /aside %}
 
 ## Copia de seguridad de la base de datos {% #backup-database %}

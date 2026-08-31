@@ -5,4 +5,4 @@ group: past
 linkedin: https://www.linkedin.com/in/alaindadaian/
 ---
 
-A software developer of more than twenty years, contributing code to NAHPU.
+A software developer of more than twenty years, contributing code to NAHPU template editor features.

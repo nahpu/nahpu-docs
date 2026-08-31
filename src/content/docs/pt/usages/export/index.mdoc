@@ -25,6 +25,8 @@ O NAHPU tem estas ações de exportação no menu do projeto:
 - Para recuperação do banco de dados, consulte [Restaurando um banco de dados](#restoring-a-database).
 - Para criar um pacote de espécimes baseado em padrões ou um NAHPU Data Package reprodutível, consulte [Empacotar registros](./export-bundles).
 - Para exportar etiquetas, tags ou outros documentos em PDF, consulte [Exportar documentos](./export-documents).
+- Para exportar uma tabela resumida de contagens em vez dos registros completos, consulte [Exportar estatísticas](./export-statistics).
+- Para exportar apenas as fotografias, consulte [Exportar imagens](./export-images).
 
 Use esta página para exportações de registros, pacotes de projeto, backups do
 banco de dados e exportações de configurações. O intercâmbio GIS de coordenadas
@@ -34,35 +36,49 @@ GPX, e exportações em GeoJSON, KML e Shapefile compactado.
 
 Para transferências de projeto, use `JSON.GZ` quando o envio precisar ser
 pequeno e as mídias não forem necessárias. Use ZIP ou TAR.GZ quando as mídias
-disponíveis devam acompanhar o projeto. Uma transferência de projeto não é um
-backup bruto do SQLite; use `Backup database` para uma cópia restaurável da
-instalação.
+disponíveis devam acompanhar o projeto. A exportação de projeto também é o
+backup de campo diário recomendado, porque o `Merge project` consegue lê-la de
+volta em outro dispositivo. Ainda assim, ela não é um backup bruto do SQLite:
+use `Backup database` semanalmente, e antes de qualquer mesclagem, para uma
+cópia restaurável de toda a instalação.
 
 ## Estratégia de backup {% #backup-strategy %}
 
 Use mais de um tipo de backup durante o trabalho de campo. Eles protegem coisas
 diferentes e não são intercambiáveis.
 
-- **Backup diário do banco de dados**: um arquivo `.sqlite3` compacto. Use com
-  frequência para recuperação do banco e segurança do dia a dia.
-- **Exportação leve do projeto**: um arquivo `JSON.GZ` comprimido com os
-  registros do projeto, sem mídia. Use para envio com internet limitada ou para
-  uma mesclagem somente de registros. Não é um backup completo do projeto.
-- **Backup completo do banco de dados**: um arquivo `.zip` ou `.tar.gz` que
-  inclui o banco SQLite, as configurações de usuário, mídias, arquivos
-  associados, fontes e mapas. Use quando precisar da recuperação completa da
-  instalação.
+**Em campo, exporte o projeto todos os dias e faça o backup do banco de dados
+uma vez por semana.** A exportação de projeto é a menor, a mais rápida e a que
+menos consome bateria entre as duas, e o `Merge project` a traz de volta ao
+NAHPU em um dispositivo substituto caso um seja perdido, quebrado ou roubado. O
+backup do banco de dados copia a instalação inteira, então ele cabe em um
+checkpoint semanal e imediatamente antes de qualquer mesclagem.
+
+- **Exportação de projeto (diária em campo)**: um arquivo ZIP ou TAR.GZ com os
+  registros do projeto e a mídia disponível, ou uma exportação leve `JSON.GZ`
+  sem mídia quando o envio precisar ser pequeno. O `Merge project` aceita as
+  três, e é isso que torna essa opção um caminho de recuperação, e não apenas
+  de transferência.
+- **Backup completo do banco de dados (semanal e antes de mesclar)**: um arquivo
+  `.zip` ou `.tar.gz` que inclui o banco SQLite, as configurações de usuário,
+  mídias, arquivos associados, fontes e mapas. Use para a recuperação completa
+  da instalação, antes de uma mesclagem que possa dar errado e quando vários
+  projetos precisarem ser preservados juntos.
+- **Backup somente do banco de dados**: um arquivo `.sqlite3` compacto. Use
+  quando os registros precisarem ser restauráveis, mas os arquivos gerenciados
+  não precisarem viajar junto.
 - **Backup das configurações de usuário**: um arquivo `.json` ou `.json.gz` com
   as configurações de usuário, predefinições de exportação, predefinições de
   modelo e layouts de documento. Use quando outro dispositivo precisar das mesmas
   listas controladas, do mesmo comportamento de exportação e dos mesmos layouts.
 
 {% aside type="tip" title="Prática recomendada" %}
-Ao final de cada dia de campo, exporte um backup completo do banco de dados para
-o armazenamento em nuvem, se houver internet, e exporte uma transferência do
-projeto para armazenamento local, como um pendrive USB-C ou um segundo
-dispositivo. Periodicamente, restaure um backup em outro dispositivo para
-confirmar que o arquivo é utilizável.
+Ao final de cada dia de campo, exporte o projeto para um armazenamento separado
+do dispositivo de trabalho, como um pendrive USB-C ou o dispositivo de um colega,
+e envie também para a nuvem se houver internet. Reserve o backup completo do
+banco de dados para o fim da semana e para o momento anterior a uma mesclagem.
+Periodicamente, restaure ou mescle um arquivo em outro dispositivo para
+confirmar que ele é utilizável.
 {% /aside %}
 
 ## Backup do banco de dados {% #backup-database %}

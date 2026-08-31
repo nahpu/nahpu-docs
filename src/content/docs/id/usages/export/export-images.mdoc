@@ -1,0 +1,107 @@
+---
+title: Ekspor Gambar
+sidebar:
+  order: 14
+---
+
+Gunakan ekspor media bila Anda memerlukan fotonya sendiri, bukan catatan yang
+menjelaskannya. Ini cara tercepat mengeluarkan sekumpulan gambar lapangan dari
+satu proyek untuk laporan hibah, laporan izin, presentasi, atau kolega yang
+tidak memakai NAHPU.
+
+Ada dua cara mengekspor. Ekspor satu berkas bila Anda ingin mengatur ukuran dan
+kualitasnya secara penuh, atau ekspor sekumpulan berkas sebagai satu arsip bila
+Anda memerlukan banyak berkas sekaligus. Audio dan video ikut terbawa dalam
+seleksi, tetapi pilihan gambar di bawah hanya berlaku untuk gambar.
+
+## Mengekspor satu berkas
+
+Buka item media, lalu pilih `Export`.
+
+{% steps %}
+
+1. Periksa nama berkas. NAHPU mengusulkan nama berkas yang sekarang, dan Anda
+   dapat mengaktifkan `Append date` untuk menambahkan tanggal hari ini.
+
+2. Pilih formatnya. `Original` selalu tersedia. `JPEG`, `PNG`, dan `WebP`
+   ditawarkan bila NAHPU dapat membaca gambarnya, yang mencakup sumber `.jpg`,
+   `.jpeg`, `.png`, dan `.webp`.
+
+3. Aktifkan `Resize image` bila berkasnya lebih besar dari yang Anda butuhkan.
+   Rasio aspek dikunci, sehingga mengisi lebar akan memperbarui tinggi, dan
+   keduanya tidak bisa melebihi dimensi asli yang tampil di atas sakelar.
+
+4. Atur `JPEG quality` saat mengekspor ke JPEG. Nilai bawaan 85 persen seimbang
+   antara ukuran dan detail. Turunkan nilainya untuk pengiriman surel atau
+   unggahan lewat koneksi lambat.
+
+5. Pilih folder tujuan, lalu `Export`. Setelah berkas ditulis, tombolnya berubah
+   menjadi `Share`.
+
+{% /steps %}
+
+{% aside type="note" %}
+
+Format yang tidak dapat dibaca NAHPU, seperti berkas RAW kamera, tetap dapat
+diekspor dalam format aslinya. Dialognya menyampaikan hal itu alih-alih
+menawarkan pilihan konversi.
+
+{% /aside %}
+
+## Mengekspor sekumpulan berkas sebagai arsip
+
+Buka galeri media dari panel media catatan mana pun, atau gunakan panel media
+pada catatan itu sendiri. Aktifkan seleksi, pilih berkas yang Anda inginkan,
+lalu pilih `Export`. Langkah ini membuka layar `Export selected media`.
+
+Ringkasannya mencantumkan berapa berkas yang dipilih, berapa yang ditemukan di
+disk, berapa yang berupa gambar, audio, video, atau lainnya, serta total ukuran
+sumbernya. Berkas yang tidak ditemukan dilaporkan sebagai peringatan, bukan
+dibuang diam-diam.
+
+Panel pengaturannya berisi:
+
+- **Archive format**. `TAR.GZ` menghasilkan berkas lebih kecil dan lebih cocok
+  untuk diunggah. macOS, Linux, dan Windows 11 membukanya tanpa perangkat lunak
+  tambahan. Pilih `ZIP` bila arsipnya akan dibuka di mesin Windows yang lebih
+  lama, karena Windows 10 dan versi sebelumnya memerlukan alat terpisah untuk
+  membuka `.tar.gz`.
+- **Image format**. `Original` menyalin berkas apa adanya. `JPEG`, `PNG`, atau
+  `WebP` mengonversi setiap gambar yang terbaca dalam seleksi.
+- **Limit image dimensions**. Tersedia setelah Anda memilih konversi. Isikan
+  lebar atau tinggi maksimum dalam piksel, dan NAHPU membatasi sisi yang lebih
+  panjang. Gambar yang sudah lebih kecil dari batas itu tidak diperbesar.
+- **JPEG quality**. Berlaku bila format gambarnya JPEG.
+- **File name**, **Append date**, dan folder tujuan.
+
+Di dalam arsip, berkas dikelompokkan ke folder `specimen`, `site`, `event`,
+`narrative`, dan `other` sehingga Anda tahu asal setiap berkas. Audio dan video
+disalin apa adanya, apa pun format gambar yang dipilih.
+
+{% aside type="caution" %}
+
+Seleksi yang besar dapat memakan waktu beberapa menit, terutama saat konversi.
+Layar menampilkan progres dan tombol `Cancel` selama proses berjalan. Biarkan
+NAHPU terbuka sampai selesai, lalu periksa jumlah berkas yang diekspor dan yang
+dilewati beserta peringatan pada ringkasan sebelum arsipnya Anda kirim.
+
+{% /aside %}
+
+## Memilih pengaturan
+
+- Untuk laporan atau salindia presentasi, konversikan ke `JPEG` dan batasi sisi
+  terpanjang sekitar 2000 px. Cara ini biasanya memperkecil arsip hingga
+  sepersepuluh tanpa penurunan mutu yang terlihat.
+- Untuk unggahan lewat koneksi internet lapangan, gunakan `TAR.GZ`, `JPEG`, dan
+  nilai kualitas yang lebih rendah.
+- Untuk pengarsipan atau untuk kolega yang akan mengolah gambarnya, pertahankan
+  `Original` agar tidak ada berkas yang dikompresi ulang.
+
+## Halaman terkait
+
+- [Lampirkan data dan media](../../how-to-recipes/collect/attach-data-and-media)
+  untuk menambahkan media ke sebuah catatan
+- [Transfer proyek](./project-transfer) bila media harus ikut berpindah bersama
+  catatannya
+- [Paket catatan](./export-bundles) untuk paket yang menyertakan media bersama
+  tabel berbasis standar

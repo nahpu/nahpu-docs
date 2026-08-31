@@ -1,0 +1,114 @@
+---
+title: Exportar Estatísticas
+sidebar:
+  order: 13
+---
+
+Use a exportação de estatísticas quando precisar de uma tabela resumida em vez
+dos registros completos. As tabelas trazem contagens e percentuais por
+categoria, que é o que a maioria dos relatórios de financiamento, relatórios de
+licença e atualizações de progresso pede. Toda tabela exibida na tela de
+estatísticas pode ser gravada em CSV, TSV, Excel ou JSON.
+
+As estatísticas são calculadas apenas para o projeto ativo.
+
+## Abrindo a tela de estatísticas
+
+Abra o painel de estatísticas de registros no dashboard do projeto e selecione
+`Explore more stats`. A tela tem três partes:
+
+- **Summary** mostra os totais do projeto e as cinco maiores contagens por
+  categoria.
+- **Detailed statistics** monta uma tabela ou gráfico a partir da medida, do
+  agrupamento, do detalhamento e do filtro que você escolher.
+- **Spatial statistics** conta registros por coordenada de local, em um mapa ou
+  em uma tabela.
+
+As exportações ficam disponíveis na visualização de tabela. Mude o painel de
+`Chart` ou `Map` para `Table` e use o botão `Export table` acima da tabela.
+
+## Estatísticas detalhadas
+
+Escolha primeiro a medida em `Measure`, porque ela define quais agrupamentos
+ficam disponíveis.
+
+| Medida | Agrupar por |
+| --- | --- |
+| Specimens | Species, Family, Site, Date, Method, Sex, Life stage |
+| Species | Family, Site, Date, Method, Sex, Life stage |
+| Part quantity | Part type, Treatment |
+
+`Life stage` só aparece quando o projeto registra esse dado. Dois controles
+adicionais aparecem quando se aplicam:
+
+- **Breakdown** divide as contagens de espécimes por espécie em `Sex` ou
+  `Life stage`. O detalhamento vira uma coluna extra na tabela exportada.
+- **Filtros** restringem a tabela a um local ao contar espécimes por espécie, ou
+  a uma espécie ao contar quantidade de partes. O filtro selecionado entra no
+  nome de arquivo sugerido.
+
+A tabela exportada repete o que a tabela na tela mostra, uma linha por
+categoria:
+
+```text
+| Rank | Species          | Specimens | Percent (%) |
+| ---- | ---------------- | --------- | ----------- |
+| 1    | Bunomys coelestis| 24        | 40.00       |
+| 2    | Bunomys penitus  | 18        | 30.00       |
+```
+
+O cabeçalho da segunda coluna segue o agrupamento selecionado, e o da coluna de
+contagem segue a medida. Com um detalhamento ativo, a coluna da série fica entre
+as duas, e categorias sem valor registrado são exportadas como `Not recorded`.
+
+## Estatísticas espaciais
+
+O painel espacial conta `Specimens`, `Species` ou `Family` por coordenada de
+local. `Coordinates by species` pede que você escolha uma espécie primeiro e
+depois conta essa espécie em cada coordenada.
+
+A tabela espacial exporta uma linha por coordenada com nome do lugar,
+localidade, latitude, longitude, elevação, contagem e percentual. É a forma mais
+rápida de obter uma lista de coordenadas com o esforço associado para um
+relatório de licença ou para um programa de GIS.
+
+## Gravando o arquivo
+
+A caixa de exportação é a mesma nos dois painéis. No celular ela abre como uma
+folha inferior e, em telas maiores, como uma caixa de diálogo.
+
+{% steps %}
+
+1. Confira o nome do arquivo. O NAHPU propõe um nome formado pelo nome do
+   projeto, pela medida e pelo agrupamento, pelo filtro ativo e pela data de
+   hoje.
+
+2. Ative `Append date` se quiser acrescentar a data atual ao nome. Isso ajuda
+   quando você exporta a mesma tabela várias vezes ao longo de uma temporada de
+   campo.
+
+3. Escolha o formato. `CSV` e `TSV` são os mais seguros para análise, `Excel`
+   grava uma planilha `.xlsx` e `JSON` mantém os nomes de cabeçalho como chaves.
+
+4. Selecione a pasta de destino. No computador o arquivo é gravado onde você
+   escolher; no celular o NAHPU usa a pasta de exportação do aplicativo.
+
+5. Selecione `Export`. Quando o arquivo é gravado, o botão passa a `Share`, para
+   enviar a tabela direto a outro aplicativo.
+
+{% /steps %}
+
+{% aside type="note" %}
+
+A exportação grava as linhas que estão na tabela naquele momento, então medida,
+agrupamento, detalhamento e filtro chegam todos ao arquivo. Altere os controles
+e exporte de novo quando precisar de outro recorte dos dados.
+
+{% /aside %}
+
+## Páginas relacionadas
+
+- [Estatísticas de registros no dashboard](../projects)
+- [Exportar registros](./export-records) para os dados de espécimes, locais e
+  eventos que estão por trás das contagens
+- [Empacotar registros](./export-bundles) para pacotes baseados em padrões

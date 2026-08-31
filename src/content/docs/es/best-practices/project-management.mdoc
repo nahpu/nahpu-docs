@@ -14,11 +14,17 @@ Una gestión coherente mantiene los registros de campo comprensibles, recuperabl
 
 En el campo, registre los datos cuanto antes y revise los campos obligatorios antes de pasar al siguiente espécimen. En el laboratorio, revise los registros, normalice nombres e identificadores, inspeccione los archivos multimedia y resuelva errores antes de publicar o archivar. Documente la entrega cuando varias personas curen el proyecto.
 
-## Realice copias de seguridad diariamente
+## Respalde con una cadencia de campo
 
-Haga una copia al final de cada día y antes de grandes cambios. Aplique la regla 3-2-1: al menos tres copias, en dos medios distintos y una fuera del sitio o en la nube. Incluya proyecto y fecha, por ejemplo `MamiferosBorneo_backup_20241015`.
+**Exporte el proyecto al final de cada jornada de campo. Respalde la base de datos una vez por semana y siempre antes de fusionar.** No cumplen la misma función, y usar la más pesada a diario es el error más común que vemos.
 
-Verifique las copias abriendo un archivo o restaurándolo periódicamente en un dispositivo de prueba. Conserve una copia en un dispositivo físico separado por si no hay acceso a la nube.
+La exportación de proyecto es pequeña, rápida y poco exigente con una batería que quizá no pueda recargar en días. Lleva los registros del proyecto y los medios disponibles, y `Merge project` la vuelve a leer en NAHPU, así que un dispositivo perdido, roto o robado cuesta como máximo un día de trabajo. Una exportación ligera `JSON.GZ` descarta los medios y queda lo bastante pequeña para subirla por una conexión débil.
+
+La copia de la base de datos duplica toda la instalación: cada proyecto, las configuraciones de usuario, los preajustes, los archivos administrados, las fuentes y los mapas. Es lo que necesita cuando el objetivo es reconstruir un dispositivo tal cual estaba, o cuando una fusión puede salir mal y hace falta un punto al que volver. También es más lenta y mucho más grande, y por eso corresponde a un punto de control semanal y no al final de una jornada larga en el campo.
+
+Aplique la regla 3-2-1 al archivo que acaba de crear: conserve al menos tres copias, en dos medios distintos, con una copia fuera del sitio o en la nube. Use el nombre del proyecto y la fecha en cada nombre de archivo, por ejemplo `BorneoMammals_20241015.zip`.
+
+No dé por hecho que un archivo existe solo porque se copió. Periódicamente, fusione una exportación de proyecto o restaure una copia de la base de datos en un segundo dispositivo y confirme que los registros y los medios son utilizables. Conserve una copia en un dispositivo físico aparte por si el acceso a la nube no está disponible.
 
 ## Transfiera proyectos de forma segura
 
