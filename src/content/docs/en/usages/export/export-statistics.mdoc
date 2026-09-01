@@ -16,7 +16,9 @@ Statistics are calculated for the active project only.
 Open the record statistics panel on the project dashboard and select
 `Explore more stats`. The screen has three parts:
 
-- **Summary** shows the project totals and the top five counts by category.
+- **Summary** shows the project totals, split into a `Record summary` group
+  and a `Taxonomic breakdown` group that counts distinct classes, orders,
+  families, genera, and species, followed by the top five counts by category.
 - **Detailed statistics** builds one table or chart from the measure, grouping,
   breakdown, and filter you choose.
 - **Spatial statistics** counts records by site coordinate, shown on a map or
@@ -31,13 +33,18 @@ Choose a `Measure` first, because it decides which groupings are available.
 
 | Measure | Group by |
 | --- | --- |
-| Specimens | Species, Family, Site, Date, Method, Sex, Life stage |
-| Species | Family, Site, Date, Method, Sex, Life stage |
+| Specimens | Species, Taxon rank, Site, Date, Method, Sex, Life stage |
+| Species | Taxon rank, Site, Date, Method, Sex, Life stage |
 | Part quantity | Part type, Treatment |
 
-Life stage only appears when the project records it. Two further controls
+Life stage only appears when the project records it. Three further controls
 appear when they apply:
 
+- **Taxon rank** picks the rank to count by: `Class`, `Order`, `Family`, or
+  `Genus`. Species has its own grouping, because it is the only one that
+  offers the breakdown and the site filter below. The chart title, the table
+  header, and the file name all name the rank you picked rather than the
+  grouping, so counting by family reads `Specimens by family`.
 - **Breakdown** splits specimen counts by species into `Sex` or `Life stage`.
   The breakdown becomes an extra column in the exported table.
 - **Filters** narrow the table to one site when counting specimens by species,

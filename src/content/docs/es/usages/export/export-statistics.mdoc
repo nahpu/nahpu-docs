@@ -17,8 +17,10 @@ Las estadísticas se calculan solo para el proyecto activo.
 Abra el panel de estadísticas de registros en el dashboard del proyecto y
 seleccione `Explore more stats`. La pantalla tiene tres partes:
 
-- **Summary** muestra los totales del proyecto y los cinco conteos más altos por
-  categoría.
+- **Summary** muestra los totales del proyecto, divididos en un grupo
+  `Record summary` y un grupo `Taxonomic breakdown` que cuenta las clases,
+  órdenes, familias, géneros y especies distintos, seguidos de los cinco
+  conteos más altos por categoría.
 - **Detailed statistics** arma una tabla o un gráfico a partir de la medida, la
   agrupación, el desglose y el filtro que elija.
 - **Spatial statistics** cuenta registros por coordenada de sitio, en un mapa o
@@ -34,13 +36,19 @@ disponibles.
 
 | Medida | Agrupar por |
 | --- | --- |
-| Specimens | Species, Family, Site, Date, Method, Sex, Life stage |
-| Species | Family, Site, Date, Method, Sex, Life stage |
+| Specimens | Species, Taxon rank, Site, Date, Method, Sex, Life stage |
+| Species | Taxon rank, Site, Date, Method, Sex, Life stage |
 | Part quantity | Part type, Treatment |
 
-`Life stage` solo aparece cuando el proyecto lo registra. Otros dos controles
+`Life stage` solo aparece cuando el proyecto lo registra. Otros tres controles
 aparecen cuando corresponde:
 
+- **Taxon rank** elige el rango con el que se cuenta: `Class`, `Order`,
+  `Family` o `Genus`. Especie tiene su propia agrupación, porque es la única
+  que ofrece el desglose y el filtro de sitio que siguen. El título del
+  gráfico, el encabezado de la tabla y el nombre del archivo indican el rango
+  elegido y no la agrupación, de modo que contar por familia se lee
+  `Specimens by family`.
 - **Breakdown** divide los conteos de especímenes por especie en `Sex` o
   `Life stage`. El desglose se convierte en una columna adicional de la tabla
   exportada.

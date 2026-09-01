@@ -17,7 +17,10 @@ Statistik dihitung hanya untuk proyek yang sedang aktif.
 Buka panel statistik catatan di dashboard proyek lalu pilih
 `Explore more stats`. Layar ini terdiri dari tiga bagian:
 
-- **Summary** menampilkan total proyek dan lima hitungan terbesar per kategori.
+- **Summary** menampilkan total proyek, terbagi menjadi grup `Record summary`
+  dan grup `Taxonomic breakdown` yang menghitung jumlah kelas, ordo, famili,
+  genus, dan spesies yang berbeda, lalu diikuti lima hitungan terbesar per
+  kategori.
 - **Detailed statistics** menyusun satu tabel atau grafik dari measure,
   pengelompokan, rincian, dan filter yang Anda pilih.
 - **Spatial statistics** menghitung catatan per koordinat lokasi, dalam bentuk
@@ -33,13 +36,19 @@ tersedia.
 
 | Measure | Kelompokkan menurut |
 | --- | --- |
-| Specimens | Species, Family, Site, Date, Method, Sex, Life stage |
-| Species | Family, Site, Date, Method, Sex, Life stage |
+| Specimens | Species, Taxon rank, Site, Date, Method, Sex, Life stage |
+| Species | Taxon rank, Site, Date, Method, Sex, Life stage |
 | Part quantity | Part type, Treatment |
 
-`Life stage` hanya muncul bila proyek mencatatnya. Dua kontrol tambahan muncul
+`Life stage` hanya muncul bila proyek mencatatnya. Tiga kontrol tambahan muncul
 bila relevan:
 
+- **Taxon rank** memilih takson yang dihitung: `Class`, `Order`, `Family`, atau
+  `Genus`. Spesies memiliki pengelompokan tersendiri, karena hanya
+  pengelompokan itu yang menyediakan rincian dan filter lokasi di bawah. Judul
+  grafik, tajuk tabel, dan nama berkas menyebutkan takson yang Anda pilih,
+  bukan nama pengelompokannya, sehingga menghitung per famili terbaca
+  `Specimens by family`.
 - **Breakdown** memecah hitungan spesimen per spesies menjadi `Sex` atau
   `Life stage`. Rincian ini menjadi kolom tambahan pada tabel yang diekspor.
 - **Filter** mempersempit tabel ke satu lokasi saat menghitung spesimen per

@@ -17,8 +17,10 @@ As estatísticas são calculadas apenas para o projeto ativo.
 Abra o painel de estatísticas de registros no dashboard do projeto e selecione
 `Explore more stats`. A tela tem três partes:
 
-- **Summary** mostra os totais do projeto e as cinco maiores contagens por
-  categoria.
+- **Summary** mostra os totais do projeto, divididos em um grupo
+  `Record summary` e um grupo `Taxonomic breakdown` que conta as classes,
+  ordens, famílias, gêneros e espécies distintos, seguidos das cinco maiores
+  contagens por categoria.
 - **Detailed statistics** monta uma tabela ou gráfico a partir da medida, do
   agrupamento, do detalhamento e do filtro que você escolher.
 - **Spatial statistics** conta registros por coordenada de local, em um mapa ou
@@ -34,13 +36,19 @@ ficam disponíveis.
 
 | Medida | Agrupar por |
 | --- | --- |
-| Specimens | Species, Family, Site, Date, Method, Sex, Life stage |
-| Species | Family, Site, Date, Method, Sex, Life stage |
+| Specimens | Species, Taxon rank, Site, Date, Method, Sex, Life stage |
+| Species | Taxon rank, Site, Date, Method, Sex, Life stage |
 | Part quantity | Part type, Treatment |
 
-`Life stage` só aparece quando o projeto registra esse dado. Dois controles
+`Life stage` só aparece quando o projeto registra esse dado. Três controles
 adicionais aparecem quando se aplicam:
 
+- **Taxon rank** escolhe o nível pelo qual contar: `Class`, `Order`, `Family`
+  ou `Genus`. Espécie tem o próprio agrupamento, porque é o único que oferece
+  o detalhamento e o filtro de local logo abaixo. O título do gráfico, o
+  cabeçalho da tabela e o nome do arquivo indicam o nível escolhido, e não o
+  agrupamento, de modo que contar por família aparece como
+  `Specimens by family`.
 - **Breakdown** divide as contagens de espécimes por espécie em `Sex` ou
   `Life stage`. O detalhamento vira uma coluna extra na tabela exportada.
 - **Filtros** restringem a tabela a um local ao contar espécimes por espécie, ou
