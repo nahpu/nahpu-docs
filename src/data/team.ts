@@ -69,3 +69,32 @@ export function byOrderThenName(a: TeamEntry, b: TeamEntry): number {
 export function byName(a: TeamEntry, b: TeamEntry): number {
   return a.data.name.localeCompare(b.data.name);
 }
+
+/// Honorifics and suffixes that are not part of a member's name and must not
+/// contribute an initial. Compared lowercased and without a trailing period.
+const NON_NAME_PARTS = new Set([
+  "dr",
+  "prof",
+  "mr",
+  "mrs",
+  "ms",
+  "mx",
+  "phd",
+  "md",
+  "jr",
+  "sr",
+  "ii",
+  "iii",
+  "iv",
+]);
+
+/// Initials shown on the avatar when a member has no photo.
+export function nameInitials(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter((part) => !NON_NAME_PARTS.has(part.toLowerCase().replace(/\.$/, "")))
+    .filter((part) => /[A-Za-zÀ-ÿ]/.test(part[0] ?? ""))
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 3);
+}

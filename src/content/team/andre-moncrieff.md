@@ -5,6 +5,7 @@ role: Maintainer
 group: core
 order: 2
 website: https://www.moncriefflab.org/
+scholar: "https://scholar.google.com/citations?user=JPJhhrsAAAAJ&hl=en"
 ---
 
 Dr. Andre E. Moncrieff is Curator of Ornithology at the Sam Noble Oklahoma Museum of

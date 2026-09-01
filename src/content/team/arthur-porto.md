@@ -4,6 +4,7 @@ institution: Florida Museum of Natural History
 group: core
 order: 4
 website: https://www.biovisionlab.com/research
+scholar: "https://scholar.google.com/citations?user=RlmpcO8AAAAJ&hl=en"
 ---
 
 Dr. Arthur Porto is Assistant Curator of AI Biodiversity at the Florida Museum of

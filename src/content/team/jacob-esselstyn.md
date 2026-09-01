@@ -4,6 +4,7 @@ institution: LSU Museum of Natural Science
 group: core
 order: 3
 website: https://esselstyn.github.io/
+scholar: https://scholar.google.com/citations?user=8p7eEcAAAAAJ&hl=en
 ---
 
 Dr. Jacob A. Esselstyn is Curator of Mammals at the LSU Museum of Natural Science

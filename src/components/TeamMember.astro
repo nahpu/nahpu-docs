@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import "../styles/global.css";
 import cntl from "cntl";
 import ProfileLinks from "./ProfileLinks.astro";
-import { primaryUrl } from "../data/team";
+import { nameInitials, primaryUrl } from "../data/team";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -16,12 +16,7 @@ const { name, institution, featured } = data;
 const roles = data.role ? [data.role].flat() : [];
 const href = primaryUrl(data);
 const hasPhoto = !!photoSrc;
-const initials = name
-  .split(" ")
-  .filter((part) => /[A-Za-zÀ-ÿ]/.test(part[0] ?? ""))
-  .map((part) => part[0])
-  .join("")
-  .slice(0, 3);
+const initials = nameInitials(name);
 
 const cardClasses = cntl`
   nh-reveal
