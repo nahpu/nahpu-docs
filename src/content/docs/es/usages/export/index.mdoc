@@ -12,8 +12,9 @@ NAHPU tiene estas acciones de exportación en el menú del proyecto:
 - **Bundle records** - Crea un Darwin Core Archive, un Darwin Core Data Package o un NAHPU Data Package completo para uso por terceros.
 - **Export documents** - Crea documentos PDF a partir de plantillas de documento y perfiles de diseño.
 - **Backup database** - Crea un archivo ZIP o TAR.GZ completo que contiene la
-  base de datos SQLite, las configuraciones de usuario, los archivos
-  gestionados, los medios, las fuentes y los mapas.
+  base de datos SQLite, los medios y los archivos asociados de todos los
+  proyectos, todas las fotos del personal y el directorio completo de
+  configuraciones de usuario, con sus fuentes y mapas.
 - **Export user configs** - Exporta las configuraciones de usuario seleccionadas como JSON o JSON.GZ.
 
 ## Rutas rápidas de exportación
@@ -61,10 +62,14 @@ un punto de control semanal y al momento inmediatamente anterior a una fusión.
   las tres, y eso es lo que convierte esta opción en una vía de recuperación y
   no solo de transferencia.
 - **Copia completa de la base de datos (semanal y antes de fusionar)**: un
-  archivo `.zip` o `.tar.gz` que incluye la base SQLite, las configuraciones de
-  usuario, los medios, los archivos asociados, las fuentes y los mapas. Úsela
-  para la recuperación completa de la instalación, antes de una fusión que
-  pueda salir mal y cuando varios proyectos deban preservarse juntos.
+  archivo `.zip` o `.tar.gz` que incluye la base SQLite, los medios y los
+  archivos asociados de todos los proyectos, todas las fotos del personal y el
+  directorio completo de configuraciones de usuario. Copia esos directorios
+  enteros, así que lleva todos los archivos de los datos de la aplicación
+  NAHPU, estén o no vinculados a un proyecto. En el campo, ejecútela de forma
+  ocasional, cuando el consumo de batería no sea una preocupación. Úsela para la
+  recuperación completa de la instalación, antes de una fusión que pueda salir
+  mal y cuando varios proyectos deban preservarse juntos.
 - **Copia solo de la base de datos**: un archivo `.sqlite3` compacto. Úsela
   cuando los registros deban ser restaurables pero los archivos administrados no
   necesiten viajar.
@@ -86,9 +91,14 @@ que es utilizable.
 ## Copia de seguridad de la base de datos {% #backup-database %}
 
 `Backup database` crea un archivo de copia de seguridad completo de NAHPU. Elija
-ZIP o TAR.GZ; el archivo contiene la base SQLite, todas las configuraciones de
-usuario, los medios gestionados, los archivos asociados, las fuentes y los mapas
-personalizados.
+ZIP o TAR.GZ; el archivo contiene la base SQLite, los directorios de medios y de
+datos asociados de todos los proyectos, todas las fotos del personal y el
+directorio completo de configuraciones de usuario, incluidas las fuentes, los
+mapas y cualquier otro archivo de configuración guardado allí. Se copian
+directorios enteros, así que el archivo lleva todos los archivos de los datos de
+la aplicación NAHPU, estén o no vinculados a un proyecto. En el campo, ejecútela
+de forma ocasional, cuando el consumo de batería no sea una preocupación, y use
+`Export project` para una copia más rápida y específica del proyecto.
 
 {% steps %}
 
@@ -142,6 +152,13 @@ Restaurar una base de datos reemplaza la base de datos actual del proyecto. Si
 restaura un archivo comprimido, NAHPU lo extrae, copia los archivos de proyecto
 incluidos en el directorio de documentos de la aplicación, importa las
 configuraciones de usuario incluidas y luego reemplaza la base SQLite activa.
+
+La restauración sobrescribe cualquier archivo de medios o de configuración cuyo
+nombre coincida con uno del archivo comprimido, en su sitio y sin una segunda
+copia; un archivo que ya sea idéntico se deja intacto. Los archivos que solo
+existen en el dispositivo no se eliminan, así que permanecen y aparecerán en las
+copias posteriores. Nada de esto se puede deshacer después, y por eso
+`Back up current data first` debe permanecer activado.
 
 ## Restaurar las configuraciones de usuario {% #restoring-user-configs %}
 

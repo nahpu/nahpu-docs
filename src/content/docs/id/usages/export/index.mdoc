@@ -12,7 +12,8 @@ NAHPU memiliki tindakan ekspor berikut pada menu proyek:
 - **Bundle records** - Membuat Darwin Core Archive, Darwin Core Data Package, atau NAHPU Data Package lengkap untuk pihak ketiga.
 - **Export documents** - Membuat dokumen PDF dari templat dokumen dan profil tata letak.
 - **Backup database** - Membuat arsip ZIP atau TAR.GZ lengkap berisi basis data
-  SQLite, konfigurasi pengguna, berkas terkelola, media, fon, dan peta.
+  SQLite, media dan berkas terkait dari semua proyek, semua foto personel, serta
+  seluruh direktori konfigurasi pengguna beserta fon dan petanya.
 - **Export user configs** - Mengekspor konfigurasi pengguna terpilih sebagai JSON atau JSON.GZ.
 
 ## Jalur ekspor cepat
@@ -58,10 +59,13 @@ mingguan dan tepat sebelum penggabungan apa pun.
   unggahannya harus kecil. `Merge project` menerima ketiganya, dan itulah yang
   menjadikannya jalur pemulihan, bukan sekadar pemindahan.
 - **Cadangan basis data lengkap (mingguan, dan sebelum menggabungkan)**: arsip
-  `.zip` atau `.tar.gz` yang memuat basis data SQLite, konfigurasi pengguna,
-  media, berkas terkait, fon, dan peta. Gunakan untuk pemulihan instalasi secara
-  utuh, sebelum penggabungan yang berisiko gagal, dan ketika beberapa proyek
-  harus dipertahankan bersama.
+  `.zip` atau `.tar.gz` yang memuat basis data SQLite, media dan berkas terkait
+  dari semua proyek, semua foto personel, serta seluruh direktori konfigurasi
+  pengguna. Direktori itu disalin utuh, sehingga arsipnya membawa semua berkas
+  di data aplikasi NAHPU, baik yang tertaut ke suatu proyek maupun tidak. Di
+  lapangan, jalankan sesekali saja, saat pemakaian baterai bukan masalah.
+  Gunakan untuk pemulihan instalasi secara utuh, sebelum penggabungan yang
+  berisiko gagal, dan ketika beberapa proyek harus dipertahankan bersama.
 - **Cadangan basis data saja**: berkas `.sqlite3` yang ringkas. Gunakan ketika
   catatan harus dapat dipulihkan tetapi managed file tidak perlu ikut.
 - **Cadangan konfigurasi pengguna**: berkas `.json` atau `.json.gz` berisi
@@ -81,8 +85,13 @@ dipakai.
 ## Mencadangkan basis data {% #backup-database %}
 
 `Backup database` membuat arsip cadangan NAHPU yang lengkap. Pilih ZIP atau
-TAR.GZ; arsip tersebut memuat basis data SQLite, seluruh konfigurasi pengguna,
-media terkelola, berkas terkait, fon, dan peta khusus.
+TAR.GZ; arsip tersebut memuat basis data SQLite, direktori media dan data
+terkait dari semua proyek, semua foto personel, serta seluruh direktori
+konfigurasi pengguna, termasuk fon, peta, dan berkas konfigurasi lain yang
+disimpan di sana. Direktori disalin utuh, sehingga arsipnya membawa semua berkas
+di data aplikasi NAHPU, baik yang tertaut ke suatu proyek maupun tidak. Di
+lapangan, jalankan sesekali saja, saat pemakaian baterai bukan masalah, dan
+gunakan `Export project` untuk cadangan yang lebih cepat dan khusus proyek.
 
 {% steps %}
 
@@ -137,6 +146,13 @@ Memulihkan basis data akan mengganti basis data proyek saat ini. Bila Anda
 memulihkan sebuah arsip, NAHPU mengekstraknya, menyalin berkas proyek yang
 disertakan ke direktori dokumen aplikasi, mengimpor konfigurasi pengguna yang
 ada di dalamnya, lalu mengganti basis data SQLite yang aktif.
+
+Pemulihan menimpa setiap berkas media atau konfigurasi yang namanya sama dengan
+berkas di dalam arsip, langsung di tempatnya dan tanpa salinan kedua; berkas yang
+sudah identik dibiarkan apa adanya. Berkas yang hanya ada di perangkat tidak
+dihapus, jadi berkas itu tetap tersimpan dan akan muncul pada cadangan
+berikutnya. Semua ini tidak dapat dibatalkan setelahnya, karena itu
+`Back up current data first` sebaiknya tetap aktif.
 
 ## Memulihkan konfigurasi pengguna {% #restoring-user-configs %}
 

@@ -53,6 +53,11 @@ new template`.
    posição, tamanho, estilo, visibilidade, bloqueio e ordem de sobreposição.
 6. Salve com `Save`; use `Save as...` para criar uma variação.
 
+Abra o botão de configurações do editor de modelos para alterar o nome, a
+descrição ou o número de lados de um modelo salvo. Renomear reaponta todos os
+layouts de impressão que usavam o nome anterior, então eles continuam
+funcionando.
+
 O tipo de registro controla os campos e registros disponíveis. Em modelos de
 espécimes, escolha o filtro de táxon antes de selecionar campos específicos.
 
@@ -160,11 +165,50 @@ próprio layout. Use `Save as...` antes de testar uma nova disposição. Informe
 `File name`, selecione o diretório e use `Export documents`. O PDF é um artefato
 de apresentação, não uma exportação estruturada nem um backup restaurável.
 
+## Fontes
+
+Abra `Settings` > `Documents` e mude para `Fonts` para ver todas as fontes
+disponíveis para os modelos. A lista tem duas partes: as fontes incluídas no
+NAHPU, sempre disponíveis, e as que você instalou. O painel direito
+pré-visualiza a fonte selecionada no tamanho que você escolher, em normal,
+negrito e itálico.
+
+Selecione `Install font` para adicionar um arquivo `.ttf`, `.otf` ou `.ttc`
+deste dispositivo. `Find fonts` abre uma biblioteca de fontes no navegador;
+baixe o arquivo lá primeiro e depois instale-o aqui. Você é responsável pela
+licença de qualquer fonte que instalar.
+
+Uma fonte instalada existe apenas naquela instalação. Ela não faz parte de uma
+transferência de configurações de usuário, então a instalação que receber um
+modelo que a use não recebe a fonte. Instale a mesma fonte em cada dispositivo
+que imprimir o modelo, ou aceite a substituição que o NAHPU oferece na
+importação. Uma fonte usada por um modelo salvo não pode ser excluída enquanto
+algum modelo a referenciar.
+
 ## Importar e compartilhar
 
-Modelos podem ser exportados como JSON pelo `Template Editor`; layouts podem ser
-exportados em `Documents`. A importação de modelo pergunta se deve
-substituir ou usar outro nome; a importação de layout cria um nome disponível.
+Modelos são exportados em `Settings` > `Documents` > `Templates`, e layouts em
+`Print layouts`. Ambos oferecem dois escopos: `Export this ...` em uma linha ou
+no menu de opções grava um único item, e `Export all ...` grava todos. Ambos
+escrevem o mesmo formato de arquivo, então qualquer um é importado pela mesma
+ação `Import`. Um único modelo ou layout também pode viajar como código QR
+quando couber em um.
+
+A importação de modelo pergunta se deve substituir ou usar outro nome, e
+acrescenta um sufixo numerado quando vários chegam de uma vez; a importação de
+layout cria um nome disponível.
+
+Quando um modelo importado usa uma fonte que esta instalação não tem, o NAHPU
+lista as fontes ausentes e pede uma substituição, com uma prévia de cada
+escolha antes de aplicá-la. Nada é armazenado até que as substituições sejam
+escolhidas, então um modelo transferido nunca carrega uma fonte que não possa
+ser renderizada.
+
+As imagens usadas por um modelo são referenciadas por nome e não ficam
+armazenadas no arquivo exportado. Um modelo que use um logotipo avisa você na
+exportação, e a imagem precisa ser adicionada novamente na instalação
+receptora.
+
 Layouts referenciam modelos por nome, portanto transfira ambos juntos. Para uma
 cópia completa com dados e arquivos gerenciados, use `Backup database`.
 

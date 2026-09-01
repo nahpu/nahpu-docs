@@ -12,7 +12,8 @@ NAHPU has these export-related actions in the project menu:
 - **Bundle records** - Creates a third-party Darwin Core Archive, Darwin Core Data Package, or complete NAHPU Data Package.
 - **Export documents** - Creates PDF documents from document templates and layout profiles.
 - **Backup database** - Creates a complete ZIP or TAR.GZ archive containing the
-  SQLite database, user configs, managed files, media, fonts, and maps.
+  SQLite database, every project's media and associated files, all personnel
+  photos, and the whole user configs directory with its fonts and maps.
 - **Export user configs** - Exports selected user configs as JSON or JSON.GZ.
 
 ## Quick export paths
@@ -58,10 +59,13 @@ merge.
   media when the upload must be small. `Merge project` accepts all three, which
   is what makes this a recovery path and not only a transfer.
 - **Full database backup (weekly, and before merging)**: a `.zip` or `.tar.gz`
-  archive that includes the SQLite database, user configs, media, associated
-  files, fonts, and maps. Use it for complete installation recovery, before a
-  merge that could go wrong, and when several projects must be preserved
-  together.
+  archive that includes the SQLite database, every project's media and
+  associated files, all personnel photos, and the entire user configs
+  directory. It copies those directories whole, so it carries every file in
+  NAHPU app data whether or not a project links to it. In the field, run it
+  occasionally, when battery use is not a concern. Use it for complete
+  installation recovery, before a merge that could go wrong, and when several
+  projects must be preserved together.
 - **Database-only backup**: a compact `.sqlite3` file. Use it when the records
   must be restorable but the managed files do not need to travel.
 - **User config backup**: a `.json` or `.json.gz` file containing user configs,
@@ -79,8 +83,13 @@ a file on another device to confirm it is usable.
 ## Backup database
 
 `Backup database` creates a complete NAHPU backup archive. Choose ZIP or TAR.GZ;
-the archive contains the SQLite database, all user configs, managed media,
-associated files, fonts, and custom maps.
+the archive contains the SQLite database, every project's media and associated
+data directories, all personnel photos, and the entire user configs directory,
+including fonts, maps, and any other configuration file kept there. Whole
+directories are copied, so the archive carries every file in NAHPU app data
+whether or not a project links to it. In the field, run it occasionally, when
+battery use is not a concern, and use `Export project` for a faster,
+project-specific backup.
 
 {% steps %}
 
@@ -133,6 +142,12 @@ Restoring a database replaces the current project database. If you restore an
 archive, NAHPU extracts it, copies included project files into the app documents
 directory, imports any included user configs, and then replaces the active
 SQLite database.
+
+A restore overwrites any media or config file whose name matches one in the
+archive, in place and without a second copy; a file that is already identical is
+left untouched. Files that exist only on the device are not deleted, so they
+remain and will appear in later backups. None of this can be undone afterwards,
+which is why `Back up current data first` should stay enabled.
 
 ## Restoring user configs
 

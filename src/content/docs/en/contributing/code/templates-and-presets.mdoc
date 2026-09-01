@@ -68,6 +68,13 @@ nahpu_configs.db (redb)
 +-- user_configs
 |   `-- document_suppressed_bundled_template_presets[]
 |
+Documents/nahpu/UserConfigs/fonts/          (filesystem, not redb)
+|
++-- catalog.json ------------> UserFontCatalog
++-- <font_uuid>/
+    +-- font.json ------------> UserFont (family, variants)
+    `-- *.ttf|otf|ttc --------> registered at startup and fed to Typst
+|
 `-- template_table_preview
     `-- specimen_columns[]
 ```
@@ -341,6 +348,26 @@ startup
 Existing user edits are never overwritten. Suppression is implemented for
 bundled templates; layouts are only protected by their existing name.
 
+Neither redb table has a rename primitive, so rename is composed:
+
+```text
+rename template
+  -> write JSON under the new name
+  -> suppress the old name if it was a bundled default
+  -> delete-with-replacement of the old name
+       `-- rewrites every layout block that referenced it
+  -> repoint the current-template preference
+  (failure at any step rolls back the new key and the suppression)
+
+rename layout
+  -> write under the new name
+  -> delete the old key
+  -> repoint the current-layout preference
+```
+
+Writing before deleting means a failure leaves the original intact rather than
+losing the preset.
+
 Template deletion is dependency-aware:
 
 ```text
@@ -362,10 +389,21 @@ policies:
 | Operation | Collision behavior |
 |---|---|
 | Record-preset JSON/QR import | Generate a suffix and enforce the UI preset limit |
-| Template JSON import | Ask to replace or choose a new name |
+| Template JSON import | Ask to replace or choose a new name; suffix in bulk |
 | Layout JSON/QR import | Generate a non-conflicting name |
 | Selected-section user-config import | Replace the selected sections atomically |
 | Current template/layout selection | Device-local; not portable |
+| Unavailable font on any template import | Prompt once per family, substitute before storing |
+
+Every export writes the same name-keyed envelope whether it holds one item or
+all of them, so a single importer handles both scopes. Bare single-object
+files written by earlier versions are still accepted on import.
+
+Fonts do not travel with a template. A template names a font family; the
+bytes live in `UserConfigs/fonts/` on each installation. Every inbound path
+runs through `TemplateFontResolutionService`, which reports the families the
+local `FontRegistry` cannot render and rewrites them to a chosen replacement
+before anything is stored.
 
 Configuration transfer validates the top-level user-config schema, requires
 requested sections to be present, and replaces only those sections. Templates
@@ -388,6 +426,9 @@ When changing this subsystem, trace the complete dependency chain:
   upgrade tests.
 - Rename or delete: aliases, layout usages, current-selection fallback, and
   collision behavior.
+- New font family: `kBundledFontFamilies`, the `pubspec.yaml` `fonts` entry
+  under the font's internal name, the Typst alias map for legacy compact keys,
+  and font-availability tests.
 
 At minimum test JSON round trips, supported and future versions, legacy aliases,
 duplicate-name imports, missing template references, bundled seeding and

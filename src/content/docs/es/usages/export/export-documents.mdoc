@@ -53,6 +53,11 @@ new template`.
    posición, tamaño, estilo, visibilidad, bloqueo y orden de superposición.
 6. Guarde con `Save`; use `Save as...` para crear una variante.
 
+Abra el botón de ajustes del editor de plantillas para cambiar el nombre, la
+descripción o el número de caras de una plantilla guardada. Renombrar reapunta
+todos los diseños de impresión que usaban el nombre anterior, así que siguen
+funcionando.
+
 El tipo de registro controla los campos y registros disponibles. En plantillas
 de especímenes, elija el filtro de taxón antes de seleccionar campos propios de
 un taxón.
@@ -163,14 +168,52 @@ disposición. Introduzca `File name`, seleccione el directorio y use `Export doc
 El PDF es un resultado de presentación, no una exportación estructurada ni una
 copia de seguridad restaurable.
 
+## Fuentes
+
+Abra `Settings` > `Documents` y cambie a `Fonts` para ver todas las fuentes
+disponibles para las plantillas. La lista tiene dos partes: las fuentes
+incluidas con NAHPU, siempre disponibles, y las que usted instaló. El panel
+derecho previsualiza la fuente seleccionada en el tamaño que elija, en normal,
+negrita y cursiva.
+
+Seleccione `Install font` para añadir un archivo `.ttf`, `.otf` o `.ttc` de
+este dispositivo. `Find fonts` abre una biblioteca de fuentes en su navegador;
+descargue el archivo allí primero y luego instálelo aquí. Usted es responsable
+de la licencia de cualquier fuente que instale.
+
+Una fuente instalada existe solo en esa instalación. No forma parte de una
+transferencia de configuraciones de usuario, así que la instalación que reciba
+una plantilla que la use no recibirá la fuente. Instale la misma fuente en cada
+dispositivo que imprima la plantilla, o acepte el reemplazo que NAHPU ofrece al
+importar. Una fuente usada por una plantilla guardada no se puede eliminar
+hasta que ninguna plantilla la referencie.
+
 ## Importar y compartir plantillas y diseños
 
-Las plantillas se pueden exportar como JSON desde `Template Editor`; los diseños
-se pueden exportar desde `Documents`. La importación de plantillas
-pregunta si se debe reemplazar o usar otro nombre; la importación de diseños
-crea un nombre disponible. Los diseños referencian plantillas por nombre, por
-lo que deben transferirse juntos. Para una copia completa con datos y archivos,
-use `Backup database`.
+Las plantillas se exportan desde `Settings` > `Documents` > `Templates`, y los
+diseños desde `Print layouts`. Ambos ofrecen dos alcances: `Export this ...`
+en una fila o en el menú de opciones escribe un solo elemento, y
+`Export all ...` escribe todos. Ambos escriben el mismo formato de archivo, así
+que cualquiera se importa con la misma acción `Import`. Una sola plantilla o
+diseño también puede viajar como código QR cuando cabe en uno.
+
+La importación de plantillas pregunta si se debe reemplazar o usar otro nombre,
+y añade un sufijo numerado cuando llegan varias a la vez; la importación de
+diseños crea un nombre disponible.
+
+Cuando una plantilla importada usa una fuente que esta instalación no tiene,
+NAHPU enumera las fuentes faltantes y pide un reemplazo, con una vista previa
+de cada opción antes de aplicarla. No se guarda nada hasta elegir los
+reemplazos, así que una plantilla transferida nunca conserva una fuente que no
+se pueda representar.
+
+Las imágenes usadas por una plantilla se referencian por nombre y no se
+almacenan en el archivo exportado. Una plantilla que use un logotipo se lo
+advierte al exportar, y la imagen debe añadirse de nuevo en la instalación
+receptora.
+
+Los diseños referencian plantillas por nombre, por lo que deben transferirse
+juntos. Para una copia completa con datos y archivos, use `Backup database`.
 
 ## Impresión de etiquetas de especímenes {% #printing-specimen-tags %}
 

@@ -57,6 +57,10 @@ new template`.
    its position, size, style, visibility, locking, and stacking order.
 6. Save the template with `Save`. Use `Save as...` when creating a variation.
 
+Open the settings button in the template editor to change the name,
+description, or side count of a saved template. Renaming repoints every print
+layout that used the old name, so layouts keep working.
+
 The template's record type controls which fields and records are available.
 For specimen templates, choose the appropriate taxon filter before selecting
 taxon-specific fields.
@@ -188,15 +192,49 @@ Enter a valid `File name`, select the destination directory on desktop, and
 select `Export documents`. The result is a PDF; it is not a structured data
 export or a restorable database backup.
 
+## Fonts
+
+Open `Settings` > `Documents` and switch to `Fonts` to see every font
+available to templates. The list is in two parts: the fonts bundled with
+NAHPU, which are always available, and the fonts you installed yourself. The
+right panel previews the selected font at a size you choose, in regular, bold,
+and italic.
+
+Select `Install font` to add a `.ttf`, `.otf`, or `.ttc` file from this
+device. `Find fonts` opens a font library in your browser; download the file
+there first, then install it here. You are responsible for the license of any
+font you install.
+
+An installed font lives on that installation only. It is not part of a
+user-config transfer, so an installation that receives a template using it
+does not receive the font. Install the same font on each device that prints
+the template, or accept the replacement NAHPU offers on import. A font used by
+a saved template cannot be deleted until no template refers to it.
+
 ## Import and share templates and layouts
 
-Templates can be exported as JSON from the `Template Editor`. Layouts can be
-exported from `Documents`. Duplicate names are handled separately:
+Templates are exported from `Settings` > `Documents` > `Templates`, and
+layouts from `Print layouts`. Both offer two scopes: `Export this ...` on a
+row or in the options menu writes one item, and `Export all ...` writes every
+item. Both write the same file format, so either file can be imported through
+the same `Import` action. A single template or layout can also travel as a QR
+code when it is small enough to fit one.
+
+Duplicate names are handled separately:
 
 - template import asks whether to replace the existing template or use a new
-  name;
+  name, and adds a numbered suffix when several arrive at once;
 - layout import creates a non-conflicting name;
 - settings transfer can replace selected configuration sections atomically.
+
+When an imported template uses a font this installation does not have, NAHPU
+lists the missing fonts and asks for a replacement, previewing each choice
+before it is applied. Nothing is stored until the replacements are chosen, so
+a transferred template never carries a font that cannot be rendered.
+
+Images used by a template are referenced by name rather than stored in the
+exported file. A template that uses a logo warns you on export, and the image
+has to be added again on the receiving installation.
 
 Layouts reference templates by name, so transfer the matching templates and
 layouts together. Current selected names are device-local. For a complete

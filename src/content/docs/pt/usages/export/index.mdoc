@@ -12,8 +12,9 @@ O NAHPU tem estas ações de exportação no menu do projeto:
 - **Bundle records** - Cria um Darwin Core Archive, um Darwin Core Data Package ou um NAHPU Data Package completo para uso por terceiros.
 - **Export documents** - Cria documentos PDF a partir de modelos de documento e perfis de layout.
 - **Backup database** - Cria um arquivo ZIP ou TAR.GZ completo contendo o banco
-  de dados SQLite, as configurações de usuário, os arquivos gerenciados, as
-  mídias, as fontes e os mapas.
+  de dados SQLite, as mídias e os arquivos associados de todos os projetos,
+  todas as fotos de pessoal e todo o diretório de configurações de usuário, com
+  suas fontes e mapas.
 - **Export user configs** - Exporta as configurações de usuário selecionadas como JSON ou JSON.GZ.
 
 ## Caminhos rápidos de exportação
@@ -60,9 +61,13 @@ checkpoint semanal e imediatamente antes de qualquer mesclagem.
   três, e é isso que torna essa opção um caminho de recuperação, e não apenas
   de transferência.
 - **Backup completo do banco de dados (semanal e antes de mesclar)**: um arquivo
-  `.zip` ou `.tar.gz` que inclui o banco SQLite, as configurações de usuário,
-  mídias, arquivos associados, fontes e mapas. Use para a recuperação completa
-  da instalação, antes de uma mesclagem que possa dar errado e quando vários
+  `.zip` ou `.tar.gz` que inclui o banco SQLite, as mídias e os arquivos
+  associados de todos os projetos, todas as fotos de pessoal e todo o diretório
+  de configurações de usuário. Ele copia esses diretórios por inteiro, então
+  leva todos os arquivos dos dados do aplicativo NAHPU, estejam eles vinculados
+  a um projeto ou não. No campo, execute-o ocasionalmente, quando o consumo de
+  bateria não for uma preocupação. Use para a recuperação completa da
+  instalação, antes de uma mesclagem que possa dar errado e quando vários
   projetos precisarem ser preservados juntos.
 - **Backup somente do banco de dados**: um arquivo `.sqlite3` compacto. Use
   quando os registros precisarem ser restauráveis, mas os arquivos gerenciados
@@ -84,8 +89,14 @@ confirmar que ele é utilizável.
 ## Backup do banco de dados {% #backup-database %}
 
 `Backup database` cria um arquivo de backup completo do NAHPU. Escolha ZIP ou
-TAR.GZ; o arquivo contém o banco SQLite, todas as configurações de usuário, as
-mídias gerenciadas, os arquivos associados, as fontes e os mapas personalizados.
+TAR.GZ; o arquivo contém o banco SQLite, os diretórios de mídia e de dados
+associados de todos os projetos, todas as fotos de pessoal e todo o diretório de
+configurações de usuário, incluindo fontes, mapas e qualquer outro arquivo de
+configuração guardado ali. Diretórios inteiros são copiados, então o arquivo
+leva todos os arquivos dos dados do aplicativo NAHPU, estejam eles vinculados a
+um projeto ou não. No campo, execute-o ocasionalmente, quando o consumo de
+bateria não for uma preocupação, e use o `Export project` para um backup mais
+rápido e específico do projeto.
 
 {% steps %}
 
@@ -139,6 +150,13 @@ Restaurar um banco de dados substitui o banco de dados atual do projeto. Se voc�
 restaurar um arquivo compactado, o NAHPU o extrai, copia os arquivos de projeto
 incluídos para o diretório de documentos do aplicativo, importa as configurações
 de usuário incluídas e, por fim, substitui o banco SQLite ativo.
+
+A restauração sobrescreve qualquer arquivo de mídia ou de configuração cujo nome
+corresponda a um do arquivo compactado, no lugar e sem uma segunda cópia; um
+arquivo que já seja idêntico é deixado intacto. Arquivos que existem apenas no
+dispositivo não são excluídos, então permanecem e aparecerão nos backups
+seguintes. Nada disso pode ser desfeito depois, e por isso a opção
+`Back up current data first` deve permanecer ativada.
 
 ## Restaurando as configurações de usuário {% #restoring-user-configs %}
 

@@ -53,6 +53,10 @@ template`.
    posisi, ukuran, gaya, visibilitas, penguncian, dan urutan tumpukan.
 6. Simpan dengan `Save`; gunakan `Save as...` untuk membuat variasi.
 
+Buka tombol pengaturan di editor templat untuk mengubah nama, deskripsi, atau
+jumlah sisi templat tersimpan. Penggantian nama mengarahkan ulang setiap tata
+letak cetak yang memakai nama lama, sehingga tata letak tetap berfungsi.
+
 Jenis catatan menentukan field dan catatan yang tersedia. Untuk templat
 spesimen, pilih filter takson sebelum memilih field khusus takson.
 
@@ -161,14 +165,52 @@ tersebut. Gunakan `Save as...` sebelum mencoba susunan baru. Masukkan `File name
 pilih direktori, lalu gunakan `Export documents`. PDF adalah hasil presentasi,
 bukan ekspor data terstruktur atau cadangan database yang dapat dipulihkan.
 
+## Fon
+
+Buka `Settings` > `Documents` lalu beralih ke `Fonts` untuk melihat semua fon
+yang tersedia bagi templat. Daftarnya terbagi dua: fon bawaan NAHPU, yang
+selalu tersedia, dan fon yang Anda pasang sendiri. Panel kanan menampilkan
+pratinjau fon terpilih pada ukuran yang Anda pilih, dalam gaya normal, tebal,
+dan miring.
+
+Pilih `Install font` untuk menambahkan berkas `.ttf`, `.otf`, atau `.ttc` dari
+perangkat ini. `Find fonts` membuka pustaka fon di peramban Anda; unduh
+berkasnya di sana lebih dulu, lalu pasang di sini. Lisensi fon yang Anda pasang
+menjadi tanggung jawab Anda.
+
+Fon yang dipasang hanya ada di instalasi tersebut. Fon bukan bagian dari
+transfer konfigurasi pengguna, sehingga instalasi yang menerima templat yang
+memakainya tidak ikut menerima fonnya. Pasang fon yang sama di setiap perangkat
+yang mencetak templat itu, atau terima pengganti yang ditawarkan NAHPU saat
+impor. Fon yang dipakai templat tersimpan tidak dapat dihapus sampai tidak ada
+templat yang merujuknya.
+
 ## Mengimpor dan berbagi
 
-Templat dapat diekspor sebagai JSON dari `Template Editor`; tata letak dapat
-diekspor dari `Documents`. Impor templat akan meminta pilihan untuk
-mengganti atau memakai nama baru; impor tata letak membuat nama yang tidak
-bertabrakan. Tata letak merujuk templat berdasarkan nama, jadi pindahkan
-keduanya bersama-sama. Untuk salinan lengkap dengan data dan file terkelola,
-gunakan `Backup database`.
+Templat diekspor dari `Settings` > `Documents` > `Templates`, dan tata letak
+dari `Print layouts`. Keduanya menawarkan dua cakupan: `Export this ...` pada
+sebuah baris atau di menu opsi menulis satu item, dan `Export all ...` menulis
+semuanya. Keduanya menulis format berkas yang sama, jadi salah satunya dapat
+diimpor dengan tindakan `Import` yang sama. Satu templat atau tata letak juga
+dapat dikirim sebagai kode QR selama ukurannya muat.
+
+Impor templat akan meminta pilihan untuk mengganti atau memakai nama baru, dan
+menambahkan akhiran bernomor bila beberapa templat datang sekaligus; impor tata
+letak membuat nama yang tidak bertabrakan.
+
+Bila templat yang diimpor memakai fon yang tidak ada di instalasi ini, NAHPU
+mendaftar fon yang hilang dan meminta penggantinya, lengkap dengan pratinjau
+setiap pilihan sebelum diterapkan. Tidak ada yang disimpan sampai penggantinya
+dipilih, sehingga templat hasil transfer tidak pernah membawa fon yang tidak
+dapat ditampilkan.
+
+Gambar yang dipakai templat dirujuk berdasarkan nama dan tidak disimpan di
+berkas ekspor. Templat yang memakai logo akan memberi peringatan saat diekspor,
+dan gambarnya harus ditambahkan lagi di instalasi penerima.
+
+Tata letak merujuk templat berdasarkan nama, jadi pindahkan keduanya
+bersama-sama. Untuk salinan lengkap dengan data dan file terkelola, gunakan
+`Backup database`.
 
 ## Mencetak label spesimen {% #printing-specimen-tags %}
 

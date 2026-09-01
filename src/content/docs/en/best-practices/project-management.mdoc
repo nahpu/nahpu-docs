@@ -20,7 +20,9 @@ In the field, record observations as soon as practical, review required fields b
 
 A project export is small, quick, and undemanding on a battery you may not be able to recharge for days. It carries the project records and its available media, and `Merge project` reads it back into NAHPU, so a lost, broken, or stolen device costs you at most one day of work. A `JSON.GZ` light export drops the media and gets small enough to upload over a weak connection.
 
-A database backup copies the whole installation: every project, user configs, presets, managed files, fonts, and maps. That is what you want when the goal is to rebuild a device exactly, or when a merge could go wrong and you need a point to return to. It is also slower and much larger, which is why it belongs at a weekly checkpoint rather than at the end of a long day in the field.
+A database backup copies the whole installation: every project with its media and associated files, every personnel photo, and the entire user configs directory with its presets, fonts, and maps. Those directories are copied whole rather than file by file from the database, so the archive carries every file in NAHPU app data whether or not a project links to it. That is what you want when the goal is to rebuild a device exactly, or when a merge could go wrong and you need a point to return to.
+
+In fieldwork, treat it as an occasional backup: weekly, immediately before any merge, and at moments when battery use is not a concern, such as a rest day or a night on mains power. Running it nightly is what fills a field device, a limited connection, and a battery you may not be able to recharge. The project export is the faster, project-specific backup that keeps the routine size manageable.
 
 Apply the 3-2-1 rule to whichever file you just made: keep at least three copies, on two different media, with one copy off-site or in the cloud. Use a project name and date in each filename, for example `BorneoMammals_20241015.zip`.
 
