@@ -146,11 +146,91 @@
     );
 }
 
+/* An extra tail on the hero fade, for a page whose next section carries its
+   own artwork: the scrim alone is still ramping at the last pixels, which
+   leaves a visible seam against the flat section below. This lands on the
+   page colour before the hero ends, so the two meet on the same tone. */
+.nh-hero-fade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 38%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-silver-tree-100) 88%
+  );
+}
+
+:root[data-theme="dark"] .nh-hero-fade {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-silver-tree-950) 88%
+  );
+}
+
 /* Drifting motes over the hero. */
 .nh-mote {
   animation: nh-float 14s ease-in-out infinite;
   transform-box: fill-box;
   transform-origin: center;
+}
+
+/* ------------------------------------------------ tropical mountains ---- */
+
+/* Backdrop for the release announcement. It sits behind the card, so the
+   ridges are kept faint enough that body text keeps its contrast. */
+.nh-ridge-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.nh-ridge-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+
+:root[data-theme="dark"] .nh-ridge-svg {
+  opacity: 0.7;
+}
+
+/* The warm haze reads as daylight over the range. On a dark page it would
+   only wash the background out, so it is nearly dialled away there. */
+.nh-ridge-haze {
+  opacity: 0.4;
+}
+
+:root[data-theme="dark"] .nh-ridge-haze {
+  opacity: 0.1;
+}
+
+/* The escarpment on the crater rim. Against a dark page a pale shape this
+   size stops reading as a cliff and starts reading as a light left on. */
+.nh-ridge-scar {
+  opacity: 0.45;
+}
+
+:root[data-theme="dark"] .nh-ridge-scar {
+  opacity: 0.2;
+}
+
+/* A narrow viewport crops the range down to the middle cone, which then fills
+   the whole section instead of sitting behind the card. Fading it there keeps
+   the announcement readable. */
+@media (max-width: 639px) {
+  .nh-ridge-svg {
+    opacity: 0.5;
+  }
+
+  :root[data-theme="dark"] .nh-ridge-svg {
+    opacity: 0.4;
+  }
 }
 
 /* -------------------------------------------------------- glass frames ---- */

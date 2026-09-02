@@ -1,6 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import TropicalMountains from "../components/landing/TropicalMountains.astro";
 import cntl from "cntl";
+import mtGede from "../assets/images/landscapes/handika-mtgede.webp";
 
 import "../styles/global.css";
 import "../styles/landing.css";
@@ -131,15 +134,13 @@ const platforms: Platform[] = [
         devices: "Phone and tablet",
         requirements: ["Android 8.0 (Oreo) or later"],
         steps: [
-            "Download the installer with the button below.",
-            "Open the downloaded APK file on your Android device.",
-            "If prompted, enable installation from unknown sources in your device settings.",
-            "Follow the on-screen instructions to complete the installation.",
+            "Open the Google Play listing with the button below.",
+            "Tap <strong>Install</strong> and wait for the download to finish.",
             "Open NAHPU from your app drawer or home screen.",
         ],
         cta: {
-            label: "Download the APK",
-            href: "https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Android.apk",
+            label: "Get it on Google Play",
+            href: "https://play.google.com/store/apps/details?id=com.hhandika.nahpu",
         },
         links: [],
     },
@@ -153,14 +154,14 @@ const platforms: Platform[] = [
             "iPadOS 15.6 or later",
             "macOS 12.4 or later (arm64 and x86_64)",
         ],
-        note: "Apple requires beta testers to install the app through TestFlight.",
+        note: "The App Store listing is on its way. Until it lands, Apple distributes NAHPU through TestFlight.",
         steps: [
             "Install TestFlight from the App Store on your iPhone, iPad, or Mac.",
             "Open the invitation below on the same device where you installed TestFlight.",
             "Follow the TestFlight instructions, then open NAHPU from your home screen or Applications folder.",
         ],
         cta: {
-            label: "Join the TestFlight beta",
+            label: "Install through TestFlight",
             href: "https://testflight.apple.com/join/DRG6yUfb",
         },
         links: [
@@ -242,7 +243,16 @@ const nextSteps = [
         <div class="nh-hero-bg" aria-hidden="true">
             <div class="nh-blob nh-blob-teal"></div>
             <div class="nh-blob nh-blob-gold"></div>
+            <Image
+                src={mtGede}
+                alt=""
+                widths={[1200, 2400]}
+                sizes="100vw"
+                class="nh-hero-photo"
+                loading="eager"
+            />
             <div class="nh-hero-scrim"></div>
+            <div class="nh-hero-fade"></div>
         </div>
 
         <div class={`${innerClasses} w-full`}>
@@ -267,34 +277,56 @@ const nextSteps = [
                     >Read the Quick Start</a
                 >
             </div>
+
+            <p
+                class="mt-6 text-[11px] tracking-wide text-silver-tree-700 dark:text-silver-tree-400"
+            >
+                Taken at Mt. Gede by Heru Handika.
+            </p>
         </div>
     </section>
 
     <!-- Release status ------------------------------------------------------->
     <section
-        class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
+        class="relative isolate overflow-hidden bg-silver-tree-100 px-6 pt-32 pb-16 sm:pt-40 sm:pb-20 dark:bg-silver-tree-950"
     >
+        <TropicalMountains />
+
         <div class={innerClasses}>
             <div
-                class="nh-reveal rounded-2xl border border-golden-grass-400/60 bg-golden-grass-50/70 p-6 dark:border-golden-grass-600/50 dark:bg-golden-grass-950/30"
+                class="nh-reveal rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/90 p-6 backdrop-blur-sm dark:border-silver-tree-700/70 dark:bg-silver-tree-900/80"
             >
-                <p class={labelClasses}>Development status</p>
+                <p class={labelClasses}>Release</p>
                 <h2
                     class="mt-3 text-xl font-semibold text-silver-tree-900 dark:text-silver-tree-50"
                 >
-                    NAHPU is in release candidate versions
+                    NAHPU v1.0.0 &ldquo;Tropical Mountains&rdquo; is out
                 </h2>
                 <p class={`${bodyTextClasses} mt-3 max-w-3xl`}>
-                    The app is still in beta testing and may contain bugs or
-                    incomplete features, but it is stable enough for general
-                    use. We are nearing the final release in the official app
-                    stores. If something looks wrong, please <a
+                    Version 1 is available now on Google Play for Android. The
+                    same release is out for Apple devices, Linux, and Windows,
+                    and their store listings will follow soon. Until then,
+                    install those platforms with the downloads below. If
+                    something looks wrong, please <a
                         class={linkClasses}
                         href="https://github.com/nahpu/nahpu/issues"
                         target="_blank"
                         rel="noopener noreferrer">report it on GitHub</a
                     >.
                 </p>
+                <p
+                    class={`${bodyTextClasses} mt-4 max-w-3xl text-silver-tree-600 dark:text-silver-tree-400`}
+                >
+                    The codename comes from the first real field expedition test
+                    of NAHPU, on Mt. Gede, West Java, Indonesia.
+                </p>
+
+                <a
+                    class={downloadBtnClasses}
+                    href="https://play.google.com/store/apps/details?id=com.hhandika.nahpu"
+                    target="_blank"
+                    rel="noopener noreferrer">Get it on Google Play</a
+                >
             </div>
         </div>
     </section>

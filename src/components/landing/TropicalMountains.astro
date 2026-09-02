@@ -1,0 +1,138 @@
+---
+/// Backdrop for the release announcement, named after Mt. Gede in West Java,
+/// where NAHPU had its first real field expedition test. The skyline traces
+/// the massif as it is seen from the tea gardens to its west: the broad
+/// crater rim with its pale escarpment on the left, the saddle, then the
+/// straight ridge climbing to Gede's summit, which is near enough flat and
+/// stands only a little above the rim, and the long flank running down to the
+/// right. Forested ridges stack in front, with valley haze between the layers.
+///
+/// The summit sits at the middle of the viewBox, because the middle is what a
+/// narrow viewport keeps once `slice` crops the sides away.
+---
+
+<div class="nh-ridge-bg" aria-hidden="true">
+    <svg
+        class="nh-ridge-svg"
+        viewBox="0 0 1200 420"
+        preserveAspectRatio="xMidYMid slice"
+        fill="none"
+    >
+        <defs>
+            <linearGradient id="nh-ridge" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--color-silver-tree-600)"
+                ></stop>
+                <stop offset="100%" stop-color="var(--color-silver-tree-400)"
+                ></stop>
+            </linearGradient>
+            <!-- Vertical, and clear at the very top, so the section starts on
+                 exactly the colour the hero scrim fades into and warms only as
+                 it comes down to the range. -->
+            <linearGradient id="nh-haze" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                    offset="0%"
+                    stop-color="var(--color-golden-grass-100)"
+                    stop-opacity="0"></stop>
+                <stop offset="45%" stop-color="var(--color-golden-grass-200)"
+                ></stop>
+                <stop offset="100%" stop-color="var(--color-silver-tree-200)"
+                ></stop>
+            </linearGradient>
+        </defs>
+
+        <!-- Morning haze behind the range. -->
+        <rect
+            class="nh-ridge-haze"
+            x="0"
+            y="0"
+            width="1200"
+            height="420"
+            fill="url(#nh-haze)"></rect>
+
+        <!-- The massif, drawn as one skyline: the rim, the saddle, the summit,
+             then the flank falling away to the right. -->
+        <path
+            fill="url(#nh-ridge)"
+            opacity="0.55"
+            d="M-40 420 L-40 178 C 40 170, 118 142, 174 110
+               C 200 96, 228 98, 252 96 C 264 88, 272 85, 284 85
+               C 320 82, 356 81, 396 86 C 420 96, 438 118, 456 132
+               C 468 128, 480 122, 496 112 L 582 58
+               C 604 53, 634 53, 658 57 C 670 66, 680 80, 690 92
+               C 706 90, 722 88, 738 88
+               C 756 89, 764 91, 780 91 C 810 92, 842 94, 870 96
+               C 900 105, 930 113, 960 124 C 990 136, 1020 149, 1050 162
+               C 1080 174, 1110 186, 1140 197 C 1172 208, 1208 221, 1240 229
+               L1240 420 Z"
+        ></path>
+
+        <!-- The pale escarpment along the crater rim. -->
+        <path
+            class="nh-ridge-scar"
+            fill="var(--color-silver-tree-100)"
+            d="M300 91 C 330 84, 362 83, 388 89 C 386 101, 360 107, 330 107
+               C 314 107, 302 99, 300 91 Z"
+        ></path>
+
+        <!-- Middle ridge. -->
+        <path
+            fill="url(#nh-ridge)"
+            opacity="0.4"
+            d="M-40 420 L-40 234 C 60 212, 160 178, 240 160
+               C 300 170, 370 186, 420 198 C 480 210, 540 220, 600 226
+               C 680 234, 762 242, 840 248 C 900 256, 962 267, 1020 275
+               C 1090 284, 1160 292, 1240 298 L1240 420 Z"
+        ></path>
+
+        <!-- Nearest forested ridge. -->
+        <path
+            fill="url(#nh-ridge)"
+            opacity="0.28"
+            d="M-40 420 L-40 308 C 60 298, 140 286, 226 284
+               C 320 282, 400 298, 486 314 C 580 332, 660 346, 748 356
+               C 860 368, 980 376, 1090 380 C 1150 382, 1200 382, 1240 382
+               L1240 420 Z"
+        ></path>
+
+        <!-- Haze settled in the valleys between the ridges. -->
+        <g stroke="var(--color-silver-tree-100)" stroke-linecap="round">
+            <path
+                d="M40 224 C 200 212, 360 230, 520 218"
+                stroke-width="5"
+                opacity="0.45"></path>
+            <path
+                d="M640 258 C 800 248, 960 266, 1120 254"
+                stroke-width="4"
+                opacity="0.35"></path>
+            <path
+                d="M160 288 C 360 278, 580 298, 800 286"
+                stroke-width="6"
+                opacity="0.3"></path>
+        </g>
+
+        <!-- Canopy motes, the same drift as the hero. -->
+        <g fill="var(--color-golden-grass-300)">
+            <circle class="nh-mote" cx="240" cy="34" r="2.4"></circle>
+            <circle
+                class="nh-mote"
+                cx="900"
+                cy="32"
+                r="2"
+                style="animation-delay:2.5s"></circle>
+        </g>
+        <g fill="var(--color-silver-tree-300)">
+            <circle
+                class="nh-mote"
+                cx="500"
+                cy="26"
+                r="1.8"
+                style="animation-delay:4.5s"></circle>
+            <circle
+                class="nh-mote"
+                cx="1120"
+                cy="62"
+                r="2.2"
+                style="animation-delay:7s"></circle>
+        </g>
+    </svg>
+</div>
