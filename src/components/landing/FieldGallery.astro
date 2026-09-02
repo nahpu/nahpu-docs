@@ -5,7 +5,7 @@ import flyingFrog from "../../assets/images/animals/handika-malayan-flying-frog.
 import peromyscus from "../../assets/images/animals/handika-peromyscus_sp.webp";
 import pitViper from "../../assets/images/animals/handika-pit-viper.webp";
 import tarantula from "../../assets/images/animals/handika-tarantula.webp";
-import snake from "../../assets/images/animals/handika-snake.webp";
+import mossShrew from "../../assets/images/animals/handika-moss-shrews.webp";
 import psilopogon from "../../assets/images/animals/handika-psilopogon.webp";
 import mtTalamau from "../../assets/images/landscapes/handika-mt-talamau.webp";
 import mtPatah from "../../assets/images/landscapes/handika-mt-patah.webp";
@@ -42,10 +42,10 @@ const photos = [
         tall: false,
     },
     {
-        image: snake,
-        caption: "Colubrid snake",
-        tag: "Herpetology",
-        alt: "A patterned snake coiled on bare ground",
+        image: mossShrew,
+        caption: "Moss shrew",
+        tag: "Mammalogy",
+        alt: "A dark moss shrew with a long pink snout and pale whiskers on green moss at night",
         tall: false,
     },
     {
@@ -72,12 +72,12 @@ const photos = [
 ];
 
 const stripClasses = cntl`
-  grid grid-flow-col grid-rows-2
-  auto-cols-[17rem] sm:auto-cols-[21rem]
-  gap-2 sm:gap-3
+  grid grid-flow-col
+  auto-cols-[20rem] sm:auto-cols-[26rem]
+  gap-1.5 sm:gap-2
   overflow-x-auto
   snap-x
-  pb-2
+  pb-1.5
   focus:outline-none focus-visible:ring-2 focus-visible:ring-silver-tree-500
 `;
 
@@ -85,6 +85,7 @@ const tileClasses = cntl`
   nh-tile
   group
   relative
+  m-0
   snap-start
   overflow-hidden
   rounded-2xl
@@ -94,16 +95,17 @@ const tileClasses = cntl`
 
 const captionClasses = cntl`
   nh-caption
-  absolute inset-x-2 bottom-2
-  rounded-lg
-  px-2.5 py-1.5
+  absolute bottom-1.5 left-1.5
+  max-w-[calc(100%-0.75rem)]
+  rounded-md
+  px-2 py-1
 `;
 ---
 
 <div class="nh-reveal">
     <div
         class={stripClasses}
-        style="grid-auto-rows: 13.5rem"
+        style="grid-template-rows: 18rem 18rem"
         tabindex="0"
         role="region"
         aria-label="Field photographs"
