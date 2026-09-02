@@ -11,7 +11,7 @@ github: hhandika
 orcid: 0000-0002-2834-7175
 ---
 
-Heru Handika is a postdoctoral associate at the University of Florida, studying
+Dr. Heru Handika is a postdoctoral associate at the University of Florida, studying
 island small-mammal diversity and speciation, with interests spanning in situ
 diversification, biodiversity informatics, and artificial intelligence. That
 work has two halves: polyglot, high-performance scientific programming that
@@ -19,4 +19,6 @@ produces open tools leveraging emerging machine learning techniques
 and scaling from a phone in the field
 up to computing clusters, and field expeditions across more than 30 localities,
 mainly in the remote mountains of Southeast Asia. Dr. Handika is responsible for the overall
-NAHPU project, app architecture, user-interface design, conventional and machine-learning key features, and integration of all supporting software.
+NAHPU project, including team management, app architecture, user-interface design,
+conventional and advanced machine-learning features,
+and integration of all supporting software.

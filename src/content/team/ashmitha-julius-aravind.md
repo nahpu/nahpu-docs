@@ -1,5 +1,5 @@
 ---
-name: Ashmitha Julius Aravind
+name: Ashmitha J. Aravind
 institution: College of Computing, Georgia Institute of Technology
 group: core
 ---
