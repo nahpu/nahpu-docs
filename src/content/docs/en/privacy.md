@@ -5,28 +5,158 @@ sidebar:
     order: 8
 ---
 
-## Introduction
+Last updated: September 2, 2026
 
-At NAHPU, we respect and protect the privacy of our users. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application. Please read this policy carefully. If you do not agree with the terms of this privacy policy, please do not access the application.
+## Scope and Summary
 
-## Collection and Use of Your Information
+This Privacy Policy covers the NAHPU application on its supported platforms. It
+does not cover third-party websites, apps, or services that you choose to open
+or use from NAHPU.
 
-We do not collect any personal data with our App. The information that you provide or generate during the utilization of our application is exclusively stored on your device, unless you opt to share this data.
+NAHPU works without an account. The NAHPU project does not operate a service
+that receives or stores your catalog records, and the app does not include
+advertising. The NAHPU team does not use your app records for analytics,
+advertising, cross-app tracking, or marketing.
 
-## Google Maps and Other Third-Party Map Providers
+Your records and files are stored locally unless you choose to export, back up,
+or share them. Some optional features contact third-party services. Those
+connections are described below.
 
-Our app uses Google Maps APIs for certain features. By using our App, you agree to be bound by Google’s Terms of Service. You can find Google’s Terms of Service at: [https://www.google.com/intl/en/policies/terms/](https://www.google.com/intl/en/policies/terms/)
+## Information You Provide or Generate
 
-We are not responsible for the performance of Google Maps or other map providers integrated into our app. Any issues related to map services should be directed to the respective provider.
+NAHPU can store information that you enter, import, or create, including:
 
-## Security of Your Information
+- project, personnel, and taxon information, which may include names, contact
+  details, affiliations, ORCID identifiers, notes, and personnel photographs;
+- sites, precise localities, coordinates, collecting events, field notes,
+  environmental observations, and specimen or sample records;
+- photographs, videos, audio recordings, associated files, and their metadata;
+  and
+- app settings, custom fields, templates, fonts, export presets, and local map
+  layers.
 
-We use administrative, technical, and physical security measures to protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.
+You decide what information to record. Natural-history records can contain
+sensitive information, including personal contact details and exact locations
+of vulnerable species. Review records before exporting or sharing them.
 
-## Changes to This Privacy Policy
+## Device Permissions and Local Processing
 
-We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. These changes are effective immediately after they are posted on this page.
+NAHPU requests device access only when a feature needs it:
+
+- **Location:** NAHPU can read your current location when you ask it to add
+  coordinates. Your device's location services determine the position under
+  your operating-system and account settings, and NAHPU stores the returned
+  coordinate locally. It does not continuously track your location or create a
+  background location history.
+- **Camera and photos:** NAHPU can capture photographs or videos, import media,
+  and scan QR codes or barcodes. Camera access starts when you open one of these
+  features.
+- **Microphone:** NAHPU can record audio and the audio track of videos when you
+  start a recording.
+- **Files and storage:** NAHPU can import files and save exports or backups in a
+  location that you select.
+
+Imported media is copied into NAHPU's local app storage. Original files may
+contain embedded metadata, including date, camera, device, or location details.
+NAHPU reads selected image metadata such as capture date, camera and lens, and
+exposure information; the copied original may retain other embedded metadata.
+
+You can deny or revoke permissions in your device settings. The related feature
+may not work without its permission.
+
+## Local Storage, Backups, and Retention
+
+NAHPU stores its database, media, associated files, settings, templates, fonts,
+and local maps in app-managed storage on your device. The operating system
+protects this storage using its app sandbox and device security controls.
+
+Your operating system or a file provider may include app data or files in a
+device or cloud backup, depending on your device and account settings. NAHPU
+does not control those backup services.
+
+Data remains until you delete it in NAHPU, remove the corresponding app files,
+or uninstall the app, subject to your operating system's backup and restoration
+behavior. Exports, backups, QR codes, and files that you shared or saved outside
+NAHPU remain wherever you placed them and are not removed when you delete the
+original record or the app.
+
+## Online Maps
+
+NAHPU provides an offline Natural Earth basemap and an option to show no
+basemap. These options do not contact an online map provider.
+
+If you select an online basemap, NAHPU requests map styles and tiles from
+[OpenFreeMap](https://openfreemap.org/). NAHPU does not upload your catalog
+records or its local point layer to OpenFreeMap. Map requests do reveal the
+requested tile area and zoom level, and ordinary network information can be
+visible to OpenFreeMap, its hosting providers, and network intermediaries.
+
+OpenFreeMap states that it collects anonymized server information such as
+browser or client type, referring pages, timestamps, and operating system. It
+does not log IP addresses by default, but may temporarily log them for up to 30
+days during a security incident. OpenFreeMap may use Cloudflare as a content
+delivery network. See the [OpenFreeMap Privacy
+Policy](https://openfreemap.org/privacy/) for its current practices.
+
+To avoid requests to an online map provider, choose `Natural Earth (Offline)`
+or `None` as the basemap.
+
+## QR and Barcode Scanning on Android
+
+On Android, NAHPU uses Google ML Kit for QR and barcode recognition. Camera
+images, barcode contents, and recognition results are processed on the device
+and are not sent to Google by ML Kit.
+
+Google states that ML Kit may contact its servers for bug fixes, model updates,
+and hardware compatibility information. It also collects limited device and
+app information, per-installation identifiers, API configuration, performance
+metrics, and API usage metrics for diagnostics and usage analytics. Google
+states that this information is encrypted in transit and is not shared with
+third parties. See Google's [ML Kit Terms and
+Privacy](https://developers.google.com/ml-kit/terms), [ML Kit Android data
+disclosure](https://developers.google.com/ml-kit/android-data-disclosure), and
+[Privacy Policy](https://policies.google.com/privacy).
+
+## Exports, Sharing, and External Links
+
+NAHPU exports or shares data only when you start the action. When you use the
+system share sheet, file picker, cloud drive, email, messaging app, or another
+destination, that provider receives the information you selected and handles it
+under its own privacy terms.
+
+NAHPU also contains user-initiated links to resources such as the NAHPU
+website, ORCID profiles, and Google Fonts. Opening a link transfers you to your
+browser or another app, whose privacy practices apply. NAHPU does not send your
+catalog records when opening these links.
+
+## Security
+
+NAHPU relies on your operating system's app sandbox, permission system, and
+device security. Keep your device, backups, and exported files secure,
+especially when they contain personal information or sensitive locality data.
+No storage or transmission method can be guaranteed to be completely secure.
+
+## Your Choices and Data Control
+
+Because the NAHPU project does not hold your catalog records on its servers,
+you control those records on your device. You can:
+
+- review, edit, export, or delete records in the app;
+- remove app-managed files or uninstall NAHPU;
+- revoke camera, microphone, photo, file, or location permissions in device
+  settings;
+- use an offline basemap or no basemap; and
+- choose whether, where, and with whom to share exports and backups.
+
+For information held by a third-party service, contact that provider or use the
+controls described in its privacy policy.
+
+## Changes to This Policy
+
+We may update this Privacy Policy when NAHPU's features or third-party services
+change. The updated policy will be posted on this page with a revised date.
 
 ## Contact Us
 
-If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at [support@nahpu.app](mailto:support@nahpu.app)
+For questions or suggestions about this Privacy Policy, contact
+[support@nahpu.app](mailto:support@nahpu.app).
