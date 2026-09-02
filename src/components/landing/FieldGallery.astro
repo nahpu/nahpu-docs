@@ -1,0 +1,158 @@
+---
+import { Image } from "astro:assets";
+import cntl from "cntl";
+import flyingFrog from "../../assets/images/animals/handika-malayan-flying-frog.webp";
+import peromyscus from "../../assets/images/animals/handika-peromyscus_sp.webp";
+import pitViper from "../../assets/images/animals/handika-pit-viper.webp";
+import tarantula from "../../assets/images/animals/handika-tarantula.webp";
+import snake from "../../assets/images/animals/handika-snake.webp";
+import psilopogon from "../../assets/images/animals/handika-psilopogon.webp";
+import mtTalamau from "../../assets/images/landscapes/handika-mt-talamau.webp";
+import mtPatah from "../../assets/images/landscapes/handika-mt-patah.webp";
+
+/// Field photographs that stand in for the records they become. The strip
+/// scrolls sideways; portraits take both rows.
+const photos = [
+    {
+        image: flyingFrog,
+        caption: "Malayan flying frog",
+        tag: "Herpetology",
+        alt: "A green flying frog gripping a thin branch at night",
+        tall: true,
+    },
+    {
+        image: peromyscus,
+        caption: "Deer mouse",
+        tag: "Mammalogy",
+        alt: "A deer mouse on a branch, whiskers lit by the sun",
+        tall: false,
+    },
+    {
+        image: pitViper,
+        caption: "Pit viper",
+        tag: "Herpetology",
+        alt: "A green pit viper coiled on mossy branches",
+        tall: false,
+    },
+    {
+        image: tarantula,
+        caption: "Tarantula",
+        tag: "Entomology",
+        alt: "A tarantula among dry leaf litter",
+        tall: false,
+    },
+    {
+        image: snake,
+        caption: "Colubrid snake",
+        tag: "Herpetology",
+        alt: "A patterned snake coiled on bare ground",
+        tall: false,
+    },
+    {
+        image: psilopogon,
+        caption: "Asian barbet",
+        tag: "Ornithology",
+        alt: "An Asian barbet perched on a branch in dappled forest light",
+        tall: true,
+    },
+    {
+        image: mtTalamau,
+        caption: "Mt. Talamau, summit",
+        tag: "Locality",
+        alt: "Sunrise breaking over forested ridges and a sea of cloud on the summit of Mt. Talamau",
+        tall: false,
+    },
+    {
+        image: mtPatah,
+        caption: "Mt. Patah, field camp",
+        tag: "Campsite",
+        alt: "Tarpaulin shelters and tents pitched in mossy montane forest",
+        tall: false,
+    },
+];
+
+const stripClasses = cntl`
+  grid grid-flow-col grid-rows-2
+  auto-cols-[17rem] sm:auto-cols-[21rem]
+  gap-2 sm:gap-3
+  overflow-x-auto
+  snap-x
+  pb-2
+  focus:outline-none focus-visible:ring-2 focus-visible:ring-silver-tree-500
+`;
+
+const tileClasses = cntl`
+  nh-tile
+  group
+  relative
+  snap-start
+  overflow-hidden
+  rounded-2xl
+  border border-silver-tree-300/60 dark:border-silver-tree-700/60
+  shadow-lg shadow-silver-tree-900/10
+`;
+
+const captionClasses = cntl`
+  nh-caption
+  absolute inset-x-2 bottom-2
+  rounded-lg
+  px-2.5 py-1.5
+`;
+---
+
+<div class="nh-reveal">
+    <div
+        class={stripClasses}
+        style="grid-auto-rows: 13.5rem"
+        tabindex="0"
+        role="region"
+        aria-label="Field photographs"
+    >
+        {
+            photos.map((photo) => (
+                <figure
+                    class={`${tileClasses} ${photo.tall ? "row-span-2" : ""}`}
+                >
+                    <Image
+                        src={photo.image}
+                        alt={photo.alt}
+                        widths={[400, 800]}
+                        sizes="21rem"
+                        class="h-full w-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                    <figcaption class={captionClasses}>
+                        <span class="block text-[10px] font-medium tracking-widest text-silver-tree-200 uppercase">
+                            {photo.tag}
+                        </span>
+                        <span class="mt-0.5 block text-sm leading-tight font-semibold text-white">
+                            {photo.caption}
+                        </span>
+                    </figcaption>
+                </figure>
+            ))
+        }
+    </div>
+
+    <div
+        class="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-silver-tree-600 dark:text-silver-tree-400"
+    >
+        <p>Photographs by Heru Handika.</p>
+        <p class="flex items-center gap-1.5">
+            Scroll for more
+            <svg
+                class="h-3.5 w-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+            >
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+        </p>
+    </div>
+</div>

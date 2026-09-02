@@ -1,0 +1,329 @@
+---
+title: Export Documents
+sidebar:
+  order: 12
+---
+
+Use `Export documents` to create printable PDFs from NAHPU records. This is
+the workflow for labels, tags, sheets, reports, and other formatted documents.
+For tabular data, use [Export records](../export-records); record-export
+presets do not control PDF documents.
+
+## How the pieces fit together
+
+```text
+Record data + Template = one populated label or document block
+Populated blocks + Print layout = pages
+Pages + preview/export action = PDF
+```
+
+- A **template** defines the content and appearance of one block.
+- A **print layout** defines the paper, margins, grid, order, and pagination.
+- Records provide the values inserted into template fields.
+
+Templates and print layouts are reusable app settings. Save a separate layout
+for each repeatable printing workflow, such as museum labels, tissue tags, or
+field sheets.
+
+## Quick export
+
+{% steps %}
+
+1. Navigate to the `Dashboard` page.
+2. Open the project menu and select `Export documents`.
+3. Select a `Layout profile`.
+4. Review the page setup, template blocks, and record selection.
+5. Select `Preview` and generate a preview.
+6. Enter a `File name` and choose the save directory when prompted.
+7. Select `Export documents`.
+8. On mobile, use `Share` after the export completes if you need to send the PDF.
+
+{% /steps %}
+
+## Create a template
+
+Open `Settings` > `Documents`, switch to `Templates`, and select `Create
+new template`.
+
+1. Enter a unique `Template name` and a useful `Description`.
+2. Choose the correct `Record type`: `Specimen`, `Specimen Part`, `Site`,
+   `Collecting Event`, `Narrative`, or `None`.
+3. Choose `1 sided` or `2 sided`. A two-sided template has separate Front and
+   Back designs; the Back is preserved when one-sided mode is selected but is
+   not printed until two-sided mode is enabled.
+4. Set the template width and height to the size of one label, tag, or block,
+   not the size of the sheet of paper.
+5. Add text, images, lines, and shapes on the canvas. Select an element to set
+   its position, size, style, visibility, locking, and stacking order.
+6. Save the template with `Save`. Use `Save as...` when creating a variation.
+
+Open the settings button in the template editor to change the name,
+description, or side count of a saved template. Renaming repoints every print
+layout that used the old name, so layouts keep working.
+
+The template's record type controls which fields and records are available.
+For specimen templates, choose the appropriate taxon filter before selecting
+taxon-specific fields.
+
+## Add record fields
+
+Insert fields from the field picker in the text editor. Prefer the full
+`Table::Field` form in reusable templates, for example:
+
+```text
+Field number: [specimen::fieldNumber]
+Scientific name: [taxonomy::scientificName]
+Locality: [site::specificLocality]
+```
+
+Short forms such as `[fieldNumber]` are supported, but full names are safer
+when more than one table contains a field with the same name. You can combine
+fields with ordinary text:
+
+```text
+[taxonomy::genus] [taxonomy::specificEpithet] - [specimen::fieldNumber]
+```
+
+Choose the text type that matches the data:
+
+- `Normal Text` for ordinary values and labels.
+- `Dates`, `Date and Time`, `Coordinates`, `Number`, and `Sex` for formatted
+  values.
+- `List Values` for pipe-delimited repeated values.
+- `Nested List` for related records such as specimen parts, personnel, or
+  effort values. Choose a table or card-list presentation.
+- `Markdown` for narrative or rich text.
+- `Encoded Text` when stored numeric codes should be shown as labels.
+
+Sex formatting supports text, letters, and symbols for every configured term.
+Uncertain values keep their suffix (`Female?`, `F?`, `♀?`; `Male?`, `M?`,
+`♂?`). Existing template conditions that compare legacy codes `0`, `1`, and
+`2` remain valid.
+
+Use a null fallback when a field may be empty. Conditional brackets and
+replacement rules are useful for optional labels, but test both the matching
+and non-matching cases.
+
+## Design for real records
+
+Preview with records that contain the longest expected text, the largest
+repeated lists, missing optional values, and long identifiers. A short sample
+can hide overflow that appears in real fieldwork data.
+
+For narrative text or nested lists:
+
+- enable dynamic text sizing where the text box should grow;
+- use a layout block's `Auto-fill page` option when block height varies;
+- keep enough width for wrapping and enough padding for the printer;
+- regenerate the preview after changing the template or layout.
+
+For images, use a managed image path that exists on the device and verify the
+image after importing the template on another device. A template JSON describes
+the definition; it is not a copy of every external image file.
+
+## Create a print-layout preset
+
+In `Settings` > `Documents`, switch to `Print layouts`. Create a new
+layout or use `Save as...` before experimenting with a known-good layout.
+
+### Page setup
+
+Choose `Page size`, `Orientation`, custom dimensions when needed, and page
+padding. Page settings describe the sheet; the template describes one block.
+
+### Template blocks
+
+Add one or more `Template blocks`. For each block choose:
+
+- `Template` — the reusable block definition;
+- `Copies` — how many copies to make for each record;
+- `Rows` and `Cols` — the fixed grid for a sheet;
+- `Auto-fill page` — measure each block's rendered height instead of forcing a
+  fixed row height;
+- template padding — space around every block;
+- `Order by` and `Direction` — deterministic record ordering;
+- `Page break after` — force a boundary after the block.
+
+If a layout block shows `This template no longer exists`, select an available
+replacement template before previewing or exporting. NAHPU does not silently
+substitute a different template.
+
+### Multiple blocks
+
+When a layout has multiple blocks, `Multiple blocks mode` controls their order:
+
+- `Continuous (Block-by-block)` prints all records from block 1, then all
+  records from block 2.
+- `Alternate (Record-by-record)` prints block 1 and block 2 for record 1,
+  then block 1 and block 2 for record 2.
+
+Use the first mode for separate sections of a packet and the second for paired
+outputs that should stay together.
+
+## Practical layout recipes
+
+| Goal | Recommended settings |
+|---|---|
+| One full-page document | One block, one row, one column, fixed height |
+| Fixed label grid | Set exact rows and columns, keep `Auto-fill page` off |
+| Variable narrative sheet | Enable dynamic text and `Auto-fill page`; preview long records |
+| Multiple copies of each label | Increase `Copies` on the block |
+| Two-sided tag | Use a `2 sided` template and verify front/back mirroring |
+| Mixed packet | Add blocks and use `Continuous (Block-by-block)` |
+| Paired record output | Add blocks and use `Alternate (Record-by-record)` |
+
+## Preview and export safely
+
+Preview is not a decorative screenshot: it exercises the same template,
+selection, measurement, and pagination path used for the PDF. Before exporting:
+
+- select representative records for each block;
+- check the first and last page;
+- check long text and repeated values;
+- check fixed-grid alignment and page padding;
+- check both sides of duplex output;
+- regenerate the preview whenever it is marked stale.
+
+Edits made to the selected layout from the export screen are saved back to that
+layout. Use `Save as...` first when testing a new arrangement so an established
+printing profile remains unchanged.
+
+Enter a valid `File name`, select the destination directory on desktop, and
+select `Export documents`. The result is a PDF; it is not a structured data
+export or a restorable database backup.
+
+## Fonts
+
+Open `Settings` > `Documents` and switch to `Fonts` to see every font
+available to templates. The list is in two parts: the fonts bundled with
+NAHPU, which are always available, and the fonts you installed yourself. The
+right panel previews the selected font at a size you choose, in regular, bold,
+and italic.
+
+Select `Install font` to add a `.ttf`, `.otf`, or `.ttc` file from this
+device. `Find fonts` opens a font library in your browser; download the file
+there first, then install it here. You are responsible for the license of any
+font you install.
+
+An installed font lives on that installation only. It is not part of a
+user-config transfer, so an installation that receives a template using it
+does not receive the font. Install the same font on each device that prints
+the template, or accept the replacement NAHPU offers on import. A font used by
+a saved template cannot be deleted until no template refers to it.
+
+## Import and share templates and layouts
+
+Templates are exported from `Settings` > `Documents` > `Templates`, and
+layouts from `Print layouts`. Both offer two scopes: `Export this ...` on a
+row or in the options menu writes one item, and `Export all ...` writes every
+item. Both write the same file format, so either file can be imported through
+the same `Import` action. A single template or layout can also travel as a QR
+code when it is small enough to fit one.
+
+Duplicate names are handled separately:
+
+- template import asks whether to replace the existing template or use a new
+  name, and adds a numbered suffix when several arrive at once;
+- layout import creates a non-conflicting name;
+- settings transfer can replace selected configuration sections atomically.
+
+When an imported template uses a font this installation does not have, NAHPU
+lists the missing fonts and asks for a replacement, previewing each choice
+before it is applied. Nothing is stored until the replacements are chosen, so
+a transferred template never carries a font that cannot be rendered.
+
+Images used by a template are referenced by name rather than stored in the
+exported file. A template that uses a logo warns you on export, and the image
+has to be added again on the receiving installation.
+
+Layouts reference templates by name, so transfer the matching templates and
+layouts together. Current selected names are device-local. For a complete
+installation copy including project data and managed files, use `Backup database`
+instead of a settings-only transfer.
+
+## Printing specimen tags
+
+Printed tags are the most common reason to use document export. Generating them
+from NAHPU data rather than writing them by hand has several advantages.
+
+- **Saves time in the field.** Rather than writing out full specimen tags, which
+  can easily take 10 or more minutes per tag, a faster alternative is to use
+  small tags with identifiers such as a tissue number (e.g., "B-729113") and
+  field number (e.g., "JPO 7299"). Then, back in a museum, you can print the
+  final, complete tags for the specimens.
+- **Neater and more standardized tags.** Some people have the gift of neat
+  handwriting, whereas others are less gifted. Printing tags ensures that all
+  the tag data is easy to read.
+- **Avoids errors from a repetitive, tedious task.** Writing a detailed locality
+  name with coordinates and elevational data can be tedious to write out dozens
+  of times in the field, and human error is common. Using NAHPU, this
+  information need only be entered once and can then be associated with each
+  specimen via a dropdown site menu. If necessary, the locality details can also
+  be easily updated within the app.
+- **Allows for a data cleanup phase.** Before printing, it is easy to use a
+  final spreadsheet to correct whacky coordinates, elevations, terminology
+  errors, spelling, and so on.
+
+### Tag-printing workflow
+
+NAHPU can print tags directly from a template and layout preset. When you need
+typesetting that the built-in layouts do not cover, an external label tool
+remains an option:
+
+{% steps %}
+
+1. Export specimen data from NAHPU as a `.csv` file.
+2. Do a final data cleanup: spellcheck, correct miscellaneous errors, and
+   organize, combine, or split data columns as necessary.
+3. Upload the spreadsheet to Entomolabels. With the
+   [Entomolabels software](https://labels.entomo.pl/) (unfortunately only
+   available for Windows computers) and custom tag templates, you can format the
+   data on the specimen tag.
+4. Export final tag PDFs for the front and back of the tags, then combine them,
+   alternating front and back pages.
+5. Use an auto-duplex printer to print the final tags.
+
+{% /steps %}
+
+### Printing equipment
+
+- **Printer.** To print tags, the NAHPU team has used the
+  [Epson WorkForce Pro WF-3820](https://epson.com/For-Work/Printers/Inkjet/WorkForce-Pro-WF-3820-Wireless-All-in-One-Printer/p/C11CJ07201)
+  with [DURABrite® Ultra instant-dry pigment ink](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1).
+  Using this printer, ink, and the paper shown below, we recently printed
+  (spring 2024) over 1000 bird specimen tags for the Louisiana State University
+  Museum of Natural Science.
+- **Paper.** We have used
+  [100% cotton, acid-free paper](https://www.redrivercatalog.com/browse/aurora-art-white-250.html)
+  with a weight of 250 gsm. Since this is a relatively thick and sturdy paper, we
+  found that it was very helpful to flex the paper a bit prior to printing.
+  Otherwise, the printer can have trouble flipping the page internally.
+
+### Archive the printed output
+
+Keep the digital PDF with the project archive, and keep the layout and template
+presets when the document must be regenerated. Review printed output before
+producing a complete batch, and print on suitable, durable paper. Keep the
+printed copy with the relevant collection records.
+
+Do not treat printed documents as a replacement for the database, the project
+export, or a structured record export. See
+[Archiving a project](../#archiving-a-project).
+
+## Troubleshooting
+
+| Symptom | What to check |
+|---|---|
+| A placeholder prints literally | Check the template record type and use the full `Table::Field` key. |
+| Preview is empty | Check the block record type and select matching records. |
+| A template is missing | Reassign the block or restore/import the named template. |
+| Text overlaps or is clipped | Use dynamic text, `Auto-fill page`, a wider block, or a larger block height. |
+| Unexpected blank space | Review fixed rows, template size, page padding, and template padding. |
+| Records are in the wrong order | Set `Order by` and `Direction` on that block. |
+| Labels repeat unexpectedly | Check `Copies` and the selected record list. |
+| Blocks are in the wrong sequence | Change `Multiple blocks mode`. |
+| The back side is absent or rotated | Verify `2 sided`, Back content, and mirror settings. |
+| Preview is marked stale | Generate a new preview after the last edit. |
+| Import changes many settings | A selected-section settings import replaces that entire section. |
+
+For developer-level storage and rendering details, see [Templates and presets](../../../contributing/code/templates-and-presets) and [Export workflows](../../../contributing/code/data-export-workflows).

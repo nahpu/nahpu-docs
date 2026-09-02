@@ -1,0 +1,171 @@
+---
+title: "Adding a taxon group"
+sidebar:
+  order: 12
+---
+
+Adding a taxon to the registry is data entry or spreadsheet import. Adding a
+new **taxon group** is a cross-cutting product change: it introduces a catalog
+format, specimen behavior, attributes, transfer rules, export columns,
+templates, and compatibility requirements. Use this checklist before writing
+the first UI switch.
+
+## 1. Define the domain contract
+
+- Choose one canonical persisted group name and document accepted legacy
+  aliases.
+- Define its relationship to taxonomy class, phylum, and rank values.
+- Decide whether the group has a dedicated attribute table or uses only common
+  specimen fields.
+- Define controlled vocabularies, icons, preparation behavior, standard export
+  columns, Darwin Core mappings, and bundle eligibility.
+- Decide whether it participates in a broader group such as all mammals.
+- Define behavior for records with an unknown or legacy group. Never silently
+  fall back to mammals.
+
+The arthropod catalog is the reference implementation for promoting an existing
+attribute table into a complete, user-selectable catalog format. The
+`fossilAttribute` table still shows why this decision matters: a table can exist
+in the schema before the surrounding product support is complete.
+
+## 2. Update persistence
+
+If the group needs new stored attributes:
+
+1. Add the table and columns to `lib/services/database/tables.drift`.
+2. Bump `kSchemaVersion` exactly once.
+3. Add an ordered migration step in `migration_coordinator.dart`.
+4. Preserve existing rows, nulls, and foreign-key relationships.
+5. Regenerate Drift code and schema snapshots.
+6. Confirm that generated `nahpu_db` models contain the new table.
+7. Update [Persistence data](../database), including table ownership and any
+   Darwin Core mappings.
+
+Do not edit generated Drift or bridge files by hand. Test fresh creation,
+populated upgrades from every supported schema, rollback, foreign-key checks,
+and SQLite integrity checks.
+
+## 3. Update core Dart types and routing
+
+Audit and update every group-dependent type and switch, including:
+
+- `CatalogFmt` and `taxonGroupList`;
+- `SpecimenRecordType`, `TaxonRecordType`, and export labels;
+- group↔catalog↔record-type mapping functions;
+- settings and project-creation selectors;
+- navigation, search, list filtering, and specimen icons;
+- preparation icons and bundled assets;
+- parasite or associated-data capability lists where applicable.
+
+Use an exhaustive switch or an explicit unsupported state. A default that
+returns `CatalogFmt.mammals` can corrupt interpretation of the new group.
+
+## 4. Add specimen UI and CRUD
+
+- Create the dedicated attribute form under the specimen screen when required.
+- Wire it into the shared specimen-form dispatcher.
+- Add create, read, update, duplicate, and delete operations to specimen
+  services and queries.
+- Update provider invalidation after attribute and group changes.
+- Ensure deletion removes the correct child table and never leaves orphan rows.
+- Test narrow and wide layouts, loading/error states, validation, and empty
+  values.
+
+Keep the screen thin. The form should dispatch to services; it should not own
+database queries or file exchange behavior.
+
+## 5. Update tabular exports and presets
+
+Update all of the following as applicable:
+
+- standard specimen export columns and attribute writers;
+- all-taxa and group-specific filtering;
+- dynamic record field-value collection;
+- export preset group selectors and allowed attribute tables;
+- export header resolution and aliases;
+- template field catalog and template-editor taxon filters;
+- statistics or other tabular views that enumerate groups.
+
+If a persisted source namespace changes, retain a canonical alias in
+`specimen_attribute_names.dart` and test old expressions. Bump the record-export
+preset schema only when the serialized contract truly changes.
+
+## 6. Update record and project transfer
+
+For specimen record exchange:
+
+- add the attribute payload while preserving the version-1 `measurements`
+  compatibility key, or introduce an explicit versioned adapter;
+- update export, import, replacement cleanup, and attribute insertion;
+- test old payloads, current payloads, missing attributes, and duplicate UUIDs.
+
+For project transfer:
+
+- collect the new table for the selected project;
+- parse and canonicalize it;
+- insert it after specimen identifiers are mapped;
+- delete/rewrite it during replacement conflicts;
+- include it in reference validation and package summaries.
+
+Updating only the database schema will produce incomplete transfers.
+
+## 7. Update packages and standards
+
+- Normalize the group name in bundle taxon selection.
+- Add attribute rows to request construction.
+- Add fields to Darwin Core mapping where a term exists.
+- Add the table/resource schema to NAHPU Data Package output.
+- Update manifests, controlled-vocabulary snapshots, and package warnings.
+- Confirm the new group appears in record export, project transfer, bundles,
+  backups, and documents as intended.
+
+For the arthropod implementation, `sex`, host association, and remarks map to
+occurrence terms. Host-part, canopy, environmental, and morphometric values map
+to MeasurementOrFact rows; do not invent an OrganismInteraction row unless the
+schema can identify both interacting occurrence records.
+
+Keep [Persistence data](../database) as the authoritative mapping reference and
+link the user-facing bundle page when output changes.
+
+## 8. Update templates and bundled presets
+
+Expose the group’s attribute namespace in the template field catalog and taxon
+selector. Ensure all-taxa templates either render the new fields or leave them
+intentionally blank. Add bundled templates only when the product requires a
+default output, and verify that startup seeding never overwrites user edits.
+
+See [Templates and presets](../templates-and-presets) for the storage and
+compatibility model.
+
+## 9. Complete a hard-coded-group audit
+
+Search for every existing group name and review:
+
+- exhaustive Dart switches and enum lists;
+- `match*` conversion functions;
+- settings/project/specimen screens;
+- export writers, preset pickers, and header mappings;
+- template fields and conditional selectors;
+- record exchange and project transfer tables;
+- bundle normalization and package resources;
+- icons, labels, fixtures, and tests.
+
+This search is a required review step because the current implementation keeps
+some group knowledge in shared type files and some in feature-specific
+services.
+
+## 10. Verify end to end
+
+Run the normal Flutter and Rust checks. Add focused tests for:
+
+- create/edit/delete and duplicate specimen behavior;
+- database migration and populated legacy data;
+- manual and preset tabular exports in every supported format;
+- record exchange and project transfer round trips;
+- bundle planning, validation, and manifests;
+- template field availability and PDF rendering;
+- old preset/template/record/project payload compatibility;
+- backup/restore inclusion and provider refresh.
+
+If the change modifies a bridge-facing Rust signature, regenerate bindings and
+run `flutter analyze`, `flutter test`, `cargo check`, and `cargo clippy`.

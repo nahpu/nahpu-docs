@@ -4,35 +4,85 @@ sidebar:
   order: 3
 ---
 
-## Menambahkan personel baru (Anggota tim)
+Catatan personel dipakai bersama di basis data NAHPU dan dapat ditugaskan ke
+beberapa proyek. Sebuah proyek hanya menampilkan personel yang ditugaskan
+padanya.
 
-Gunakan tombol `Tambah personel baru` untuk menambahkan personel baru. Anda akan diminta untuk memasukkan informasi berikut di bawah ini. Aplikasi secara default hanya menampilkan informasi penting. Klik tombol `Tampilkan lebih banyak` untuk menampilkan semua bidang.
+## Menambahkan personel ke proyek
 
-- **Nama (wajib)** - Nama personel.
-- **Email** - Email personel.
-- **Telepon** - Nomor telepon personel.
-- **Afiliasi** - Institusi personel.
-- **Peran perawatan spesimen (wajib)** - Peran personel dalam memproses spesimen. Lihat [Terminologi](./personnel#terminologi) untuk informasi lebih lanjut.
-- **Inisial lapangan (wajib jika peran perawatan spesimen adalah `Kataloger`)** - Inisial personel.
-- **Nomor lapangan (wajib jika peran perawatan spesimen adalah `Kataloger`)** - Nomor lapangan personel. Inisial dan nomor akan digunakan untuk ID lapangan. Aplikasi secara otomatis menambah nomor tersebut setiap kali Anda membuat spesimen baru. Misalnya, jika inisial lapangan adalah `ABC` dan nomor lapangan adalah `1`, spesimen pertama akan memiliki ID lapangan `ABC1`. Spesimen kedua akan memiliki ID lapangan `ABC2`, dan seterusnya.
-- **Catatan** - Catatan apa pun tentang personel.
+{% aside type="caution" %}
+Setiap proyek memerlukan setidaknya satu orang dengan peran `Cataloger`. Orang itu memegang nomor lapangan yang menghasilkan ID lapangan spesimen, dan wizard pembuatan proyek tidak akan selesai dengan ID lapangan personel sebelum ada satu. Peran ini tidak dapat diubah setelah dibuat, jadi tentukan sebelum menyimpan.
+{% /aside %}
 
-> **Penting:** Beberapa institusi mungkin menggunakan kombinasi ID proyek dan nomor untuk ID lapangan. Gunakan ID ini sebagai inisial, alih-alih memasukkan inisial sebenarnya dari orang tersebut. Misalnya, `ABC-1`. Dalam hal ini, Anda dapat memasukkan `ABC-` sebagai inisial lapangan dan `1` sebagai nomor lapangan.
+Pada panel Personel di dasbor proyek, pilih `Add personnel`. Bila sudah ada
+orang di basis data, pilih `Select from database` lalu pilih siapa yang akan
+ditugaskan. Bila belum, pilih `Add new personnel`.
 
-## Mengedit informasi personel
+Formulirnya memuat:
 
-Di dasbor, klik/ketuk tombol menu (ikon tiga titik) pada nama orang yang ingin Anda edit informasinya, lalu pilih edit. Anda akan dibawa ke halaman personel tempat Anda dapat mengedit informasi tersebut.
+- **Name (wajib)** - nama orang tersebut.
+- **Photo** - avatar atau foto personel.
+- **Affiliation** - institusi orang tersebut.
+- **Email** - alamat surel orang tersebut.
+- **Phone** - nomor telepon orang tersebut.
+- **ORCID** - ORCID iD opsional bertanda hubung dengan digit pemeriksa yang
+  sahih, misalnya `0000-0002-1825-0097`.
+- **Specimen care role** - `Cataloger`, `Preparator only`, `Determiner only`,
+  atau `None`.
+- **Notes** - informasi tambahan tentang orang tersebut.
 
-## Terminologi
+Gunakan `Show more` untuk menampilkan kolom opsional. Alamat surel dibakukan
+menjadi huruf kecil dan nomor telepon hanya menerima angka.
 
-### Kataloger
+Ekspor Darwin Core memakai URL kanonis `https://orcid.org/...` sebagai pengenal
+agen orang tersebut bila ORCID tersedia. Bila tidak, dipakai UUID personel
+NAHPU.
 
-Seseorang yang membuat dan mengedit catatan dalam katalog. Ini termasuk membuat catatan baru, mengedit catatan yang sudah ada, dan menghapus catatan. Peran `kataloger` memerlukan inisial lapangan dan nomor lapangan mereka.
+## Nomor lapangan untuk pengatalog
 
-### Hanya preparator
+Bila perannya `Cataloger`, NAHPU menyediakan opsi
+`Register personal field number`. Aktifkan bila inisial dan nomor orang tersebut
+harus menghasilkan Field ID spesimen. Masukkan inisial lapangan dan nomor awal;
+nomornya bertambah seiring pembuatan spesimen.
 
-Seseorang yang membantu menyiapkan spesimen tetapi tidak membuat atau mengedit catatan dalam katalog.
+Sebagian institusi memakai kode proyek alih-alih inisial seseorang. Misalnya,
+masukkan `ABC-` sebagai inisial dan `1` sebagai nomor awal untuk menghasilkan ID
+seperti `ABC-1`.
 
-### Tidak ada
+Pendaftaran nomor lapangan bersifat opsional. Peran pengatalog tidak dapat
+diubah setelah orang tersebut dibuat.
 
-Dalam bidang peran perawatan spesimen, ini berarti orang tersebut tidak memiliki peran dalam merawat spesimen. Ini bisa berupa pemandu lapangan, pengemudi, atau siapa pun yang mendukung pengumpulan data tetapi tidak memiliki peran dalam merawat atau memproses spesimen.
+## Menyunting dan mengeluarkan personel
+
+Gunakan menu tiga titik di samping seseorang pada panel Personel proyek untuk
+menyunting atau mengeluarkannya dari proyek. Mengeluarkan seseorang dari proyek
+tidak menghapus catatan personel bersama. Seseorang tidak dapat dikeluarkan
+selama catatan proyek masih memakainya.
+
+Untuk mencari, menyunting, atau menghapus personel basis data secara permanen,
+buka `Settings` lalu pilih `Personnel` atau `Manage personnel`. NAHPU mencegah
+penghapusan permanen bila orang tersebut masih ditugaskan pada suatu proyek.
+
+## Peristilahan
+
+### Cataloger
+
+Orang yang membuat dan menyunting catatan katalog spesimen. Pengatalog dapat
+muncul pada kolom pengatalog, preparator, dan personel pengumpul. Perannya tidak
+dapat diubah setelah dibuat.
+
+### Preparator only
+
+Orang yang membantu mempreparasi spesimen, tetapi tidak membuat atau menyunting
+catatan katalog.
+
+### Determiner only
+
+Orang yang mengidentifikasi spesimen, tetapi tidak mengatalog atau
+mempreparasinya. Pilih orang ini pada kolom `Determiner` di formulir spesimen.
+
+### None
+
+Orang yang mendukung kerja lapangan tanpa peran perawatan spesimen, misalnya
+pemandu, pengemudi, atau juru masak. Namanya tetap dapat dicatat sebagai
+personel pengumpul.

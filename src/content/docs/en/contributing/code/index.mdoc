@@ -1,0 +1,71 @@
+---
+title: "Overview"
+sidebar:
+  order: 2
+---
+
+NAHPU is an offline-first software system for recording, validating, exporting, and
+backing up collection data at the point of collection.
+
+Use this section when contributing to the main NAHPU app. The code docs are
+split by topic so you can read only the part that matches your change.
+
+## Topics
+
+- [Setup](./setup) - Install the tools needed to build NAHPU locally.
+- [Architecture](./architecture) - Understand how Flutter, Drift, Rust, and the
+  NAHPU API crates fit together.
+- [NAHPU API](./nahpu-api) - Learn where app code ends and shared Rust API
+  crates begin.
+- [NAHPU design system](./design-approach) - Learn the Material 3 tokens,
+  adaptive layout, hierarchy, and UI patterns used in NAHPU.
+- [Code conventions](./conventions) - Follow Dart, Flutter, Riverpod, and Rust
+  conventions used in the app.
+- [Persistence data](./database) - Understand storage ownership, schema changes,
+  migrations, and Darwin Core mappings.
+- [Data import and export](./data-import-export-overview) - Follow every
+  import, transfer, backup, tabular export, package, GIS, and document flow.
+- [Templates and presets](./templates-and-presets) - Understand record-export
+  mappings, document templates, print layouts, and PDF rendering behavior.
+- [Troubleshooting](./troubleshooting) - Fix common setup and build errors.
+- [AI-assisted development](./llm-assisted-development) - Use AI tools
+  responsibly while keeping human accountability for every contribution.
+
+## Contribution flow
+
+{% steps %}
+
+1. Pick or open an issue in the [NAHPU repository](https://github.com/nahpu/nahpu/issues).
+2. Fork and clone the repository.
+
+   ```bash
+   git clone https://github.com/nahpu/nahpu.git
+   cd nahpu
+   ```
+
+3. Create a focused branch.
+
+   ```bash
+   git checkout -b your-branch-name
+   ```
+
+4. Make the change using the architecture and convention pages in this section.
+5. Run the checks that match your change.
+
+   ```bash
+   flutter analyze
+   flutter test
+   python scripts.py frb --check
+   ```
+
+6. Open a pull request against the `dev` branch with a clear description,
+   tests run, and screenshots for UI changes.
+
+{% /steps %}
+
+{% aside type="note" title="Rust logic lives outside the app" %}
+The `rust/` directory in the app is a Flutter Rust Bridge wrapper layer. Core
+Rust implementations live in NAHPU API crates such as `nahpu_db`,
+`nahpu_export`, `nahpu_gis`, `nahpu_archive`, and `nahpu_configs`. See the
+[NAHPU API](./nahpu-api) page before adding Rust behavior.
+{% /aside %}

@@ -1,0 +1,437 @@
+---
+title: "Templates and presets"
+sidebar:
+  order: 11
+---
+
+This page is the developer reference for the configuration that drives tabular
+exports and printable documents. It explains the persisted models, the runtime
+pipeline, and the dependency rules that are easy to miss when changing one
+part of this subsystem.
+
+For the practical user workflow, read [Export Documents](../../../usages/export/export-documents). For the surrounding exchange flows, read [Export workflows](../data-export-workflows).
+
+## The vocabulary
+
+These names describe different things even though the UI calls several of them
+“presets”:
+
+| Concept | Defines | Stored by | Used by |
+|---|---|---|---|
+| Record-export preset | Record type, mappings, headers, and flattening rules | `record_export_presets` in `nahpu_configs` redb | `PresetRecordExporter` and the tabular writer |
+| Document template | One printable block, including content and visual elements | `template_presets` in `nahpu_configs` redb | Template editor, preview, and PDF writer |
+| Document layout / print-layout preset | Page geometry, blocks, ordering, and pagination | `document_layouts` in `nahpu_configs` redb | Document settings, preview, and PDF writer |
+| Current selection | Which template or layout opens by default on this device | `SharedPreferences` | Settings and export screens |
+| Template size preset | An editor shortcut for physical dimensions | Dart constants | Template editor only; it is not a saved template |
+
+The ownership model is:
+
+```text
+Project records in SQLite
+        |
+        +--> field-value maps ------------------------+
+                                                       |
+redb configuration                                    v
+  +-- record-export presets --> tabular mapping --> CSV/TSV/XLSX/JSON
+  +-- template presets ------> printable block --+
+  +-- document layouts ------> page/block plan ---+--> PDF
+                                                       ^
+SharedPreferences                                      |
+  +-- current template/layout names -------------------+
+```
+
+Templates and layouts are configuration, not project records. A template does
+not contain a copy of a specimen; a layout does not contain a copy of a
+template. They refer to names and are resolved when preview or export runs.
+
+## Persistence and serialized envelopes
+
+The actual storage shape is slightly different from the Dart models exposed by
+the editor:
+
+```text
+nahpu_configs.db (redb)
+|
++-- record_export_presets[name]
+|   `-- ConfigExportPreset
+|       +-- fields["__nahpu_record_export_preset_v2__"]
+|       |   `-- JSON string -> ExportPresetModel
+|       `-- combined_fields[]       (empty for current Dart presets)
+|
++-- template_presets[name]
+|   `-- JSON object -> Template
+|
++-- document_layouts[name]
+|   `-- DocumentLayoutPreset
+|       `-- blocks[].template_name ---- references template_presets[name]
+|
++-- user_configs
+|   `-- document_suppressed_bundled_template_presets[]
+|
+Documents/nahpu/UserConfigs/fonts/          (filesystem, not redb)
+|
++-- catalog.json ------------> UserFontCatalog
++-- <font_uuid>/
+    +-- font.json ------------> UserFont (family, variants)
+    `-- *.ttf|otf|ttc --------> registered at startup and fed to Typst
+|
+`-- template_table_preview
+    `-- specimen_columns[]
+```
+
+`nahpu.db` remains the canonical project-record database. The generated Dart
+bindings under `lib/src/rust/` are bridge outputs and must not be edited by
+hand. Rust wrapper functions in `rust/src/api/config.rs` adapt values to the
+`nahpu_configs` models, where redb storage and atomic replacement operations
+live.
+
+The current source-of-truth versions should be checked before documenting a
+schema change. At the time of writing, user-config transfer schema version is
+3, record-export preset schema version is 10, and record-export readers accept
+versions 2 through 10. These are separate from the internal redb table shape,
+the Flutter Rust Bridge version, and the Rust crate version. Never use a crate
+version as a data migration marker.
+
+## Record-export presets
+
+`ExportPresetModel` is a versioned Dart model. Its persisted shape is:
+
+```text
+ExportPresetModel
++-- schemaVersion
++-- recordType
++-- specimenRecordType
++-- headerFormat
+`-- mappings[]: ExportFieldMapping
+    +-- expression
+    +-- headerOverride?
+    +-- textType / formatOption / caseFormat
+    +-- nullFallbackOption / customNullFallbackText
+    +-- listMode / indexedHeaderStyle
+    +-- nestedNamespace? / nestedFields[] / nestedMode
+    +-- fieldSeparator / recordSeparator
+    +-- bracketConditions[] / bracketConditionMode
+    +-- conditionalText
+    `-- replacementRules[]
+```
+
+The current Dart provider wraps the model as a JSON string under the reserved
+`__nahpu_record_export_preset_v2__` field in the Rust `ConfigExportPreset`.
+Presets without that payload cannot recover their record type and mapping
+metadata; the provider treats them as unsupported legacy entries and removes
+them rather than guessing specimen behavior.
+
+The mapping branch is:
+
+```text
+mapping
+|
++-- scalar
+|   `-- expression: [table::field], [field], or fields + literal text
+|
+`-- nested
+    +-- nestedNamespace + nestedFields[]
+    `-- nestedMode: concatenate | spreadColumns | expandRows
+```
+
+Canonical source keys use `table::field`. Short field names are supported for
+convenience, but suffix matching can be ambiguous when multiple namespaces
+contain the same field. Do not silently reinterpret an unknown namespace as a
+different table; add an explicit compatibility alias when a source key is
+renamed.
+
+The runtime path is:
+
+```text
+Preset selected
+  -> validate mappings
+  -> collect source records
+  -> build canonical table::field maps
+  -> resolve headers
+  -> evaluate scalar, list, and nested mappings
+  -> apply formatting, conditions, fallbacks, and replacements
+  -> expand columns or rows
+  -> tabular writer
+  -> CSV / TSV / XLSX / JSON
+```
+
+Important constraints are enforced by `validateExportPreset`:
+
+- only one nested mapping may use `expandRows`;
+- conditional output and indexed-list output require one direct source field;
+- standardized header modes require custom headers for composite mappings;
+- explicit header overrides must be unique;
+- Darwin Core generated headers support CSV, TSV, and Excel, not JSON;
+- filename, destination, and runtime output format do not belong to the preset.
+
+When a field is added, update the source query/model, default field list, field
+picker, dynamic value map, header resolver, Darwin Core mapping where relevant,
+and compatibility aliases. Add round-trip, version, repeated-value, empty-value,
+and header tests.
+
+## Document templates
+
+Templates are serialized `Template` models describing one physical block:
+
+```text
+Template
++-- name / recordType / description
++-- widthMm / heightMm
++-- printOptions
+|   +-- isDuplex
+|   +-- mirrorFront
+|   `-- mirrorBack
++-- outline?
++-- page1: TemplatePage
+|   +-- customTexts[]
+|   +-- customImages[]
+|   +-- customLines[]
+|   `-- customShapes[]
+`-- page2: TemplatePage
+    +-- customTexts[]
+    +-- customImages[]
+    +-- customLines[]
+    `-- customShapes[]
+```
+
+Text elements own content and its presentation: placeholder text, position,
+typography, bounds, rotation, z-order, colors, borders, padding, visibility,
+locking, dynamic height, QR behavior, null fallback, and replacement rules.
+Images own a local path, position, size, rotation, visibility, locking, and
+z-order. Lines and shapes own geometry and stroke/fill styling. All four
+element types are persisted in page-specific arrays and are sorted for render
+order by their visual properties.
+
+The field catalog is derived from the selected `recordType` and, for specimen
+templates, the selected taxon. It currently exposes:
+
+| Record type | Available namespaces |
+|---|---|
+| `none` | `project`, `personnel` |
+| narrative | `narrative`, `site`, `personnel` |
+| site | `site`, `personnel`, `coordinate` |
+| collecting event | `collEvent`, `site`, `weather`, `coordinate`, `collEffort`, `collPersonnel` |
+| specimen / specimen part | `specimen`, `taxonomy`, `personnel`, `project`, `collEvent`, `site`, `coordinate`, `weather`, taxon-specific attributes, `specimenPart` |
+
+Use full keys such as `[specimen::fieldNumber]` in durable templates. The editor
+also supports short keys, fallback syntax, conditional brackets, sex icons,
+and nested-list wildcards such as `[specimenPart::*]`.
+
+Template text follows one shared transformation order:
+
+```text
+raw template text
+  -> nested-list expansion
+  -> ordinary or conditional placeholder lookup
+  -> null fallback
+  -> type-specific formatting and case conversion
+  -> ordered replacement rules
+  -> QR SVG generation OR Markdown-to-Typst conversion
+  -> measured and rendered element
+```
+
+Placeholder lookup checks an exact key, case-insensitive equivalents, and then
+short suffix matches. Missing values use the element's fallback policy; a
+missing key can remain visible in editor-style output, so a literal placeholder
+usually indicates a wrong namespace or record type rather than a PDF compiler
+problem.
+
+`page2` is preserved when a template is switched to one-sided mode but is not
+printed until `isDuplex` is enabled. Template dimensions describe one block,
+not the page of paper. Page size, page margins, grid, ordering, and pagination
+belong to the document layout. `DocumentPageSetupService` is legacy and must
+not receive new behavior.
+
+## Document layouts
+
+The Rust-backed layout model is:
+
+```text
+DocumentLayoutPreset
++-- name
++-- layoutType
++-- pageSizeKey / pageOrientation
++-- customPageWidthMm? / customPageHeightMm?
++-- pagePadTopMm / LeftMm / RightMm / BottomMm
++-- fillPage
++-- multiBlockMode
+`-- blocks[]: DocumentLayoutBlock
+    +-- templateName ---------- references Template.name
+    +-- templateCount
+    +-- rows / cols
+    +-- templatePadTopMm / LeftMm / RightMm / BottomMm
+    +-- pageBreakAfter
+    +-- sortField?
+    `-- sortDirection
+```
+
+Behavior that must remain visible to contributors:
+
+- `templateCount` repeats each record's block.
+- Fixed rows divide usable page height; columns divide usable page width.
+- A negative `rows` value encodes block-level auto-fill while preserving the
+  previous fixed row count as `abs(rows)`.
+- `fillPage` is a compatibility-level global auto-fill switch. Current UI edits
+  auto-fill per block and clears the global flag.
+- `sortField` sorts each block's field-value maps independently.
+- `pageBreakAfter` controls the boundary after a block run.
+- `Continuous` groups blocks block-by-block; `Alternate` interleaves them
+  record-by-record.
+- Duplex blocks generate paired front/back sheet runs. Simplex blocks never
+  receive empty back pages.
+
+The current UI exposes whole-page layouts and the `Continuous`/`Alternate`
+multiple-block choice. Lower-level renderer support for continuous-height
+output must not be documented as a UI feature until a screen exposes it.
+
+Layout JSON compatibility and template-reference compatibility are separate:
+
+```text
+stored layout
+  -> JSON deserializes? --no--> incompatible layout status
+                         |
+                        yes
+                         v
+  -> every block template exists? --no--> missing-template warning/export error
+                                  |
+                                 yes
+                                  v
+                         preview and PDF export may proceed
+```
+
+The layout editor keeps a missing template name visible so it can be repaired;
+the document input resolver fails before export instead of substituting another
+template silently.
+
+## End-to-end document rendering
+
+Preview and final export share the same record collection, substitution,
+measurement, pagination, and rendering layers:
+
+```text
+Layout block
+  -> resolve template by name
+  -> template.recordType chooses record collector
+  -> selected records (or all records when none are selected)
+  -> build table::field value maps
+  -> sort per block
+  -> substitute and format template pages
+  -> duplicate per templateCount
+  -> group or alternate blocks
+  -> fixed-grid or auto-fill pagination
+  -> apply duplex and mirroring
+  -> write Typst
+  -> compile PDF bytes
+  -> preview or saved PDF
+```
+
+Each block can therefore use a different template and record type. `RecordType.none`
+creates a project/personnel context rather than selecting project records.
+Repeated relationships are commonly pipe-delimited in the field map before a
+nested-list element turns them into a Markdown table or card list. Dynamic text
+changes measured height and pushes later rows down; fixes must be made in shared
+substitution or measurement code so preview and export remain equivalent.
+
+## Seeding, deletion, and transfer
+
+Bundled defaults are loaded from `assets/configs/basic.json`:
+
+```text
+startup
+  -> read bundled JSON
+  -> parse template and layout entries
+  -> skip existing names
+  -> skip suppressed bundled template names
+  -> insert only missing definitions
+```
+
+Existing user edits are never overwritten. Suppression is implemented for
+bundled templates; layouts are only protected by their existing name.
+
+Neither redb table has a rename primitive, so rename is composed:
+
+```text
+rename template
+  -> write JSON under the new name
+  -> suppress the old name if it was a bundled default
+  -> delete-with-replacement of the old name
+       `-- rewrites every layout block that referenced it
+  -> repoint the current-template preference
+  (failure at any step rolls back the new key and the suppression)
+
+rename layout
+  -> write under the new name
+  -> delete the old key
+  -> repoint the current-layout preference
+```
+
+Writing before deleting means a failure leaves the original intact rather than
+losing the preset.
+
+Template deletion is dependency-aware:
+
+```text
+delete template
+  -> inspect layout usages
+  -> unused? --------------------yes--> delete
+       |
+       no
+       v
+  replacement supplied and same record type?
+       | no                         | yes
+       v                            v
+  reject, leave data intact    replace all block names and delete atomically
+```
+
+Individual imports and complete user-config transfer have different collision
+policies:
+
+| Operation | Collision behavior |
+|---|---|
+| Record-preset JSON/QR import | Generate a suffix and enforce the UI preset limit |
+| Template JSON import | Ask to replace or choose a new name; suffix in bulk |
+| Layout JSON/QR import | Generate a non-conflicting name |
+| Selected-section user-config import | Replace the selected sections atomically |
+| Current template/layout selection | Device-local; not portable |
+| Unavailable font on any template import | Prompt once per family, substitute before storing |
+
+Every export writes the same name-keyed envelope whether it holds one item or
+all of them, so a single importer handles both scopes. Bare single-object
+files written by earlier versions are still accepted on import.
+
+Fonts do not travel with a template. A template names a font family; the
+bytes live in `UserConfigs/fonts/` on each installation. Every inbound path
+runs through `TemplateFontResolutionService`, which reports the families the
+local `FontRegistry` cannot render and rewrites them to a chosen replacement
+before anything is stored.
+
+Configuration transfer validates the top-level user-config schema, requires
+requested sections to be present, and replaces only those sections. Templates
+and layouts should normally travel together because layouts contain template
+names rather than embedded template definitions.
+
+## Change recipes and tests
+
+When changing this subsystem, trace the complete dependency chain:
+
+- New source field: source model/query, default list, picker/catalog, dynamic
+  field map, header resolver, Darwin Core map, aliases, and export tests.
+- New template field or element: field catalog, editor controls, resolver,
+  formatting/conditional logic, preview, PDF writer, and round-trip tests.
+- New text format: parser, formatting order, editor option, preview/PDF parity,
+  missing-value behavior, and representative long/repeated-value tests.
+- New layout property: Rust model, bridge wrapper, generated bindings, JSON
+  import/export, editor, preview, renderer, compatibility, and tests.
+- New bundled default: asset, missing-name seeding, suppression behavior, and
+  upgrade tests.
+- Rename or delete: aliases, layout usages, current-selection fallback, and
+  collision behavior.
+- New font family: `kBundledFontFamilies`, the `pubspec.yaml` `fonts` entry
+  under the font's internal name, the Typst alias map for legacy compact keys,
+  and font-availability tests.
+
+At minimum test JSON round trips, supported and future versions, legacy aliases,
+duplicate-name imports, missing template references, bundled seeding and
+suppression, selected-section replacement, preview/export parity, empty and
+long values, repeated and taxon-specific values, nested row expansion,
+pagination, and duplex output.

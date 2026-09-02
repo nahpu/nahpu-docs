@@ -17,7 +17,7 @@ Meskipun katalog lapangan berbasis kertas secara tradisional telah menjadi metod
 
 - **Aksesibilitas Data**: NAHPU memungkinkan Anda mengakses data dari lokasi mana pun dan membagikannya dengan kolaborator, memastikan mereka menerima salinan yang tepat. Sebaliknya, katalog berbasis kertas mengharuskan transportasi fisik katalog, mengirim gambar hasil pemindaian halaman, atau memasukkan catatan ke dalam spreadsheet, yang dapat menunda akses sampai Anda kembali dari lapangan dan mendigitalkan data.
 
-- **Kualitas Data**: NAHPU membantu dalam menstandardisasi pengumpulan data Anda dan membantu mencegah kesalahan entri data sekunder yang umum terjadi ketika mendigitalkan katalog lapangan berbasis kertas. Pembaruan NAHPU di masa mendatang akan mencakup fitur validasi data otomatis.
+- **Kualitas Data**: NAHPU membantu menstandardisasi pengumpulan data dan mencegah kesalahan entri umum saat mendigitalkan katalog lapangan berbasis kertas. Konfigurasikan daftar terkontrol dan periksa bidang wajib sebelum berangkat ke lapangan.
 
 - **Asosiasi Data**: NAHPU memungkinkan Anda menautkan data Anda dengan sumber data lain, seperti koordinat GPS, gambar, dan rekaman audio. Anda hanya perlu memasukkan suatu lokasi satu kali, yang dapat dikaitkan dengan banyak entri data. Di sisi lain, katalog berbasis kertas mengharuskan Anda menulis lokasi yang sama berkali-kali, biasanya di bagian atas setiap halaman.
 
@@ -37,7 +37,7 @@ Dua pendekatan umum untuk beralih ke NAHPU dari katalog lapangan berbasis kertas
 
 Beberapa faktor yang perlu dipertimbangkan saat beralih ke NAHPU:
 
-- **Pilihan perangkat**. Aplikasi dirancang untuk bekerja di berbagai perangkat, termasuk smartphone, tablet, laptop, dan desktop. Anda dapat mulai menggunakan smartphone Anda. Jika Anda memiliki anggaran, kami sarankan menggunakan tablet dan keyboard Bluetooth untuk pengalaman yang lebih baik. Tergantung pada kondisi lapangan, Anda dapat menggunakan laptop. Untuk informasi lebih lanjut, silakan lihat di bagian [Persyaratan Perangkat](./usages/devices).
+- **Pilihan perangkat**. Aplikasi dirancang untuk bekerja di berbagai perangkat, termasuk smartphone, tablet, laptop, dan desktop. Anda dapat mulai menggunakan smartphone Anda. Jika Anda memiliki anggaran, kami sarankan menggunakan tablet dan keyboard Bluetooth untuk pengalaman yang lebih baik. Tergantung pada kondisi lapangan, Anda dapat menggunakan laptop. Untuk informasi lebih lanjut, silakan lihat di bagian [Persyaratan Perangkat](../usages/devices).
 
 — **Kondisi lapangan**. NAHPU dirancang untuk lokasi lapangan terpencil tanpa akses internet. Pertimbangkan ketahanan perangkat dan ketersediaan listrik. Beberapa smartphone baru tahan air dan tahan debu. Tablet dan laptop mungkin membutuhkan perlindungan ekstra. Gunakan casing yang kokoh sebisa mungkin. Untuk area tanpa listrik, power bank sebesar 20.000 hingga 25.000 mAh biasanya cukup untuk kerja lapangan selama seminggu menggunakan smartphone atau tablet.
 

@@ -1,36 +1,67 @@
 ---
-title: Specimens Records
+title: Specimen Records
 sidebar:
   order: 7
 ---
 
 ## Setting up specimen records
 
-The NAHPU default lists for `Specimen parts` and `Treatments` are limited and do not include all possible options. If this is your first NAHPU project, we recommend setting up the entries first. You can do this by going to the settings:
+The NAHPU default lists for `Specimen parts` and `Treatments` are intentionally
+short. Before entering a large batch of specimens, configure the project lists
+that your team will use in the field or collection room.
 
 {% steps %}
 
 1. Navigate to the dashboard.
-2. Tab/click the humburger menu in the top left corner.
+2. Tap/click the hamburger menu in the top left corner.
 3. Select `Settings`.
-4. Select `Specimens`. 
-5. Add `Tissue ID` (optional).
+4. Select `Specimens`.
+5. Configure the `Use project ID` toggle. It is off by default, which uses a
+   cataloger's initials and field number. At least one Cataloger must have
+   personal field-number registration enabled and a current number.
 
-    Some museums have separate tissue numbers for the same specimen. You can setup the prefix and the number here. It will auto increment each time you add a new tissue number.
+    Turn on `Use project ID` to configure a prefix, the next catalog number,
+    and a suffix. NAHPU concatenates those values directly. Turn on
+    auto-increment to assign and advance the project number when a new specimen
+    uses this mode.
 
-6. Add `Specimen part types`.
+    This choice is only the default. Open a specimen's field-ID editor to choose
+    Personnel or Project for that specimen. A project can contain both types,
+    but one specimen cannot have both identifiers.
 
-    Add all the possibilities. You can have more than what you will collect.
+    {% aside type="caution" %}
 
-7. Add `Treatments`
+    Changing a prefix or suffix changes how existing project IDs display.
+    Those identifiers may already have been used in exports or written on
+    specimen labels. Double-check the values before confirming the change.
 
-    You can do it in a similar manner as the `Specimen part types`.
+    {% /aside %}
+
+6. Add `Tissue ID` (optional).
+
+    Some museums assign separate tissue numbers for the same voucher specimen.
+    You can set up a prefix and the next number here. NAHPU can then generate
+    the next tissue number when you add a specimen part.
+
+7. Add `Specimen types`.
+
+    Add all preparation and tissue types you expect to use, including types you
+    may only collect occasionally.
+
+8. Add `Treatments`.
+
+    Treatments are used on specimen parts. Examples include `None`, `ETOH`,
+    `Formalin`, `LN2`, and `DMSO`.
 
 {% /steps %}
 
 {% aside type="tip" %}
 
-Future versions of NAHPU will allow you to share the settings to other devices. You can use share setting options to share all the list you created.
+Specimen types and treatments are user configs. They can be exported and
+imported with project archives so another NAHPU installation can use the same
+controlled lists and export behavior.
+
+See [Settings](../settings) for the complete configuration map.
 
 {% /aside %}
 
@@ -41,74 +72,276 @@ Future versions of NAHPU will allow you to share the settings to other devices. 
 
 2. Click the `+` button to add a new specimen record.
 
-    You can also use the tree dot menu icon and tap on `Create site`.
+    You can also use the three-dot menu and choose a duplicate action when you
+    want to reuse part of the current specimen record.
 
     {% aside type="tip" %}
 
-    If you collect the same `Specimen part` for each new specimen, you can minimize typing by using the `Duplicate part` option. Tap/click on the three dot menu botton. Then, `Duplicate site`. It will create a new site using information from the current site, except the `Site ID` and coordinates are empty. Then, fill in the `Site ID` and add coordinetes.
+    If you collect the same `Specimen part` for each new specimen, use
+    `Duplicate part` to minimize repetitive entry. Review the copied part before
+    saving because part-level IDs, timing, and treatments should still match the
+    new specimen.
 
     {% /aside %}
 
 3. Select `Cataloger`.
 
-    This is the person that responsible for cataloging this specimen in the field.
+    This is the person responsible for cataloging the specimen. Depending on the
+    project field ID mode, NAHPU can use the cataloger's field number or a
+    project-level field number.
 
 4. Select `Preparator`.
 
-    The app automatically input the same personel as the cataloger. If a different person prepare the specimen, you should update the field with the person name.
+    NAHPU defaults the preparator to the cataloger. If a different person
+    prepares the voucher or part, update the preparator field.
 
-5. Select `Species`.
+5. Select the `Taxon`.
 
-    Start typing, the field will show the closest species matching the name. Tab/click on the name of the species. The app will also auto populate the `Taxonomy` panel based on selected species.
+    Start typing to search the project's taxon registry, then select the
+    matching record from the list. NAHPU populates the `Taxon Info` panel from
+    that taxon record. Because the registry holds records at any rank, material
+    that is not yet identified to species can be linked to its family or genus
+    and refined later.
 
-6. Select `ID confidence`.
+6. Select `ID Confidence`.
 
-    This tells the users reading the data about how confident you are about the species identification. It also helps the museum curators/collection manager to prioritize which specimens needed careful look to check the identification.
-
+    This tells later reviewers how confident you are in the identification and
+    helps curators prioritize records that need review. The values are `Low`,
+    `Medium`, and `High`.
 
 7. Select the specimen `Condition`.
 
-8. Add the `Prep. date` and `Prep. time`.
+    Current condition values are `Freshly Euthanized`, `Good`, `Fair`, `Poor`,
+    `Rotten`, `Released`, and `Unknown`.
+
+8. Add the `Collection date`, `Collection time`, `Prep. date`, and `Prep. time`
+   when available.
 
 {% /steps %}
 
-## Collecting Records
+## Collection and Identification
+
+The `Collection & Identification` card stores the core specimen metadata:
+
+- `Museum ID`: optional museum catalog or accession identifier.
+- Field ID: either the cataloger's field number or a formatted project number.
+  Use the responsive field-ID editor to select the type for this specimen.
+  Switching types removes the previous identifier; consumed numbers are not
+  reused.
+- `Cataloger`: the person who catalogs the specimen.
+- `Preparator`: the person who prepares the specimen or voucher.
+- `Determiner`: the person who identified the specimen.
+- `Taxon`: the selected record from the project taxon registry.
+- `ID Confidence`: confidence in the identification.
+- `Identification Method`: optional method or evidence used for identification.
+- `Condition`: condition of the specimen.
+- `Collection date` and `Collection time`: when the specimen was collected.
+- `Prep. date` and `Prep. time`: when the specimen was prepared.
 
 ## Taxonomy
 
+The `Taxon Info` card is read from the taxon selected in `Collection & Identification`.
+It shows class, order, and family in the specimen form. Select `View details` to
+review the full taxonomy record, including:
+
+- the record's `Rank`;
+- kingdom and phylum, taken from the registry when recorded and inferred from
+  class otherwise;
+- class, order, family, genus, and — when the record reaches those ranks —
+  species and subspecies, plus authors and common name;
+- Red List category, CITES status, country status, and notes when present.
+
 ## Capture Records
+
+Capture records connect a specimen to the collecting event, site, coordinate,
+method, and collector that produced it.
+
+- `Site ID`: the site associated with a collecting event.
+- `Event ID`: the collecting event for the specimen. Changing the event clears
+  event-dependent fields in this card except capture date and capture time.
+- `Capture date`: the date the specimen was captured.
+- `Capture time`: exact time, or a relative time when `Relative time` is enabled.
+- `Relative time`: switches capture time to one of `Dawn`, `Morning`,
+  `Afternoon`, `Dusk`, or `Night`.
+- `Method`: the collecting effort/method from the selected event.
+- `Method ID`: an optional trap, net, or other method-specific identifier.
+- `Coordinate ID`: the coordinate record associated with the selected event.
+- `Coordinate extent (m)`: optional positive distance describing how far the
+  capture record extends beyond the coordinate point. It appears immediately
+  below `Coordinate ID`.
+- `Collector`: optional collector from the selected event personnel list.
+
+In Darwin Core exports, a positive coordinate extent is added to the saved
+coordinate uncertainty. If the coordinate has no valid uncertainty, the extent
+is used by itself. Empty, zero, and negative values are ignored.
 
 ## Measurements
 
 Select the tab below to view measurement options for each taxonomic group.
+Mammal, bird, and herpetofauna weight fields support `g`, `kg`, and `lbs` and
+default to `g`. Changing the unit only changes the label; it does not convert
+the entered number.
+
+Sex is a restricted controlled vocabulary shared by every taxon group. `Male`,
+`Female`, and `Unknown` are always available. In `Settings` > `Specimens`, add
+`Gynandromorph`, `Hermaphrodite`, `Female?`, or `Male?` to the dropdown. The
+question mark records that the examiner is uncertain.
 
 {% tabs %}
 {% tabitem label="Mammals" %}
 
-- `Total length (mm)`: the total length of the specimen including from to tip of the nose to the tip of the tail.
+- `Total length (mm)`: the total length from the tip of the nose to the tip of
+  the tail.
 - `Tail length (mm)`: the length of the tail from the base to the tip.
-- `Head and body length (mm)`: Auto calculated from the `Total length (mm) - Tail length (mm)`.
-- `Tail/HB length` percentage: Auto calculated from the `Tail length (mm) / Head and body length (mm)`.
+- `Head and body length (mm)`: auto-calculated from `Total length (mm) - Tail length (mm)`.
+- `Tail/HB length`: auto-calculated from `Tail length (mm) / Head and body length (mm)`.
 - `Hind foot length (mm)`: the length of the hind foot from the base to the tip of the claw.
+- `Ear length (mm)`: ear length.
+- `Weight`: specimen weight in the selected unit.
+- `Accuracy`: measurement accuracy or reason measurements may be inaccurate.
+- `Sex`: select from the configured specimen-sex vocabulary.
+- `Age`: `Adult`, `Subadult`, `Juvenile`, or `Unknown`.
+- Male reproductive fields: testis position, testis length and width, and
+  epididymis appearance.
+- Female reproductive fields: vagina opening, pubic symphysis, reproductive
+  stage, mammae condition, mammae counts, placental scar counts, embryo counts,
+  and embryo crown-rump length.
+- Bat fields, when enabled: forearm length, tibia length, echolocation type,
+  maximum and minimum frequency, frequency at maximum energy, and duration.
+- `Remarks`: additional notes about measurements.
 
 {% /tabitem %}
 {% tabitem label="Birds" %}
-Work in progress.
-{% /tabitem %}
-{% tabitem label="Fish" %}
 
-Work in progress.
+- `Weight`: specimen weight in the selected unit.
+- `Wingspan (mm)`: wingspan length.
+- Soft-part colors: bill color, iris color, foot color, and tarsus color.
+- `Sex`: select from the configured specimen-sex vocabulary.
+- `Brood patch`: whether a brood patch is present.
+- `Bursa present`: whether a bursa is present. If present, record bursa length
+  and width.
+- `Skull ossification (%)`: selected from the available percentage list.
+- `Fat`: fat category from `None` through `Extremely Heavy`.
+- `Stomach contents`: notes on stomach contents.
+- Male gonad fields: testis length, width, and remarks.
+- Female gonad fields: ovary length, ovary width, ovary appearance, ova sizes,
+  oviduct width, oviduct appearance, and remarks.
+- Molt fields: wing molt, tail molt, body molt, and molt remarks.
+- Notes: habitat remarks and specimen remarks.
+
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
-Work in progress.
+
+- `Sex`: select from the configured specimen-sex vocabulary.
+- `Age`: `Adult`, `Juvenile`, `Neonate`, `Metamorph`, or `Unknown`.
+- `Weight`: specimen weight in the selected unit.
+- `SVL (cm)`: snout-vent length.
+- `Remarks`: additional information about the specimen.
+
 {% /tabitem %}
-{% tabitem label="Fossils" %}
-"Under development"
-Work in progress.
+{% tabitem label="Arthropods" %}
+
+The ecological-interaction section is visible by default. Use
+`Show specimen morphometrics` to reveal or hide the measurement fields; saved
+morphometric values automatically reopen that section.
+
+- `Sex`: select from the configured specimen-sex vocabulary.
+- `Caste`: the caste of a social insect, when applicable.
+- Ecological interactions: `Host organism` and `Host part`.
+- Optional morphometrics: `Head width (mm)`, `Body length (mm)`,
+  `Upper wingspan (mm)`, and `Lower wingspan (mm)`.
+- `Remarks`: additional ecological or specimen notes.
+
+Environmental conditions are not specimen attributes. Record canopy cover on
+the site under `Site Attributes`, and temperature, humidity, pH, dissolved
+oxygen, and flow velocity on the collecting event's environmental data.
+
+Arthropod catalogs do not show parasite-detection fields or the parasite tab.
+
+{% /tabitem %}
+{% tabitem label="Fish and fossils" %}
+
+    Measurement fields depend on the catalog format and the tabs available in
+    your project. Record the fields shown for the selected format.
+
 {% /tabitem %}
 
 
 {% /tabs %}
+
 ## Specimen Parts
 
+Use `Specimen Parts` for voucher preparations, tissues, swabs, parasites, and
+other physical parts derived from the specimen. Each specimen can have multiple
+parts.
+
+The parasite tab is available for mammals, birds, and herpetofauna. It is not
+available for arthropod catalogs.
+
+Part fields include:
+
+- `Tissue ID`: optional tissue identifier. NAHPU can repeat or generate the next
+  configured tissue number.
+- `QR/barcode ID`: optional unique ID for a tube, tag, or container. On mobile,
+  NAHPU can scan a QR/barcode; it can also generate a UUID.
+- `Preparation type`: user-defined specimen part type.
+- `Counts`: number of parts or containers.
+- `Treatment`: preservation treatment.
+- `Additional treatment`: optional second treatment.
+- `Storage`: storage medium or method.
+- `Storage location`: freezer, cabinet, shelf, or container location.
+- `Time taken`: time the part was taken, recommended for fresh tissues.
+- `Preparator`: part-level preparator when different from the voucher preparator.
+- `Date taken`: date the part was taken.
+- `PMI`: post-mortem interval, for example `1:30`.
+- `Museum permanent`: museum that permanently holds the part.
+- `Museum loan`: museum receiving the part on loan.
+- `Remarks`: notes specific to the part.
+
+The part list displays the part type, count, barcode ID, preparator, tissue ID,
+treatment, date/time, PMI, and whether a remark exists.
+
+Parasite curation records likewise provide `Storage` and `Storage location` so
+the preservation method and physical location can be recorded separately.
+
+## Associated Data
+
+Use `Associated Data` for specimen-linked digital data that is not better stored
+as a specimen part or media record. Examples include GenBank accessions,
+MorphoSource records, analysis files, or external database links.
+
+Associated data fields include:
+
+- `Data type`: `Link` or `File`.
+- `Name`: source or dataset name, such as `GenBank`.
+- `Description`: accession number or description of the data.
+- `Date`: date associated with the data.
+- `URL`: external URL when the data type is `Link`.
+- File selector: local file attachment when the data type is `File`.
+
 ## Media
+
+Use `Media` for images or other media records associated with the specimen.
+Media records are stored in the shared media system and linked to the specimen
+through the specimen-media relationship.
+
+## Managing specimen records
+
+Open the three-dot menu on the specimen page to manage the current record:
+
+- `Edit`: update the specimen, measurements, parts, associated data, or media.
+- `Duplicate part`: create a new specimen using the current specimen's part
+  information. Review IDs, dates, times, and treatments before saving.
+- `Export specimen`: save a JSON record or an archive that includes specimen
+  media.
+- `Import specimen`: choose a new or existing target specimen, then map the
+  imported event, site, and taxon references to records in the current project.
+- `Delete record`: delete the specimen, its measurements, parts, associated
+  data, and media links. The field number is not reused automatically.
+- `Delete all records`: delete all specimens, measurements, parts, associated
+  data, and specimen media in the current project.
+
+Changing the event in `Capture Records` clears the event-dependent method,
+collector, and coordinate values. Capture date and time are preserved. When a
+record is imported, review these relationships and all generated identifiers
+before continuing your cataloging workflow.

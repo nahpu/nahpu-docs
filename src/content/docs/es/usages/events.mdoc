@@ -1,68 +1,238 @@
 ---
-title: Eventos de recolección
+title: Eventos de Recolecta
 sidebar:
   order: 6
 ---
 
-Los eventos de recolección le ayudan a realizar un seguimiento de los esfuerzos de recolección, el personal, el clima y los datos astronómicos de cada evento. Los registros de especímenes se vinculan directamente al evento en lugar de al sitio.
+Los eventos de recolecta le ayudan a llevar registro de la actividad, el
+esfuerzo, el personal, los datos ambientales y los datos astronómicos de un
+período de trabajo en un sitio. Los registros de especímenes se vinculan a un
+evento de recolecta, y no directamente a un sitio, de modo que el evento es el
+puente entre el espécimen y el contexto de sitio, coordenada, método y colector.
 
 ## Configuración de eventos
 
-Las listas predeterminadas de NAHPU para `Métodos de recolección` (Collection Methods) y `Roles del personal` (Personnel Roles) son limitadas y no incluyen todas las opciones posibles. Si este es su primer proyecto en NAHPU, le recomendamos configurar las entradas. Puede hacerlo yendo a la configuración:
+La lista predeterminada de NAHPU para `Primary activities` es `Collecting`,
+`Recording` y `Observing`. `Other` se dejó fuera de forma deliberada, pero puede
+agregarlo, así como cualquier actividad propia de su protocolo. Los valores de
+actividad ya existentes siguen disponibles aunque no estén en la lista
+configurada.
 
 {% steps %}
 
-1. Navegue al tablero.
-2. Toque/haga clic en el menú de hamburguesa en la esquina superior izquierda.
-3. Seleccione `Configuración`.
-4. Seleccione `Eventos`. 
-5. Edite las entradas para que coincidan con su escenario de campo.
+1. Vaya al panel.
+2. Toque o haga clic en el menú de hamburguesa de la esquina superior izquierda.
+3. Seleccione `Settings`.
+4. Seleccione `Events`.
+5. Edite las actividades principales, los métodos de recolecta y los roles del
+   personal según su escenario de campo.
+6. En `Environmental data fields`, seleccione los campos integrados que deben
+   aparecer en el formulario del evento. Los valores predeterminados son
+   temperatura ambiente, humedad ambiente, nubosidad, lluvia y notas.
 
 {% /steps %}
+
+## Gestionar eventos de recolecta
+
+Abra un evento y use su menú de tres puntos para gestionar el registro:
+
+- `Edit`: cambia los campos del evento, el esfuerzo, el personal o los datos
+  ambientales.
+- `Duplicate event`: copia el sitio, los horarios, la actividad, las notas, los
+  esfuerzos y el personal. Las fechas avanzan un día y el nuevo evento recibe un
+  registro de datos ambientales vacío.
+- `Show QR`: muestra el registro del evento para que otro dispositivo móvil lo
+  escanee.
+- `Export event`: guarda el evento y sus datos relacionados como JSON.
+- `Scan QR`: crea o reemplaza un evento a partir de un código QR de evento.
+- `Import event`: crea o reemplaza un evento a partir de un registro JSON
+  exportado.
+- `Delete record`: elimina el evento, sus esfuerzos, su personal, los datos
+  ambientales y los valores personalizados del evento. Un registro de espécimen
+  que haga referencia al evento debe moverse o eliminarse antes.
+- `Delete all records`: elimina todos los eventos de recolecta y sus esfuerzos,
+  personal y datos ambientales en el proyecto actual.
+
+Al importar un evento, elija si el registro entrante crea un evento nuevo o
+actualiza uno existente. Confirme el sitio y el personal referenciados después
+de la importación.
+
+Los métodos de recolecta predeterminados incluyen `Hand`, `Net` y `Pitfall`. Los
+roles predeterminados del personal incluyen `Leader` y `Helper`. Puede agregar
+valores más específicos, como red de niebla, trampa de arpa, muestreo por
+encuentro visual, conductor, grabador u observador, según su protocolo.
 
 ## Crear un nuevo evento
 
 {% steps %}
-1. Navegue a la página de eventos utilizando la barra de navegación inferior.
+1. Vaya a la página de eventos usando la barra de navegación inferior.
 
-2. Utilice el botón `+` en la esquina superior derecha para crear un nuevo evento.
+2. Use el botón `+` de la esquina superior derecha para crear un nuevo evento.
 
-    También puede utilizar el icono del menú de tres puntos y tocar en `Crear evento`.
+    También puede usar el menú de tres puntos y tocar `Create event`.
 
     {% aside type="tip" %}
 
-    Puede minimizar la escritura de la misma información duplicando el evento en lugar de crear uno nuevo. Toque/haga clic en el botón del menú de tres puntos. Luego, en `Duplicar evento`. Esto creará un nuevo evento utilizando la información del evento actual, con la `Fecha de inicio` y la `Fecha de finalización` actualizadas automáticamente al día siguiente.
+    Puede reducir la escritura repetida duplicando un evento. Toque o haga clic
+    en el menú de tres puntos y elija `Duplicate event`. NAHPU copia el sitio,
+    los horarios, la actividad, las notas, el esfuerzo y el personal, adelanta
+    `Start Date` y `End Date` un día, y crea un registro de datos ambientales
+    vacío.
 
     {% /aside %}
 
-3. Seleccione el `ID del sitio`.
+3. Seleccione el `Site ID`.
 
-4. Agregue la `Fecha de inicio` y la `Fecha de finalización`.
+4. Agregue `Start Date` y `End Date`.
 
-    El `ID del evento` se completará automáticamente con el formato `{ID del sitio}-{Fecha de inicio}`.
+    El `Event ID` se genera a partir de `{Site ID}-{Start Date}`.
 
-5. Edite el `ID del evento` (opcional).
+5. Edite el `Event ID` (opcional).
 
-    Si tiene múltiples eventos con el mismo `ID de sitio` y `Fecha de inicio`, debe editar el `ID del evento` para incluir un sufijo único. Esto suele suceder cuando desea separar los esfuerzos de recolección diurnos y nocturnos, o cuando tiene múltiples actividades en el mismo sitio al mismo tiempo.
+    Si tiene varios eventos con el mismo `Site ID` y la misma `Start Date`,
+    agregue un sufijo al ID. Esto es útil cuando separa el trabajo diurno y
+    nocturno, realiza varias actividades en el mismo sitio o necesita distinguir
+    eventos repetidos en la misma fecha.
 
-6. Agregue la `Hora de inicio` y la `Hora de finalización`.
+6. Agregue `Start Time` y `End Time`.
 
-7. Agregue la actividad principal.
+7. Agregue la `Primary activity`.
 
-    Para un escenario de recolección de campo, esta será casi siempre `Recolección`. Sin embargo, si también está realizando grabaciones al mismo tiempo, es posible que desee crear un evento separado para el registro.
+    Los valores predeterminados son `Collecting`, `Recording` y `Observing`.
+    `Other` no es predeterminado; agréguelo en `Settings` > `Events` si su
+    protocolo lo necesita. En muchos flujos con especímenes será `Collecting`,
+    pero cree eventos separados cuando actividades distintas necesiten su propio
+    esfuerzo, personal o contexto ambiental.
 
 {% /steps %}
+
+## Detalles del evento
+
+La tarjeta `Event Details` almacena la identidad y los horarios principales del
+evento:
+
+- `Event ID`: generado a partir del ID del sitio, la fecha de inicio y un sufijo
+  opcional.
+- `Site ID`: sitio donde ocurrió el evento.
+- `Start Date` y `End Date`: rango de fechas del evento.
+- `Start Time` y `End Time`: rango de horarios del evento.
+
+En proyectos de mamíferos, la fecha de inicio predeterminada es el día anterior y
+el selector de hora comienza en `07:00`, lo que se adapta a la revisión de
+trampas nocturnas. En los demás formatos de catálogo, los selectores de fecha y
+hora comienzan en la fecha y hora actuales.
+
+## Actividad {% #activity %}
+
+La tarjeta `Activity` almacena el propósito general del evento.
+
+- `Primary activity`: seleccionada del vocabulario controlado editable en la
+  configuración de eventos. También se ofrecen los valores heredados ya
+  almacenados, para que no se pierdan los datos existentes.
+- `Notes`: notas libres sobre la actividad, las actividades secundarias, los
+  detalles del protocolo o el motivo por el que se eligió `Other`.
 
 ## Agregar esfuerzo
 
 {% steps %}
 
-1. Utilice el botón `+ Agregar esfuerzo` para crear un nuevo esfuerzo.
+1. Use el botón `+ Add effort` para crear un nuevo esfuerzo.
 
 2. Seleccione un método.
 
+3. Agregue `Brand and Model` cuando el método use equipo específico.
+
+4. Agregue `Count`.
+
+    Es el número de herramientas, trampas, redes, grabadoras u otras unidades
+    utilizadas.
+
+5. Agregue `Size` cuando corresponda.
+
+6. Agregue `Notes` para detalles específicos del esfuerzo.
+
 {% /steps %}
 
-## Agregar personal de recolección
+Los registros de esfuerzo se almacenan por separado del evento, de modo que un
+evento puede incluir varios métodos. Cada esfuerzo contiene:
 
-Próximamente...
+- `Method`: método de recolecta definido por el usuario.
+- `Brand and Model`: marca o modelo del equipo, cuando sea relevante.
+- `Count`: número de herramientas o unidades.
+- `Size`: tamaño de la herramienta o del montaje.
+- `Notes`: cualquier nota específica del método.
+
+Los registros de captura de especímenes pueden luego seleccionar uno de estos
+esfuerzos del evento como el `Method` del espécimen.
+
+## Agregar personal de recolecta
+
+Use la pestaña `Event Personnel` para registrar a todas las personas
+involucradas en el evento.
+
+{% steps %}
+
+1. Abra la pestaña de personal en el panel inferior derecho del evento.
+2. Use `+ Add personnel`.
+3. Seleccione una entrada de `Personnel` de la lista de personal del proyecto.
+4. Seleccione un `Role`.
+
+{% /steps %}
+
+Los roles del personal se definen por el usuario en la configuración de eventos.
+Agregue a todas las personas que contribuyeron al evento, incluidos colectores,
+líderes, ayudantes, conductores, observadores, grabadores o quienes ayudaron con
+la logística. Los registros de captura de especímenes pueden luego seleccionar
+una entrada de personal del evento como el `Collector` del espécimen.
+
+## Datos ambientales y astronomía
+
+NAHPU crea un registro de datos ambientales para cada evento de recolecta. En
+`Settings` > `Events`, seleccione qué campos integrados aparecen en el
+formulario. Ocultar un campo cambia solo el formulario: los valores ya
+almacenados permanecen en la base de datos y en las exportaciones.
+
+Los campos integrados disponibles incluyen:
+
+- `Day Lowest` y `Day Highest`: rango de temperatura diurna en grados Celsius.
+- `Night Lowest` y `Night Highest`: rango de temperatura nocturna en grados
+  Celsius.
+- `Average`: porcentaje promedio de humedad.
+- `Dew Point`: temperatura del punto de rocío.
+- `Cloud cover`: un código de `0` (despejado) a `8` (totalmente cubierto), o `9`
+  cuando el cielo está oscurecido. Un octavo representa un octavo del cielo
+  visible.
+- `Rainfall`, `Ambient temperature` y `Ambient humidity`: condiciones en el
+  evento.
+- `Water temperature`, `pH`, `Dissolved oxygen` y `Flow velocity`: mediciones
+  acuáticas.
+- `Sunrise` y `Sunset`: horas locales de salida y puesta del sol.
+- `Moon Phase`: una de `New Moon`, `Waxing Crescent`, `First Quarter`,
+  `Waxing Gibbous`, `Full Moon`, `Waning Gibbous`, `Last Quarter` o
+  `Waning Crescent`.
+- `Notes`: notas adicionales sobre clima, hábitat o astronomía.
+
+Use `Add custom field` o `Manage custom fields` en esta sección para campos
+ambientales de toda la instalación o específicos del proyecto. Sus valores
+pertenecen al evento individual, no se filtran por el formato de catálogo del
+espécimen y se incluyen en las exportaciones de eventos, especímenes,
+documentos, Darwin Core, intercambio de registros y transferencia de proyecto.
+
+Los datos ambientales no se copian al duplicar un evento. El evento duplicado
+recibe un registro en blanco, para que ingrese las condiciones correctas de esa
+fecha.
+
+## Cómo usan los eventos los registros de especímenes
+
+Cuando crea o edita un espécimen, la tarjeta `Capture Records` toma datos de los
+eventos de recolecta:
+
+- `Site ID` filtra los ID de evento disponibles.
+- `Event ID` vincula el espécimen con el evento.
+- `Method` proviene de los registros de esfuerzo del evento.
+- `Collector` proviene de la lista de personal del evento.
+- `Coordinate ID` proviene de las coordenadas asociadas al sitio del evento.
+
+Cambiar el evento de un espécimen borra los campos dependientes del evento, como
+método, colector y coordenada, y conserva la fecha y la hora de captura del
+espécimen.

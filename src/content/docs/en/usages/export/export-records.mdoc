@@ -1,0 +1,148 @@
+---
+title: Export Records
+sidebar:
+  order: 10
+---
+
+Use `Export records` when you need project data as CSV, TSV, Excel, or JSON.
+This is the best export for spreadsheet review, database import, analysis, and
+sharing structured data with collaborators.
+
+## Quick way to export records
+
+{% steps %}
+
+1. Navigate to the `Dashboard` page.
+2. Open the project menu and select `Export records`.
+3. Optional: choose an export preset from `Export preset`.
+4. If you are not using a preset, select the `Record type`.
+    - `Narrative`
+    - `Sites`
+    - `Events`
+    - `Specimen records`
+    - `Specimen parts`
+5. For specimen records, select the taxon group. Mammal exports can be limited
+   to non-bats, bats, or all mammals.
+6. Select the specimen field mode.
+    - `Standard`
+    - `All fields`
+    - `Custom fields`
+7. Optional: turn on `Concatenate multi-entry` to combine repeated values in one
+   cell.
+8. Optional: turn on `Field names only for headers` to use field IDs instead of display
+   labels.
+9. Select the file `Format`.
+    - `Comma-separated (.csv)`
+    - `Tab-separated (.tsv)`
+    - `Excel (.xlsx)`
+    - `JSON (.json)`
+10. Add `File name` for the exported file.
+11. Select the `Directory` where you want to save the exported file.
+12. Click `Save`.
+
+{% /steps %}
+
+{% aside type="tip" title="Sharing saved files" %}
+After the file is saved, the `Save` button changes to `Share`. Use `Share` on
+mobile devices to send the file to another app or save it through the system
+file picker.
+{% /aside %}
+
+## Deep dive
+
+Record export reads data from the active project and writes one selected record
+type at a time. Choose the record type that matches the table or workflow you
+want to inspect: narrative entries, sites, events, specimen records, or specimen
+parts.
+
+```text
+Project database
+    |
+    v
+Record type + filters + field mode
+    |
+    v
+Exporter
+    |
+    +--> CSV / TSV
+    +--> Excel
+    +--> JSON
+```
+
+Export presets save repeatable choices such as record type, taxon selection,
+field mappings, header style, and repeated-value behavior. The output format,
+filename, and destination are chosen when you run the export. Use a preset when
+your team needs the same export shape across field days, devices, or projects.
+If a collaborator also needs the same presets, export user configs or include
+them in a full database archive.
+
+In `Settings` > `Tabular Data`, preset settings are saved as you change them,
+but the name is not. Type a new name and select `Rename` to commit it; until
+then the preset keeps its current name and your typing is left alone. Export a
+single preset from its row, or every preset from the options menu. Both write
+the same file format, so either file imports through the same `Import`
+action.
+
+Event and specimen exports include stored environmental values even when their
+fields are hidden from the event form. Environmental custom fields are
+available to export presets and use stable headers in the form
+`customEnvironment::<definition UUID>`. These fields also flow into event
+documents, Darwin Core event output, event record exchange, and project
+transfer, so form visibility never acts as a data-deletion or export filter.
+
+Specimen records have extra filtering because they are usually the largest and
+most institution-specific export. The taxon group narrows the record set before
+the file is written. Field mode controls the columns:
+
+- `Standard` writes the default fields used by most workflows.
+- `All fields` writes every supported specimen field.
+- `Custom fields` lets you choose a smaller or institution-specific column set.
+
+Arthropod record exports include sex, life stage, caste, the host organism and
+host part, the optional morphometrics, and remarks. Arthropod-only exports and
+presets do not offer parasite-detection or parasite columns. `All taxa` exports
+retain those columns for the catalog groups that support parasites.
+
+Repeated values can be written as separate values or concatenated into one cell.
+Concatenation is useful for spreadsheets and quick review, while keeping entries
+separate is better when another database will parse the file.
+
+`Field names only for headers` writes field IDs instead of display labels. Use this when
+the receiving system expects stable field names or when you need predictable
+headers for scripts. Leave it off when people will read the export directly in a
+spreadsheet.
+
+Darwin Core field mappings use standard headers only where the NAHPU field has
+the same meaning. Unmatched fields retain a `nahpu:` header. Derived exports use
+the specimen determiner for `identifiedBy`, prefer the determiner's canonical
+ORCID URL for `identifiedByID`, preserve verbatim coordinates, add positive
+coordinate extent to coordinate uncertainty, and retain the selected weight
+unit (`g`, `kg`, or `lbs`).
+
+For arthropods, Darwin Core mappings place sex, life stage, caste, the host
+association, and remarks on the occurrence. Host part and the morphometrics
+become MeasurementOrFact values with units where defined. Environmental
+observations belong to the collecting event, not to the specimen.
+
+Choose the output format based on the next tool:
+
+- CSV and TSV are the most portable spreadsheet and database-import formats.
+- Excel is convenient for manual review and sharing with spreadsheet users.
+- JSON preserves structured data for scripts and downstream software.
+
+Record exports are not backups: NAHPU cannot read them back. Use them for data
+exchange, review, and analysis. Use `Export project` for the daily field backup,
+[Backup database](../#backup-database) weekly and before a merge, and use
+[Bundle records](../export-bundles) when you need a standards-based specimen
+package with related records and media.
+
+To move project data between devices, use `Merge project` or `Export project`
+in the project dashboard menu. Use JSON.GZ for records-only uploads over
+limited internet; it excludes media. Use ZIP or TAR.GZ for a full project copy
+with available media. Merges check the project UUID, guide you through each
+section, and show conflicts before writing anything. Back up the database
+first; a force merge is only available after acknowledging that a UUID mismatch
+will use the active project UUID.
+
+Contributors can read the implementation details in [Templates and presets](../../../contributing/code/templates-and-presets)
+and [Export workflows](../../../contributing/code/data-export-workflows).

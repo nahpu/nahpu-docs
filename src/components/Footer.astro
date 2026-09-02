@@ -1,0 +1,122 @@
+---
+import EditLink from "virtual:starlight/components/EditLink";
+import Pagination from "virtual:starlight/components/Pagination";
+
+const { entry, lang, lastUpdated } = Astro.locals.starlightRoute;
+
+const rawAuthors = entry.data.authors;
+const authors = (
+    Array.isArray(rawAuthors) ? rawAuthors : rawAuthors ? [rawAuthors] : []
+)
+    .map((author) => author.trim())
+    .filter(Boolean);
+
+const localeLabels = {
+    "en-US": { author: "Author", authors: "Authors" },
+    "pt-BR": { author: "Autor", authors: "Autores" },
+    es: { author: "Autor", authors: "Autores" },
+    id: { author: "Penulis", authors: "Penulis" },
+};
+
+const labels = localeLabels[lang] ?? localeLabels["en-US"];
+const authorLabel = authors.length === 1 ? labels.author : labels.authors;
+const authorList = new Intl.ListFormat(lang, {
+    style: "long",
+    type: "conjunction",
+}).format(authors);
+
+function formatLastUpdated(date: Date) {
+    const today = new Date();
+    const todayUtc = Date.UTC(
+        today.getUTCFullYear(),
+        today.getUTCMonth(),
+        today.getUTCDate(),
+    );
+    const updatedUtc = Date.UTC(
+        date.getUTCFullYear(),
+        date.getUTCMonth(),
+        date.getUTCDate(),
+    );
+    const days = Math.round((todayUtc - updatedUtc) / (24 * 60 * 60 * 1000));
+    const relativeTime = new Intl.RelativeTimeFormat(lang, { numeric: "auto" });
+
+    if (days < 7) {
+        return relativeTime.format(-days, "day");
+    }
+
+    if (days < 56) {
+        return relativeTime.format(-Math.floor(days / 7), "week");
+    }
+
+    return date.toLocaleDateString(lang, {
+        dateStyle: "medium",
+        timeZone: "UTC",
+    });
+}
+
+const lastUpdatedLabel = lastUpdated
+    ? formatLastUpdated(lastUpdated)
+    : undefined;
+const lastUpdatedDateTime = lastUpdated?.toISOString();
+---
+
+<footer class="sl-flex">
+    <div class="meta sl-flex">
+        <div class="metadata sl-flex" aria-label="Page metadata">
+            {
+                authors.length > 0 && (
+                    <p>
+                        <span class="label">{authorLabel}:</span> {authorList}
+                    </p>
+                )
+            }
+            {
+                lastUpdatedLabel && (
+                    <p>
+                        <span class="label">
+                            {Astro.locals.t("page.lastUpdated")}
+                        </span>{" "}
+                        <time datetime={lastUpdatedDateTime}>
+                            {lastUpdatedLabel}
+                        </time>
+                    </p>
+                )
+            }
+        </div>
+        <EditLink />
+    </div>
+    <Pagination />
+</footer>
+
+<style>
+    @layer starlight.core {
+        footer {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .meta {
+            gap: 0.75rem 3rem;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: baseline;
+            margin-top: 3rem;
+            font-size: var(--sl-text-sm);
+            color: var(--sl-color-gray-3);
+        }
+
+        .metadata {
+            gap: 0.5rem 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .metadata p {
+            margin: 0;
+        }
+
+        .label {
+            color: var(--sl-color-gray-2);
+            font-weight: 600;
+        }
+    }
+</style>

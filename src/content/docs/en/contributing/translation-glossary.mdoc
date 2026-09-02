@@ -1,0 +1,173 @@
+---
+title: "Translation glossary"
+authors:
+  - Heru Handika
+lastUpdated: 2026-08-27
+sidebar:
+  order: 4
+---
+
+NAHPU documentation is translated into Brazilian Portuguese, Spanish, and
+Indonesian with AI assistance and reviewed by people. This page is the shared
+reference for how NAHPU and natural history terms are rendered in each
+language, so the same concept does not appear under three different names.
+
+{% aside type="note" %}
+This page is available in English only. Translation is coordination work
+between languages, so it stays in one place.
+{% /aside %}
+
+## Rules
+
+### On-screen names stay in English
+
+The NAHPU interface is English-only. When a sentence names a control the reader
+must find on screen — a button, a field label, a menu entry, a card title —
+write it in English inside backticks and translate the prose around it:
+
+```text
+en  Select `Add taxon`, then choose the `Import` mode.
+pt  Selecione `Add taxon` e escolha o modo `Import`.
+es  Seleccione `Add taxon` y elija el modo `Import`.
+id  Pilih `Add taxon`, lalu pilih mode `Import`.
+```
+
+Do not translate the text inside the backticks. A reader who is looking for a
+translated button will not find one.
+
+When the same word is used as an ordinary noun rather than as the name of a
+control, translate it: `Site ID` stays in English, but "record the site
+coordinates" becomes "registre as coordenadas do local".
+
+### Scientific terms follow the receiving language
+
+Taxonomic ranks, Latin names, and collection vocabulary have established forms
+in each language. Use them. Leaving `class`, `order`, `family`, and `epithet` in
+English inside an Indonesian sentence is not more precise — it is harder to
+read for the person the translation is for.
+
+Italicize genus and species names in every language, and never translate them.
+
+### Standards keep their published names
+
+`Darwin Core`, `dwc:scientificName`, `dwc:MaterialEntity`, `dwc:preparations`,
+GBIF, IUCN, CITES, ORCID, UUID, and file formats such as `.xlsx`, `JSON.GZ`, and
+`TAR.GZ` are proper names. Never translate them, and never translate a
+`dwc:` term into a local phrase in running text.
+
+### Do not invent a term
+
+If a concept has no settled equivalent, keep the English term in backticks and
+explain it once in the receiving language. Add the decision to the table below
+so the next translator makes the same choice.
+
+## NAHPU concepts
+
+| English | Portuguese (BR) | Spanish | Indonesian |
+| --- | --- | --- | --- |
+| project | projeto | proyecto | proyek |
+| site (the place) | local | sitio | lokasi |
+| `Site` (the record type) | `Site` | `Site` | `Site` |
+| locality | localidade | localidad | lokalitas |
+| location (project scope) | localização | ubicación | wilayah |
+| collecting event | evento de coleta | evento de recolecta | kegiatan pengumpulan |
+| effort | esforço | esfuerzo | upaya |
+| specimen | espécime | espécimen | spesimen |
+| specimen part | parte do espécime | parte del espécimen | bagian spesimen |
+| parasite | parasita | parásito | parasit |
+| host | hospedeiro | hospedador | inang |
+| narrative | narrativa | narrativa | narasi |
+| record | registro | registro | catatan |
+| field (in a form) | campo | campo | kolom |
+| controlled vocabulary | vocabulário controlado | vocabulario controlado | kosakata terkontrol |
+| field ID | ID de campo | ID de campo | ID lapangan |
+| project ID | ID do projeto | ID del proyecto | ID proyek |
+| media | mídia | medios | media |
+| backup | backup | copia de seguridad | cadangan |
+| restore | restauração | restauración | pemulihan |
+| export | exportação | exportación | ekspor |
+| import | importação | importación | impor |
+| preset | predefinição | preajuste | prasetel |
+| template | modelo | plantilla | templat |
+| user configs | configurações de usuário | configuraciones de usuario | konfigurasi pengguna |
+
+## People and roles
+
+| English | Portuguese (BR) | Spanish | Indonesian |
+| --- | --- | --- | --- |
+| personnel | pessoal | personal | personel |
+| cataloger | catalogador | catalogador | pengatalog |
+| collector | coletor | colector | pengumpul |
+| preparator | preparador | preparador | preparator |
+| determiner | determinador | determinador | pengidentifikasi |
+| collecting personnel | pessoal de coleta | personal de recolecta | personel pengumpul |
+
+Role names that appear in the personnel form — `Cataloger`, `Determiner only`,
+`Preparator only`, `None` — are on-screen names. Keep them in English inside
+backticks and use the translated word in prose.
+
+## Taxonomy
+
+| English | Portuguese (BR) | Spanish | Indonesian |
+| --- | --- | --- | --- |
+| taxon / taxa | táxon / táxons | taxón / taxones | takson |
+| taxonomy | taxonomia | taxonomía | taksonomi |
+| taxon rank | categoria taxonômica | categoría taxonómica | tingkat takson |
+| kingdom | reino | reino | kerajaan |
+| phylum | filo | filo | filum |
+| class | classe | clase | kelas |
+| order | ordem | orden | ordo |
+| family | família | familia | famili |
+| genus | gênero | género | genus |
+| species | espécie | especie | spesies |
+| subspecies | subespécie | subespecie | subspesies |
+| specific epithet | epíteto específico | epíteto específico | epitet spesifik |
+| subspecific epithet | epíteto subespecífico | epíteto subespecífico | epitet subspesifik |
+| scientific name | nome científico | nombre científico | nama ilmiah |
+| authorship | autoria | autoría | kepengarangan |
+| common name | nome comum | nombre común | nama umum |
+| identification | identificação | identificación | identifikasi |
+
+{% aside type="caution" title="Indonesian ranks" %}
+Use `ordo` and `famili`, not `order` and `family`. Use `takson` and `spesimen`,
+not `taxon` and `specimen`. Earlier translations left these in English; they are
+being corrected as pages are revised.
+{% /aside %}
+
+## Collection and curation
+
+| English | Portuguese (BR) | Spanish | Indonesian |
+| --- | --- | --- | --- |
+| natural history collection | coleção de história natural | colección de historia natural | koleksi sejarah alam |
+| curation | curadoria | curaduría | kurasi |
+| accession number | número de tombo | número de acceso | nomor akses |
+| catalog number | número de catálogo | número de catálogo | nomor katalog |
+| voucher | testemunho | ejemplar de referencia | spesimen bukti |
+| tissue | tecido | tejido | jaringan |
+| preparation | preparação | preparación | preparasi |
+| tag / label | etiqueta | etiqueta | label |
+| coordinate | coordenada | coordenada | koordinat |
+| habitat | habitat | hábitat | habitat |
+| trap line | linha de armadilhas | línea de trampas | jalur perangkap |
+| pitfall trap | armadilha de queda | trampa de caída | perangkap sumuran |
+| mist net | rede de neblina | red de niebla | jaring kabut |
+
+## Translation workflow
+
+The steps for producing and reviewing a translation are on the
+[Documentation](../docs#adding-a-new-language-translation) page.
+
+Every page under a non-English locale shows an **AI-assisted translation**
+notice under its title. Adding `authors` to that page's front matter switches
+the notice to the reviewed state and names the reviewers:
+
+```yaml
+---
+title: "Página traduzida"
+authors:
+  - Reviewer Name
+---
+```
+
+Add `authors` only after a person has read the translation against the English
+source and corrected it. Until then, the unreviewed notice is the honest label.

@@ -3,155 +3,386 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
 import markdoc from "@astrojs/markdoc";
+import preact from "@astrojs/preact";
 // https://astro.build/config
 export default defineConfig({
   site: "https://nahpu.app",
-  integrations: [
-    starlight({
-      title: {
-        default: "NAHPU Documentation",
-        "en-US": "NAHPU Documentation",
-        "pt-BR": "Documentação do NAHPU",
-        es: "Documentación de NAHPU",
-        id: "Dokumentasi NAHPU",
+  redirects: {
+    "/usages/export": "/en/usages/export/",
+    "/en/curatorial-guideline": "/en/usages/export/",
+    "/en/curatorial-guideline/backup-restore": "/en/usages/export/",
+    "/en/curatorial-guideline/archiving": "/en/usages/export/",
+    "/en/curatorial-guideline/tag-printing": "/en/usages/export/export-documents/",
+    "/en/curatorial-guideline/data-curation": "/en/best-practices/data-management/",
+    "/pt/curatorial-guideline": "/pt/usages/export/",
+    "/pt/curatorial-guideline/backup-restore": "/pt/usages/export/",
+    "/pt/curatorial-guideline/archiving": "/pt/usages/export/",
+    "/pt/curatorial-guideline/tag-printing": "/pt/usages/export/export-documents/",
+    "/pt/curatorial-guideline/data-curation": "/pt/best-practices/data-management/",
+    "/es/curatorial-guideline": "/es/usages/export/",
+    "/es/curatorial-guideline/backup-restore": "/es/usages/export/",
+    "/es/curatorial-guideline/archiving": "/es/usages/export/",
+    "/es/curatorial-guideline/tag-printing": "/es/usages/export/export-documents/",
+    "/es/curatorial-guideline/data-curation": "/es/best-practices/data-management/",
+    "/id/curatorial-guideline": "/id/usages/export/",
+    "/id/curatorial-guideline/backup-restore": "/id/usages/export/",
+    "/id/curatorial-guideline/archiving": "/id/usages/export/",
+    "/id/curatorial-guideline/tag-printing": "/id/usages/export/export-documents/",
+    "/id/curatorial-guideline/data-curation": "/id/best-practices/data-management/",
+    "/usages/export-records": "/en/usages/export/export-records/",
+    "/usages/export-documents": "/en/usages/export/export-documents/",
+    "/usages/export-bundles": "/en/usages/export/export-bundles/",
+    "/en/usages/export-records": "/en/usages/export/export-records/",
+    "/en/usages/export-documents": "/en/usages/export/export-documents/",
+    "/en/usages/export-bundles": "/en/usages/export/export-bundles/",
+    "/es/usages/export-records": "/es/usages/export/export-records/",
+    "/es/usages/export-documents": "/es/usages/export/export-documents/",
+    "/es/usages/export-bundles": "/es/usages/export/export-bundles/",
+    "/id/usages/export-records": "/id/usages/export/export-records/",
+    "/id/usages/export-documents": "/id/usages/export/export-documents/",
+    "/id/usages/export-bundles": "/id/usages/export/export-bundles/",
+    "/pt/usages/export-records": "/pt/usages/export/export-records/",
+    "/pt/usages/export-documents": "/pt/usages/export/export-documents/",
+    "/pt/usages/export-bundles": "/pt/usages/export/export-bundles/",
+  },
+  integrations: [starlight({
+    title: {
+      default: "NAHPU Documentation",
+      "en-US": "NAHPU Documentation",
+      "pt-BR": "Documentação do NAHPU",
+      es: "Documentación de NAHPU",
+      id: "Dokumentasi NAHPU",
+    },
+    customCss: ["./src/styles/global.css"],
+    description:
+      "Documentation for NAHPU, a digital field catalog for natural history collections.",
+    logo: {
+      src: "./src/assets/nahpu.svg",
+    },
+    favicon: "/nahpu.svg",
+    head: [
+      {
+        tag: "link",
+        attrs: {
+          rel: "icon",
+          type: "image/png",
+          href: "/favicon.png", // Fallback PNG
+        },
       },
-      customCss: ["./src/styles/global.css"],
-      description:
-        "Documentation for NAHPU, a digital field catalog for natural history collections.",
-      logo: {
-        src: "./src/assets/nahpu.svg",
+      // Add other icon sizes/formats as needed (e.g., apple-touch-icon.png)
+    ],
+    // Use BCP 47 language tags,
+    // https://gist.github.com/typpo/b2b828a35e683b9bf8db91b5404f1bd1
+    defaultLocale: "en",
+    components: {
+      SiteTitle: "./src/components/SiteTitle.astro",
+      Footer: "./src/components/Footer.astro",
+      PageTitle: "./src/components/PageTitle.astro",
+    },
+    locales: {
+      en: { label: "English (United States)", lang: "en-US" },
+      pt: { label: "Portuguese (Brazil)", lang: "pt-BR" },
+      es: { label: "Spanish", lang: "es" },
+      id: { label: "Indonesian", lang: "id" },
+    },
+    editLink: {
+      baseUrl: "https://github.com/nahpu/nahpu-docs/edit/release/",
+    },
+    social: [
+      {
+        icon: "github",
+        label: "GitHub",
+        href: "https://github.com/nahpu",
       },
-      favicon: "/nahpu.svg",
-      head: [
-        {
-          tag: "link",
-          attrs: {
-            rel: "icon",
-            type: "image/png",
-            href: "/favicon.png", // Fallback PNG
-          },
+    ],
+    sidebar: [
+      {
+        label: "Introduction",
+        link: "/",
+        translations: {
+          "pt-BR": "Introdução",
+          es: "Introducción",
+          id: "Pendahuluan",
         },
-        // Add other icon sizes/formats as needed (e.g., apple-touch-icon.png)
-      ],
-      // Use BCP 47 language tags,
-      // https://gist.github.com/typpo/b2b828a35e683b9bf8db91b5404f1bd1
-      defaultLocale: "en",
-      components: {
-        SiteTitle: "./src/components/SiteTitle.astro",
       },
-      locales: {
-        en: { label: "English (United States)", lang: "en-US" },
-        pt: { label: "Portuguese (Brazil)", lang: "pt-BR" },
-        es: { label: "Spanish", lang: "es" },
-        id: { label: "Indonesian", lang: "id" },
+      {
+        label: "Day 1",
+        link: "day-one",
+        translations: {
+          "pt-BR": "Dia 1",
+          es: "Día 1",
+          id: "Hari 1",
+        },
       },
-      editLink: {
-        baseUrl: "https://github.com/nahpu/nahpu-docs/edit/release/",
+      {
+        label: "Switch to NAHPU",
+        link: "switch",
+        translations: {
+          "pt-BR": "Migrar para NAHPU",
+          es: "Cambiar a NAHPU",
+          id: "Beralih ke NAHPU",
+        },
       },
-      social: [
-        {
-          icon: "github",
-          label: "GitHub",
-          href: "https://github.com/nahpu",
+      {
+        label: "Installation",
+        link: "installation",
+        translations: {
+          "pt-BR": "Instalação",
+          es: "Instalación",
+          id: "Instalasi",
         },
-      ],
-      sidebar: [
-        {
-          label: "Introduction",
-          link: "/",
-          translations: {
-            "pt-BR": "Introdução",
-            es: "Introducción",
-            id: "Pendahuluan",
+      },
+      {
+        label: "How-to recipes",
+        translations: {
+          "pt-BR": "Guias práticos",
+          es: "Guías prácticas",
+          id: "Panduan praktis",
+        },
+        items: [
+          {
+            label: "Prepare",
+            translations: {
+              "pt-BR": "Preparar",
+              es: "Preparar",
+              id: "Persiapan",
+            },
+            items: [
+              {
+                autogenerate: {
+                  directory: "how-to-recipes/prepare",
+                  collapsed: true,
+                },
+              },
+            ],
           },
-        },
-        {
-          label: "Day 1",
-          link: "day-one",
-          translations: {
-            "pt-BR": "Dia 1",
-            es: "Día 1",
-            id: "Hari 1",
+          {
+            label: "Collect",
+            translations: {
+              "pt-BR": "Coletar",
+              es: "Recolectar",
+              id: "Pengumpulan",
+            },
+            items: [
+              {
+                autogenerate: {
+                  directory: "how-to-recipes/collect",
+                  collapsed: true,
+                },
+              },
+            ],
           },
-        },
-        {
-          label: "Best Practices",
-          link: "best-practices",
-          translations: {
-            "pt-BR": "Práticas Recomendadas",
-            es: "Prácticas Recomendadas",
-            id: "Praktik yang Direkomendasikan",
+          {
+            label: "Export and print",
+            translations: {
+              "pt-BR": "Exportar e imprimir",
+              es: "Exportar e imprimir",
+              id: "Ekspor dan cetak",
+            },
+            items: [
+              {
+                autogenerate: {
+                  directory: "how-to-recipes/export-and-print",
+                  collapsed: true,
+                },
+              },
+            ],
           },
-        },
-        {
-          label: "Switch to NAHPU",
-          link: "switch",
-          translations: {
-            "pt-BR": "Migrar para NAHPU",
-            es: "Cambiar a NAHPU",
-            id: "Beralih ke NAHPU",
+          {
+            label: "Protect and collaborate",
+            translations: {
+              "pt-BR": "Proteger e colaborar",
+              es: "Proteger y colaborar",
+              id: "Melindungi dan berkolaborasi",
+            },
+            items: [
+              {
+                autogenerate: {
+                  directory: "how-to-recipes/protect-and-collaborate",
+                  collapsed: true,
+                },
+              },
+            ],
           },
+        ],
+      },
+      {
+        label: "Best Practices",
+        translations: {
+          "pt-BR": "Práticas Recomendadas",
+          es: "Prácticas Recomendadas",
+          id: "Praktik yang Direkomendasikan",
         },
-        {
-          label: "Installation",
-          link: "installation",
-          translations: {
-            "pt-BR": "Instalação",
-            es: "Instalación",
-            id: "Instalasi",
+        items: [
+          {
+            autogenerate: {
+              directory: "best-practices",
+              collapsed: true,
+            },
           },
+        ],
+      },
+      {
+        label: "Usages",
+        translations: {
+          "pt-BR": "Usos",
+          es: "Usos",
+          id: "Penggunaan",
         },
-        {
-          label: "General Usages",
-          autogenerate: { directory: "usages" },
-          translations: {
-            "pt-BR": "Usos Gerais",
-            es: "Usos Generales",
-            id: "Penggunaan Umum",
+        items: [
+          {
+            label: "Overview",
+            link: "usages",
+            translations: {
+              "pt-BR": "Visão Geral",
+              es: "Resumen",
+              id: "Ikhtisar",
+            },
           },
-        },
-        {
-          label: "Curatorial Guidelines",
-          autogenerate: { directory: "curatorial-guideline" },
-          translations: {
-            "pt-BR": "Diretrizes Curatoriais",
-            es: "Directrices Curatoriales",
-            id: "Pedoman Kuratorial",
+          {
+            label: "Device Requirements",
+            link: "usages/devices",
+            translations: {
+              "pt-BR": "Requisitos de Dispositivos",
+              es: "Requisitos del dispositivo",
+              id: "Persyaratan Perangkat",
+            },
           },
-          collapsed: true,
-        },
-        {
-          label: "Contributing",
-          autogenerate: { directory: "contributing" },
-          translations: {
-            "pt-BR": "Contribuindo",
-            es: "Contribuyendo",
-            id: "Berkontribusi",
+          {
+            label: "Projects",
+            link: "usages/projects",
+            translations: {
+              "pt-BR": "Projetos",
+              es: "Proyectos",
+              id: "Proyek",
+            },
           },
-          collapsed: true,
-        },
-        {
-          label: "Privacy Policy",
-          link: "privacy",
-          translations: {
-            "pt-BR": "Política de Privacidade",
-            es: "Política de Privacidad",
-            id: "Kebijakan Privasi",
+          {
+            label: "Settings",
+            link: "usages/settings",
+            translations: {
+              "pt-BR": "Configurações",
+              es: "Configuración",
+              id: "Pengaturan",
+            },
           },
-        },
-        {
-          label: "Terms and Conditions",
-          link: "terms",
-          translations: {
-            "pt-BR": "Termos e Condições",
-            es: "Términos y Condiciones",
-            id: "Syarat dan Ketentuan",
+          {
+            label: "Narrative",
+            link: "usages/narrative",
+            translations: {
+              "pt-BR": "Narrativa",
+              es: "Narrativa",
+              id: "Narasi",
+            },
           },
+          {
+            label: "Personnel",
+            link: "usages/personnel",
+            translations: {
+              "pt-BR": "Pessoal",
+              es: "Personal",
+              id: "Personel",
+            },
+          },
+          {
+            label: "Sites",
+            link: "usages/sites",
+            translations: {
+              "pt-BR": "Locais",
+              es: "Sitios",
+              id: "Lokasi",
+            },
+          },
+          {
+            label: "Events",
+            link: "usages/events",
+            translations: {
+              "pt-BR": "Eventos",
+              es: "Eventos",
+              id: "Kegiatan Pengumpulan",
+            },
+          },
+          {
+            label: "Specimens",
+            link: "usages/specimens",
+            translations: {
+              "pt-BR": "Espécimes",
+              es: "Especímenes",
+              id: "Spesimen",
+            },
+          },
+          {
+            label: "Taxon",
+            link: "usages/taxon",
+            translations: {
+              "pt-BR": "Táxon",
+              es: "Taxón",
+              id: "Takson",
+            },
+          },
+          {
+            label: "Export",
+            collapsed: true,
+            translations: {
+              "pt-BR": "Exportar",
+              es: "Exportar",
+              id: "Ekspor",
+            },
+            items: [
+              {
+                autogenerate: {
+                  directory: "usages/export",
+                  collapsed: true,
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: "Contributing",
+        items: [
+          { label: "Become a contributor", link: "contributing" },
+          { label: "Documentation", link: "contributing/docs" },
+          {
+            label: "Translation glossary",
+            link: "contributing/translation-glossary",
+          },
+          {
+            label: "Code",
+            collapsed: true,
+            items: [
+              {
+                autogenerate: {
+                  directory: "contributing/code",
+                  collapsed: true,
+                },
+              },
+            ],
+          },
+        ],
+        collapsed: true,
+      },
+      {
+        label: "Privacy Policy",
+        link: "privacy",
+        translations: {
+          "pt-BR": "Política de Privacidade",
+          es: "Política de Privacidad",
+          id: "Kebijakan Privasi",
         },
-      ],
-    }),
-    markdoc(),
-  ],
+      },
+      {
+        label: "Terms and Conditions",
+        link: "terms",
+        translations: {
+          "pt-BR": "Termos e Condições",
+          es: "Términos y Condiciones",
+          id: "Syarat dan Ketentuan",
+        },
+      },
+    ],
+  }), markdoc(), preact()],
   vite: {
     plugins: [tailwindcss()],
   },

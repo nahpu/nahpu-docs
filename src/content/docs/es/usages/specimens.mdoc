@@ -6,8 +6,12 @@ sidebar:
 
 ## Configuración de registros de especímenes
 
+Un registro de espécimen reúne la identificación, la preparación, los datos de
+captura y las partes físicas de un espécimen. Un espécimen se vincula a un
+evento de recolección; el evento proporciona el sitio, el método, el colector y
+la coordenada.
 
-## Configuración de eventos
+## Configuración de especímenes
 
 Las listas predeterminadas de NAHPU para `Partes de especímenes` y `Tratamientos` son limitadas y no incluyen todas las opciones posibles. Si este es su primer proyecto NAHPU, recomendamos configurar las entradas primero. Puede hacer esto yendo a la configuración:
 
@@ -17,23 +21,46 @@ Las listas predeterminadas de NAHPU para `Partes de especímenes` y `Tratamiento
 2. Toque/haga clic en el menú de hamburguesa en la esquina superior izquierda.
 3. Seleccione `Configuración`.
 4. Seleccione `Especímenes`. 
-5. Agregue `ID de tejido` (opcional).
+5. Configure el interruptor `Use project ID`. Está desactivado de forma
+   predeterminada y usa las iniciales y el número de campo de un catalogador.
+   Al menos un Catalogador debe tener activado el registro de número de campo
+   personal y un número actual.
+
+    Active `Use project ID` para definir un prefijo, el siguiente número de
+    catálogo y un sufijo. NAHPU concatena esos valores directamente. Active el
+    incremento automático para asignar y avanzar el número del proyecto.
+
+    Esta selección es solo el valor predeterminado. En el editor de ID de cada
+    espécimen puede elegir Personnel o Project. Un proyecto puede usar ambos
+    tipos, pero un espécimen no puede tener los dos.
+
+    {% aside type="caution" %}
+
+    Cambiar el prefijo o sufijo modifica cómo se muestran los ID de proyecto
+    existentes. Esos ID podrían haberse usado en exportaciones o escrito en
+    etiquetas de especímenes. Compruebe los valores antes de confirmar.
+
+    {% /aside %}
+
+6. Agregue `ID de tejido` (opcional).
 
     Algunos museos tienen números de tejido separados para el mismo espécimen. Puede configurar el prefijo y el número aquí. Se incrementará automáticamente cada vez que agregue un nuevo número de tejido.
 
-6. Agregue `Tipos de partes de espécimen`.
+7. Agregue `Specimen types`.
 
     Agregue todas las posibilidades. Puede tener más de lo que recolectará.
 
-7. Agregue `Tratamientos`
+8. Agregue `Tratamientos`
 
-    Puede hacerlo de manera similar a los `Tipos de partes de espécimen`.
+    Puede hacerlo de manera similar a `Specimen types`.
 
 {% /steps %}
 
 {% aside type="tip" %}
 
-Las versiones futuras de NAHPU le permitirán compartir la configuración con otros dispositivos. Puede usar las opciones de compartir configuración para compartir toda la lista que creó.
+Las listas de partes y tratamientos son configuraciones del usuario. Puede
+exportarlas e importarlas con los paquetes del proyecto para reutilizar la
+misma terminología y el mismo comportamiento de exportación.
 
 {% /aside %}
 
@@ -44,11 +71,14 @@ Las versiones futuras de NAHPU le permitirán compartir la configuración con ot
 
 2. Haga clic en el botón `+` para agregar un nuevo registro de espécimen.
 
-    También puede usar el icono del menú de tres puntos y tocar en `Crear sitio`.
+    También puede usar el icono del menú de tres puntos y elegir una acción de
+    duplicación.
 
     {% aside type="tip" %}
 
-    Si recolecta la misma `Parte de espécimen` para cada nuevo espécimen, puede minimizar la escritura usando la opción `Duplicar parte`. Toque/haga clic en el botón del menú de tres puntos. Luego, `Duplicar sitio`. Creará un nuevo sitio usando la información del sitio actual, excepto que el `ID del sitio` y las coordenadas estarán vacíos. Luego, complete el `ID del sitio` y agregue las coordenadas.
+    Si recolecta la misma `Parte de espécimen` para cada nuevo espécimen, use
+    `Duplicate part`. Revise los identificadores, las fechas, las horas y los
+    tratamientos de la copia antes de guardarla.
 
     {% /aside %}
 
@@ -71,19 +101,59 @@ Las versiones futuras de NAHPU le permitirán compartir la configuración con ot
 
 7. Seleccione la `Condición` del espécimen.
 
-8. Agregue la `Fecha de prep.` y la `Hora de prep.`.
+8. Agregue la `Fecha de recolección`, `Hora de recolección`, `Fecha de prep.` y
+   `Hora de prep.` cuando estén disponibles.
 
 {% /steps %}
 
-## Registros de recolección
+## Recolecta e identificación
+
+La tarjeta `Collection & Identification` incluye `Museum ID`, el número de
+campo, `Cataloger`, `Preparator`, `Determiner`, `Taxon`, `ID Confidence`,
+`Identification Method`, `Condition`, y las fechas y horas de recolecta y
+preparación.
+
+El editor adaptable de ID permite elegir Personnel o Project para cada
+espécimen. Al cambiar de tipo se elimina el identificador anterior y no se
+reutilizan los números ya consumidos.
 
 ## Taxonomía
 
+La tarjeta `Taxon Info` se completa desde la especie seleccionada. Muestra la
+clasificación y permite consultar el registro taxonómico, incluidos autores,
+nombre común, categoría de Lista Roja, estado CITES y notas si están presentes.
+
 ## Registros de captura
+
+Los registros de captura vinculan el espécimen con su evento:
+
+- `Site ID` y `Event ID`: sitio y evento de recolección.
+- `Capture date` y `Capture time`: fecha y hora de captura; `Relative time`
+  permite usar Dawn, Morning, Afternoon, Dusk o Night.
+- `Method` y `Method ID`: esfuerzo y código del método del evento.
+- `Coordinate ID`: coordenada vinculada al sitio del evento.
+- `Coordinate extent (m)`: extensión positiva opcional del registro de captura;
+  aparece justo debajo de `Coordinate ID`.
+- `Collector`: persona del evento que realizó la recolección.
+
+En las exportaciones Darwin Core, la extensión se suma a la incertidumbre de
+la coordenada. Si no hay una incertidumbre válida, se usa solo la extensión.
+Los valores vacíos, cero o negativos se ignoran.
+
+Al cambiar el evento se borran el método, el colector y la coordenada, pero se
+conservan la fecha y la hora de captura.
 
 ## Mediciones
 
 Seleccione la pestaña a continuación para ver las opciones de medición para cada grupo taxonómico.
+El peso de mamíferos, aves y herpetofauna admite `g`, `kg` y `lbs`, con `g` como
+valor predeterminado. Cambiar la unidad no convierte el número introducido.
+
+El sexo es un vocabulario controlado restringido compartido por todos los
+grupos taxonómicos. `Male`, `Female` y `Unknown` siempre están disponibles. En
+`Settings` > `Specimens` puede añadir `Gynandromorph`, `Hermaphrodite`,
+`Female?` o `Male?`; el signo de interrogación indica incertidumbre del
+examinador.
 
 {% tabs %}
 {% tabitem label="Mamíferos" %}
@@ -96,19 +166,76 @@ Seleccione la pestaña a continuación para ver las opciones de medición para c
 
 {% /tabitem %}
 {% tabitem label="Aves" %}
-Trabajo en progreso.
+- `Peso`, `Envergadura (mm)`, colores de partes blandas, `Sexo`, placa
+  incubatriz, bursa y osificación del cráneo.
 {% /tabitem %}
 {% tabitem label="Peces" %}
 
-Trabajo en progreso.
+Los campos de medición disponibles dependen del formato del catálogo.
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
-Trabajo en progreso.
+- `Sexo`, `Edad`, `Peso`, `SVL (cm)` y observaciones.
+{% /tabitem %}
+{% tabitem label="Artrópodos" %}
+
+La sección de interacciones ecológicas se muestra de forma predeterminada. Use
+`Show specimen morphometrics` para mostrar u ocultar las mediciones; los valores
+morfométricos guardados vuelven a abrir esa sección.
+
+- `Sex`: se elige del vocabulario controlado de sexo del espécimen.
+- `Caste`: la casta de un insecto social, cuando corresponda.
+- Interacciones ecológicas: `Host organism` y `Host part`.
+- Morfometría opcional: `Head width (mm)`, `Body length (mm)`,
+  `Upper wingspan (mm)` y `Lower wingspan (mm)`.
+- `Remarks`: notas ecológicas o del espécimen.
+
+Las condiciones ambientales no son atributos del espécimen. Registre la
+cobertura del dosel en el sitio, en `Site Attributes`, y la temperatura, la
+humedad, el pH, el oxígeno disuelto y la velocidad del flujo en los datos
+ambientales del evento de recolecta.
+
+Los catálogos de artrópodos no muestran campos de detección ni la pestaña de
+parásitos.
+
 {% /tabitem %}
 
 
 
 {% /tabs %}
-## Partes de especímenes
+## Partes de especímenes {% #specimen-parts %}
+
+Cada espécimen puede tener varias partes, como vouchers, tejidos, hisopos o
+parásitos. Una parte puede incluir `Tissue ID`, `QR/barcode ID`, `Preparation
+type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
+`Storage`, `Storage location`, `Date taken`, `PMI`, museos permanente y de
+préstamo, y `Remarks`. Los registros de parásitos también separan el método de
+almacenamiento de la ubicación física.
+
+La pestaña de parásitos está disponible para mamíferos, aves y herpetofauna,
+pero no para catálogos de artrópodos.
+
+## Datos asociados {% #associated-data %}
+
+Use `Associated Data` para enlaces o archivos digitales relacionados, como
+accesiones de GenBank, registros de MorphoSource o archivos de análisis. Los
+campos incluyen `Data Type`, `Name`, `Description`, `Date`, `URL` o un archivo.
 
 ## Multimedia
+
+Use `Media` para imágenes y otros archivos multimedia asociados al espécimen.
+
+## Gestionar registros de especímenes
+
+En el menú de tres puntos del espécimen puede usar:
+
+- `Edit`: actualizar el espécimen, sus mediciones, partes, datos y multimedia.
+- `Duplicate part`: crear un espécimen nuevo copiando la información de partes.
+- `Export specimen`: guardar un JSON o un archivo que incluya multimedia.
+- `Import specimen`: elegir un espécimen nuevo o existente y relacionar sus
+  eventos, sitios y taxones con registros del proyecto actual.
+- `Delete record`: eliminar el espécimen, mediciones, partes, datos y vínculos
+  multimedia. El número de campo no se reutiliza automáticamente.
+- `Delete all records`: eliminar todos los especímenes, mediciones, partes,
+  datos y multimedia del proyecto.
+
+Revise las relaciones y los identificadores generados después de importar.

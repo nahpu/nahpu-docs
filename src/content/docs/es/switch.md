@@ -17,7 +17,7 @@ Si bien los catálogos de campo en papel han sido tradicionalmente el método pr
 
 - **Accesibilidad de los Datos**: NAHPU le permite acceder a sus datos desde cualquier ubicación y compartirlos con colaboradores, asegurando que reciban una copia exacta. Por el contrario, los catálogos en papel requieren transportar físicamente los catálogos, enviar imágenes escaneadas de las páginas o ingresar los registros en una hoja de cálculo, lo que puede retrasar el acceso hasta que regrese del campo y digitalice los datos.
 
-- **Calidad de los Datos**: NAHPU ayuda a estandarizar la recopilación de datos y ayuda a prevenir errores comunes de entrada de datos secundarios que pueden ocurrir al digitalizar catálogos de campo en papel. Las futuras actualizaciones de NAHPU incluirán funciones automáticas de validación de datos.
+- **Calidad de los Datos**: NAHPU ayuda a estandarizar la recopilación de datos y a prevenir errores comunes de entrada al digitalizar catálogos de campo en papel. Configure listas controladas y revise los campos obligatorios antes de salir al campo.
 
 - **Asociación de Datos**: NAHPU le permite vincular sus datos con otras fuentes de datos, como coordenadas GPS, imágenes y grabaciones de audio. Solo necesita ingresar un sitio una vez, que puede estar asociado con múltiples entradas de datos. Por otro lado, los catálogos en papel requieren que escriba el mismo sitio varias veces, generalmente en la parte superior de cada página.
 
@@ -37,7 +37,7 @@ Dos enfoques típicos para la transición a NAHPU desde los catálogos de campo 
 
 Varios factores a considerar al hacer la transición a NAHPU:
 
-- **Elección de dispositivo**. La aplicación está diseñada para funcionar en varios dispositivos, incluidos teléfonos inteligentes, tabletas, computadoras portátiles y de escritorio. Puede comenzar a usar su teléfono inteligente. Si tiene el presupuesto, le recomendamos utilizar una tableta y un teclado Bluetooth para una mejor experiencia. Dependiendo de las condiciones del campo, puede usar una computadora portátil. Para obtener más información, consulte la sección [Requisitos de Dispositivos](./usages/devices).
+- **Elección de dispositivo**. La aplicación está diseñada para funcionar en varios dispositivos, incluidos teléfonos inteligentes, tabletas, computadoras portátiles y de escritorio. Puede comenzar a usar su teléfono inteligente. Si tiene el presupuesto, le recomendamos utilizar una tableta y un teclado Bluetooth para una mejor experiencia. Dependiendo de las condiciones del campo, puede usar una computadora portátil. Para obtener más información, consulte la sección [Requisitos de Dispositivos](../usages/devices).
 
 — **Condiciones de campo**. NAHPU está diseñado para sitios de campo remotos sin acceso a Internet. Considere la durabilidad del dispositivo y la disponibilidad de electricidad. Algunos teléfonos inteligentes nuevos son resistentes al agua y al polvo. Las tabletas y computadoras portátiles pueden necesitar protección adicional. Utilice una funda resistente siempre que sea posible. Para áreas sin electricidad, un banco de energía de 20,000 a 25,000 mAh suele ser suficiente para una semana de trabajo de campo con un teléfono inteligente o una tableta.
 

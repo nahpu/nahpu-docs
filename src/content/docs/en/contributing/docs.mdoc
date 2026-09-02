@@ -8,13 +8,13 @@ We appreciate your interest in improving NAHPU documentation. Several ways you c
 
 - [**Update existing docs**](#update-existing-docs): Fix errors or add new information to current pages
 - [**Create new content**](#create-new-content): Write new pages or sections on topics we haven't covered yet
-- [**Translate docs**](#adding-a-new-language-translation): Help us reach more people by translating into other languages (coming soon)
+- [**Translate docs**](#adding-a-new-language-translation): Help us reach more people by reviewing our translations or adding a new language
 
 ## Updating Existing Docs
 
 ### Team Members
 
-At the bottom of each page on the website, you will find an `Edit page` link. Click on this link to open the page in GitHub. Here's the step to do it:
+At the bottom of each page on the website, you will find an `Edit page` link. Click on this link to open the page in GitHub. Here are the steps to do it:
 
 {% steps %}
 
@@ -29,6 +29,13 @@ At the bottom of each page on the website, you will find an `Edit page` link. Cl
 3. Start by making small changes.
 
    If you are new to the project, begin with minor fixes such as typos, grammar corrections, or broken links before tackling larger edits.
+
+   We use the [Markdoc](https://markdoc.dev/) format for our documentation. This format is similar to Markdown but with additional features for documentation. It is designed to be easy for non-technical contributors to write, while providing the flexibility to style the writing.
+
+   Consider the following when making changes:
+
+   - Any text enclosed with `{% text %}` is a [Starlight component](https://starlight.astro.build/reference/components/). It is sensitive to spaces.
+   - You can use the component to style your writing. Learn more [below](#writing-with-starlight-components).
 
 4. Commit your changes.
 
@@ -51,18 +58,7 @@ At the bottom of each page on the website, you will find an `Edit page` link. Cl
 
 7. Make more changes.
 
-   Repeat steps 2–5 for any additional edits. For larger contributions involving multiple pages or new sections, consider [cloning the repository locally](#local-development) for a more efficient workflow.
-
-
-    We use [Markdoc](https://markdoc.dev/) format for our documentation. This format is similar to markdown but with additional features for documentation. It is designed to be easy for non-technical contributors to contribute while providing flexibility to style the writing.
-
-    Consider the following when making changes:
-
-    - Any text enclosed with `{% text %}` is a [Starlight component](https://starlight.astro.build/reference/components/). It is sensitive to spaces.
-    - You can use the component to style your writing. Learn more [below](#writing-with-starlight-components).
-
-
-3. Continue with step 4 and 5.
+   Repeat steps 2–6 for any additional edits. For larger contributions involving multiple pages or new sections, consider [cloning the repository locally](#local-development) for a more efficient workflow.
 
 {% /steps %}
 
@@ -131,18 +127,45 @@ non-technical contributors. Please reach out to a
 
 ## Create New Content
 
-For create one or two pages, you can add a new file in the [GitHub repository](https://github.com/nahpu/nahpu-docs). The documentation files are inside `src/content/docs/[language]`. We need to add the English content first, then write translations for the other languages. We prefer the documentation in markdoc `.mdoc` format. However, you can start with plain Markdown and let the documentation maintainer do the rest.
+To create one or two pages, you can add a new file in the [GitHub repository](https://github.com/nahpu/nahpu-docs). The documentation files are inside `src/content/docs/[language]`. We need to add the English content first, then write translations for the other languages. We prefer the documentation in markdoc `.mdoc` format. However, you can start with plain Markdown and let the documentation maintainer do the rest.
 
-For a more complex scenario with complex pages and rooting, see the [Deep Dive](./deep_dive) section for more details.
+### Page Metadata
+
+Add the page author and the date it was last updated to the frontmatter of new
+pages and substantially revised pages. Starlight displays this information in
+the page footer.
+
+Use `authors` for one or more contributor names and `lastUpdated` for the date
+of the latest substantive update. Use the ISO date format `YYYY-MM-DD`:
+
+```yaml
+---
+title: "Page title"
+authors:
+  - Author Name
+lastUpdated: 2026-07-25
+---
+```
+
+Add all contributors who authored or substantially revised the page. Update
+`lastUpdated` whenever the page receives a substantive content change.
+
+For a more complex scenario with complex pages and rooting, see the [Deep Dive](#deep-dive) section for more details.
 
 ## Adding a New Language Translation
 
 We're always looking for speakers of languages we don't currently support. To facilitate the addition of new languages, we use AI to assist with translations. If you're interested in contributing, please reach out to one of our [team members](/teams). Our workflow for adding a new language involves:
 
 1. Creating a new language directory in the `src/content/docs` folder. The folder name follows the language code (e.g., `en`, `es`, `fr`).
-2. Using a large language model to translate the English documentation.
-3. Add the sidebar translations in the `astro.config.mjs` file.
-3. Reviewing and revising the AI translation for accuracy by a team member.
+2. Using a large language model to translate the English documentation, following the [Translation glossary](../translation-glossary).
+3. Adding the sidebar translations in the `astro.config.mjs` file.
+4. Reviewing and revising the AI translation for accuracy by a team member.
+5. Adding the reviewer to the page's `authors` front matter, which switches the page's translation notice from "check for accuracy" to the reviewed state.
+
+Every page under a non-English locale carries an **AI-assisted translation**
+notice below its title. The notice is added automatically, so translators do
+not write it into the page. Pages that fall back to English, such as this
+Contributing section, do not show it.
 
 ## Deep Dive
 

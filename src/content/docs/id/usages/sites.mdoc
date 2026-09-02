@@ -30,7 +30,9 @@ sidebar:
 
     {% aside type="tip" %}
 
-    Untuk proyek yang melibatkan banyak perangkat, kami merekomendasikan pembuatan `siteID` yang sama untuk lokasi yang identik. [Fitur penggabungan data yang akan datang](https://github.com/nahpu/nahpu/issues/124) akan menggunakan `siteID` untuk mengidentifikasi dan menggabungkan catatan dari perangkat yang berbeda. Pembaruan NAHPU di masa mendatang akan memungkinkan untuk berbagi info lokasi ke lokasi yang berbeda dengan cara yang serupa seperti berbagi informasi proyek. 
+    Untuk proyek yang menggunakan banyak perangkat, gunakan `Site ID` yang sama
+    untuk lokasi yang identik. Ini memudahkan pencocokan catatan lokasi dan
+    kegiatan ketika diimpor ke perangkat lain.
 
     {% /aside %}
 
@@ -40,7 +42,8 @@ sidebar:
 
 5. Tambahkan tipe lokasi
 
-    Tipe lokasi membantu mengategorikan lokasi berdasarkan karakteristik atau kegunaannya. Saat ini, tidak ada opsi untuk mengedit daftar tersebut. Fitur NAHPU mendatang akan memungkinkan Anda melakukannya.
+    Tipe lokasi membantu mengategorikan lokasi berdasarkan karakteristik atau
+    kegunaannya. Pilih nilai dari daftar tipe yang dikonfigurasi untuk proyek.
 
 6. Isi detail geografi
 
@@ -71,25 +74,108 @@ sidebar:
 
 {% /steps %}
 
-## Menambahkan koordinat
+## Informasi lokasi
 
-Anda dapat menambahkan koordinat secara manual dari perangkat GPS Anda atau menggunakan koordinat perangkat.
+Formulir lokasi mencatat tempat dan orang yang bertanggung jawab:
 
-### Mendapatkan koordinat dari perangkat saat ini
+- `Site ID`: pengenal unik dalam proyek yang digunakan oleh kegiatan dan catatan
+  yang dipertukarkan.
+- `Site leader`: orang yang bertanggung jawab atas kamp, jalur jebakan, atau
+  lokasi lainnya.
+- `Site type`: kategori lokasi yang telah dikonfigurasi.
+- Lokalitas dan catatan: teks lokalitas yang tepat serta keterangan penggunaan
+  lokasi.
+- Tipe, kondisi, dan deskripsi habitat: lingkungan yang diamati di lokasi.
+
+## Mengelola lokasi
+
+Buka menu tiga titik pada halaman lokasi untuk menggunakan tindakan berikut:
+
+- `Edit site`: memperbarui lokasi dan koordinatnya.
+- `Duplicate site`: menyalin rincian ke catatan baru dengan ID dan koordinat
+  kosong.
+- `Show QR`: menampilkan catatan untuk dipindai perangkat seluler lain.
+- `Export site`: menyimpan catatan sebagai JSON.
+- `Scan QR`: membuat atau mengganti lokasi dari kode QR.
+- `Import site`: membuat atau mengganti lokasi dari catatan JSON yang diekspor.
+- `Delete record`: menghapus lokasi saat ini. Lokasi tidak dapat dihapus selama
+  masih digunakan oleh kegiatan.
+- `Delete all records`: menghapus semua lokasi dalam proyek. Hapus kegiatan
+  yang merujuk lokasi terlebih dahulu.
+
+Saat mengimpor lokasi, pilih apakah catatan membuat lokasi baru atau memperbarui
+lokasi yang ada. Periksa kembali personel dan koordinat yang terkait.
+
+## Menyalin data lokasi dari proyek lain
+
+Gunakan `Copy from project ...` bila sebuah lokasi pada proyek lain memuat
+informasi yang ingin Anda pakai ulang di proyek saat ini. Tindakan ini mengisi
+lokasi yang sedang dibuka; tindakan ini tidak membuat lokasi baru dan tidak
+mengubah proyek sumbernya.
+
+Lokasi saat ini harus kosong sebelum Anda mulai. Lokasi yang sudah berisi
+informasi, koordinat, media, atau data tertaut tidak dapat menerima data
+salinan. Harus ada setidaknya dua proyek, karena sumbernya wajib berupa proyek
+yang berbeda.
 
 {% steps %}
 
-1. Ketuk/klik tombol `Titik GPS` di sebelah tombol `Tambah koordinat`.
+1. Buka lokasi yang akan menerima informasi salinan. Pastikan catatan lokasi itu
+   masih kosong.
 
-2. Ini akan membawa Anda ke halaman tambah koordinat dengan sebagian besar informasi sudah terisi.
+2. Buka menu tiga titik lalu pilih `Copy from project ...`.
 
-3. Isi sisa bidang lainnya. 
-    
-    Lihat bagian [menambahkan koordinat secara manual](#menambahkan-koordinat-secara-manual) untuk detailnya. Nama unit GPS Anda harus sesuai dengan model persis perangkat Anda. Contoh: `iPad Mini 4`.
+3. Pilih proyek sumber berdasarkan namanya, lalu pilih salah satu lokasinya.
+
+4. Pilih data yang akan disalin. Pilihan yang tersedia mencakup:
+
+   - Site ID
+   - Site leader
+   - Site type
+   - Kolom geografi, meliputi negara, gugus pulau, negara bagian/provinsi,
+     kabupaten/paroki/distrik, kotamadya/kota, dan lokalitas rinci
+   - Remarks
+   - Tipe, kondisi, dan deskripsi habitat
+   - Koordinat
+
+   Kolom yang tidak berisi data pada lokasi sumber tidak dapat dipilih. Memilih
+   `Coordinates` akan menyalin seluruh koordinat milik lokasi sumber terpilih.
+
+5. Pilih `Copy` untuk mengisi lokasi saat ini.
 
 {% /steps %}
 
-### Menambahkan koordinat secara manual
+Lokasi sumber tetap tidak berubah. Tindakan ini hanya menyalin kolom lokasi dan
+koordinat; tindakan ini tidak menyalin media lokasi, tautan data terkait,
+catatan situs fosil, kegiatan pengumpulan, atau catatan lain yang tertaut pada
+lokasi sumber.
+
+## Menambahkan koordinat {% #adding-coordinates %}
+
+Satu lokasi dapat memiliki beberapa catatan koordinat untuk ujung jalur
+jebakan, titik pengumpulan yang berbeda, atau titik lain yang termasuk dalam
+lokasi yang sama. Anda dapat menambahkan koordinat secara manual, menggunakan
+GPS perangkat, atau mengimpor titik dari file GIS/GPS.
+
+### Menggunakan GPS perangkat saat menambahkan koordinat {% #use-device-gps-while-adding-a-coordinate %}
+
+{% steps %}
+
+1. Pada halaman lokasi, buka panel koordinat lalu ketuk/klik `Add coordinate`.
+
+2. Pada halaman `Add coordinates`, gunakan kartu `Device GPS` lalu ketuk/klik
+   tombol lokasinya.
+
+3. NAHPU mengisi lintang desimal, bujur desimal, ketinggian, dan ketidakpastian
+   GPS jika disediakan oleh sistem operasi. Periksa nilainya, isi bidang lain,
+   lalu simpan koordinat.
+
+    Masukkan nama unit GPS secara terpisah menggunakan model perangkat yang
+    tepat, misalnya `iPad Mini 4`.
+
+{% /steps %}
+
+### Menambahkan koordinat secara manual {% #manually-adding-coordinate %}
 
 {% steps %}
 
@@ -111,9 +197,21 @@ Anda dapat menambahkan koordinat secara manual dari perangkat GPS Anda atau meng
 
     {% /aside %}
 
-3. Masukkan nilai lintang (latitude) dan bujur (longitude).
+3. Pilih format dan masukkan nilai koordinat.
 
-    Saat ini, NAHPU hanya mendukung koordinat desimal.
+    NAHPU menerima derajat desimal (DD), derajat dan menit desimal (DDM),
+    derajat-menit-detik (DMS), serta satu nilai UTM dalam format
+    `zona hemisfer timur utara`. UTM menggunakan WGS84.
+
+    Untuk DDM dan DMS, masukkan derajat, menit, dan detik pada field angka yang
+    terpisah. Kemudian pilih N/S untuk lintang dan E/W untuk bujur. NAHPU
+    menambahkan simbol koordinat dan menggabungkan bagian tersebut sebagai
+    nilai lintang dan bujur verbatim Darwin Core.
+
+    NAHPU menyimpan nilai desimal untuk perhitungan serta nilai gabungan dan
+    sistem koordinat untuk field verbatim. Jika nilai koordinat sudah diisi,
+    perubahan format meminta konfirmasi sebelum menghapusnya. Menyimpan
+    koordinat DD menghapus nilai verbatim lama.
 
 4. Tambahkan ketinggian (elevation) dalam meter.
 
@@ -134,3 +232,64 @@ Anda dapat menambahkan koordinat secara manual dari perangkat GPS Anda atau meng
     Tambahkan informasi tambahan jika ada.
 
 {% /steps %}
+
+### Mengimpor koordinat dari file
+
+Gunakan impor file ketika beberapa titik sudah tersedia dalam file GIS atau
+GPS. Impor koordinat tersedia melalui `Add coordinate → Import` pada suatu
+lokasi.
+
+{% steps %}
+
+1. Buka lokasi, ketuk/klik `Add coordinate`, lalu pilih mode `Import`.
+
+2. Format yang didukung ditampilkan di atas tindakan impor. Pilih
+   `Select coordinate file`, lalu pilih file GeoJSON/JSON, KML, Shapefile
+   terkompresi, atau GPX. Anda juga dapat memilih `Scan QR` untuk menambahkan
+   catatan koordinat dari perangkat NAHPU lain.
+
+3. Periksa titik yang diimpor dan teks peringatan apa pun. Peta menyoroti titik
+   yang sedang difokuskan, dan semua titik yang valid dipilih secara default.
+
+4. Gunakan `Select all`, `Clear all`, atau kotak centang individual untuk
+   memilih titik yang akan ditambahkan. Ketuk/klik `Add N selected` untuk
+   menyimpannya ke lokasi saat ini.
+
+{% /steps %}
+
+Impor file mempertahankan nama titik, catatan, lintang dan bujur desimal, serta
+ketinggian. Titik yang diimpor ditetapkan ke lokasi saat ini dan datum `WGS84`;
+alur ini tidak menyediakan informasi ketidakpastian atau unit GPS.
+
+Hanya titik yang diimpor. Fitur non-titik dalam GeoJSON atau Shapefile,
+geometri non-titik dalam KML, koordinat yang tidak valid, dan catatan lain yang
+tidak didukung akan dilewati dan dilaporkan saat peninjauan. Pada GPX, hanya
+waypoint yang diimpor; rute dan track diabaikan. Jika tidak ada titik valid yang
+tersisa, NAHPU menampilkan kesalahan dan tidak menambahkan catatan.
+
+### Mengelola dan mengekspor koordinat
+
+Tombol `Manage` pada panel koordinat lokasi membuka semua koordinat proyek.
+Anda dapat memfilter berdasarkan lokasi, memilih titik tertentu atau semua titik
+yang terlihat, memusatkan peta pada titik, dan membuka peta dalam layar penuh.
+
+{% steps %}
+
+1. Buka panel koordinat suatu lokasi dan ketuk/klik `Manage`.
+
+2. Filter berdasarkan lokasi jika diperlukan, lalu pilih koordinat yang akan
+   diekspor.
+
+3. Ketuk/klik `Export coordinates (N)`.
+
+4. Pilih `GeoJSON (.geojson)`, `KML (.kml)`, atau `Shapefile bundle (.zip)`.
+   Masukkan nama file, pilih direktori tujuan, lalu pilih `Export`.
+
+5. Setelah file dibuat, gunakan `Share` pada perangkat yang mendukung berbagi.
+
+{% /steps %}
+
+Setiap koordinat yang diekspor harus memiliki lintang dan bujur desimal yang
+valid. Ekspor GIS mencakup nama, catatan, lintang dan bujur desimal WGS84, serta
+ketinggian jika tersedia. Ekspor ini berbeda dari `Export records`, paket
+proyek, dan cadangan database.

@@ -1,0 +1,263 @@
+---
+title: "NAHPU design system"
+sidebar:
+  order: 6
+---
+
+NAHPU uses Flutter's Material 3 components to support scientists recording
+complex natural-history data on phones, tablets, laptops, and desktops. The
+design system combines Material semantics with NAHPU layout and visual tokens.
+Contributors should reuse these foundations instead of creating a parallel
+style for one screen.
+
+## Design goals
+
+- **Clarity first.** The screen purpose, current state, and next action should
+  be understandable before a user enters data.
+- **Support field conditions.** Workflows should remain deterministic and
+  understandable without reliable network access.
+- **Reveal complexity gradually.** Put primary work first and uncommon options
+  in secondary sections, menus, dialogs, or conditional steps.
+- **Preserve data and context.** Validation and failed saves must not silently
+  discard user input.
+- **Design for everyone.** Support touch, keyboard, text scaling, meaningful
+  labels, and long localized text.
+
+## Material 3 foundation
+
+Both light and dark themes use `ThemeData(useMaterial3: true)`. Their color
+schemes are generated from semantic seed colors:
+
+| Role | Seed |
+| --- | --- |
+| Primary | Canopy teal `#1B9E77` |
+| Secondary | Misty sage `#4D625B` |
+| Tertiary | Moss shadow `#1E352F` |
+
+Use `Theme.of(context).colorScheme` roles such as `surface`,
+`surfaceContainerHighest`, `primaryContainer`, `outlineVariant`, and `error`.
+Do not hard-code a light or dark color for ordinary application chrome.
+
+NAHPU customizes the Material app bar, cards, and input decoration. Material 3
+still owns component states and behavior; NAHPU tokens define recurring
+spacing, corners, strokes, elevation, control sizes, and responsive widths.
+
+## Curated even-value scale
+
+App-authored visual values must come from `lib/styles/design_tokens.dart`.
+Values are named by purpose so a contributor chooses a relationship, not only
+a number.
+
+### Spacing
+
+| Token | Value | Typical use |
+| --- | ---: | --- |
+| `NahpuSpacing.xxs` | 2 | Label/value separation |
+| `NahpuSpacing.xs` | 4 | Micro-gutters and compact inset |
+| `NahpuSpacing.sm` | 6 | Deliberately compact list separation |
+| `NahpuSpacing.md` | 8 | Default field and control gap |
+| `NahpuSpacing.lg` | 12 | Container content and grouped controls |
+| `NahpuSpacing.xl` | 16 | Section interiors and action separation |
+| `NahpuSpacing.xxl` | 24 | Page edges and major separation |
+| `NahpuSpacing.xxxl` | 32 | Prominent empty states and large groups |
+
+The larger 48 and 64 values are reserved for display-scale separation. Do not
+use them to compensate for an unclear hierarchy.
+
+### Corners, strokes, and elevation
+
+| Kind | Values | Use |
+| --- | --- | --- |
+| Radius | 8, 12, 16, 24 | Small controls, Material cards, grouped panels, prominent containers |
+| Stroke | 0, 2 | No outline or a regular app-owned outline |
+| Elevation | 0, 2, 4, 8, 12 | Flat content through overlay hierarchy |
+
+Use `StadiumBorder` for pills and chips rather than inventing a very large
+radius. NAHPU is predominantly flat: borders, semantic surfaces, and spacing
+establish hierarchy. Use elevation only when an overlay or persistent
+navigation needs separation.
+
+### Legacy values
+
+`5` and `10` are legacy design values. Although 10 is mathematically even, it
+is excluded from NAHPU's curated scale.
+
+| Legacy use | Replacement |
+| --- | --- |
+| 5-pixel padding or gap | 4 |
+| Compact 10-pixel padding or gap | 8 |
+| Container-level 10-pixel padding | 12 |
+| 10-pixel radius | 12 |
+| 10-pixel text or progress indicator | 12 or a theme text style |
+| Elevation 10 | 8 |
+
+Other arbitrary values should also move to the appropriate scale: for
+example, 15-pixel padding becomes 16, a 25-pixel icon becomes 24, and explicit
+1/1.2/1.5-pixel app outlines become 2. Do not mechanically round everything
+to the nearest number; preserve whether the relationship is compact, normal,
+or prominent.
+
+The token policy covers application padding, gaps, radii, strokes, elevation,
+icons, progress indicators, explicit UI type, and fixed control dimensions.
+It does not reinterpret opacity, ratios, animation durations, domain values,
+map geometry, or user-configurable document and template dimensions.
+
+## Layout hierarchy
+
+A typical page follows this hierarchy:
+
+1. `Scaffold` supplies the base surface.
+2. `AppBar` identifies the current screen.
+3. `NavigationBar`, `NavigationDrawer`, and floating actions expose navigation
+   and project-wide operations.
+4. `SafeArea`, scrolling, and width constraints protect usable content.
+5. `FormSection`, `FormCard`, or `CommonSettingSection` groups related ideas.
+6. Fields and actions follow the user's task order inside each section.
+
+The project shell keeps its five main destinations in an `IndexedStack` and
+uses a Material 3 bottom `NavigationBar`. The project drawer contains transfer,
+export, backup, settings, close, and delete operations. Creation actions use a
+floating action button or speed dial.
+
+Use filled or rounded icons for selected destinations and outlined icons for
+unselected destinations. Destructive actions use the semantic error color and
+require explicit confirmation.
+
+## Adaptive layout
+
+Layout decisions respond to available constraints rather than the operating
+system. Use `LayoutBuilder` for a local region and
+`MediaQuery.sizeOf(context)` for viewport-level behavior.
+
+NAHPU's shared screen classes are:
+
+| Class | Width |
+| --- | ---: |
+| Phone | Under 600 logical pixels |
+| Tablet | 600–899 logical pixels |
+| Desktop | 900 logical pixels and above |
+
+The common row/column transition is 600, but it is not a universal breakpoint.
+The project-creation wizard changes from horizontal step chips to a left step
+rail at 840 because its navigation needs more room.
+
+| Interface | Compact behavior | Wide behavior |
+| --- | --- | --- |
+| Project dashboard | Four panels stacked | Two panels in each row |
+| Project wizard | Horizontally scrollable step chips | 248-pixel step rail and content pane |
+| Setting field groups | Fields stacked | Related fields share flexible rows |
+| Project navigation labels | Only the selected label is shown on phones | All labels are shown |
+| Home project grid | Column count follows available width | Additional columns are added |
+
+Shared layout primitives include:
+
+- `AdaptiveLayout`: switches between `LayoutRow` and a vertical container.
+- `AdaptiveMainLayout`: lays out dashboard-style panels horizontally or
+  vertically.
+- `LayoutRow`: gives children flexible, equal-width slots.
+- `ConstrainedLayout`: centers readable content with a 600-pixel maximum.
+- `ScrollableConstrainedLayout`: adds vertical scrolling to constrained
+  content.
+
+Common content maxima are 600 for ordinary forms, 720 for project forms, 760
+for wizard content, 800 for the home project list, and 1200 for Settings.
+These widths are semantic constraints, not spacing values.
+
+Platform checks remain appropriate for capabilities—for example, showing QR
+scanning on mobile or choosing a bottom sheet instead of a dialog. They should
+not determine whether ordinary content uses a row or column.
+
+## Surfaces and containers
+
+- Use the scaffold `surface` as the page background.
+- Use a translucent `surfaceContainerHighest` for secondary grouped content.
+- Use `primaryContainer` or another semantic container role for selected or
+  primary regions.
+- Use `outlineVariant` with the regular 2-pixel stroke for app-owned panel
+  boundaries.
+- Use `error` and its matching on-color for destructive or invalid states.
+
+Global Material cards use a 12-pixel radius. App-owned form sections, setting
+groups, and project panels generally use a 16-pixel radius. Prominent overlays
+or media containers may use 24. Nested components should use a smaller radius
+than their outer container.
+
+Prefer shared containers before adding decoration directly:
+
+| Need | Existing pattern |
+| --- | --- |
+| Dashboard or record panel | `FormCard` |
+| Group of related form fields | `FormSection` |
+| Settings group with optional dividers | `CommonSettingSection` |
+| Readable scrolling form | `ScrollableConstrainedLayout` |
+| Compact horizontal inset | `CommonPadding` |
+
+## Typography and actions
+
+Use `Theme.of(context).textTheme` roles. Page and section hierarchy should not
+depend on an isolated hard-coded font size. NAHPU uses Merriweather for the
+established app-bar and branded-heading treatment; body and control text use
+the active Material typography.
+
+- Use a filled button for the primary completion action.
+- Use an outlined button for a secondary or cancel action.
+- Use a text button for a tertiary action or low-emphasis navigation.
+- Use icon-only buttons only when the icon is familiar and has a tooltip or
+  semantic label.
+- Disable submit or continue actions while invalid or saving, and show visible
+  progress during asynchronous work.
+
+## Dropdowns and bounded controls
+
+Dropdowns beside other controls need a bounded slot. Set `isExpanded: true`
+and wrap the field in `Expanded` or `Flexible` when it is inside a row.
+
+```dart
+Row(
+  children: [
+    Expanded(
+      child: DropdownButtonFormField<String>(
+        isExpanded: true,
+        decoration: const InputDecoration(labelText: 'Format'),
+        items: formatItems,
+        onChanged: onFormatChanged,
+      ),
+    ),
+    const SizedBox(width: NahpuSpacing.lg),
+    Flexible(child: actionButton),
+  ],
+)
+```
+
+If the row cannot fit long or localized labels, use `LayoutBuilder` and switch
+to a column instead of allowing a render overflow.
+
+## States, accessibility, and field use
+
+Design loading, empty, error, disabled, saving, success, and destructive
+confirmation states together with the normal state.
+
+- Keep Material touch targets and readable contrast in light and dark themes.
+- Do not communicate selection, validation, or errors by color alone.
+- Add tooltips or semantic labels to icon-only actions.
+- Preserve keyboard focus and traversal on desktop.
+- Test larger text and longer Spanish, Portuguese, and Indonesian labels.
+- Keep the primary workflow usable offline and make save state visible.
+- Guard asynchronous UI updates with `context.mounted`.
+- Keep database, file, network, and bridge work out of `build` methods.
+
+## UI review checklist
+
+Before submitting a UI change, verify:
+
+- The screen uses Material 3 theme roles and NAHPU design tokens.
+- No new 5/10 or arbitrary app-authored visual literals were introduced.
+- The primary task and next action are obvious.
+- The screen works in light and dark themes.
+- Relevant widths are tested just below, at, and above 600, 840, or 900.
+- Rows use bounded flexible children and do not overflow localized text.
+- Content scrolls without being hidden by the keyboard or safe-area insets.
+- Loading, empty, error, disabled, and saving states are usable.
+- Keyboard navigation, tooltips, semantics, text scaling, and touch targets are
+  appropriate.
+- Focused widget tests cover changed interaction or adaptive behavior.

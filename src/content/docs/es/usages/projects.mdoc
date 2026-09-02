@@ -4,41 +4,159 @@ sidebar:
   order: 2
 ---
 
-## Crear un nuevo proyecto
+Los proyectos organizan los datos de NAHPU. Un proyecto puede contener
+personal, taxones, sitios, eventos de recolección, registros de especímenes,
+narrativas y archivos multimedia vinculados.
 
-Para crear un nuevo proyecto, utilice el botón `+` en la esquina inferior derecha de la pantalla de inicio. Se le pedirá que ingrese un nombre de proyecto, una descripción del proyecto y el formato principal del catálogo.
+## Crear un proyecto
 
-- **El nombre del proyecto** debe ser corto y descriptivo.
-- **La descripción del proyecto** debe ser de unas pocas frases que expliquen el propósito del proyecto.
-- **El formato principal del catálogo** es el formato del catálogo que se utilizará para generar las páginas del catálogo de especímenes. Puede cambiar esto más tarde. También puede mezclar diferentes tipos de formatos de catálogo en el mismo proyecto.
+{% aside type="caution" %}
+Un proyecto necesita al menos una persona con el rol `Cataloger`. Al elegir identificadores de campo `Personnel`, el asistente agrega un paso condicional `Cataloger` y no le deja terminar hasta que exista una persona elegible. Consulte [Personal](./personnel/#agregar-personal-a-un-proyecto).
+{% /aside %}
 
-## Conociendo el tablero (dashboard)
+En la pantalla de inicio, seleccione `+`, elija `New project` y decida si va a
+crear una identidad nueva o reutilizar la información de otro dispositivo.
 
-Después de crear un proyecto, accederá al tablero del proyecto. El tablero está dividido en cuatro paneles principales:
+{% steps %}
 
-- **Resumen del proyecto** - Este panel proporciona una visión rápida del proyecto. Incluye el nombre del proyecto, la descripción, el [investigador principal](./projects#investigador-principal), la ubicación, la fecha de inicio, la fecha de finalización, la fecha de creación de la base de datos y la fecha del último acceso.
-- **Personal** - Este panel enumera a todo el personal asociado con el proyecto. Puede agregar más personal haciendo clic en el botón `[+ Agregar personal]` en la parte inferior del panel.
-- **Registro de taxones** - Este panel enumera todos los taxones registrados en la base de datos. Puede agregar más taxones haciendo clic en el botón `[+ Agregar taxón]` en la parte inferior del panel. También puede importar taxones desde un archivo csv haciendo clic en el botón `[Importar desde archivo]`.
-- **Estadísticas de registros** - Gráfico que muestra estadísticas en tiempo real del número de registros en el proyecto.
+1. En `Welcome`, seleccione `Create new project`. Para reutilizar una
+   identidad, use `Import project-info JSON` o `Scan project QR` en un móvil.
+2. En `Project information`, introduzca un nombre único de 3 a 25 caracteres.
+   Puede añadir descripción, investigador principal, acceso institucional,
+   ubicación, zona horaria IANA y fechas.
+3. En `Main taxon`, elija el taxón que controlará los formularios nuevos en
+   este dispositivo. Puede omitirlo y cambiarlo después en `Settings` >
+   `Format`.
+4. En `Field ID`, elija `Personnel` o `Project`. El modo personal requiere un
+   Cataloger apto; el modo de proyecto combina prefijo, número actual y sufijo
+   sin añadir separadores. Puede configurarlo después en `Settings` >
+   `Specimens`.
+5. En `Review`, revise la identidad, la configuración del dispositivo y la
+   disponibilidad de taxones. Seleccione `Create project`.
 
-## Actualización de la información del proyecto
+{% /steps %}
 
-Puede agregar más información sobre el proyecto haciendo clic en el botón `lápiz` en la parte inferior derecha del resumen del proyecto.
+NAHPU genera un UUID para los proyectos nuevos. Importar la información o
+escanear el QR conserva el UUID de origen, pero solo copia metadatos: no incluye
+registros, personal, taxones, multimedia ni opciones del dispositivo.
 
-## Eliminar proyectos
+## Zona horaria del proyecto
 
-Hacemos deliberadamente difícil eliminar un proyecto. Si está seguro de que desea eliminar un proyecto, primero elimine todos los registros asociados con el proyecto siguiendo todos los pasos a continuación:
+El campo `Time zone` registra la ubicación de zona horaria IANA donde se realiza
+el proyecto, como `Asia/Jakarta` o `America/New_York`. Seleccione la ubicación
+del trabajo de campo, no la zona horaria del dispositivo usado para introducir
+los datos.
 
-1. Vaya al tablero del proyecto.
-2. Haga clic en el botón de narrativa en la barra de navegación inferior. Utilice el botón de menú (icono de tres puntos) en la esquina superior derecha para seleccionar `Eliminar todos los registros`.
-3. Repita el paso 2 para `Registros de especímenes`, `Eventos de recolección` y `Registros de sitios`. Se requiere el mismo orden exacto para eliminar los registros.
-4. Regrese al tablero del proyecto y elimine a todo el personal enumerado.
-5. Elimine el proyecto utilizando el botón de eliminar en el menú lateral.
+NAHPU guarda la zona horaria como metadato del proyecto. Se muestra en Project
+Overview, se incluye al compartir la información o transferir el proyecto y
+está disponible como `project::timeZone` en plantillas y exportaciones. Esto
+proporciona contexto para interpretar fechas y horas en otros dispositivos.
 
+La zona horaria no cambia el reloj del dispositivo ni convierte automáticamente
+las horas existentes de narrativas, eventos o especímenes. Esas horas siguen
+siendo los valores del reloj local introducidos en cada registro. Use la zona
+horaria del proyecto al registrar el trabajo de campo y mantenga la misma
+configuración en todos los dispositivos.
 
+### Ver fechas y horas en otro dispositivo
+
+NAHPU guarda las fechas y horas como valores simples, no como instantes
+conscientes de la zona horaria. Al abrir el mismo proyecto en otro dispositivo,
+NAHPU no cambia la hora registrada según la zona horaria de ese dispositivo. El
+dispositivo puede mostrar el mismo valor con un formato distinto según su
+configuración regional—por ejemplo, cambiar el orden de la fecha, el nombre del
+mes o el formato de 12/24 horas—pero el valor introducido permanece igual.
+
+Por ejemplo, si la zona horaria del proyecto es `Asia/Jakarta` y un evento se
+registra como **12 de mayo, 08:30**, otro dispositivo puede mostrar la fecha y
+la hora con un formato diferente, pero no convertirá automáticamente el valor
+a otra hora. `Asia/Jakarta` identifica el contexto en el que debe entenderse
+`08:30`.
+
+### Por qué es importante
+
+Mantener correcta la zona horaria del proyecto ayuda a comparar eventos
+introducidos en distintos dispositivos, conserva el contexto temporal al
+compartir o transferir datos y facilita la interpretación reproducible de las
+exportaciones. Si el equipo trabaja entre zonas horarias o introduce datos
+históricos de otro lugar, explique la excepción en una narrativa u otro
+contexto apropiado del registro.
+
+## Administrar proyectos desde la pantalla de inicio
+
+Cada proyecto tiene un menú de acciones:
+
+- **Edit info** - Actualiza el formulario del proyecto.
+- **Show QR** - Muestra la información del proyecto para escanearla en un
+  dispositivo móvil.
+- **Export info** - Exporta la información del proyecto como JSON. No incluye
+  sus registros ni archivos multimedia.
+- **Details** - Muestra la información del proyecto sin editarla.
+
+## Panel del proyecto
+
+El panel contiene cuatro secciones:
+
+- **Project Overview** - Muestra el nombre, UUID, descripción, investigador
+  principal, acceso, ubicación, zona horaria, fechas, creación y último acceso.
+- **Personnel** - Lista el personal asignado y permite usar `Add personnel`
+  para seleccionar una persona existente o crear una nueva.
+- **Taxon Registry** - Lista los taxones registrados y permite añadirlos o
+  importarlos.
+- **Record Statistics** - Resume los registros del proyecto y ofrece
+  estadísticas detalladas.
+
+El menú del proyecto también contiene acciones para transferir, exportar,
+respaldar, configurar y eliminar el proyecto.
+
+## Actualizar la información del proyecto
+
+Desde el panel, seleccione `Edit` en Project Overview. Desde la pantalla de
+inicio, abra el menú de acciones y seleccione `Edit info`. El formulario agrupa
+los detalles, lugar y tiempo, y fechas. Cambie el taxón principal o los ID en
+[Configuración](../settings).
+
+## Compartir información del proyecto {% #sharing-project-information %}
+
+Para copiar la información sin transferir registros:
+
+1. En el dispositivo de origen, seleccione `Export info` o `Show QR`.
+2. En el dispositivo receptor, seleccione `New project` y use `Import
+   project-info JSON` o `Scan project QR` en un móvil.
+
+Estos métodos conservan el UUID y crean un proyecto con la misma información.
+Para transferir registros, multimedia y otros datos, use [Transferir un
+proyecto](../export/project-transfer).
+
+## Transferir datos del proyecto
+
+Use `Export project` y `Merge project` para combinar datos del mismo proyecto
+en distintos dispositivos NAHPU. La guía de [Transferir un proyecto](../export/project-transfer)
+explica las exportaciones JSON.GZ sin multimedia para cargas con internet
+limitado y las exportaciones ZIP/TAR.GZ para copias completas con multimedia,
+además de las copias de seguridad, la comprobación del UUID y la resolución de
+conflictos.
+
+`Bundle records` es una exportación distinta para publicación, análisis,
+archivo o uso por terceros. No se puede combinar con `Merge project`.
+
+## Eliminar un proyecto
+
+Abra el menú del proyecto y seleccione `Delete project`. NAHPU solicita los
+primeros cinco caracteres del UUID porque la eliminación no se puede deshacer.
+
+La eliminación borra registros de especímenes y mediciones, eventos y
+esfuerzos, personal de eventos, narrativas, sitios y coordenadas, vínculos de
+personal, multimedia y el registro del proyecto. También elimina los archivos
+guardados. Los archivos compartidos con un registro taxonómico se desvinculan
+en lugar de borrarse. Si falla la limpieza de archivos, NAHPU muestra una
+advertencia después de borrar los registros de la base de datos.
+
+Exporte una transferencia del proyecto o una copia de seguridad antes de
+eliminarlo si puede necesitar los datos más adelante.
 
 ## Terminología
 
-### Investigador Principal
+### Investigador principal
 
-El investigador principal es la persona responsable del proyecto.
+Es la persona responsable del proyecto.

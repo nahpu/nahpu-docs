@@ -1,0 +1,128 @@
+---
+title: "Troubleshooting"
+sidebar:
+  order: 14
+---
+
+## `flutter_rust_bridge_codegen` not found
+
+**Cause:** `flutter_rust_bridge_codegen` is not in your `PATH`.
+
+**Fix:** Install it and ensure Cargo binaries are available to your shell.
+
+```bash
+cargo install flutter_rust_bridge_codegen
+export PATH="$HOME/.cargo/bin:$PATH"
+```
+
+## LLVM not found on macOS
+
+**Cause:** Flutter Rust Bridge codegen cannot find LLVM.
+
+**Fix:** Install LLVM with Homebrew.
+
+```bash
+brew install llvm
+```
+
+## CocoaPods issues on macOS
+
+**Cause:** CocoaPods is outdated, missing, or incompatible with the current
+Xcode version.
+
+**Fix:** Install or update CocoaPods and reinstall pods.
+
+```bash
+sudo gem install cocoapods
+cd ios
+pod deintegrate
+pod install
+```
+
+If needed, clear the CocoaPods cache.
+
+```bash
+pod cache clean --all
+rm -rf ~/Library/Caches/CocoaPods
+rm -rf ios/Pods
+rm -rf ios/Podfile.lock
+cd ios && pod install
+```
+
+## Windows linker errors
+
+**Cause:** MSVC build tools or the Windows SDK are missing or misconfigured.
+
+**Fix:** Install [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+with the **Desktop development with C++** workload, then use the MSVC Rust
+toolchain.
+
+```bash
+rustup default stable-x86_64-pc-windows-msvc
+```
+
+## Android context was not initialized
+
+**Cause:** The Dart VM loads the Rust library differently than a standard
+Android JVM app.
+
+**Fix:** Check the current Flutter Rust Bridge Android setup and regenerate the
+bridge files. This error usually means the Android native loading path is out of
+sync with the bridge configuration.
+
+```bash
+python scripts.py frb --generate
+flutter clean
+flutter pub get
+```
+
+## iOS TestFlight reports `store_dart_post_cobject` not found
+
+**Cause:** Xcode stripped symbols needed by Flutter Rust Bridge.
+
+**Fix:** In Xcode, open the build settings for the native Rust target. Under
+**Deployment**, set **Strip Linked Product** to `No` and **Strip Style** to
+`Debugging Symbols`.
+
+## App stuck on home screen after schema changes
+
+**Cause:** A schema change was made without a matching version bump, generated
+code update, or migration.
+
+**Fix for development:** Confirm the database path and follow the schema and
+migration workflow in [Persistence data](../database). Delete only the local
+development database and rerun the app. For production changes, add a real
+migration.
+
+{% tabs %}
+{% tabitem label="macOS" %}
+```bash
+find ~/Library/Containers -name "nahpu.db" 2>/dev/null
+rm /path/to/nahpu.db
+```
+{% /tabitem %}
+{% tabitem label="Linux" %}
+```bash
+find ~/.local/share -name "nahpu.db" 2>/dev/null
+rm /path/to/nahpu.db
+```
+{% /tabitem %}
+{% tabitem label="Windows" %}
+```powershell
+Get-ChildItem -Recurse -Path "$env:USERPROFILE\Documents" -Filter "nahpu.db"
+Remove-Item "$env:USERPROFILE\Documents\nahpu\nahpu.db"
+```
+{% /tabitem %}
+{% tabitem label="Android Emulator" %}
+```bash
+adb shell
+cd /data/data/org.nahpu.app/databases
+rm nahpu.db
+```
+{% /tabitem %}
+{% /tabs %}
+
+{% aside type="note" title="Check the database path" %}
+When you run `flutter run`, NAHPU prints the database path early in the terminal
+output. Use that path to confirm the file before deleting it.
+{% /aside %}

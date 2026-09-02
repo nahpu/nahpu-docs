@@ -1,72 +1,232 @@
 ---
-title: Kegiatan Pengoleksian
+title: Kegiatan Pengumpulan
 sidebar:
   order: 6
 ---
 
-Kegiatan pengoleksian (Collecting Events) membantu Anda melacak upaya pengumpulan data, personel dan anggota tim, cuaca, dan data astronomi untuk setiap kegiatan. Catatan spesimen ditautkan langsung ke kegiatan, bukan ke lokasi penelitian.
+Kegiatan pengumpulan membantu Anda melacak aktivitas, upaya, personel, data
+lingkungan, dan data astronomi untuk satu periode kerja di sebuah lokasi.
+Catatan spesimen terhubung ke kegiatan pengumpulan, bukan langsung ke lokasi,
+sehingga kegiatan menjadi jembatan antara spesimen dan konteks lokasi,
+koordinat, metode, serta pengumpulnya.
 
 ## Menyiapkan kegiatan
 
-Daftar default NAHPU untuk `Metode Pengumpulan` dan `Peran Personel` terbatas dan tidak mencakup semua opsi. Jika ini adalah proyek NAHPU pertama Anda, kami menyarankan untuk menyiapkan entri-entri tersebut. Anda dapat melakukannya dengan membuka pengaturan:
+Daftar bawaan NAHPU untuk `Primary activities` adalah `Collecting`, `Recording`,
+dan `Observing`. `Other` sengaja tidak disertakan, tetapi Anda dapat
+menambahkannya, begitu pula aktivitas khusus sesuai protokol Anda. Nilai
+aktivitas yang sudah tersimpan tetap tersedia meskipun tidak ada dalam daftar
+yang dikonfigurasi.
 
 {% steps %}
 
-1. Navigasikan ke dasbor.
-2. Ketuk/klik menu hamburger di pojok kiri atas.
-3. Pilih `Pengaturan`.
-4. Pilih `Kegiatan`.
-5. Edit entri agar sesuai dengan skenario lapangan Anda.
+1. Buka dasbor.
+2. Ketuk atau klik menu hamburger di sudut kiri atas.
+3. Pilih `Settings`.
+4. Pilih `Events`.
+5. Sunting aktivitas utama, metode pengumpulan, dan peran personel agar sesuai
+   dengan skenario lapangan Anda.
+6. Di `Environmental data fields`, pilih kolom bawaan yang harus muncul pada
+   formulir kegiatan. Kolom bawaannya adalah suhu udara, kelembapan udara,
+   tutupan awan, curah hujan, dan catatan.
 
 {% /steps %}
+
+## Mengelola kegiatan pengumpulan
+
+Buka sebuah kegiatan lalu gunakan menu tiga titiknya untuk mengelola catatan:
+
+- `Edit`: mengubah kolom kegiatan, upaya, personel, atau data lingkungan.
+- `Duplicate event`: menyalin lokasi, waktu, aktivitas, catatan, upaya, dan
+  personel. Tanggalnya maju satu hari dan kegiatan baru memperoleh catatan data
+  lingkungan yang kosong.
+- `Show QR`: menampilkan catatan kegiatan agar dipindai perangkat seluler lain.
+- `Export event`: menyimpan kegiatan dan data terkaitnya sebagai JSON.
+- `Scan QR`: membuat atau mengganti kegiatan dari kode QR kegiatan.
+- `Import event`: membuat atau mengganti kegiatan dari catatan JSON hasil
+  ekspor.
+- `Delete record`: menghapus kegiatan, upayanya, personelnya, data lingkungan,
+  dan nilai khusus per kegiatan. Catatan spesimen yang merujuk ke kegiatan
+  tersebut harus dipindahkan atau dihapus lebih dulu.
+- `Delete all records`: menghapus semua kegiatan pengumpulan beserta upaya,
+  personel, dan data lingkungannya pada proyek aktif.
+
+Saat mengimpor kegiatan, pilih apakah catatan yang masuk membuat kegiatan baru
+atau memperbarui kegiatan yang sudah ada. Periksa kembali lokasi dan personel
+yang dirujuk setelah impor selesai.
+
+Metode pengumpulan bawaan mencakup `Hand`, `Net`, dan `Pitfall`. Peran personel
+bawaan mencakup `Leader` dan `Helper`. Anda dapat menambahkan nilai yang lebih
+spesifik, seperti jaring kabut, perangkap harpa, survei perjumpaan visual,
+pengemudi, perekam, atau pengamat, sesuai protokol Anda.
 
 ## Membuat kegiatan baru
 
 {% steps %}
-1. Navigasikan ke halaman kegiatan menggunakan bilah navigasi bawah.
+1. Buka halaman kegiatan melalui bilah navigasi bawah.
 
-2. Gunakan tombol `+` di pojok kanan atas untuk membuat kegiatan baru.
+2. Gunakan tombol `+` di sudut kanan atas untuk membuat kegiatan baru.
 
-    Anda juga dapat menggunakan ikon menu tiga titik dan mengetuk `Buat kegiatan`.
+    Anda juga dapat memakai menu tiga titik lalu mengetuk `Create event`.
 
     {% aside type="tip" %}
 
-    Anda dapat meminimalkan pengetikan informasi yang sama dengan menduplikasi kegiatan alih-alih membuat yang baru. Ketuk/klik pada tombol menu tiga titik. Kemudian, pilih `Duplikat kegiatan`. Ini akan membuat kegiatan baru menggunakan informasi dari kegiatan saat ini dengan `Tanggal Mulai` dan `Tanggal Berakhir` diperbarui secara otomatis ke hari berikutnya.
+    Anda dapat mengurangi pengetikan berulang dengan menduplikasi kegiatan.
+    Ketuk atau klik menu tiga titik, lalu pilih `Duplicate event`. NAHPU
+    menyalin lokasi, waktu, aktivitas, catatan, upaya, dan personel, memajukan
+    `Start Date` dan `End Date` satu hari, serta membuat catatan data lingkungan
+    baru yang kosong.
 
     {% /aside %}
 
-3. Pilih `ID Situs`.
+3. Pilih `Site ID`.
 
-4. Tambahkan `Tanggal Mulai` dan `Tanggal Berakhir`.
+4. Masukkan `Start Date` dan `End Date`.
 
-    `ID Kegiatan` akan diisi secara otomatis dengan `{ID Situs}-{Tanggal Mulai}`.
+    `Event ID` dibuat dari `{Site ID}-{Start Date}`.
 
-5. Edit `ID Kegiatan` (opsional).
+5. Sunting `Event ID` (opsional).
 
-    Jika Anda memiliki beberapa kegiatan dengan `ID Situs` dan `Tanggal mulai` yang sama, Anda harus mengedit `ID Kegiatan` untuk menyertakan akhiran unik untuk kegiatan tersebut. Ini biasanya terjadi ketika Anda ingin memisahkan upaya pengumpulan siang dan malam, atau ketika Anda memiliki beberapa aktivitas di situs yang sama pada waktu yang sama.
+    Bila Anda memiliki beberapa kegiatan dengan `Site ID` dan `Start Date` yang
+    sama, tambahkan akhiran pada ID tersebut. Ini berguna saat Anda memisahkan
+    kerja siang dan malam, menjalankan beberapa aktivitas di lokasi yang sama,
+    atau perlu membedakan kegiatan berulang pada tanggal yang sama.
 
-6. Tambahkan `Waktu Mulai` dan `Waktu Berakhir`.
+6. Masukkan `Start Time` dan `End Time`.
 
-7. Tambahkan aktivitas utama.
+7. Tambahkan `Primary activity`.
 
-    Untuk skenario pengoleksian lapangan, ini hampir selalu berupa `Pengoleksian`. Namun, jika Anda juga melakukan perekaman pada saat yang sama, Anda mungkin ingin membuat kegiatan terpisah untuk rekaman tersebut.
+    Nilai bawaannya adalah `Collecting`, `Recording`, dan `Observing`. `Other`
+    bukan nilai bawaan; tambahkan di `Settings` > `Events` bila protokol Anda
+    memerlukannya. Pada banyak alur kerja spesimen nilainya akan `Collecting`,
+    tetapi buatlah kegiatan terpisah bila aktivitas yang berbeda memerlukan
+    upaya, personel, atau konteks lingkungan sendiri.
 
 {% /steps %}
+
+## Detail kegiatan
+
+Kartu `Event Details` menyimpan identitas dan waktu utama kegiatan:
+
+- `Event ID`: dibuat dari ID lokasi, tanggal mulai, dan akhiran opsional.
+- `Site ID`: lokasi tempat kegiatan berlangsung.
+- `Start Date` dan `End Date`: rentang tanggal kegiatan.
+- `Start Time` dan `End Time`: rentang waktu kegiatan.
+
+Pada proyek mamalia, tanggal mulai bawaannya adalah hari sebelumnya dan pemilih
+waktu dimulai pada `07:00`, yang sesuai untuk pemeriksaan perangkap semalam.
+Untuk format katalog lain, pemilih tanggal dan waktu dimulai pada tanggal dan
+waktu saat ini.
+
+## Aktivitas {% #activity %}
+
+Kartu `Activity` menyimpan tujuan umum kegiatan.
+
+- `Primary activity`: dipilih dari kosakata terkontrol yang dapat disunting di
+  pengaturan kegiatan. Nilai lama yang sudah tersimpan juga tetap ditawarkan
+  agar data yang ada tidak hilang.
+- `Notes`: catatan bebas tentang aktivitas, aktivitas sekunder, detail protokol,
+  atau alasan `Other` dipilih.
 
 ## Menambah upaya
 
 {% steps %}
 
-1. Gunakan tombol `+ Tambah upaya` untuk membuat upaya baru.
+1. Gunakan tombol `+ Add effort` untuk membuat upaya baru.
 
-2. Pilih metode.
+2. Pilih sebuah metode.
+
+3. Masukkan `Brand and Model` bila metode tersebut memakai peralatan tertentu.
+
+4. Masukkan `Count`.
+
+    Ini adalah jumlah alat, perangkap, jaring, perekam, atau unit lain yang
+    digunakan.
+
+5. Masukkan `Size` bila relevan.
+
+6. Masukkan `Notes` untuk detail khusus upaya tersebut.
 
 {% /steps %}
 
+Catatan upaya disimpan terpisah dari kegiatan, sehingga satu kegiatan dapat
+mencakup beberapa metode. Setiap upaya memuat:
+
+- `Method`: metode pengumpulan yang ditentukan pengguna.
+- `Brand and Model`: merek atau model peralatan bila relevan.
+- `Count`: jumlah alat atau unit.
+- `Size`: ukuran alat atau pemasangannya.
+- `Notes`: catatan khusus terkait metode.
+
+Catatan tangkapan spesimen nantinya dapat memilih salah satu upaya kegiatan ini
+sebagai `Method` spesimen tersebut.
+
 ## Menambah personel pengumpul
 
-    Tambahkan personel/ anggota tim dan perannya di tab ini. Misalnya, tambahkan "HH" di column "Personel" dan tambahkan "Ketua" di bagian "Peran"
+Gunakan tab `Event Personnel` untuk mencatat semua orang yang terlibat dalam
+kegiatan.
 
-## Menambah data cuaca 
+{% steps %}
 
-    Tambahkan data cuaca, termasuk temperatur, kelembapan, dan astronomical data
+1. Buka tab personel di panel kanan bawah kegiatan.
+2. Gunakan `+ Add personnel`.
+3. Pilih satu entri `Personnel` dari daftar personel proyek.
+4. Pilih sebuah `Role`.
+
+{% /steps %}
+
+Peran personel ditentukan pengguna di pengaturan kegiatan. Tambahkan semua orang
+yang berkontribusi pada kegiatan, termasuk pengumpul, ketua, pembantu lapangan,
+pengemudi, pengamat, perekam, atau orang yang membantu logistik. Catatan
+tangkapan spesimen nantinya dapat memilih satu entri personel kegiatan sebagai
+`Collector` spesimen tersebut.
+
+## Data lingkungan dan astronomi
+
+NAHPU membuat satu catatan data lingkungan untuk setiap kegiatan pengumpulan. Di
+`Settings` > `Events`, pilih kolom bawaan mana yang muncul pada formulir.
+Menyembunyikan sebuah kolom hanya mengubah formulir: nilai yang sudah tersimpan
+tetap ada di basis data dan dalam hasil ekspor.
+
+Kolom bawaan yang tersedia mencakup:
+
+- `Day Lowest` dan `Day Highest`: rentang suhu siang dalam derajat Celsius.
+- `Night Lowest` dan `Night Highest`: rentang suhu malam dalam derajat Celsius.
+- `Average`: persentase kelembapan rata-rata.
+- `Dew Point`: suhu titik embun.
+- `Cloud cover`: kode dari `0` (cerah) hingga `8` (tertutup penuh), atau `9`
+  bila langit terhalang. Satu okta mewakili seperdelapan langit yang terlihat.
+- `Rainfall`, `Ambient temperature`, dan `Ambient humidity`: kondisi pada
+  kegiatan tersebut.
+- `Water temperature`, `pH`, `Dissolved oxygen`, dan `Flow velocity`: pengukuran
+  perairan.
+- `Sunrise` dan `Sunset`: waktu matahari terbit dan terbenam setempat.
+- `Moon Phase`: salah satu dari `New Moon`, `Waxing Crescent`, `First Quarter`,
+  `Waxing Gibbous`, `Full Moon`, `Waning Gibbous`, `Last Quarter`, atau
+  `Waning Crescent`.
+- `Notes`: catatan tambahan tentang cuaca, habitat, atau astronomi.
+
+Gunakan `Add custom field` atau `Manage custom fields` pada bagian ini untuk
+kolom lingkungan yang berlaku di seluruh instalasi atau khusus proyek.
+Nilainya melekat pada kegiatan masing-masing, tidak disaring berdasarkan format
+katalog spesimen, dan disertakan dalam ekspor kegiatan, spesimen, dokumen,
+Darwin Core, pertukaran catatan, dan transfer proyek.
+
+Data lingkungan tidak ikut disalin saat menduplikasi kegiatan. Kegiatan hasil
+duplikasi memperoleh catatan kosong agar Anda dapat mengisi kondisi yang tepat
+untuk tanggal tersebut.
+
+## Bagaimana catatan spesimen memakai kegiatan
+
+Saat Anda membuat atau menyunting spesimen, kartu `Capture Records` mengambil
+data dari kegiatan pengumpulan:
+
+- `Site ID` menyaring `Event ID` yang tersedia.
+- `Event ID` menghubungkan spesimen dengan kegiatan tersebut.
+- `Method` berasal dari catatan upaya kegiatan.
+- `Collector` berasal dari daftar personel kegiatan.
+- `Coordinate ID` berasal dari koordinat yang terkait dengan lokasi kegiatan.
+
+Mengubah kegiatan sebuah spesimen akan mengosongkan kolom yang bergantung pada
+kegiatan, seperti metode, pengumpul, dan koordinat, sambil mempertahankan
+tanggal serta waktu tangkapan spesimen.

@@ -1,0 +1,37 @@
+---
+title: Pengelolaan Proyek
+---
+
+Pengelolaan yang konsisten membuat catatan lapangan mudah dipahami, dipulihkan, dan dikurasi.
+
+## Beri nama proyek dan lokasi secara konsisten
+
+- Gunakan nama singkat yang menunjukkan ekspedisi dan taksa target, misalnya `Mamalia Patah`.
+- Gunakan bidang tanggal proyek untuk tanggal mulai dan selesai.
+- Berikan `SitesID` yang unik dan tetap untuk setiap lokasi; lihat [panduan Lokasi](../../usages/sites).
+
+## Pisahkan alur lapangan dan laboratorium
+
+Di lapangan, catat data sesegera mungkin dan periksa bidang wajib sebelum berpindah ke spesimen berikutnya. Di laboratorium, tinjau catatan, seragamkan nama dan ID, periksa media, dan selesaikan kesalahan sebelum publikasi atau pengarsipan. Catat serah terima jika proyek dikurasi oleh beberapa orang.
+
+## Cadangkan dengan irama kerja lapangan
+
+**Ekspor proyek di akhir setiap hari lapangan. Cadangkan basis data sekali seminggu, dan selalu sebelum menggabungkan.** Keduanya bukan pekerjaan yang sama, dan memakai yang lebih berat setiap hari adalah kekeliruan paling umum yang kami temui.
+
+Ekspor proyek berukuran kecil, cepat, dan tidak menuntut banyak dari baterai yang mungkin tidak dapat Anda isi ulang selama berhari-hari. Ekspor ini membawa catatan proyek beserta media yang tersedia, dan `Merge project` membacanya kembali ke NAHPU, sehingga perangkat yang hilang, rusak, atau dicuri paling banyak menghabiskan satu hari kerja. Ekspor ringan `JSON.GZ` melepas medianya dan menjadi cukup kecil untuk diunggah lewat koneksi yang lemah.
+
+Cadangan basis data menyalin seluruh instalasi: setiap proyek beserta media dan berkas terkaitnya, semua foto personel, dan seluruh direktori konfigurasi pengguna dengan prasetel, fon, dan petanya. Direktori itu disalin utuh, bukan berkas demi berkas berdasarkan basis data, sehingga arsipnya membawa semua berkas di data aplikasi NAHPU, baik yang tertaut ke suatu proyek maupun tidak. Itulah yang Anda perlukan ketika tujuannya membangun ulang sebuah perangkat persis seperti semula, atau ketika penggabungan berisiko gagal dan Anda butuh titik untuk kembali.
+
+Di lapangan, perlakukan ini sebagai cadangan sesekali: mingguan, tepat sebelum penggabungan apa pun, dan pada saat pemakaian baterai bukan masalah, misalnya hari istirahat atau malam dengan sumber listrik. Menjalankannya setiap malam justru memenuhi perangkat lapangan, koneksi yang terbatas, dan baterai yang mungkin tidak dapat Anda isi ulang. Ekspor proyek adalah cadangan yang lebih cepat dan khusus proyek, dan itulah yang menjaga ukuran cadangan rutin tetap terkendali.
+
+Terapkan aturan 3-2-1 pada berkas yang baru Anda buat: simpan setidaknya tiga salinan, pada dua media berbeda, dengan satu salinan di luar lokasi atau di awan. Gunakan nama proyek dan tanggal pada setiap nama berkas, misalnya `BorneoMammals_20241015.zip`.
+
+Jangan menganggap sebuah berkas ada hanya karena sudah disalin. Sesekali, gabungkan satu ekspor proyek atau pulihkan satu cadangan basis data di perangkat kedua, lalu pastikan catatan dan medianya dapat dipakai. Simpan satu salinan pada perangkat fisik terpisah untuk berjaga-jaga bila akses awan tidak tersedia.
+
+## Transfer proyek dengan aman
+
+Gunakan [panduan Transfer proyek](../../usages/export/project-transfer) untuk memindahkan atau menggabungkan proyek yang sama antarperangkat NAHPU. Gunakan JSON.GZ untuk unggahan catatan tanpa media ketika internet terbatas; ini bukan cadangan lengkap. Gunakan ZIP atau TAR.GZ jika memerlukan salinan lengkap dengan media. Tinjau jumlah data dan peringatan media yang hilang, lalu simpan cadangan asli sampai perangkat penerima diperiksa.
+
+## Beri nama ekspor dengan jelas
+
+Gunakan nama proyek, jenis paket, dan tanggal, misalnya `MamaliaBorneo_DwC_20241015.csv` atau `MamaliaBorneo_transfer_20241015.zip`. Lihat [panduan Ekspor](../../usages/export).

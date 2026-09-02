@@ -1,0 +1,161 @@
+---
+title: "Export workflows"
+sidebar:
+  order: 10
+---
+
+This page explains how NAHPU turns project data and configuration into files.
+For import counterparts and shared safety rules, read [Import workflows](../data-import-workflows)
+and [Data import and export](../data-import-export-overview).
+
+## Project information and record exchange
+
+Project information is a metadata-only JSON or QR payload produced by
+`ProjectExchangeService`. It creates a project shell elsewhere; it is not a
+project backup.
+
+Site, event, and specimen exchange uses the version-1 `nahpu_record` envelope.
+The record-specific services collect the record and its dependencies before
+serialization. A media-bearing specimen is staged as JSON plus media files in
+a ZIP or TAR.GZ archive. The archive service is responsible for the container;
+Dart remains responsible for project relationships and media manifests.
+
+## Project transfer
+
+`ProjectTransferService` exports a project-scoped payload containing the rows
+needed to reconstruct or merge one project. It includes referenced taxonomy and
+personnel, relationship tables, warnings, and media manifest entries. The
+output choices are:
+
+- `JSON.GZ (light)` for records-only, limited-bandwidth transfers;
+- `ZIP` or `TAR.GZ` when available media and project files must travel with the
+  payload.
+
+The payload is not a copy of `nahpu.db`. Use the database backup workflow for a
+restorable installation copy. Export code must call reference validation before
+writing and must keep the project-transfer version in sync with its parser and
+import plan.
+
+## Tabular record export
+
+The record-export screen supports narratives, sites, events, specimen records,
+and specimen parts. It writes CSV, TSV, Excel, or JSON. Dart services assemble
+application-specific rows; the bridge-facing `RecordWriter` delegates file
+writing to `nahpu_db`.
+
+There are two paths:
+
+1. **Standard export** uses the built-in field lists and taxon filters.
+2. **Preset export** executes a versioned `ExportPresetModel` through
+   `PresetRecordExporter`.
+
+Preset mappings use stable `table::field` source keys. They can select direct
+fields, combine fields with literal text, transform case and null values,
+replace text conditionally, and flatten lists or nested child rows. Nested
+values can be concatenated, spread into indexed columns, or expanded into
+repeated rows. Header modes are table-field names, field names, NAHPU namespace,
+and Darwin Core.
+
+The output format, filename, and destination are runtime choices; they are not
+the core identity of a record-export preset. Darwin Core generated headers use
+the positional tabular writer and therefore support CSV, TSV, and Excel, not
+JSON.
+
+When adding a source field, update its field catalog, default export list,
+preset field picker, header resolution, and compatibility aliases as needed.
+See [Templates and presets](../templates-and-presets) for the persisted model.
+
+## Statistics export
+
+`StatisticsTableExporter` reuses the tabular writer for calculated and spatial
+statistics. It validates that every row has the same number of cells as the
+header. CSV, TSV, and Excel are written as positional rows; JSON becomes an
+array of objects keyed by the supplied headers. Statistics output is an
+analysis artifact, not a database backup.
+
+## Publishing and reproducibility bundles
+
+`DwcBundleWriter` reads the active project, builds a transport-safe request,
+shows a manifest preview, validates it, and then invokes the bridge writer.
+The formats are:
+
+- **Darwin Core Archive**: ZIP with occurrence core, metadata, optional
+  extensions, and media;
+- **Darwin Core Data Package**: relational package as TAR.GZ or ZIP;
+- **NAHPU Data Package**: reproducible project payload, CSV resources,
+  controlled-vocabulary snapshots, configuration, manifests, and available
+  files as TAR.GZ or ZIP.
+
+`nahpu_dwc` owns Darwin Core mapping and package semantics. `nahpu_dp` owns the
+complete reproducible package. `nahpu_archive` owns generic archive containers.
+The Dart request builder owns project-specific row assembly, taxon selection,
+media selection, warnings, and UI state.
+
+The canonical field mapping lives in [Persistence data](../database). Update it
+when a new source field changes Darwin Core output. A table existing in Drift is
+not enough to make it appear in a bundle; row construction, schema resources,
+mapping, manifests, and tests must all include it.
+
+## PDF document export
+
+Document export follows this flow:
+
+```text
+selected records
+    → document field-value maps
+    → template substitution
+    → layout and pagination planning
+    → Markdown/Typst rendering
+    → Typst compilation with fonts
+    → PDF bytes
+```
+
+`DocumentWriter` supports specimen, site, event, and narrative records.
+Templates define content; document layouts define page size, blocks, rows,
+columns, padding, ordering, and page breaks. Preview and final export use the
+same layout model, so contributors must test long text, nested lists, dynamic
+height, overflow, font loading, and page boundaries.
+
+See [Templates and presets](../templates-and-presets) for storage and sharing
+rules. PDFs are presentation artifacts and cannot replace structured exports
+or backups.
+
+## Database backup
+
+The current full backup writer creates a ZIP or TAR.GZ archive containing the
+SQLite database, all user configs, managed media, associated files, fonts, and
+custom maps. It is the complete-installation recovery path. Restore accepts
+the raw database or either archive format.
+
+Do not describe project transfer as a database backup, and do not describe a
+record export as restorable. Keep archive contents, path validation, settings
+import, and integrity checks synchronized when changing this workflow.
+
+## User-config export
+
+`UserConfigTransferService` exports selected configuration sections as JSON or
+JSON.GZ. The export includes schema metadata and is intended to reproduce
+controlled lists, record-export behavior, templates, and layouts on another
+installation. It does not include project rows unless a full database backup
+is used.
+
+## Coordinates
+
+Coordinate export validates every selected point and writes GeoJSON, KML, or a
+zipped Shapefile. A coordinate QR payload is available for one-point exchange.
+Missing, non-finite, or out-of-range latitude/longitude values fail the export
+with context instead of being omitted. TopoJSON is a lower-level API capability
+but is not currently exposed by the app’s coordinate-export screen.
+
+## Export test checklist
+
+- deterministic headers and row ordering;
+- CSV, TSV, Excel, and JSON encoding;
+- repeated values and nested-row expansion;
+- preset schema compatibility and legacy source aliases;
+- Darwin Core header validation and package manifests;
+- empty optional columns and empty datasets;
+- media manifest completeness and archive paths;
+- PDF overflow, fonts, pagination, and preview parity;
+- backup archive contents and restore integrity;
+- cleanup after failed writes.

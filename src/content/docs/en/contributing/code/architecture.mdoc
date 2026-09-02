@@ -1,0 +1,184 @@
+---
+title: "Architecture"
+sidebar:
+  order: 4
+---
+
+This architecture page describes the NAHPU cross-platform app and the underlying technology stack. For guideline on the developing other supporting software and tools, please refer to the [Tools](../tools) page.
+
+For the complete feature-by-feature exchange inventory, see [Data import and
+export](../data-import-export-overview). This page keeps only the shared layer
+model and the short version of each data flow.
+
+The app is an offline-first, cross-platform application. Flutter owns the user interface, application workflows, and canonical project database. The Rust [NAHPU_API](https://github.com/nahpu/nahpu_api) is used through [Flutter Rust Bridge](https://github.com/fzyzcjy/flutter_rust_bridge) for high-performance solutions, and to extend libraries availabilities beyond Flutter.
+
+## High-level architecture
+
+```text
+┌──────────────────────────────────────────────────────────────────────┐
+│                              NAHPU App                               │
+│                         Flutter + Dart UI                            │
+└──────────────────────────────────────────────────────────────────────┘
+          │
+          │ screens render and dispatch user actions
+          ▼
+┌───────────────────────────┐     ┌───────────────────────────────────┐
+│ lib/screens/              │────▶│ lib/screens/shared/               │
+│ Page-level UI             │     │ Reusable widgets and controls     │
+└───────────────────────────┘     └───────────────────────────────────┘
+          │
+          │ watches and updates application state
+          ▼
+┌──────────────────────────────────────────────────────────────────────┐
+│ lib/services/providers/                                              │
+│ Riverpod providers and AsyncNotifiers                                │
+└──────────────────────────────────────────────────────────────────────┘
+          │
+          │ calls domain services
+          ▼
+┌──────────────────────────────────────────────────────────────────────┐
+│ lib/services/                                                        │
+│ Database queries, validation, media, maps, transfers, imports,       │
+│ exports, templates, navigation, settings, and platform IO            │
+└──────────────────────────────────────────────────────────────────────┘
+          │                                      │
+          │ Drift queries                        │ Generated FRB calls
+          ▼                                      ▼
+┌───────────────────────────┐     ┌───────────────────────────────────┐
+│ lib/services/database/    │     │ lib/src/rust/                     │
+│ Drift + SQLite            │     │ Generated Dart bridge bindings    │
+└───────────────────────────┘     └───────────────────────────────────┘
+          │                                      │
+          │ canonical project data               │ FFI / platform bridge
+          ▼                                      ▼
+┌───────────────────────────┐     ┌───────────────────────────────────┐
+│ Local NAHPU storage       │     │ rust/src/api/                     │
+│ nahpu.db, media, backups  │     │ Thin bridge-facing wrappers       │
+└───────────────────────────┘     └───────────────────────────────────┘
+                                                 │
+                                                 │ delegates reusable behavior
+                                                 ▼
+                              ┌───────────────────────────────────────┐
+                              │ NAHPU API workspace                   │
+                              │ archive · configs · db · dp · dwc     │
+                              │ export · gis                          │
+                              └───────────────────────────────────────┘
+```
+
+## Layers
+
+**Screens** under `lib/screens/` are page-level UI wrappers. They render state,
+handle navigation, and connect controls to providers. Reusable controls belong
+under `lib/screens/shared/` or a relevant screen component directory.
+
+**Providers** under `lib/services/providers/` expose application state through
+Riverpod. Database-backed providers commonly use asynchronous loading and
+mutation state so screens do not own persistence or business workflows.
+
+**Services** under `lib/services/` contain domain workflows. They coordinate
+database queries, validation, media files, templates, project transfers, record
+exports, bundle exports, GIS operations, and platform file IO. Screens should
+not contain these workflows.
+
+**Database services** use Drift over SQLite. It is the authoritative store for
+projects, specimens, sites, collecting events, personnel, taxonomy, media
+metadata, measurements, narratives, and related records. See [Persistence
+data](../database) for the current schema version and migration workflow.
+
+**Bridge bindings** under `lib/src/rust/` are generated from the Rust wrapper
+crate. They are not hand-edited. Dart services use these bindings when the
+operation is implemented in the NAHPU API workspace.
+
+**Rust wrappers** under `rust/src/api/` define the Flutter-facing boundary.
+They adapt Dart-friendly values and errors to the reusable Rust crates.
+This a wrapper layer for the Rust NAHPU API and intentionally thin.
+
+**NAHPU API crates** under the separate `nahpu_api` repository provide a growing
+list of reusable Rust implementations:
+
+- `nahpu_archive` creates and extracts ZIP, tar.gz, and gzip archives.
+- `nahpu_configs` stores reproducible user configuration and document presets
+  in `redb`, and supports configuration export/import.
+- `nahpu_db` generates Rust models from the Drift schema and provides tabular
+  record import/export helpers. It does not own the app’s SQLite connection.
+- `nahpu_dp` plans, validates, and writes reproducible NAHPU Data Packages.
+- `nahpu_dwc` maps records to Darwin Core and writes Darwin Core Archive and
+  Darwin Core Data Package bundles.
+- `nahpu_export` renders document data as Markdown or Typst and compiles Typst
+  to PDF with caller-provided fonts.
+- `nahpu_gis` converts coordinates, imports and exports GIS files, and
+  normalizes vector layers to WGS84 GeoJSON.
+
+## Persistence boundaries
+
+Persistence is divided between the canonical Drift/SQLite project database,
+reproducible `nahpu_configs` configuration, installation-local
+`SharedPreferences`, and app-managed files. The complete ownership model,
+storage layout, schema workflow, migration rules, and Darwin Core field mapping
+are maintained on the [Persistence data](../database) page.
+
+## Important data flows
+
+**Taxonomy import and tabular record export** start in Dart services, which read
+or assemble rows from Drift. The bridge delegates reusable table reading and
+writing to `nahpu_db`; Dart performs application-specific validation and
+database updates. Generic spreadsheet import for all record types is not a
+shipped app workflow.
+
+**Bundle export** is planned and validated before writing. Dart services build
+the request from database records, configurations, vocabularies, and files.
+`nahpu_dwc` handles Darwin Core bundles, while `nahpu_dp` handles the complete
+NAHPU Data Package and records dependency versions in its metadata.
+
+**Document export** combines Dart-managed records, templates, layouts, and
+fonts. Dart services prepare the document input, while `nahpu_export` provides
+Markdown/Typst conversion and Typst-to-PDF compilation.
+
+**GIS exchange** passes coordinate or vector-layer requests through the bridge
+to `nahpu_gis`. Dart services connect the result to site records, maps, and
+file selection.
+
+**Project and record transfer** is coordinated in Dart because it owns the
+database rows, media manifest, conflict handling, and import decisions.
+`nahpu_archive` supplies the ZIP and tar.gz container operations.
+
+For detail on exchange workflows, see [Data import and export](../data-import-export-overview).
+For schema ownership and field mapping, see the [Persistence data](../database) page.
+
+## Directory map
+
+For most contributors, the main work is in the `lib/`, `assets/`, `tests/`, and `rust/` directories.
+The other directories contain platform-specific code and build configuration.
+It only needs to be modified when adding capabilities or changing the build configuration.
+
+{% filetree %}
+- android/ Android platform-specific code and build configuration
+- assets/ Static assets such as images, fonts, icons, and bundled presets
+- db_schemas/ Drift schema snapshots and migration fixtures
+- integration_test/ End-to-end integration tests
+- ios/ iOS platform-specific code and build configuration
+- lib/ Main Dart source code for the Flutter app
+  - screens/ Page-level Flutter UI and shared widgets
+  - services/ Providers, database, domain workflows, and platform IO
+  - src/rust/ Generated Flutter Rust Bridge Dart bindings
+- linux/ Linux platform-specific code and build configuration
+- macos/ macOS platform-specific code and build configuration
+- rust/ Rust wrapper crate used by Flutter Rust Bridge
+  - src/api/ Bridge-facing wrapper modules
+- scripts/ Development and automation scripts
+- test/ Unit and widget tests
+- windows/ Windows platform-specific code and build configuration
+{% /filetree %}
+
+## Design principles
+
+- Keep screens thin and keep workflows in providers and services.
+- Treat Drift SQLite as the canonical project-record persistence storage (see
+  [Persistence data](../database) for all storage boundaries).
+- Keep reproducibility-related configuration in `nahpu_configs`, not local UI
+  settings.
+- Keep Rust wrappers small and put reusable behavior in NAHPU API crates.
+- Plan and validate imports, exports, archives, and migrations as data-integrity
+  operations.
+- Prefer deterministic local behavior because NAHPU is used in field conditions
+  without reliable network access.

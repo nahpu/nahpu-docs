@@ -1,0 +1,13 @@
+---
+import Default from "@astrojs/starlight/components/PageTitle.astro";
+import AiTranslationNotice from "./AiTranslationNotice.astro";
+
+const { locale, isFallback, entry } = Astro.locals.starlightRoute;
+
+// Pages that fall back to English keep the English text under a localized
+// route, so they are not translations and must not carry the notice.
+const isTranslated = Boolean(locale) && locale !== "en" && !isFallback;
+---
+
+<Default><slot /></Default>
+{isTranslated && <AiTranslationNotice authors={entry.data.authors} />}

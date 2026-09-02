@@ -1,0 +1,124 @@
+---
+title: Exportar Estadísticas
+sidebar:
+  order: 13
+---
+
+Use la exportación de estadísticas cuando necesite una tabla resumida en lugar
+de los registros completos. Las tablas contienen conteos y porcentajes por
+categoría, que es lo que piden la mayoría de los informes de financiamiento, los
+informes de permisos y las actualizaciones de avance. Toda tabla que aparece en
+la pantalla de estadísticas puede escribirse en CSV, TSV, Excel o JSON.
+
+Las estadísticas se calculan solo para el proyecto activo.
+
+## Abrir la pantalla de estadísticas
+
+Abra el panel de estadísticas de registros en el dashboard del proyecto y
+seleccione `Explore more stats`. La pantalla tiene tres partes:
+
+- **Summary** muestra los totales del proyecto, divididos en un grupo
+  `Record summary` y un grupo `Taxonomic breakdown` que cuenta las clases,
+  órdenes, familias, géneros y especies distintos, seguidos de los cinco
+  conteos más altos por categoría.
+- **Detailed statistics** arma una tabla o un gráfico a partir de la medida, la
+  agrupación, el desglose y el filtro que elija.
+- **Spatial statistics** cuenta registros por coordenada de sitio, en un mapa o
+  como tabla.
+
+Las exportaciones están disponibles en la vista de tabla. Cambie el panel de
+`Chart` o `Map` a `Table` y use el botón `Export table` encima de la tabla.
+
+## Estadísticas detalladas
+
+Elija primero la medida en `Measure`, porque decide qué agrupaciones están
+disponibles.
+
+| Medida | Agrupar por |
+| --- | --- |
+| Specimens | Species, Taxon rank, Site, Date, Method, Sex, Life stage |
+| Species | Taxon rank, Site, Date, Method, Sex, Life stage |
+| Part quantity | Part type, Treatment |
+
+`Life stage` solo aparece cuando el proyecto lo registra. Otros tres controles
+aparecen cuando corresponde:
+
+- **Taxon rank** elige el rango con el que se cuenta: `Class`, `Order`,
+  `Family` o `Genus`. Especie tiene su propia agrupación, porque es la única
+  que ofrece el desglose y el filtro de sitio que siguen. El título del
+  gráfico, el encabezado de la tabla y el nombre del archivo indican el rango
+  elegido y no la agrupación, de modo que contar por familia se lee
+  `Specimens by family`.
+- **Breakdown** divide los conteos de especímenes por especie en `Sex` o
+  `Life stage`. El desglose se convierte en una columna adicional de la tabla
+  exportada.
+- **Filtros** limitan la tabla a un sitio al contar especímenes por especie, o a
+  una especie al contar cantidad de partes. El filtro seleccionado se incluye en
+  el nombre de archivo propuesto.
+
+La tabla exportada repite lo que muestra la tabla en pantalla, una fila por
+categoría:
+
+```text
+| Rank | Species          | Specimens | Percent (%) |
+| ---- | ---------------- | --------- | ----------- |
+| 1    | Bunomys coelestis| 24        | 40.00       |
+| 2    | Bunomys penitus  | 18        | 30.00       |
+```
+
+El encabezado de la segunda columna sigue la agrupación seleccionada, y el de la
+columna de conteo sigue la medida. Con un desglose activo, la columna de la
+serie queda entre ambas, y las categorías sin valor registrado se exportan como
+`Not recorded`.
+
+## Estadísticas espaciales
+
+El panel espacial cuenta `Specimens`, `Species` o `Family` por coordenada de
+sitio. `Coordinates by species` le pide elegir una especie primero y luego
+cuenta esa especie en cada coordenada.
+
+La tabla espacial exporta una fila por coordenada con el nombre del lugar, la
+localidad, la latitud, la longitud, la elevación, el conteo y el porcentaje. Es
+la forma más rápida de obtener una lista de coordenadas con el esfuerzo asociado
+para un informe de permiso o para un programa GIS.
+
+## Escribir el archivo
+
+El cuadro de exportación es el mismo en ambos paneles. En el teléfono se abre
+como una hoja inferior y, en pantallas más anchas, como un cuadro de diálogo.
+
+{% steps %}
+
+1. Revise el nombre del archivo. NAHPU propone uno formado por el nombre del
+   proyecto, la medida y la agrupación, el filtro activo y la fecha de hoy.
+
+2. Active `Append date` si quiere agregar la fecha actual al nombre. Esto ayuda
+   cuando exporta la misma tabla varias veces durante una temporada de campo.
+
+3. Elija el formato. `CSV` y `TSV` son los más seguros para análisis, `Excel`
+   escribe un libro `.xlsx` y `JSON` conserva los nombres de encabezado como
+   claves.
+
+4. Seleccione la carpeta de destino. En el escritorio el archivo se escribe
+   donde usted elija; en el móvil NAHPU usa la carpeta de exportación de la
+   aplicación.
+
+5. Seleccione `Export`. Cuando el archivo queda escrito, el botón pasa a
+   `Share`, para enviar la tabla directamente a otra aplicación.
+
+{% /steps %}
+
+{% aside type="note" %}
+
+La exportación escribe las filas que están en la tabla en ese momento, así que
+la medida, la agrupación, el desglose y el filtro llegan todos al archivo.
+Cambie los controles y exporte de nuevo cuando necesite otro corte de los datos.
+
+{% /aside %}
+
+## Páginas relacionadas
+
+- [Estadísticas de registros en el dashboard](../projects)
+- [Exportar registros](./export-records) para los datos de especímenes, sitios y
+  eventos que están detrás de los conteos
+- [Empaquetar registros](./export-bundles) para paquetes basados en estándares

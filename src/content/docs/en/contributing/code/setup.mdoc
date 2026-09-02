@@ -1,0 +1,129 @@
+---
+title: "Setup"
+sidebar:
+  order: 3
+---
+
+## Prerequisites
+
+Install these tools before working on NAHPU:
+
+- [Git](https://git-scm.com/downloads)
+- [Dart SDK](https://dart.dev/get-dart)
+- [Flutter SDK](https://flutter.dev/docs/get-started/install)
+- [Rust toolchain](https://rustup.rs/)
+- [flutter_rust_bridge](https://cjycode.com/flutter_rust_bridge/)
+- [GitHub CLI](https://cli.github.com/) *(optional)*
+
+## Local setup
+
+{% steps %}
+
+1. Install Flutter using the official guide for your operating system.
+
+   Run `flutter doctor` and resolve the reported issues before continuing.
+
+   ```bash
+   flutter doctor
+   ```
+
+2. Install Rust.
+
+   {% tabs %}
+   {% tabitem label="macOS / Linux" %}
+   ```bash
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   rustc --version
+   ```
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   Download and run `rustup-init.exe` from [rustup.rs](https://rustup.rs/), then
+   verify the installation.
+
+   ```powershell
+   rustc --version
+   ```
+   {% /tabitem %}
+   {% /tabs %}
+
+3. Install Flutter Rust Bridge codegen.
+
+   ```bash
+   cargo install flutter_rust_bridge_codegen
+   ```
+
+4. Make sure Cargo binaries are on your `PATH`.
+
+   {% tabs %}
+   {% tabitem label="macOS / Linux" %}
+   ```bash
+   export PATH="$HOME/.cargo/bin:$PATH"
+   ```
+
+   Add that line to your shell config, such as `~/.zshrc` or `~/.bashrc`.
+   {% /tabitem %}
+   {% tabitem label="Windows" %}
+   Add `%USERPROFILE%\.cargo\bin` to your system `PATH` in Environment
+   Variables.
+   {% /tabitem %}
+   {% /tabs %}
+
+5. Clone NAHPU and get dependencies.
+
+   ```bash
+   git clone https://github.com/nahpu/nahpu.git
+   cd nahpu
+   flutter pub get
+   ```
+
+6. Run the app.
+
+   ```bash
+   flutter run
+   ```
+
+   {% aside type="caution" title="Attention Mac Users" %}
+
+   If you are running on macOS, we recommend using the iOS simulator. This way it will avoid signing issues and having to modify the Xcode project. If you are modifying the Xcode project, please do not commit the changes to the respository.
+
+   {% /aside %}
+
+{% /steps %}
+
+## Useful commands
+
+```bash
+# Analyze Dart code
+flutter analyze
+
+# Run Dart tests
+flutter test
+
+# Generate Drift, Riverpod, and other Dart generated code
+dart run build_runner build --delete-conflicting-outputs
+
+# Generate Flutter Rust Bridge bindings
+flutter_rust_bridge_codegen generate
+
+# Run cargo check in rust/
+python scripts.py frb --check
+
+# Cleaning up build artifacts. Do this regularly to save disk space.
+flutter clean
+
+# For cleaning up Rust build artifacts, run this in the rust/ directory.
+cd rust/
+cargo clean
+```
+
+{% aside type="tip" title="Navigating the codebase" %}
+
+The NAHPU app codebase in general, is medium in size (~300k lines of code),
+and relatively large for a Flutter project.
+If you are new to the codebase this size, it can be overwhelming to navigate.
+A simple way to start is try to run the app and explore the UI,
+then find the corresponding code by searching for the text in the UI using a code editor.
+The UI layer will guide you to all relevant code, and the underlying architecture
+and conventions to understand the code.
+
+{% /aside %}

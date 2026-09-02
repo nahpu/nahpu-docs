@@ -1,0 +1,133 @@
+---
+title: Configurações
+---
+
+O NAHPU separa os registros do projeto, os registros compartilhados do banco de
+dados, as configurações de usuário reprodutíveis e as preferências que ficam
+apenas na instalação. Abra um projeto, abra o menu do `Dashboard` e selecione
+`Settings` para configurar a instalação atual.
+
+## O que cada configuração afeta
+
+| Tipo | Exemplos | Comportamento na transferência |
+| --- | --- | --- |
+| Informações do projeto | Nome, tombo, localização, fuso horário, datas, valores de Field ID do projeto | Incluídas nas transferências de informações e de projeto |
+| Registros compartilhados do banco | Táxons e pessoal | Armazenados no banco de dados do NAHPU e associados a projetos |
+| Configurações de usuário | Listas controladas e predefinições de exportação ou de documento | Transferidas com `Export user configs` e `Import user configs` |
+| Estado da instalação | Tema e táxon principal atual | Permanece na instalação atual |
+
+Alterar uma configuração com um projeto aberto pode, portanto, afetar outros
+projetos da mesma instalação. Revise as configurações de usuário transferidas
+antes de substituir a sua configuração atual.
+
+## Catálogos
+
+### Format
+
+`Format` seleciona o táxon principal usado nos novos formulários de espécime
+deste dispositivo. Um projeto pode conter mais de um grupo taxonômico; esta
+configuração controla apenas o formato de espécime ativo e os seus campos de
+medição.
+
+### Events e Sites
+
+Use `Events` para gerenciar a lista controlada de atividades principais, os
+métodos de coleta, as funções do pessoal do evento e os campos ambientais
+exibidos nos formulários de evento. As atividades principais começam com
+`Collecting`, `Recording` e `Observing`; `Other` não é incluído a menos que você
+o adicione. Os formulários ambientais mostram inicialmente temperatura ambiente,
+umidade ambiente, cobertura de nuvens, chuva e notas. Assim como nas
+configurações de Geografia, os demais campos internos podem ser exibidos ou
+ocultados sem apagar os valores armazenados. Use `Sites` para gerenciar os
+vocabulários controlados de tipos de local e de habitat. Mantenha essas
+configurações consistentes entre os dispositivos de campo transferindo as
+configurações de usuário.
+
+### Specimens
+
+`Specimens` contém a visibilidade dos campos de captura, os Field IDs, os
+tissue IDs, os sexos de espécime, os tipos de espécime, os tratamentos, as
+condições e as configurações de parasitas dependentes do táxon.
+
+O vocabulário de sexo do espécime é restrito. `Male`, `Female` e `Unknown`
+continuam disponíveis para qualquer táxon. Use os chips `+` para acrescentar
+`Gynandromorph`, `Hermaphrodite`, `Female?` ou `Male?` aos menus suspensos do
+espécime. Os chips opcionais só podem ser removidos quando nenhum registro de
+espécime do banco de dados usa aquele valor.
+
+Em `Field ID`, deixe `Use project ID` desligado para usar as iniciais e o número
+de campo pessoal de um Cataloger. O Cataloger precisa ter a função `Cataloger`,
+o registro de campo ativado, as iniciais e um número de campo atual.
+
+Ative `Use project ID` para configurar prefixo, número de catálogo atual, sufixo
+e o comportamento de incremento automático. O NAHPU concatena os três valores
+diretamente. Por exemplo, `NAHPU-`, `120` e `-M` produzem `NAHPU-120-M`.
+
+{% aside type="caution" %}
+
+Alterar o prefixo ou o sufixo de um Field ID de projeto muda a forma como os IDs
+já atribuídos são exibidos. Confirme a alteração com cuidado se esses
+identificadores já tiverem sido exportados ou escritos em etiquetas.
+
+{% /aside %}
+
+## Database
+
+- `Taxa` gerencia os registros de taxonomia disponíveis para os projetos.
+- `Personnel` gerencia as pessoas do banco de dados e as suas funções de cuidado
+  com o espécime.
+- `Replace database` substitui o banco SQLite ativo a partir de um backup.
+
+{% aside type="caution" %}
+
+Faça um backup atual antes de usar `Replace database`. Substituir o banco de
+dados é diferente de mesclar um projeto ou importar configurações de usuário.
+
+{% /aside %}
+
+## Exports
+
+- `Tabular Data` gerencia as predefinições reutilizáveis de exportação de
+  registros.
+- `Documents` gerencia os modelos de documento, as predefinições de layout de
+  impressão e as fontes disponíveis para os modelos.
+- `Template Editor` cria e edita modelos de documento.
+
+Essas predefinições são configurações de usuário. Exporte-as quando outra
+instalação precisar reproduzir as mesmas colunas, rótulos ou layouts.
+
+## Applications
+
+### Theme
+
+Use `Theme` para escolher `System`, `Light` ou `Dark`. A escolha se aplica apenas
+à instalação atual.
+
+### Uso de dados e limpeza
+
+Abra `Data usage` para examinar as pastas gerenciadas pelo NAHPU. O resumo mostra
+o armazenamento total, as quantidades de arquivos e mídias e o espaço que pode
+ser recuperado com a remoção de arquivos desvinculados.
+
+`Remove unlinked files` exclui arquivos que não são mais usados por nenhum
+registro, incluindo resíduos de mídias excluídas ou importações canceladas.
+Arquivos vinculados, bancos de dados e backups, fontes personalizadas, camadas
+de mapa e arquivos fora das pastas gerenciadas pelo NAHPU não são afetados.
+Remova uma fonte instalada em `Documents` > `Fonts`, e não aqui.
+
+A árvore `Files` permite inspecionar os arquivos armazenados, salvar uma cópia
+ou remover individualmente os arquivos permitidos. Escolha `Select` para
+trabalhar com vários arquivos. Use `Clear` ou `Select all` e escolha o botão
+flutuante `Review` para conferir a quantidade, o tamanho e os locais agrupados
+antes de exportar um arquivo compactado ou excluir os arquivos permanentemente.
+
+Escolha `Rescan` depois que arquivos forem alterados fora do NAHPU para atualizar
+o relatório de armazenamento.
+
+## Transferir configurações de usuário
+
+`Export user configs` e `Import user configs` estão no menu `Dashboard` do
+projeto, ao lado de `Settings`; eles não ficam dentro da página de configurações.
+A transferência de configurações de usuário pode reproduzir vocabulários controlados e
+predefinições sem substituir o banco de dados do projeto. Consulte
+[Exportar](../export) antes de substituir configurações ou dados.

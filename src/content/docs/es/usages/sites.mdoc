@@ -30,7 +30,9 @@ sidebar:
 
     {% aside type="tip" %}
 
-    Para un proyecto que involucra múltiples dispositivos, recomendamos crear el mismo `siteID` para un sitio idéntico. La [próxima función de fusión de datos](https://github.com/nahpu/nahpu/issues/124) utilizará el `siteID` para identificar y fusionar registros de diferentes dispositivos. Una futura actualización de NAHPU permitirá compartir la información del sitio con diferentes sitios de manera similar a como se comparte la información del proyecto. 
+    Para un proyecto que involucra varios dispositivos, use el mismo `Site ID`
+    para un sitio idéntico. Esto facilita hacer coincidir los registros de sitios
+    y eventos cuando se importan en otro dispositivo.
 
     {% /aside %}
 
@@ -40,7 +42,8 @@ sidebar:
 
 5. Agregue el tipo de sitio.
 
-    El tipo de sitio ayuda a categorizar el sitio según sus características o uso. Actualmente, no hay opción para editar la lista. Una próxima función de NAHPU le permitirá hacerlo.
+    El tipo de sitio ayuda a categorizar el sitio según sus características o
+    uso. Seleccione un valor de la lista de tipos configurada para el proyecto.
 
 6. Complete los detalles geográficos.
 
@@ -71,25 +74,109 @@ sidebar:
 
 {% /steps %}
 
-## Agregar coordenadas
+## Información del sitio
 
-Puede agregar coordenadas manualmente desde su dispositivo GPS o utilizar las coordenadas del dispositivo.
+El formulario registra el lugar y las personas responsables:
 
-### Obtener coordenadas del dispositivo actual
+- `Site ID`: identificador único del proyecto que usan los eventos y los
+  registros intercambiados.
+- `Site leader`: persona responsable del campamento, la línea de trampas u otro
+  sitio.
+- `Site type`: categoría configurada para el sitio.
+- Localidad y observaciones: texto de localidad precisa y notas sobre el uso
+  del sitio.
+- Tipo, condición y descripción del hábitat: entorno observado en el sitio.
+
+## Gestionar sitios
+
+Abra el menú de tres puntos en la página del sitio para usar estas acciones:
+
+- `Edit site`: actualizar el sitio y sus coordenadas.
+- `Duplicate site`: copiar los detalles a un registro nuevo con ID y
+  coordenadas vacíos.
+- `Show QR`: mostrar el registro para escanearlo desde otro dispositivo móvil.
+- `Export site`: guardar el registro como JSON.
+- `Scan QR`: crear o reemplazar un sitio desde un código QR.
+- `Import site`: crear o reemplazar un sitio desde un registro JSON exportado.
+- `Delete record`: eliminar el sitio actual. No se puede eliminar mientras un
+  evento lo utilice.
+- `Delete all records`: eliminar todos los sitios del proyecto. Primero quite
+  los eventos que los referencian.
+
+Al importar un sitio, elija si crea un sitio nuevo o actualiza uno existente.
+Revise el personal vinculado y las coordenadas después de importar.
+
+## Copiar datos de sitio desde otro proyecto
+
+Use `Copy from project ...` cuando un sitio de otro proyecto tenga información
+que quiera reutilizar en el proyecto actual. Esta acción rellena el sitio
+actual; no crea un sitio nuevo ni modifica el proyecto de origen.
+
+El sitio actual debe estar vacío antes de comenzar. Un sitio con información,
+coordenadas, medios o datos vinculados no puede recibir datos copiados. Deben
+existir al menos dos proyectos, porque el origen debe ser un proyecto distinto.
 
 {% steps %}
 
-1. Toque/haga clic en el botón `punto GPS` junto al botón `Agregar coordenada`.
+1. Abra el sitio que recibirá la información copiada. Confirme que es un
+   registro de sitio vacío.
 
-2. Esto le llevará a la página de agregar coordenada con la mayor parte de la información ya completada.
+2. Abra el menú de tres puntos y seleccione `Copy from project ...`.
 
-3. Complete el resto de los campos. 
-    
-    Consulte la sección [agregar coordenadas manualmente](#agregar-coordenadas-manualmente) para obtener más detalles. El nombre de su unidad GPS debe coincidir con el modelo exacto de su dispositivo. Por ejemplo: `iPad Mini 4`.
+3. Seleccione el proyecto de origen por su nombre y luego seleccione uno de sus
+   sitios.
+
+4. Seleccione los datos que se copiarán. Las opciones disponibles incluyen:
+
+   - Site ID
+   - Site leader
+   - Site type
+   - Campos de geografía, incluidos país, grupo de islas, estado/provincia,
+     condado/parroquia/distrito, municipio/ciudad y localidad precisa
+   - Remarks
+   - Tipo, condición y descripción del hábitat
+   - Coordenadas
+
+   Los campos sin datos en el sitio de origen no están disponibles. Seleccionar
+   `Coordinates` copia todas las coordenadas que pertenecen al sitio de origen
+   seleccionado.
+
+5. Seleccione `Copy` para rellenar el sitio actual.
 
 {% /steps %}
 
-### Agregar coordenadas manualmente
+El sitio de origen permanece sin cambios. Esta acción copia solo campos del
+sitio y coordenadas; no copia medios del sitio, enlaces de datos asociados,
+registros de sitio fosilífero, eventos de recolecta ni otros registros
+vinculados al sitio de origen.
+
+## Agregar coordenadas {% #adding-coordinates %}
+
+Un sitio puede tener varios registros de coordenadas para los extremos de una
+línea de trampas, puntos de recolección separados u otros puntos del mismo
+sitio. Puede agregar coordenadas manualmente, usar el GPS del dispositivo o
+importar puntos desde un archivo GIS/GPS.
+
+### Usar el GPS del dispositivo al agregar una coordenada {% #use-device-gps-while-adding-a-coordinate %}
+
+{% steps %}
+
+1. En la página del sitio, abra el panel de coordenadas y toque/haga clic en
+   `Add coordinate`.
+
+2. En la página `Add coordinates`, use la tarjeta `Device GPS` y toque/haga
+   clic en su botón de ubicación.
+
+3. NAHPU completa la latitud decimal, la longitud decimal, la elevación y la
+   incertidumbre del GPS cuando el sistema operativo las proporciona. Revise
+   los valores, complete los campos restantes y guarde la coordenada.
+
+    Introduzca el nombre de la unidad GPS por separado, usando el modelo exacto
+    del dispositivo, como `iPad Mini 4`.
+
+{% /steps %}
+
+### Agregar coordenadas manualmente {% #manually-adding-coordinate %}
 
 {% steps %}
 
@@ -111,9 +198,21 @@ Puede agregar coordenadas manualmente desde su dispositivo GPS o utilizar las co
 
     {% /aside %}
 
-3. Ingrese los valores de latitud y longitud.
+3. Seleccione el formato e introduzca los valores de la coordenada.
 
-    Actualmente, NAHPU solo admite coordenadas decimales.
+    NAHPU acepta grados decimales (DD), grados y minutos decimales (DDM),
+    grados-minutos-segundos (DMS) y un valor UTM con el formato
+    `zona hemisferio este norte`. UTM usa WGS84.
+
+    Para DDM y DMS, introduzca grados, minutos y segundos en campos numéricos
+    separados. Después seleccione N/S para la latitud y E/W para la longitud.
+    NAHPU agrega los símbolos y concatena las partes para los valores verbatim
+    de latitud y longitud de Darwin Core.
+
+    NAHPU guarda los valores decimales para los cálculos y conserva el valor
+    concatenado y el sistema de coordenadas para los campos verbatim. Si ya hay
+    valores, cambiar de formato pide confirmación antes de borrarlos. Al guardar
+    una coordenada en DD se eliminan los valores verbatim anteriores.
 
 4. Agregue la elevación en metros.
 
@@ -134,3 +233,70 @@ Puede agregar coordenadas manualmente desde su dispositivo GPS o utilizar las co
     Agregue información adicional si la hay.
 
 {% /steps %}
+
+### Importar coordenadas desde un archivo
+
+Use la importación de archivos cuando varios puntos ya existan en un archivo
+GIS o GPS. La importación está disponible en `Add coordinate → Import` dentro
+de un sitio.
+
+{% steps %}
+
+1. Abra un sitio, toque/haga clic en `Add coordinate` y seleccione el modo
+   `Import`.
+
+2. Los formatos compatibles aparecen encima de las acciones de importación.
+   Seleccione `Select coordinate file` y elija un archivo GeoJSON/JSON, KML,
+   Shapefile comprimido o GPX. También puede elegir `Scan QR` para agregar un
+   registro de coordenadas desde otro dispositivo NAHPU.
+
+3. Revise los puntos importados y cualquier advertencia. El mapa resalta el
+   punto enfocado y todos los puntos válidos aparecen seleccionados por
+   defecto.
+
+4. Use `Select all`, `Clear all` o las casillas individuales para elegir qué
+   puntos agregar. Toque/haga clic en `Add N selected` para guardarlos en el
+   sitio actual.
+
+{% /steps %}
+
+La importación conserva el nombre, las notas, la latitud y longitud decimales
+y la elevación. Los puntos importados se asignan al sitio actual y al datum
+`WGS84`; este flujo no proporciona incertidumbre ni información de la unidad
+GPS.
+
+Solo se importan puntos. Las entidades que no sean puntos en GeoJSON o
+Shapefile, las geometrías que no sean puntos en KML, las coordenadas inválidas
+y otros registros no compatibles se omiten y se informan en la revisión. En
+GPX se importan los waypoints; las rutas y tracks se ignoran. Si no quedan
+puntos válidos, NAHPU muestra un error y no agrega registros.
+
+### Gestionar y exportar coordenadas
+
+El botón `Manage` del panel de coordenadas de un sitio abre todas las
+coordenadas del proyecto. Puede filtrar por sitio, seleccionar puntos
+individuales o todos los visibles, enfocar un punto en el mapa y abrir el mapa
+en pantalla completa.
+
+{% steps %}
+
+1. Abra el panel de coordenadas de un sitio y toque/haga clic en `Manage`.
+
+2. Filtre por sitio si es necesario y seleccione las coordenadas que desea
+   exportar.
+
+3. Toque/haga clic en `Export coordinates (N)`.
+
+4. Elija `GeoJSON (.geojson)`, `KML (.kml)` o `Shapefile bundle (.zip)`. Escriba
+   el nombre del archivo, elija el directorio de destino y seleccione
+   `Export`.
+
+5. Cuando se cree el archivo, use `Share` en los dispositivos compatibles.
+
+{% /steps %}
+
+Cada coordenada exportada debe tener una latitud y longitud decimales válidas.
+Las exportaciones GIS incluyen el nombre, las notas, la latitud y longitud
+decimales WGS84 y la elevación cuando está disponible. Esta exportación es
+distinta de `Export records`, los paquetes del proyecto y las copias de
+seguridad de la base de datos.

@@ -6,8 +6,11 @@ sidebar:
 
 ## Configurando registros de espécimes
 
+Um registro de espécime reúne identificação, preparação, dados de captura e as
+partes físicas do espécime. O espécime se vincula a um evento de coleta; o
+evento fornece localidade, método, coletor e coordenada.
 
-## Configurando eventos
+## Configurando espécimes
 
 As listas padrão do NAHPU para `Partes do espécime` e `Tratamentos` são limitadas e não incluem todas as opções possíveis. Se este for o seu primeiro projeto NAHPU, recomendamos configurar as entradas primeiro. Você pode fazer isso acessando as configurações:
 
@@ -17,23 +20,46 @@ As listas padrão do NAHPU para `Partes do espécime` e `Tratamentos` são limit
 2. Toque/clique no menu hambúrguer no canto superior esquerdo.
 3. Selecione `Configurações`.
 4. Selecione `Espécimes`. 
-5. Adicione `ID de Tecido` (opcional).
+5. Configure o interruptor `Use project ID`. Ele fica desativado por padrão e
+   usa as iniciais e o número de campo de um catalogador. Pelo menos um
+   Catalogador deve ter o registro de número de campo pessoal ativado e um
+   número atual.
+
+    Ative `Use project ID` para definir prefixo, próximo número de catálogo e
+    sufixo. O NAHPU concatena esses valores diretamente. Ative o incremento
+    automático para atribuir e avançar o número do projeto.
+
+    Essa escolha é apenas o padrão. No editor de ID de cada espécime, selecione
+    Personnel ou Project. Um projeto pode usar os dois tipos, mas um espécime
+    não pode ter ambos.
+
+    {% aside type="caution" %}
+
+    Alterar o prefixo ou o sufixo modifica a exibição dos IDs de projeto
+    existentes. Esses IDs podem já ter sido usados em exportações ou escritos
+    em etiquetas de espécimes. Confira os valores antes de confirmar.
+
+    {% /aside %}
+
+6. Adicione `ID de Tecido` (opcional).
 
     Alguns museus têm números de tecido separados para o mesmo espécime. Você pode configurar o prefixo e o número aqui. Ele será incrementado automaticamente cada vez que você adicionar um novo número de tecido.
 
-6. Adicione `Tipos de partes do espécime`.
+7. Adicione `Specimen types`.
 
     Adicione todas as possibilidades. Você pode ter mais do que o que irá coletar.
 
-7. Adicione `Tratamentos`
+8. Adicione `Tratamentos`
 
-    Você pode fazer isso de maneira semelhante aos `Tipos de partes do espécime`.
+    Faça isso de maneira semelhante a `Specimen types`.
 
 {% /steps %}
 
 {% aside type="tip" %}
 
-Versões futuras do NAHPU permitirão que você compartilhe as configurações com outros dispositivos. Você pode usar as opções de compartilhamento de configurações para compartilhar todas as listas que criou.
+Os tipos de partes e tratamentos são configurações do usuário. Eles podem ser
+exportados e importados com pacotes do projeto para reutilizar a mesma
+terminologia e o mesmo comportamento de exportação.
 
 {% /aside %}
 
@@ -44,11 +70,14 @@ Versões futuras do NAHPU permitirão que você compartilhe as configurações c
 
 2. Clique no botão `+` para adicionar um novo registro de espécime.
 
-    Você também pode usar o ícone do menu de três pontos e tocar em `Criar localidade`.
+    Você também pode usar o menu de três pontos e escolher uma ação de
+    duplicação.
 
     {% aside type="tip" %}
 
-    Se você coletar a mesma `Parte do espécime` para cada novo espécime, poderá minimizar a digitação usando a opção `Duplicar parte`. Toque/clique no botão de menu de três pontos. Em seguida, `Duplicar localidade`. Isso criará uma nova localidade usando as informações da localidade atual, exceto que o `ID da Localidade` e as coordenadas estarão vazios. Em seguida, preencha o `ID da Localidade` e adicione as coordenadas.
+    Se você coletar a mesma `Parte do espécime` para cada novo espécime, use
+    `Duplicate part`. Revise IDs, datas, horários e tratamentos da cópia antes
+    de salvá-la.
 
     {% /aside %}
 
@@ -71,19 +100,59 @@ Versões futuras do NAHPU permitirão que você compartilhe as configurações c
 
 7. Selecione a `Condição` do espécime.
 
-8. Adicione a `Data de prep.` e `Hora de prep.`.
+8. Adicione a `Data de coleta`, `Hora de coleta`, `Data de prep.` e `Hora de
+   prep.` quando disponíveis.
 
 {% /steps %}
 
-## Registros de Coleta
+## Coleta e identificação
+
+O cartão `Collection & Identification` inclui `Museum ID`, o número de campo,
+`Cataloger`, `Preparator`, `Determiner`, `Taxon`, `ID Confidence`,
+`Identification Method`, `Condition` e as datas e horários de coleta e
+preparação.
+
+O editor responsivo de ID permite escolher Personnel ou Project para cada
+espécime. A troca remove o identificador anterior, e números já consumidos não
+são reutilizados.
 
 ## Taxonomia
 
+O cartão `Taxon Info` é preenchido a partir da espécie selecionada. Ele mostra a
+classificação e permite consultar o registro taxonômico, incluindo autores,
+nome comum, categoria da Lista Vermelha, status CITES e observações quando
+existentes.
+
 ## Registros de Captura
+
+Os registros de captura vinculam o espécime ao evento:
+
+- `Site ID` e `Event ID`: localidade e evento de coleta.
+- `Capture date` e `Capture time`: data e horário da captura; `Relative time`
+  pode usar Dawn, Morning, Afternoon, Dusk ou Night.
+- `Method` e `Method ID`: esforço e identificador do método do evento.
+- `Coordinate ID`: coordenada associada à localidade do evento.
+- `Coordinate extent (m)`: extensão positiva opcional do registro de captura;
+  aparece logo abaixo de `Coordinate ID`.
+- `Collector`: coletor da lista de pessoal do evento.
+
+Nas exportações Darwin Core, a extensão é somada à incerteza da coordenada. Se
+não houver incerteza válida, a extensão é usada sozinha. Valores vazios, zero
+ou negativos são ignorados.
+
+Ao mudar o evento, método, coletor e coordenada são limpos, enquanto a data e o
+horário da captura são preservados.
 
 ## Medições
 
 Selecione a guia abaixo para visualizar as opções de medição para cada grupo taxonômico.
+O peso de mamíferos, aves e herpetofauna aceita `g`, `kg` e `lbs`, com `g` como
+padrão. Mudar a unidade não converte o número informado.
+
+Sexo é um vocabulário controlado restrito compartilhado por todos os grupos
+taxonômicos. `Male`, `Female` e `Unknown` ficam sempre disponíveis. Em
+`Settings` > `Specimens`, adicione `Gynandromorph`, `Hermaphrodite`, `Female?`
+ou `Male?`; o ponto de interrogação registra a incerteza do examinador.
 
 {% tabs %}
 {% tabitem label="Mamíferos" %}
@@ -96,19 +165,75 @@ Selecione a guia abaixo para visualizar as opções de medição para cada grupo
 
 {% /tabitem %}
 {% tabitem label="Aves" %}
-Trabalho em progresso.
+- `Peso`, `Envergadura (mm)`, cores das partes moles, `Sexo`, placa de
+  incubação, bursa e ossificação do crânio.
 {% /tabitem %}
 {% tabitem label="Peixes" %}
 
-Trabalho em progresso.
+Os campos de medição disponíveis dependem do formato do catálogo.
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
-Trabalho em progresso.
+- `Sexo`, `Idade`, `Peso`, `SVL (cm)` e observações.
+{% /tabitem %}
+{% tabitem label="Artrópodes" %}
+
+A seção de interações ecológicas fica visível por padrão. Use
+`Show specimen morphometrics` para exibir ou ocultar as medições; valores
+morfométricos salvos reabrem essa seção automaticamente.
+
+- `Sex`: selecionado no vocabulário controlado de sexo do espécime.
+- `Caste`: a casta de um inseto social, quando aplicável.
+- Interações ecológicas: `Host organism` e `Host part`.
+- Morfometria opcional: `Head width (mm)`, `Body length (mm)`,
+  `Upper wingspan (mm)` e `Lower wingspan (mm)`.
+- `Remarks`: observações ecológicas ou do espécime.
+
+As condições ambientais não são atributos do espécime. Registre a cobertura do
+dossel no local, em `Site Attributes`, e a temperatura, a umidade, o pH, o
+oxigênio dissolvido e a velocidade do fluxo nos dados ambientais do evento de
+coleta.
+
+Catálogos de artrópodes não exibem campos de detecção nem a guia de parasitas.
+
 {% /tabitem %}
 
 
 
 {% /tabs %}
-## Partes do Espécime
+## Partes do Espécime {% #specimen-parts %}
+
+Cada espécime pode ter várias partes, como vouchers, tecidos, swabs ou
+parasitas. Uma parte pode conter `Tissue ID`, `QR/barcode ID`, `Preparation type`,
+`Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
+`Storage`, `Storage location`, `Date taken`, `PMI`, museu permanente, museu de
+empréstimo e `Remarks`. Registros de parasitas também separam o método de
+armazenamento da localização física.
+
+A guia de parasitas está disponível para mamíferos, aves e herpetofauna, mas
+não para catálogos de artrópodes.
+
+## Dados associados {% #associated-data %}
+
+Use `Associated Data` para links ou arquivos digitais relacionados, como
+acessões do GenBank, registros do MorphoSource ou arquivos de análise. Os campos
+incluem `Data Type`, `Name`, `Description`, `Date`, `URL` ou um arquivo.
 
 ## Mídia
+
+Use `Media` para imagens e outros arquivos de mídia associados ao espécime.
+
+## Gerenciando registros de espécimes
+
+No menu de três pontos do espécime, use:
+
+- `Edit`: atualizar o espécime, medições, partes, dados associados ou mídia.
+- `Duplicate part`: criar um espécime novo copiando as informações da parte.
+- `Export specimen`: salvar um JSON ou arquivo que inclua mídia.
+- `Import specimen`: escolher um espécime novo ou existente e relacionar seus
+  eventos, localidades e táxons ao projeto atual.
+- `Delete record`: excluir o espécime, medições, partes, dados e vínculos de
+  mídia. O número de campo não é reutilizado automaticamente.
+- `Delete all records`: excluir todos os espécimes, medições, partes, dados e
+  mídias de espécimes do projeto.
+
+Depois de importar, revise os relacionamentos e todos os identificadores gerados.

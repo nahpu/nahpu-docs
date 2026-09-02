@@ -1,0 +1,111 @@
+---
+import { getImage } from "astro:assets";
+import landscape from "../../assets/images/landscapes/handika-mt-bandahara.webp";
+
+/// Blurred NAHPU colour field with the field landscape overlaid on top of it.
+const wide = await getImage({
+    src: landscape,
+    width: 2400,
+    format: "webp",
+    quality: 78,
+});
+const narrow = await getImage({
+    src: landscape,
+    width: 1200,
+    format: "webp",
+    quality: 72,
+});
+---
+
+<div class="nh-hero-bg" aria-hidden="true">
+    <div class="nh-blob nh-blob-teal"></div>
+    <div class="nh-blob nh-blob-gold"></div>
+    <div class="nh-blob nh-blob-deep"></div>
+
+    <img
+        class="nh-hero-photo"
+        src={wide.src}
+        srcset={`${narrow.src} 1200w, ${wide.src} 2400w`}
+        sizes="100vw"
+        width={wide.attributes?.width ?? 2400}
+        height={wide.attributes?.height ?? 1170}
+        alt=""
+        loading="eager"
+        decoding="async"
+    />
+
+    <svg
+        class="nh-hero-contours"
+        viewBox="0 0 1200 700"
+        preserveAspectRatio="xMidYMid slice"
+        fill="none"
+    >
+        <defs>
+            <linearGradient id="nh-contour" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="var(--color-silver-tree-400)"
+                ></stop>
+                <stop offset="55%" stop-color="var(--color-silver-tree-200)"
+                ></stop>
+                <stop offset="100%" stop-color="var(--color-golden-grass-300)"
+                ></stop>
+            </linearGradient>
+        </defs>
+
+        <g stroke="url(#nh-contour)" stroke-width="1.2" opacity="0.55">
+            <path d="M-40 520 C 220 470, 380 560, 620 500 S 1020 400, 1260 470"
+            ></path>
+            <path
+                class="nh-contour-line"
+                d="M-40 470 C 200 420, 400 500, 640 440 S 1020 340, 1260 410"
+            ></path>
+            <path d="M-40 420 C 180 372, 420 440, 660 382 S 1020 282, 1260 350"
+            ></path>
+            <path
+                class="nh-contour-line"
+                d="M-40 370 C 160 326, 440 382, 680 326 S 1020 226, 1260 292"
+            ></path>
+            <path d="M-40 320 C 140 280, 460 326, 700 270 S 1020 172, 1260 234"
+            ></path>
+            <path d="M-40 610 C 240 560, 400 650, 640 590 S 1020 494, 1260 560"
+            ></path>
+        </g>
+
+        <g fill="var(--color-golden-grass-300)">
+            <circle class="nh-mote" cx="182" cy="240" r="2.5"></circle>
+            <circle
+                class="nh-mote"
+                cx="948"
+                cy="180"
+                r="2"
+                style="animation-delay:2s"></circle>
+            <circle
+                class="nh-mote"
+                cx="640"
+                cy="132"
+                r="1.8"
+                style="animation-delay:5s"></circle>
+        </g>
+        <g fill="var(--color-silver-tree-300)">
+            <circle
+                class="nh-mote"
+                cx="392"
+                cy="150"
+                r="2"
+                style="animation-delay:3s"></circle>
+            <circle
+                class="nh-mote"
+                cx="1084"
+                cy="308"
+                r="2.4"
+                style="animation-delay:6.5s"></circle>
+            <circle
+                class="nh-mote"
+                cx="268"
+                cy="392"
+                r="1.6"
+                style="animation-delay:8s"></circle>
+        </g>
+    </svg>
+
+    <div class="nh-hero-scrim"></div>
+</div>

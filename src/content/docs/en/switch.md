@@ -17,7 +17,7 @@ While paper-based field catalogs have traditionally been the go-to method for co
 
 - **Data Accessibility**: NAHPU enables you to access your data from any location and share it with collaborators, ensuring they receive an exact copy. In contrast, paper-based catalogs necessitate physically transporting the catalogs, sending scanned images of the pages, or inputting the records into a spreadsheet, which can delay access until you return from the field and digitize the data.
 
-- **Data Quality**: NAHPU aids in standardizing your data collection and helps prevent common secondary data entry errors that can occur when digitizing paper-based field catalogs. Future NAHPU updates will include automatic data validation features.
+- **Data Quality**: NAHPU aids in standardizing your data collection and helps prevent common secondary data entry errors that can occur when digitizing paper-based field catalogs. Configure controlled lists and review required fields before leaving the field.
 
 - **Data Association**: NAHPU allows you to link your data with other data sources, such as GPS coordinates, images, and audio recordings. You only need to enter a site once, which can be associated with multiple data entries. On the other hand, paper-based catalogs require you to write the same site multiple times, typically at the top of each page.
 
@@ -37,7 +37,7 @@ Two typical approaches to transition to NAHPU from paper-based field catalogs:
 
 Several factors to consider when transitioning to NAHPU:
 
-- **Device choice**. The app is designed to work on various devices, including smartphones, tablets, laptops, and desktops. You can start using your smartphone. If you have the budget, we recommend using a tablet and a Bluetooth keyboard for a better experience. Depending on the field conditions, you can use a laptop. For more information, please look at the [Devices Requirements](./usages/devices) section.
+- **Device choice**. The app is designed to work on various devices, including smartphones, tablets, laptops, and desktops. You can start using your smartphone. If you have the budget, we recommend using a tablet and a Bluetooth keyboard for a better experience. Depending on the field conditions, you can use a laptop. For more information, please look at the [Devices Requirements](../usages/devices) section.
 
 — **Field conditions**. NAHPU is designed for remote field sites without internet access. Consider device durability and electricity availability. Some new smartphones are water—and dust-resistant. Tablets and laptops may need extra protection. Use a sturdy case whenever possible. For areas without electricity, a 20,000 to 25,000 mAh power bank is typically sufficient for a week of fieldwork using a smartphone or tablet.
 

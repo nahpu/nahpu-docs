@@ -1,0 +1,439 @@
+---
+title: Bundle Records
+sidebar:
+  order: 11
+---
+
+Use `Bundle records` to package related NAHPU data and files for exchange,
+publication, archiving, or reproducibility. The bundle screen previews the
+exact files and table fields before writing anything.
+
+NAHPU provides three bundle types:
+
+- **Darwin Core Archive** for established biodiversity publishing systems that
+  expect `meta.xml`.
+- **Darwin Core Data Package** for relational Darwin Core data described by a
+  Frictionless `datapackage.json`.
+- **NAHPU Data Package** for a reproducible copy of the active project,
+  configuration, and available related files.
+
+## Create a bundle
+
+{% steps %}
+
+1. Navigate to the `Dashboard` page.
+2. Open the project menu and select `Bundle records`.
+3. Select the `Bundle format`.
+4. Select the `Archive format` when the chosen bundle supports more than one
+   container.
+   - `TAR.GZ` is the default for Data Packages.
+   - `ZIP` is available for tools and operating systems that prefer standard
+     ZIP archives.
+   - Darwin Core Archive always uses ZIP.
+5. For a Darwin Core bundle, choose `All taxa` or `Selected taxa`.
+   Selecting Mammals also includes Bats.
+6. Add a `File name` and select the destination `Directory`.
+7. Review `Package contents`. Expand a CSV resource to see its exported
+   fields.
+8. Review any warnings, especially missing media or a DwC-DP ZIP compatibility
+   notice.
+9. Click `Export`.
+
+{% /steps %}
+
+{% aside type="caution" title="Review before sharing" %}
+NAHPU Data Packages contain the complete active-project transfer data and user
+configuration. They can include personnel details, project locations, media,
+and custom fonts. Treat them as potentially sensitive files.
+{% /aside %}
+
+## Choose an archive container
+
+### TAR.GZ
+
+`TAR.GZ` first combines package files into a tar archive and then compresses
+that stream with gzip. It is the default for Darwin Core Data Packages and
+NAHPU Data Packages.
+
+Typical file names are:
+
+- `specimens.dwc-dp.tar.gz`
+- `nahpu-data.nahpu-dp.tar.gz`
+
+After extraction, `datapackage.json` and any package-specific metadata are at
+the root of the extracted package.
+
+### ZIP
+
+ZIP stores and compresses multiple files in one widely supported archive.
+NAHPU Data Package supports ZIP as a normal container. Darwin Core Data
+Package supports ZIP as a compatibility option, but TAR.GZ is the
+standards-oriented choice under the current DwC-DP compression guidance.
+
+Darwin Core Archive always uses ZIP because ZIP is part of its normal exchange
+workflow.
+
+## Deep dive
+
+### Darwin Core Archive
+
+A Darwin Core Archive is a specimen-focused exchange package based on the
+[Darwin Core Text Guidelines](https://dwc.tdwg.org/text/).
+
+#### Scope
+
+The selected taxon groups determine the specimen occurrences in the archive.
+NAHPU then follows relationships from those specimens to include available:
+
+- collecting events;
+- specimen parts and other material entities;
+- measurements;
+- media;
+- collectors, catalogers, preparators, and media creators.
+
+Empty optional fields and empty extension tables are omitted.
+
+#### Root files
+
+{% filetree %}
+- meta.xml
+- eml.xml
+- occurrence.csv
+- material.csv
+- measurement_or_fact.csv
+- multimedia.csv
+- media/
+{% /filetree %}
+
+Only files supported by the selected data are written.
+
+`meta.xml` describes the occurrence core and extension files, their column
+positions, and their Darwin Core term identifiers. `eml.xml` contains
+dataset-level metadata. `occurrence.csv` is always the core table.
+
+#### Relationships
+
+Extension records reference the occurrence core. For example:
+
+- a specimen part becomes a material record linked by occurrence identifier;
+- measurements become MeasurementOrFact records;
+- media rows reference both the occurrence and the packaged media path.
+
+#### Output
+
+Darwin Core Archive produces:
+
+```text
+<file-name>.dwca.zip
+```
+
+Choose this format when the receiving repository, collection-management
+system, or publishing workflow explicitly expects a Darwin Core Archive.
+
+### Darwin Core Data Package
+
+A Darwin Core Data Package, or DwC-DP, represents Darwin Core data as related
+tables under the [Darwin Core Data Package specification](https://dwc.tdwg.org/dp/).
+It also follows the Frictionless Data Package model.
+
+#### Root files
+
+{% filetree %}
+- datapackage.json
+- eml.xml
+- occurrence.csv
+- event.csv
+- material.csv
+- occurrence-assertion.csv
+- media.csv
+- agent.csv
+- occurrence-agent-role.csv
+- event-agent-role.csv
+- material-agent-role.csv
+- media-agent-role.csv
+- occurrence-media.csv
+- media/
+{% /filetree %}
+
+Optional tables appear only when data exists.
+
+#### Descriptor
+
+`datapackage.json` identifies the versioned DwC-DP profile and describes:
+
+- every CSV resource;
+- CSV media type and format;
+- ordered field descriptors;
+- primary keys;
+- foreign keys;
+- relationship predicates.
+
+DwC-DP uses a normalized relational model. Internal primary and foreign key
+columns preserve links even where the original human-readable identifier is
+also retained.
+
+#### Data mapping
+
+NAHPU maps the selected specimen data into concepts such as:
+
+- `occurrence` for the specimen occurrence;
+- `event` for collecting activity and location context;
+- `material` for specimen parts;
+- `occurrence-assertion` for measurements;
+- `agent` and role tables for people and their roles;
+- `media` and `occurrence-media` for media metadata and relationships.
+
+Mappings use standard Darwin Core terms only for exact semantic matches.
+Unmatched application fields stay in the NAHPU namespace. Original DDM, DMS,
+or UTM text is preserved in verbatim-coordinate terms, positive capture extent
+is added to coordinate uncertainty, selected weight units are retained, and
+agent identifiers prefer canonical ORCID URLs with NAHPU UUIDs as fallback.
+
+For arthropods, sex, life stage, caste, the host association, and specimen
+remarks are occurrence terms. Host part and the optional morphometrics — head
+width, body length, and upper and lower wingspan — are MeasurementOrFact
+records in millimetres. Canopy cover and the environmental parameters are
+assertions on the collecting event rather than on the specimen, with defined
+units including °C, %, mg/L, m/s, mm, and okta.
+
+#### Archive options
+
+- `TAR.GZ` produces `<file-name>.dwc-dp.tar.gz` and is the default.
+- `ZIP` produces `<file-name>.dwc-dp.zip` for compatibility.
+
+When ZIP is selected, NAHPU shows a warning because the current DwC-DP guide
+specifies gzip for whole-package compression.
+
+Choose DwC-DP when the recipient supports Frictionless descriptors and needs
+explicit table schemas and relational links.
+
+### NAHPU Data Package
+
+NAHPU Data Package is NAHPU's reproducibility and complete-data exchange
+format. It is a Frictionless Data Package with additional NAHPU metadata.
+
+Unlike the Darwin Core formats, it is not restricted to selected specimen
+taxa. It includes the same complete active-project JSON used by `Export
+project`, matching tabular resources, and related files.
+
+Its typed, relational CSV resources, enum mappings, and controlled-vocabulary
+snapshots make it suitable for downstream analysis in Python, R, and other
+Frictionless-compatible tools. Use Darwin Core Data Package instead when a
+workflow requires standardized Darwin Core tables and terms.
+
+#### Root layout
+
+{% filetree %}
+- datapackage.json
+- nahpu.toml
+- nahpu-project.json
+- tables/
+  - project.csv
+  - ...
+- configs/
+  - user_configs.json
+- mappings/
+  - sqlite_enums.csv
+- vocabularies/
+  - site.csv
+  - events.csv
+  - specimens.csv
+  - parasites.csv
+- files/
+  - ...
+- media/
+  - ...
+{% /filetree %}
+
+`project.csv` and every other database table containing records are included.
+Empty project tables are omitted from both `tables/` and `datapackage.json`, so
+the exact list varies with the project. Metadata resources, including enum
+mappings and controlled-vocabulary CSVs, remain present even when they have no
+rows.
+
+#### Project JSON
+
+`nahpu-project.json` is the same versioned payload produced by a full `Export
+project` operation. It contains the active project, related records, media
+manifest, export metadata, and warnings. It preserves distinctions such as a
+null value versus an intentionally empty string without requiring SQLite.
+
+The CSV files are open, tool-independent representations for inspection,
+analysis, and Frictionless-compatible processing. Their records are generated
+from the same payload so the JSON and tables remain scoped consistently. Empty
+collections remain in `nahpu-project.json` for project transfer even when no
+corresponding CSV resource is exported.
+
+#### SQLite enum mappings
+
+`mappings/sqlite_enums.csv` explains integer values that NAHPU stores as enum
+indexes. Each row includes:
+
+- the SQLite table and column;
+- the Dart enum type or logical indexed type;
+- the zero-based SQLite integer;
+- the stable enum name used in code;
+- the human-readable name shown in NAHPU.
+
+Table and column context are included because more than one record type can
+use an enum with the same short name but a different value order. The mapping
+covers specimen sex and identification confidence, mammal age and reproductive
+fields, avian reproductive and molt fields, herpetofauna age, and
+echolocation categories. Boolean integers and numeric measurements are not
+enum indexes and are therefore not listed.
+
+The mapping file also includes the arthropod sex enum. Specimen-sex rows use
+explicit stable codes rather than deriving codes from enum order; legacy codes
+`0`, `1`, and `2` retain their original meanings. The mapping remains available
+even when the corresponding project table is empty and therefore omitted.
+
+#### Controlled vocabularies
+
+The package snapshots the current user-controlled type names from NAHPU
+Settings into four CSV resources:
+
+- `vocabularies/site.csv` contains site types and habitat types;
+- `vocabularies/events.csv` contains collecting methods and collecting
+  personnel roles;
+- `vocabularies/specimens.csv` contains specimen types, treatments, conditions,
+  and the enabled restricted specimen-sex vocabulary.
+- `vocabularies/parasites.csv` contains parasite categories, detection and
+  preparation methods, anatomical locations, storage, and treatments.
+
+Each row records the user configuration key, vocabulary name, zero-based list
+position, and configured value. If a setting has not yet been customized, the
+CSV contains the NAHPU default vocabulary that applies at export time. These
+files make the labels referenced by table records directly available to CSV
+and Frictionless tools without requiring them to parse the full configuration
+document.
+
+#### Frictionless descriptor
+
+`datapackage.json` uses the standard `data-package` profile. Each populated
+project table is a `tabular-data-resource` with:
+
+- column order;
+- field data types;
+- required-field constraints;
+- primary keys;
+- foreign-key references;
+- UTF-8 CSV encoding.
+
+The descriptor also declares the enum mapping and four controlled-vocabulary
+CSVs as tabular resources with field schemas and composite primary keys. It
+lists the project JSON, user configuration, manifest, and packaged user files
+as non-tabular resources.
+
+#### Analyze with Frictionless
+
+Extract the ZIP or TAR.GZ archive before loading `datapackage.json`, because
+the descriptor uses paths relative to the package root. Since empty project
+tables are omitted, inspect or test the resource names before reading an
+optional table.
+
+Python users can install the
+[Frictionless Framework](https://framework.frictionlessdata.io/docs/getting-started.html)
+and read the specimen table when it is available:
+
+```python
+from collections import Counter
+
+from frictionless import Package
+
+package = Package("/path/to/extracted-package/datapackage.json")
+print(package.resource_names)
+
+if package.has_resource("specimen"):
+    specimens = package.get_resource("specimen").read_rows()
+    counts = Counter(row["taxonGroup"] or "Unspecified" for row in specimens)
+    print(counts)
+```
+
+R users can install the
+[frictionless package](https://docs.ropensci.org/frictionless/) and perform the
+same inspection and summary:
+
+```r
+library(frictionless)
+
+package <- read_package("/path/to/extracted-package/datapackage.json")
+resource_names(package)
+
+if ("specimen" %in% resource_names(package)) {
+  specimens <- read_resource(package, "specimen")
+  print(table(specimens$taxonGroup, useNA = "ifany"))
+}
+```
+
+#### Reproducibility manifest
+
+`nahpu.toml` records:
+
+- package format name and version;
+- export timestamp;
+- application name, version, and build number;
+- NAHPU database schema version;
+- user configuration schema version;
+- the number of exported tables;
+- the enum-mapping and controlled-vocabulary resource paths and counts;
+- the versions of the compiled `nahpu_api` crates, including `nahpu_dp`,
+  `nahpu_dwc`, `nahpu_db`, and `nahpu_configs`.
+
+This metadata helps determine which version of NAHPU and its Rust components
+created the package.
+
+#### User configuration
+
+`configs/user_configs.json` contains the versioned NAHPU configuration export:
+
+- general user configuration values;
+- record export presets;
+- document template presets;
+- document layouts.
+
+#### User files
+
+When available, NAHPU includes:
+
+- media referenced by the active project;
+- photos for personnel referenced by the active project;
+- custom user fonts.
+
+Project media keeps the transfer-compatible paths below `media/`; custom fonts
+keep safe relative paths below `files/`. Missing files produce warnings and
+are not silently represented as successfully bundled content.
+
+#### Archive options
+
+- `TAR.GZ` produces `<file-name>.nahpu-dp.tar.gz`.
+- `ZIP` produces `<file-name>.nahpu-dp.zip`.
+
+The internal package contents are the same in both containers.
+
+## Bundle versus backup
+
+Darwin Core bundles are exchange formats and are not restorable NAHPU
+backups.
+
+Contributors extending bundle fields or taxon groups should read [Export
+workflows](../../../contributing/code/data-export-workflows) and [Adding a taxon
+group](../../../contributing/code/adding-a-taxon-group).
+
+A NAHPU Data Package contains the full project-transfer payload and compatible
+media paths, so `Merge project` can open it directly. Its first purpose remains
+a documented, interoperable package. Continue using [Backup
+database](../#backup-database) when a restorable copy of the complete NAHPU
+database is required.
+
+## Package validation and warnings
+
+Before writing, NAHPU validates required data and package relationships. After
+writing, it reopens the archive and checks that required root metadata exists.
+
+Warnings can include:
+
+- linked media that no longer exists on the device;
+- ZIP compatibility mode for DwC-DP.
+
+A warning does not necessarily prevent export, but it should be reviewed before
+the package is shared or deposited.

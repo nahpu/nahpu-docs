@@ -5,9 +5,11 @@ import cntl from "cntl";
 interface Props {
   title: string;
   description: string;
+  /// Draw the page behind a transparent navigation bar, as the landing hero does.
+  overlayNav?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, overlayNav = false } = Astro.props;
 
 const bodyClasses = cntl`
   bg-silver-tree-100
@@ -43,7 +45,7 @@ const footerClasses = cntl`
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   </head>
   <body class={bodyClasses}>
-    <Navbar />
+    <Navbar overlay={overlayNav} />
     <main>
       <slot />
     </main>

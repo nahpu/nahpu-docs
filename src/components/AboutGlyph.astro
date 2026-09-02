@@ -1,0 +1,357 @@
+---
+import cntl from "cntl";
+
+/// The glyphs for the mission and roadmap cards on the about page. They follow
+/// the same rules as the landing page pillars: one shared 92x84 frame at x=14
+/// y=18 is the only stroked box in a glyph, everything inside it is drawn with
+/// fills and lines, and colors come from the theme tokens.
+export type GlyphName =
+    | "fieldwork"
+    | "responsible"
+    | "sharing"
+    | "accessible"
+    | "taxonomy"
+    | "machine-learning"
+    | "integrations";
+
+interface Props {
+    name: GlyphName;
+    class?: string;
+}
+
+const { name, class: className } = Astro.props;
+
+const glyphClasses = cntl`
+  ${className ?? "h-16 w-16"} shrink-0
+`;
+
+const frameFill = "var(--color-silver-tree-400)";
+const frameStroke = "var(--color-silver-tree-500)";
+---
+
+<svg class={glyphClasses} viewBox="0 0 120 120" fill="none" aria-hidden="true">
+    <rect
+        x="14"
+        y="18"
+        width="92"
+        height="84"
+        rx="14"
+        fill={frameFill}
+        fill-opacity="0.18"
+        stroke={frameStroke}
+        stroke-width="2"
+        stroke-opacity="0.7"></rect>
+
+    {
+        /* Tangled field records resolving into tidy, linked rows. */
+        name === "fieldwork" && (
+            <g>
+                <g
+                    stroke="var(--color-silver-tree-500)"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    opacity="0.8"
+                >
+                    <path d="M24 34 C 40 34, 38 64, 50 62 C 55 61, 57 60.5, 60 60" />
+                    <path d="M24 60 C 34 60, 38 38, 50 44 C 55 46.5, 57 54, 60 60" />
+                    <path d="M24 86 C 40 86, 36 68, 50 65 C 55 64, 57 62, 60 60" />
+                </g>
+
+                <g
+                    stroke="var(--color-silver-tree-400)"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                >
+                    <path d="M66 58 C 70 58, 68 44, 72 44" />
+                    <path d="M66 60 h6" />
+                    <path d="M66 62 C 70 62, 68 76, 72 76" />
+                </g>
+
+                <circle cx="60" cy="60" r="6" fill="var(--color-silver-tree-600)" />
+
+                <rect
+                    class="nh-stack-bar"
+                    x="72"
+                    y="40.5"
+                    width="22"
+                    height="7"
+                    rx="3.5"
+                    fill="var(--color-silver-tree-500)"
+                />
+                <rect
+                    class="nh-stack-bar nh-stack-bar-2"
+                    x="72"
+                    y="56.5"
+                    width="16"
+                    height="7"
+                    rx="3.5"
+                    fill="var(--color-golden-grass-500)"
+                />
+                <rect
+                    class="nh-stack-bar nh-stack-bar-3"
+                    x="72"
+                    y="72.5"
+                    width="20"
+                    height="7"
+                    rx="3.5"
+                    fill="var(--color-silver-tree-500)"
+                />
+            </g>
+        )
+    }
+
+    {
+        /* Collecting effort watched against a limit, then signed off. */
+        name === "responsible" && (
+            <g>
+                <path
+                    d="M32 68 A28 28 0 0 1 88 68"
+                    stroke="var(--color-silver-tree-400)"
+                    stroke-width="6"
+                    stroke-linecap="round"
+                    opacity="0.35"
+                />
+                <path
+                    d="M32 68 A28 28 0 0 1 68.7 41.4"
+                    stroke="var(--color-silver-tree-500)"
+                    stroke-width="6"
+                    stroke-linecap="round"
+                />
+                <path
+                    d="M60 68 L66.2 49"
+                    stroke="var(--color-golden-grass-500)"
+                    stroke-width="3.2"
+                    stroke-linecap="round"
+                />
+                <circle cx="60" cy="68" r="4.5" fill="var(--color-silver-tree-600)" />
+
+                <circle cx="90" cy="86" r="11" fill="var(--color-silver-tree-600)" />
+                <path
+                    class="nh-draw"
+                    d="M85 86 l4 4 l7 -8.5"
+                    stroke="var(--color-silver-tree-50)"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </g>
+        )
+    }
+
+    {
+        /* Field records travelling to the museum database. */
+        name === "sharing" && (
+            <g>
+                <rect
+                    x="24"
+                    y="44"
+                    width="24"
+                    height="32"
+                    rx="6"
+                    fill="var(--color-silver-tree-600)"
+                />
+                <g stroke="var(--color-silver-tree-50)" stroke-width="2.6" stroke-linecap="round">
+                    <path d="M30 54 h12" />
+                    <path d="M30 60 h12" />
+                    <path d="M30 66 h7" />
+                </g>
+
+                <path
+                    d="M52 60 h9"
+                    stroke="var(--color-silver-tree-400)"
+                    stroke-width="2"
+                    stroke-dasharray="3 4"
+                    stroke-linecap="round"
+                />
+                <path
+                    class="nh-flag"
+                    d="M61 55 l6 5 l-6 5 z"
+                    fill="var(--color-golden-grass-400)"
+                />
+
+                <path d="M70 56 L86 44 L102 56 Z" fill="var(--color-silver-tree-500)" />
+                <g fill="var(--color-silver-tree-600)">
+                    <rect x="73" y="60" width="6" height="18" rx="2" />
+                    <rect x="83" y="60" width="6" height="18" rx="2" />
+                    <rect x="93" y="60" width="6" height="18" rx="2" />
+                    <rect x="69" y="81" width="34" height="6" rx="3" />
+                </g>
+            </g>
+        )
+    }
+
+    {
+        /* Everyone inside the same circle. */
+        name === "accessible" && (
+            <g>
+                <circle
+                    cx="60"
+                    cy="60"
+                    r="22"
+                    stroke="var(--color-silver-tree-400)"
+                    stroke-width="1.8"
+                    opacity="0.45"
+                />
+                <circle
+                    class="nh-orbit"
+                    cx="60"
+                    cy="60"
+                    r="30"
+                    stroke="var(--color-golden-grass-400)"
+                    stroke-width="2"
+                    stroke-dasharray="5 10"
+                />
+                <circle cx="60" cy="47" r="5.5" fill="var(--color-silver-tree-600)" />
+                <g
+                    stroke="var(--color-silver-tree-600)"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                >
+                    <path d="M48 60 h24" />
+                    <path d="M60 55 v11" />
+                    <path d="M60 66 l-6 10" />
+                    <path d="M60 66 l6 10" />
+                </g>
+            </g>
+        )
+    }
+
+    {
+        /* A tree of disciplines with a new branch growing. */
+        name === "taxonomy" && (
+            <g>
+                <g
+                    stroke="var(--color-silver-tree-500)"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                >
+                    <path d="M28 60 h16" />
+                    <path d="M44 38 V82" />
+                    <path d="M44 38 h14" />
+                    <path d="M44 82 h14" />
+                    <path d="M58 30 V46" />
+                    <path d="M58 74 V90" />
+                    <path d="M58 30 h18" />
+                    <path d="M58 46 h18" />
+                    <path d="M58 74 h18" />
+                </g>
+                <path
+                    d="M58 90 h18"
+                    stroke="var(--color-golden-grass-500)"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-dasharray="4 4"
+                />
+
+                <g fill="var(--color-silver-tree-600)">
+                    <circle cx="80" cy="30" r="4.5" />
+                    <circle cx="80" cy="46" r="4.5" />
+                    <circle cx="80" cy="74" r="4.5" />
+                </g>
+                <circle
+                    class="nh-flag"
+                    cx="80"
+                    cy="90"
+                    r="4.5"
+                    fill="var(--color-golden-grass-500)"
+                />
+            </g>
+        )
+    }
+
+    {
+        /* A measurement that does not fit the pattern, caught. */
+        name === "machine-learning" && (
+            <g>
+                <g
+                    stroke="var(--color-silver-tree-400)"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    opacity="0.6"
+                >
+                    <path d="M28 34 v56" />
+                    <path d="M28 90 h64" />
+                </g>
+                <path
+                    d="M34 82 L92 46"
+                    stroke="var(--color-silver-tree-500)"
+                    stroke-width="2.6"
+                    stroke-linecap="round"
+                />
+
+                <g fill="var(--color-silver-tree-600)">
+                    <circle cx="41" cy="75" r="3.2" />
+                    <circle cx="52" cy="71" r="3.2" />
+                    <circle cx="61" cy="63" r="3.2" />
+                    <circle cx="71" cy="59" r="3.2" />
+                    <circle cx="80" cy="51" r="3.2" />
+                    <circle cx="88" cy="48" r="3.2" />
+                </g>
+
+                <path
+                    d="M54 44 L60 60"
+                    stroke="var(--color-silver-tree-400)"
+                    stroke-width="1.6"
+                    stroke-dasharray="3 4"
+                    stroke-linecap="round"
+                />
+                <circle class="nh-flag" cx="53" cy="40" r="4.5" fill="#e2685f" />
+            </g>
+        )
+    }
+
+    {
+        /* NAHPU records enriched from external databases. */
+        name === "integrations" && (
+            <g>
+                <g
+                    stroke="var(--color-silver-tree-400)"
+                    stroke-width="1.8"
+                    stroke-dasharray="4 4"
+                    stroke-linecap="round"
+                >
+                    <path d="M50 54 C 62 54, 62 38, 72 38" />
+                    <path d="M50 60 h22" />
+                    <path d="M50 66 C 62 66, 62 86, 72 86" />
+                </g>
+                <circle
+                    class="nh-flag"
+                    cx="61"
+                    cy="60"
+                    r="3.2"
+                    fill="var(--color-golden-grass-400)"
+                />
+
+                <rect
+                    x="24"
+                    y="48"
+                    width="24"
+                    height="24"
+                    rx="7"
+                    fill="var(--color-silver-tree-600)"
+                />
+                <g stroke="var(--color-silver-tree-50)" stroke-width="2.4" stroke-linecap="round">
+                    <path d="M30 56 h12" />
+                    <path d="M30 60 h12" />
+                    <path d="M30 64 h7" />
+                </g>
+
+                <g>
+                    <rect x="75" y="34" width="22" height="10" fill="var(--color-silver-tree-500)" />
+                    <ellipse cx="86" cy="44" rx="11" ry="4.5" fill="var(--color-silver-tree-500)" />
+                    <ellipse cx="86" cy="34" rx="11" ry="4.5" fill="var(--color-silver-tree-400)" />
+                </g>
+                <g>
+                    <rect x="75" y="60" width="22" height="10" fill="var(--color-golden-grass-500)" />
+                    <ellipse cx="86" cy="70" rx="11" ry="4.5" fill="var(--color-golden-grass-500)" />
+                    <ellipse cx="86" cy="60" rx="11" ry="4.5" fill="var(--color-golden-grass-400)" />
+                </g>
+                <g>
+                    <rect x="75" y="82" width="22" height="10" fill="#3f9fd6" />
+                    <ellipse cx="86" cy="92" rx="11" ry="4.5" fill="#3f9fd6" />
+                    <ellipse cx="86" cy="82" rx="11" ry="4.5" fill="#7bc0e8" />
+                </g>
+            </g>
+        )
+    }
+</svg>

@@ -4,41 +4,155 @@ sidebar:
   order: 2
 ---
 
-## Membuat proyek baru
+Proyek mengatur data NAHPU. Satu proyek dapat berisi personel, takson, situs,
+kegiatan pengumpulan, catatan spesimen, narasi, dan media terkait.
 
-Untuk membuat proyek baru, gunakan tombol `+` di pojok kanan bawah layar utama. Anda akan diminta untuk memasukkan nama proyek, deskripsi proyek, dan format katalog utama.
+## Membuat proyek
 
-- **Nama proyek** harus singkat dan deskriptif.
-- **Deskripsi proyek** harus terdiri dari beberapa kalimat yang menjelaskan tujuan proyek.
-- **Format katalog utama** adalah format katalog yang akan digunakan untuk menghasilkan halaman katalog spesimen. Anda dapat mengubah ini nanti. Anda juga dapat mencampur berbagai jenis format katalog dalam proyek yang sama.
+{% aside type="caution" %}
+Sebuah proyek memerlukan setidaknya satu orang dengan peran `Cataloger`. Ketika Anda memilih ID lapangan `Personnel`, wizard menambahkan langkah kondisional `Cataloger` dan tidak mengizinkan Anda menyelesaikannya sebelum ada orang yang memenuhi syarat. Lihat [Personel](./personnel/#menambahkan-personel-ke-proyek).
+{% /aside %}
 
-## Mengenal dasbor
+Di layar beranda, pilih `+`, pilih `New project`, lalu tentukan apakah Anda
+akan membuat identitas baru atau memakai informasi dari perangkat lain.
 
-Setelah Anda membuat proyek, Anda akan menuju dasbor proyek. Dasbor dibagi menjadi empat panel utama:
+{% steps %}
 
-- **Ringkasan proyek** - Panel ini memberikan gambaran singkat tentang proyek. Ini mencakup nama proyek, deskripsi, [peneliti utama](./projects#peneliti-utama), lokasi, tanggal mulai, tanggal selesai, tanggal pembuatan basis data, dan tanggal akses terakhir.
-- **Personel** - Panel ini mencantumkan semua personel yang terkait dengan proyek. Anda dapat menambahkan lebih banyak personel dengan mengeklik tombol `[+ Tambah personel]` di bagian bawah panel.
-- **Registri takson** - Panel ini mencantumkan semua taksa yang terdaftar dalam basis data. Anda dapat menambahkan lebih banyak taksa dengan mengeklik tombol `[+ Tambah takson]` di bagian bawah panel. Anda juga dapat mengimpor taksa dari berkas csv dengan mengeklik tombol `[Impor dari berkas]`.
-- **Statistik catatan** - Grafik yang menunjukkan statistik waktu nyata dari jumlah catatan dalam proyek.
+1. Pada `Welcome`, pilih `Create new project`. Untuk memakai identitas yang
+   sama, gunakan `Import project-info JSON` atau `Scan project QR` di perangkat
+   seluler.
+2. Pada `Project information`, masukkan nama unik sepanjang 3–25 karakter.
+   Deskripsi, peneliti utama, nomor akses institusi, lokasi, zona waktu IANA,
+   dan tanggal bersifat opsional.
+3. Pada `Main taxon`, pilih takson untuk formulir spesimen baru di perangkat
+   ini. Langkah ini dapat dilewati dan diubah melalui `Settings` > `Format`.
+4. Pada `Field ID`, pilih `Personnel` atau `Project`. Mode personel memerlukan
+   Cataloger yang memenuhi syarat. Mode proyek menggabungkan awalan, nomor
+   katalog saat ini, dan akhiran tanpa menambah pemisah. Pengaturan ini juga
+   tersedia di `Settings` > `Specimens`.
+5. Pada `Review`, periksa identitas proyek, pengaturan perangkat, dan kesiapan
+   taksonomi, lalu pilih `Create project`.
 
-## Memperbarui info Proyek
+{% /steps %}
 
-Anda dapat menambahkan informasi lebih lanjut tentang proyek dengan mengeklik tombol `pensil` di pojok kanan bawah ringkasan proyek.
+NAHPU membuat UUID untuk proyek baru. Impor info atau pemindaian QR
+mempertahankan UUID sumber, tetapi hanya menyalin metadata—bukan catatan,
+personel, takson, media, atau pengaturan perangkat.
 
-## Menghapus Proyek
+## Zona waktu proyek
 
-Kami sengaja mempersulit penghapusan proyek. Jika Anda yakin ingin menghapus proyek, hapus semua catatan yang terkait dengan proyek tersebut terlebih dahulu dengan mengikuti semua langkah di bawah ini:
+Bidang `Time zone` menyimpan lokasi zona waktu IANA tempat proyek dilakukan,
+seperti `Asia/Jakarta` atau `America/New_York`. Pilih lokasi kegiatan lapangan,
+bukan zona waktu perangkat yang digunakan untuk memasukkan data.
 
-1. Buka dasbor proyek
-2. Klik tombol narasi di bilah navigasi bawah. Gunakan tombol menu (ikon tiga titik) di pojok kanan atas untuk memilih `Hapus semua catatan`.
-3. Ulangi langkah 2 untuk `Catatan Spesimen`, `Kejadian Pengoleksian`, dan `Catatan Lokasi`. Penghapusan catatan harus dilakukan dalam urutan yang sama persis.
-4. Kembali ke dasbor proyek dan hapus semua personel yang terdaftar.
-5. Hapus proyek menggunakan tombol hapus di laci menu.
+NAHPU menyimpan zona waktu sebagai metadata proyek. Nilainya ditampilkan pada
+Project Overview, disertakan saat informasi proyek atau transfer penuh ditukar,
+dan tersedia sebagai `project::timeZone` dalam templat dokumen dan ekspor. Ini
+memberikan konteks saat tanggal dan waktu ditinjau pada perangkat lain.
 
+Zona waktu tidak mengubah jam perangkat dan tidak mengonversi waktu narasi,
+kegiatan, atau spesimen yang sudah ada secara otomatis. Waktu tersebut tetap
+merupakan nilai jam lokal yang dimasukkan pada catatan. Gunakan zona waktu
+proyek saat mencatat kegiatan lapangan dan pertahankan pengaturan yang sama di
+semua perangkat.
 
+### Melihat tanggal dan waktu di perangkat lain
+
+NAHPU menyimpan tanggal dan waktu sebagai nilai biasa, bukan sebagai waktu
+absolut yang terkait dengan zona waktu. Saat proyek yang sama dibuka di
+perangkat lain, NAHPU tidak menggeser waktu yang tersimpan berdasarkan zona
+waktu perangkat tersebut. Perangkat dapat menampilkan nilai yang sama dengan
+format lokal yang berbeda—misalnya urutan tanggal, nama bulan, atau format
+12/24 jam—tetapi nilai jam yang dimasukkan tetap sama.
+
+Contohnya, jika zona waktu proyek adalah `Asia/Jakarta` dan kegiatan lapangan
+dicatat sebagai **12 Mei, 08.30**, perangkat lain mungkin menampilkan tanggal
+dan waktu dengan format berbeda, tetapi tidak akan mengonversinya secara
+otomatis menjadi waktu lain. `Asia/Jakarta` menjelaskan konteks untuk memahami
+`08.30`.
+
+### Mengapa zona waktu penting
+
+Zona waktu proyek yang benar membantu membandingkan kegiatan yang dimasukkan
+dari perangkat berbeda, mempertahankan konteks waktu saat data dibagikan atau
+ditransfer, dan mendukung interpretasi ekspor yang dapat diulang. Jika tim
+bekerja lintas zona waktu atau memasukkan data historis dari lokasi lain,
+jelaskan pengecualian tersebut dalam narasi atau konteks catatan lain yang
+sesuai.
+
+## Mengelola proyek dari layar beranda
+
+Setiap proyek memiliki menu tindakan:
+
+- **Edit info** - Memperbarui formulir proyek.
+- **Show QR** - Menampilkan informasi proyek untuk dipindai perangkat seluler.
+- **Export info** - Mengekspor informasi proyek sebagai JSON. Catatan dan media
+  proyek tidak termasuk di dalamnya.
+- **Details** - Menampilkan informasi proyek tanpa mengeditnya.
+
+## Dasbor proyek
+
+Dasbor memiliki empat panel:
+
+- **Project Overview** - Menampilkan nama, UUID, deskripsi, peneliti utama,
+  nomor akses, lokasi, zona waktu, tanggal, tanggal pembuatan, dan akses
+  terakhir.
+- **Personnel** - Menampilkan personel yang ditugaskan dan menyediakan
+  `Add personnel` untuk memilih data yang sudah ada atau membuat data baru.
+- **Taxon Registry** - Menampilkan takson terdaftar serta kontrol untuk
+  menambah atau mengimpor takson.
+- **Record Statistics** - Merangkum catatan proyek dan statistik terperinci.
+
+Menu proyek juga berisi tindakan transfer, ekspor, pencadangan, pengaturan,
+dan penghapusan proyek.
+
+## Memperbarui informasi proyek
+
+Dari dasbor, pilih `Edit` pada Project Overview. Dari layar beranda, buka menu
+tindakan proyek dan pilih `Edit info`. Formulir mengelompokkan detail, tempat
+dan waktu, serta tanggal proyek. Ubah takson utama atau ID lapangan melalui
+[Pengaturan](../settings).
+
+## Berbagi informasi proyek {% #sharing-project-information %}
+
+Untuk menyalin informasi tanpa mentransfer catatan:
+
+1. Pada perangkat sumber, pilih `Export info` atau `Show QR`.
+2. Pada perangkat penerima, pilih `New project`, lalu gunakan `Import
+   project-info JSON` atau `Scan project QR` di perangkat seluler.
+
+Metode ini mempertahankan UUID dan membuat proyek dengan informasi yang sama.
+Untuk mentransfer catatan, media, dan data lain, gunakan [Transfer
+proyek](../export/project-transfer).
+
+## Mentransfer data proyek
+
+Gunakan `Export project` dan `Merge project` untuk menggabungkan data proyek
+yang sama dari beberapa perangkat NAHPU. Panduan [Transfer
+proyek](../export/project-transfer) menjelaskan ekspor JSON.GZ tanpa media untuk
+unggahan dengan internet terbatas dan ekspor ZIP/TAR.GZ untuk salinan lengkap
+dengan media, serta pencadangan, pemeriksaan UUID, dan penyelesaian konflik.
+
+`Bundle records` adalah ekspor terpisah untuk publikasi, analisis, arsip, atau
+pihak ketiga. Berkas ini tidak dapat digabungkan dengan `Merge project`.
+
+## Menghapus proyek
+
+Buka menu proyek dan pilih `Delete project`. NAHPU meminta lima karakter
+pertama UUID karena penghapusan tidak dapat dibatalkan.
+
+Penghapusan menghapus catatan spesimen dan pengukuran, kegiatan dan upaya
+pengumpulan, personel kegiatan, narasi, situs dan koordinat, tautan personel,
+media proyek, serta catatan proyek. Berkas tersimpan juga dihapus. Media yang
+masih digunakan oleh catatan taksonomi dilepaskan, bukan dihapus. Jika
+pembersihan berkas gagal, NAHPU menampilkan peringatan setelah catatan basis
+data dihapus.
+
+Ekspor transfer proyek atau cadangan basis data sebelum menghapusnya jika data
+mungkin masih diperlukan.
 
 ## Terminologi
 
-### Peneliti Utama
+### Peneliti utama
 
-Peneliti utama adalah orang yang bertanggung jawab atas proyek tersebut.
+Orang yang bertanggung jawab atas proyek.

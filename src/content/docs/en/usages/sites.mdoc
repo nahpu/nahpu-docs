@@ -6,56 +6,77 @@ sidebar:
 
 ## Creating a new Site
 
+A site is a reusable place record. Collecting events belong to a site, and
+specimen capture records reach the site through their collecting event. Create
+one site for each distinct camp, trap line, locality, or other place used by
+your project.
+
 {% steps %}
 1. Navigate to the site page using the bottom navigation bar.
 
-2. Use the `+` button at the top right corner to create a new site. 
-    
-    You can also use the tree dot menu icon and tap on `Create site`.
+2. Use the `+` button at the top right corner to create a new site.
+
+    You can also use the three-dot menu icon and tap `Create site`.
 
     {% aside type="tip" %}
 
-    You can minimize typing the same information by duplicating the site instead of creating a new one. Tap/click on the three dot menu botton. Then, `Duplicate site`. It will create a new site using information from the current site, except the `Site ID` and coordinates are empty. Then, fill in the `Site ID` and add coordinetes.
+    You can minimize repeated entry by duplicating a site instead of creating a
+    new one. Open the three-dot menu and choose `Duplicate site`. NAHPU copies
+    the site information, but leaves the `Site ID` and coordinates empty. Enter
+    a unique ID and add the correct coordinates before saving.
 
     {% /aside %}
 
-3. Create a site ID. 
+3. Create a site ID.
 
 
 
     We recommend creating a site ID convention for your team. An example of site ID convention for mammalogy fieldwork:
-    
-    - City, town, or village is ID-ed as it is. For example, the city of Bogor will be `BOGOR`. 
+
+    - City, town, or village is ID-ed as it is. For example, the city of Bogor will be `BOGOR`.
     - The camp site uses `{2-letter locality abbreviation}-CAMP{camp number}` format. For example, camp 1 in Mt. Gede-Pangrango is `GP-CAMP1`.
     - The trap line uses `{2-letter locality abbreviation}{trapline leader initial}-L{line number}` format. For example, line 1 in Mt. Gede-Pangrango led by Heru Handika is `GPHH-L1`.
     - The pitfall line uses `{2-letter locality abbreviation}{pitfall line leader initial}-P{line number}` format. For example, line 1 in Mt. Gede-Pangrango led by Heru Handika is `GPHH-P1`.
 
     {% aside type="tip" %}
 
-    For a project involving multiple devices, we recommend creating the same `siteID` for an identical site. The [upcoming data merging feature](https://github.com/nahpu/nahpu/issues/124) will use the `siteID` to identify and merge records from different devices. Future NAHPU update will allow to share site info to different site in similar manner as sharing project information. 
+    For a project involving multiple devices, use the same `Site ID` for an
+    identical site. This makes exchanged site and event records easier to match
+    when they are imported into another project device.
 
     {% /aside %}
 
 4. Add the Site leader
-    
-    If this is a field camp, you can put the team leader name. If you it is a trap line, you can design a person in-charge of that trap line as the site leader.
+
+    If this is a field camp, you can put the team leader name. If it is a trap line, you can designate the person in charge of that trap line as the site leader.
 
 5. Add the site type
 
-    The site type helps categorize the site based on its characteristics or usage. Currently, there is no option to edit the list. Upcoming NAHPU feature will allow you to do so.
+    The site type categorizes the site by its characteristics or use. Choose a
+    value from the project's configured site-type list.
 
 6. Fill in the geography details
 
-    We recommend to follow your museum convention for writing the precise locality and remarks.
+    Start with `Find existing locality`. It matches what you type against every
+    locality already saved in the project, and selecting a suggestion fills the
+    whole geography hierarchy at once. Each field also suggests values already
+    recorded for that field, so a country or state you have typed before comes
+    back as an option.
+
+    Localities are stored once and shared between sites, so reusing a saved
+    locality avoids creating a near-duplicate place record. Which geography
+    fields appear is configurable in Settings.
+
+    We recommend following your museum convention for writing the precise locality and remarks.
 
     {% aside type="tip" title="Writing remarks" %}
 
-    If the site is a trapline, it is a good practice to explain how the trapline is run. 
+    If the site is a trapline, it is a good practice to explain how the trapline is run.
 
     For example:
 
     ```text
-    The trapline runs from Shelter I to Shelter IV along the trails betweeen the to camp sites.
+    The trapline runs from Shelter I to Shelter IV along the trails between the two camp sites.
     ```
 
     {% /aside %}
@@ -73,21 +94,119 @@ sidebar:
 
 {% /steps %}
 
-## Adding coordinates
+## Site information
 
-You can add coordinate manually from your GPS device or use the device coordinate.
+The site form records the place and the people responsible for it:
 
-### Get coordinates from a current device
+- `Site ID`: a project-unique identifier used by events and exchanged records.
+- `Site leader`: the person responsible for the camp, trap line, or other site.
+- `Site type`: the configured category for the site.
+- Geography: `Country`, `Island group`, `State/Province`,
+  `County/Parish/District`, and `Municipality/City/Town`, shared between sites
+  that record the same place.
+- `Precise Locality` and `Remarks`: the specific named place below municipality
+  level, and notes about how the site is used or operated.
+- Habitat type, condition, and description: the environment observed at the
+  site.
+
+## Managing sites
+
+Open the three-dot menu on the site page for these actions:
+
+- `Create site`: create a new site record.
+- `Duplicate site`: copy the site details into a new record with a blank ID and
+  blank coordinates.
+- `Copy from project ...`: copy selected site information from a site in another
+  project into the current empty site.
+- `Show QR`: display the site record for another mobile device to scan.
+- `Export site`: save the site record as JSON or compresed in a ZIP/TAR.GZ file for records with media attachments.
+    The exported file can be imported into another device or shared with other team members.
+    {% aside type="tip" %}
+    For large site records or for importing site into another device without a camera access, use this option. You can then transfer the file to another device and import it there.
+    {% /aside %}
+- `Scan QR`: create or replace a site from a site QR code.
+- `Import site`: create or replace a site from an exported JSON record.
+- `Delete record`: delete the current site. A site cannot be deleted while an
+  event still references it.
+- `Delete all records`: delete all sites in the current project. Events that
+  reference those sites must be removed first.
+
+When importing a site, choose whether the imported record creates a new site or
+updates an existing site. Review linked personnel and coordinates after an
+import.
+
+## Copy site data from another project
+
+Use `Copy from project ...` when a site in another project has information that
+you want to reuse in the current project. This action fills the current site;
+it does not create a new site or change the source project.
+
+The current site must be empty before you begin. A site with information,
+coordinates, media, or linked data cannot receive copied data. At least two
+projects must exist, because the source must be a different project.
 
 {% steps %}
 
-1. Tap/click the `GPS point` button next to the `Add coordinate` button.
+1. Open the site that will receive the copied information. Make sure it is an
+   empty site record.
 
-2. It will take you the add coordinate page with the most of the information already filled.
+2. Open the three-dot menu and select `Copy from project ...`.
 
-3. Fill in the rest of the fields. 
-    
-    See the [manually adding coordinate](#adding-coordinates) section for details. Your GPS unit name should match the exact model of your device. For example: `iPad Mini 4`.
+3. Select the source project by name, then select one of its sites.
+
+4. Select the data to copy. The available choices include:
+
+   - Site ID
+   - Site leader
+   - Site type
+   - Geography fields, including country, island group, state/province,
+     county/parish/district, municipality/city/town, and precise locality
+   - Remarks
+   - Habitat type, condition, and description
+   - Coordinates
+
+   Fields without data in the source site are unavailable. Selecting
+   `Coordinates` copies all coordinates belonging to the selected source site.
+
+5. Select `Copy` to fill the current site.
+
+{% /steps %}
+
+The source site remains unchanged. This action copies site fields and
+coordinates only; it does not copy site media, associated-data links,
+fossil-site records, collecting events, or other records linked to the source
+site.
+
+{% aside type="tip" title="If copying is unavailable" %}
+
+If NAHPU reports that multiple projects are required, create or import another
+project first. If it reports that the site is not empty, create a new site or
+remove the existing site information, coordinates, media, and linked data
+before trying again.
+
+{% /aside %}
+
+## Adding coordinates
+
+Each site can have multiple coordinate records for trapline ends, separate
+collection points, or other points that belong to the same site. Add a
+coordinate manually, use the device GPS, or import points from a GIS/GPS file.
+
+### Use device GPS while adding a coordinate
+
+{% steps %}
+
+1. On the site page, open the coordinate panel and tap/click `Add coordinate`.
+
+2. On the `Add coordinates` page, use the `Device GPS` card and tap/click its
+   location button.
+
+3. NAHPU fills the decimal latitude, decimal longitude, elevation, and GPS
+   uncertainty when the operating system provides them. Review the values,
+   complete the remaining fields, and save the coordinate.
+
+    Enter the GPS unit name separately, using the exact model of your device,
+    such as `iPad Mini 4`.
 
 {% /steps %}
 
@@ -99,7 +218,7 @@ You can add coordinate manually from your GPS device or use the device coordinat
 
 2. Enter the coordinate name.
 
-    Keep the name short and informative. You can use the `Notes` field to add additional information about the coordinate. 
+    Keep the name short and informative. You can use the `Notes` field to add additional information about the coordinate.
 
     {% aside type="tip" %}
 
@@ -111,13 +230,26 @@ You can add coordinate manually from your GPS device or use the device coordinat
       - If the trapline extends beyond the first start point, the coordinate at the new start is suffixed with `{number}`. For example, `KMHH-L1S2` for first extension, `KMHH-L1S3` for the next extension, and so on until the trapline are fully moved.
       - If the trapline extends beyond the first end point, the coordinate at the new end is suffixed with `{number}`. For example, `KMHH-L1E2` for first extension, and continue in a similar manner as the start line extension.
 
-
-
     {% /aside %}
 
-3. Enter the latitude and longitude values.
+3. Select a coordinate format and enter its values.
 
-    Currently, NAHPU only support decimal coordinates.
+    NAHPU accepts decimal degrees (DD), degrees and decimal minutes (DDM),
+    degrees-minutes-seconds (DMS), and a single UTM value in the form
+    `zone hemisphere easting northing`. UTM input uses WGS84. Latitude and
+    longitude directions must match their axes, and converted decimal values
+    must be within valid latitude and longitude ranges.
+
+    For DDM and DMS, enter degrees, minutes, and seconds in their separate
+    numeric fields, then choose N/S for latitude and E/W for longitude. NAHPU
+    adds the coordinate symbols and concatenates the parts for the Darwin Core
+    verbatim latitude and longitude values.
+
+    NAHPU saves decimal latitude and longitude for calculations and also keeps
+    the concatenated value and coordinate system for Darwin Core verbatim
+    fields. If coordinate values are already entered, changing formats asks
+    for confirmation before clearing them. Selecting DD clears older verbatim
+    coordinate values after the coordinate is saved.
 
 4. Add elevation in meters.
 
@@ -139,3 +271,62 @@ You can add coordinate manually from your GPS device or use the device coordinat
 
 {% /steps %}
 
+### Import coordinates from a file
+
+Use file import when several points already exist in a GIS or GPS file.
+Coordinate import is available from `Add coordinate → Import` on a site.
+
+{% steps %}
+
+1. Open a site, tap/click `Add coordinate`, and select the `Import` mode.
+
+2. The supported formats appear above the import actions. Choose
+   `Select coordinate file` and select a GeoJSON/JSON file, KML file, zipped
+   Shapefile, or GPX file. You can also choose `Scan QR` to add a coordinate QR
+   record from another NAHPU device.
+
+3. Review the imported points and any warning text. The map highlights the
+   focused point, and all valid points are selected by default.
+
+4. Use `Select all`, `Clear all`, or the individual checkboxes to choose which
+   points to add. Tap/click `Add N selected` to save them to the current site.
+
+{% /steps %}
+
+File import transfers the point name, notes, decimal latitude, decimal
+longitude, and elevation. Imported points are assigned the current site and
+`WGS84` datum; uncertainty and GPS unit information are not supplied by this
+exchange flow.
+
+Only point coordinates are imported. Non-point GeoJSON or Shapefile features,
+non-point KML geometries, invalid coordinates, and other unsupported records
+are skipped and reported in the review. GPX waypoints are imported; GPX routes
+and tracks are ignored. If no valid points remain, NAHPU reports an import
+error instead of adding records.
+
+### Manage and export coordinates
+
+The `Manage` button in a site's coordinate panel opens all project coordinates.
+You can filter the list by site, select individual points or all visible
+points, focus a point on the map, and open the map in full screen.
+
+{% steps %}
+
+1. Open a site's coordinate panel and tap/click `Manage`.
+
+2. Filter by site if needed, then select the coordinates to export.
+
+3. Tap/click `Export coordinates (N)`.
+
+4. Choose `GeoJSON (.geojson)`, `KML (.kml)`, or `Shapefile bundle (.zip)`.
+   Enter a file name, choose a destination directory, and select `Export`.
+
+5. After the file is created, use `Share` on devices that support sharing.
+
+{% /steps %}
+
+Every exported coordinate must have a valid decimal latitude and longitude.
+GIS exports include the coordinate name, notes, WGS84 decimal latitude and
+longitude, and elevation when available. Coordinate export is separate from
+`Export records`, project bundles, and database backups; use those options when
+you need tabular records or a restorable NAHPU project copy.

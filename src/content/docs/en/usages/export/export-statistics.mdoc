@@ -1,0 +1,117 @@
+---
+title: Export Statistics
+sidebar:
+  order: 13
+---
+
+Use the statistics export when you need a summary table rather than the full
+records. The tables are counts and percentages by category, which is what most
+grant reports, permit reports, and progress updates ask for. Every table shown
+on the statistics screen can be written to CSV, TSV, Excel, or JSON.
+
+Statistics are calculated for the active project only.
+
+## Opening the statistics screen
+
+Open the record statistics panel on the project dashboard and select
+`Explore more stats`. The screen has three parts:
+
+- **Summary** shows the project totals, split into a `Record summary` group
+  and a `Taxonomic breakdown` group that counts distinct classes, orders,
+  families, genera, and species, followed by the top five counts by category.
+- **Detailed statistics** builds one table or chart from the measure, grouping,
+  breakdown, and filter you choose.
+- **Spatial statistics** counts records by site coordinate, shown on a map or
+  as a table.
+
+Exports are available from the table view. Switch a panel from `Chart` or `Map`
+to `Table`, then use the `Export table` button above the table.
+
+## Detailed statistics
+
+Choose a `Measure` first, because it decides which groupings are available.
+
+| Measure | Group by |
+| --- | --- |
+| Specimens | Species, Taxon rank, Site, Date, Method, Sex, Life stage |
+| Species | Taxon rank, Site, Date, Method, Sex, Life stage |
+| Part quantity | Part type, Treatment |
+
+Life stage only appears when the project records it. Three further controls
+appear when they apply:
+
+- **Taxon rank** picks the rank to count by: `Class`, `Order`, `Family`, or
+  `Genus`. Species has its own grouping, because it is the only one that
+  offers the breakdown and the site filter below. The chart title, the table
+  header, and the file name all name the rank you picked rather than the
+  grouping, so counting by family reads `Specimens by family`.
+- **Breakdown** splits specimen counts by species into `Sex` or `Life stage`.
+  The breakdown becomes an extra column in the exported table.
+- **Filters** narrow the table to one site when counting specimens by species,
+  or to one species when counting part quantity. The selected filter is
+  included in the default file name.
+
+The exported table repeats what the on-screen table shows, one row per
+category:
+
+```text
+| Rank | Species          | Specimens | Percent (%) |
+| ---- | ---------------- | --------- | ----------- |
+| 1    | Bunomys coelestis| 24        | 40.00       |
+| 2    | Bunomys penitus  | 18        | 30.00       |
+```
+
+The second column header follows the grouping you selected, and the count
+column header follows the measure. With a breakdown active, the series column
+sits between them, and categories with no recorded value are exported as
+`Not recorded`.
+
+## Spatial statistics
+
+The spatial panel counts `Specimens`, `Species`, or `Family` per site
+coordinate. `Coordinates by species` asks you to pick a species first and then
+counts that species at each coordinate.
+
+The spatial table exports one row per coordinate with the place name, locality,
+latitude, longitude, elevation, count, and percent. This is the fastest way to
+get a coordinate list with effort attached to it for a permit report or for a
+GIS program.
+
+## Writing the file
+
+The export dialog is the same for both panels. On a phone it opens as a bottom
+sheet, and on a wider screen as a dialog.
+
+{% steps %}
+
+1. Check the file name. NAHPU proposes one built from the project name, the
+   measure and grouping, the active filter, and today's date.
+
+2. Turn on `Append date` if you want the current date added to the name. This
+   helps when you export the same table repeatedly during a field season.
+
+3. Choose the format. `CSV` and `TSV` are the safest for analysis, `Excel`
+   writes an `.xlsx` workbook, and `JSON` keeps the header names as keys.
+
+4. Select a destination folder. On desktop the file is written where you
+   choose; on mobile NAHPU uses the app export folder.
+
+5. Select `Export`. When the file is written, the button becomes `Share` so you
+   can send the table straight to another app.
+
+{% /steps %}
+
+{% aside type="note" %}
+
+The export writes the rows currently in the table, so the measure, grouping,
+breakdown, and filter all carry through to the file. Change the controls and
+export again when you need a different cut of the data.
+
+{% /aside %}
+
+## Related pages
+
+- [Record statistics on the dashboard](../projects)
+- [Export records](./export-records) for the underlying specimen, site, and
+  event data
+- [Bundle records](./export-bundles) for standards-based packages

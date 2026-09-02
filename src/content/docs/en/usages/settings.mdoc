@@ -1,0 +1,125 @@
+---
+title: Settings
+---
+
+NAHPU separates project records, shared database records, reproducible user
+configs, and installation-only preferences. Open a project, open the
+Dashboard menu, and select `Settings` to configure the current installation.
+
+## What each setting affects
+
+| Kind | Examples | Transfer behavior |
+| --- | --- | --- |
+| Project information | Name, accession, location, time zone, dates, project field-ID values | Included in project-info and project transfers |
+| Shared database records | Taxa and personnel | Stored in the NAHPU database and associated with projects |
+| User configs | Controlled vocabularies and export or document presets | Transfer with `Export user configs` and `Import user configs` |
+| Installation state | Theme and current main taxon | Remains on the current installation |
+
+Changing a setting while one project is open can therefore affect other
+projects on the same installation. Review transferred user configs before
+replacing your current configuration.
+
+## Catalogs
+
+### Format
+
+`Format` selects the main taxon used for new specimen forms on this device. A
+project can contain more than one taxon group; this setting only controls the
+currently active specimen format and its measurement fields.
+
+### Events and sites
+
+Use `Events` to manage the controlled primary-activity list, collection
+methods, event-personnel roles, and environmental fields shown on event forms.
+Primary activities default to `Collecting`, `Recording`, and `Observing`;
+`Other` is not included unless you add it. Environmental forms initially show
+ambient temperature, ambient humidity, cloud cover, rainfall, and notes. Like
+Geography settings, the other built-in fields can be shown or hidden without
+deleting stored values. Use `Sites` to manage controlled vocabularies for site
+and habitat types. Keep these settings consistent across field devices by
+transferring user configs.
+
+### Specimens
+
+`Specimens` contains capture-field visibility, field IDs, tissue IDs, specimen
+sexes, specimen types, treatments, conditions, and taxon-dependent parasite
+settings.
+
+The specimen-sex vocabulary is restricted. `Male`, `Female`, and `Unknown`
+remain available for every taxon. Use the `+` chips to add `Gynandromorph`,
+`Hermaphrodite`, `Female?`, or `Male?` to specimen dropdowns. Optional chips can
+be removed only when no specimen record in the database uses that value.
+
+Under `Field ID`, leave `Use project ID` off to use a Cataloger's initials and
+personal field number. The Cataloger must have the `Cataloger` role, field
+registration enabled, initials, and a current field number.
+
+Turn on `Use project ID` to configure a prefix, current catalog number, suffix,
+and auto-increment behavior. NAHPU concatenates the three values directly. For
+example, `NAHPU-`, `120`, and `-M` produce `NAHPU-120-M`.
+
+{% aside type="caution" %}
+
+Changing a project-ID prefix or suffix changes how assigned project IDs are
+displayed. Confirm the change carefully if those identifiers have already
+been exported or written on labels.
+
+{% /aside %}
+
+## Database
+
+- `Taxa` manages taxonomy records available to projects.
+- `Personnel` manages people in the database and their specimen-care roles.
+- `Replace database` replaces the active SQLite database from a backup.
+
+{% aside type="caution" %}
+
+Make a current backup before using `Replace database`. Replacing the database
+is different from merging a project or importing user configs.
+
+{% /aside %}
+
+## Exports
+
+- `Tabular Data` manages reusable record-export presets.
+- `Documents` manages document templates, print-layout presets, and the
+  fonts available to templates.
+- `Template Editor` creates and edits document templates.
+
+These presets are user configs. Export them when another installation must
+reproduce the same columns, labels, or layouts.
+
+## Applications
+
+### Theme
+
+Use `Theme` to select `System`, `Light`, or `Dark`. The choice applies only to
+the current installation.
+
+### Data usage and cleanup
+
+Open `Data usage` to scan the folders managed by NAHPU. The summary reports
+total storage, file and media counts, and space that can be reclaimed from
+unlinked files.
+
+`Remove unlinked files` deletes files that are no longer used by any record,
+including leftovers from deleted media or cancelled imports. Linked files,
+databases and backups, custom fonts, map layers, and files outside
+NAHPU-managed folders are not affected. Remove an installed font from
+`Documents` > `Fonts` rather than from here.
+
+The `Files` tree lets you inspect stored files, save a copy, or remove eligible
+files individually. Choose `Select` to work with several files. Use `Clear` or
+`Select all`, then choose the floating `Review` button to check the file count,
+size, and grouped locations before exporting an archive or permanently
+removing the files.
+
+Choose `Rescan` after files have changed outside NAHPU to refresh the storage
+report.
+
+## Transferring user configs
+
+`Export user configs` and `Import user configs` are in the project Dashboard
+menu, next to `Settings`; they are not inside the Settings page. User-config
+transfer can reproduce controlled vocabularies and presets without replacing the
+project database. See [Export](../export) before replacing configs or data.

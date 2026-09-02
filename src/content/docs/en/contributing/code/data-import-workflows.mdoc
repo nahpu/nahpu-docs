@@ -1,0 +1,190 @@
+---
+title: "Import workflows"
+sidebar:
+  order: 9
+---
+
+This page describes how imported files become NAHPU data. For the shared
+architecture and safety rules, read [Data import and export](../data-import-export-overview)
+first.
+
+## Taxonomy spreadsheets
+
+The taxon registry accepts `.xlsx`, `.csv`, and `.tsv` files. The UI in
+`lib/screens/projects/taxonomy/add_taxon.dart` delegates file reading to
+`lib/services/import/taxon_reader.dart`. The reader uses the generated import
+binding, whose Rust wrapper calls `nahpu_db::io::import::RecordImporter`.
+
+The flow is:
+
+```text
+file picker → delimiter/sheet inspection → flexible header mapping
+           → required-field validation → preview/counts → Drift inserts
+```
+
+Taxon rows may represent class, order, family, genus, species, or subspecies.
+The optional rank column defaults to species when absent or blank only if all
+species fields are complete; otherwise the row must provide a rank. Each row
+requires the classification fields from class through that rank. Header aliases
+such as `taxonRank`, `taxonClass`, `taxonOrder`, `taxonFamily`,
+`specificEpithet`, `infraspecificEpithet`, and `common name` are normalized by
+the Dart import types.
+Excel files are read as sheets. CSV and TSV use their normal delimiters; an
+unknown extension receives best-effort Excel, comma, tab, and semicolon
+detection, with a custom delimiter override as a last resort.
+
+Import validation belongs in Dart because it understands NAHPU taxonomy rules,
+duplicate handling, and the current project. The Rust reader should remain a
+reusable table parser. Add focused tests for every delimiter, malformed
+header, missing required field, duplicate, and unsupported workbook case.
+
+Importing a taxon is not the same as implementing a new taxon group. A new
+group needs application code, attribute persistence, transfer support, and
+export mappings; see [Adding a taxon group](../adding-a-taxon-group).
+
+## Project information
+
+`ProjectExchangeService` serializes a `ProjectData` object to readable JSON or
+compact QR content. The import action on the new-project screen reads that
+metadata and pre-fills a project shell. It does not import specimens, sites,
+events, media, or configuration. Use project transfer when the goal is to move
+project records.
+
+Keep the JSON decoder strict about object shape and required project identity.
+The QR form is deliberately compact, so it should not be expanded into a
+general-purpose project transport format.
+
+## Site, event, and specimen record exchange
+
+Record exchange uses a versioned `nahpu_record` envelope with a type marker for
+`site`, `event`, or `specimen`. The main code is under
+`lib/services/record_exchange/`:
+
+- site import resolves coordinates, personnel, and associated data;
+- event import resolves its linked site, weather, effort, and personnel;
+- specimen import resolves taxonomy, event, coordinates, attributes, parts,
+  associated data, personnel, and optional media.
+
+Plain JSON is suitable when there is no media. ZIP and TAR.GZ archives contain
+`nahpu-record.json` plus a validated media tree. The importer checks the type,
+wire version, dependency references, and archive paths before writing. Existing
+owned child rows are removed only when the user chose replacement; a collision
+without an explicit target receives a new UUID.
+
+Keep the version-1 wire contract stable. If a new attribute table or dependency
+is added, add compatibility handling for old payloads and tests for both the
+old and current shapes.
+
+## Project transfer and merge
+
+Project transfer is a project-scoped transport, not a raw database copy. The
+version-4 payload contains project information, related table rows, a database
+version, warnings, and a media manifest. The archive service supports:
+
+- `JSON.GZ (light)`: records without media for small uploads;
+- `ZIP`: a full transfer archive;
+- `TAR.GZ`: a full transfer archive.
+
+`ProjectTransferService` first collects project-owned rows and only the
+taxonomy/personnel rows referenced by those records. On import it validates
+references, checks project UUIDs, builds a conflict plan, remaps IDs, writes
+rows in dependency order, and then copies media. The review UI exposes **Keep
+current**, **Use imported**, **Import as new**, and **Skip**.
+
+### Record matching
+
+Records are matched on the identity the app presents, so a conflict card names
+the same thing the user sees elsewhere:
+
+- sites match on `siteID`;
+- events match on site, `startDate`, and `idSuffix` — the parts of
+  `formatCollEventId`, not `startTime`;
+- specimens match on `uuid`;
+- taxonomy matches on genus and specific epithet;
+- narratives match on site, date, time, and writer.
+
+When two destination records share one identifier, the match is ambiguous and
+becomes a blocking conflict instead of silently importing another copy.
+
+### Blocking conflicts
+
+A conflict with `requiresChoice` has no safe default: the wizard leaves its
+action empty, refuses to advance past the section, and `importProject` throws
+before opening its transaction. `unresolvedConflicts` in
+`project_transfer_models.dart` is the single gate both sides call.
+
+Duplicate identifiers are always blocking, because they reach physical labels
+and published exports and must never be renumbered silently:
+
+- specimen field IDs and project IDs, compared as the rendered string so two
+  catalogers sharing initials still collide;
+- `tissueID` and `barcodeID` on specimen parts;
+- `specimen.uuid` already owned by another project;
+- `parasite.parasiteUuid` already in the database.
+
+Local rows the archive also carries are left out of the comparison — they are
+the same record, not a new duplicate — which keeps detection independent of the
+actions chosen later. `parentConflictIds` retires a child conflict once its
+parent record is kept or skipped.
+
+Do not use light JSON.GZ as a complete backup. Do not bypass the plan when
+adding a new table: update collection, parsing, row insertion, cleanup, and
+reference validation together. A new user-facing identifier needs a uniqueness
+check in `_findSpecimenConflicts` and a claim in `_IdentifierIndex`.
+
+## Full database restore
+
+`DbWriter` accepts a raw SQLite database or a complete ZIP/TAR.GZ archive. For
+an archive it validates extraction paths, finds database candidates at the
+archive root, imports `user_configs.json` when present, copies managed media,
+fonts, maps, and associated files, and replaces the active SQLite file. The UI
+offers a backup of the current database before replacement.
+
+This is the destructive restore path. Keep the current database backup enabled
+unless the user explicitly accepts the risk. Test corrupted archives, multiple
+database candidates, unsafe paths, missing settings, interrupted copies, and
+database-integrity failures.
+
+## User-config import
+
+`UserConfigTransferService` accepts JSON and JSON.GZ. It asks the Rust config
+wrapper to inspect the file, displays a preview, lets the user select sections,
+and replaces only those selected sections. The underlying `nahpu_configs`
+crate validates the configuration export schema and performs the replacement
+in the configuration store.
+
+Configuration replacement does not alter project SQLite rows. It is therefore
+appropriate for sharing controlled lists, export behavior, templates, and
+layouts without sharing specimen data.
+
+## GIS and map-layer import
+
+Coordinate import is a reviewable point exchange. `CoordinateExchangeService`
+passes GeoJSON/JSON, KML, GPX, and zipped WGS84 Shapefile files to
+`nahpu_gis`, then converts valid points into site-scoped Drift companions.
+Non-point features, GPX routes/tracks, missing coordinates, and out-of-range
+values are skipped or reported as warnings rather than silently inserted.
+
+Map-layer import is separate from coordinate import. `UserMapLayerService`
+accepts GeoJSON, zipped WGS84 Shapefiles, and PMTiles. Vector layers are
+normalized to managed GeoJSON; PMTiles remain managed tile archives with
+metadata and bounds. These are reference layers, not site coordinate rows.
+
+## File and media ingestion
+
+Adding an image, video, audio file, font, map, or associated file is file
+ingestion rather than a portable record import. Dart extracts metadata, copies
+the file into the managed documents tree, and writes metadata/link rows. The
+file is later included only when the selected record exchange, project
+transfer, package, or full backup includes it.
+
+## Import test checklist
+
+- valid and invalid type/version markers;
+- future-version rejection and old-version compatibility;
+- missing references and cross-project references;
+- unsafe archive paths and missing media;
+- duplicate records and replacement targets;
+- rollback/no partial writes;
+- provider invalidation after successful import;
+- temporary-directory cleanup after errors.
