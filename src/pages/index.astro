@@ -112,7 +112,7 @@ const capabilities = [
     {
         color: "#3f9fd6",
         title: "Multi-taxon support",
-        desc: "Mix taxa in a single project —each specimen gets a catalog format tailored to its taxon.",
+        desc: "Mix taxa in a single project or separate in multiple projects. Each specimen gets a catalog format tailored to its taxon.",
     },
     {
         color: "#7c72d8",
@@ -132,7 +132,7 @@ const capabilities = [
     {
         color: "#b07a56",
         title: "Real-time statistics",
-        desc: "Monitor activity to make decision on collecting strategy and prevent over-collection at a glance.",
+        desc: "Monitor activity to make decision on collecting strategy, avoid collector bias, and prevent over-collection at a glance.",
     },
     {
         color: "#e2685f",
@@ -194,31 +194,10 @@ const funders: Funder[] = [
     },
 ];
 
-const fieldOrigins = [
-    {
-        color: "#2f9e7d",
-        climate: "Humid",
-        place: "Mountains of Southeast Asia",
-        desc: "Humid montane forest, weather that turns without warning, and no electricity to fall back on. The catalog has to open offline, hold up on a partly charged device, and still be there the next morning.",
-    },
-    {
-        color: "#3f9fd6",
-        climate: "Humid to temperate",
-        place: "The Andes and the Amazon",
-        desc: "High elevations in the tall Andes and riverine habitat deep in the Amazon, where a specimen, its site, and its samples stay tied together through days of travel between camps. Work recorded on separate devices merges back into one project once the team regroups.",
-    },
-    {
-        color: "#e0913a",
-        climate: "Dry",
-        place: "The North American desert",
-        desc: "Dry, dusty air and long collecting days, where specimens are prepared in the dust rather than at a clean bench. When a connection turns up, a backup is a few taps away, whether a light, media-free copy over a thin signal, or the whole project with its photographs when bandwidth allows.",
-    },
-];
-
 const spreadsheetSteps = [
     {
         title: "Start where the spreadsheet was",
-        desc: "Enter records in NAHPU instead of a sheet and export a tabular file whenever you need one. Everything downstream of the export — your scripts, your database, your collaborators — carries on unchanged.",
+        desc: "Enter records in NAHPU instead of a sheet and export a tabular file whenever you need one. Everything downstream of the export carries on unchanged.",
     },
     {
         title: "Associations come with the record",
@@ -226,7 +205,7 @@ const spreadsheetSteps = [
     },
     {
         title: "One project instead of many sheets",
-        desc: "Sites, specimens, tissue samples, and photo logs stop living in separate files that drift apart between field seasons. They stay in step because they are the same catalog.",
+        desc: "Sites, specimens, tissue samples, and digital asset records stop living in separate files that drift apart between field seasons. They stay associated in the same catalog.",
     },
 ];
 ---
@@ -379,11 +358,10 @@ const spreadsheetSteps = [
                     Fields that match the discipline
                 </h2>
                 <p class={sectionLeadClasses}>
-                    Each format carries the measurements and preparation terms
-                    its discipline expects, and a single project can hold more
-                    than one format. You can add custom fields to any format,
-                    and the app will remember them for the next specimen of that
-                    taxon.
+                    Each format is fine-tuned for its discipline, and a single
+                    project can hold more than one format. You can add custom
+                    fields to any format, and the app will remember them for the
+                    next specimen of that taxon.
                 </p>
             </header>
 
@@ -515,33 +493,6 @@ const spreadsheetSteps = [
                     cold, to hot and dry climates, and everything in between.
                 </p>
             </header>
-
-            <div class="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
-                {
-                    fieldOrigins.map((item, index) => (
-                        <article
-                            class="nh-reveal rounded-2xl border border-silver-tree-300/70 bg-silver-tree-100/70 p-6 dark:border-silver-tree-700/70 dark:bg-silver-tree-950/50"
-                            style={`transition-delay: ${index * 60}ms`}
-                        >
-                            <div class="flex items-center gap-2">
-                                <span
-                                    class="block h-2.5 w-2.5 rounded-full"
-                                    style={`background:${item.color}`}
-                                />
-                                <span class="text-[11px] font-semibold tracking-widest text-silver-tree-600 uppercase dark:text-silver-tree-400">
-                                    {item.climate}
-                                </span>
-                            </div>
-                            <h3 class="mt-4 text-lg font-semibold text-silver-tree-900 dark:text-silver-tree-50">
-                                {item.place}
-                            </h3>
-                            <p class="mt-3 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
-                                {item.desc}
-                            </p>
-                        </article>
-                    ))
-                }
-            </div>
 
             <div
                 class="nh-reveal mt-6 rounded-2xl border border-silver-tree-300/70 bg-silver-tree-100/70 p-6 sm:p-8 dark:border-silver-tree-700/70 dark:bg-silver-tree-950/50"
