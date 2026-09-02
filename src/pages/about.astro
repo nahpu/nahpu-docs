@@ -81,17 +81,17 @@ const mission: Highlight[] = [
     {
         glyph: "fieldwork",
         title: "Simplify complex fieldwork",
-        body: "NAHPU is designed with genomic studies and remote fieldwork in mind. It simplifies associating digital assets — such as photographs or audio recordings — and specimen parts — such as tissue or parasite samples — with voucher specimens. Built with high-performance programming languages and frameworks, NAHPU runs smoothly across a wide range of devices while minimizing battery usage.",
+        body: "NAHPU is designed with genomic studies and remote fieldwork in mind. It simplifies associating digital assets, such as photographs or audio recordings and features fields to keep track tissue quality. Built with high-performance programming languages and frameworks, NAHPU runs smoothly across a wide range of devices while minimizing battery usage.",
     },
     {
         glyph: "responsible",
         title: "Support responsible and reproducible research",
-        body: "NAHPU records detailed information about collected specimens, including their origin, collection date, site, measurements, field personnel, and collection method. Real-time statistics help you monitor collecting activities and make informed decisions to prevent over-collection, keeping fieldwork both responsible and reproducible.",
+        body: "NAHPU records detailed information about collected specimens, including their origin, collection date, site, measurements, field personnel, and collection method. Real-time statistics help you monitor collecting activities and make informed decisions to prevent over-collection and collector bias, keeping fieldwork both responsible and reproducible.",
     },
     {
         glyph: "sharing",
         title: "Promote data sharing and collaboration",
-        body: "By adhering to open standards, NAHPU enables data sharing and supports automatic pipelines for transferring records from the field to museum databases.",
+        body: "By adhering to open standards, NAHPU enables data sharing and supports automatic pipelines for transferring records from the field to museum databases, and data analytics using standard formats.",
     },
     {
         glyph: "accessible",
@@ -109,15 +109,15 @@ const roadmap: Highlight[] = [
     {
         glyph: "machine-learning",
         title: "Analysis as the data arrives",
-        body: "Outlier detection, morphometric analysis, and deep learning image processing are in progress, with audio analytics next in line. All of it runs as records are entered, so insights arrive during fieldwork.",
+        body: "Outlier detection, morphometric analysis, and deep learning image processing are in progress, with audio analytics next in line. All of it runs on the device as records are entered, so insights arrive during fieldwork.",
     },
     {
         glyph: "integrations",
         title: "Third-party resources",
-        body: "External resources add context on the taxa you study and simplify taxon imports and taxonomic checks — GenBank, Crossref, and the Mammal Diversity Database among them.",
+        body: "External resources add context on the taxa you study, streamline taxon imports and validation, and support student learning. GenBank, Crossref, and the Mammal Diversity Database are among the resources we plan to integrate.",
         link: {
             href: "https://github.com/nahpu/kanchil",
-            label: "Kanchil on GitHub",
+            label: "Follow Kanchil’s progress on GitHub",
         },
     },
 ];
@@ -274,10 +274,14 @@ const roadmap: Highlight[] = [
                     > standard and follows the <a
                         class={linkClasses}
                         href="https://www.go-fair.org/">FAIR principles</a
-                    >, and uses the <a
+                    > and <a
+                        class={linkClasses}
+                        href="https://frictionlessdata.io/">Frictionless Data</a
+                    >. The app uses the <a
                         class={linkClasses}
                         href="https://m3.material.io/">Material Design</a
-                    > system for an interface that also accommodates users with disabilities.
+                    > system for a consistent interface across platforms and accommodates
+                    users visual impairments and color blindness.
                 </p>
             </header>
 
@@ -324,7 +328,10 @@ const roadmap: Highlight[] = [
                             <p class={cardBodyClasses}>{item.body}</p>
                             {item.link && (
                                 <p class="mt-3 text-sm">
-                                    <a class={linkClasses} href={item.link.href}>
+                                    <a
+                                        class={linkClasses}
+                                        href={item.link.href}
+                                    >
                                         {item.link.label}
                                     </a>
                                 </p>
