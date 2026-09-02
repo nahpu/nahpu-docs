@@ -7,6 +7,7 @@ export interface Acknowledgment {
 /// Acknowledgments section of the localized documentation home pages.
 export const acknowledgments: Acknowledgment[] = [
   { name: "Alfath Fanidya" },
+  { name: "Endah D. Jayanti" },
   { name: "Fajar Alfitrian" },
   { name: "Lutfi S. Maulidiyah" },
   { name: "Akbar F. Hilmi" },
