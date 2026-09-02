@@ -6,6 +6,7 @@ export interface Acknowledgment {
 /// People who provided feedback on NAHPU. Previously listed in the
 /// Acknowledgments section of the localized documentation home pages.
 export const acknowledgments: Acknowledgment[] = [
+  { name: "Alfath Fanidya" },
   { name: "Fajar Alfitrian" },
   { name: "Lutfi S. Maulidiyah" },
   { name: "Akbar F. Hilmi" },
