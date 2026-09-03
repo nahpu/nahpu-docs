@@ -1,0 +1,457 @@
+---
+title: Referência do Editor de Modelos
+sidebar:
+  label: Editar modelo
+  order: 15
+---
+
+Um glossário de todas as opções do editor de modelos e o conjunto completo de
+símbolos para placeholders e saída condicional. Para o fluxo de trabalho que usa
+essas opções, consulte [Exportar documentos](../export-documents).
+
+Os tamanhos no canvas estão em milímetros (`mm`). As espessuras de traço, os
+tamanhos de fonte e o preenchimento estão em pontos PDF (`pt`, onde 1 pt é 1/72
+de polegada). As cores são armazenadas como valores `0xAARRGGBB`, mas são sempre
+escolhidas pelo seletor de cores.
+
+## Símbolos de placeholder
+
+Tudo o que um modelo pode escrever vem de uma destas formas. Todas são digitadas
+dentro de um elemento de texto e todas podem ser combinadas com texto comum.
+
+| Símbolo | Significado | Exemplo |
+|---|---|---|
+| `[ ]` | Um placeholder de campo. | `[fieldNumber]` |
+| `::` | Separa a tabela do campo em uma chave completa. | `[specimen::fieldNumber]` |
+| `??` | Fallback escrito quando o campo está vazio. | `[specimen::preparator??N/A]` |
+| `-img` | Exibe um campo `.sex` como ícone em vez de texto. | `[mammal.sex]-img` |
+| `[[ ]]` | Uma expressão condicional. | `[[specimen::condition][…]]` |
+
+### Chaves de campo
+
+Um placeholder contém uma chave completa `Table::Field` ou um nome de campo
+curto:
+
+```text
+Número de campo: [specimen::fieldNumber]
+Nome científico: [taxonomy::scientificName]
+Localidade: [site::specificLocality]
+```
+
+Formas curtas como `[fieldNumber]` também funcionam, mas a chave completa é mais
+segura sempre que mais de uma tabela tem um campo com esse nome. Insira as
+chaves pelo seletor de campos em vez de digitá-las; o seletor oferece apenas
+campos que o tipo de registro do modelo pode realmente fornecer.
+
+### Fallback para valor nulo
+
+`??` dá ao placeholder algo para imprimir quando o registro não tem valor. O
+controle `No Content Placeholder` o escreve para você e oferece cinco opções:
+
+| Opção | Escrito como | Saída quando o campo está vazio |
+|---|---|---|
+| `Blank` | `[specimen::preparator]` | Nada |
+| `table::field` | `[specimen::preparator??specimen::preparator]` | A própria chave do campo, como lembrete visível |
+| `N/A` | `[specimen::preparator??N/A]` | `N/A` |
+| `None` | `[specimen::preparator??None]` | `None` |
+| Personalizado | `[specimen::preparator??não registrado]` | O que você digitar |
+
+O texto após `??` é literal. Um placeholder terminado em `-img` nunca aceita
+fallback.
+
+### Placeholders de ícone de sexo e de imagem
+
+Dois placeholders se comportam de forma diferente dos demais porque exibem uma
+imagem em vez de um texto. Ambos devem ser a única coisa no seu elemento de
+texto:
+
+- `[mammal.sex]-img` desenha o sexo como um ícone redimensionável. A chave deve
+  terminar em `.sex`; defina a caixa do ícone com os campos de largura e altura.
+- `[media::media]`, com o tipo de texto definido como `Picture`, desenha as
+  imagens anexadas ao registro em uma grade dimensionada conforme o número de
+  imagens.
+
+## Saída condicional {% #conditional-output %}
+
+Uma expressão condicional decide, no momento da impressão, se um valor deve ser
+marcado ou substituído. Construa a expressão com `Conditional output` na barra
+de ferramentas de texto, que escreve a sintaxe abaixo no texto; a mesma caixa de
+diálogo reabre e edita uma expressão que já esteja lá.
+
+### O conjunto completo de símbolos
+
+| Símbolo | Nome | O que faz |
+|---|---|---|
+| `[[` … `]]` | Delimitadores da expressão | Abrem e fecham uma expressão condicional. |
+| `][` | Separador do alvo | Encerra o campo alvo e inicia a lista de condições. |
+| `==` | Igual | Coincide quando o valor é exatamente o valor de comparação. |
+| `!=` | Diferente | Coincide quando o valor difere do valor de comparação. |
+| `~=` | Contém | Coincide quando o valor de comparação aparece em qualquer parte do valor. |
+| `!=""` | Não está vazio | Coincide quando o campo contém qualquer valor. |
+| `==""` | Está vazio | Coincide quando o campo está em branco ou ausente. |
+| `&&` | Todas | Todas as condições precisam coincidir. |
+| `\|\|` | Qualquer | Pelo menos uma condição precisa coincidir. |
+| `"` … `"` | Aspas de valor | Delimitam cada valor de comparação. Obrigatórias, e vazias para os dois operadores de vacuidade. |
+| `\"` `\\` | Escapes | Uma aspa ou uma barra invertida dentro de um valor de comparação. |
+| `]=>` | Marcador de substituição | Encerra as condições e inicia o texto de substituição. |
+
+### As duas formas
+
+Coloque o valor alvo entre colchetes quando as condições coincidirem:
+
+```text
+[[alvo][condições]]
+```
+
+Substitua o valor alvo por texto literal quando as condições coincidirem:
+
+```text
+[[alvo][condições]=>"substituição"]]
+```
+
+Observe o fechamento: a forma com substituição também termina em `]]`, e o
+marcador `]=>` fica dentro da expressão.
+
+### Dois exemplos detalhados
+
+**Colocar entre colchetes um peso estimado.** As medidas de mamíferos trazem um
+indicador de exatidão que nomeia os campos que não foram medidos com precisão.
+Coloque o peso entre colchetes quando ele for um deles:
+
+```text
+[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
+```
+
+Um espécime com o peso sinalizado imprime `[82.5]`; um medido com precisão
+imprime `82.5`. Este é o caso especial de `~=`: em
+`mammalAttribute::accuracy`, a comparação pergunta se a medida nomeada está
+sinalizada, não se o texto contém a palavra.
+
+**Marcar um nome cuja identificação é incerta.** A confiança da identificação é
+armazenada como `0` para Low, `1` para Medium e `2` para High, então "não High"
+é `!="2"`. Coloque o gênero e o epíteto em um mesmo elemento de texto e torne o
+epíteto condicional:
+
+```text
+[taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
+```
+
+Uma identificação de confiança alta imprime `Rattus rattus`; qualquer nível
+inferior imprime `Rattus ?`.
+
+Duas coisas neste exemplo merecem ser entendidas antes de você contar com ele.
+
+As condições comparam o valor **armazenado**, não o exibido. O `Encoded Text`
+transforma `2` em `High` no caminho até a página, mas uma condição vê `2`, então
+`specimen::iDConfidence!="High"` coincidiria com todos os registros. Leia o
+código a partir do valor que o registro realmente contém.
+
+Uma substituição **troca** o valor; ela não o complementa. É por isso que o
+exemplo imprime `Rattus ?` e não `Rattus rattus?`. Hoje não há como manter um
+valor e acrescentar um sufixo a ele condicionalmente.
+
+Como `!=` nunca coincide com um valor vazio, um espécime sem nenhuma confiança
+de identificação registrada imprime o seu epíteto sem marca. Se a confiança não
+registrada também precisar ser marcada, defina o `No Content Placeholder` do
+elemento no campo de confiança, ou verifique os níveis registrados:
+
+```text
+[[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"]=>"?"]]
+```
+
+### Tipos de condicional na caixa de diálogo
+
+`Conditional type` escolhe qual dos três arranjos a caixa de diálogo escreve:
+
+| Tipo | Saída | As condições testam |
+|---|---|---|
+| `Conditional brackets` | Envolve o valor alvo em `[ ]` | Qualquer outro campo |
+| `Conditional field` | Escreve o `Replacement text` | Qualquer outro campo |
+| `Conditional value` | Escreve o `Replacement text` | O valor do próprio campo alvo |
+
+Deixe o `Replacement text` vazio para ocultar o valor quando as condições
+coincidirem.
+
+`Conditional value` é o tipo indicado para "quando este campo disser X, imprima
+Y". Ele define para você o campo de origem de todas as condições como o alvo, e
+é por isso que o seletor de campo de origem desaparece quando você o seleciona.
+
+`Match logic` define o conector: `Any condition (OR)` escreve `||` e
+`All conditions (AND)` escreve `&&`.
+
+### Suprimir um valor que depende de outro campo
+
+`Is not empty` e `Is empty` são os operadores para "imprima isto apenas quando
+aquilo tiver sido registrado". Eles não aceitam valor de comparação, e a caixa
+de diálogo oculta o campo de valor quando você escolhe um deles.
+
+Uma medida de testículos só faz sentido quando a posição testicular foi
+registrada, então `12 × 7` deve desaparecer por completo — inclusive o `×` —
+quando ela não foi. Três expressões em um mesmo elemento de texto fazem isso:
+
+```text
+[[mammalAttribute::testisLength][mammalAttribute::testisPosition==""]=>""]] [[mammalAttribute::testisPosition][mammalAttribute::testisPosition!=""]=>"×"]] [[mammalAttribute::testisWidth][mammalAttribute::testisPosition==""]=>""]]
+```
+
+Um espécime com a posição registrada imprime `12 × 7`. Um sem ela não imprime
+nada.
+
+Cada parte tem a sua função:
+
+- As duas medidas usam `Is empty` com um `Replacement text` **vazio**, de modo
+  que são apagadas quando a posição está ausente e impressas normalmente nos
+  outros casos.
+- O separador é a parte interessante. O seu alvo é o próprio campo de posição e
+  a sua substituição é `×`, então ele imprime `×` quando a posição está
+  registrada e recorre ao valor da própria posição — que está vazio — quando
+  não está. É isso que remove o separador solto.
+
+O mesmo formato serve para qualquer medida que dependa de um campo controlador:
+nomeie o campo controlador na condição e dê ao separador uma expressão própria.
+
+### Como as condições são avaliadas
+
+Estas regras são o que faz uma expressão funcionar, ou falhar:
+
+- Tanto o valor do registro quanto o valor de comparação têm os espaços
+  **removidos** antes da comparação, e a comparação **diferencia maiúsculas de
+  minúsculas**.
+- As condições leem o valor **armazenado**, antes de qualquer tipo de texto ou
+  formato ser aplicado. Compare `"2"`, não `"High"`.
+- `Is not empty` e `Is empty` são os únicos operadores que um valor em branco
+  pode satisfazer. Todos os outros operadores tratam um valor em branco como
+  não coincidência.
+- `~=` não tem forma de vacuidade; `field~=""` não é uma expressão válida.
+- Um **valor de registro ausente ou vazio nunca coincide** — inclusive com
+  `!=`. Se você precisa de "o campo está vazio", use um fallback nulo em vez de
+  uma condição.
+- Um **alvo vazio** nunca é colocado entre colchetes nem substituído, mesmo
+  quando as condições coincidem. O elemento recorre ao seu
+  `No Content Placeholder`.
+- Um valor de comparação vazio nunca coincide, e uma expressão que contenha um
+  não é válida.
+- `&&` e `||` **não podem ser misturados** em uma mesma expressão. Aninhe uma
+  segunda expressão ou reformule a lógica.
+- O analisador considera as aspas, então um `]` dentro de um valor de comparação
+  entre aspas não encerra a expressão antes do tempo.
+- Um `[[` malformado é ignorado em vez de fatal: o resto do texto continua a ser
+  renderizado, e é por isso que uma expressão quebrada é impressa literalmente
+  em vez de gerar um erro.
+- `~=` em `mammalAttribute::accuracy` é especial: em vez de um teste de
+  substring, ele pergunta se a medida nomeada foi sinalizada como inexata, então
+  `mammalAttribute::accuracy~="totalLength"` coincide quando o comprimento total
+  está marcado como estimativa.
+- Uma substituição **troca** o valor inteiro em vez de acrescentar algo a ele,
+  então um sufixo ou prefixo condicional não é possível hoje.
+
+Os códigos de sexo legados `0`, `1` e `2` continuam sendo valores de comparação
+válidos, então as condições escritas para modelos antigos continuam
+funcionando.
+
+## Barra de ferramentas
+
+| Controle | O que faz |
+|---|---|
+| `Add text` | Coloca um novo elemento de texto no canvas. |
+| `Add image` | Coloca uma imagem estática do dispositivo. |
+| `Add line` | Coloca uma linha reta. |
+| `Add shape` | Coloca um retângulo, elipse, círculo, triângulo ou polígono. |
+| `Save template` | Grava o modelo. Use `Save as...` para uma variação. |
+| `Undo` / `Redo` | Percorre o histórico de edição. |
+| `Template border` | Abre o painel de contorno da borda do modelo. |
+| `Show grid` / `Hide grid` | Alterna a grade de alinhamento. |
+| `Enable snap` / `Disable snap` | Alterna o encaixe na grade e em outros elementos. |
+| Bloqueio do canvas | Congela o deslocamento para que um arraste nunca mova o canvas. |
+| `Select specimen for text preview` | Escolhe o registro cujos valores preenchem os placeholders enquanto você desenha. |
+| `Template settings` | Nome, descrição, número de lados e tamanho do modelo. |
+| `Preset template` | Carrega um ponto de partida já incluído. |
+| `Zoom in` / `Zoom out` | Ajusta apenas a visualização do canvas; nada muda na saída. |
+| `1 sided` / `Front` / `Back` | Alterna o modo de lados e o lado que está sendo editado. |
+| Espelhar | Espelha um lado, para tags dobradas em uma borda. |
+
+## Opções do elemento de texto
+
+### Conteúdo
+
+| Opção | Valores | Notas |
+|---|---|---|
+| Texto | Qualquer texto, placeholders, condicionais | O conteúdo do elemento. |
+| `Text type` | Veja a tabela abaixo | Escolhe como o valor é formatado. |
+| `Format` | Depende do tipo de texto | O formato específico dentro desse tipo. |
+| `No Content Placeholder` | Blank, `table::field`, `N/A`, `None`, personalizado | Escreve o fallback `??`. |
+| `Conditional output` | Colchetes, campo, valor | Escreve uma expressão `[[ … ]]`. |
+| `Find and replace` | — | Edita o texto do elemento. |
+| Regras de substituição | Padrão, substituição, tipo de correspondência, sensibilidade a maiúsculas | Reescrevem valores após a formatação. |
+| `Map encoded values` | Mapeamento padrão ou personalizado | Transforma códigos armazenados em rótulos para o `Encoded Text`. |
+
+### Tipografia e estilo
+
+| Opção | Valores |
+|---|---|
+| `Font` | Fontes incluídas e instaladas; uma fonte não instalada é marcada como `(not installed)` |
+| Tamanho da fonte | Pontos, com botões para aumentar e diminuir |
+| `Bold`, `Italic`, `Underline`, `Strikethrough` | Ligado ou desligado |
+| Alinhamento | `Align left`, `Align center`, `Align right` |
+| Caixa | `Normal`, `Uppercase`, `Lowercase`, `Capitalize` |
+| Cor do texto | Seletor de cores |
+
+### Caixa e posicionamento
+
+| Opção | Valores | Notas |
+|---|---|---|
+| Posição | X e Y em mm | Medidas a partir do canto superior esquerdo do modelo. |
+| Largura máxima | mm | O texto quebra nesta largura. Sem definição, não há quebra de linha. |
+| Altura | mm | Limita a altura da caixa de texto. |
+| Preenchimento | pt | Espaço dentro da caixa, ao redor do texto. |
+| Rotação | 0–359 graus | Graus inteiros. |
+| Cor de fundo | Cor ou nenhuma | — |
+| Cor, espessura e traço da borda | Cor, pt, `solid` / `dashed` / `dotted` / `double` | — |
+| Raio dos cantos | pt | Arredonda a caixa. |
+| Dimensionamento dinâmico | Ligado ou desligado | Permite que a caixa cresça com o texto. Combine com o `Auto-fill page` de um bloco de layout. |
+| Empilhamento | `Bring to front`, `Bring forward`, `Send backward`, `Send to back` | — |
+| Bloqueio | Ligado ou desligado | Um elemento bloqueado não pode ser arrastado nem redimensionado. |
+| Visível | Ligado ou desligado | Um elemento oculto é mantido no modelo, mas não é impresso. |
+
+### Código QR
+
+Transforme um elemento de texto em um código QR para levar um identificador que
+um celular consiga ler.
+
+| Opção | Valores |
+|---|---|
+| Código QR | Ligado ou desligado |
+| Tamanho | mm |
+| Cor de fundo | Seletor de cores |
+| Forma | `Square` ou `Circle` |
+
+A carga do QR mantém o valor formatado bruto, incluindo um `.0` final que o
+texto impresso descartaria, de modo que um código lido corresponde exatamente ao
+valor armazenado.
+
+### Imagem
+
+| Opção | Valores |
+|---|---|
+| Largura, altura | mm |
+
+Apenas um elemento com `[media::media]` ou `[media]` isolado resolve as imagens
+do registro. Misturar o placeholder com outro texto deliberadamente não
+funciona.
+
+## Tipos de texto e seus formatos {% #text-types-and-their-formats %}
+
+| Tipo de texto | Opções de formato |
+|---|---|
+| `Normal Text` | `Normal`, `Uppercase`, `Lowercase`, `Capitalize` |
+| `Picture` | Dimensionado por largura e altura, não por um formato |
+| `Markdown` | `Normal`; renderiza texto rico, como uma narrativa |
+| `Coordinates` | `Decimal`, `Cardinal Dec`, `DMS`, `DDM` |
+| `List Values` | Barra vertical, vírgula, ponto e vírgula, barra, nova linha, marcadores, separador personalizado |
+| `Nested List` | `Table` ou `Card list`; uma tabela adiciona um controle `Header Case` |
+| `Dates` | `YYYY-MM-DD`, `DD-MM-YYYY`, `MM-DD-YYYY`, `DD/MM/YYYY`, `MM/DD/YYYY`, `Month DD, YYYY`, `DD Month YYYY`, `DD Mon YYYY` |
+| `Date and Time` | Dezessete combinações dos formatos de data acima com saída em 24 horas, 12 horas, ISO e apenas hora |
+| `Time` | `24h`, `24h seconds`, `12h`, `12h padded` |
+| `Sex` | `Presentation` e `Missing`, descritos abaixo |
+| `Number` | `Original`, ou 0, 1, 2 ou 3 casas decimais |
+| `Encoded Text` | `Default mapping` ou `Custom mapping...` |
+
+`Nested List` serve para registros relacionados — partes de espécimes, pessoal,
+valores de esforço — e é o tipo de texto que mais frequentemente precisa de
+dimensionamento dinâmico.
+
+### `Encoded Text`: o que é decodificado
+
+O `Encoded Text` transforma um código numérico armazenado no seu rótulo. O
+`Default mapping` usa a tabela abaixo, comparada com o final da chave do campo,
+de modo que tanto `mammalAttribute::testisPosition` quanto o curto
+`testisPosition` são decodificados.
+
+| A chave do campo termina em | Código 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|---|---|---|
+| `::sex` | Male | Female | Unknown | Gynandromorph | Hermaphrodite | Female? | Male? |
+| `::iDConfidence` | Low | Medium | High | | | | |
+| `mammalAttribute::age` | Adult | Subadult | Juvenile | Unknown | | | |
+| `herpAttribute::age` | Adult | Juvenile | Neonate | Metamorph | Unknown | | |
+| `::testisPosition` | Scrotal | Abdominal | | | | | |
+| `::epididymisAppearance` | Tubular | Partial | Not Tubular | | | | |
+| `::vaginaOpening` | Imperforate | Perforate | | | | | |
+| `::pubicSymphysis` | Close | Small Open | Open | | | | |
+| `::reproductiveStage` | Nulliparous | Primiparous | Multiparous | | | | |
+| `::mammaeCondition` | Small | Large | Lactating | | | | |
+| `::echolocation` | FM | CF | QCF | None | | | |
+| `::ovaryAppearance` | Smooth | Ova minute | At least one ovum ≥ 1 mm dia. | | | | |
+| `::oviductAppearance` | Straight | Convoluted | | | | | |
+| `::fat` | None | Trace | Light | Moderate | Heavy | Extremely Heavy | |
+| `::bodyMolt` | None | Trace | Light | Moderate | Heavy | | |
+
+Estes campos são decodificados como `Yes` para `1` e `No` para `0`:
+
+`::broodPatch`, `::hasBursa`, `::wingIsMolt`, `::tailIsMolt`,
+`::showBatFields`, `::showEchoFields`.
+
+Qualquer outro caso é mantido como está. Um campo sem entrada na tabela acima,
+um valor que não seja um número inteiro e um código fora da sua lista são todos
+impressos sem alteração — o que é normalmente o que um número solto em uma
+etiqueta impressa significa. O `Custom mapping...` é a maneira de rotular um
+campo que o mapeamento padrão não cobre.
+
+Dois desses casos têm alternativas mais convenientes. O tipo de texto `Sex`
+formata o sexo como símbolo ou letra e lida com a incerteza, e `[…sex]-img` o
+desenha como ícone; use o `Encoded Text` em um campo de sexo apenas quando
+quiser a palavra simples.
+
+### Formatação de sexo
+
+| Controle | Opções |
+|---|---|
+| `Format` | `Symbol (♂/♀)`, `Letter (M/F)`, `Text (Male/Female)` |
+| `Missing` | `Unknown`, `N/A`, `None` |
+
+Uma determinação incerta mantém o seu sufixo em todas as apresentações:
+`Female?`, `F?`, `♀?`, e `Male?`, `M?`, `♂?`.
+
+## Opções de imagem, linha e forma
+
+Imagens estáticas, linhas e formas são decoração. Elas não carregam dados de
+registro, portanto não têm tipo de texto, formato nem opções condicionais.
+
+| Elemento | Opções |
+|---|---|
+| Imagem | Caminho da imagem, posição, largura, altura, rotação, empilhamento, bloqueio, visibilidade |
+| Linha | Posição, comprimento, rotação, espessura (pt), cor, estilo de traço, empilhamento, bloqueio, visibilidade |
+| Forma | Tipo de forma, posição, largura, altura, rotação, espessura do traço, cor do traço, estilo do traço, cor de preenchimento ou `Clear fill`, empilhamento, bloqueio, visibilidade |
+
+Os tipos de forma são `rect`, `ellipse`, `circle`, `triangle` e `polygon`; um
+polígono também recebe um número de lados. Os estilos de traço para linhas e
+formas são `solid`, `dashed`, `dotted` e `double`.
+
+Um elemento de imagem armazena um caminho, não a figura. Um modelo exportado
+para outro dispositivo nomeia a imagem e a pede novamente lá.
+
+## Opções do modelo
+
+| Opção | Valores | Notas |
+|---|---|---|
+| `Template name` | Texto | Precisa ser único. Renomear reaponta todos os layouts que usavam o nome antigo. |
+| `Description` | Texto | — |
+| `Record type` | `Specimen`, `Specimen Part`, `Site`, `Collecting Event`, `Narrative`, `None` | Controla quais campos e registros estão disponíveis. |
+| Número de lados | `1 sided` ou `2 sided` | Um modelo de um lado mantém o desenho do verso, mas não o imprime. |
+| Largura, altura | mm | O tamanho de um bloco, não da folha. |
+| `Template border` | Estilo, espessura (pt), cor | Os estilos são `solid`, `dashed`, `dotted` e `double line`. |
+
+As opções de impressão salvas com um modelo cobrem duplex, espelhamento de
+frente e verso, tamanho de página, linhas e colunas por página, preenchimento de
+página e preenchimento de documento. Um preset de layout de impressão
+substitui essas opções para a folha que produz; consulte
+[Exportar documentos](../export-documents#create-a-print-layout-preset).
+
+## Solução de problemas de sintaxe
+
+| Sintoma | Verifique |
+|---|---|
+| Uma condicional aparece literalmente | Uma expressão malformada é ignorada. Verifique se falta um `]]`, se há um valor sem aspas ou `&&` e `\|\|` misturados. |
+| Uma condição nunca coincide | Os valores diferenciam maiúsculas de minúsculas e têm os espaços removidos; um valor vazio do registro nunca coincide, mesmo com `!=`. |
+| Uma condição `!=` não imprime nada em registros vazios | Isso é por design. Use um fallback `??` para o caso vazio. |
+| Um fallback imprime `[table::field]` | A opção de fallback `table::field` está selecionada; troque-a por `Blank`, `N/A`, `None` ou um texto personalizado. |
+| Um ícone de sexo aparece como texto | O elemento deve conter apenas `[…sex]-img`, e a chave deve terminar em `.sex`. |
+| As imagens do registro não aparecem | O elemento deve conter apenas `[media::media]` e usar o tipo de texto `Picture`. |

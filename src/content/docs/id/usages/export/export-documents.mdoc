@@ -81,12 +81,89 @@ dengan teks biasa:
 
 Pilih jenis teks yang sesuai: `Normal Text`, `Dates`, `Date and Time`,
 `Coordinates`, `Number`, `Sex`, `List Values`, `Nested List`, `Markdown`, atau
-`Encoded Text`. Gunakan fallback untuk field opsional dan uji kondisi yang cocok
-maupun yang tidak cocok.
+`Encoded Text`.
 
 Format sex mendukung teks, huruf, dan simbol untuk semua istilah. Nilai yang
 tidak pasti mempertahankan akhiran (`Female?`, `F?`, `♀?`; `Male?`, `M?`,
 `♂?`). Kondisi lama dengan kode `0`, `1`, dan `2` tetap berlaku.
+
+Setiap jenis teks dan opsi formatnya tercantum di
+[Referensi editor templat](../template-editor-reference#text-types-and-their-formats).
+
+## Menangani field kosong
+
+Atur `No Content Placeholder` pada elemen teks untuk menentukan apa yang
+dicetak oleh field yang kosong. Kontrol ini menuliskan fallback `??` ke dalam
+placeholder:
+
+```text
+[specimen::preparator??N/A]
+```
+
+Lima pilihannya adalah `Blank`, key field itu sendiri, `N/A`, `None`, dan teks
+kustom. Tentukan fallback sebelum merancang tata letak di sekitar nilainya,
+karena hasil kosong dan hasil `N/A` memerlukan ruang yang berbeda.
+
+## Keluaran kondisional
+
+Ekspresi kondisional menentukan, saat pencetakan, apakah sebuah nilai ditandai
+atau digantikan. Bangun ekspresi dengan `Conditional output` di bilah alat teks
+alih-alih mengetiknya sendiri; dialognya menuliskan sintaksnya dan terbuka
+kembali pada ekspresi yang sudah ada untuk diedit.
+
+Ada dua bentuk. Apit nilainya dengan tanda kurung siku bila kondisinya cocok,
+di sini untuk menandai bobot yang menurut penanda akurasi mamalia merupakan
+perkiraan:
+
+```text
+[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
+```
+
+Atau ganti nilainya dengan teks literal bila kondisinya cocok, di sini untuk
+menandai identifikasi spesies yang tingkat keyakinannya bukan tinggi:
+
+```text
+[taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
+```
+
+Yang pertama mencetak `[82.5]` untuk bobot perkiraan dan `82.5` untuk lainnya.
+Yang kedua mencetak `Rattus rattus` untuk identifikasi berkeyakinan tinggi dan
+`Rattus ?` untuk tingkat di bawahnya.
+
+Simbol-simbolnya:
+
+| Simbol | Arti |
+|---|---|
+| `[[` … `]]` | Membuka dan menutup ekspresi |
+| `][` | Mengakhiri field sasaran dan memulai daftar kondisi |
+| `==` `!=` `~=` | Sama dengan, tidak sama dengan, memuat |
+| `&&` `\|\|` | Semua kondisi, salah satu kondisi |
+| `"` … `"` | Mengapit setiap nilai pembanding |
+| `]=>` | Mengakhiri kondisi dan memulai teks pengganti |
+
+Empat aturan menjelaskan sebagian besar kondisi yang tidak berperilaku seperti
+dugaan. Pembandingan dipangkas spasinya, tetapi **membedakan huruf besar dan
+kecil**. Kondisi membaca nilai yang **tersimpan**, jadi keyakinan identifikasi
+bernilai `"2"` dan bukan `"High"`, meskipun elemennya menampilkan labelnya.
+**Nilai catatan yang kosong tidak pernah cocok**, termasuk dengan `!=`, jadi
+gunakan fallback dan bukan kondisi untuk kasus kosong. Dan `&&` serta `||`
+**tidak dapat dicampur** dalam satu ekspresi.
+
+Penggantian menyubstitusi keseluruhan nilai, bukan menambahkannya, itulah
+sebabnya contoh di atas mencetak `Rattus ?` dan bukan `Rattus rattus?`.
+
+Uji kasus yang cocok maupun yang tidak cocok di pratinjau. Ekspresi yang salah
+bentuk dilewati tanpa laporan, sehingga tercetak apa adanya.
+
+Kumpulan simbol lengkap, tiga jenis kondisional pada dialognya, dan seluruh
+aturan evaluasinya ada di
+[Referensi editor templat](../template-editor-reference#conditional-output).
+
+Replacement rule adalah cara lain untuk menulis ulang sebuah nilai. Aturan ini
+berjalan setelah pemformatan, mencocokkan berdasarkan nilai persis atau
+substring, dan dapat membedakan huruf besar-kecil atau tidak. Gunakan aturan ini
+untuk substitusi berulang pada banyak nilai, dan gunakan kondisional untuk
+keputusan yang bergantung pada field lain.
 
 ## Merancang untuk data nyata
 
@@ -286,6 +363,8 @@ proyek, atau ekspor catatan terstruktur. Lihat
 | Gejala | Yang perlu diperiksa |
 |---|---|
 | Placeholder tampil apa adanya | Jenis catatan dan key lengkap `Table::Field`. |
+| Kondisional tercetak apa adanya | Ekspresinya salah bentuk. Periksa `]]` yang hilang, nilai tanpa tanda kutip, atau `&&` dan `\|\|` yang dicampur. |
+| Kondisi tidak pernah cocok | Pembandingan membedakan huruf besar-kecil, membaca nilai tersimpan alih-alih label yang ditampilkan, dan nilai catatan yang kosong tidak pernah cocok. |
 | Pratinjau kosong | Jenis blok dan catatan yang dipilih. |
 | Templat hilang | Tetapkan ulang blok atau pulihkan/impor templat. |
 | Teks bertumpuk atau terpotong | Teks dinamis, `Auto-fill page`, lebar, dan tinggi blok. |
@@ -297,4 +376,6 @@ proyek, atau ekspor catatan terstruktur. Lihat
 | Pratinjau usang | Buat pratinjau baru. |
 | Impor mengubah banyak preset | Impor satu bagian mengganti seluruh bagian tersebut. |
 
-Untuk detail penyimpanan dan rendering, lihat [Templates and presets](../../../contributing/code/templates-and-presets) dan [Export workflows](../../../contributing/code/data-export-workflows).
+Setiap opsi di editor templat tercantum di
+[Referensi editor templat](../template-editor-reference). Untuk detail
+penyimpanan dan rendering, lihat [Templates and presets](../../../contributing/code/templates-and-presets) dan [Export workflows](../../../contributing/code/data-export-workflows).

@@ -83,13 +83,89 @@ combinar campos con texto normal:
 
 Elija el tipo de texto adecuado: `Normal Text`, `Dates`, `Date and Time`,
 `Coordinates`, `Number`, `Sex`, `List Values`, `Nested List`, `Markdown` o
-`Encoded Text`. Use valores de reserva para campos opcionales y pruebe las
-condiciones cuando coinciden y cuando no coinciden.
+`Encoded Text`.
 
 El formato de sexo admite texto, letras y símbolos para todos los términos.
 Los valores inciertos conservan el sufijo (`Female?`, `F?`, `♀?`; `Male?`,
 `M?`, `♂?`). Las condiciones existentes con los códigos heredados `0`, `1` y
 `2` siguen siendo válidas.
+
+Todos los tipos de texto y sus opciones de formato están listados en la
+[Referencia del editor de plantillas](../template-editor-reference#text-types-and-their-formats).
+
+## Manejar campos vacíos
+
+Configure `No Content Placeholder` en un elemento de texto para decidir qué
+imprime un campo vacío. El control escribe un valor de reserva `??` dentro del
+placeholder:
+
+```text
+[specimen::preparator??N/A]
+```
+
+Las cinco opciones son `Blank`, la propia clave del campo, `N/A`, `None` y una
+cadena personalizada. Elija el valor de reserva antes de diseñar alrededor del
+valor, porque un resultado vacío y un resultado `N/A` ocupan espacios distintos.
+
+## Salida condicional
+
+Una expresión condicional decide, en el momento de imprimir, si marcar un valor
+o reemplazarlo. Constrúyala con `Conditional output` en la barra de herramientas
+de texto en lugar de escribirla a mano; el diálogo escribe la sintaxis y se
+vuelve a abrir sobre una expresión existente para editarla.
+
+Hay dos formas. Encierre el valor entre corchetes cuando las condiciones
+coincidan, aquí para marcar un peso que el indicador de exactitud de mamíferos
+señala como estimado:
+
+```text
+[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
+```
+
+O reemplace el valor con texto literal cuando coincidan, aquí para marcar una
+identificación de especie que no tiene confianza alta:
+
+```text
+[taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
+```
+
+La primera imprime `[82.5]` para un peso estimado y `82.5` en los demás casos.
+La segunda imprime `Rattus rattus` para una identificación de confianza alta y
+`Rattus ?` para cualquier valor menor.
+
+Los símbolos son:
+
+| Símbolo | Significado |
+|---|---|
+| `[[` … `]]` | Abre y cierra la expresión |
+| `][` | Termina el campo objetivo e inicia las condiciones |
+| `==` `!=` `~=` | Igual, distinto, contiene |
+| `&&` `\|\|` | Todas las condiciones, cualquier condición |
+| `"` … `"` | Encierran cada valor de comparación |
+| `]=>` | Termina las condiciones e inicia el texto de reemplazo |
+
+Cuatro reglas explican la mayoría de las condiciones que no se comportan como
+se espera. Las comparaciones se recortan, pero **distinguen mayúsculas y
+minúsculas**. Las condiciones leen el valor **almacenado**, así que la confianza
+de identificación es `"2"` y no `"High"`, incluso cuando el elemento muestra la
+etiqueta. Un **valor vacío del registro nunca coincide**, ni siquiera con `!=`,
+de modo que use un valor de reserva y no una condición para el caso vacío. Y
+`&&` y `||` **no pueden mezclarse** en una misma expresión.
+
+Un reemplazo sustituye todo el valor en lugar de añadirse a él, y por eso el
+ejemplo anterior imprime `Rattus ?` y no `Rattus rattus?`.
+
+Pruebe en la vista previa tanto el caso que coincide como el que no. Una
+expresión mal formada se omite sin avisar, así que se imprime literalmente.
+
+El conjunto completo de símbolos, los tres tipos de condicional del diálogo y
+todas las reglas de evaluación están en la
+[Referencia del editor de plantillas](../template-editor-reference#conditional-output).
+
+Las reglas de reemplazo son la otra manera de reescribir un valor. Se aplican
+después del formato, coinciden por valor exacto o por subcadena y pueden
+distinguir mayúsculas y minúsculas o no. Úselas para una sustitución repetida en
+muchos valores, y una condicional para una decisión que dependa de otro campo.
 
 ## Diseñar para datos reales
 
@@ -293,6 +369,8 @@ exportación del proyecto o la exportación estructurada de registros. Consulte
 | Síntoma | Qué comprobar |
 |---|---|
 | El placeholder aparece literalmente | Tipo de registro y clave completa `Table::Field`. |
+| Una condicional aparece literalmente | La expresión está mal formada. Busque un `]]` que falte, un valor sin comillas o `&&` y `\|\|` mezclados. |
+| Una condición nunca coincide | Las comparaciones distinguen mayúsculas y minúsculas, leen el valor almacenado en lugar de la etiqueta mostrada, y un valor vacío del registro nunca coincide. |
 | La vista previa está vacía | Tipo del bloque y registros seleccionados. |
 | Falta una plantilla | Reasigne el bloque o restaure/import la plantilla. |
 | El texto se superpone o se corta | Texto dinámico, `Auto-fill page`, ancho y alto del bloque. |
@@ -304,4 +382,6 @@ exportación del proyecto o la exportación estructurada de registros. Consulte
 | La vista previa está desactualizada | Genere una vista previa nueva. |
 | La importación cambia muchos presets | La transferencia de una sección reemplaza toda esa sección. |
 
-Para detalles de almacenamiento y renderizado, consulte [Templates and presets](../../../contributing/code/templates-and-presets) y [Export workflows](../../../contributing/code/data-export-workflows).
+Todas las opciones del editor de plantillas están listadas en la
+[Referencia del editor de plantillas](../template-editor-reference). Para
+detalles de almacenamiento y renderizado, consulte [Templates and presets](../../../contributing/code/templates-and-presets) y [Export workflows](../../../contributing/code/data-export-workflows).

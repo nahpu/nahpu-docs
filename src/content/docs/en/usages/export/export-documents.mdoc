@@ -100,9 +100,79 @@ Uncertain values keep their suffix (`Female?`, `F?`, `♀?`; `Male?`, `M?`,
 `♂?`). Existing template conditions that compare legacy codes `0`, `1`, and
 `2` remain valid.
 
-Use a null fallback when a field may be empty. Conditional brackets and
-replacement rules are useful for optional labels, but test both the matching
-and non-matching cases.
+Every text type and format option is listed in the
+[Template editor reference](../template-editor-reference#text-types-and-their-formats).
+
+## Handle empty fields
+
+Set `No Content Placeholder` on a text element to decide what an empty field
+prints. The control writes a `??` fallback into the placeholder:
+
+```text
+[specimen::preparator??N/A]
+```
+
+The five options are `Blank`, the field key itself, `N/A`, `None`, and a custom
+string. Choose the fallback before designing around the value, because a blank
+result and an `N/A` result take different amounts of space.
+
+## Conditional output
+
+A conditional expression decides at print time whether to mark a value or
+replace it. Build one with `Conditional output` in the text toolbar rather than
+typing it by hand; the dialog writes the syntax and reopens on an existing
+expression to edit it.
+
+There are two shapes. Bracket the value when the conditions match, here to mark
+a weight the mammal accuracy flag says was estimated:
+
+```text
+[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
+```
+
+Or replace the value with literal text when they match, here to mark a species
+identification that is not high confidence:
+
+```text
+[taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
+```
+
+The first prints `[82.5]` for an estimated weight and `82.5` otherwise. The
+second prints `Rattus rattus` for a high-confidence identification and
+`Rattus ?` for anything less.
+
+The symbols are:
+
+| Symbol | Meaning |
+|---|---|
+| `[[` … `]]` | Open and close the expression |
+| `][` | Ends the target field, starts the conditions |
+| `==` `!=` `~=` | Equals, not equals, contains |
+| `&&` `\|\|` | All conditions, any condition |
+| `"` … `"` | Wrap every comparison value |
+| `]=>` | Ends the conditions, starts the replacement text |
+
+Four rules explain most conditions that do not behave as expected. Comparisons
+are trimmed but **case-sensitive**. Conditions read the **stored** value, so ID
+confidence is `"2"` and not `"High"` even when the element displays the label.
+An **empty record value never matches**, including with `!=`, so use a fallback
+rather than a condition for the empty case. And `&&` and `||` **cannot be
+mixed** in one expression.
+
+A replacement substitutes the whole value rather than adding to it, which is
+why the example above prints `Rattus ?` rather than `Rattus rattus?`.
+
+Test both the matching and the non-matching case in the preview. A malformed
+expression is skipped rather than reported, so it prints literally.
+
+The complete symbol set, the three conditional types in the dialog, and the
+full evaluation rules are in the
+[Template editor reference](../template-editor-reference#conditional-output).
+
+Replacement rules are the other way to rewrite a value. They run after
+formatting, match by exact value or substring, and can be case-sensitive or
+not. Use them for a repeated substitution across many values, and a conditional
+for a decision that depends on another field.
 
 ## Design for real records
 
@@ -315,6 +385,8 @@ export, or a structured record export. See
 | Symptom | What to check |
 |---|---|
 | A placeholder prints literally | Check the template record type and use the full `Table::Field` key. |
+| A conditional prints literally | The expression is malformed. Check for a missing `]]`, an unquoted value, or mixed `&&` and `\|\|`. |
+| A condition never matches | Comparisons are case-sensitive, read the stored value rather than the displayed label, and an empty record value never matches. |
 | Preview is empty | Check the block record type and select matching records. |
 | A template is missing | Reassign the block or restore/import the named template. |
 | Text overlaps or is clipped | Use dynamic text, `Auto-fill page`, a wider block, or a larger block height. |
@@ -326,4 +398,6 @@ export, or a structured record export. See
 | Preview is marked stale | Generate a new preview after the last edit. |
 | Import changes many settings | A selected-section settings import replaces that entire section. |
 
-For developer-level storage and rendering details, see [Templates and presets](../../../contributing/code/templates-and-presets) and [Export workflows](../../../contributing/code/data-export-workflows).
+Every option in the template editor is listed in the
+[Template editor reference](../template-editor-reference). For developer-level
+storage and rendering details, see [Templates and presets](../../../contributing/code/templates-and-presets) and [Export workflows](../../../contributing/code/data-export-workflows).

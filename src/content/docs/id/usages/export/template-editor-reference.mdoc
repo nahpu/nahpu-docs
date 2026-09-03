@@ -1,0 +1,458 @@
+---
+title: Referensi Editor Templat
+sidebar:
+  label: Mengedit templat
+  order: 15
+---
+
+Glosarium setiap opsi di editor templat, beserta kumpulan simbol lengkap untuk
+placeholder dan keluaran kondisional. Untuk alur kerja yang menggunakan opsi-opsi
+ini, lihat [Ekspor Dokumen](../export-documents).
+
+Ukuran pada kanvas dinyatakan dalam milimeter (`mm`). Ketebalan garis, ukuran
+fon, dan padding dinyatakan dalam poin PDF (`pt`, di mana 1 pt adalah 1/72
+inci). Warna disimpan sebagai nilai `0xAARRGGBB`, tetapi selalu dipilih melalui
+pemilih warna.
+
+## Simbol placeholder
+
+Semua yang dapat ditulis oleh sebuah templat berasal dari salah satu bentuk
+berikut. Semuanya diketik ke dalam elemen teks, dan semuanya dapat dicampur
+dengan teks biasa.
+
+| Simbol | Arti | Contoh |
+|---|---|---|
+| `[ ]` | Placeholder field. | `[fieldNumber]` |
+| `::` | Memisahkan tabel dari field pada key lengkap. | `[specimen::fieldNumber]` |
+| `??` | Fallback yang dicetak ketika field kosong. | `[specimen::preparator??N/A]` |
+| `-img` | Menampilkan field `.sex` sebagai ikon, bukan teks. | `[mammal.sex]-img` |
+| `[[ ]]` | Ekspresi kondisional. | `[[specimen::condition][…]]` |
+
+### Key field
+
+Sebuah placeholder memuat key lengkap `Table::Field` atau nama field singkat:
+
+```text
+Nomor lapangan: [specimen::fieldNumber]
+Nama ilmiah: [taxonomy::scientificName]
+Lokasi: [site::specificLocality]
+```
+
+Bentuk singkat seperti `[fieldNumber]` juga dikenali, tetapi key lengkap lebih
+aman setiap kali lebih dari satu tabel memiliki field dengan nama tersebut.
+Masukkan key dari pemilih field alih-alih mengetiknya; pemilih hanya menawarkan
+field yang benar-benar dapat disediakan oleh tipe catatan templat itu.
+
+### Fallback nilai kosong
+
+`??` memberi placeholder sesuatu untuk dicetak ketika catatan tidak memiliki
+nilai. Kontrol `No Content Placeholder` menuliskannya untuk Anda, dengan lima
+pilihan:
+
+| Pilihan | Ditulis sebagai | Keluaran saat field kosong |
+|---|---|---|
+| `Blank` | `[specimen::preparator]` | Tidak ada |
+| `table::field` | `[specimen::preparator??specimen::preparator]` | Key field itu sendiri, sebagai pengingat yang terlihat |
+| `N/A` | `[specimen::preparator??N/A]` | `N/A` |
+| `None` | `[specimen::preparator??None]` | `None` |
+| Kustom | `[specimen::preparator??tidak dicatat]` | Apa pun yang Anda ketik |
+
+Teks setelah `??` bersifat literal. Placeholder yang diakhiri `-img` tidak
+pernah menerima fallback.
+
+### Placeholder ikon sex dan gambar
+
+Dua placeholder berperilaku berbeda dari yang lain karena menampilkan gambar,
+bukan string. Keduanya harus menjadi satu-satunya isi elemen teksnya:
+
+- `[mammal.sex]-img` menggambar sex sebagai ikon yang dapat diubah ukurannya.
+  Key-nya harus diakhiri `.sex`; atur kotak ikon dengan field lebar dan tinggi.
+- `[media::media]`, dengan jenis teks disetel ke `Picture`, menggambar gambar
+  yang terlampir pada catatan dalam grid yang ukurannya menyesuaikan jumlah
+  gambar.
+
+## Keluaran kondisional {% #conditional-output %}
+
+Ekspresi kondisional menentukan, saat pencetakan, apakah sebuah nilai ditandai
+atau digantikan. Bangun ekspresi dengan `Conditional output` di bilah alat teks,
+yang akan menuliskan sintaks di bawah ini ke dalam teks; dialog yang sama akan
+terbuka kembali dan mengedit ekspresi yang sudah ada.
+
+### Kumpulan simbol lengkap
+
+| Simbol | Nama | Fungsinya |
+|---|---|---|
+| `[[` … `]]` | Pembatas ekspresi | Membuka dan menutup sebuah ekspresi kondisional. |
+| `][` | Pemisah sasaran | Mengakhiri field sasaran dan memulai daftar kondisi. |
+| `==` | Sama dengan | Cocok bila nilainya tepat sama dengan nilai pembanding. |
+| `!=` | Tidak sama dengan | Cocok bila nilainya berbeda dari nilai pembanding. |
+| `~=` | Memuat | Cocok bila nilai pembanding muncul di bagian mana pun dari nilainya. |
+| `!=""` | Tidak kosong | Cocok bila field memuat nilai apa pun. |
+| `==""` | Kosong | Cocok bila field kosong atau tidak ada. |
+| `&&` | Semua | Setiap kondisi harus cocok. |
+| `\|\|` | Salah satu | Setidaknya satu kondisi harus cocok. |
+| `"` … `"` | Tanda kutip nilai | Mengapit setiap nilai pembanding. Wajib, dan dibiarkan kosong untuk kedua operator kekosongan. |
+| `\"` `\\` | Escape | Tanda kutip atau garis miring terbalik di dalam nilai pembanding. |
+| `]=>` | Penanda penggantian | Mengakhiri kondisi dan memulai teks pengganti. |
+
+### Dua bentuk
+
+Apit nilai sasaran dengan tanda kurung siku bila kondisinya cocok:
+
+```text
+[[sasaran][kondisi]]
+```
+
+Ganti nilai sasaran dengan teks literal bila kondisinya cocok:
+
+```text
+[[sasaran][kondisi]=>"pengganti"]]
+```
+
+Perhatikan penutupnya: bentuk dengan penggantian tetap diakhiri `]]`, dan
+penanda `]=>` berada di dalam ekspresi.
+
+### Dua contoh terurai
+
+**Mengapit bobot yang merupakan perkiraan.** Pengukuran mamalia memiliki
+penanda akurasi yang menyebutkan field mana yang tidak diukur secara presisi.
+Apit bobotnya bila bobot termasuk salah satunya:
+
+```text
+[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
+```
+
+Spesimen yang bobotnya ditandai mencetak `[82.5]`; yang diukur presisi mencetak
+`82.5`. Inilah kasus khusus `~=`: pada `mammalAttribute::accuracy`,
+pembandingannya menanyakan apakah pengukuran yang disebut itu ditandai, bukan
+apakah teksnya memuat kata tersebut.
+
+**Menandai nama yang identifikasinya tidak pasti.** Keyakinan identifikasi
+disimpan sebagai `0` untuk Low, `1` untuk Medium, dan `2` untuk High, sehingga
+"bukan High" adalah `!="2"`. Tempatkan genus dan epitet pada satu elemen teks,
+lalu jadikan epitetnya kondisional:
+
+```text
+[taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
+```
+
+Identifikasi berkeyakinan tinggi mencetak `Rattus rattus`; tingkat di bawahnya
+mencetak `Rattus ?`.
+
+Ada dua hal pada contoh ini yang perlu dipahami sebelum Anda mengandalkannya.
+
+Kondisi membandingkan nilai yang **tersimpan**, bukan yang ditampilkan.
+`Encoded Text` mengubah `2` menjadi `High` di jalur menuju halaman, tetapi
+kondisi melihat `2`, sehingga `specimen::iDConfidence!="High"` akan cocok dengan
+setiap catatan. Baca kodenya dari nilai yang benar-benar dimuat catatan itu.
+
+Penggantian **menyubstitusi** nilainya; ia tidak menambahkan pada nilai itu.
+Itulah sebabnya contoh di atas mencetak `Rattus ?` dan bukan `Rattus rattus?`.
+Saat ini belum ada cara untuk mempertahankan sebuah nilai lalu menambahkan
+akhiran secara kondisional.
+
+Karena `!=` tidak pernah cocok dengan nilai kosong, spesimen yang sama sekali
+tidak memiliki catatan keyakinan identifikasi akan mencetak epitetnya tanpa
+tanda. Jika keyakinan yang tidak tercatat juga perlu ditandai, atur
+`No Content Placeholder` elemen pada field keyakinan, atau periksa tingkat yang
+tercatat saja:
+
+```text
+[[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"]=>"?"]]
+```
+
+### Jenis kondisional pada dialog
+
+`Conditional type` memilih susunan mana dari ketiganya yang dituliskan dialog:
+
+| Jenis | Keluaran | Kondisinya menguji |
+|---|---|---|
+| `Conditional brackets` | Mengapit nilai sasaran dengan `[ ]` | Field lain mana pun |
+| `Conditional field` | Menulis `Replacement text` | Field lain mana pun |
+| `Conditional value` | Menulis `Replacement text` | Nilai field sasaran itu sendiri |
+
+Biarkan `Replacement text` kosong untuk menyembunyikan nilainya ketika
+kondisinya cocok.
+
+`Conditional value` adalah pilihan untuk "bila field ini bernilai X, cetak Y".
+Ia menyetel field sumber setiap kondisi ke sasaran untuk Anda, dan itulah
+sebabnya pemilih field sumber menghilang saat Anda memilihnya.
+
+`Match logic` menyetel penghubungnya: `Any condition (OR)` menulis `||` dan
+`All conditions (AND)` menulis `&&`.
+
+### Menyembunyikan nilai yang bergantung pada field lain
+
+`Is not empty` dan `Is empty` adalah operator untuk "cetak ini hanya bila itu
+tercatat". Keduanya tidak memerlukan nilai pembanding, dan dialog menyembunyikan
+kotak nilai ketika Anda memilih salah satunya.
+
+Pengukuran testis hanya bermakna ketika posisi testis tercatat, sehingga
+`12 × 7` semestinya hilang sepenuhnya — termasuk tanda `×` — ketika posisinya
+tidak tercatat. Tiga ekspresi dalam satu elemen teks melakukan hal itu:
+
+```text
+[[mammalAttribute::testisLength][mammalAttribute::testisPosition==""]=>""]] [[mammalAttribute::testisPosition][mammalAttribute::testisPosition!=""]=>"×"]] [[mammalAttribute::testisWidth][mammalAttribute::testisPosition==""]=>""]]
+```
+
+Spesimen dengan posisi tercatat mencetak `12 × 7`. Yang tanpa posisi tidak
+mencetak apa pun.
+
+Setiap bagian punya perannya:
+
+- Kedua pengukuran memakai `Is empty` dengan `Replacement text` yang
+  **kosong**, sehingga keduanya dikosongkan ketika posisinya tidak ada dan
+  dicetak normal pada kondisi lain.
+- Pemisahnya adalah bagian yang menarik. Sasarannya adalah field posisi itu
+  sendiri dan penggantinya adalah `×`, sehingga ia mencetak `×` ketika posisinya
+  tercatat, dan jatuh kembali ke nilai posisi itu sendiri — yang kosong —
+  ketika tidak. Itulah yang menghilangkan pemisah yang menggantung.
+
+Pola yang sama berlaku untuk pengukuran apa pun yang bergantung pada field
+pengendali: sebut field pengendali itu dalam kondisinya, lalu beri pemisahnya
+ekspresi tersendiri.
+
+### Bagaimana kondisi dievaluasi
+
+Aturan-aturan berikut menentukan apakah sebuah ekspresi bekerja atau gagal:
+
+- Baik nilai catatan maupun nilai pembanding **dipangkas** spasinya sebelum
+  dibandingkan, dan pembandingannya **membedakan huruf besar dan kecil**.
+- Kondisi membaca nilai yang **tersimpan**, sebelum jenis teks atau format
+  apa pun diterapkan. Bandingkan `"2"`, bukan `"High"`.
+- `Is not empty` dan `Is empty` adalah satu-satunya operator yang dapat
+  dipenuhi oleh nilai kosong. Semua operator lain menganggap nilai kosong
+  sebagai tidak cocok.
+- `~=` tidak memiliki bentuk kekosongan; `field~=""` bukan ekspresi yang valid.
+- **Nilai catatan yang tidak ada atau kosong tidak pernah cocok** — termasuk
+  dengan `!=`. Jika Anda perlu "field kosong", gunakan fallback nilai kosong,
+  bukan kondisi.
+- **Sasaran yang kosong** tidak pernah diapit atau digantikan, bahkan ketika
+  kondisinya cocok. Elemennya jatuh kembali ke `No Content Placeholder`-nya.
+- Nilai pembanding yang kosong tidak pernah cocok, dan ekspresi yang memuatnya
+  tidak valid.
+- `&&` dan `||` **tidak dapat dicampur** dalam satu ekspresi. Sarangkan
+  ekspresi kedua, atau susun ulang logikanya.
+- Pengurai memperhatikan tanda kutip, sehingga `]` di dalam nilai pembanding
+  yang dikutip tidak mengakhiri ekspresi lebih awal.
+- `[[` yang salah bentuk dilewati, bukan fatal: sisa teksnya tetap
+  ditampilkan, dan itulah sebabnya ekspresi yang rusak tercetak apa adanya
+  alih-alih memunculkan kesalahan.
+- `~=` pada `mammalAttribute::accuracy` bersifat khusus: alih-alih menguji
+  substring, ia menanyakan apakah pengukuran yang disebut ditandai tidak akurat,
+  sehingga `mammalAttribute::accuracy~="totalLength"` cocok ketika panjang total
+  ditandai sebagai perkiraan.
+- Penggantian **menyubstitusi** keseluruhan nilai alih-alih menambahkannya,
+  sehingga akhiran atau awalan kondisional belum dimungkinkan saat ini.
+
+Kode sex lama `0`, `1`, dan `2` tetap merupakan nilai pembanding yang valid,
+sehingga kondisi yang ditulis untuk templat lama tetap bekerja.
+
+## Bilah alat
+
+| Kontrol | Fungsinya |
+|---|---|
+| `Add text` | Menempatkan elemen teks baru pada kanvas. |
+| `Add image` | Menempatkan gambar statis dari perangkat. |
+| `Add line` | Menempatkan garis lurus. |
+| `Add shape` | Menempatkan persegi panjang, elips, lingkaran, segitiga, atau poligon. |
+| `Save template` | Menyimpan templat. Gunakan `Save as...` untuk membuat variasi. |
+| `Undo` / `Redo` | Menelusuri riwayat pengeditan. |
+| `Template border` | Membuka panel garis tepi untuk batas templat. |
+| `Show grid` / `Hide grid` | Mengalihkan grid perataan. |
+| `Enable snap` / `Disable snap` | Mengalihkan pengancingan ke grid dan ke elemen lain. |
+| Kunci kanvas | Membekukan penggeseran agar tarikan tidak memindahkan kanvas. |
+| `Select specimen for text preview` | Memilih catatan yang nilainya mengisi placeholder saat Anda merancang. |
+| `Template settings` | Nama, deskripsi, jumlah sisi, dan ukuran templat. |
+| `Preset template` | Memuat titik awal yang sudah disediakan. |
+| `Zoom in` / `Zoom out` | Hanya mengubah skala tampilan kanvas; tidak ada yang berubah pada hasilnya. |
+| `1 sided` / `Front` / `Back` | Mengalihkan mode sisi dan sisi yang sedang diedit. |
+| Cermin | Mencerminkan satu sisi, untuk tag yang dilipat pada satu tepi. |
+
+## Opsi elemen teks
+
+### Konten
+
+| Opsi | Nilai | Catatan |
+|---|---|---|
+| Teks | Teks apa pun, placeholder, kondisional | Isi elemen. |
+| `Text type` | Lihat tabel di bawah | Menentukan bagaimana nilainya diformat. |
+| `Format` | Bergantung pada jenis teks | Format spesifik di dalam jenis tersebut. |
+| `No Content Placeholder` | Blank, `table::field`, `N/A`, `None`, kustom | Menuliskan fallback `??`. |
+| `Conditional output` | Kurung, field, nilai | Menuliskan ekspresi `[[ … ]]`. |
+| `Find and replace` | — | Mengedit teks elemen. |
+| Replacement rule | Pola, pengganti, jenis kecocokan, kepekaan huruf | Menulis ulang nilai setelah pemformatan. |
+| `Map encoded values` | Pemetaan bawaan atau kustom | Mengubah kode tersimpan menjadi label untuk `Encoded Text`. |
+
+### Tipografi dan gaya
+
+| Opsi | Nilai |
+|---|---|
+| `Font` | Fon bawaan dan terpasang; fon yang tidak terpasang ditandai `(not installed)` |
+| Ukuran fon | Poin, dengan tombol untuk menambah dan mengurangi |
+| `Bold`, `Italic`, `Underline`, `Strikethrough` | Aktif atau tidak |
+| Perataan | `Align left`, `Align center`, `Align right` |
+| Huruf | `Normal`, `Uppercase`, `Lowercase`, `Capitalize` |
+| Warna teks | Pemilih warna |
+
+### Kotak dan penempatan
+
+| Opsi | Nilai | Catatan |
+|---|---|---|
+| Posisi | X dan Y dalam mm | Diukur dari sudut kiri atas templat. |
+| Lebar maksimum | mm | Teks dilipat pada lebar ini. Bila tidak disetel, teks tidak dilipat. |
+| Tinggi | mm | Membatasi tinggi kotak teks. |
+| Padding | pt | Ruang di dalam kotak, di sekitar teks. |
+| Rotasi | 0–359 derajat | Derajat bulat. |
+| Warna latar | Warna atau tidak ada | — |
+| Warna, ketebalan, dan gaya garis tepi | Warna, pt, `solid` / `dashed` / `dotted` / `double` | — |
+| Radius sudut | pt | Membulatkan sudut kotak. |
+| Ukuran dinamis | Aktif atau tidak | Membiarkan kotak tumbuh mengikuti teks. Pasangkan dengan `Auto-fill page` pada blok tata letak. |
+| Penumpukan | `Bring to front`, `Bring forward`, `Send backward`, `Send to back` | — |
+| Kunci | Aktif atau tidak | Elemen yang terkunci tidak dapat ditarik atau diubah ukurannya. |
+| Terlihat | Aktif atau tidak | Elemen yang disembunyikan tetap ada di templat, tetapi tidak dicetak. |
+
+### Kode QR
+
+Ubah elemen teks menjadi kode QR untuk membawa identifier yang dapat dibaca
+kembali oleh ponsel.
+
+| Opsi | Nilai |
+|---|---|
+| Kode QR | Aktif atau tidak |
+| Ukuran | mm |
+| Warna latar | Pemilih warna |
+| Bentuk | `Square` atau `Circle` |
+
+Muatan QR menyimpan nilai terformat apa adanya, termasuk `.0` di akhir yang
+akan dibuang oleh teks cetak, sehingga kode yang dipindai sama persis dengan
+nilai yang tersimpan.
+
+### Gambar
+
+| Opsi | Nilai |
+|---|---|
+| Lebar, tinggi | mm |
+
+Hanya elemen yang berisi `[media::media]` atau `[media]` saja yang diuraikan
+menjadi gambar catatan. Mencampur placeholder ini dengan teks lain memang
+tidak akan bekerja.
+
+## Jenis teks dan formatnya {% #text-types-and-their-formats %}
+
+| Jenis teks | Opsi format |
+|---|---|
+| `Normal Text` | `Normal`, `Uppercase`, `Lowercase`, `Capitalize` |
+| `Picture` | Diatur dengan lebar dan tinggi, bukan dengan format |
+| `Markdown` | `Normal`; menampilkan teks kaya seperti narasi |
+| `Coordinates` | `Decimal`, `Cardinal Dec`, `DMS`, `DDM` |
+| `List Values` | Garis tegak, koma, titik koma, garis miring, baris baru, butir, pemisah kustom |
+| `Nested List` | `Table` atau `Card list`; tabel menambahkan kontrol `Header Case` |
+| `Dates` | `YYYY-MM-DD`, `DD-MM-YYYY`, `MM-DD-YYYY`, `DD/MM/YYYY`, `MM/DD/YYYY`, `Month DD, YYYY`, `DD Month YYYY`, `DD Mon YYYY` |
+| `Date and Time` | Tujuh belas kombinasi format tanggal di atas dengan keluaran 24 jam, 12 jam, ISO, dan hanya waktu |
+| `Time` | `24h`, `24h seconds`, `12h`, `12h padded` |
+| `Sex` | `Presentation` dan `Missing`, dijelaskan di bawah |
+| `Number` | `Original`, atau 0, 1, 2, atau 3 angka desimal |
+| `Encoded Text` | `Default mapping` atau `Custom mapping...` |
+
+`Nested List` digunakan untuk catatan terkait — bagian spesimen, personel,
+nilai upaya — dan merupakan jenis teks yang paling sering memerlukan ukuran
+dinamis.
+
+### `Encoded Text`: apa yang diterjemahkan
+
+`Encoded Text` mengubah kode numerik tersimpan menjadi labelnya.
+`Default mapping` menggunakan tabel di bawah, dicocokkan pada akhir key field,
+sehingga `mammalAttribute::testisPosition` maupun `testisPosition` yang singkat
+sama-sama diterjemahkan.
+
+| Key field diakhiri | Kode 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|---|---|---|
+| `::sex` | Male | Female | Unknown | Gynandromorph | Hermaphrodite | Female? | Male? |
+| `::iDConfidence` | Low | Medium | High | | | | |
+| `mammalAttribute::age` | Adult | Subadult | Juvenile | Unknown | | | |
+| `herpAttribute::age` | Adult | Juvenile | Neonate | Metamorph | Unknown | | |
+| `::testisPosition` | Scrotal | Abdominal | | | | | |
+| `::epididymisAppearance` | Tubular | Partial | Not Tubular | | | | |
+| `::vaginaOpening` | Imperforate | Perforate | | | | | |
+| `::pubicSymphysis` | Close | Small Open | Open | | | | |
+| `::reproductiveStage` | Nulliparous | Primiparous | Multiparous | | | | |
+| `::mammaeCondition` | Small | Large | Lactating | | | | |
+| `::echolocation` | FM | CF | QCF | None | | | |
+| `::ovaryAppearance` | Smooth | Ova minute | At least one ovum ≥ 1 mm dia. | | | | |
+| `::oviductAppearance` | Straight | Convoluted | | | | | |
+| `::fat` | None | Trace | Light | Moderate | Heavy | Extremely Heavy | |
+| `::bodyMolt` | None | Trace | Light | Moderate | Heavy | | |
+
+Field berikut diterjemahkan menjadi `Yes` untuk `1` dan `No` untuk `0`:
+
+`::broodPatch`, `::hasBursa`, `::wingIsMolt`, `::tailIsMolt`,
+`::showBatFields`, `::showEchoFields`.
+
+Selain itu dibiarkan apa adanya. Field yang tidak ada di tabel di atas, nilai
+yang bukan bilangan bulat, dan kode di luar daftarnya semuanya dicetak tanpa
+perubahan — dan itulah biasanya arti angka polos pada label cetak.
+`Custom mapping...` adalah cara memberi label pada field yang tidak dicakup
+pemetaan bawaan.
+
+Dua di antaranya memiliki alternatif yang lebih ramah. Jenis teks `Sex`
+memformat sex sebagai simbol atau huruf dan menangani ketidakpastian, dan
+`[…sex]-img` menggambarnya sebagai ikon; gunakan `Encoded Text` pada field sex
+hanya bila Anda menginginkan katanya secara polos.
+
+### Pemformatan sex
+
+| Kontrol | Pilihan |
+|---|---|
+| `Format` | `Symbol (♂/♀)`, `Letter (M/F)`, `Text (Male/Female)` |
+| `Missing` | `Unknown`, `N/A`, `None` |
+
+Penentuan yang tidak pasti mempertahankan akhirannya pada setiap penyajian:
+`Female?`, `F?`, `♀?`, dan `Male?`, `M?`, `♂?`.
+
+## Opsi gambar, garis, dan bentuk
+
+Gambar statis, garis, dan bentuk bersifat dekoratif. Ketiganya tidak membawa
+data catatan, sehingga tidak memiliki jenis teks, format, maupun opsi
+kondisional.
+
+| Elemen | Opsi |
+|---|---|
+| Gambar | Path gambar, posisi, lebar, tinggi, rotasi, penumpukan, kunci, visibilitas |
+| Garis | Posisi, panjang, rotasi, ketebalan (pt), warna, gaya garis, penumpukan, kunci, visibilitas |
+| Bentuk | Jenis bentuk, posisi, lebar, tinggi, rotasi, ketebalan garis, warna garis, gaya garis, warna isian atau `Clear fill`, penumpukan, kunci, visibilitas |
+
+Jenis bentuknya adalah `rect`, `ellipse`, `circle`, `triangle`, dan `polygon`;
+poligon juga memerlukan jumlah sisi. Gaya garis untuk garis dan bentuk adalah
+`solid`, `dashed`, `dotted`, dan `double`.
+
+Elemen gambar menyimpan path, bukan gambarnya. Templat yang diekspor ke
+perangkat lain menyebutkan nama gambarnya dan memintanya kembali di sana.
+
+## Opsi templat
+
+| Opsi | Nilai | Catatan |
+|---|---|---|
+| `Template name` | Teks | Harus unik. Mengganti nama akan mengarahkan ulang setiap tata letak yang memakai nama lama. |
+| `Description` | Teks | — |
+| `Record type` | `Specimen`, `Specimen Part`, `Site`, `Collecting Event`, `Narrative`, `None` | Menentukan field dan catatan mana yang tersedia. |
+| Jumlah sisi | `1 sided` atau `2 sided` | Templat satu sisi tetap menyimpan rancangan sisi belakangnya, tetapi tidak mencetaknya. |
+| Lebar, tinggi | mm | Ukuran satu blok, bukan lembarnya. |
+| `Template border` | Gaya, ketebalan (pt), warna | Gayanya adalah `solid`, `dashed`, `dotted`, dan `double line`. |
+
+Opsi cetak yang disimpan bersama templat mencakup duplex, pencerminan sisi
+depan dan belakang, ukuran halaman, baris dan kolom per halaman, padding
+halaman, serta padding dokumen. Preset tata letak cetak menimpa opsi ini untuk
+lembar yang dihasilkannya; lihat
+[Ekspor Dokumen](../export-documents#create-a-print-layout-preset).
+
+## Mengatasi masalah sintaks
+
+| Gejala | Yang perlu diperiksa |
+|---|---|
+| Kondisional tercetak apa adanya | Ekspresi yang salah bentuk dilewati. Periksa `]]` yang hilang, nilai tanpa tanda kutip, atau `&&` dan `\|\|` yang dicampur. |
+| Kondisi tidak pernah cocok | Nilai membedakan huruf besar-kecil dan dipangkas spasinya; nilai catatan yang kosong tidak pernah cocok, bahkan dengan `!=`. |
+| Kondisi `!=` tidak mencetak apa pun pada catatan kosong | Itu memang dirancang demikian. Gunakan fallback `??` untuk kasus kosong. |
+| Fallback mencetak `[table::field]` | Pilihan fallback `table::field` sedang dipakai; ubah ke `Blank`, `N/A`, `None`, atau teks kustom. |
+| Ikon sex tampil sebagai teks | Elemennya harus berisi `[…sex]-img` saja, dan key-nya harus diakhiri `.sex`. |
+| Gambar catatan tidak muncul | Elemennya harus berisi `[media::media]` saja dan memakai jenis teks `Picture`. |

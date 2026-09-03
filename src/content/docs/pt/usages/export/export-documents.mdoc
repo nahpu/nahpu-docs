@@ -82,12 +82,88 @@ combinados com texto comum:
 
 Escolha o tipo de texto adequado: `Normal Text`, `Dates`, `Date and Time`,
 `Coordinates`, `Number`, `Sex`, `List Values`, `Nested List`, `Markdown` ou
-`Encoded Text`. Use fallback para campos opcionais e teste condições tanto
-quando coincidem quanto quando não coincidem.
+`Encoded Text`.
 
 A formatação de sexo aceita texto, letras e símbolos para todos os termos.
 Valores incertos mantêm o sufixo (`Female?`, `F?`, `♀?`; `Male?`, `M?`, `♂?`).
 Condições existentes com os códigos legados `0`, `1` e `2` continuam válidas.
+
+Todos os tipos de texto e as suas opções de formato estão listados na
+[Referência do editor de modelos](../template-editor-reference#text-types-and-their-formats).
+
+## Lidar com campos vazios
+
+Defina `No Content Placeholder` em um elemento de texto para decidir o que um
+campo vazio imprime. O controle escreve um fallback `??` dentro do placeholder:
+
+```text
+[specimen::preparator??N/A]
+```
+
+As cinco opções são `Blank`, a própria chave do campo, `N/A`, `None` e um texto
+personalizado. Escolha o fallback antes de desenhar o layout em torno do valor,
+porque um resultado vazio e um resultado `N/A` ocupam espaços diferentes.
+
+## Saída condicional
+
+Uma expressão condicional decide, no momento da impressão, se um valor deve ser
+marcado ou substituído. Construa a expressão com `Conditional output` na barra
+de ferramentas de texto em vez de digitá-la à mão; a caixa de diálogo escreve a
+sintaxe e reabre em uma expressão existente para editá-la.
+
+Há duas formas. Coloque o valor entre colchetes quando as condições coincidirem,
+aqui para marcar um peso que o indicador de exatidão de mamíferos aponta como
+estimado:
+
+```text
+[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
+```
+
+Ou substitua o valor por texto literal quando elas coincidirem, aqui para
+marcar uma identificação de espécie que não tem confiança alta:
+
+```text
+[taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
+```
+
+A primeira imprime `[82.5]` para um peso estimado e `82.5` nos demais casos. A
+segunda imprime `Rattus rattus` para uma identificação de confiança alta e
+`Rattus ?` para qualquer nível inferior.
+
+Os símbolos são:
+
+| Símbolo | Significado |
+|---|---|
+| `[[` … `]]` | Abre e fecha a expressão |
+| `][` | Encerra o campo alvo e inicia as condições |
+| `==` `!=` `~=` | Igual, diferente, contém |
+| `&&` `\|\|` | Todas as condições, qualquer condição |
+| `"` … `"` | Delimitam cada valor de comparação |
+| `]=>` | Encerra as condições e inicia o texto de substituição |
+
+Quatro regras explicam a maioria das condições que não se comportam como o
+esperado. As comparações têm os espaços removidos, mas **diferenciam maiúsculas
+de minúsculas**. As condições leem o valor **armazenado**, então a confiança da
+identificação é `"2"` e não `"High"`, mesmo quando o elemento exibe o rótulo. Um
+**valor vazio do registro nunca coincide**, inclusive com `!=`, então use um
+fallback e não uma condição para o caso vazio. E `&&` e `||` **não podem ser
+misturados** em uma mesma expressão.
+
+Uma substituição troca o valor inteiro em vez de acrescentar algo a ele, e é por
+isso que o exemplo acima imprime `Rattus ?` e não `Rattus rattus?`.
+
+Teste na prévia tanto o caso que coincide quanto o que não coincide. Uma
+expressão malformada é ignorada sem aviso, então ela é impressa literalmente.
+
+O conjunto completo de símbolos, os três tipos de condicional da caixa de
+diálogo e todas as regras de avaliação estão na
+[Referência do editor de modelos](../template-editor-reference#conditional-output).
+
+As regras de substituição são a outra maneira de reescrever um valor. Elas são
+aplicadas após a formatação, correspondem por valor exato ou por substring e
+podem diferenciar maiúsculas de minúsculas ou não. Use-as para uma substituição
+repetida em muitos valores, e uma condicional para uma decisão que depende de
+outro campo.
 
 ## Preparar para dados reais
 
@@ -290,6 +366,8 @@ exportação do projeto ou da exportação estruturada de registros. Consulte
 | Sintoma | Verifique |
 |---|---|
 | Placeholder aparece literalmente | Tipo de registro e chave completa `Table::Field`. |
+| Uma condicional aparece literalmente | A expressão está malformada. Verifique se falta um `]]`, se há um valor sem aspas ou `&&` e `\|\|` misturados. |
+| Uma condição nunca coincide | As comparações diferenciam maiúsculas de minúsculas, leem o valor armazenado em vez do rótulo exibido, e um valor vazio do registro nunca coincide. |
 | Prévia vazia | Tipo do bloco e registros selecionados. |
 | Modelo ausente | Reatribua o bloco ou restaure/import o modelo. |
 | Texto sobreposto ou cortado | Texto dinâmico, `Auto-fill page`, largura e altura do bloco. |
@@ -301,4 +379,6 @@ exportação do projeto ou da exportação estruturada de registros. Consulte
 | Prévia desatualizada | Gere a prévia novamente. |
 | Importação altera muitos presets | A transferência de uma seção substitui toda aquela seção. |
 
-Para detalhes de armazenamento e renderização, consulte [Templates and presets](../../../contributing/code/templates-and-presets) e [Export workflows](../../../contributing/code/data-export-workflows).
+Todas as opções do editor de modelos estão listadas na
+[Referência do editor de modelos](../template-editor-reference). Para detalhes
+de armazenamento e renderização, consulte [Templates and presets](../../../contributing/code/templates-and-presets) e [Export workflows](../../../contributing/code/data-export-workflows).

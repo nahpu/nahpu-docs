@@ -5,52 +5,46 @@ sidebar:
   order: 4
 ---
 
-NAHPU is specifically designed as a digital field catalog for natural history collections. It offers alternatives to other solutions, such as pre-formatted traditional paper-based field catalogs and no-code custom-built form apps like [Claris FileMaker](https://www.claris.com/). This guide provides comprehensive instructions on transitioning from paper-based field catalogs and custom-built form apps to NAHPU.
+NAHPU is a digital field catalog built for natural history collections. It
+replaces unformatted/pre-formatted paper field catalogs and no-code custom form apps such as
+[Claris FileMaker](https://www.claris.com/). This page compares the them and
+outlines how to move across.
 
-## Transition from Paper-based Field Catalogs
+## NAHPU compared with a paper field catalog
 
-### Benefits of Using NAHPU
+|              | Paper field catalog                                           | NAHPU                                                                                                                                                                                                                                                |
+| ------------ | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cost         | Ongoing paper, ink, binders, storage                          | Free; runs on a phone you already own. A dedicated tablet is about $200–$500 and lasts around five years. Catalogs still print when a hard copy is required.                                                                                         |
+| Access       | Carry the book home, scan pages, or retype into a spreadsheet | Open on any device and hand collaborators an exact copy                                                                                                                                                                                              |
+| Data quality | Secondary entry errors when digitizing                        | Controlled lists and required-field checks before you leave the field                                                                                                                                                                                |
+| Associations | The same site rewritten on every page                         | Enter a site once and link it to many records, plus GPS, images, videos, and audio                                                                                                                                                                   |
+| Backup       | Photograph or retype each page                                | Cloud, flash drive, or another device. Many drives are water and shock proof                                                                                                                                                                         |
+| Findability  | Read through by hand; no filtering                            | Search and filter, following [Darwin Core](https://dwc.tdwg.org/) and the [FAIR principles](https://www.go-fair.org/)                                                                                                                                |
+| Statistics   | Counted by hand                                               | A growing list of summary statistics, including species, family, and preservation summaries per project and site, exportable to a spreadsheet. Advanced machine learning methods are currently being developed for on-device morphological analyses. |
 
-While paper-based field catalogs have traditionally been the go-to method for collecting natural history data due to their simplicity and ease of use, NAHPU presents a more efficient and cost-effective alternative. Here are some key advantages of using NAHPU over paper-based field catalogs:
+## NAHPU compared with a custom-built form app
 
-- **Cost-Effectiveness**: NAHPU is free to use, eliminating the need for paper, ink, binders, and additional storage space. In contrast, paper-based field catalogs require ongoing expenses for these materials. Additionally, NAHPU can operate on a personal smartphone, eliminating the need for additional investment. A decent dedicated tablet from a quality brand starts at around $200-$500 and can last for five years. Even if a hard copy is required, NAHPU catalogs can still be printed.
+Moving from a form app is the easier transition: your data entry, backup, and
+export habits carry over largely unchanged.
 
-- **Data Accessibility**: NAHPU enables you to access your data from any location and share it with collaborators, ensuring they receive an exact copy. In contrast, paper-based catalogs necessitate physically transporting the catalogs, sending scanned images of the pages, or inputting the records into a spreadsheet, which can delay access until you return from the field and digitize the data.
+|           | Custom-built form app                                                                                                      | NAHPU                                                                                               |
+| --------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Cost      | Development and maintenance, often a paid subscription — see the FileMaker [pricing page](https://www.claris.com/pricing/) | Free, with the app and its documentation under active development                                   |
+| Standards | Varies by build                                                                                                            | Darwin Core and FAIR compliance as a goal of the project                                            |
+| Openness  | May be proprietary, with proprietary formats                                                                               | Open source, open libraries, CSV and JSON export, and a plain SQLite database you can open yourself |
+| Devices   | Device support depends on the build                                                                                        | Phones, tablets, laptops, and desktops, with Flutter and Material Design accessibility              |
 
-- **Data Quality**: NAHPU aids in standardizing your data collection and helps prevent common secondary data entry errors that can occur when digitizing paper-based field catalogs. Configure controlled lists and review required fields before leaving the field.
+## Plan the transition
 
-- **Data Association**: NAHPU allows you to link your data with other data sources, such as GPS coordinates, images, and audio recordings. You only need to enter a site once, which can be associated with multiple data entries. On the other hand, paper-based catalogs require you to write the same site multiple times, typically at the top of each page.
+Pick an approach:
 
-- **Data Security**: NAHPU simplifies the process of data backup. With NAHPU, you can save time, reduce errors, and optimize storage space usage. When connected to the internet, data can be easily backed up to cloud services like Google Drive or Dropbox. In addition, NAHPU supports cross-device data sharing and allows data to be copied to a flash drive, many of which are designed to be water and shockproof, providing an extra layer of data security. This starkly contrasts the process for paper-based catalogs, which requires each page to be photographed or manually entered into a spreadsheet. This method is not only time-consuming and error-prone, but it may also require additional storage space.
+- **Soft.** Use NAHPU alongside your paper field catalog.
+- **Hard.** Use NAHPU as the only catalog, with paper carried as a backup.
 
-- **Data Findability**: NAHPU incorporates a search feature, enabling you to locate your data effortlessly. This is a significant advantage over paper-based catalogs, which require manual data searching and lack an easy method for filtering data based on specific criteria. Moreover, NAHPU adheres to the [Darwin Core](https://dwc.tdwg.org/) standard and the [FAIR (Findable, Accessible, Interoperable, and Reusable) principles](https://www.go-fair.org/). This ensures that your data is easily discoverable and accessible but also interoperable and reusable.
+Then settle three practical questions:
 
-- **Real-time Statistics**: Manual counting is no longer necessary with NAHPU. It provides summaries for species and family counts per project and site, as well as preservation summaries per project and species. It allows you to export your data to a spreadsheet for further analysis. Paper-based catalogs require manual data counting and make real-time data updates challenging.
-
-### Approaches to Transition from Paper-based Field Catalogs
-
-Two typical approaches to transition to NAHPU from paper-based field catalogs:
-
-- Soft approach. Use NAHPU to supplement paper-based field catalogs.
-
-- Hard approach. Use NAHPU as the only field catalog. You can bring paper-based field catalogs as backup.
-
-Several factors to consider when transitioning to NAHPU:
-
-- **Device choice**. The app is designed to work on various devices, including smartphones, tablets, laptops, and desktops. You can start using your smartphone. If you have the budget, we recommend using a tablet and a Bluetooth keyboard for a better experience. Depending on the field conditions, you can use a laptop. For more information, please look at the [Devices Requirements](../usages/devices) section.
-
-— **Field conditions**. NAHPU is designed for remote field sites without internet access. Consider device durability and electricity availability. Some new smartphones are water—and dust-resistant. Tablets and laptops may need extra protection. Use a sturdy case whenever possible. For areas without electricity, a 20,000 to 25,000 mAh power bank is typically sufficient for a week of fieldwork using a smartphone or tablet.
-
-- **Data Backup Options**. A flash drive can be utilized for data backup. Depending on your device’s compatibility, a USB-C flash drive or an adapter may be required for connection. Cross-backup with another smartphone or tablet in the field is also an option as an alternative or supplementary measure. Cloud services such as Google Drive or Dropbox can be used for data backup if you have reliable internet access. However, it’s important to note that this data transfer process requires installing a specific application on your device and appropriate account access.
-
-## Transition from Custom-built Form Apps
-
-NAHPU, purpose-built to serve the unique requirements of natural history collections, presents a user-friendly and economically viable alternative to custom-built form apps. These custom apps often entail substantial development and maintenance expenses, whereas NAHPU offers a more cost-effective and efficient solution. We are dedicated to the ongoing enhancement of both the app and its supporting documentation to cater to our users’ evolving needs. Transitioning from custom-built form apps to NAHPU is more straightforward than shifting from paper-based field catalogs. You should be able to adapt your data entry, backup, and export method to using NAHPU. Here are some key benefits of migrating to NAHPU from custom-built form apps:
-
-- **Cost-Effectiveness**: NAHPU is free to use, eliminating additional development costs. In contrast, custom-built form apps can be expensive to develop and maintain. For instance, [Claris FileMaker](https://www.claris.com/), a widely-used custom-built form app, necessitates a paid subscription. More details can be found on their [pricing page](https://www.claris.com/pricing/).
-
-- **Enhanced Data Findability and Accessibility**: NAHPU is engineered to simplify data searching and access. We strive for full compliance with the Darwin Core standard and FAIR principles, ensuring your data is easily findable and accessible. Custom-built form apps may not offer the same level of data findability and accessibility.
-
-- **Open Source Advantage**: NAHPU is an open-source application that utilizes open-source libraries. Additionally, the app supports common data formats, such as CSV and JSON, facilitating easy import into other software for further analysis. The database used is SQLite, a widely adopted open-source database, allowing you to access the database independently of the app. In contrast, custom-built form apps may not be open source and may employ proprietary data formats.
-
-- **Accessible and User-Friendly Interface**: NAHPU, designed with inclusivity in mind, leverages the accessibility features of Flutter and Material Design to ensure a user-friendly interface that caters to individuals with visual impairments. The application’s cross-platform design allows it to function seamlessly on various devices, including smartphones, tablets, laptops, and desktops. This broad compatibility stands in contrast to custom-built form apps, which may face limitations in device compatibility and accessibility.
+| Question                       | What to consider                                                                                                                                                                                                                                                |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Which device?                  | Phones, tablets, laptops, and desktops all work. Start with your phone; a tablet with a Bluetooth keyboard is the better experience if the budget allows. See [Device Requirements](../usages/devices).                                                         |
+| What are the field conditions? | NAHPU is designed for remote sites with no internet. Weigh durability and power: recent phones are often water and dust resistant, tablets and laptops usually need a sturdy case, and a 20,000–25,000 mAh power bank covers about a week on a phone or tablet. |
+| How will you back up?          | A flash drive, USB-C or with an adapter, is the baseline. Cross-backup to a teammate's device adds redundancy. Cloud services such as Google Drive or Dropbox work where the connection does, but need their own app and account on the device.                 |
