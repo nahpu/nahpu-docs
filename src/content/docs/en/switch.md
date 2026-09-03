@@ -7,7 +7,7 @@ sidebar:
 
 NAHPU is a digital field catalog built for natural history collections. It
 replaces unformatted/pre-formatted paper field catalogs and no-code custom form apps such as
-[Claris FileMaker](https://www.claris.com/). This page compares the them and
+[Claris FileMaker](https://www.claris.com/). This page compares them and
 outlines how to move across.
 
 ## NAHPU compared with a paper field catalog
