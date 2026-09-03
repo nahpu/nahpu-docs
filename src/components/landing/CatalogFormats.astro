@@ -5,7 +5,7 @@ import cntl from "cntl";
 type Format = {
     name: string;
     color: string;
-    status: "available" | "development";
+    status: "available" | "beta" | "development";
     glyph: "mammal" | "bird" | "herp" | "insect" | "fish" | "fossil";
 };
 
@@ -29,9 +29,9 @@ const formats: Format[] = [
         glyph: "herp",
     },
     {
-        name: "Entomology",
+        name: "Invertebrate zoology",
         color: "#e0913a",
-        status: "available",
+        status: "beta",
         glyph: "insect",
     },
     {
@@ -76,10 +76,27 @@ const availableClasses = cntl`
   dark:bg-silver-tree-800 dark:text-silver-tree-100
 `;
 
+const betaClasses = cntl`
+  border border-silver-tree-400/80 text-silver-tree-800
+  dark:border-silver-tree-600/80 dark:text-silver-tree-100
+`;
+
 const developmentClasses = cntl`
   bg-golden-grass-100 text-golden-grass-900
   dark:bg-golden-grass-950 dark:text-golden-grass-200
 `;
+
+const statusStyles: Record<Format["status"], string> = {
+    available: availableClasses,
+    beta: betaClasses,
+    development: developmentClasses,
+};
+
+const statusLabels: Record<Format["status"], string> = {
+    available: "Available",
+    beta: "Beta",
+    development: "In development",
+};
 ---
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -193,15 +210,13 @@ const developmentClasses = cntl`
                         {format.name}
                     </h3>
                     <span
-                        class={`${statusClasses} ${format.status === "available" ? availableClasses : developmentClasses}`}
+                        class={`${statusClasses} ${statusStyles[format.status]}`}
                     >
                         <span
                             class="h-1.5 w-1.5 rounded-full"
-                            style={`background:${format.status === "available" ? format.color : "var(--color-golden-grass-500)"}`}
+                            style={`background:${format.status === "development" ? "var(--color-golden-grass-500)" : format.color}`}
                         />
-                        {format.status === "available"
-                            ? "Available"
-                            : "In development"}
+                        {statusLabels[format.status]}
                     </span>
                 </div>
             </article>

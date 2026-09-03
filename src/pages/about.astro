@@ -64,7 +64,7 @@ const catalogFormats = [
     { name: "Mammalogy", status: "Available" },
     { name: "Ornithology", status: "Available" },
     { name: "Herpetology", status: "Available" },
-    { name: "Entomology", status: "Available" },
+    { name: "Invertebrate zoology", status: "Beta" },
     { name: "Ichthyology", status: "In development" },
     { name: "Paleontology", status: "In development" },
     { name: "Marine invertebrates", status: "In development" },
@@ -184,8 +184,8 @@ const roadmap: Highlight[] = [
                     <p class={leadClasses}>
                         Specimen fields follow the conventions of each
                         discipline, and a single project can hold more than one
-                        format. Four formats ship today, with three more in
-                        active development.
+                        format. Three formats ship today, one is in beta,
+                        and three more are in active development.
                     </p>
 
                     <ul class="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -199,7 +199,9 @@ const roadmap: Highlight[] = [
                                         class={`rounded-full px-2.5 py-0.5 text-[11px] font-medium whitespace-nowrap ${
                                             format.status === "Available"
                                                 ? "bg-silver-tree-200 text-silver-tree-800 dark:bg-silver-tree-800 dark:text-silver-tree-100"
-                                                : "bg-golden-grass-100 text-golden-grass-900 dark:bg-golden-grass-950 dark:text-golden-grass-200"
+                                                : format.status === "Beta"
+                                                  ? "border border-silver-tree-400/80 text-silver-tree-800 dark:border-silver-tree-600/80 dark:text-silver-tree-100"
+                                                  : "bg-golden-grass-100 text-golden-grass-900 dark:bg-golden-grass-950 dark:text-golden-grass-200"
                                         }`}
                                     >
                                         {format.status}
