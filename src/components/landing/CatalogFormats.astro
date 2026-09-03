@@ -4,7 +4,6 @@ import cntl from "cntl";
 /// Catalog formats NAHPU ships, plus the ones still being built.
 type Format = {
     name: string;
-    taxa: string;
     color: string;
     status: "available" | "development";
     glyph: "mammal" | "bird" | "herp" | "insect" | "fish" | "fossil";
@@ -13,42 +12,36 @@ type Format = {
 const formats: Format[] = [
     {
         name: "Mammalogy",
-        taxa: "Skins, skulls, and standard external measurements, etc.",
         color: "#2f9e7d",
         status: "available",
         glyph: "mammal",
     },
     {
         name: "Ornithology",
-        taxa: "Plumage, molt, and other bird-specific attributes.",
         color: "#3f9fd6",
         status: "available",
         glyph: "bird",
     },
     {
         name: "Herpetology",
-        taxa: "Amphibian and reptile records with measurement and fixation details.",
         color: "#7c72d8",
         status: "available",
         glyph: "herp",
     },
     {
         name: "Entomology",
-        taxa: "Insect series, host-plant association, and mounting details.",
         color: "#e0913a",
         status: "available",
         glyph: "insect",
     },
     {
         name: "Ichthyology",
-        taxa: "Fish records with meristics and fixation details.",
         color: "#3c8fa8",
         status: "development",
         glyph: "fish",
     },
     {
         name: "Paleontology",
-        taxa: "Fossil material with stratigraphic and locality context.",
         color: "#b07a56",
         status: "development",
         glyph: "fossil",
@@ -59,7 +52,7 @@ const cardClasses = cntl`
   nh-taxon-card
   nh-reveal
   relative
-  flex items-start gap-4
+  flex items-center gap-4
   rounded-2xl
   border border-silver-tree-300/70 dark:border-silver-tree-700/70
   bg-silver-tree-50/70 dark:bg-silver-tree-900/50
@@ -195,26 +188,21 @@ const developmentClasses = cntl`
                     </svg>
                 </span>
 
-                <div class="flex flex-col gap-1.5">
-                    <div class="flex flex-wrap items-center gap-2">
-                        <h3 class="text-base font-semibold text-silver-tree-900 dark:text-silver-tree-50">
-                            {format.name}
-                        </h3>
+                <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="text-base font-semibold text-silver-tree-900 dark:text-silver-tree-50">
+                        {format.name}
+                    </h3>
+                    <span
+                        class={`${statusClasses} ${format.status === "available" ? availableClasses : developmentClasses}`}
+                    >
                         <span
-                            class={`${statusClasses} ${format.status === "available" ? availableClasses : developmentClasses}`}
-                        >
-                            <span
-                                class="h-1.5 w-1.5 rounded-full"
-                                style={`background:${format.status === "available" ? format.color : "var(--color-golden-grass-500)"}`}
-                            />
-                            {format.status === "available"
-                                ? "Available"
-                                : "In development"}
-                        </span>
-                    </div>
-                    <p class="text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
-                        {format.taxa}
-                    </p>
+                            class="h-1.5 w-1.5 rounded-full"
+                            style={`background:${format.status === "available" ? format.color : "var(--color-golden-grass-500)"}`}
+                        />
+                        {format.status === "available"
+                            ? "Available"
+                            : "In development"}
+                    </span>
                 </div>
             </article>
         ))
