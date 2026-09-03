@@ -1,5 +1,5 @@
 import type { VNode } from "preact";
-import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import { useCallback, useRef, useState } from "preact/hooks";
 
 type Picture = {
   src: string;
@@ -35,8 +35,6 @@ type Props = {
   shots: Shot[];
 };
 
-const ROTATION_MS = 8000;
-
 const LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
 
 const linkClasses =
@@ -69,42 +67,16 @@ function withLinks(text: string): (string | VNode)[] {
   return nodes;
 }
 
-function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-
-  return reduced;
-}
-
-/** Rotating tour of NAHPU screens, driven by a tab list. */
+/** Tour of NAHPU screens. The reader picks each screen from the tab list. */
 export default function AppShowcase({ shots }: Props) {
   const [active, setActive] = useState(0);
   const [variant, setVariant] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [engaged, setEngaged] = useState(false);
-  const reducedMotion = usePrefersReducedMotion();
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const selectShot = useCallback((index: number) => {
     setActive(index);
     setVariant(0);
   }, []);
-
-  useEffect(() => {
-    if (paused || engaged || reducedMotion || shots.length < 2) return;
-    const timer = window.setTimeout(
-      () => setActive((index) => (index + 1) % shots.length),
-      ROTATION_MS,
-    );
-    return () => window.clearTimeout(timer);
-  }, [active, engaged, paused, reducedMotion, shots.length]);
 
   const focusTab = useCallback(
     (index: number) => {
@@ -137,13 +109,7 @@ export default function AppShowcase({ shots }: Props) {
   const currentVariant = current.variants?.[variant];
 
   return (
-    <div
-      class="grid grid-cols-1 gap-6 lg:grid-cols-[19rem_1fr] lg:gap-10"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusIn={() => setPaused(true)}
-      onFocusOut={() => setPaused(false)}
-    >
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-[19rem_1fr] lg:gap-10">
       <div
         role="tablist"
         aria-label="NAHPU screens"
@@ -163,10 +129,7 @@ export default function AppShowcase({ shots }: Props) {
               aria-selected={isActive}
               aria-controls={`shot-panel-${shot.id}`}
               tabIndex={isActive ? 0 : -1}
-              onClick={() => {
-                selectShot(index);
-                setEngaged(true);
-              }}
+              onClick={() => selectShot(index)}
               class={`group relative shrink-0 snap-start overflow-hidden rounded-xl border px-4 py-3 text-left transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-silver-tree-500 lg:w-full lg:shrink ${
                 isActive
                   ? "border-silver-tree-500 bg-silver-tree-50 dark:border-silver-tree-500 dark:bg-silver-tree-900"
@@ -204,22 +167,8 @@ export default function AppShowcase({ shots }: Props) {
                 class="absolute inset-x-0 bottom-0 h-0.5 bg-silver-tree-200/60 dark:bg-silver-tree-800"
               >
                 <span
-                  key={`${shot.id}-${active}-${paused}`}
                   class="block h-full origin-left bg-gradient-to-r from-silver-tree-500 to-golden-grass-400"
-                  style={
-                    isActive
-                      ? {
-                          animation:
-                            reducedMotion || paused || engaged
-                              ? "none"
-                              : `nh-progress ${ROTATION_MS}ms linear forwards`,
-                          width:
-                            reducedMotion || paused || engaged
-                              ? "100%"
-                              : undefined,
-                        }
-                      : { width: 0 }
-                  }
+                  style={{ width: isActive ? "100%" : 0 }}
                 />
               </span>
             </button>
@@ -334,10 +283,7 @@ export default function AppShowcase({ shots }: Props) {
                     key={option.id}
                     type="button"
                     aria-pressed={isCurrent}
-                    onClick={() => {
-                      setVariant(optionIndex);
-                      setEngaged(true);
-                    }}
+                    onClick={() => setVariant(optionIndex)}
                     class={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-silver-tree-600 focus-visible:ring-offset-2 focus-visible:ring-offset-silver-tree-100 dark:focus-visible:ring-silver-tree-300 dark:focus-visible:ring-offset-silver-tree-900 ${
                       isCurrent
                         ? "border-transparent bg-silver-tree-800 text-silver-tree-50 dark:bg-silver-tree-200 dark:text-silver-tree-950"
