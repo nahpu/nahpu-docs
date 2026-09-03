@@ -6,7 +6,7 @@ sidebar:
 ---
 
 NAHPU is a digital field catalog built for natural history collections. It
-replaces unformatted/pre-formatted paper field catalogs and no-code custom form apps such as
+replaces unformatted and pre-formatted paper field catalogs and no-code custom form apps such as
 [Claris FileMaker](https://www.claris.com/). This page compares them and
 outlines how to move across.
 
@@ -15,24 +15,25 @@ outlines how to move across.
 |              | Paper field catalog                                           | NAHPU                                                                                                                                                                                                                                                |
 | ------------ | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Cost         | Ongoing paper, ink, binders, storage                          | Free; runs on a phone you already own. A dedicated tablet is about $200–$500 and lasts around five years. Catalogs still print when a hard copy is required.                                                                                         |
-| Access       | Carry the book home, scan pages, or retype into a spreadsheet | Open on any device and hand collaborators an exact copy                                                                                                                                                                                              |
+| Access       | Carry the book home, scan pages, or retype into a spreadsheet | Open on any device and hand collaborators an exact copy. Install NAHPU on your phone and import the data; the catalog is with you all the time.                                                                                                               |
 | Data quality | Secondary entry errors when digitizing                        | Controlled lists and required-field checks before you leave the field                                                                                                                                                                                |
 | Associations | The same site rewritten on every page                         | Enter a site once and link it to many records, plus GPS, images, videos, and audio                                                                                                                                                                   |
-| Backup       | Photograph or retype each page                                | Cloud, flash drive, or another device. Many drives are water and shock proof                                                                                                                                                                         |
+| Backup       | Photograph or retype each page                                | Cloud, flash drive, or another device. Many drives are waterproof and shockproof                                                                                                                                                                         |
 | Findability  | Read through by hand; no filtering                            | Search and filter, following [Darwin Core](https://dwc.tdwg.org/) and the [FAIR principles](https://www.go-fair.org/)                                                                                                                                |
-| Statistics   | Counted by hand                                               | A growing list of summary statistics, including species, family, and preservation summaries per project and site, exportable to a spreadsheet. Advanced machine learning methods are currently being developed for on-device morphological analyses. |
+| Statistics   | Counted by hand                                               | A growing list of summary statistics, including species, family, and preservation summaries per project and site, exportable to a spreadsheet. Advanced machine learning methods are being developed for on-device morphological analyses. |
 
 ## NAHPU compared with a custom-built form app
 
 Moving from a form app is the easier transition: your data entry, backup, and
 export habits carry over largely unchanged.
 
-|           | Custom-built form app                                                                                                      | NAHPU                                                                                               |
-| --------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| Cost      | Development and maintenance, often a paid subscription — see the FileMaker [pricing page](https://www.claris.com/pricing/) | Free, with the app and its documentation under active development                                   |
-| Standards | Varies by build                                                                                                            | Darwin Core and FAIR compliance as a goal of the project                                            |
-| Openness  | May be proprietary, with proprietary formats                                                                               | Open source, open libraries, CSV and JSON export, and a plain SQLite database you can open yourself |
-| Devices   | Device support depends on the build                                                                                        | Phones, tablets, laptops, and desktops, with Flutter and Material Design accessibility              |
+|            | Custom-built form app                                                                                                      | NAHPU                                                                                                   |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Cost       | Development and maintenance, often a paid subscription — see the FileMaker [pricing page](https://www.claris.com/pricing/) | Free                                                                                                    |
+| Standards  | Varies by build                                                                                                            | Darwin Core and FAIR compliance as a goal of the project                                                |
+| Openness   | May be proprietary, with proprietary formats                                                                               | Open source, open libraries, CSV and JSON export, and a plain SQLite database you can open yourself     |
+| Devices    | Device support depends on the build                                                                                        | Phones, tablets, laptops, and desktops, with Flutter and Material Design accessibility                  |
+| Statistics | Summary reports must be designed and maintained as part of the build                                                       | Built in: species, family, and preservation summaries per project and site, exportable to a spreadsheet |
 
 ## Plan the transition
 
