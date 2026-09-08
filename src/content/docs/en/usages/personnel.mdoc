@@ -10,7 +10,7 @@ multiple projects. A project only displays the personnel assigned to it.
 ## Adding personnel to a project
 
 {% aside type="caution" %}
-Every project needs at least one person with the `Cataloger` role. That person owns the field number that generates specimen field IDs, and the create-project wizard will not finish with personnel Field IDs until one exists. The role cannot be changed after it is created, so decide it before saving.
+Personnel Field IDs require a `Cataloger` with a registered personal field number. Project Field IDs use the project numbering convention instead; they do not require every number to come from a person's sequence. Choose the role carefully because it cannot be changed after creation.
 {% /aside %}
 
 From the Personnel panel on the project dashboard, select `Add personnel`.
@@ -44,9 +44,7 @@ number` option. Turn it on when the cataloger's initials and number should
 generate specimen field IDs. Enter the field initial and starting number; the
 number advances as specimens are created.
 
-Some institutions use a project code instead of a person's initials. For
-example, enter `ABC-` as the initial and `1` as the starting number to generate
-IDs such as `ABC-1`.
+If the collection uses project-based numbering, configure the project Field ID convention in Settings instead of registering a fictitious person with the project code.
 
 Field-number registration is optional. A cataloger role cannot be changed
 after the person is created.

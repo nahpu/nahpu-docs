@@ -1,7 +1,7 @@
 ---
 title: "Persistence data"
 sidebar:
-  order: 13
+  order: 6
 ---
 
 This page is the canonical reference for NAHPU persistence boundaries, schema
@@ -316,7 +316,7 @@ exported or reproduced. Installation-local preferences remain in
 
 ## Darwin Core field mapping
 
-This is the audited schema-v21 mapping surface for `nahpu_dwc` 0.5.0. It uses
+This is the audited schema-v21 mapping surface for `nahpu_dwc` 0.6.0. It uses
 the 2026-05-26 [Darwin Core List of Terms](https://dwc.tdwg.org/list/) and the
 [Darwin Core Data Package 1.0](https://dwc.tdwg.org/dp/) profile. Source fields
 use `table::field` notation.
@@ -328,13 +328,53 @@ Every persisted column has exactly one status:
   assertion or MeasurementOrFact row.
 - **Relationship**: represented by a DwC-DP relationship or agent-role row.
 - **Dynamic**: custom-field configuration decides its exported representation.
-- **Unmapped**: no exact current standard representation; tabular output keeps
-  the value under the shown `nahpu:<table>.<column>` header.
+  A value with no exact term is withheld from Darwin Core bundles.
+- **Unmapped**: no exact current standard representation. Tabular output keeps
+  the value under the shown `nahpu:<table>.<column>` header; Darwin Core
+  bundles omit it, and the NAHPU Data Package carries it.
 
 When a generic JSON or XML conversion finds multiple populated source fields
 that target the same standard term, it preserves each value under its NAHPU
 header instead of overwriting data. Structured bundle builders may combine
 those fields where the combination rule is explicit.
+
+### Bundle export contract
+
+A Darwin Core bundle column exists only when it is registered in
+`crates/nahpu_dwc/src/dwc/terms.rs`. Each registered entry names the CSV
+header, the standard term the header stands for, and the bundle profile the
+column is legal in. A value that resolves to no registered term is withheld
+from the bundle, reported in the manifest at plan time, and remains available
+in a NAHPU Data Package. No column is ever published under an invented term
+IRI.
+
+Only three namespaces may be written:
+
+| Namespace | Base IRI |
+|---|---|
+| `dwc` | `http://rs.tdwg.org/dwc/terms/` |
+| `dcterms` | `http://purl.org/dc/terms/` |
+| `ac` | `http://rs.tdwg.org/ac/terms/` |
+
+The Darwin Core Data Package profile defines no term namespace of its own.
+Every column in its table schemas versions a Darwin Core, Dublin Core, or
+Audubon Core term, so `dwc-dp` never appears as a field IRI.
+
+The two writers publish different shapes, and the registry is keyed by table
+and profile so a header is only legal where the standard puts it. The Archive
+is one flat occurrence core with extensions. The Data Package is relational and
+its Occurrence class is thin: determination ranks belong to `identification`,
+location and collecting values belong to `event`, and catalog and preparation
+values belong to `material`. Values with no class column, such as the host
+association, are written as assertions. `_pk` and `_fk` columns are Data
+Package structural keys that version the identifier term they stand for, and
+never appear in an Archive.
+
+Filtering happens at two different levels, and at neither is it row-level. A
+Darwin Core bundle is filtered by *term*; a NAHPU Data Package is filtered by
+*populated table*, so a mammals-only project carries no bird, herpetofauna,
+arthropod, or fossil resources and no enum mappings for them. A persisted row
+is exported by both even when only its defaults are set.
 
 The table audit is grouped by data domain:
 
@@ -589,7 +629,7 @@ The table audit is grouped by data domain:
 
 | Fields | Status | Darwin Core or export handling |
 |---|---|---|
-| `id`; `uuid`; `sourceTemplateUuid`; `name`; `type`; `uiSection`; `options`; `scope`; `projectUuid`; `catalogFormat`; `sortOrder`; `isArchived`; `dwcTarget`; `dwcField`; `dwcMode`; `allowDwcConflict`; `createdAt`; `updatedAt` | Dynamic | Configuration determines whether a value targets an exact field, an assertion, or `dynamicProperties`. Definition metadata is not itself statically mapped. |
+| `id`; `uuid`; `sourceTemplateUuid`; `name`; `type`; `uiSection`; `options`; `scope`; `projectUuid`; `catalogFormat`; `sortOrder`; `isArchived`; `dwcTarget`; `dwcField`; `dwcMode`; `allowDwcConflict`; `createdAt`; `updatedAt` | Dynamic | Configuration determines whether a value targets an exact registered term or an assertion. A value with no Darwin Core term is withheld from Darwin Core bundles and remains in the NAHPU Data Package. Definition metadata is not itself statically mapped. |
 
 #### `customFieldValue`
 
@@ -609,7 +649,8 @@ column.
 ## Unmapped-field follow-ups
 
 These fields remain **Unmapped** until their persisted semantics support an
-exact representation:
+exact representation. They are absent from both Darwin Core outputs and are
+carried only by the NAHPU Data Package:
 
 - Convert fossil era, period, series, epoch, and biozone values from stored
   enum indices into controlled labels before creating GeologicalContext rows.
@@ -624,9 +665,18 @@ exact representation:
 - Resolve the product distinction between specimen `fieldNumber`, derived
   project field numbers, `dwc:recordNumber`, and `dwc:catalogNumber` before
   changing the established bundle contract.
+- Decide whether NAHPU ever publishes a namespaced Data Package extension for
+  its own terms, or stays strictly standard-only.
+- Re-verify every registered namespace whenever TDWG republishes the term list.
+  Ratification can move a term between namespaces.
+- Migrate the tabular mapper's `dwc:preferredAgentName` prefix to
+  `dcterms:title`. The term is published in Dublin Core, and the bundle writers
+  already resolve it correctly; the flat exports keep the legacy prefix because
+  renaming it changes columns in saved user presets.
 
 The mapping is maintained with `nahpu_dwc`. A schema, mapper, or bundle change
-must update this audit and the schema-classification tests in the same change.
+must update this audit, the term registry in `dwc/terms.rs`, and the
+schema-classification tests in the same change.
 
 ## Missing improvements and follow-up work
 

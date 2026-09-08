@@ -2,28 +2,36 @@
 title: App Setup
 ---
 
-Prepare NAHPU before fieldwork so the app reflects your team's protocols and every device is ready to record data offline.
+Prepare and test NAHPU on each device before relying on it for collection records. Setup is where error prevention is cheapest: Chapman (2005) states the two principles plainly — prevention is preferable to correction, and the earlier in the information chain an error is caught, the less it costs to fix. A constraint added in Settings before departure removes a class of errors that would otherwise be found, if at all, by a curator years later.
 
-## Configure the app
+## Agree on the configuration
 
-- Customize the controlled vocabularies for specimen fields, collection methods, preparation types, and personnel.
-- Create useful presets for repeated cataloging workflows and review them with the whole team.
-- Confirm the main taxon, field-ID mode, eligible Cataloger, controlled
-  vocabularies, and export presets in the [Settings guide](../../usages/settings).
-- Install NAHPU from the [Installation guide](../../installation), then update it before departure while you still have reliable internet access.
-- Open the app after updating and confirm that projects, settings, and permissions are available.
+Choose the main taxon, Field ID mode, project time zone, measurement units, and controlled vocabularies with the team. Personnel numbering uses a cataloger's registered initials and number; project numbering uses the project's convention. Neither choice replaces a plan for avoiding duplicate identifiers across devices.
 
-## Prepare a project
+Review field visibility and presets in [Settings](/en/usages/settings/). Hidden fields can still hold data and appear in exports. Define custom fields only when a built-in field does not express the observation: agree on placement, type, scope, applicable catalog, units, and allowed values. Enter a test value and check its export.
 
-Create a project with a short, descriptive name and review the optional device
-setup in the wizard. Confirm the dates, taxonomy readiness, field-ID convention,
-and site-identifier convention before collecting begins. The [Projects guide](../../usages/projects)
-describes project creation and dashboard operations in detail.
+Prefer a configured vocabulary over free text wherever the observation allows it. A habitat condition chosen from a list cannot be entered as `disturbed`, `Disturbed`, and `disturbed ` in the same project, and the three variants will not be reconciled at export time. This is the prevention Chapman describes, applied to the field you are about to fill several hundred times.
 
-## Run a mock catalog session
+## Prepare shared resources
 
-Use a real or representative specimen to rehearse the complete workflow: create a record, enter required values, generate a site coordinate when appropriate, attach media, save the record, and review it from the project dashboard. Repeat the exercise on every field device and resolve differences before departure.
+Assign the required personnel and review the taxon list, including identification ranks and uncertain identifications. Reuse existing database entries when they represent the same person or taxon. Decide which device maintains shared definitions and distributes updates.
 
-## Confirm field readiness
+Prepare export presets, document templates, print layouts, and required fonts. User-config transfers do not include custom font files or images; install required assets separately and test the resulting documents. Use [project identity](/en/how-to-recipes/prepare/share-project-identity/) to establish a common project UUID when devices will contribute to one project; it does not transfer collection records.
 
-Before leaving, confirm that each device has enough storage, a charged battery and backup power, the latest NAHPU version, the correct project, and the required location and camera permissions. Test airplane-mode operation if the field site may lack connectivity. Then rehearse both recovery paths once: export the project and merge it back on a second device, and make one database backup that can be restored.
+## Rehearse the workflow
+
+Use a clearly named practice project. Create a site, coordinate, event, and specimen; change an identification; add a part, media, and an associated file where applicable. Leave and reopen each record to confirm persisted values. Use explicit confirmation buttons in dialogs; many record fields save automatically.
+
+Verify the practice records by reopening each one and comparing it against the physical tag, field by field. Scanning the exported table for gaps and outliers is not equivalent, and the difference is measurable. Barchard & Pace (2011) had 195 participants enter 30 data sheets by three methods and found that only 0.06% of the resulting errors were blank or outside the allowable range for their variable — so almost every real error survives a check based on missing values and impossible numbers. In the same study, visual checking produced 29–58% more errors than double entry and was no better than single entry. Treat a clean-looking export as evidence of nothing in particular, and build a verification step that reads the record itself.
+
+Where a value matters enough to justify it, enter it twice from the source and compare. Double entry cost 33% more time than visual checking in that study, which is a defensible trade for identifiers and measurements that cannot be recovered once the specimen is in a jar.
+
+Repeat the exercise without internet, including required location and camera permissions. Check the actual exported table and a printed label. Import a project archive on a separate test installation and open its records and files. Test database replacement only on an installation whose contents you can discard.
+
+Before departure, confirm available storage, power, installed resources, backup destinations, and the team's working project. See [Devices](/en/usages/devices/), [Device Choice and Care](/en/best-practices/device-care/), and [project recovery](/en/how-to-recipes/protect-and-collaborate/import-project/).
+
+## References
+
+Barchard KA & Pace LA (2011). [Preventing human error: the impact of data entry methods on data accuracy and statistical results](https://doi.org/10.1016/j.chb.2011.04.004). *Computers in Human Behavior* 27:1834–1839.
+
+Chapman AD (2005). [Principles of Data Quality](https://www.gbif.org/document/80509/principles-of-data-quality). GBIF Secretariat, Copenhagen.

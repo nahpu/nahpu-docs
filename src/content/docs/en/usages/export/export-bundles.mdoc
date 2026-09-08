@@ -39,7 +39,7 @@ NAHPU provides three bundle types:
    fields.
 8. Review any warnings, especially missing media or a DwC-DP ZIP compatibility
    notice.
-9. Click `Export`.
+9. Click `Create bundle`.
 
 {% /steps %}
 
@@ -95,6 +95,14 @@ NAHPU then follows relationships from those specimens to include available:
 
 Empty optional fields and empty extension tables are omitted.
 
+#### Field coverage
+
+A bundle column is written only when the value has an exact, registered
+Darwin Core, Dublin Core, or Audubon Core term. Fields without one are not
+written to a Darwin Core bundle at all. Export a NAHPU Data Package when a
+workflow needs every recorded value. `Package contents` lists any fields that
+were withheld before you export.
+
 #### Root files
 
 {% filetree %}
@@ -144,6 +152,7 @@ It also follows the Frictionless Data Package model.
 - datapackage.json
 - eml.xml
 - occurrence.csv
+- identification.csv
 - event.csv
 - material.csv
 - occurrence-assertion.csv
@@ -179,14 +188,22 @@ also retained.
 NAHPU maps the selected specimen data into concepts such as:
 
 - `occurrence` for the specimen occurrence;
+- `identification` for the determination and its taxonomic ranks;
 - `event` for collecting activity and location context;
 - `material` for specimen parts;
 - `occurrence-assertion` for measurements;
 - `agent` and role tables for people and their roles;
 - `media` and `occurrence-media` for media metadata and relationships.
 
-Mappings use standard Darwin Core terms only for exact semantic matches.
-Unmatched application fields stay in the NAHPU namespace. Original DDM, DMS,
+DwC-DP is relational, so a value is written to the class the standard puts it
+in rather than repeated on the occurrence row. Taxonomic ranks are in
+`identification`, location and collecting values are in `event`, and catalog
+and preparation values are in `material`. A value with no class column, such
+as the host association, becomes an assertion. `_pk` and `_fk` columns are
+structural keys that version the identifier term they stand for.
+
+The same field-coverage rule applies as for the Archive: only exact,
+registered terms are written. Original DDM, DMS,
 or UTM text is preserved in verbatim-coordinate terms, positive capture extent
 is added to coordinate uncertainty, selected weight units are retained, and
 agent identifiers prefer canonical ORCID URLs with NAHPU UUIDs as fallback.
@@ -222,6 +239,14 @@ Its typed, relational CSV resources, enum mappings, and controlled-vocabulary
 snapshots make it suitable for downstream analysis in Python, R, and other
 Frictionless-compatible tools. Use Darwin Core Data Package instead when a
 workflow requires standardized Darwin Core tables and terms.
+
+It is the only NAHPU bundle that preserves custom fields with no Darwin Core
+term, so it is the format to choose when nothing may be lost.
+
+The package describes only the tables the project populated. A mammals-only
+project carries no bird, herpetofauna, arthropod, or fossil resources, and
+`mappings/sqlite_enums.csv` lists only the enum columns of the tables that are
+present.
 
 #### Root layout
 

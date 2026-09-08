@@ -234,42 +234,17 @@ importar puntos desde un archivo GIS/GPS.
 
 {% /steps %}
 
-### Importar coordenadas desde un archivo
+### Importar coordenadas desde un archivo {% #import-coordinates-from-a-file %}
 
-Use la importación de archivos cuando varios puntos ya existan en un archivo
-GIS o GPS. La importación está disponible en `Add coordinate → Import` dentro
-de un sitio.
+Use `Add coordinate` > `Import` > `Select coordinate file` para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile comprimido o GPX.
 
-{% steps %}
+En archivos tabulares, `Match columns` requiere `Latitude` y `Longitude` en grados decimales. Los campos opcionales son `Name / ID`, `Elevation (m)`, `GPS unit` y `Notes`. Revise la asignación sugerida, deje campos no deseados como `Not included` y seleccione `Review coordinates`. Use `Edit column mapping` para corregir una vista previa inesperada.
 
-1. Abra un sitio, toque/haga clic en `Add coordinate` y seleccione el modo
-   `Import`.
+Revise avisos y posiciones en el mapa. Use casillas individuales, `Select all` o `Clear all` y después `Add N selected` para añadir los puntos al sitio actual. Compruebe los puntos guardados antes de usarlos para especímenes.
 
-2. Los formatos compatibles aparecen encima de las acciones de importación.
-   Seleccione `Select coordinate file` y elija un archivo GeoJSON/JSON, KML,
-   Shapefile comprimido o GPX. También puede elegir `Scan QR` para agregar un
-   registro de coordenadas desde otro dispositivo NAHPU.
+Las posiciones importadas usan WGS84. Confirme el datum de origen; este flujo no convierte otro datum a WGS84. La elevación está en metros. La importación no proporciona incertidumbre de la coordenada; revise y añada la información de origen cuando se conozca. Los archivos tabulares pueden proporcionar la unidad GPS; las importaciones GIS no la proporcionan.
 
-3. Revise los puntos importados y cualquier advertencia. El mapa resalta el
-   punto enfocado y todos los puntos válidos aparecen seleccionados por
-   defecto.
-
-4. Use `Select all`, `Clear all` o las casillas individuales para elegir qué
-   puntos agregar. Toque/haga clic en `Add N selected` para guardarlos en el
-   sitio actual.
-
-{% /steps %}
-
-La importación conserva el nombre, las notas, la latitud y longitud decimales
-y la elevación. Los puntos importados se asignan al sitio actual y al datum
-`WGS84`; este flujo no proporciona incertidumbre ni información de la unidad
-GPS.
-
-Solo se importan puntos. Las entidades que no sean puntos en GeoJSON o
-Shapefile, las geometrías que no sean puntos en KML, las coordenadas inválidas
-y otros registros no compatibles se omiten y se informan en la revisión. En
-GPX se importan los waypoints; las rutas y tracks se ignoran. Si no quedan
-puntos válidos, NAHPU muestra un error y no agrega registros.
+Solo se importan geometrías de punto. Las geometrías no admitidas y las filas inválidas se omiten con avisos; las rutas y trazas GPX se ignoran. Sin puntos válidos, se produce un error en vez de crear coordenadas.
 
 ### Gestionar y exportar coordenadas
 

@@ -41,7 +41,7 @@ NAHPU menyediakan tiga jenis paket:
    kolom yang diekspor.
 8. Tinjau peringatan yang muncul, terutama media yang hilang atau pemberitahuan
    kompatibilitas ZIP untuk DwC-DP.
-9. Klik `Export`.
+9. Klik `Create bundle`.
 
 {% /steps %}
 
@@ -149,6 +149,7 @@ mengikuti model Frictionless Data Package.
 - datapackage.json
 - eml.xml
 - occurrence.csv
+- identification.csv
 - event.csv
 - material.csv
 - occurrence-assertion.csv
@@ -190,8 +191,17 @@ NAHPU memetakan data spesimen terpilih ke konsep seperti:
 - `agent` dan tabel peran untuk orang beserta perannya;
 - `media` dan `occurrence-media` untuk metadata dan hubungan media.
 
-Pemetaan memakai istilah Darwin Core baku hanya untuk kecocokan makna yang
-tepat. Kolom aplikasi yang tidak bersesuaian tetap berada di ruang nama NAHPU.
+DwC-DP bersifat relasional, sehingga sebuah nilai ditulis pada kelas yang
+ditetapkan standar, bukan diulang pada baris occurrence. Peringkat taksonomi
+berada di `identification`, nilai lokasi dan pengumpulan di `event`, serta
+nilai katalog dan preparasi di `material`. Nilai tanpa kolom kelas, seperti
+asosiasi inang, menjadi asersi. Kolom `_pk` dan `_fk` adalah kunci struktural
+yang memversikan istilah pengenal yang diwakilinya.
+
+Hanya istilah baku yang terdaftar dan cocok persis yang ditulis. Kolom tanpa
+istilah tersebut tidak ditulis ke paket Darwin Core; ekspor NAHPU Data Package
+bila alur kerja memerlukan seluruh nilai yang tercatat. `Package contents`
+mencantumkan kolom yang ditahan sebelum Anda mengekspor.
 Teks DDM, DMS, atau UTM yang asli dipertahankan pada istilah koordinat verbatim,
 rentang tangkapan positif ditambahkan ke ketidakpastian koordinat, satuan berat
 yang dipilih dipertahankan, dan pengenal agen mengutamakan URL ORCID kanonis
@@ -429,8 +439,8 @@ Paket Darwin Core adalah format pertukaran dan bukan cadangan NAHPU yang dapat
 dipulihkan.
 
 Kontributor yang menambah kolom paket atau grup takson sebaiknya membaca
-[Alur ekspor](../../../contributing/code/data-export-workflows) dan
-[Menambahkan grup takson](../../../contributing/code/adding-a-taxon-group).
+[Alur ekspor (bahasa Inggris)](/en/contributing/code/data-export-workflows/) dan
+[Menambahkan grup takson (bahasa Inggris)](/en/contributing/code/adding-a-taxon-group/).
 
 NAHPU Data Package memuat seluruh muatan transfer proyek beserta jalur media
 yang kompatibel, sehingga `Merge project` dapat membukanya secara langsung.

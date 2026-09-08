@@ -11,7 +11,7 @@ narrativas y archivos multimedia vinculados.
 ## Crear un proyecto
 
 {% aside type="caution" %}
-Un proyecto necesita al menos una persona con el rol `Cataloger`. Al elegir identificadores de campo `Personnel`, el asistente agrega un paso condicional `Cataloger` y no le deja terminar hasta que exista una persona elegible. Consulte [Personal](./personnel/#agregar-personal-a-un-proyecto).
+Un proyecto necesita al menos una persona con el rol `Cataloger`. Al elegir identificadores de campo `Personnel`, el asistente agrega un paso condicional `Cataloger` y no le deja terminar hasta que exista una persona elegible. Consulte [Personal](/es/usages/personnel/#agregar-personal-a-un-proyecto).
 {% /aside %}
 
 En la pantalla de inicio, seleccione `+`, elija `New project` y decida si va a
@@ -130,15 +130,11 @@ proyecto](../export/project-transfer).
 
 ## Transferir datos del proyecto
 
-Use `Export project` y `Merge project` para combinar datos del mismo proyecto
-en distintos dispositivos NAHPU. La guía de [Transferir un proyecto](../export/project-transfer)
-explica las exportaciones JSON.GZ sin multimedia para cargas con internet
-limitado y las exportaciones ZIP/TAR.GZ para copias completas con multimedia,
-además de las copias de seguridad, la comprobación del UUID y la resolución de
-conflictos.
+Use `Export project` para crear una transferencia. En el destino, `Import project` en la pantalla inicial crea un proyecto local; `Merge project` combina datos con un proyecto existente. Importar JSON de información o QR del proyecto crea solo la identidad, sin registros ni archivos multimedia.
 
-`Bundle records` es una exportación distinta para publicación, análisis,
-archivo o uso por terceros. No se puede combinar con `Merge project`.
+Las exportaciones ZIP y TAR.GZ incluyen los archivos multimedia disponibles. JSON.GZ ligero incluye solo registros. Revise avisos de archivos ausentes y conserve el origen hasta verificar registros y adjuntos en el destino.
+
+Un NAHPU Data Package compatible también puede importarse o combinarse porque incluye los datos del proyecto. Los paquetes Darwin Core y las exportaciones tabulares no restauran un proyecto NAHPU. Sustituir el banco es una operación de recuperación separada, al nivel de la instalación.
 
 ## Eliminar un proyecto
 

@@ -55,7 +55,7 @@ new template`.
    not the size of the sheet of paper.
 5. Add text, images, lines, and shapes on the canvas. Select an element to set
    its position, size, style, visibility, locking, and stacking order.
-6. Save the template with `Save`. Use `Save as...` when creating a variation.
+6. Save the template with `Save template`. Use `Save as...` when creating a variation.
 
 Open the settings button in the template editor to change the name,
 description, or side count of a saved template. Renaming repoints every print
@@ -152,12 +152,7 @@ The symbols are:
 | `"` … `"` | Wrap every comparison value |
 | `]=>` | Ends the conditions, starts the replacement text |
 
-Four rules explain most conditions that do not behave as expected. Comparisons
-are trimmed but **case-sensitive**. Conditions read the **stored** value, so ID
-confidence is `"2"` and not `"High"` even when the element displays the label.
-An **empty record value never matches**, including with `!=`, so use a fallback
-rather than a condition for the empty case. And `&&` and `||` **cannot be
-mixed** in one expression.
+Comparisons trim surrounding whitespace and are case-sensitive. They read stored values: compare `"2"`, not `"High"`, for identification confidence. Use `Is empty` (`==""`) or `Is not empty` (`!=""`) to test whether a source field has a value. Other comparisons do not match a blank source. Do not mix `&&` and `||` in one expression.
 
 A replacement substitutes the whole value rather than adding to it, which is
 why the example above prints `Rattus ?` rather than `Rattus rattus?`.

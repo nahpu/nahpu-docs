@@ -4,29 +4,11 @@ sidebar:
   order: 10
 ---
 
-Use `Export project` y `Merge project` para combinar los datos ingresados para
-el mismo proyecto NAHPU en dispositivos distintos. Una transferencia completa es
-un archivo ZIP o TAR.GZ con un manifiesto versionado `nahpu-project.json` y sus
-archivos de medios disponibles.
+Use `Export project` para crear una transferencia. En el destino, `Import project` en la pantalla inicial crea un proyecto local; `Merge project` combina datos con un proyecto existente. Importar JSON de información o QR del proyecto crea solo la identidad, sin registros ni archivos multimedia.
 
-Para cargas con internet limitada, active `Light export` para crear una
-exportación `JSON.GZ` sin medios. JSON.GZ sirve para fusionar registros del
-proyecto, pero no es una copia de seguridad completa. Use ZIP o TAR.GZ cuando se
-necesiten los medios o una copia completa del proyecto.
+Las exportaciones ZIP y TAR.GZ incluyen los archivos multimedia disponibles. JSON.GZ ligero incluye solo registros. Revise avisos de archivos ausentes y conserve el origen hasta verificar registros y adjuntos en el destino.
 
-`Export project` es también la copia de campo diaria recomendada. Es más
-pequeña y rápida que una copia de la base de datos y consume menos batería y,
-como `Merge project` la vuelve a leer, una exportación por jornada de campo
-limita la pérdida por un dispositivo roto o extraviado a un solo día. Reserve
-`Backup database` para el punto de control semanal y para el momento previo a
-una fusión. Consulte
-[Estrategia de copias de seguridad](./#backup-strategy).
-
-Esto es distinto de los paquetes Darwin Core, que sirven para publicación,
-análisis, archivo u otros flujos de terceros y no son aceptados por
-`Merge project`. Un NAHPU Data Package contiene el mismo contenido de proyecto y
-la misma disposición de medios que una exportación completa, así que también
-puede seleccionarse para fusionar.
+Un NAHPU Data Package compatible también puede importarse o combinarse porque incluye los datos del proyecto. Los paquetes Darwin Core y las exportaciones tabulares no restauran un proyecto NAHPU. Sustituir el banco es una operación de recuperación separada, al nivel de la instalación.
 
 ## Exportar un proyecto {% #export-a-project %}
 
@@ -52,10 +34,10 @@ rotos se omiten.
 
 ## Fusionar con el proyecto correspondiente {% #merge-into-the-matching-project %}
 
-{% aside type="caution" title="Haga una copia primero" %}
-Una fusión es uno de los dos momentos para los que existe la copia completa de la base de datos. Cree una antes de fusionar. El asistente
-exige que confirme este recordatorio y ofrece un atajo `Back up now`, para que
-pueda recuperar la base anterior si es necesario.
+{% aside type="caution" %}
+
+Haga una copia del banco antes de combinar. El asistente ofrece `Back up now` y exige confirmar el recordatorio.
+
 {% /aside %}
 
 {% steps %}
@@ -95,9 +77,7 @@ puede elegir:
 
 La información del proyecto se revisa campo por campo. Los UUID de personal y de
 espécimen se usan como identidad; la taxonomía se compara por género y epíteto
-específico normalizados. Los sitios usan un ID de sitio no vacío. Los eventos y
-las narrativas usan su sitio resuelto más su fecha, hora y campos de
-identificación.
+específico normalizados. Los sitios usan un ID de sitio no vacío. Los eventos coinciden por sitio resuelto, fecha inicial y sufijo del ID; la hora inicial no forma parte de esa coincidencia. Las narrativas coinciden por sitio resuelto, fecha, hora y autor.
 
 El personal y la taxonomía se comparten entre proyectos en la base de datos. El
 asistente advierte cuando reemplazar uno de ellos podría afectar a otro
@@ -115,3 +95,19 @@ Si los proyectos realmente representan el mismo trabajo de campo, active
 asigna entonces el UUID del proyecto activo a los registros importados con
 alcance de proyecto. Forzar la fusión no sobrescribe conflictos
 automáticamente; siguen aplicándose todas las opciones normales de conflicto.
+
+## Importar en otra instalación {% #import-a-project %}
+
+Cree un proyecto local desde una transferencia NAHPU o recupere un proyecto en un dispositivo de reemplazo.
+
+## Pasos
+
+{% steps %}
+
+1. Conserve el archivo de origen y haga una copia de los datos existentes en la instalación receptora.
+2. En la pantalla inicial, seleccione `Import project` y `Choose archive`. Elija un proyecto JSON.GZ, ZIP, TAR.GZ o un NAHPU Data Package compatible.
+3. Revise la identidad y `Destination project name`. Si el UUID ya existe, use `Open Merge project`; otro proyecto con el mismo nombre requiere un nombre de destino distinto.
+4. Confirme el recordatorio de copia de seguridad, revise personal, taxonomía y especímenes y resuelva todos los elementos `Needs attention`.
+5. Revise recuentos y avisos de archivos ausentes y seleccione `Import project` en la revisión final.
+6. Abra el proyecto importado y compruebe sitios, eventos, identificadores de especímenes, narrativas y varios adjuntos. JSON.GZ no contiene archivos multimedia; conserve el origen hasta completar la verificación.
+{% /steps %}

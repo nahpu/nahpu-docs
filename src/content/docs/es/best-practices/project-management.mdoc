@@ -2,36 +2,46 @@
 title: Gestión de Proyectos
 ---
 
-Una gestión coherente mantiene los registros de campo comprensibles, recuperables y listos para la curaduría.
+Acuerde la responsabilidad del proyecto, la asignación de identificadores y las transferencias antes de que varias personas introduzcan registros.
 
-## Nombre proyectos y sitios de forma coherente
+## Nombre e identifique el proyecto
 
-- Use un nombre corto que identifique la expedición y el taxón objetivo, como `Mamiferos Patah`.
-- Use los campos de fecha del proyecto para las fechas de inicio y finalización.
-- Asigne a cada sitio un `SitesID` único y estable. Consulte la [guía de Sitios](../../usages/sites).
+Use un nombre reconocible, como `Patah Mammals`, y registre las fechas en sus campos. El UUID identifica el proyecto en las transferencias. Es distinto del número de catálogo del proyecto y del Field ID legible del espécimen. Crear otro proyecto con el mismo nombre no recrea su UUID.
 
-## Separe los flujos de campo y laboratorio
+Asigne IDs estables a los sitios y explique su significado en la descripción de la localidad. Consulte [nombres de sitios y coordenadas](/es/best-practices/data-collection/).
 
-En el campo, registre los datos cuanto antes y revise los campos obligatorios antes de pasar al siguiente espécimen. En el laboratorio, revise los registros, normalice nombres e identificadores, inspeccione los archivos multimedia y resuelva errores antes de publicar o archivar. Documente la entrega cuando varias personas curen el proyecto.
+## Coordine la numeración
 
-## Respalde con una cadencia de campo
+Los Field IDs por proyecto sirven para una secuencia compartida de procesamiento; los Field IDs por persona, para las secuencias individuales de catalogadores. Elija la convención adecuada al protocolo, en vez de asignar un código de proyecto a una persona ficticia.
 
-**Exporte el proyecto al final de cada jornada de campo. Respalde la base de datos una vez por semana y siempre antes de fusionar.** No cumplen la misma función, y usar la más pesada a diario es el error más común que vemos.
+NAHPU no sincroniza dispositivos automáticamente. Si varios usan una secuencia, asigne intervalos sin superposición o designe un dispositivo para numerar. Hágalo antes del primer registro y no después de la primera fusión: Chapman (2005) argumenta que la prevención supera a la corrección y que un error detectado más tarde en la cadena de información cuesta más, y los Field IDs duplicados son el ejemplo más claro en un proyecto de NAHPU. Dos dispositivos que asignan `HH-001` producen dos especímenes, dos etiquetas y dos frascos que ninguna consulta posterior puede separar, mientras que un intervalo acordado de antemano — por ejemplo `HH-001` a `HH-400` en un dispositivo y desde `HH-401` en el segundo — cuesta una conversación.
 
-La exportación de proyecto es pequeña, rápida y poco exigente con una batería que quizá no pueda recargar en días. Lleva los registros del proyecto y los medios disponibles, y `Merge project` la vuelve a leer en NAHPU, así que un dispositivo perdido, roto o robado cuesta como máximo un día de trabajo. Una exportación ligera `JSON.GZ` descarta los medios y queda lo bastante pequeña para subirla por una conexión débil.
+Documente las entregas y busque duplicados tras las transferencias. Los UUID ayudan a distinguir registros, pero no impiden Field IDs legibles duplicados ni etiquetas incorrectas.
 
-La copia de la base de datos duplica toda la instalación: cada proyecto con sus medios y archivos asociados, todas las fotos del personal y el directorio completo de configuraciones de usuario, con sus preajustes, fuentes y mapas. Esos directorios se copian enteros, no archivo por archivo a partir de la base de datos, así que el archivo comprimido lleva todos los archivos de los datos de la aplicación NAHPU, estén o no vinculados a un proyecto. Es lo que necesita cuando el objetivo es reconstruir un dispositivo tal cual estaba, o cuando una fusión puede salir mal y hace falta un punto al que volver.
+## Gestione las contribuciones
 
-En el campo, trátela como una copia ocasional: semanal, inmediatamente antes de cualquier fusión y en momentos en que el consumo de batería no sea una preocupación, como un día de descanso o una noche con corriente eléctrica. Ejecutarla cada noche es lo que llena un dispositivo de campo, una conexión limitada y una batería que quizá no pueda recargar. La exportación de proyecto es la copia más rápida y específica del proyecto, y es la que mantiene manejable el tamaño de rutina.
+Establezca una identidad común antes de repartir el trabajo. Asigne responsables del personal, taxones, vocabularios y campos personalizados compartidos. Acuerde cuándo cada dispositivo dejará de editar para una entrega y quién revisará el proyecto combinado.
 
-Aplique la regla 3-2-1 al archivo que acaba de crear: conserve al menos tres copias, en dos medios distintos, con una copia fuera del sitio o en la nube. Use el nombre del proyecto y la fecha en cada nombre de archivo, por ejemplo `BorneoMammals_20241015.zip`.
+Use `Import project` en la pantalla inicial para llevar un proyecto a otra instalación. Use `Merge project` dentro de un proyecto existente para combinar contribuciones, revisando conflictos de UUID y decisiones por sección. No fuerce una incompatibilidad de UUID solo porque los nombres se parezcan. Conserve los paquetes de origen y una copia anterior a la fusión hasta comprobar el resultado.
 
-No dé por hecho que un archivo existe solo porque se copió. Periódicamente, fusione una exportación de proyecto o restaure una copia de la base de datos en un segundo dispositivo y confirme que los registros y los medios son utilizables. Conserve una copia en un dispositivo físico aparte por si el acceso a la nube no está disponible.
+Registre quién proporcionó y revisó cada paquete, y qué se decidió en cada entrega, mientras el equipo siga reunido. Michener et al. (1997) lo describen como resistir la entropía de la información: el contenido interpretativo de un conjunto de datos se degrada con el tiempo, y los detalles que explican una fusión — qué dispositivo tenía la lista de taxones autorizada, por qué se abandonó un intervalo — son los primeros en desaparecer. Una nota escrita en el campamento vale más que una reconstrucción intentada al año siguiente.
 
-## Transfiera proyectos de forma segura
+## Programe y verifique las copias
 
-Use la [guía de Transferencia de proyectos](../../usages/export/project-transfer) para mover o combinar el mismo proyecto entre dispositivos NAHPU. Use JSON.GZ para cargas de registros sin multimedia cuando el acceso a internet sea limitado; no es una copia de seguridad completa. Use ZIP o TAR.GZ cuando necesite una copia completa con multimedia. Revise los conteos y las advertencias de archivos multimedia faltantes y conserve la copia original hasta comprobar el dispositivo receptor.
+Exporte el proyecto activo a intervalos acordados, por ejemplo al terminar cada jornada y antes de una entrega importante. Elija ZIP o TAR.GZ cuando los archivos disponibles deban acompañar los registros. JSON.GZ los omite. Investigue los avisos de archivos ausentes: un paquete no puede incluir archivos que ya faltan.
 
-## Nombre las exportaciones claramente
+Use `Backup database` para recuperar toda la instalación y antes de fusiones o curación importante. Determine la frecuencia según el trabajo en riesgo, el almacenamiento y la energía; el tamaño y la duración dependen de la instalación.
 
-Use proyecto, tipo de paquete y fecha, por ejemplo `MamiferosBorneo_DwC_20241015.csv` o `MamiferosBorneo_transfer_20241015.zip`. Consulte la [guía de Exportación](../../usages/export).
+Planifique contra el desgaste, no solo contra la catástrofe. Vines et al. (2014) solicitaron los conjuntos de datos de 516 artículos publicados entre 2 y 22 años antes y encontraron que la probabilidad de que un conjunto de datos siguiera existiendo caía un 17 % por cada año transcurrido desde la publicación: los datos se pierden sobre todo por discos averiados, medios ilegibles, archivos sin etiquetar y personas que se marchan, más que por un único suceso dramático. Conserve copias fechadas fuera del dispositivo de registro, incluido otro dispositivo físico si no hay internet. Confirme la copia remota después de subirla a la nube.
+
+Pruebe periódicamente la recuperación en otra instalación y compare cantidades, relaciones, identificadores y archivos. Esa restauración es el único paso que distingue una copia de seguridad de un archivo que nunca ha abierto. Conserve versiones anteriores hasta verificar la nueva.
+
+Use nombres claros, como `PatahMammals_transfer_20260908.zip`. Un nombre que lleva el proyecto, el propósito y la fecha sigue siendo interpretable cuando es la única copia que sobrevive. Consulte [Transferencia de proyectos](/es/usages/export/project-transfer/) y [Exportación](/es/usages/export/) para las opciones de transferencia y sustitución de la base de datos.
+
+## Referencias
+
+Chapman AD (2005). [Principles of Data Quality](https://www.gbif.org/document/80509/principles-of-data-quality). GBIF Secretariat, Copenhague.
+
+Michener WK, Brunt JW, Helly JJ, Kirchner TB & Stafford SG (1997). [Nongeospatial metadata for the ecological sciences](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2). *Ecological Applications* 7:330–342.
+
+Vines TH, Albert AYK, Andrew RL, Débarre F, Bock DG, Franklin MT, Gilbert KJ, Moore J-S, Renaut S & Rennison DJ (2014). [The availability of research data declines rapidly with article age](https://doi.org/10.1016/j.cub.2013.11.014). *Current Biology* 24:94–97.

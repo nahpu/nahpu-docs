@@ -51,7 +51,7 @@ template`.
    seluruh kertas.
 5. Tambahkan teks, gambar, garis, dan bentuk. Pilih elemen untuk mengatur
    posisi, ukuran, gaya, visibilitas, penguncian, dan urutan tumpukan.
-6. Simpan dengan `Save`; gunakan `Save as...` untuk membuat variasi.
+6. Simpan dengan `Save template`; gunakan `Save as...` untuk membuat variasi.
 
 Buka tombol pengaturan di editor templat untuk mengubah nama, deskripsi, atau
 jumlah sisi templat tersimpan. Penggantian nama mengarahkan ulang setiap tata
@@ -141,13 +141,7 @@ Simbol-simbolnya:
 | `"` … `"` | Mengapit setiap nilai pembanding |
 | `]=>` | Mengakhiri kondisi dan memulai teks pengganti |
 
-Empat aturan menjelaskan sebagian besar kondisi yang tidak berperilaku seperti
-dugaan. Pembandingan dipangkas spasinya, tetapi **membedakan huruf besar dan
-kecil**. Kondisi membaca nilai yang **tersimpan**, jadi keyakinan identifikasi
-bernilai `"2"` dan bukan `"High"`, meskipun elemennya menampilkan labelnya.
-**Nilai catatan yang kosong tidak pernah cocok**, termasuk dengan `!=`, jadi
-gunakan fallback dan bukan kondisi untuk kasus kosong. Dan `&&` serta `||`
-**tidak dapat dicampur** dalam satu ekspresi.
+Perbandingan memangkas spasi di tepi dan membedakan huruf besar-kecil. Nilai yang dibaca adalah nilai tersimpan: bandingkan `"2"`, bukan `"High"`, untuk keyakinan identifikasi. Gunakan `Is empty` (`==""`) atau `Is not empty` (`!=""`) untuk menguji keberadaan nilai kolom sumber. Perbandingan lain tidak cocok dengan sumber kosong. Jangan campur `&&` dan `||` dalam satu ekspresi.
 
 Penggantian menyubstitusi keseluruhan nilai, bukan menambahkannya, itulah
 sebabnya contoh di atas mencetak `Rattus ?` dan bukan `Rattus rattus?`.
@@ -378,4 +372,4 @@ proyek, atau ekspor catatan terstruktur. Lihat
 
 Setiap opsi di editor templat tercantum di
 [Referensi editor templat](../template-editor-reference). Untuk detail
-penyimpanan dan rendering, lihat [Templates and presets](../../../contributing/code/templates-and-presets) dan [Export workflows](../../../contributing/code/data-export-workflows).
+penyimpanan dan rendering, lihat [Templates and presets (bahasa Inggris)](/en/contributing/code/templates-and-presets/) dan [Export workflows (bahasa Inggris)](/en/contributing/code/data-export-workflows/).

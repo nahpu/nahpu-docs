@@ -155,14 +155,10 @@ Un reemplazo **sustituye** el valor; no se le añade. Por eso el ejemplo imprime
 `Rattus ?` y no `Rattus rattus?`. Hoy no hay manera de conservar un valor y
 añadirle un sufijo de forma condicional.
 
-Como `!=` nunca coincide con un valor vacío, un espécimen sin ninguna confianza
-de identificación registrada imprime su epíteto sin marca. Si la confianza no
-registrada también debe marcarse, configure el `No Content Placeholder` del
-elemento en el campo de confianza, o compruebe en su lugar los niveles
-registrados:
+Una comparación no vacía como `!="2"` no coincide con confianza no registrada. Para incluir ese caso, use `Is empty` como condición OR adicional:
 
 ```text
-[[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"]=>"?"]]
+[[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"||specimen::iDConfidence==""]=>"?"]]
 ```
 
 ### Tipos de condicional en el diálogo
@@ -219,41 +215,11 @@ expresión propia.
 
 ### Cómo se evalúan las condiciones
 
-Estas reglas son las que hacen que una expresión funcione, o que falle:
+Las comparaciones eliminan espacios en los extremos y distinguen mayúsculas. Leen valores almacenados: compare `"2"`, no `"High"`, para confianza de identificación. Use `Is empty` (`==""`) o `Is not empty` (`!=""`) para comprobar si el campo de origen tiene valor. Otras comparaciones no coinciden con un origen vacío. No mezcle `&&` y `||` en una expresión.
 
-- Tanto el valor del registro como el valor de comparación se **recortan**
-  antes de comparar, y la comparación **distingue mayúsculas y minúsculas**.
-- Las condiciones leen el valor **almacenado**, antes de aplicar cualquier tipo
-  de texto o formato. Compare `"2"`, no `"High"`.
-- `Is not empty` e `Is empty` son los únicos operadores que un valor en blanco
-  puede satisfacer. Todos los demás operadores tratan un valor en blanco como
-  no coincidencia.
-- `~=` no tiene forma de vacuidad; `field~=""` no es una expresión válida.
-- Un **valor de registro ausente o vacío nunca coincide**, ni siquiera con
-  `!=`. Si necesita "el campo está vacío", use un valor de reserva nulo en
-  lugar de una condición.
-- Un **objetivo vacío** nunca se encierra entre corchetes ni se reemplaza,
-  incluso cuando las condiciones coinciden. El elemento recurre a su
-  `No Content Placeholder`.
-- Un valor de comparación vacío nunca coincide, y una expresión que contenga
-  uno no es válida.
-- `&&` y `||` **no pueden mezclarse** en una misma expresión. Anide una segunda
-  expresión o reformule la lógica.
-- El analizador tiene en cuenta las comillas, así que un `]` dentro de un valor
-  de comparación entre comillas no termina la expresión antes de tiempo.
-- Un `[[` mal formado se omite en lugar de ser fatal: el resto del texto se
-  sigue representando, y por eso una expresión rota se imprime literalmente en
-  lugar de provocar un error.
-- `~=` sobre `mammalAttribute::accuracy` es especial: en lugar de una prueba de
-  subcadena, pregunta si la medida nombrada quedó marcada como inexacta, de
-  modo que `mammalAttribute::accuracy~="totalLength"` coincide cuando la
-  longitud total está marcada como estimación.
-- Un reemplazo **sustituye** todo el valor en lugar de añadirse a él, así que
-  hoy no es posible un sufijo o prefijo condicional.
+Un objetivo vacío usa `No Content Placeholder` en vez de un reemplazo condicional. `~=""` no es válido. Una expresión malformada puede imprimirse literalmente; previsualice registros que cumplan y que no cumplan las condiciones. El reemplazo sustituye todo el valor; uno vacío oculta un objetivo con contenido cuando coinciden las condiciones.
 
-Los códigos de sexo heredados `0`, `1` y `2` siguen siendo valores de
-comparación válidos, así que las condiciones escritas contra plantillas
-antiguas continúan funcionando.
+Para `mammalAttribute::accuracy`, `~=` comprueba si la medida indicada se marcó como inexacta, por ejemplo `mammalAttribute::accuracy~="totalLength"`. En ese campo no es una búsqueda habitual de una subcadena.
 
 ## Barra de herramientas
 
@@ -457,8 +423,6 @@ impresión las anula para la hoja que produce; consulte
 | Síntoma | Qué comprobar |
 |---|---|
 | Una condicional aparece literalmente | Una expresión mal formada se omite. Busque un `]]` que falte, un valor sin comillas o `&&` y `\|\|` mezclados. |
-| Una condición nunca coincide | Los valores distinguen mayúsculas y minúsculas y se recortan; un valor vacío del registro nunca coincide, ni siquiera con `!=`. |
-| Una condición `!=` no imprime nada en registros vacíos | Es el comportamiento previsto. Use un valor de reserva `??` para el caso vacío. |
 | Un valor de reserva imprime `[table::field]` | Está seleccionada la opción de reserva `table::field`; cámbiela a `Blank`, `N/A`, `None` o una cadena personalizada. |
 | Un icono de sexo se representa como texto | El elemento debe contener solo `[…sex]-img`, y la clave debe terminar en `.sex`. |
 | Las imágenes del registro no aparecen | El elemento debe contener solo `[media::media]` y usar el tipo de texto `Picture`. |

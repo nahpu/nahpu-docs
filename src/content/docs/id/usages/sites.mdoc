@@ -233,39 +233,17 @@ GPS perangkat, atau mengimpor titik dari file GIS/GPS.
 
 {% /steps %}
 
-### Mengimpor koordinat dari file
+### Mengimpor koordinat dari file {% #import-coordinates-from-a-file %}
 
-Gunakan impor file ketika beberapa titik sudah tersedia dalam file GIS atau
-GPS. Impor koordinat tersedia melalui `Add coordinate → Import` pada suatu
-lokasi.
+Gunakan `Add coordinate` > `Import` > `Select coordinate file` untuk CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile terkompresi, atau GPX.
 
-{% steps %}
+Untuk berkas tabel, `Match columns` memerlukan `Latitude` dan `Longitude` dalam derajat desimal. Bidang opsional meliputi `Name / ID`, `Elevation (m)`, `GPS unit`, dan `Notes`. Tinjau pemetaan yang disarankan, biarkan bidang yang tidak diperlukan sebagai `Not included`, lalu pilih `Review coordinates`. Gunakan `Edit column mapping` untuk memperbaiki pratinjau yang tidak sesuai.
 
-1. Buka lokasi, ketuk/klik `Add coordinate`, lalu pilih mode `Import`.
+Tinjau peringatan dan posisi peta. Gunakan kotak centang, `Select all`, atau `Clear all`, lalu `Add N selected` untuk menambahkan titik ke lokasi aktif. Periksa titik tersimpan sebelum menggunakannya untuk spesimen.
 
-2. Format yang didukung ditampilkan di atas tindakan impor. Pilih
-   `Select coordinate file`, lalu pilih file GeoJSON/JSON, KML, Shapefile
-   terkompresi, atau GPX. Anda juga dapat memilih `Scan QR` untuk menambahkan
-   catatan koordinat dari perangkat NAHPU lain.
+Posisi impor menggunakan WGS84. Pastikan datum sumber; alur ini tidak mengonversi datum lain ke WGS84. Elevasi menggunakan meter. Impor tidak menyediakan ketidakpastian koordinat; tinjau dan tambahkan dari sumber jika diketahui. Berkas tabel dapat menyediakan unit GPS, sedangkan impor GIS tidak.
 
-3. Periksa titik yang diimpor dan teks peringatan apa pun. Peta menyoroti titik
-   yang sedang difokuskan, dan semua titik yang valid dipilih secara default.
-
-4. Gunakan `Select all`, `Clear all`, atau kotak centang individual untuk
-   memilih titik yang akan ditambahkan. Ketuk/klik `Add N selected` untuk
-   menyimpannya ke lokasi saat ini.
-
-{% /steps %}
-
-Impor file mempertahankan nama titik, catatan, lintang dan bujur desimal, serta
-ketinggian. Titik yang diimpor ditetapkan ke lokasi saat ini dan datum `WGS84`;
-alur ini tidak menyediakan informasi ketidakpastian atau unit GPS.
-
-Hanya titik yang diimpor. Fitur non-titik dalam GeoJSON atau Shapefile,
-geometri non-titik dalam KML, koordinat yang tidak valid, dan catatan lain yang
-tidak didukung akan dilewati dan dilaporkan saat peninjauan. Pada GPX, hanya
-waypoint yang diimpor; rute dan track diabaikan. Jika tidak ada titik valid yang
-tersisa, NAHPU menampilkan kesalahan dan tidak menambahkan catatan.
+Hanya geometri titik yang diimpor. Geometri yang tidak didukung dan baris tidak valid dilewati dengan peringatan; rute dan trek GPX diabaikan. Jika tidak ada titik valid, aplikasi menampilkan kesalahan tanpa membuat koordinat.
 
 ### Mengelola dan mengekspor koordinat
 

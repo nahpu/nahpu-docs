@@ -51,7 +51,7 @@ new template`.
    não para o tamanho da folha.
 5. Adicione textos, imagens, linhas e formas. Selecione um elemento para ajustar
    posição, tamanho, estilo, visibilidade, bloqueio e ordem de sobreposição.
-6. Salve com `Save`; use `Save as...` para criar uma variação.
+6. Salve com `Save template`; use `Save as...` para criar uma variação.
 
 Abra o botão de configurações do editor de modelos para alterar o nome, a
 descrição ou o número de lados de um modelo salvo. Renomear reaponta todos os
@@ -141,13 +141,7 @@ Os símbolos são:
 | `"` … `"` | Delimitam cada valor de comparação |
 | `]=>` | Encerra as condições e inicia o texto de substituição |
 
-Quatro regras explicam a maioria das condições que não se comportam como o
-esperado. As comparações têm os espaços removidos, mas **diferenciam maiúsculas
-de minúsculas**. As condições leem o valor **armazenado**, então a confiança da
-identificação é `"2"` e não `"High"`, mesmo quando o elemento exibe o rótulo. Um
-**valor vazio do registro nunca coincide**, inclusive com `!=`, então use um
-fallback e não uma condição para o caso vazio. E `&&` e `||` **não podem ser
-misturados** em uma mesma expressão.
+As comparações removem espaços nas extremidades e diferenciam maiúsculas de minúsculas. Leem valores armazenados: compare `"2"`, não `"High"`, para confiança da identificação. Use `Is empty` (`==""`) ou `Is not empty` (`!=""`) para testar se o campo de origem tem valor. Outras comparações não coincidem com uma origem vazia. Não misture `&&` e `||` na mesma expressão.
 
 Uma substituição troca o valor inteiro em vez de acrescentar algo a ele, e é por
 isso que o exemplo acima imprime `Rattus ?` e não `Rattus rattus?`.
@@ -381,4 +375,4 @@ exportação do projeto ou da exportação estruturada de registros. Consulte
 
 Todas as opções do editor de modelos estão listadas na
 [Referência do editor de modelos](../template-editor-reference). Para detalhes
-de armazenamento e renderização, consulte [Templates and presets](../../../contributing/code/templates-and-presets) e [Export workflows](../../../contributing/code/data-export-workflows).
+de armazenamento e renderização, consulte [Templates and presets (em inglês)](/en/contributing/code/templates-and-presets/) e [Export workflows (em inglês)](/en/contributing/code/data-export-workflows/).

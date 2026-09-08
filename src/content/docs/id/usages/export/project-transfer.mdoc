@@ -4,29 +4,11 @@ sidebar:
   order: 10
 ---
 
-Gunakan `Export project` dan `Merge project` untuk menggabungkan data yang
-dimasukkan bagi proyek NAHPU yang sama di perangkat berbeda. Transfer lengkap
-berupa arsip ZIP atau TAR.GZ berisi manifes berversi `nahpu-project.json`
-beserta berkas medianya yang tersedia.
+Gunakan `Export project` untuk membuat transfer. Pada penerima, `Import project` di layar awal membuat proyek lokal; `Merge project` menggabungkan data dengan proyek yang sudah ada. Impor JSON informasi atau QR proyek hanya membuat identitas tanpa catatan atau media.
 
-Untuk unggahan dengan internet terbatas, aktifkan `Light export` guna membuat
-ekspor `JSON.GZ` tanpa media. JSON.GZ cocok untuk menggabungkan catatan proyek,
-tetapi bukan cadangan proyek yang lengkap. Gunakan ZIP atau TAR.GZ bila media
-atau salinan proyek yang lengkap diperlukan.
+Ekspor ZIP dan TAR.GZ menyertakan media yang tersedia. JSON.GZ ringan hanya berisi catatan. Tinjau peringatan berkas yang hilang dan simpan sumber hingga catatan serta lampiran pada penerima diperiksa.
 
-`Export project` juga merupakan cadangan lapangan harian yang dianjurkan.
-Ukurannya lebih kecil dan prosesnya lebih cepat daripada cadangan basis data
-serta lebih hemat baterai, dan karena `Merge project` membacanya kembali, satu
-ekspor per hari lapangan membatasi kehilangan akibat perangkat rusak atau hilang
-menjadi satu hari saja. Simpan `Backup database` untuk pemeriksaan mingguan dan
-untuk saat sebelum penggabungan. Lihat
-[Strategi pencadangan](./#backup-strategy).
-
-Ini berbeda dari paket Darwin Core, yang ditujukan untuk publikasi, analisis,
-pengarsipan, atau alur kerja pihak ketiga lain, dan tidak diterima oleh
-`Merge project`. NAHPU Data Package memuat muatan proyek dan tata letak media
-yang sama dengan ekspor proyek lengkap, sehingga juga dapat dipilih untuk
-digabungkan.
+NAHPU Data Package yang kompatibel juga dapat diimpor atau digabungkan karena berisi data proyek. Paket Darwin Core dan ekspor tabel tidak dapat memulihkan proyek NAHPU. Penggantian basis data merupakan operasi pemulihan terpisah pada tingkat instalasi.
 
 ## Mengekspor proyek {% #export-a-project %}
 
@@ -50,10 +32,10 @@ dan tautan rusaknya tidak disertakan.
 
 ## Menggabungkan ke proyek yang cocok {% #merge-into-the-matching-project %}
 
-{% aside type="caution" title="Cadangkan terlebih dahulu" %}
-Penggabungan adalah salah satu dari dua momen yang menjadi alasan adanya cadangan basis data lengkap. Buat satu sebelum menggabungkan. Pandu penggabungan mewajibkan
-Anda mengakui pengingat ini dan menyediakan pintasan `Back up now`, sehingga
-basis data sebelumnya dapat dipulihkan bila perlu.
+{% aside type="caution" %}
+
+Cadangkan basis data sebelum menggabungkan. Panduan menyediakan `Back up now` dan memerlukan konfirmasi pengingat.
+
 {% /aside %}
 
 {% steps %}
@@ -93,9 +75,7 @@ dapat memilih:
 
 Informasi proyek ditinjau kolom demi kolom. UUID personel dan UUID spesimen
 dipakai sebagai identitas; taksonomi dicocokkan berdasarkan genus dan epitet
-spesifik yang dibakukan. Lokasi memakai Site ID yang tidak kosong. Kegiatan dan
-narasi memakai lokasi hasil penyelesaian ditambah tanggal, waktu, dan kolom
-pengenalnya.
+spesifik yang dibakukan. Lokasi memakai Site ID yang tidak kosong. Kegiatan dicocokkan berdasarkan lokasi yang telah dipetakan, tanggal mulai, dan akhiran ID; waktu mulai tidak termasuk pencocokan ini. Narasi dicocokkan berdasarkan lokasi yang dipetakan, tanggal, waktu, dan penulis.
 
 Personel dan taksonomi dipakai bersama antarproyek di basis data. Pandu ini
 memperingatkan bila mengganti salah satunya dapat memengaruhi proyek lain. UUID
@@ -113,3 +93,19 @@ Bila kedua proyek benar-benar mewakili kerja lapangan yang sama, aktifkan
 memberikan UUID proyek aktif kepada catatan impor yang bercakupan proyek.
 Memaksa penggabungan tidak otomatis menimpa konflik; semua pilihan penanganan
 konflik yang biasa tetap berlaku.
+
+## Impor ke instalasi lain {% #import-a-project %}
+
+Buat proyek lokal dari transfer NAHPU atau pulihkan proyek pada perangkat pengganti.
+
+## Langkah
+
+{% steps %}
+
+1. Simpan arsip sumber dan cadangkan data yang sudah ada pada instalasi penerima.
+2. Pada layar awal, pilih `Import project`, lalu `Choose archive`. Pilih proyek JSON.GZ, ZIP, TAR.GZ, atau NAHPU Data Package yang kompatibel.
+3. Tinjau identitas proyek dan `Destination project name`. Jika UUID sudah ada, gunakan `Open Merge project`; proyek lain dengan nama yang sama memerlukan nama tujuan berbeda.
+4. Konfirmasikan pengingat cadangan, tinjau personel, taksonomi, dan spesimen, lalu selesaikan semua item `Needs attention`.
+5. Tinjau jumlah dan peringatan berkas yang hilang, lalu pilih `Import project` pada tinjauan akhir.
+6. Buka proyek hasil impor dan periksa lokasi, kegiatan, pengenal spesimen, narasi, serta beberapa lampiran. JSON.GZ tidak berisi media; simpan sumber hingga pemeriksaan selesai.
+{% /steps %}

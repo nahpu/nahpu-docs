@@ -123,3 +123,23 @@ report.
 menu, next to `Settings`; they are not inside the Settings page. User-config
 transfer can reproduce controlled vocabularies and presets without replacing the
 project database. See [Export](../export) before replacing configs or data.
+
+## Custom fields {% #custom-fields %}
+
+Field definitions specify where a value belongs and how it is entered. Types are Text, Number, Yes / No, and Dropdown. Use a consistent unit in the label and project protocol for numeric observations. Scope is selected at creation: `Current project` applies to one project and `Global` to the installation. Specimen-related fields can be restricted by catalog; environmental fields belong to events.
+
+Optional Darwin Core mappings specify an export target and field. Review their meaning in the intended export and inspect a sample output before sharing data. Mapping a field name does not validate its values. Existing values can prevent deletion; archive a field to stop using it while retaining the data. Discarding legacy values is a separate irreversible action.
+
+Define additional fields and verify how they appear in project records.
+
+## Steps
+
+{% steps %}
+
+1. Open the intended project and go to `Settings` > `Custom fields`, then create a field and choose its target section.
+2. Set `Label` and `Type`. For a dropdown, enter the permitted options. Choose `Current project` or `Global` scope; global definitions apply across this installation.
+3. For specimen-related fields, check catalog applicability. Use the reference guide for optional Darwin Core mappings.
+4. Save the definition, open a record in the target section, and enter a test value using the agreed unit convention. Reopen the record to check the value.
+5. Use `Archive` to retire a field while retaining its data, and `Restore` to make it available again. `Delete` is unavailable while stored values remain.
+6. Export the definition from `Custom fields` or include it in user-config transfer. Import it on the receiving device and verify the target section, scope, and options.
+{% /steps %}

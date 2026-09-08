@@ -146,13 +146,10 @@ A replacement **substitutes** the value; it does not append to it. That is why
 the example prints `Rattus ?` and not `Rattus rattus?`. There is currently no
 way to keep a value and add a suffix to it conditionally.
 
-Because `!=` never matches an empty value, a specimen with no ID confidence
-recorded at all prints its epithet unmarked. If unrecorded confidence should
-also be marked, set the element's `No Content Placeholder` on the confidence
-field, or check for the recorded levels instead:
+A nonempty comparison such as `!="2"` does not match unrecorded confidence. To include that case explicitly, use `Is empty` as an additional OR condition:
 
 ```text
-[[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"]=>"?"]]
+[[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"||specimen::iDConfidence==""]=>"?"]]
 ```
 
 ### Conditional types in the dialog
@@ -206,37 +203,11 @@ expression of its own.
 
 ### How conditions are evaluated
 
-These rules are what make an expression behave, or fail to:
+Comparisons trim surrounding whitespace and are case-sensitive. They read stored values: compare `"2"`, not `"High"`, for identification confidence. Use `Is empty` (`==""`) or `Is not empty` (`!=""`) to test whether a source field has a value. Other comparisons do not match a blank source. Do not mix `&&` and `||` in one expression.
 
-- Both the record value and the comparison value are **trimmed** before
-  comparison, and the comparison is **case-sensitive**.
-- Conditions read the **stored** value, before any text type or format is
-  applied. Compare `"2"`, not `"High"`.
-- `Is not empty` and `Is empty` are the only operators a blank value can
-  satisfy. Every other operator treats a blank as no match.
-- `~=` has no emptiness form; `field~=""` is not a valid expression.
-- A **missing or empty record value never matches** — including with `!=`. If
-  you need "field is empty", use a null fallback instead of a condition.
-- An **empty target** is never bracketed or replaced, even when the conditions
-  match. The element falls back to its `No Content Placeholder`.
-- An empty comparison value never matches, and an expression that contains one
-  is not valid.
-- `&&` and `||` **cannot be mixed** in one expression. Nest a second expression
-  instead, or restate the logic.
-- The parser is quote-aware, so a `]` inside a quoted comparison value does not
-  end the expression early.
-- A malformed `[[` is skipped rather than fatal: the rest of the text still
-  renders, which is why a broken expression prints literally instead of
-  raising an error.
-- `~=` on `mammalAttribute::accuracy` is special: instead of a substring test it
-  asks whether the named measurement was flagged inaccurate, so
-  `mammalAttribute::accuracy~="totalLength"` matches when total length is
-  marked as an estimate.
-- A replacement **substitutes** the whole value rather than adding to it, so a
-  conditional suffix or prefix is not possible today.
+An empty target uses its `No Content Placeholder` rather than a conditional replacement. `~=""` is invalid. A malformed expression can print literally, so preview both matching and nonmatching records. A replacement substitutes the whole target value; an empty replacement hides a nonempty target when its conditions match.
 
-Legacy sex codes `0`, `1`, and `2` remain valid comparison values, so
-conditions written against older templates keep working.
+For `mammalAttribute::accuracy`, `~=` tests whether the named measurement was flagged inaccurate, for example `mammalAttribute::accuracy~="totalLength"`. It is not an ordinary substring test for that field.
 
 ## Toolbar
 
@@ -433,8 +404,6 @@ A print layout preset overrides these for the sheet it produces; see
 | Symptom | What to check |
 |---|---|
 | A conditional prints literally | A malformed expression is skipped. Check for a missing `]]`, an unquoted value, or mixed `&&` and `\|\|`. |
-| A condition never matches | Values are case-sensitive and trimmed; an empty record value never matches, even with `!=`. |
-| A `!=` condition prints nothing on empty records | That is by design. Use a `??` fallback for the empty case. |
 | A fallback prints `[table::field]` | The `table::field` fallback option is selected; switch it to `Blank`, `N/A`, `None`, or a custom string. |
 | A sex icon renders as text | The element must contain only `[…sex]-img`, and the key must end in `.sex`. |
 | Record images do not appear | The element must contain only `[media::media]` and use the `Picture` text type. |

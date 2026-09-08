@@ -11,7 +11,7 @@ vinculadas.
 ## Criar um projeto
 
 {% aside type="caution" %}
-Um projeto precisa de pelo menos uma pessoa com o papel `Cataloger`. Ao escolher identificadores de campo `Personnel`, o assistente adiciona uma etapa condicional `Cataloger` e não permite concluir enquanto não existir uma pessoa elegível. Consulte [Pessoal](./personnel/#adicionar-pessoal-a-um-projeto).
+Um projeto precisa de pelo menos uma pessoa com o papel `Cataloger`. Ao escolher identificadores de campo `Personnel`, o assistente adiciona uma etapa condicional `Cataloger` e não permite concluir enquanto não existir uma pessoa elegível. Consulte [Pessoal](/pt/usages/personnel/#adicionar-pessoal-a-um-projeto).
 {% /aside %}
 
 Na tela inicial, selecione `+`, escolha `New project` e decida se vai criar uma
@@ -129,15 +129,11 @@ projeto](../export/project-transfer).
 
 ## Transferir dados do projeto
 
-Use `Export project` e `Merge project` para combinar dados do mesmo projeto em
-dispositivos NAHPU diferentes. O guia [Transferir um projeto](../export/project-transfer)
-explica as exportações JSON.GZ sem mídia para uploads com internet limitada e
-as exportações ZIP/TAR.GZ para cópias completas com mídia, além de backups,
-verificação do UUID e resolução de conflitos.
+Use `Export project` para criar uma transferência. No destino, `Import project` na tela inicial cria um projeto local; `Merge project` combina dados com um projeto existente. Importar JSON de informações ou QR do projeto cria apenas a identidade, sem registros ou mídia.
 
-`Bundle records` é uma exportação separada para publicação, análise,
-arquivamento ou uso por terceiros. Ela não pode ser mesclada com `Merge
-project`.
+Exportações ZIP e TAR.GZ incluem a mídia disponível. JSON.GZ leve inclui apenas registros. Revise os avisos de arquivos ausentes e mantenha a origem até verificar registros e anexos no destino.
+
+Um NAHPU Data Package compatível também pode ser importado ou mesclado, pois inclui os dados do projeto. Pacotes Darwin Core e exportações tabulares não restauram um projeto NAHPU. A substituição do banco é uma operação de recuperação separada, no nível da instalação.
 
 ## Excluir um projeto
 

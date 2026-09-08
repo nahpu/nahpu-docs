@@ -21,10 +21,15 @@ export const acknowledgments: Acknowledgment[] = [
     url: "https://scholar.google.com/citations?user=8hl2znQAAAAJ&hl=en",
   },
   {
+    name: "Edward L. Stanley",
+    url: "https://www.edwardstanley.org/",
+  },
+  { name: "Jocelyn P. Colella", url: "https://jpcolella.weebly.com/" },
+  {
     name: "Jessie L. Williamson",
     url: "https://www.jessiewilliamson.com/home",
   },
-  { name: "Jocelyn P. Colella", url: "https://jpcolella.weebly.com/" },
+
   { name: "Nicholas A. Mason", url: "https://mason-lab.org/" },
   {
     name: "Melissa Hawkins",

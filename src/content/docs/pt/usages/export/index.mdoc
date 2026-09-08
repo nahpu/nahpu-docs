@@ -4,110 +4,41 @@ sidebar:
   order: 9
 ---
 
-O NAHPU tem estas ações de exportação no menu do projeto:
+Use `Export project` para criar uma transferência. No destino, `Import project` na tela inicial cria um projeto local; `Merge project` combina dados com um projeto existente. Importar JSON de informações ou QR do projeto cria apenas a identidade, sem registros ou mídia.
 
-- **Merge project** - Adiciona uma exportação de projeto NAHPU ao projeto ativo por meio de uma revisão guiada de conflitos.
-- **Export project** - Cria uma exportação leve em JSON.GZ sem mídia, ou um arquivo de transferência ZIP/TAR.GZ com as mídias disponíveis.
-- **Export records** - Exporta um tipo de registro para CSV, TSV, Excel ou JSON.
-- **Bundle records** - Cria um Darwin Core Archive, um Darwin Core Data Package ou um NAHPU Data Package completo para uso por terceiros.
-- **Export documents** - Cria documentos PDF a partir de modelos de documento e perfis de layout.
-- **Backup database** - Cria um arquivo ZIP ou TAR.GZ completo contendo o banco
-  de dados SQLite, as mídias e os arquivos associados de todos os projetos,
-  todas as fotos de pessoal e todo o diretório de configurações de usuário, com
-  suas fontes e mapas.
-- **Export user configs** - Exporta as configurações de usuário selecionadas como JSON ou JSON.GZ.
+Exportações ZIP e TAR.GZ incluem a mídia disponível. JSON.GZ leve inclui apenas registros. Revise os avisos de arquivos ausentes e mantenha a origem até verificar registros e anexos no destino.
 
-## Caminhos rápidos de exportação
+Um NAHPU Data Package compatível também pode ser importado ou mesclado, pois inclui os dados do projeto. Pacotes Darwin Core e exportações tabulares não restauram um projeto NAHPU. A substituição do banco é uma operação de recuperação separada, no nível da instalação.
 
-- Para exportar dados tabulares do projeto, consulte [Exportar registros](./export-records).
-- Para importar ou exportar arquivos GIS de coordenadas, consulte [Locais](../sites#adding-coordinates).
-- Para mover um projeto entre dispositivos NAHPU, consulte [Transferir um projeto](./project-transfer).
-- Para um envio compacto, somente de registros, com internet limitada, use a exportação leve `JSON.GZ` descrita em [Transferir um projeto](./project-transfer).
-- Para recuperação do banco de dados, consulte [Restaurando um banco de dados](#restoring-a-database).
-- Para criar um pacote de espécimes baseado em padrões ou um NAHPU Data Package reprodutível, consulte [Empacotar registros](./export-bundles).
-- Para exportar etiquetas, tags ou outros documentos em PDF, consulte [Exportar documentos](./export-documents).
-- Para exportar uma tabela resumida de contagens em vez dos registros completos, consulte [Exportar estatísticas](./export-statistics).
-- Para exportar apenas as fotografias, consulte [Exportar imagens](./export-images).
+## Escolha uma saída
 
-Use esta página para exportações de registros, pacotes de projeto, backups do
-banco de dados e exportações de configurações. O intercâmbio GIS de coordenadas
-é gerenciado no painel de coordenadas de um local, não no menu do projeto. O
-fluxo de coordenadas aceita importações em GeoJSON, KML, Shapefile compactado e
-GPX, e exportações em GeoJSON, KML e Shapefile compactado.
-
-Para transferências de projeto, use `JSON.GZ` quando o envio precisar ser
-pequeno e as mídias não forem necessárias. Use ZIP ou TAR.GZ quando as mídias
-disponíveis devam acompanhar o projeto. A exportação de projeto também é o
-backup de campo diário recomendado, porque o `Merge project` consegue lê-la de
-volta em outro dispositivo. Ainda assim, ela não é um backup bruto do SQLite:
-use `Backup database` semanalmente, e antes de qualquer mesclagem, para uma
-cópia restaurável de toda a instalação.
+- [Exportar Registros](/pt/usages/export/export-records/)
+- [Empacotar Registros](/pt/usages/export/export-bundles/)
+- [Exportar Documentos](/pt/usages/export/export-documents/)
+- [Exportar Estatísticas](/pt/usages/export/export-statistics/)
+- [Exportar Imagens](/pt/usages/export/export-images/)
 
 ## Estratégia de backup {% #backup-strategy %}
 
-Use mais de um tipo de backup durante o trabalho de campo. Eles protegem coisas
-diferentes e não são intercambiáveis.
+Mantenha uma cópia verificada dos dados de cada dia de campo fora do dispositivo de trabalho.
 
-**Em campo, exporte o projeto todos os dias e faça o backup do banco de dados
-uma vez por semana.** A exportação de projeto é a menor, a mais rápida e a que
-menos consome bateria entre as duas, e o `Merge project` a traz de volta ao
-NAHPU em um dispositivo substituto caso um seja perdido, quebrado ou roubado. O
-backup do banco de dados copia a instalação inteira, então ele cabe em um
-checkpoint semanal e imediatamente antes de qualquer mesclagem.
-
-- **Exportação de projeto (diária em campo)**: um arquivo ZIP ou TAR.GZ com os
-  registros do projeto e a mídia disponível, ou uma exportação leve `JSON.GZ`
-  sem mídia quando o envio precisar ser pequeno. O `Merge project` aceita as
-  três, e é isso que torna essa opção um caminho de recuperação, e não apenas
-  de transferência.
-- **Backup completo do banco de dados (semanal e antes de mesclar)**: um arquivo
-  `.zip` ou `.tar.gz` que inclui o banco SQLite, as mídias e os arquivos
-  associados de todos os projetos, todas as fotos de pessoal e todo o diretório
-  de configurações de usuário. Ele copia esses diretórios por inteiro, então
-  leva todos os arquivos dos dados do aplicativo NAHPU, estejam eles vinculados
-  a um projeto ou não. No campo, execute-o ocasionalmente, quando o consumo de
-  bateria não for uma preocupação. Use para a recuperação completa da
-  instalação, antes de uma mesclagem que possa dar errado e quando vários
-  projetos precisarem ser preservados juntos.
-- **Backup somente do banco de dados**: um arquivo `.sqlite3` compacto. Use
-  quando os registros precisarem ser restauráveis, mas os arquivos gerenciados
-  não precisarem viajar junto.
-- **Backup das configurações de usuário**: um arquivo `.json` ou `.json.gz` com
-  as configurações de usuário, predefinições de exportação, predefinições de
-  modelo e layouts de documento. Use quando outro dispositivo precisar das mesmas
-  listas controladas, do mesmo comportamento de exportação e dos mesmos layouts.
-
-{% aside type="tip" title="Prática recomendada" %}
-Ao final de cada dia de campo, exporte o projeto para um armazenamento separado
-do dispositivo de trabalho, como um pendrive USB-C ou o dispositivo de um colega,
-e envie também para a nuvem se houver internet. Reserve o backup completo do
-banco de dados para o fim da semana e para o momento anterior a uma mesclagem.
-Periodicamente, restaure ou mescle um arquivo em outro dispositivo para
-confirmar que ele é utilizável.
-{% /aside %}
-
-## Backup do banco de dados {% #backup-database %}
-
-`Backup database` cria um arquivo de backup completo do NAHPU. Escolha ZIP ou
-TAR.GZ; o arquivo contém o banco SQLite, os diretórios de mídia e de dados
-associados de todos os projetos, todas as fotos de pessoal e todo o diretório de
-configurações de usuário, incluindo fontes, mapas e qualquer outro arquivo de
-configuração guardado ali. Diretórios inteiros são copiados, então o arquivo
-leva todos os arquivos dos dados do aplicativo NAHPU, estejam eles vinculados a
-um projeto ou não. No campo, execute-o ocasionalmente, quando o consumo de
-bateria não for uma preocupação, e use o `Export project` para um backup mais
-rápido e específico do projeto.
+## Etapas
 
 {% steps %}
 
-1. Vá para a página `Dashboard`.
-2. Abra o menu do projeto e selecione `Backup database`.
-3. Escolha `TAR.GZ` ou `ZIP`.
-4. Adicione o `File name`.
-5. Selecione o `Directory` onde deseja salvar o backup.
-6. Clique em `Save`.
-
+1. Abra o menu do projeto e selecione `Export project`.
+2. Revise contagens e avisos de arquivos ausentes. Escolha ZIP ou TAR.GZ para incluir a mídia disponível. JSON.GZ leve contém apenas registros e não é um backup completo da mídia.
+3. Salve com o nome do projeto e a data e copie para outro armazenamento ou dispositivo.
+4. Confira se a cópia pode ser acessada e revise os avisos antes de considerar o backup completo. Teste a recuperação periodicamente em outra instalação.
+5. Use `Import project` na tela inicial para recuperar na instalação de destino ou `Merge project` dentro de um projeto existente.
+6. Faça um `Backup database` completo em intervalos regulares, por exemplo semanalmente, e antes de importar, mesclar ou substituir dados. Mantenha o backup anterior verificado até conferir o novo.
 {% /steps %}
+
+## Backup do banco de dados {% #backup-database %}
+
+`Backup database` cria ZIP ou TAR.GZ com o banco SQLite e os diretórios gerenciados de projetos, pessoal e configurações, incluindo arquivos sem vínculo com registros atuais. Um arquivo SQLite isolado contém registros, mas não fornece mídia ou outros arquivos gerenciados.
+
+Abra o menu do projeto, selecione `Backup database`, escolha formato, nome e destino e selecione `Save backup`. Mantenha uma cópia fora do dispositivo de trabalho e verifique-a antes de substituir um backup anterior.
 
 ## Exportar configurações de usuário {% #export-user-configs %}
 
@@ -124,7 +55,7 @@ exportação e de documento.
     - `JSON.GZ (.json.gz)`
 4. Adicione o `File name`.
 5. Selecione o `Directory` onde deseja salvar o arquivo.
-6. Clique em `Save`.
+6. Clique em `Export user configs`.
 
 {% /steps %}
 
@@ -179,7 +110,7 @@ restaurar dados do projeto e configurações de usuário ao mesmo tempo, restaur
 um arquivo ZIP ou TAR.GZ do banco de dados.
 
 Para o modelo de armazenamento e compatibilidade no nível de quem contribui com
-o código, consulte [Importação e exportação de dados](../../contributing/code/data-import-export-overview).
+o código, consulte [Importação e exportação de dados (em inglês)](/en/contributing/code/data-import-export-overview/).
 
 ## Arquivando um projeto {% #archiving-a-project %}
 

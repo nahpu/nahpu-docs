@@ -1,69 +1,51 @@
 ---
-title: Data Management
+title: Data Management and Specimen Curation
 ---
 
-Good data management keeps records understandable, recoverable, and useful
-after fieldwork. Define conventions before collecting, review records during
-curation, and preserve the context needed to interpret each project.
+Review records while their field context is available, and preserve the evidence needed for later curation.
 
-## Capture complete data
+## Review records and relationships
 
-- Use stable identifiers for projects, sites, events, specimens, and parts.
-- Use controlled values for people, methods, preparation types, and other
-  repeated fields.
-- Record dates, locations, collectors, methods, and uncertainty as soon as
-  practical.
-- Link specimens to their sites, events, personnel, taxonomy, media, and
-  associated data.
+Check Field IDs against physical labels, then verify sites, events, coordinates, collecting personnel, identifications, parts, and preparations. Look for duplicate readable identifiers, unexpected dates, absent values, and inconsistent units. Counts alone cannot establish that the correct records were transferred.
 
-## Review field records
+Read the records rather than a summary of them. Barchard & Pace (2011) found that only 0.06% of data-entry errors were blank or outside the allowable range for their variable, and concluded that researchers cannot rely on histograms and frequency tables to detect entry errors. A NAHPU export with no empty cells and no impossible measurements is consistent with hundreds of transposed digits and misassigned identifications. The check that works is the specimen in hand against the record on screen — a swapped Field ID between two shrews is invisible in a frequency table and obvious at the tray.
 
-- Confirm that each specimen has a stable identifier and the correct project.
-- Check required values, collection dates, sites, events, collectors, and
-  preparation details.
-- Attach media and associated files to the correct record and confirm that they
-  can be opened.
-- Record uncertainty or unresolved questions in notes for later review.
+Changing a specimen's identification selects its taxon; editing a shared taxon changes the entry used by other records. Preserve identification confidence, determiner, and explanatory remarks. Review the affected records after correcting shared taxa or personnel.
 
-## Review and clean records
+Retain original observations when documenting corrections. Use notes or project documentation to record the reason, source, date, and responsible person for significant curation; do not assume every edit creates a complete audit history.
 
-Review records in the field before moving to the next specimen. In the lab,
-check for duplicate identifiers, missing required values, invalid coordinates,
-inconsistent dates, and broken media links. Normalize taxon names, personnel,
-localities, and methods while keeping the original field information available
-when it is needed to understand a correction.
+## Preserve attachments
 
-Use a second person to review important changes. Record the project scope,
-collection methods, responsible curators, and major corrections so another user
-can understand how the dataset was created.
+Use Media for photographs and other supported media records. Use Associated Data for related files or external resources, with a meaningful relationship and description. Open attachments after copying or importing them. An external link does not guarantee that its target will remain available or be included in a transfer — Vines et al. (2014) measured a 17% decline per year in the odds that a dataset behind a published paper still existed, and a URL in an Associated Data record is subject to the same attrition. Copy what you can hold; link only what you cannot.
 
-## Protect sensitive information
+Keep originals and investigate missing-file warnings before removing source copies. Decide whether custom fonts and template images must be transferred separately. Changing form visibility does not remove stored values or exclude them from exports.
 
-Identify sensitive locations, personal information, and restricted collection
-details before sharing data. Export only what the recipient needs and use
-secure storage for project archives and backups. Follow institutional policies
-and applicable collecting, access, and data-sharing requirements.
+## Choose and inspect exports
 
-## Choose the right export
+Use `Export records` with a reviewed preset for analysis or spreadsheet curation. Verify columns, repeated values, units, filters, and identifiers in the output. A Darwin Core header choice is a mapping, not a guarantee that every field has an equivalent standard term.
 
-- Use `Export records` for structured data review, analysis, and exchange.
-- Use `Export project` for the daily field backup, and for moving a project
-  between devices. Use ZIP or TAR.GZ so media travels with it, or `JSON.GZ` for
-  a records-only upload over limited internet. `Merge project` reads all three
-  back, so this is a recovery path as well as a transfer.
-- Use `Bundle records` for publishing, standards-based exchange, or a
-  reproducible data package.
-- Use `Backup database` weekly, and before any merge or other major change,
-  when you need a restorable copy of the whole NAHPU installation rather than
-  one project. It copies every project directory, every personnel photo, and
-  the entire user configs directory, whether or not a project links to those
-  files, so it is much larger than a project export. In the field, run it
-  occasionally, when battery use is not a concern.
+Use native project exports or NAHPU Data Packages for supported re-import workflows. ZIP and TAR.GZ project transfers include available project files; JSON.GZ omits them. Standards packages, tables, images, and printed documents serve exchange or publication and do not replace a recoverable native copy. Consult [Bundle records](/en/usages/export/export-bundles/) for each package's contents and limitations.
 
-Create a fresh backup before major changes. Use exports to review records in a
-spreadsheet or another database when useful, and check record counts, identifier
-uniqueness, relationships, media links, coordinates, dates, and sensitive
-information before the dataset is published or archived.
+Keep an installation-wide backup before major curation or merging, and verify recovery independently. Follow the [backup routine](/en/best-practices/project-management/) agreed by the team.
 
-See the [Export guide](../../usages/export) for the detailed backup, restore,
-and archiving workflows.
+## Protect information before sharing
+
+Decide what to release from the risk to the taxon, not from a habit of withholding everything or publishing everything. Tulloch et al. (2018) set out a decision tree that weighs the risk of exploitation — poaching, collection, disturbance by visitors — against the conservation benefit of the data being available, and argue that treating all localities as sensitive obstructs conservation for the many species facing no such risk. Apply it per taxon and record the decision with the project documentation, so a later release can follow the same reasoning.
+
+Where a locality is sensitive, generalize rather than delete: a coordinate rounded to a documented precision with the uncertainty widened to match keeps the record usable for range-scale analysis while removing the trap line. State in the released dataset which values were generalized or withheld, and keep the protected original.
+
+Review exact locations, personnel contact details, notes, and image metadata for restrictions. Export only approved information and inspect the actual files, including companion tables and attachments. Hiding a field in NAHPU is not redaction: a hidden field keeps its stored value and can still appear in an export.
+
+## Print and check labels
+
+Include a readable Field ID and the collection information required by your institution. A specimen UUID QR code can link a label to the digital record; retain readable text so the label remains useful without a scanner, and because a label outlives the software that generated it.
+
+Preview representative records, including long names and missing fields. Print at the intended dimensions, inspect clipping and legibility, and scan the QR code to confirm it identifies the intended specimen. Match each label to the physical specimen and its parts before attachment. See [document export](/en/usages/export/export-documents/).
+
+## References
+
+Barchard KA & Pace LA (2011). [Preventing human error: the impact of data entry methods on data accuracy and statistical results](https://doi.org/10.1016/j.chb.2011.04.004). *Computers in Human Behavior* 27:1834–1839.
+
+Tulloch AIT, Auerbach N, Legge S, Rhodes J, Robinson J, Vieira S, Watson JEM, Whyte M & Turak E (2018). [A decision tree for assessing the risks and benefits of publishing biodiversity data](https://doi.org/10.1038/s41559-018-0608-1). *Nature Ecology & Evolution* 2:1209–1217.
+
+Vines TH, Albert AYK, Andrew RL, Débarre F, Bock DG, Franklin MT, Gilbert KJ, Moore J-S, Renaut S & Rennison DJ (2014). [The availability of research data declines rapidly with article age](https://doi.org/10.1016/j.cub.2013.11.014). *Current Biology* 24:94–97.

@@ -32,8 +32,8 @@ const english = metadataByLocale.get("en");
 const englishRecipes = [...english.keys()].filter(
   (path) => !isIndexPath(path),
 );
-if (englishRecipes.length !== 31) {
-  errors.push(`en: expected 31 recipes, found ${englishRecipes.length}`);
+if (englishRecipes.length !== 33) {
+  errors.push(`en: expected 33 recipes, found ${englishRecipes.length}`);
 }
 for (const [path, order] of Object.entries({
   "prepare/index.md": 1,

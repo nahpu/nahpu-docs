@@ -10,7 +10,7 @@ sites, collecting events, specimen records, narratives, and linked media.
 ## Creating a project
 
 {% aside type="caution" %}
-A project needs at least one person with the `Cataloger` role. When you choose `Personnel` Field IDs, the wizard adds a conditional `Cataloger` step and will not let you finish until an eligible person exists. See [Personnel](./personnel/#adding-personnel-to-a-project).
+A project needs at least one person with the `Cataloger` role. When you choose `Personnel` Field IDs, the wizard adds a conditional `Cataloger` step and will not let you finish until an eligible person exists. See [Personnel](/en/usages/personnel/#adding-personnel-to-a-project).
 {% /aside %}
 
 From the home screen, select `+`, choose `New project`, and then choose whether
@@ -143,14 +143,11 @@ the [Transfer a Project](../export/project-transfer) workflow instead.
 
 ## Transferring project data
 
-Use `Export project` and `Merge project` to combine data collected for the same
-project on different NAHPU devices. The transfer guide covers light JSON.GZ
-exports for limited-internet, media-free uploads and ZIP/TAR.GZ exports for
-full project copies with available media. It also covers backup, UUID checks,
-section-by-section conflict review, and the final merge.
+Use `Export project` to create a transfer. On the receiving installation, home-screen `Import project` creates a local project; `Merge project` combines data with a project that already exists. Importing project-info JSON or a project QR code creates only the project identity, without records or media.
 
-`Bundle records` is a separate export for publishing, analysis, archiving, or
-third-party data use. A bundle cannot be merged with `Merge project`.
+ZIP and TAR.GZ project exports include available media. Light JSON.GZ includes records only. Review missing-file warnings and keep the source until records and attachments on the receiving device are verified.
+
+A compatible NAHPU Data Package can also be imported or merged because it includes the project payload. Darwin Core packages and tabular exports cannot restore a NAHPU project. Database replacement is a separate installation-level recovery operation.
 
 ## Deleting a project
 

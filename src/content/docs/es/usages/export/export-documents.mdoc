@@ -51,7 +51,7 @@ new template`.
 4. Defina el ancho y alto de una etiqueta, rótulo o bloque, no de toda la hoja.
 5. Añada textos, imágenes, líneas y formas. Seleccione un elemento para ajustar
    posición, tamaño, estilo, visibilidad, bloqueo y orden de superposición.
-6. Guarde con `Save`; use `Save as...` para crear una variante.
+6. Guarde con `Save template`; use `Save as...` para crear una variante.
 
 Abra el botón de ajustes del editor de plantillas para cambiar el nombre, la
 descripción o el número de caras de una plantilla guardada. Renombrar reapunta
@@ -144,13 +144,7 @@ Los símbolos son:
 | `"` … `"` | Encierran cada valor de comparación |
 | `]=>` | Termina las condiciones e inicia el texto de reemplazo |
 
-Cuatro reglas explican la mayoría de las condiciones que no se comportan como
-se espera. Las comparaciones se recortan, pero **distinguen mayúsculas y
-minúsculas**. Las condiciones leen el valor **almacenado**, así que la confianza
-de identificación es `"2"` y no `"High"`, incluso cuando el elemento muestra la
-etiqueta. Un **valor vacío del registro nunca coincide**, ni siquiera con `!=`,
-de modo que use un valor de reserva y no una condición para el caso vacío. Y
-`&&` y `||` **no pueden mezclarse** en una misma expresión.
+Las comparaciones eliminan espacios en los extremos y distinguen mayúsculas. Leen valores almacenados: compare `"2"`, no `"High"`, para confianza de identificación. Use `Is empty` (`==""`) o `Is not empty` (`!=""`) para comprobar si el campo de origen tiene valor. Otras comparaciones no coinciden con un origen vacío. No mezcle `&&` y `||` en una expresión.
 
 Un reemplazo sustituye todo el valor en lugar de añadirse a él, y por eso el
 ejemplo anterior imprime `Rattus ?` y no `Rattus rattus?`.
@@ -384,4 +378,4 @@ exportación del proyecto o la exportación estructurada de registros. Consulte
 
 Todas las opciones del editor de plantillas están listadas en la
 [Referencia del editor de plantillas](../template-editor-reference). Para
-detalles de almacenamiento y renderizado, consulte [Templates and presets](../../../contributing/code/templates-and-presets) y [Export workflows](../../../contributing/code/data-export-workflows).
+detalles de almacenamiento y renderizado, consulte [Templates and presets (en inglés)](/en/contributing/code/templates-and-presets/) y [Export workflows (en inglés)](/en/contributing/code/data-export-workflows/).

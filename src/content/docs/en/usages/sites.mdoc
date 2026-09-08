@@ -271,38 +271,17 @@ coordinate manually, use the device GPS, or import points from a GIS/GPS file.
 
 {% /steps %}
 
-### Import coordinates from a file
+### Import coordinates from a file {% #import-coordinates-from-a-file %}
 
-Use file import when several points already exist in a GIS or GPS file.
-Coordinate import is available from `Add coordinate → Import` on a site.
+Use `Add coordinate` > `Import` > `Select coordinate file` for CSV, TSV, Excel, GeoJSON/JSON, KML, zipped Shapefile, or GPX.
 
-{% steps %}
+For tabular files, `Match columns` requires `Latitude` and `Longitude` in decimal degrees. Optional fields are `Name / ID`, `Elevation (m)`, `GPS unit`, and `Notes`. Review the inferred mapping, leave unwanted fields as `Not included`, and select `Review coordinates`. Use `Edit column mapping` to correct an unexpected preview.
 
-1. Open a site, tap/click `Add coordinate`, and select the `Import` mode.
+Review warnings and the mapped positions. Use individual checkboxes, `Select all`, or `Clear all`, then `Add N selected` to add the chosen points to the current site. Check the saved points before using them for specimens.
 
-2. The supported formats appear above the import actions. Choose
-   `Select coordinate file` and select a GeoJSON/JSON file, KML file, zipped
-   Shapefile, or GPX file. You can also choose `Scan QR` to add a coordinate QR
-   record from another NAHPU device.
+Imported positions use WGS84. Confirm the source datum before import; this workflow does not convert another datum to WGS84. Elevation is in meters. Coordinate uncertainty is not supplied by this import; review and add it from the source when known. Tabular files can supply the GPS unit, while GIS imports do not supply it.
 
-3. Review the imported points and any warning text. The map highlights the
-   focused point, and all valid points are selected by default.
-
-4. Use `Select all`, `Clear all`, or the individual checkboxes to choose which
-   points to add. Tap/click `Add N selected` to save them to the current site.
-
-{% /steps %}
-
-File import transfers the point name, notes, decimal latitude, decimal
-longitude, and elevation. Imported points are assigned the current site and
-`WGS84` datum; uncertainty and GPS unit information are not supplied by this
-exchange flow.
-
-Only point coordinates are imported. Non-point GeoJSON or Shapefile features,
-non-point KML geometries, invalid coordinates, and other unsupported records
-are skipped and reported in the review. GPX waypoints are imported; GPX routes
-and tracks are ignored. If no valid points remain, NAHPU reports an import
-error instead of adding records.
+Only point geometries are imported. Unsupported geometries and invalid rows are skipped with warnings; GPX routes and tracks are ignored. No valid points produces an error instead of new coordinates.
 
 ### Manage and export coordinates
 

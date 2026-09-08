@@ -42,7 +42,7 @@ O NAHPU oferece três tipos de pacote:
    exportados.
 8. Revise os avisos, especialmente sobre mídia ausente ou sobre a
    compatibilidade de ZIP no DwC-DP.
-9. Clique em `Export`.
+9. Clique em `Create bundle`.
 
 {% /steps %}
 
@@ -153,6 +153,7 @@ segue o modelo Frictionless Data Package.
 - datapackage.json
 - eml.xml
 - occurrence.csv
+- identification.csv
 - event.csv
 - material.csv
 - occurrence-assertion.csv
@@ -194,9 +195,18 @@ O NAHPU mapeia os dados de espécime selecionados para conceitos como:
 - `agent` e as tabelas de função para as pessoas e os seus papéis;
 - `media` e `occurrence-media` para os metadados e as relações de mídia.
 
-Os mapeamentos usam termos Darwin Core padronizados apenas em correspondências
-semânticas exatas. Os campos do aplicativo sem correspondência permanecem no
-namespace NAHPU. O texto original em DDM, DMS ou UTM é preservado nos termos de
+O DwC-DP é relacional, portanto cada valor é escrito na classe que o padrão
+lhe atribui, em vez de repetido na linha da ocorrência. Os níveis taxonômicos
+ficam em `identification`, os valores de localidade e coleta em `event`, e os
+de catálogo e preparação em `material`. Um valor sem coluna de classe, como a
+associação com o hospedeiro, vira uma asserção. As colunas `_pk` e `_fk` são
+chaves estruturais que versionam o termo identificador que representam.
+
+Só são escritos termos exatos e registrados. Os campos sem um deles não são
+escritos em um pacote Darwin Core; exporte um NAHPU Data Package quando o
+fluxo de trabalho precisar de todos os valores registrados. `Package contents`
+lista os campos retidos antes de você exportar. O texto original em DDM, DMS ou
+UTM é preservado nos termos de
 coordenada verbatim, a extensão positiva de captura é somada à incerteza da
 coordenada, as unidades de peso selecionadas são mantidas e os identificadores
 de agente preferem URLs ORCID canônicas, com os UUIDs do NAHPU como alternativa.
@@ -438,8 +448,8 @@ Os pacotes Darwin Core são formatos de intercâmbio e não são backups
 restauráveis do NAHPU.
 
 Quem contribui estendendo campos de pacote ou grupos taxonômicos deve ler
-[Fluxos de exportação](../../../contributing/code/data-export-workflows) e
-[Adicionar um grupo taxonômico](../../../contributing/code/adding-a-taxon-group).
+[Fluxos de exportação (em inglês)](/en/contributing/code/data-export-workflows/) e
+[Adicionar um grupo taxonômico (em inglês)](/en/contributing/code/adding-a-taxon-group/).
 
 Um NAHPU Data Package contém todo o conteúdo de transferência do projeto e
 caminhos de mídia compatíveis, então o `Merge project` pode abri-lo diretamente.

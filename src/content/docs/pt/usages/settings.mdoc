@@ -131,3 +131,23 @@ projeto, ao lado de `Settings`; eles não ficam dentro da página de configuraç
 A transferência de configurações de usuário pode reproduzir vocabulários controlados e
 predefinições sem substituir o banco de dados do projeto. Consulte
 [Exportar](../export) antes de substituir configurações ou dados.
+
+## Campos personalizados {% #custom-fields %}
+
+As definições indicam onde o valor pertence e como é preenchido. Os tipos são Text, Number, Yes / No e Dropdown. Use uma unidade consistente no rótulo e no protocolo para observações numéricas. O escopo é escolhido na criação: `Current project` se aplica a um projeto e `Global` à instalação. Campos de espécimes podem ser restritos por catálogo; campos ambientais pertencem aos eventos.
+
+Mapeamentos Darwin Core opcionais definem destino e campo da exportação. Revise o significado na exportação desejada e confira uma saída de teste antes de compartilhar. Mapear o nome não valida os valores. Valores existentes podem impedir a exclusão; arquive o campo para deixar de usá-lo sem perder dados. Descartar valores legados é uma ação separada e irreversível.
+
+Defina campos adicionais e confira como aparecem nos registros do projeto.
+
+## Etapas
+
+{% steps %}
+
+1. Abra o projeto desejado e acesse `Settings` > `Custom fields`; crie um campo e escolha a seção de destino.
+2. Defina `Label` e `Type`. Para uma lista suspensa, informe as opções permitidas. Escolha o escopo `Current project` ou `Global`; definições globais se aplicam à instalação inteira.
+3. Para campos de espécimes, confira o catálogo aplicável. Consulte o guia de referência para mapeamentos Darwin Core opcionais.
+4. Salve a definição, abra um registro na seção de destino e preencha um valor de teste com a unidade acordada. Reabra o registro para conferir o valor.
+5. Use `Archive` para retirar um campo de uso mantendo seus dados e `Restore` para disponibilizá-lo novamente. `Delete` fica indisponível enquanto houver valores armazenados.
+6. Exporte a definição em `Custom fields` ou inclua-a na transferência de configurações. Importe-a no dispositivo de destino e confira seção, escopo e opções.
+{% /steps %}

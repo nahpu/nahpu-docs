@@ -63,3 +63,17 @@ These scripts map to the entries in `package.json`:
 See the [contribution guidelines](https://nahpu.app/en/contributing/docs/) for guidance on code and documentation contributions, as well as developer tooling information.
 
 If you'd like to propose changes, open an issue or submit a pull request on the `main` branch.
+
+## Bundled documentation checks
+
+Day One introduces NAHPU concepts and guided first-use practice. How-to recipes
+cover individual workflows. Both are bundled in the app; edit them here and
+sync the app copies with its `tool/sync_cookbook.dart` command.
+
+Run `bun run check:cookbook` and `bun run build`, then `bun run check:doc-links`.
+To include app-only Info links, pass
+`--info-root <nahpu-root>/assets/docs/info` to the link check. It validates
+actual built pages and section IDs, including translated Markdoc anchors,
+for Cookbook, Day One, Usage, Best Practices, and optional Info sources.
+Relative links are resolved from their published page routes. English developer
+references are allowed when those technical pages have no translation.

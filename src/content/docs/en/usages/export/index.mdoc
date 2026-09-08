@@ -4,103 +4,41 @@ sidebar:
   order: 9
 ---
 
-NAHPU has these export-related actions in the project menu:
+Use `Export project` to create a transfer. On the receiving installation, home-screen `Import project` creates a local project; `Merge project` combines data with a project that already exists. Importing project-info JSON or a project QR code creates only the project identity, without records or media.
 
-- **Merge project** - Adds a NAHPU project export to the active project through a guided conflict review.
-- **Export project** - Creates a light JSON.GZ export without media, or a ZIP/TAR.GZ transfer archive with available media.
-- **Export records** - Exports one record type to CSV, TSV, Excel, or JSON.
-- **Bundle records** - Creates a third-party Darwin Core Archive, Darwin Core Data Package, or complete NAHPU Data Package.
-- **Export documents** - Creates PDF documents from document templates and layout profiles.
-- **Backup database** - Creates a complete ZIP or TAR.GZ archive containing the
-  SQLite database, every project's media and associated files, all personnel
-  photos, and the whole user configs directory with its fonts and maps.
-- **Export user configs** - Exports selected user configs as JSON or JSON.GZ.
+ZIP and TAR.GZ project exports include available media. Light JSON.GZ includes records only. Review missing-file warnings and keep the source until records and attachments on the receiving device are verified.
 
-## Quick export paths
+A compatible NAHPU Data Package can also be imported or merged because it includes the project payload. Darwin Core packages and tabular exports cannot restore a NAHPU project. Database replacement is a separate installation-level recovery operation.
 
-- To export tabular project data, see [Export records](./export-records).
-- To import or export GIS coordinate files, see [Sites](../sites#adding-coordinates).
-- To move one project between NAHPU devices, see [Transfer a project](./project-transfer).
-- For a compact records-only upload over limited internet, use the `JSON.GZ` light export described in [Transfer a project](./project-transfer).
-- For database recovery, see [Restoring a database](#restoring-a-database).
-- To create a standards-based specimen package or reproducible NAHPU Data Package, see [Bundle records](./export-bundles).
-- To export printable PDF labels, tags, or other documents, see [Export documents](./export-documents).
-- To export a summary count table instead of full records, see [Export statistics](./export-statistics).
-- To export photographs on their own, see [Export images](./export-images).
+## Choose an output
 
-Use this page for record exports, project packages, database backups, and
-settings exports. Statistics tables and media are exported from the screens
-that show them rather than from the project menu. Coordinate GIS exchange is
-managed from a site's coordinate panel, not from the project menu. The
-coordinate workflow supports GeoJSON, KML, zipped Shapefile, and GPX imports,
-and GeoJSON, KML, and zipped Shapefile exports.
-
-For project transfers, use `JSON.GZ` when the upload must be small and media is
-not needed. Use ZIP or TAR.GZ when available media should travel with the
-project. A project export is also the recommended daily field backup, because
-`Merge project` can read it back on another device. It is not a raw SQLite
-backup, though: use `Backup database` weekly, and before any merge, for a
-restorable copy of the whole installation.
+- [Export Records](/en/usages/export/export-records/)
+- [Bundle Records](/en/usages/export/export-bundles/)
+- [Export Documents](/en/usages/export/export-documents/)
+- [Export Statistics](/en/usages/export/export-statistics/)
+- [Export Images](/en/usages/export/export-images/)
 
 ## Backup strategy {% #backup-strategy %}
 
-Use more than one backup type during fieldwork. They protect different things
-and are not interchangeable.
+Keep a verified copy of each field day’s project data away from the working device.
 
-**In the field, export the project every day and back up the database every
-week.** A project export is the smaller, faster, and less battery-hungry of the
-two, and `Merge project` brings it back into NAHPU on a replacement device if
-one is lost, broken, or stolen. A database backup copies the whole
-installation, so it belongs at a weekly checkpoint and immediately before any
-merge.
-
-- **Project export (daily in the field)**: a ZIP or TAR.GZ archive with the
-  project records and available media, or a `JSON.GZ` light export without
-  media when the upload must be small. `Merge project` accepts all three, which
-  is what makes this a recovery path and not only a transfer.
-- **Full database backup (weekly, and before merging)**: a `.zip` or `.tar.gz`
-  archive that includes the SQLite database, every project's media and
-  associated files, all personnel photos, and the entire user configs
-  directory. It copies those directories whole, so it carries every file in
-  NAHPU app data whether or not a project links to it. In the field, run it
-  occasionally, when battery use is not a concern. Use it for complete
-  installation recovery, before a merge that could go wrong, and when several
-  projects must be preserved together.
-- **Database-only backup**: a compact `.sqlite3` file. Use it when the records
-  must be restorable but the managed files do not need to travel.
-- **User config backup**: a `.json` or `.json.gz` file containing user configs,
-  export presets, template presets, and document layouts. Use it when another
-  device needs the same controlled lists, export behavior, and document layouts.
-
-{% aside type="tip" title="Recommended practice" %}
-At the end of each field day, export the project to storage separate from the
-working device, such as a USB-C flash drive or a teammate's device, and upload
-it as well if internet is available. Keep the full database backup for the end
-of the week and for the moment before you merge. Periodically restore or merge
-a file on another device to confirm it is usable.
-{% /aside %}
-
-## Backup database
-
-`Backup database` creates a complete NAHPU backup archive. Choose ZIP or TAR.GZ;
-the archive contains the SQLite database, every project's media and associated
-data directories, all personnel photos, and the entire user configs directory,
-including fonts, maps, and any other configuration file kept there. Whole
-directories are copied, so the archive carries every file in NAHPU app data
-whether or not a project links to it. In the field, run it occasionally, when
-battery use is not a concern, and use `Export project` for a faster,
-project-specific backup.
+## Steps
 
 {% steps %}
 
-1. Navigate to the `Dashboard` page.
-2. Open the project menu and select `Backup database`.
-3. Choose `TAR.GZ` or `ZIP`.
-4. Add `File name`.
-5. Select the `Directory` where you want to save the backup.
-6. Click `Save`.
-
+1. Open the project drawer and select `Export project`.
+2. Review record counts and missing-file warnings. Choose ZIP or TAR.GZ to include available media. Light JSON.GZ contains records only and is not a complete media backup.
+3. Save the export with the project name and date, and copy it to separate storage or another device.
+4. Check that the copy is accessible and review warnings before treating the backup as complete. Periodically test recovery on another installation.
+5. Use `Import project` on the home screen to recover onto a receiving installation, or `Merge project` within an existing project.
+6. Create a full `Backup database` at a regular checkpoint, such as weekly, and before importing, merging, or replacing data. Retain the previous verified backup until the new one is checked.
 {% /steps %}
+
+## Backup database {% #backup-database %}
+
+`Backup database` creates ZIP or TAR.GZ containing the SQLite database and the managed project, personnel, and user-configuration directories, including files not linked to current project records. A standalone SQLite file contains database records but does not supply media or other managed files.
+
+Open the project menu, select `Backup database`, choose the format, file name, and destination, then select `Save backup`. Keep a copy outside the working device and verify it before replacing a previous backup.
 
 ## Export user configs
 
@@ -116,7 +54,7 @@ saved export and document presets, to a settings file.
     - `JSON.GZ (.json.gz)`
 4. Add `File name`.
 5. Select the `Directory` where you want to save the file.
-6. Click `Save`.
+6. Click `Export user configs`.
 
 {% /steps %}
 

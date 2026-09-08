@@ -2,27 +2,36 @@
 title: Configuración de la Aplicación
 ---
 
-Prepare NAHPU antes del trabajo de campo para que la aplicación refleje los protocolos de su equipo y cada dispositivo pueda registrar datos sin conexión.
+Prepare y pruebe NAHPU en cada dispositivo antes de utilizarlo para registros de recolección. La configuración es el momento en que prevenir errores resulta más barato: Chapman (2005) enuncia los dos principios con claridad — la prevención es preferible a la corrección, y cuanto antes se detecte un error en la cadena de información, menos cuesta corregirlo. Una restricción añadida en Configuración antes de salir elimina toda una clase de errores que, de lo contrario, encontraría un curador años después, si es que alguien los encuentra.
 
-## Configure la aplicación
+## Acuerde la configuración
 
-- Personalice los valores desplegables de campos de especímenes, métodos de recolección, tipos de preparación y personal.
-- Cree ajustes preestablecidos para flujos de catalogación repetidos y revíselos con todo el equipo.
-- Confirme taxón principal, modo de ID, Cataloger, vocabularios y exportaciones
-  mediante [Configuración](../../usages/settings).
-- Instale NAHPU desde la [guía de Instalación](../../installation) y actualícelo antes de salir, mientras tenga internet confiable.
-- Abra la aplicación después de actualizarla y confirme que los proyectos, ajustes y permisos estén disponibles.
+Defina con el equipo el taxón principal, el modo de Field ID, la zona horaria del proyecto, las unidades y los vocabularios controlados. La numeración por persona utiliza las iniciales y el número registrados del catalogador; la numeración por proyecto utiliza la convención del proyecto. Ambas requieren un plan para evitar identificadores duplicados entre dispositivos.
 
-## Prepare un proyecto
+Revise la visibilidad de campos y los ajustes preestablecidos en [Configuración](/es/usages/settings/). Los campos ocultos pueden contener datos y aparecer en exportaciones. Cree campos personalizados cuando los existentes no representen la observación: acuerde ubicación, tipo, ámbito, catálogo aplicable, unidades y valores permitidos. Introduzca un valor de prueba y compruebe su exportación.
 
-Cree un proyecto con nombre breve y revise la configuración opcional del
-asistente. Confirme fechas, taxonomía, ID de campo y la convención de sitios. La
-[guía de Proyectos](../../usages/projects) explica las operaciones detalladas.
+Prefiera un vocabulario configurado al texto libre siempre que la observación lo permita. Una condición de hábitat elegida de una lista no puede escribirse como `disturbed`, `Disturbed` y `disturbed ` en el mismo proyecto, y esas tres variantes no se reconciliarán al exportar. Es la prevención que describe Chapman aplicada al campo que está a punto de rellenar varios cientos de veces.
 
-## Realice una sesión simulada
+## Prepare los recursos compartidos
 
-Use un espécimen real o representativo para ensayar todo el flujo: cree un registro, complete los campos requeridos, genere una coordenada cuando corresponda, adjunte archivos multimedia, guarde el registro y revíselo en el tablero. Repita el ejercicio en cada dispositivo.
+Asigne el personal necesario y revise la lista de taxones, incluidos los rangos y las identificaciones inciertas. Reutilice entradas existentes para la misma persona o taxón. Defina qué dispositivo mantiene las definiciones compartidas y distribuye las actualizaciones.
 
-## Confirme la preparación
+Prepare ajustes de exportación, plantillas, diseños de impresión y fuentes. La transferencia de configuraciones de usuario no incluye archivos de fuentes personalizadas ni imágenes; instálelos por separado y pruebe los documentos. Use la [identidad del proyecto](/es/how-to-recipes/prepare/share-project-identity/) para establecer un UUID común entre dispositivos que contribuirán al mismo proyecto; no transfiere registros de recolección.
 
-Antes de salir, confirme el almacenamiento disponible, la batería y una fuente de respaldo, la versión más reciente de NAHPU, el proyecto correcto y los permisos de ubicación y cámara. Pruebe el modo avión. Después ensaye una vez las dos vías de recuperación: exporte el proyecto y fusiónelo de vuelta en un segundo dispositivo, y cree una copia de la base de datos que pueda restaurarse.
+## Practique el flujo de trabajo
+
+Use un proyecto claramente identificado como práctica. Cree sitio, coordenada, evento y espécimen; cambie una identificación; añada una parte, medios y un archivo asociado cuando corresponda. Salga y vuelva a abrir los registros para comprobar los valores persistidos. Use los botones de confirmación de los diálogos; muchos campos se guardan automáticamente.
+
+Compruebe los registros de práctica reabriendo cada uno y comparándolo campo por campo con la etiqueta física. Revisar la tabla exportada en busca de huecos y valores atípicos no equivale a eso, y la diferencia es medible. Barchard & Pace (2011) hicieron que 195 participantes introdujeran 30 hojas de datos por tres métodos y encontraron que solo el 0,06 % de los errores resultantes eran valores en blanco o fuera del rango permitido de su variable, de modo que casi todos los errores reales sobreviven a una comprobación basada en valores ausentes y números imposibles. En el mismo estudio, la revisión visual produjo entre un 29 % y un 58 % más de errores que la doble entrada y no fue mejor que la entrada simple. Considere que una exportación de aspecto limpio no demuestra nada en particular y construya una comprobación que lea el registro en sí.
+
+Cuando un valor lo justifique, introdúzcalo dos veces desde la fuente y compare. La doble entrada costó un 33 % más de tiempo que la revisión visual en ese estudio, un intercambio defendible para identificadores y medidas que no se pueden recuperar una vez que el espécimen está en un frasco.
+
+Repita sin internet, incluidas las autorizaciones necesarias de ubicación y cámara. Compruebe la tabla exportada y una etiqueta impresa. Importe un archivo de proyecto en otra instalación de prueba y abra sus registros y archivos. Pruebe la sustitución de la base de datos solo en una instalación cuyo contenido pueda descartar.
+
+Antes de salir, compruebe almacenamiento, energía, recursos instalados, destinos de las copias y proyecto de trabajo. Consulte [Dispositivos](/es/usages/devices/), [Elección y cuidado de los dispositivos](/es/best-practices/device-care/) y [recuperación de proyectos](/es/how-to-recipes/protect-and-collaborate/import-project/).
+
+## Referencias
+
+Barchard KA & Pace LA (2011). [Preventing human error: the impact of data entry methods on data accuracy and statistical results](https://doi.org/10.1016/j.chb.2011.04.004). *Computers in Human Behavior* 27:1834–1839.
+
+Chapman AD (2005). [Principles of Data Quality](https://www.gbif.org/document/80509/principles-of-data-quality). GBIF Secretariat, Copenhague.

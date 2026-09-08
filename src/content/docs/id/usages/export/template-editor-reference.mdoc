@@ -151,14 +151,10 @@ Itulah sebabnya contoh di atas mencetak `Rattus ?` dan bukan `Rattus rattus?`.
 Saat ini belum ada cara untuk mempertahankan sebuah nilai lalu menambahkan
 akhiran secara kondisional.
 
-Karena `!=` tidak pernah cocok dengan nilai kosong, spesimen yang sama sekali
-tidak memiliki catatan keyakinan identifikasi akan mencetak epitetnya tanpa
-tanda. Jika keyakinan yang tidak tercatat juga perlu ditandai, atur
-`No Content Placeholder` elemen pada field keyakinan, atau periksa tingkat yang
-tercatat saja:
+Perbandingan tidak kosong seperti `!="2"` tidak cocok dengan keyakinan yang belum dicatat. Untuk memasukkan kasus itu, gunakan `Is empty` sebagai kondisi OR tambahan:
 
 ```text
-[[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"]=>"?"]]
+[[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"||specimen::iDConfidence==""]=>"?"]]
 ```
 
 ### Jenis kondisional pada dialog
@@ -214,39 +210,11 @@ ekspresi tersendiri.
 
 ### Bagaimana kondisi dievaluasi
 
-Aturan-aturan berikut menentukan apakah sebuah ekspresi bekerja atau gagal:
+Perbandingan memangkas spasi di tepi dan membedakan huruf besar-kecil. Nilai yang dibaca adalah nilai tersimpan: bandingkan `"2"`, bukan `"High"`, untuk keyakinan identifikasi. Gunakan `Is empty` (`==""`) atau `Is not empty` (`!=""`) untuk menguji keberadaan nilai kolom sumber. Perbandingan lain tidak cocok dengan sumber kosong. Jangan campur `&&` dan `||` dalam satu ekspresi.
 
-- Baik nilai catatan maupun nilai pembanding **dipangkas** spasinya sebelum
-  dibandingkan, dan pembandingannya **membedakan huruf besar dan kecil**.
-- Kondisi membaca nilai yang **tersimpan**, sebelum jenis teks atau format
-  apa pun diterapkan. Bandingkan `"2"`, bukan `"High"`.
-- `Is not empty` dan `Is empty` adalah satu-satunya operator yang dapat
-  dipenuhi oleh nilai kosong. Semua operator lain menganggap nilai kosong
-  sebagai tidak cocok.
-- `~=` tidak memiliki bentuk kekosongan; `field~=""` bukan ekspresi yang valid.
-- **Nilai catatan yang tidak ada atau kosong tidak pernah cocok** — termasuk
-  dengan `!=`. Jika Anda perlu "field kosong", gunakan fallback nilai kosong,
-  bukan kondisi.
-- **Sasaran yang kosong** tidak pernah diapit atau digantikan, bahkan ketika
-  kondisinya cocok. Elemennya jatuh kembali ke `No Content Placeholder`-nya.
-- Nilai pembanding yang kosong tidak pernah cocok, dan ekspresi yang memuatnya
-  tidak valid.
-- `&&` dan `||` **tidak dapat dicampur** dalam satu ekspresi. Sarangkan
-  ekspresi kedua, atau susun ulang logikanya.
-- Pengurai memperhatikan tanda kutip, sehingga `]` di dalam nilai pembanding
-  yang dikutip tidak mengakhiri ekspresi lebih awal.
-- `[[` yang salah bentuk dilewati, bukan fatal: sisa teksnya tetap
-  ditampilkan, dan itulah sebabnya ekspresi yang rusak tercetak apa adanya
-  alih-alih memunculkan kesalahan.
-- `~=` pada `mammalAttribute::accuracy` bersifat khusus: alih-alih menguji
-  substring, ia menanyakan apakah pengukuran yang disebut ditandai tidak akurat,
-  sehingga `mammalAttribute::accuracy~="totalLength"` cocok ketika panjang total
-  ditandai sebagai perkiraan.
-- Penggantian **menyubstitusi** keseluruhan nilai alih-alih menambahkannya,
-  sehingga akhiran atau awalan kondisional belum dimungkinkan saat ini.
+Target kosong menggunakan `No Content Placeholder`, bukan penggantian kondisional. `~=""` tidak valid. Ekspresi yang salah format dapat tercetak secara literal; pratinjau catatan yang cocok dan tidak cocok. Penggantian menukar seluruh nilai; pengganti kosong menyembunyikan target berisi ketika kondisinya cocok.
 
-Kode sex lama `0`, `1`, dan `2` tetap merupakan nilai pembanding yang valid,
-sehingga kondisi yang ditulis untuk templat lama tetap bekerja.
+Untuk `mammalAttribute::accuracy`, `~=` menguji apakah pengukuran yang disebut ditandai tidak akurat, misalnya `mammalAttribute::accuracy~="totalLength"`. Pada kolom ini, operator tersebut bukan pencarian potongan teks biasa.
 
 ## Bilah alat
 
@@ -451,8 +419,6 @@ lembar yang dihasilkannya; lihat
 | Gejala | Yang perlu diperiksa |
 |---|---|
 | Kondisional tercetak apa adanya | Ekspresi yang salah bentuk dilewati. Periksa `]]` yang hilang, nilai tanpa tanda kutip, atau `&&` dan `\|\|` yang dicampur. |
-| Kondisi tidak pernah cocok | Nilai membedakan huruf besar-kecil dan dipangkas spasinya; nilai catatan yang kosong tidak pernah cocok, bahkan dengan `!=`. |
-| Kondisi `!=` tidak mencetak apa pun pada catatan kosong | Itu memang dirancang demikian. Gunakan fallback `??` untuk kasus kosong. |
 | Fallback mencetak `[table::field]` | Pilihan fallback `table::field` sedang dipakai; ubah ke `Blank`, `N/A`, `None`, atau teks kustom. |
 | Ikon sex tampil sebagai teks | Elemennya harus berisi `[…sex]-img` saja, dan key-nya harus diakhiri `.sex`. |
 | Gambar catatan tidak muncul | Elemennya harus berisi `[media::media]` saja dan memakai jenis teks `Picture`. |
