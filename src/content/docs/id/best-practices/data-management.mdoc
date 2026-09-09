@@ -1,46 +1,68 @@
 ---
-title: Pengelolaan Data
+title: Pengelolaan Data dan Kurasi Spesimen
+sidebar:
+    label: Pengelolaan Data dan Kurasi
+    order: 5
 ---
 
 Tinjau catatan selagi konteks lapangan tersedia dan simpan bukti yang diperlukan untuk kurasi berikutnya.
 
-## Tinjau catatan dan hubungan
+## Tinjau catatan dan hubungannya
 
-Cocokkan Field ID dengan label fisik, lalu periksa lokasi, kegiatan, koordinat, personel, identifikasi, bagian, dan preparasi. Cari pengenal ganda, tanggal tidak terduga, nilai kosong, dan satuan tidak konsisten. Jumlah catatan saja tidak membuktikan bahwa catatan yang benar telah ditransfer.
+**Cocokkan ID lapangan dengan label fisiknya**, lalu periksa lokasi, kegiatan pengumpulan, koordinat, personel pengumpul, identifikasi, bagian spesimen, dan preparasi. Cari pengenal terbaca yang ganda, tanggal yang janggal, nilai yang kosong, dan satuan yang tidak konsisten. Jumlah catatan saja tidak membuktikan bahwa catatan yang benar sudah dipindahkan.
 
-Bacalah catatannya, bukan ringkasannya. Barchard & Pace (2011) menemukan hanya 0,06% kesalahan entri data yang berupa nilai kosong atau di luar rentang yang diizinkan untuk variabelnya, dan menyimpulkan peneliti tidak dapat mengandalkan histogram maupun tabel frekuensi untuk mendeteksinya. Ekspor NAHPU tanpa sel kosong dan tanpa pengukuran mustahil tetap konsisten dengan ratusan angka tertukar dan identifikasi yang salah tempat. Pemeriksaan yang berhasil adalah spesimen di tangan dibandingkan catatan di layar: Field ID yang tertukar antara dua cecurut tidak tampak pada tabel frekuensi dan langsung terlihat di baki.
+**Bacalah catatannya, bukan ringkasannya.** Ekspor NAHPU tanpa sel kosong dan tanpa pengukuran mustahil tetap sejalan dengan ratusan angka tertukar dan identifikasi yang salah tempat. Pemeriksaan yang berhasil adalah spesimen di tangan dibandingkan catatan di layar: ID lapangan yang tertukar antara dua celurut tak tampak pada tabel frekuensi dan langsung ketahuan di baki.
 
-Mengubah identifikasi spesimen memilih taksonnya; mengedit takson bersama mengubah entri yang dipakai catatan lain. Simpan tingkat keyakinan identifikasi, pengidentifikasi, dan keterangan. Tinjau catatan terdampak setelah memperbaiki takson atau personel bersama.
+{% aside type="note" title="Mengapa ringkasan tak menangkap salah ketik" %}
+NAHPU menyediakan statistik ringkas untuk membantu keputusan di lapangan, agar Anda dapat mengoptimalkan pengumpulan data dan menghindari bias pencuplikan. Statistik itu bukan pengganti pencegahan galat data. [Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) menemukan hanya 0,06% galat entri data yang berupa nilai kosong atau di luar rentang yang diizinkan bagi peubahnya, dan menyimpulkan bahwa peneliti tidak dapat mengandalkan histogram dan tabel frekuensi untuk mendeteksi galat entri.
+{% /aside %}
 
-Pertahankan pengamatan asli saat mendokumentasikan koreksi. Catat alasan, sumber, tanggal, dan penanggung jawab perubahan penting dalam catatan atau dokumentasi proyek; jangan menganggap setiap edit menghasilkan riwayat audit lengkap.
+**Mengubah identifikasi spesimen berarti memilih taksonnya; menyunting takson bersama mengubah entri yang dipakai catatan lain.** Pertahankan tingkat keyakinan identifikasi, pengidentifikasi, dan keterangan penjelasnya, serta tinjau catatan yang terdampak setelah memperbaiki takson atau personel bersama.
+
+**Simpan pengamatan asli saat mendokumentasikan koreksi.** Gunakan catatan atau dokumentasi proyek untuk merekam alasan, sumber, tanggal, dan penanggung jawab kurasi yang penting. Jangan menganggap setiap suntingan menghasilkan riwayat audit yang lengkap.
 
 ## Simpan lampiran
 
-Gunakan Media untuk foto dan catatan media lain yang didukung. Gunakan Associated Data untuk berkas terkait atau sumber eksternal, dengan hubungan dan deskripsi yang bermakna. Buka lampiran setelah menyalin atau mengimpor. Tautan eksternal tidak menjamin sumbernya tetap tersedia atau isinya disertakan dalam transfer — Vines et al. (2014) mengukur penurunan 17% per tahun pada peluang sebuah kumpulan data di balik artikel terbitan masih ada, dan URL dalam catatan Associated Data tunduk pada kehilangan bertahap yang sama. Salin apa yang dapat Anda simpan sendiri; tautkan hanya yang tidak bisa.
+- **Media** memuat foto dan rekaman media lain yang didukung.
+- **Associated Data** memuat berkas terkait atau sumber daya eksternal, dengan hubungan dan deskripsi yang bermakna.
+- **Buka lampiran setelah menyalin atau mengimpornya.** Simpan berkas aslinya, dan telusuri peringatan berkas hilang sebelum menghapus salinan sumber.
 
-Simpan berkas asli dan selidiki peringatan berkas hilang sebelum menghapus salinan sumber. Tentukan apakah font kustom dan gambar templat perlu ditransfer terpisah. Menyembunyikan kolom tidak menghapus nilai tersimpan maupun mengecualikannya dari ekspor.
+**Salin apa yang bisa Anda simpan sendiri; tautkan hanya yang tidak bisa.** Tautan eksternal tidak menjamin sasarannya tetap tersedia atau ikut terbawa dalam transfer.
+
+{% aside type="note" title="Secepat apa data tertaut menghilang" %}
+[Vines et al. (2014)](https://doi.org/10.1016/j.cub.2013.11.014) mengukur penurunan 17% per tahun pada peluang bahwa kumpulan data di balik sebuah artikel terbit masih ada. URL dalam catatan Associated Data mengalami keausan yang sama.
+{% /aside %}
+
+Putuskan apakah fonta khusus dan gambar templat perlu dipindahkan terpisah. Mengubah visibilitas formulir tidak menghapus nilai tersimpan maupun mengeluarkannya dari ekspor. Fonta hanya dipakai untuk mencetak arsip catatan dan untuk membuat label spesimen serta bagiannya.
 
 ## Pilih dan periksa ekspor
 
-Gunakan `Export records` dengan preset yang telah ditinjau untuk analisis atau kurasi lembar kerja. Periksa kolom, nilai berulang, satuan, filter, dan pengenal. Pilihan tajuk Darwin Core merupakan pemetaan, bukan jaminan bahwa setiap kolom memiliki istilah standar yang setara.
+**Gunakan `Export records` dengan prasetel yang sudah ditinjau** untuk analisis atau kurasi lewat lembar sebar. Periksa kolom, nilai berulang, satuan, saringan, dan pengenal pada keluarannya. Pilihan tajuk Darwin Core adalah pemetaan, bukan jaminan bahwa tiap kolom punya padanan istilah baku.
 
-Gunakan ekspor proyek asli atau NAHPU Data Packages untuk alur impor kembali yang didukung. ZIP dan TAR.GZ menyertakan berkas proyek yang tersedia; JSON.GZ tidak. Paket standar, tabel, gambar, dan dokumen cetak berguna untuk pertukaran atau publikasi dan tidak menggantikan salinan asli yang dapat dipulihkan. Lihat [Paket Catatan](/id/usages/export/export-bundles/) untuk isi dan batasannya.
+**Gunakan ekspor proyek asli atau NAHPU Data Packages untuk alur impor ulang yang didukung.** Transfer proyek ZIP dan TAR.GZ menyertakan berkas proyek yang tersedia; JSON.GZ tidak. Paket standar, tabel, gambar, dan dokumen cetak melayani pertukaran atau publikasi, dan tidak menggantikan salinan asli yang dapat dipulihkan. Lihat [Paket catatan](/id/usages/export/export-bundles/) untuk isi dan batasan tiap paket.
 
-Simpan cadangan seluruh instalasi sebelum kurasi besar atau penggabungan dan periksa pemulihan secara terpisah. Ikuti [rutinitas pencadangan](/id/best-practices/project-management/) tim.
+**Simpan cadangan seluruh instalasi sebelum kurasi besar atau penggabungan**, dan verifikasi pemulihannya secara terpisah. Ikuti [rutinitas pencadangan](/id/best-practices/project-management/) yang disepakati tim.
 
-## Lindungi informasi sebelum berbagi
+## Lindungi informasi sebelum dibagikan
 
-Putuskan apa yang dirilis berdasarkan risiko terhadap takson, bukan berdasarkan kebiasaan menahan atau menerbitkan segalanya. Tulloch et al. (2018) menyusun pohon keputusan yang menimbang risiko eksploitasi — perburuan liar, pengambilan, gangguan pengunjung — terhadap manfaat konservasi dari ketersediaan data, dan berargumen bahwa memperlakukan semua lokalitas sebagai sensitif justru menghambat konservasi banyak spesies yang tidak menghadapi risiko itu. Terapkan per takson dan catat keputusannya dalam dokumentasi proyek, agar rilis berikutnya mengikuti penalaran yang sama.
+**Putuskan apa yang dirilis berdasarkan risiko terhadap taksonnya**, bukan karena kebiasaan menahan semuanya atau membuka semuanya. Terapkan pertimbangan itu per takson dan catat keputusannya bersama dokumentasi proyek, agar rilis berikutnya mengikuti penalaran yang sama.
 
-Bila sebuah lokalitas sensitif, generalisasikan alih-alih menghapus: koordinat yang dibulatkan ke presisi terdokumentasi, dengan ketidakpastian diperlebar sepadan, tetap berguna untuk analisis berskala sebaran sekaligus menghilangkan jalur perangkap. Nyatakan dalam dataset terbitan nilai mana yang digeneralisasi atau tidak disertakan, dan simpan sumber asli yang terlindungi.
+**Bila sebuah lokalitas peka, buat lebih umum alih-alih menghapusnya.** Koordinat yang dibulatkan pada presisi terdokumentasi, dengan ketidakpastian yang diperlebar seimbang, menjaga catatan tetap berguna untuk analisis skala sebaran sekaligus menghapus jalur perangkapnya. Nyatakan dalam kumpulan data yang dirilis nilai mana yang diumumkan lebih kasar atau ditahan, dan simpan aslinya secara terlindungi.
 
-Tinjau pembatasan lokasi tepat, kontak personel, catatan, dan metadata gambar. Ekspor hanya informasi yang disetujui dan periksa berkas sebenarnya, termasuk tabel pendamping dan lampiran. Menyembunyikan kolom di NAHPU bukan penyuntingan informasi: kolom tersembunyi tetap menyimpan nilainya dan masih dapat muncul dalam ekspor.
+**Tinjau lokasi persis, kontak personel, catatan, dan metadata gambar untuk pembatasan.** Ekspor hanya informasi yang disetujui dan periksa berkas sesungguhnya, termasuk tabel pendamping dan lampiran. Menyembunyikan kolom di NAHPU bukan penyuntingan sensor: kolom tersembunyi tetap menyimpan nilainya dan masih dapat muncul dalam ekspor.
 
 ## Cetak dan periksa label
 
-Sertakan Field ID yang dapat dibaca dan informasi koleksi yang diwajibkan lembaga. Kode QR UUID spesimen dapat menghubungkan label ke catatan digital; pertahankan teks yang dapat dibaca agar label berguna tanpa pemindai, dan karena label berumur lebih panjang daripada perangkat lunak yang membuatnya.
+**Sertakan ID lapangan yang terbaca dan informasi koleksi yang diwajibkan lembaga Anda.** Kode QR UUID spesimen dapat menghubungkan label dengan catatan digitalnya; pertahankan teks yang terbaca agar label tetap berguna tanpa pemindai, dan karena label berumur lebih panjang daripada perangkat lunak yang membuatnya.
 
-Pratinjau catatan yang mewakili data, termasuk nama panjang dan kolom kosong. Cetak pada ukuran yang direncanakan, periksa bagian terpotong dan keterbacaan, lalu pindai QR untuk memastikan spesimen yang benar. Cocokkan setiap label dengan spesimen fisik dan bagiannya sebelum pemasangan. Lihat [ekspor dokumen](/id/usages/export/export-documents/).
+Sebelum memasang label apa pun:
+
+- Pratinjau catatan yang mewakili, termasuk nama panjang dan kolom yang kosong.
+- Cetak pada ukuran yang dituju, lalu periksa pemotongan dan keterbacaannya.
+- Pindai kode QR untuk memastikan ia menunjuk spesimen yang dimaksud.
+- Cocokkan tiap label dengan spesimen fisik dan bagian-bagiannya.
+
+Lihat [ekspor dokumen](/id/usages/export/export-documents/).
 
 ## Referensi
 

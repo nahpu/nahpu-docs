@@ -5,13 +5,14 @@ sidebar:
     order: 8
 ---
 
-Última actualización: 2 de septiembre de 2026
+Última actualización: 9 de septiembre de 2026
 
 ## Alcance y resumen
 
 Esta Política de Privacidad cubre la aplicación NAHPU en sus plataformas
-compatibles. No cubre sitios web, aplicaciones o servicios de terceros que
-usted decida abrir o utilizar desde NAHPU.
+compatibles y el sitio web de NAHPU en [nahpu.app](https://nahpu.app/). No
+cubre sitios web, aplicaciones o servicios de terceros que usted decida abrir o
+utilizar desde NAHPU.
 
 NAHPU funciona sin una cuenta. El proyecto NAHPU no opera un servicio que
 reciba o almacene sus registros de catálogo y la aplicación no incluye
@@ -89,8 +90,10 @@ original o la aplicación.
 ## Mapas en línea
 
 NAHPU proporciona un mapa base sin conexión de Natural Earth y una opción para
-no mostrar ningún mapa base. Estas opciones no contactan a un proveedor de
-mapas en línea.
+no mostrar ningún mapa base. Ninguna de las dos opciones solicita estilos ni
+teselas a un proveedor de mapas en línea. En macOS y Windows, el software que
+dibuja el mapa sí se descarga de una red de distribución de contenido, como
+describe la siguiente sección.
 
 Si selecciona un mapa base en línea, NAHPU solicita estilos y teselas de mapa a
 [OpenFreeMap](https://openfreemap.org/). NAHPU no carga sus registros de
@@ -110,6 +113,41 @@ actuales.
 
 Para evitar solicitudes a un proveedor de mapas en línea, elija `Natural Earth
 (Offline)` o `None` como mapa base.
+
+## Cómo se dibujan los mapas en macOS y Windows
+
+En Android e iOS, NAHPU dibuja los mapas con un renderizador incorporado en la
+aplicación. En macOS y Windows, los dibuja dentro de una vista web del sistema,
+y esa vista web descarga la biblioteca de renderizado MapLibre GL, su hoja de
+estilos y una biblioteca auxiliar de lectura de teselas desde la red de
+distribución de contenido [unpkg](https://unpkg.com/).
+
+**Esta solicitud se produce siempre que se dibuja un mapa en esas plataformas,
+incluso cuando el mapa base está configurado como `Natural Earth (Offline)` o
+`None`**, porque la biblioteca de renderizado debe cargarse antes de que pueda
+aparecer cualquier mapa. La vista web de su sistema operativo puede almacenar
+estos archivos en caché, de modo que la solicitud no se repite necesariamente
+con cada mapa.
+
+La solicitud revela información normal de red, incluida su dirección IP, a
+unpkg y a sus proveedores de alojamiento. No incluye sus registros de catálogo,
+sus coordenadas, sus capas de mapa ni ninguna otra cosa sobre lo que el mapa
+muestra. unpkg distribuye archivos del registro público de npm y puede utilizar
+Cloudflare como red de distribución de contenido.
+
+Si la biblioteca de renderizado no puede cargarse, NAHPU recurre al mapa
+incorporado de Natural Earth, que se dibuja íntegramente en su dispositivo. Por
+lo tanto, trabajar sin conexión en macOS o Windows produce un mapa sin ninguna
+solicitud de red, tras una breve espera mientras NAHPU determina que la
+biblioteca es inalcanzable. En Linux, el mapa incorporado es el único
+renderizador y no se solicita ninguna biblioteca de renderizado.
+
+Mientras hay un mapa en pantalla en macOS o Windows, NAHPU también abre una
+conexión en la interfaz de bucle invertido de su dispositivo (`127.0.0.1`), en
+un puerto asignado por el sistema operativo, para que la aplicación y la vista
+web intercambien datos del mapa. Esta conexión permanece en su dispositivo, no
+es accesible desde otros dispositivos y no se utiliza para enviar nada fuera de
+él.
 
 ## Escaneo de códigos QR y de barras en Android
 
@@ -141,6 +179,22 @@ sitio web de NAHPU, perfiles de ORCID y Google Fonts. Al abrir un enlace, se le
 transfiere a su navegador o a otra aplicación, cuyas prácticas de privacidad se
 aplican. NAHPU no envía sus registros de catálogo al abrir estos enlaces.
 
+## El sitio web de NAHPU
+
+El sitio web de NAHPU en [nahpu.app](https://nahpu.app/), incluidas esta página
+y la documentación, es un sitio estático publicado mediante GitHub Pages. No
+instala cookies de seguimiento, no contiene publicidad, no incrusta contenido
+de terceros y no ejecuta ningún script de analítica. No recibimos un registro
+de quién lo visita.
+
+Como proveedor de alojamiento, GitHub recibe información normal de red en cada
+solicitud, incluidas su dirección IP, el tipo de navegador y las páginas
+solicitadas, y la utiliza para servir y proteger el sitio. Consulte la
+[Declaración de Privacidad de
+GitHub](https://docs.github.com/es/site-policy/privacy-policies/github-privacy-statement)
+para conocer sus prácticas. Seguir un enlace del sitio hacia otro sitio web lo
+lleva a ese sitio, cuyas propias prácticas de privacidad se aplican.
+
 ## Seguridad
 
 NAHPU depende del entorno aislado de aplicaciones, el sistema de permisos y la
@@ -164,6 +218,20 @@ usted controla esos registros en su dispositivo. Puede:
 
 Para información conservada por un servicio de terceros, contacte al proveedor
 o utilice los controles descritos en su política de privacidad.
+
+## Menores
+
+NAHPU es una herramienta de campo y de colecciones destinada al trabajo de
+investigación, docencia y curaduría, y no está dirigida a menores. Está pensada
+para personas de 13 años o más, o de la edad superior que su país establezca
+para el consentimiento.
+
+No recopilamos a sabiendas información personal de menores. La aplicación no
+tiene cuenta, ni registro, ni servicio que pudiera recibir esa información.
+Cuando un estudiante o un menor utiliza NAHPU en una clase, un curso de campo o
+un proyecto supervisado, el adulto o la institución que supervisa es
+responsable de los registros introducidos y de cualquier permiso o
+consentimiento que el proyecto requiera.
 
 ## Cambios en esta política
 

@@ -1,34 +1,48 @@
 ---
 title: Pengumpulan Data
+sidebar:
+    label: Pengumpulan Data
+    order: 4
 ---
 
-Catat konteks yang cukup agar peneliti lain dapat menafsirkan spesimen, mengunjungi kembali lokalitas, dan menilai pengamatan. Michener et al. (1997) menggambarkan entropi informasi yang menyusul satu musim lapangan: isi penafsiran sebuah kumpulan data merosot seiring bubarnya orang-orang yang menyimpannya dalam ingatan, dan penurunan itu paling cepat pada bulan-bulan pertama. Apa pun yang tidak dapat dinyatakan sendiri oleh catatan itulah yang akan hilang.
+Catat konteks yang cukup agar peneliti lain dapat menafsirkan spesimen, mengunjungi kembali lokalitasnya, dan menilai pengamatan. **Apa pun yang tidak dapat dinyatakan sendiri oleh catatan itulah yang akan hilang.**
+
+{% aside type="note" title="Mengapa konteks lapangan memudar" %}
+[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) menggambarkan entropi informasi yang menyusul satu musim lapangan: isi penafsiran sebuah kumpulan data merosot seiring bubarnya orang-orang yang menyimpannya dalam ingatan, dan penurunan itu paling cepat pada bulan-bulan pertama.
+{% /aside %}
 
 ## Penamaan lokasi dan koordinat
 
-Gunakan `Site ID` yang stabil, misalnya `PAT-01`, untuk lokalitas koleksi. Isi nama deskriptif, wilayah administratif, akses, dan penanda tempat pada kolom lokasi, bukan memasukkan semuanya ke ID. Saat berkunjung kembali, gunakan lokasi yang sama dan buat kegiatan koleksi baru.
+**Gunakan `Site ID` yang stabil untuk satu lokalitas pengumpulan**, misalnya `PAT-01`. Simpan nama deskriptif, wilayah administratif, keterangan akses, dan penanda bentang alam pada kolom lokasi, bukan memampatkan semuanya ke dalam ID. `Site ID` yang ringkas tetapi deskriptif lebih mudah ditemukan saat memilih kegiatan pengumpulan. NAHPU otomatis menampilkan lokalitas lengkap pada tiap kolom setelah Anda memilih sebuah `Site ID`.
 
-Namai koordinat secara konsisten: `PAT-01-T01-START` dan `PAT-01-T01-END` dapat menandai ujung transek; `PAT-01-TRAP-001` menandai posisi perangkap. Dokumentasikan konvensi dan arti setiap titik. Contoh ini merupakan konvensi tim, bukan pengenal yang dibuat atau diwajibkan NAHPU. Setiap spesimen harus merujuk titik yang sesuai; satu lokasi dapat memiliki beberapa titik.
+**Beri nama koordinat secara konsisten di dalam satu lokasi.** Misalnya, `PAT-01-T01-START` dan `PAT-01-T01-END` dapat menandai satu transek, sedangkan `PAT-01-TRAP-001` menandai posisi perangkap. Dokumentasikan konvensinya dan makna tiap titik. Contoh-contoh ini adalah konvensi tim, bukan pengenal yang dibuat atau diwajibkan NAHPU. Setiap spesimen harus merujuk titik koordinat yang tepat; satu lokasi dapat memuat beberapa titik.
 
 ## Georeferensi {% #georeferencing %}
 
-Simpan deskripsi lokalitas dan sumber posisi. Presisi desimal saja tidak membuktikan akurasi. Panduan berikut menerapkan *Georeferencing Best Practices* dari Chapman & Wieczorek (2020) dan *Quick Reference Guide* pendampingnya (Zermoglio et al. 2020) pada kolom koordinat NAHPU; lihat keduanya untuk metode selengkapnya.
+Simpan deskripsi lokalitas dan sumber posisinya. **Banyaknya angka desimal saja tidak menjamin ketepatan.**
 
-### Tulis lokalitas yang berdiri sendiri tanpa koordinat
+{% aside type="note" title="Panduan sumber" %}
+Bagian ini menerapkan [*Georeferencing Best Practices*](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) karya Chapman & Wieczorek (2020) beserta [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/) pendampingnya (Zermoglio et al. 2020) pada kolom koordinat NAHPU. Kami menyarankan membaca keduanya untuk metode selengkapnya.
+{% /aside %}
 
-Chapman & Wieczorek menyarankan tetap menuliskan deskripsi lokalitas walaupun koordinat sudah ada, karena deskripsi itulah bukti independen untuk memeriksa sebuah posisi. Gunakan `Precise Locality`, hierarki geografi, dan `Remarks`, serta tulis cukup spesifik sehingga tidak menyisakan tafsir kedua. Panduan mereka menyebut bentuk kabur yang harus dihindari: `dekat`, `pusat dari`, dan arah tanpa jarak seperti `sebelah barat Jiuquan`. Tulislah `7,2 km timur laut Muara Sipongi lewat jalan, menyusuri jalur punggungan di atas Pondok II`.
+### Tulis lokalitas yang berdiri tanpa koordinat
 
-Deskripsi itulah yang menangkap koordinat yang salah belahan bumi atau tertukar antara lintang dan bujur. Posisi tanpa teks lokalitas tidak punya pembanding.
+**Tuliskan deskripsi lokalitas sekalipun Anda punya koordinat.** Deskripsi itu adalah bukti mandiri untuk memeriksa sebuah posisi. Gunakan `Precise Locality`, hierarki geografi, dan `Remarks` untuk itu, dan buatlah cukup rinci sehingga tidak menyisakan tafsir kedua.
+
+- Hindari rumusan yang kabur: `dekat`, `pusat dari`, dan arah tanpa jarak seperti `sebelah timur Temboan`.
+- Tulislah `7,2 km timur laut Muara Sipongi lewat jalan darat, menyusuri jalur punggungan di atas Shelter II`.
+
+Deskripsi itulah yang menangkap koordinat yang salah belahan bumi atau tertukar antara lintang dan bujur. Posisi tanpa teks lokalitas tidak punya pembanding apa pun.
 
 ### Selalu catat datum
 
-Datum yang tidak dicatat atau keliru merupakan salah satu kesalahan posisi terbesar yang mungkin terjadi. Chapman & Wieczorek melaporkan pergeseran antara yang tercatat pada sebagian peta dan WGS84 berkisar dari nol hingga 5359 m — kesalahan berskala kilometer yang muncul dari kolom yang dibiarkan pada nilai bawaan.
+**Datum yang tidak dicatat atau keliru adalah salah satu sumber galat posisi terbesar.** Pergeseran antara yang tercatat pada sebagian peta dan WGS84 berkisar dari nol hingga 5359 m: galat berskala kilometer yang muncul hanya karena satu kolom dibiarkan pada nilai bawaannya.
 
-Kolom `Datum` NAHPU menggunakan WGS84 secara bawaan dan diekspor sebagai `dwc:geodeticDatum`. Periksa pengaturan datum pada unit GPS itu sendiri, jangan menganggapnya sudah sesuai. Mengubah kolom `Datum` tidak mentransformasikan koordinat yang direkam pada datum lain, begitu pula mengonversi antarformat masukan yang diterima. Lakukan transformasi tersebut dengan alat geospasial sebelum impor dan catat prosesnya dalam catatan.
+Kolom `Datum` NAHPU berisi WGS84 secara bawaan dan diekspor sebagai `dwc:geodeticDatum`. **Periksa setelan datum pada unit GPS itu sendiri**, jangan menganggapnya sudah cocok. Mengubah kolom `Datum` tidak mengonversi koordinat yang direkam dalam datum lain, begitu pula peralihan antarformat masukan yang diterima. Konversikan data semacam itu dengan perkakas geospasial sebelum diimpor, dan catat konversinya pada catatan.
 
-### Pertahankan setiap desimal yang diberikan sumber
+### Pertahankan semua desimal dari sumbernya
 
-Memangkas koordinat membuang akurasi yang tidak dapat dipulihkan. Chapman & Wieczorek memberikan jarak di permukaan yang diwakili tiap angka desimal:
+Memotong angka koordinat membuang ketepatan yang tak dapat dipulihkan. Perkiraan jarak di permukaan untuk tiap angka desimal:
 
 | Angka desimal | Perkiraan jarak di permukaan |
 |---|---|
@@ -38,51 +52,64 @@ Memangkas koordinat membuang akurasi yang tidak dapat dipulihkan. Chapman & Wiec
 | 2 (0,01°) | 1.111 m |
 | 1 (0,1°) | 11.111 m |
 
-Jalur perangkap yang dicatat dengan dua angka desimal berada di suatu tempat dalam radius sekitar 1,1 km — lebih lebar daripada jalur perangkap itu sendiri, dan cukup lebar untuk menempatkan `PAT-01-T01-START` dan `PAT-01-T01-END` pada titik yang sama. Masukkan sebanyak mungkin angka desimal yang disediakan sumber koordinat.
+Satu jalur perangkap yang dicatat dengan dua desimal berada di suatu titik dalam radius sekitar 1,1 km: lebih lebar daripada jalur perangkapnya sendiri, dan cukup lebar untuk menempatkan `PAT-01-T01-START` dan `PAT-01-T01-END` di titik yang sama. GPS genggam khusus umumnya memberi lima angka desimal. **Masukkan sebanyak mungkin desimal yang disediakan sumber koordinat.**
 
-### Rekam posisi tempat kegiatan benar-benar terjadi
+### Ambil posisi di tempat kegiatan berlangsung
 
-Chapman & Wieczorek menegaskan bahwa koordinat harus menggambarkan tempat kegiatan benar-benar terjadi, bukan pangkalan atau kamp. Di NAHPU, rekam dengan kartu `Device GPS` pada posisi pengumpulan dan periksa hasilnya sebelum menerimanya. Pembacaan kemudian di kamp menunjukkan posisi kamp, kecuali Anda sengaja memasukkan jarak offset yang terdokumentasi atau posisi yang dikoreksi.
+**Ambil pembacaan di titik pengumpulan, bukan di kamp.** Di NAHPU, ambil koordinat lewat kartu `Device GPS` di lokasi dan periksa hasilnya sebelum menerimanya. Pembacaan yang diambil belakangan di kamp menggambarkan kamp, kecuali Anda sengaja memasukkan pergeseran terdokumentasi atau posisi terkoreksi.
 
-Bila posisi harus dinyatakan sebagai offset, ukur sepanjang jalur atau sebagai dua jarak tegak lurus dari sebuah bentang alam; panduan mereka mencatat cara ini menghilangkan ketidakpastian akibat arah kompas yang kurang tepat. Catat apakah jarak diukur menyusuri rute (`by road`) atau sebagai garis lurus (`by air`) — keduanya menggambarkan tempat yang berbeda. Gunakan bentang acuan yang stabil, seperti penanda permanen atau titik triangulasi, jangan titik jalan sementara atau kamp yang tidak akan ada musim depan.
+Ponsel kelas atas beberapa tahun terakhir merekam koordinat dengan ketepatan yang sebanding dengan GPS genggam khusus, sehingga mencatat langsung di NAHPU pada ponsel merupakan pilihan yang memadai. Kami tetap lebih menyukai GPS khusus untuk kerja lapangan karena baterainya jauh lebih awet. **Bila tablet yang memuat proyek ditinggal di kamp, ambil pembacaan di lokasi dengan ponsel atau unit GPS**, lalu masukkan kemudian dengan mencantumkan sumbernya.
 
-Untuk transek, catat kedua ujungnya sebagai koordinat terpisah — itulah gunanya konvensi `-START` dan `-END` di atas. Satu lokasi dapat memuat sebanyak mungkin titik yang diperlukan protokol.
+**Nyatakan pergeseran sebagai jarak terukur, jangan sebagai arah kompas.** Ukur menyusuri jalur atau sebagai dua jarak tegak lurus dari sebuah bentang alam; cara itu menghilangkan ketidakpastian yang ditimbulkan arah kompas yang kurang presisi. Catat apakah jarak diukur menyusuri rute (`by road`) atau garis lurus (`by air`) — keduanya menggambarkan tempat yang berbeda. Gunakan penanda acuan yang tetap, seperti tengara permanen atau titik triangulasi, jangan titik singgah sementara atau kamp yang tak akan ada musim depan.
+
+**Untuk transek, catat kedua ujungnya sebagai koordinat terpisah**, dan untuk itulah konvensi `-START` dan `-END` di atas. Satu lokasi dapat memuat titik sebanyak yang dibutuhkan protokol.
 
 ### Tetapkan ketidakpastian dari pembacaan perangkat, lalu perlebar
 
-*Quick Reference Guide* memberikan dua aturan operasional yang dapat langsung diterapkan pengguna NAHPU. Masukkan nilai setidaknya dua kali akurasi yang dilaporkan GPS pada saat perekaman. Bila akurasinya tidak diketahui, 30 m adalah nilai bawaan yang konservatif untuk pembacaan alat genggam setelah Mei 2000, ketika Selective Availability dihentikan.
+Dua aturan yang bisa langsung diterapkan:
 
-Alasan memperlebar angka perangkat adalah karena akurasi yang dilaporkan mengandaikan kondisi yang jarang tersedia di bawah tegakan hutan. Chapman & Wieczorek merangkum kinerja terpublikasi: alat genggam menjanjikan di bawah 5 m di area terbuka dengan empat satelit atau lebih, ponsel mencapai sekitar 4,9 m di bawah langit terbuka dan memburuk di dekat pohon dan bangunan, sedangkan akurasi terukur di hutan berkisar 3–11 m pada hutan gugur tanpa daun dan 3–20 m saat berdaun. Merata-ratakan beberapa pembacaan pada satu posisi membawa penerima modern ke sekitar 3 m atau lebih baik, sepadan dengan beberapa menit tambahan di lokasi yang akan dikutip selama puluhan tahun.
+- **Masukkan sekurang-kurangnya dua kali lipat ketepatan yang dilaporkan GPS** pada saat pengambilan.
+- **Bila ketepatannya tidak diketahui, gunakan 30 m**, nilai bawaan yang konservatif untuk pembacaan alat genggam setelah Mei 2000, saat Selective Availability dihentikan.
 
-NAHPU menyimpan `Uncertainty (m)` dalam meter bulat dan mengekspornya sebagai `dwc:coordinateUncertaintyInMeters`. Perekaman lewat perangkat dapat mengisinya dari akurasi yang dilaporkan sistem operasi; perlakukan angka itu sebagai titik awal yang harus diperlebar, bukan penilaian akhir. Biarkan nilai yang tidak diketahui kosong dan jelaskan kekurangannya dalam catatan.
+Alasan memperlebar angka perangkat adalah bahwa ketepatan yang dilaporkan mengandaikan kondisi yang jarang Anda dapatkan di bawah tegakan hutan. **Merata-ratakan beberapa pembacaan pada satu posisi** membawa penerima modern ke sekitar 3 m atau lebih baik, sepadan dengan beberapa menit di lokasi yang akan Anda kutip selama puluhan tahun.
 
-Catat `Elevation (m)` dengan kehati-hatian yang sama. Elevasi dari GPS umumnya berakurasi 5 m atau lebih buruk, dan Chapman & Wieczorek mencatat model elevasi digital sering menjadi sumber yang lebih baik; jika elevasi diambil dari DEM atau altimeter, sebutkan dalam catatan.
+{% aside type="note" title="Kinerja penerima menurut publikasi" %}
+Kedua aturan di atas berasal dari [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). [Chapman & Wieczorek](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) merangkum kinerja terukur di baliknya: alat genggam menjanjikan di bawah 5 m di area terbuka dengan empat satelit atau lebih; ponsel mencapai sekitar 4,9 m di bawah langit terbuka dan memburuk di dekat pohon dan bangunan; ketepatan di hutan berkisar 3–11 m pada hutan luruh daun tanpa daun dan 3–20 m saat berdaun.
+{% /aside %}
 
-### Bedakan ketidakpastian dan jangkauan spesimen
+NAHPU menyimpan `Uncertainty (m)` dalam meter bulat dan mengekspornya sebagai `dwc:coordinateUncertaintyInMeters`. Pengambilan lewat perangkat dapat mengisinya dari ketepatan yang dilaporkan sistem operasi.
 
-`Coordinate extent (m)` spesimen menjelaskan jangkauan spasial relatif terhadap titik yang dipilih, misalnya area koleksi yang diwakili satu koordinat. Nilai ini berbeda dari ketidakpastian koordinat. Dokumentasikan arti dan pengukuran jangkauan yang digunakan protokol Anda.
+**Catat `Elevation (m)` dengan kehati-hatian yang sama.** Elevasi GPS umumnya meleset 5 m atau lebih, dan model elevasi digital sering menjadi sumber yang lebih baik; bila Anda mengambil elevasi dari DEM atau altimeter, sebutkan pada catatan.
 
-Pemetaan Darwin Core NAHPU menjumlahkan nilai positif ketidakpastian koordinat dan jangkauan spesimen; jika hanya satu tersedia, nilai itulah yang digunakan. Ini adalah perilaku ekspor, bukan metode umum menghitung ketidakpastian georeferensi — metode titik-radius pada Chapman & Wieczorek menggabungkan luas bentang yang dirujuk, akurasi sumber koordinat, presisi desimal, datum, dan galat pengukuran offset. Hindari menghitung jangkauan yang sama dua kali dan tinjau nilai ekspor berdasarkan metode terdokumentasi sebelum publikasi.
+### Bedakan ketidakpastian dan rentang spesimen
 
-### Catat siapa yang melakukan georeferensi, dan bagaimana
+`Coordinate extent (m)` pada spesimen menggambarkan rentang ruang spesimen terhadap titik yang dipilih, misalnya area pengumpulan yang diwakili satu koordinat. **Ini berbeda dari ketidakpastian koordinat.** Dokumentasikan makna dan cara pengukuran rentang yang dipakai protokol Anda.
 
-Georeferensi yang dapat direproduksi memerlukan asal usul, dan *Quick Reference Guide* mencantumkan `dwc:georeferencedBy`, `dwc:georeferencedDate`, `dwc:georeferenceProtocol`, `dwc:georeferenceSources`, dan `dwc:georeferenceVerificationStatus` bersama posisinya.
+Pemetaan Darwin Core NAHPU menjumlahkan nilai positif ketidakpastian koordinat dan rentang spesimen; bila hanya satu yang terisi, nilai itulah yang dipakai. Ini perilaku ekspor, bukan metode umum menghitung ketidakpastian georeferensi. **Hindari menghitung rentang yang sama dua kali**, dan periksa nilai hasil ekspor terhadap metode yang Anda dokumentasikan sebelum publikasi.
 
-NAHPU tidak memiliki kolom khusus untuk istilah-istilah tersebut. NAHPU membawa `notes` koordinat ke `dwc:georeferenceRemarks`, masukan apa adanya ke `dwc:verbatimCoordinates` dan `dwc:verbatimCoordinateSystem`, serta `GPS unit` untuk perangkat yang dipakai. Catat protokol, pelaksana, dan sumbernya dalam dokumentasi proyek atau kolom kustom yang disepakati, dan sebutkan dalam `notes` metode yang menghasilkan titik tersebut. Kumpulan data yang tidak dapat menjelaskan cara koordinatnya dibuat tidak dapat dinilai ulang kemudian.
+{% aside type="note" title="Perhitungan lengkapnya" %}
+Metode titik-radius pada [Chapman & Wieczorek](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) menggabungkan luas bentang alamnya, ketepatan sumber koordinat, presisi koordinat, datum, dan galat pengukuran pergeseran.
+{% /aside %}
+
+### Catat siapa yang mengambil koordinat, dan bagaimana
+
+**NAHPU menganggap koordinat dicatat oleh ketua lokasi. Bila pembacaan diambil orang lain, sebutkan pada `notes` koordinat tersebut.**
+
+Catat metodenya di sana juga. NAHPU membawa `notes` ke `dwc:georeferenceRemarks`, entri verbatim ke `dwc:verbatimCoordinates` dan `dwc:verbatimCoordinateSystem`, serta `GPS unit` untuk perangkat yang dipakai. Kumpulan data yang tak dapat menjelaskan bagaimana koordinatnya dibuat tidak dapat dinilai ulang kemudian.
 
 ### Tinjau titik hasil impor
 
-Untuk CSV, TSV, atau Excel, petakan `Latitude` dan `Longitude` ke kolom derajat desimal melalui `Edit column mapping`. Tinjau pemetaan opsional nama, elevasi, unit GPS, dan catatan. Periksa peringatan dan pilih hanya titik yang diinginkan dalam `Review coordinates` sebelum menambahkannya.
+Untuk CSV, TSV, atau Excel, petakan `Latitude` dan `Longitude` ke kolom derajat desimal melalui `Edit column mapping`. Tinjau pemetaan opsional untuk nama, elevasi, unit GPS, dan catatan. Periksa peringatan dan pilih hanya titik yang dimaksud pada `Review coordinates` sebelum menambahkannya.
 
-Pengimpor lembar kerja menetapkan WGS84 dan tidak memetakan ketidakpastian. Mengingat kasus terburuk 5359 m di atas, periksa sistem koordinat sumber sebelum impor, bukan sesudahnya; lalu tinjau titik yang ditambahkan dan lengkapi metadata yang kurang. Baris yang berhasil dibaca tidak membuktikan lokalitasnya benar. Lihat [impor koordinat](/id/usages/sites/#import-coordinates-from-a-file).
+**Pengimpor lembar sebar menetapkan WGS84 dan tidak memetakan ketidakpastian.** Mengingat kasus terburuk 5359 m di atas, pastikan sistem koordinat sumbernya sebelum impor, bukan sesudah; lalu periksa titik yang ditambahkan dan lengkapi metadata yang kurang. Baris yang berhasil terbaca bukan bukti bahwa titiknya menggambarkan lokalitas yang benar. Lihat [impor koordinat](/id/usages/sites/#import-coordinates-from-a-file).
 
-## Kegiatan dan pengamatan
+## Kegiatan pengumpulan dan pengamatan
 
-Buat kegiatan sesuai kunjungan atau periode pengambilan sampel dalam protokol. Periksa lokasi, tanggal, waktu, metode, dan personel. Duplikasi kegiatan membiarkan data lingkungan kosong: isi pengamatan untuk kegiatan baru. Nilai astronomi dimasukkan secara manual.
+**Buat kegiatan pengumpulan yang mencerminkan kunjungan atau periode pencuplikan dalam protokol Anda.** Pastikan lokasi, tanggal, waktu, metode, dan personel pengumpul sudah benar. Menggandakan sebuah kegiatan menyisakan data lingkungan yang kosong, jadi masukkan pengamatan untuk kegiatan yang baru. Nilai astronomi dimasukkan secara manual.
 
-Gunakan satuan yang ditampilkan dan bedakan nol dari nilai yang belum dicatat. Jelaskan perkiraan dan pengecualian dalam catatan. Gunakan kolom kustom yang disepakati untuk pengamatan berulang dan periksa ketersediaannya pada katalog serta penempatan yang sesuai.
+**Catat pengukuran dengan satuan yang ditampilkan, dan bedakan nol dari nilai yang tidak dicatat.** Jelaskan perkiraan atau pengecualian pada catatan. Gunakan kolom khusus yang disepakati untuk pengamatan berulang, dan periksa ketersediaannya pada katalog serta penempatan yang relevan.
 
-Sebelum meninggalkan lokasi, buka kembali beberapa spesimen yang mewakili catatan dan periksa kegiatan, koordinat, identifikasi, Field ID, bagian, serta lampiran. Catat pertanyaan yang belum terjawab selagi konteks masih tersedia — inilah saat entropi yang digambarkan Michener et al. paling murah dihentikan, karena jawabannya masih ada di kamp, bukan dalam ingatan seseorang setahun kemudian.
+**Sebelum meninggalkan lokasi, buka kembali beberapa spesimen mewakili** dan periksa kegiatan, koordinat, identifikasi, ID lapangan, bagian spesimen, dan lampirannya. Catat pertanyaan yang belum terjawab selagi konteksnya masih ada. Inilah saat termurah untuk menahan kemerosotan itu, karena jawabannya masih ada di kamp, bukan di ingatan seseorang setahun kemudian.
 
 ## Referensi
 
@@ -92,4 +119,4 @@ Zermoglio PF, Chapman AD, Wieczorek JR, Luo M-Y & Bloom DA (2020). [Georeferenci
 
 Michener WK, Brunt JW, Helly JJ, Kirchner TB & Stafford SG (1997). [Nongeospatial metadata for the ecological sciences](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2). *Ecological Applications* 7:330–342.
 
-Gunakan panduan ini bersama protokol operasional terdokumentasi yang sesuai dengan metode yang benar-benar digunakan.
+Gunakan panduan ini bersama protokol operasional terdokumentasi yang mencerminkan metode yang benar-benar dipakai.

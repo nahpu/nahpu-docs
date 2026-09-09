@@ -1,34 +1,49 @@
 ---
 title: Configuração do Aplicativo
+sidebar:
+    label: Configuração do Aplicativo
+    order: 2
 ---
 
-Prepare e teste o NAHPU em cada dispositivo antes de usá-lo para registros de coleta. A configuração é o momento em que prevenir erros custa menos: Chapman (2005) enuncia os dois princípios com clareza — a prevenção é preferível à correção, e quanto mais cedo um erro for detectado na cadeia de informação, mais barata é sua correção. Uma restrição adicionada em Configurações antes da saída elimina toda uma classe de erros que, de outro modo, seria encontrada por um curador anos depois, se é que seria.
+Prepare e teste o NAHPU em cada dispositivo antes de usá-lo para registros de coleta. O NAHPU foi projetado para tornar a configuração fácil e o compartilhamento dela simples. **A configuração é o momento em que prevenir erros custa menos.** Uma restrição adicionada em Configurações antes da saída elimina toda uma classe de erros que, de outro modo, seria encontrada por um curador anos depois, se é que seria.
 
 ## Defina a configuração
 
-Combine com a equipe o táxon principal, o modo de Field ID, o fuso horário do projeto, as unidades de medida e os vocabulários controlados. A numeração por pessoa usa as iniciais e o número registrados para um catalogador; a numeração por projeto usa a convenção do projeto. Ambas exigem um plano para evitar identificadores duplicados entre dispositivos.
+**Defina a configuração com a equipe, e não dispositivo a dispositivo.** Isso mantém a consistência entre todos os dispositivos e reduz a chance de erros. Recomendamos designar uma pessoa para executar a configuração no NAHPU. Depois, compartilhe essa configuração com toda a equipe, para que cada um configure o próprio dispositivo.
 
-Revise a visibilidade dos campos e as predefinições em [Configurações](/pt/usages/settings/). Campos ocultos podem conter dados e aparecer nas exportações. Crie campos personalizados quando os campos existentes não representarem a observação: defina localização, tipo, escopo, catálogo aplicável, unidades e valores permitidos. Insira um valor de teste e confira sua exportação.
-
-Prefira um vocabulário configurado ao texto livre sempre que a observação permitir. Uma condição de hábitat escolhida em uma lista não pode ser digitada como `disturbed`, `Disturbed` e `disturbed ` no mesmo projeto, e essas três variantes não serão reconciliadas na exportação. É a prevenção descrita por Chapman aplicada ao campo que você vai preencher centenas de vezes.
+**Revise a visibilidade dos campos e as predefinições em [Configurações](/pt/usages/settings/).** Campos ocultos ainda podem guardar dados e aparecer nas exportações. Crie um campo personalizado apenas quando nenhum campo nativo expressar a observação, e combine posição, tipo, escopo, catálogo aplicável, unidades e valores permitidos. Insira um valor de teste e verifique sua exportação.
 
 ## Prepare os recursos compartilhados
 
-Adicione as pessoas necessárias e revise a lista de táxons, incluindo níveis taxonômicos e identificações incertas. Reutilize entradas existentes quando representarem a mesma pessoa ou táxon. Defina qual dispositivo mantém as definições compartilhadas e distribui atualizações.
+- **Pessoal e táxons.** Atribua o pessoal necessário e revise a lista de táxons, incluindo categorias de identificação e identificações incertas. Reutilize entradas existentes quando representarem a mesma pessoa ou táxon.
+- **Um único mantenedor.** Defina qual dispositivo mantém as definições compartilhadas e distribui as atualizações.
+- **Documentos e fontes.** Prepare predefinições de exportação, modelos de documento, leiautes de impressão e as fontes necessárias. A transferência de configurações de usuário não inclui arquivos de fontes personalizadas nem imagens; instale esses recursos separadamente e teste os documentos resultantes.
+- **Identidade do projeto.** Use a [identidade do projeto](/pt/how-to-recipes/prepare/share-project-identity/) para estabelecer um UUID comum quando vários dispositivos contribuírem para o mesmo projeto. Quem usar outro dispositivo importa essa identidade antes de criar registros. Ter o mesmo nome de projeto não estabelece um UUID compartilhado.
 
-Prepare predefinições de exportação, modelos de documentos, layouts de impressão e fontes. A transferência de configurações do usuário não inclui arquivos de fontes personalizadas nem imagens; instale os recursos necessários separadamente e teste os documentos. Use a [identidade do projeto](/pt/how-to-recipes/prepare/share-project-identity/) para estabelecer um UUID comum entre dispositivos que contribuirão para o mesmo projeto; ela não transfere registros de coleta.
+## Ensaie o fluxo de trabalho
 
-## Pratique o fluxo de trabalho
+Use um projeto de prática com nome claro. Crie local, coordenada, evento e espécime; altere uma identificação; adicione uma parte, mídia e um arquivo associado quando couber. **Saia e reabra cada registro para confirmar que os valores foram gravados.** As caixas de diálogo exigem um botão de confirmação explícito; muitos campos de registro salvam automaticamente.
 
-Use um projeto identificado como prática. Crie local, coordenada, evento e espécime; altere uma identificação; adicione parte, mídia e arquivo associado quando aplicável. Saia e reabra os registros para conferir os valores persistidos. Use os botões de confirmação dos diálogos; muitos campos dos registros são salvos automaticamente.
+Depois, repita o exercício como será no campo:
 
-Confira os registros de prática reabrindo cada um e comparando-o campo a campo com a etiqueta física. Percorrer a tabela exportada em busca de lacunas e valores atípicos não é equivalente, e a diferença é mensurável. Barchard & Pace (2011) pediram a 195 participantes que digitassem 30 fichas de dados por três métodos e verificaram que apenas 0,06% dos erros resultantes eram valores em branco ou fora do intervalo permitido para a variável — ou seja, quase todos os erros reais sobrevivem a uma conferência baseada em valores ausentes e números impossíveis. No mesmo estudo, a conferência visual produziu de 29% a 58% mais erros do que a dupla digitação e não foi melhor do que a digitação simples. Considere que uma exportação de aparência limpa não comprova nada em especial e monte uma etapa de conferência que leia o próprio registro.
+- Trabalhe sem internet, incluindo as permissões necessárias de localização e câmera.
+- Verifique a tabela exportada real e uma etiqueta impressa.
+- Importe um arquivo de projeto em outra instalação de teste e abra seus registros e arquivos.
+- Teste a substituição do banco de dados apenas em uma instalação cujo conteúdo possa ser descartado.
 
-Quando um valor justificar, digite-o duas vezes a partir da fonte e compare. A dupla digitação custou 33% mais tempo do que a conferência visual naquele estudo, uma troca defensável para identificadores e medidas que não podem ser recuperados depois que o espécime está no vidro.
+## Verifique lendo o registro, não a exportação
 
-Repita sem internet, incluindo as permissões de localização e câmera necessárias. Confira a tabela exportada e uma etiqueta impressa. Importe um arquivo de projeto em outra instalação de teste e abra seus registros e arquivos. Teste a substituição do banco de dados apenas em uma instalação cujo conteúdo possa ser descartado.
+**Reabra cada registro de prática e compare-o campo a campo com a etiqueta física.** Percorrer a tabela exportada em busca de lacunas e valores atípicos não equivale a isso, e a diferença é mensurável: quase todo erro real de digitação é um valor plausível dentro da faixa permitida, portanto sobrevive a uma verificação baseada em valores ausentes e números impossíveis. Trate uma exportação de aparência limpa como prova de nada em particular.
 
-Antes da saída, confira armazenamento, energia, recursos instalados, destinos dos backups e o projeto de trabalho. Consulte [Dispositivos](/pt/usages/devices/), [Escolha e cuidados com o dispositivo](/pt/best-practices/device-care/) e [recuperação de projetos](/pt/how-to-recipes/protect-and-collaborate/import-project/).
+**Quando um valor justificar, digite-o duas vezes a partir da fonte e compare.** A dupla digitação custa tempo, uma troca defensável para identificadores e medidas que não podem ser recuperados depois que o espécime está no vidro.
+
+{% aside type="note" title="Evidência a favor da dupla digitação" %}
+[Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) pediram a 195 participantes que digitassem 30 folhas de dados por três métodos. Apenas 0,06% dos erros resultantes eram valores em branco ou fora da faixa permitida para a variável. A conferência visual produziu de 29% a 58% mais erros do que a dupla digitação e não foi melhor que a digitação simples, enquanto a dupla digitação custou 33% mais tempo.
+{% /aside %}
+
+## Antes da saída
+
+Confirme armazenamento, energia, recursos instalados, destinos de backup e o projeto de trabalho da equipe. Consulte [Dispositivos](/pt/usages/devices/), [Escolha e cuidados com o dispositivo](/pt/best-practices/device-care/) e [recuperação de projeto](/pt/how-to-recipes/protect-and-collaborate/import-project/).
 
 ## Referências
 

@@ -5,14 +5,14 @@ sidebar:
     order: 13
 ---
 
-Terakhir diperbarui: 2 September 2026
+Terakhir diperbarui: 9 September 2026
 
 ## Persetujuan dan Cakupan
 
 Syarat dan Ketentuan ini (**Syarat**) mengatur penggunaan aplikasi resmi NAHPU
-(**Aplikasi**) yang didistribusikan oleh proyek NAHPU. Rujukan kepada **kami**
-atau **proyek NAHPU** berarti para pengelola yang menerbitkan Aplikasi dan situs
-web resmi.
+(**Aplikasi**) yang didistribusikan oleh proyek NAHPU. Rujukan kepada **kami**,
+**Tim NAHPU**, atau **proyek NAHPU** berarti para pengelola yang menerbitkan
+Aplikasi dan situs web resmi.
 
 Dengan mengunduh, mengakses, atau menggunakan Aplikasi, Anda menyetujui Syarat
 ini. Jika Anda menggunakan Aplikasi untuk institusi, pemberi kerja, tim riset,
@@ -41,6 +41,13 @@ perangkat, izin, dan konektivitas.
 Anda harus memiliki kecakapan hukum untuk menerima Syarat ini. Jika hukum yang
 berlaku tidak mengizinkan Anda melakukannya sendiri, gunakan Aplikasi hanya
 dengan izin orang tua, wali, institusi, atau pihak bertanggung jawab lainnya.
+
+Aplikasi ini diperuntukkan bagi pengguna berusia 13 tahun ke atas, atau usia
+yang lebih tinggi apabila negara Anda menetapkan batas usia persetujuan yang
+lebih tinggi, dan tidak ditujukan bagi anak di bawah usia tersebut. Apabila
+seorang anak di bawah umur menggunakan NAHPU dalam kelas, kursus lapangan, atau
+proyek yang diawasi, orang dewasa atau lembaga yang mengawasi menerima Syarat
+ini dan tetap bertanggung jawab atas penggunaan tersebut.
 
 Organisasi yang menyediakan atau mengelola perangkat, proyek, atau kumpulan
 data dapat menerapkan kebijakannya sendiri pada penggunaan NAHPU. Anda
@@ -127,11 +134,14 @@ dan catatan lokasi sensitif.
 
 ## Peta, Pemindaian, Berbagi, dan Layanan Pihak Ketiga Lainnya
 
-Beberapa fungsi opsional bergantung pada sistem operasi atau pihak ketiga.
-Misalnya, peta dasar daring meminta gaya dan ubin peta dari OpenFreeMap,
-pengenalan kode QR dan kode batang pada Android menggunakan Google ML Kit, dan
-hasil ekspor atau tautan eksternal dapat dibuka dengan penyedia berkas,
-penyimpanan awan, peramban, surel, atau aplikasi perpesanan.
+Beberapa fungsi bergantung pada sistem operasi atau pihak ketiga. Misalnya,
+peta dasar daring meminta gaya dan ubin peta dari OpenFreeMap; peta pada macOS
+dan Windows mengunduh pustaka perendernya dari jaringan pengiriman konten
+unpkg, apa pun peta dasar yang Anda pilih; pengenalan kode QR dan kode batang
+pada Android menggunakan Google ML Kit; dan hasil ekspor atau tautan eksternal
+dapat dibuka dengan penyedia berkas, penyimpanan awan, peramban, surel, atau
+aplikasi perpesanan. [Kebijakan Privasi](../privacy/) menjelaskan apa yang
+diterima masing-masing pihak tersebut.
 
 Layanan pihak ketiga diatur oleh ketentuan, praktik privasi, ketersediaan, dan
 batasan teknis mereka sendiri. Kami tidak mengendalikan dan tidak bertanggung
@@ -230,9 +240,34 @@ timbul dari atau terkait dengan Aplikasi.
 Batasan ini mencakup kerugian yang terkait dengan catatan atau keluaran yang
 tidak akurat, kegagalan perangkat atau penyimpanan, gangguan kerja lapangan,
 pengungkapan tanpa izin, layanan pihak ketiga, ketidakpatuhan terhadap izin atau
-peraturan, atau ketidakmampuan menggunakan Aplikasi. Tidak ada ketentuan dalam
-Syarat ini yang membatasi tanggung jawab yang menurut hukum yang berlaku tidak
-dapat dibatasi.
+peraturan, atau ketidakmampuan menggunakan Aplikasi.
+
+NAHPU disediakan tanpa biaya. Sejauh diizinkan oleh hukum, total tanggung jawab
+kami atas seluruh klaim yang berkaitan dengan Aplikasi, digabungkan, tidak akan
+melebihi jumlah yang lebih besar antara jumlah yang Anda bayarkan untuk
+Aplikasi, yaitu nihil, dan lima puluh dolar Amerika Serikat (USD 50).
+
+Tidak ada ketentuan dalam Syarat ini yang membatasi tanggung jawab yang menurut
+hukum yang berlaku tidak dapat dibatasi, termasuk tanggung jawab atas kematian
+atau cedera diri akibat kelalaian, atas kecurangan, atau atas tanggung jawab
+lain yang tidak dapat dikecualikan secara sah.
+
+## Ganti Rugi
+
+Sejauh diizinkan oleh hukum, Anda bertanggung jawab atas klaim, tuntutan,
+kerugian, dan biaya, termasuk biaya hukum yang wajar, yang diajukan pihak
+ketiga terhadap proyek NAHPU, kontributor, atau pengelolanya akibat penggunaan
+Aplikasi oleh Anda. Ini mencakup klaim yang timbul dari catatan, media, dan
+berkas yang Anda masukkan, ekspor, atau bagikan; dari izin, lisensi, atau
+kewenangan yang tidak ada atau dilampaui; dari pengungkapan informasi pribadi
+maupun data lokalitas yang sensitif; dan dari pelanggaran Anda terhadap Syarat
+ini atau terhadap hukum yang berlaku.
+
+Ketentuan ini tidak berlaku bagi klaim yang disebabkan oleh tindakan atau
+kelalaian kami sendiri, dan tidak ada bagian dari bagian ini yang mewajibkan
+Anda menanggung tanggung jawab yang menurut hukum yang berlaku tidak dapat
+dialihkan. Jika Anda menggunakan Aplikasi untuk institusi, pemberi kerja, tim
+riset, atau organisasi lain, bagian ini berlaku bagi organisasi tersebut.
 
 ## Mengakhiri Penggunaan
 

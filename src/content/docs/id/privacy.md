@@ -5,13 +5,14 @@ sidebar:
     order: 8
 ---
 
-Terakhir diperbarui: 2 September 2026
+Terakhir diperbarui: 9 September 2026
 
 ## Ruang lingkup dan ringkasan
 
-Kebijakan Privasi ini berlaku untuk aplikasi NAHPU pada platform yang
-didukung. Kebijakan ini tidak berlaku untuk situs web, aplikasi, atau layanan
-pihak ketiga yang Anda pilih untuk dibuka atau digunakan dari NAHPU.
+Kebijakan Privasi ini berlaku untuk aplikasi NAHPU pada platform yang didukung
+dan untuk situs web NAHPU di [nahpu.app](https://nahpu.app/). Kebijakan ini
+tidak berlaku untuk situs web, aplikasi, atau layanan pihak ketiga yang Anda
+pilih untuk dibuka atau digunakan dari NAHPU.
 
 NAHPU berfungsi tanpa akun. Proyek NAHPU tidak mengoperasikan layanan yang
 menerima atau menyimpan catatan katalog Anda, dan aplikasi tidak memuat iklan.
@@ -85,7 +86,10 @@ aplikasi.
 ## Peta daring
 
 NAHPU menyediakan peta dasar Natural Earth luring dan pilihan untuk tidak
-menampilkan peta dasar. Pilihan ini tidak menghubungi penyedia peta daring.
+menampilkan peta dasar. Kedua pilihan itu tidak meminta gaya atau petak peta
+kepada penyedia peta daring. Di macOS dan Windows, perangkat lunak yang
+menggambar peta tetap diunduh dari jaringan pengiriman konten, sebagaimana
+dijelaskan pada bagian berikutnya.
 
 Jika Anda memilih peta dasar daring, NAHPU meminta gaya dan petak peta dari
 [OpenFreeMap](https://openfreemap.org/). NAHPU tidak mengunggah catatan katalog
@@ -102,6 +106,39 @@ OpenFreeMap](https://openfreemap.org/privacy/) untuk praktik terbarunya.
 
 Untuk menghindari permintaan kepada penyedia peta daring, pilih `Natural Earth
 (Offline)` atau `None` sebagai peta dasar.
+
+## Cara peta digambar di macOS dan Windows
+
+Di Android dan iOS, NAHPU menggambar peta dengan perender yang tertanam di
+dalam aplikasi. Di macOS dan Windows, peta digambar di dalam tampilan web
+sistem, dan tampilan web itu mengunduh pustaka perender MapLibre GL, lembar
+gayanya, serta pustaka pembaca petak pendukung dari jaringan pengiriman konten
+[unpkg](https://unpkg.com/).
+
+**Permintaan ini terjadi setiap kali peta digambar pada platform tersebut,
+termasuk ketika peta dasar disetel ke `Natural Earth (Offline)` atau `None`**,
+karena pustaka perender harus dimuat sebelum peta apa pun dapat muncul.
+Tampilan web sistem operasi Anda dapat menyimpan berkas ini dalam singgahan,
+sehingga permintaan tersebut tidak selalu berulang untuk setiap peta.
+
+Permintaan ini mengungkap informasi jaringan biasa, termasuk alamat IP Anda,
+kepada unpkg dan penyedia hostingnya. Permintaan ini tidak memuat catatan
+katalog Anda, koordinat Anda, lapisan peta Anda, atau hal lain mengenai isi
+peta. unpkg menyajikan berkas dari registri npm publik dan dapat menggunakan
+Cloudflare sebagai jaringan pengiriman konten.
+
+Jika pustaka perender tidak dapat dimuat, NAHPU beralih ke peta Natural Earth
+bawaan, yang digambar sepenuhnya pada perangkat Anda. Karena itu, bekerja
+luring di macOS atau Windows menghasilkan peta tanpa permintaan jaringan sama
+sekali, setelah jeda singkat saat NAHPU memastikan pustaka tersebut tidak dapat
+dijangkau. Di Linux, peta bawaan adalah satu-satunya perender dan tidak ada
+pustaka perender yang diminta.
+
+Selama peta tampil di layar pada macOS atau Windows, NAHPU juga membuka koneksi
+pada antarmuka loopback perangkat Anda (`127.0.0.1`), pada porta yang
+ditetapkan sistem operasi, agar aplikasi dan tampilan web dapat bertukar data
+peta. Koneksi ini tetap berada di perangkat Anda, tidak dapat dijangkau dari
+perangkat lain, dan tidak digunakan untuk mengirim apa pun ke luar perangkat.
 
 ## Pemindaian kode QR dan kode batang di Android
 
@@ -133,6 +170,23 @@ NAHPU, profil ORCID, dan Google Fonts. Membuka tautan akan memindahkan Anda ke
 peramban atau aplikasi lain, sehingga praktik privasi layanan tersebut berlaku.
 NAHPU tidak mengirimkan catatan katalog Anda saat membuka tautan tersebut.
 
+## Situs web NAHPU
+
+Situs web NAHPU di [nahpu.app](https://nahpu.app/), termasuk halaman ini dan
+dokumentasinya, adalah situs statis yang diterbitkan melalui GitHub Pages.
+Situs ini tidak memasang kuki pelacak, tidak memuat iklan, tidak menyematkan
+konten pihak ketiga, dan tidak menjalankan skrip analitik. Kami tidak menerima
+catatan tentang siapa yang mengunjunginya.
+
+Sebagai penyedia hosting, GitHub menerima informasi jaringan biasa pada setiap
+permintaan, termasuk alamat IP Anda, jenis peramban, dan halaman yang diminta,
+lalu menggunakannya untuk menyajikan dan melindungi situs. Lihat [Pernyataan
+Privasi
+GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement)
+untuk mengetahui praktiknya. Mengikuti tautan dari situs ini ke situs web lain
+akan membawa Anda ke situs tersebut, sehingga praktik privasi situs itu yang
+berlaku.
+
 ## Keamanan
 
 NAHPU mengandalkan sandbox aplikasi, sistem izin, dan keamanan perangkat yang
@@ -155,6 +209,21 @@ mengendalikan catatan tersebut pada perangkat. Anda dapat:
 
 Untuk informasi yang disimpan oleh layanan pihak ketiga, hubungi penyedia
 tersebut atau gunakan kontrol yang dijelaskan dalam kebijakan privasinya.
+
+## Anak-anak
+
+NAHPU adalah perkakas lapangan dan koleksi yang ditujukan untuk kerja
+penelitian, pengajaran, dan kurasi, serta tidak ditujukan bagi anak-anak.
+Aplikasi ini diperuntukkan bagi pengguna berusia 13 tahun ke atas, atau usia
+yang lebih tinggi apabila negara Anda menetapkan batas usia persetujuan yang
+lebih tinggi.
+
+Kami tidak dengan sengaja mengumpulkan informasi pribadi anak-anak. Aplikasi
+ini tidak memiliki akun, pendaftaran, maupun layanan yang dapat menerima
+informasi semacam itu. Apabila seorang pelajar atau anak di bawah umur
+menggunakan NAHPU dalam kelas, kursus lapangan, atau proyek yang diawasi, orang
+dewasa atau lembaga yang mengawasi bertanggung jawab atas catatan yang
+dimasukkan dan atas izin maupun persetujuan yang diperlukan proyek tersebut.
 
 ## Perubahan pada kebijakan ini
 

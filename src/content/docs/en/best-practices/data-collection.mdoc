@@ -1,34 +1,48 @@
 ---
 title: Data Collection
+sidebar:
+    label: Data Collection
+    order: 4
 ---
 
-Record enough context for another researcher to interpret a specimen, revisit its locality, and assess the observations. Michener et al. (1997) describe the information entropy that follows a field season: the interpretive content of a dataset decays as the people who held it in memory disperse, and it decays fastest in the first months. Whatever a record cannot say for itself is what will be lost.
+Record enough context for another researcher to interpret a specimen, revisit its locality, and assess the observations. **Whatever a record cannot say for itself is what will be lost.**
+
+{% aside type="note" title="Why field context decays" %}
+[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) describe the information entropy that follows a field season: the interpretive content of a dataset decays as the people who held it in memory disperse, and it decays fastest in the first months.
+{% /aside %}
 
 ## Site and coordinate naming
 
-Use a stable `Site ID` for a collecting locality, such as `PAT-01`. Put its descriptive name, administrative location, access details, and relevant landmarks in the site fields rather than encoding everything in the ID. Do not rename a site each time it is revisited; create a collecting event for the new visit.
+**Use a stable `Site ID` for a collecting locality**, such as `PAT-01`. Put its descriptive name, administrative location, access details, and relevant landmarks in the site fields rather than encoding everything in the ID. A compact, yet descriptive, site ID is easier to find when selecting collecting events. NAHPU will automatically show the full site locality in each field after you select a site ID.
 
-Name coordinates consistently within the site. For example, `PAT-01-T01-START` and `PAT-01-T01-END` can mark a transect, while `PAT-01-TRAP-001` identifies a trap position. Document the convention and what each point represents. These examples are team conventions, not identifiers generated or enforced by NAHPU. A specimen must reference the appropriate point; a site can contain several.
+**Name coordinates consistently within the site.** For example, `PAT-01-T01-START` and `PAT-01-T01-END` can mark a transect, while `PAT-01-TRAP-001` identifies a trap position. Document the convention and what each point represents. These examples are team conventions, not identifiers generated or enforced by NAHPU. A specimen must reference the appropriate coordinate point; a site can contain several.
 
 ## Georeferencing {% #georeferencing %}
 
-Preserve the locality description and the source of the position. Decimal precision alone does not establish accuracy. The guidance below applies Chapman & Wieczorek's (2020) *Georeferencing Best Practices* and the companion *Quick Reference Guide* (Zermoglio et al. 2020) to NAHPU's coordinate fields; consult both for the full method.
+Preserve the locality description and the source of the position. **Decimal precision alone does not establish accuracy.**
+
+{% aside type="note" title="Source guides" %}
+This section applies Chapman & Wieczorek's (2020) [*Georeferencing Best Practices*](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) and the companion [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/) (Zermoglio et al. 2020) to NAHPU's coordinate fields. We recommend consulting both for the full method.
+{% /aside %}
 
 ### Write a locality that stands without the coordinates
 
-Chapman & Wieczorek advise providing a descriptive locality even when you have coordinates, because the description is the independent evidence against which a position can be checked. Use `Precise Locality`, the geography hierarchy, and `Remarks` for it, and make it specific enough to leave no room for a second reading. Their guide singles out vague constructions to avoid: `near`, `center of`, and a bare direction with no distance such as `West of Jiuquan`. Write `7.2 km NE of Muara Sipongi by road, along the ridge trail above Shelter II` instead.
+**Provide a descriptive locality even when you have coordinates.** The description is the independent evidence against which a position can be checked. Use `Precise Locality`, the geography hierarchy, and `Remarks` for it, and make it specific enough to leave no room for a second reading.
+
+- Avoid vague constructions: `near`, `center of`, and a bare direction with no distance such as `East of Temboan`.
+- Write `7.2 km NE of Muara Sipongi by road, along the ridge trail above Shelter II` instead.
 
 That description is what catches a coordinate typed with the wrong hemisphere or with latitude and longitude transposed. A position with no locality text has nothing to be checked against.
 
 ### Record the datum, always
 
-An unrecorded or mistaken datum is one of the largest positional errors available. Chapman & Wieczorek report that shifts between what some maps record and WGS84 range from zero to 5359 m — a kilometres-scale error introduced by a field left at its default.
+**An unrecorded or mistaken datum is one of the largest positional errors available.** Shifts between what some maps record and WGS84 range from zero to 5359 m, a kilometres-scale error introduced by a field left at its default.
 
-NAHPU's `Datum` defaults to WGS84 and exports as `dwc:geodeticDatum`. Check the datum setting on the GPS unit itself rather than assuming it matches. Changing the `Datum` field does not transform coordinates recorded in a different datum, and neither does converting between the accepted input formats. Transform such data with a geospatial tool before importing, and record the transformation in notes.
+NAHPU's `Datum` defaults to WGS84 and exports as `dwc:geodeticDatum`. **Check the datum setting on the GPS unit itself** rather than assuming it matches. Changing the `Datum` field does not transform coordinates recorded in a different datum, and neither does converting between the accepted input formats. Transform such data with a geospatial tool before importing, and record the transformation in notes.
 
-### Keep every decimal the source gives
+### Keep every decimal from the source
 
-Truncating a coordinate discards accuracy that cannot be recovered. Chapman & Wieczorek give the ground distance each decimal place represents:
+Truncating a coordinate discards accuracy that cannot be recovered. Approximate ground distance per decimal place:
 
 | Decimal places | Approximate ground distance |
 |---|---|
@@ -38,51 +52,64 @@ Truncating a coordinate discards accuracy that cannot be recovered. Chapman & Wi
 | 2 (0.01°) | 1,111 m |
 | 1 (0.1°) | 11,111 m |
 
-A trap line recorded to two decimal places sits somewhere inside roughly 1.1 km — wider than the trap line itself, and wide enough to place `PAT-01-T01-START` and `PAT-01-T01-END` at the same point. Enter as many decimals as the coordinate source provides.
+A trap line recorded to two decimal places sits somewhere inside roughly 1.1 km, wider than the trap line itself, and wide enough to place `PAT-01-T01-START` and `PAT-01-T01-END` at the same point. A dedicated handheld GPS device usually gives five decimal places. **Enter as many decimals as the coordinate source provides.**
 
 ### Capture the position where the event happened
 
-Chapman & Wieczorek are explicit that coordinates should describe where the event actually occurred, not the base station or camp. In NAHPU, capture with the `Device GPS` card at the collecting position and inspect the result before accepting it. A reading taken later at camp describes camp, unless you deliberately enter a documented offset or corrected position.
+**Take the reading at the collecting position, not at camp.** In NAHPU, capture with the `Device GPS` card at the site and inspect the result before accepting it. A reading taken later at camp describes camp, unless you deliberately enter a documented offset or corrected position.
 
-When you must express a position as an offset, measure along a path or as two orthogonal distances from a feature; their guide notes this removes the uncertainty an imprecise heading would add. Record whether the distance was measured along the route (`by road`) or as a straight line (`by air`) — the two describe different places. Use stable reference features such as permanent landmarks or trig points, never a temporary waypoint or a camp that will be gone next season.
+A flagship smartphone from the past few years records coordinates with an accuracy comparable to a dedicated handheld GPS device, so recording directly in NAHPU on your phone is a workable option. We still prefer a dedicated GPS unit for fieldwork, for its far longer battery life. **If the tablet holding the project stays in camp, take the reading at the site with the phone or the GPS unit** and enter it later with its source noted.
 
-For a transect, record both ends as separate coordinates, which is what the `-START` and `-END` convention above is for. A site can hold as many points as the protocol needs.
+**Express an offset as a measured distance, never as a heading.** Measure along a path or as two orthogonal distances from a feature; that removes the uncertainty an imprecise heading would add. Record whether the distance was measured along the route (`by road`) or as a straight line (`by air`) — the two describe different places. Use stable reference features such as permanent landmarks or trig points, never a temporary waypoint or a camp that will be gone next season.
+
+**For a transect, record both ends as separate coordinates**, which is what the `-START` and `-END` convention above is for. A site can hold as many points as the protocol needs.
 
 ### Set uncertainty from the device reading, then widen it
 
-The *Quick Reference Guide* gives two operating rules NAHPU users can apply directly. Enter a value at least twice the accuracy the GPS reported at the moment of capture. Where the accuracy is unknown, 30 m is the conservative default for a handheld reading taken after May 2000, when Selective Availability was discontinued.
+Two rules you can apply directly:
 
-The reason to widen the device figure is that reported accuracy assumes conditions you rarely have under forest. Chapman & Wieczorek summarize the published performance: handheld units promise under 5 m in open areas with four or more satellites, smartphones reach about 4.9 m under open sky and degrade near trees and buildings, and measured forest accuracy runs 3–11 m in deciduous forest without leaves and 3–20 m in leaf. Averaging several readings at one position brings a modern receiver to around 3 m or better, which is worth the minutes at a site you will cite for decades.
+- **Enter at least twice the accuracy the GPS reported** at the moment of capture.
+- **Where the accuracy is unknown, use 30 m**, the conservative default for a handheld reading taken after May 2000, when Selective Availability was discontinued.
 
-NAHPU stores `Uncertainty (m)` in whole meters and exports it as `dwc:coordinateUncertaintyInMeters`. A device capture can populate it from the accuracy the operating system reports; treat that as the starting figure to widen, not a finished assessment. Leave unknown values blank and say what is missing in notes.
+The reason to widen the device figure is that reported accuracy assumes conditions you rarely have under forest. **Averaging several readings at one position** brings a modern receiver to around 3 m or better, which is worth the minutes at a site you will cite for decades.
 
-Record `Elevation (m)` with the same scepticism. GPS elevation is typically accurate to 5 m or worse, and Chapman & Wieczorek note a digital elevation model is often the better source; if you take elevation from a DEM or an altimeter, say so in notes.
+{% aside type="note" title="Published receiver performance" %}
+The two rules above come from the [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). [Chapman & Wieczorek](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) summarize the measured performance behind them: handheld units promise under 5 m in open areas with four or more satellites; smartphones reach about 4.9 m under open sky and degrade near trees and buildings; forest accuracy runs 3–11 m in deciduous forest without leaves and 3–20 m in leaf.
+{% /aside %}
+
+NAHPU stores `Uncertainty (m)` in whole meters and exports it as `dwc:coordinateUncertaintyInMeters`. A device capture can populate it from the accuracy the operating system reports.
+
+**Record `Elevation (m)` with the same scepticism.** GPS elevation is typically accurate to 5 m or worse, and a digital elevation model is often the better source; if you take elevation from a DEM or an altimeter, say so in notes.
 
 ### Distinguish uncertainty from specimen extent
 
-A specimen's `Coordinate extent (m)` describes its spatial extent relative to the selected point, such as a collecting area represented by one coordinate. It is separate from the coordinate's uncertainty. Document the meaning and measurement of any extent your protocol uses.
+A specimen's `Coordinate extent (m)` describes its spatial extent relative to the selected point, such as a collecting area represented by one coordinate. **It is separate from the coordinate's uncertainty.** Document the meaning and measurement of any extent your protocol uses.
 
-NAHPU's Darwin Core mapping adds positive coordinate uncertainty and positive specimen extent; if only one is present, it uses that value. This is export behavior, not a general method for calculating georeferencing uncertainty — the point-radius method in Chapman & Wieczorek combines the extent of the feature, the accuracy of the coordinate source, coordinate precision, datum, and any offset measurement. Avoid counting the same extent twice, and review the exported value against your documented method before publication.
+NAHPU's Darwin Core mapping adds positive coordinate uncertainty and positive specimen extent; if only one is present, it uses that value. This is export behavior, not a general method for calculating georeferencing uncertainty. **Avoid counting the same extent twice**, and review the exported value against your documented method before publication.
+
+{% aside type="note" title="The full calculation" %}
+The point-radius method in [Chapman & Wieczorek](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) combines the extent of the feature, the accuracy of the coordinate source, coordinate precision, datum, and any offset measurement.
+{% /aside %}
 
 ### Record who georeferenced, and how
 
-Reproducible georeferences need provenance, and the *Quick Reference Guide* lists `dwc:georeferencedBy`, `dwc:georeferencedDate`, `dwc:georeferenceProtocol`, `dwc:georeferenceSources`, and `dwc:georeferenceVerificationStatus` alongside the position itself.
+**NAHPU assumes the site leader recorded the coordinate. If someone else took the reading, say so in the coordinate's `notes`.**
 
-NAHPU has no dedicated field for those terms. It carries the coordinate's `notes` to `dwc:georeferenceRemarks`, the verbatim entry to `dwc:verbatimCoordinates` and `dwc:verbatimCoordinateSystem`, and `GPS unit` for the device used. Record the protocol, the person, and the sources in project documentation or in an agreed custom field, and state in `notes` which method produced the point. A dataset that cannot say how its coordinates were made cannot be re-evaluated later.
+Record the method there too. NAHPU carries `notes` to `dwc:georeferenceRemarks`, the verbatim entry to `dwc:verbatimCoordinates` and `dwc:verbatimCoordinateSystem`, and `GPS unit` for the device used. A dataset that cannot say how its coordinates were made cannot be re-evaluated later.
 
 ### Review imported points
 
 For CSV, TSV, or Excel, map `Latitude` and `Longitude` to decimal-degree columns in `Edit column mapping`. Review optional name, elevation, GPS-unit, and notes mappings. Inspect warnings and select only the intended points in `Review coordinates` before adding them.
 
-The spreadsheet importer assigns WGS84 and does not map uncertainty. Given the 5359 m worst case above, verify the source coordinate system before import rather than after; then inspect the added coordinates and supply the missing metadata. A successfully parsed row is not proof that the point describes the correct locality. See [coordinate import](/en/usages/sites/#import-coordinates-from-a-file).
+**The spreadsheet importer assigns WGS84 and does not map uncertainty.** Given the 5359 m worst case above, verify the source coordinate system before import rather than after; then inspect the added coordinates and supply the missing metadata. A successfully parsed row is not proof that the point describes the correct locality. See [coordinate import](/en/usages/sites/#import-coordinates-from-a-file).
 
 ## Events and observations
 
-Create events that reflect your protocol's visits or sampling periods. Confirm the site, date, time, method, and collecting personnel. Duplicating an event leaves environmental data blank: enter observations for the new event. Astronomy values are entered manually.
+**Create events that reflect your protocol's visits or sampling periods.** Confirm the site, date, time, method, and collecting personnel. Duplicating an event leaves environmental data blank, so enter observations for the new event. Astronomy values are entered manually.
 
-Record measurements with the displayed units and distinguish zero from an unrecorded value. Explain estimates or exceptions in notes. Use agreed custom fields for recurring observations; check their availability for the relevant catalog and placement.
+**Record measurements with the displayed units, and distinguish zero from an unrecorded value.** Explain estimates or exceptions in notes. Use agreed custom fields for recurring observations, and check their availability for the relevant catalog and placement.
 
-Before leaving the site, reopen representative specimens and verify their event, coordinate, identification, Field ID, parts, and attachments. Record unresolved questions while their context is still available — this is the point at which the entropy Michener et al. describe is cheapest to arrest, because the answer is still in the camp rather than in someone's memory a year later.
+**Before leaving the site, reopen representative specimens** and verify their event, coordinate, identification, Field ID, parts, and attachments. Record unresolved questions while their context is still available. This is the point at which decay is cheapest to arrest, because the answer is still in the camp rather than in someone's memory a year later.
 
 ## References
 
@@ -91,5 +118,3 @@ Chapman AD & Wieczorek JR (2020). [Georeferencing Best Practices](https://docs.g
 Zermoglio PF, Chapman AD, Wieczorek JR, Luo M-Y & Bloom DA (2020). [Georeferencing Quick Reference Guide](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). GBIF Secretariat, Copenhagen.
 
 Michener WK, Brunt JW, Helly JJ, Kirchner TB & Stafford SG (1997). [Nongeospatial metadata for the ecological sciences](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2). *Ecological Applications* 7:330–342.
-
-Use these guides alongside a documented operational protocol that reflects the method actually used.

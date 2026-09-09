@@ -69,18 +69,23 @@ o valor informado permanece igual.
 
 Por exemplo, se o fuso horário do projeto for `Asia/Jakarta` e um evento de
 campo for registrado como **12 de maio, 08:30**, outro dispositivo pode exibir a
-data e a hora em um formato local diferente, mas não converterá
-automaticamente o valor para outro horário. `Asia/Jakarta` identifica o
-contexto em que `08:30` deve ser interpretado.
+data e a hora em um formato local diferente, mas não converterá o valor para
+outro horário. Isso é importante porque a conversão de fuso horário é
+irrelevante para a coleta de espécimes e significaria outra coisa para as
+atividades dos organismos. `Asia/Jakarta` identifica o contexto em que `08:30`
+deve ser interpretado.
 
 ### Por que isso é importante
 
 Manter correto o fuso horário do projeto ajuda a comparar eventos registrados
 em dispositivos diferentes, preserva o contexto temporal ao compartilhar ou
-transferir dados e apoia a interpretação reproduzível das exportações. Se a
-equipe trabalhar entre fusos horários ou inserir dados históricos de outro
-local, explique a exceção em uma narrativa ou em outro contexto apropriado do
-registro.
+transferir dados e apoia a interpretação reproduzível das exportações. Um banco
+de dados de terceiros que armazene o contexto temporal em UTC pode usar o fuso
+horário para interpretar os dados corretamente. Se a equipe trabalhar entre
+fusos horários ou inserir dados históricos de outro local, explique a exceção
+na descrição do projeto ou em outro contexto apropriado do registro, como uma
+narrativa. Quando fizer sentido, recomendamos criar um projeto separado para um
+local em outro fuso horário.
 
 ## Gerenciar projetos na tela inicial
 

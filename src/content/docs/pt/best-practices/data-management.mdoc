@@ -1,46 +1,68 @@
 ---
-title: Gerenciamento de Dados
+title: Gerenciamento de Dados e Curadoria de Espécimes
+sidebar:
+    label: Gerenciamento de Dados e Curadoria
+    order: 5
 ---
 
 Revise os registros enquanto o contexto de campo estiver disponível e preserve as evidências necessárias para a curadoria.
 
 ## Revise registros e relações
 
-Compare Field IDs com etiquetas físicas e confira locais, eventos, coordenadas, equipe, identificações, partes e preparações. Procure identificadores legíveis duplicados, datas inesperadas, valores ausentes e unidades inconsistentes. Contagens não comprovam que os registros corretos foram transferidos.
+**Confira os Field IDs com as etiquetas físicas** e depois verifique locais, eventos, coordenadas, pessoal de coleta, identificações, partes e preparações. Procure identificadores legíveis duplicados, datas inesperadas, valores ausentes e unidades inconsistentes. As contagens, sozinhas, não comprovam que os registros corretos foram transferidos.
 
-Leia os registros, e não um resumo deles. Barchard & Pace (2011) verificaram que apenas 0,06% dos erros de digitação eram valores em branco ou fora do intervalo permitido para a variável, e concluíram que pesquisadores não podem confiar em histogramas e tabelas de frequência para detectá-los. Uma exportação do NAHPU sem células vazias e sem medidas impossíveis é compatível com centenas de dígitos trocados e identificações mal atribuídas. A conferência que funciona é o espécime na mão diante do registro na tela: um Field ID trocado entre dois musaranhos é invisível em uma tabela de frequência e evidente na bandeja.
+**Leia os registros, e não um resumo deles.** Uma exportação do NAHPU sem células vazias e sem medidas impossíveis é compatível com centenas de dígitos trocados e identificações mal atribuídas. A conferência que funciona é o espécime na mão diante do registro na tela: um Field ID trocado entre dois musaranhos é invisível em uma tabela de frequências e evidente na bandeja.
 
-Alterar a identificação de um espécime seleciona seu táxon; editar um táxon compartilhado altera a entrada usada por outros registros. Preserve confiança da identificação, determinador e observações. Revise os registros afetados após corrigir táxons ou pessoas compartilhados.
+{% aside type="note" title="Por que resumos não pegam erros de digitação" %}
+O NAHPU oferece estatísticas de resumo para apoiar decisões em campo, de modo que você possa otimizar a coleta de dados e evitar viés amostral. Elas não substituem a prevenção de erros de dados. [Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) constataram que apenas 0,06% dos erros de digitação eram valores em branco ou fora da faixa permitida para a variável, e concluíram que não se pode confiar em histogramas e tabelas de frequência para detectá-los.
+{% /aside %}
 
-Preserve observações originais ao documentar correções. Registre motivo, fonte, data e responsável por alterações importantes nas notas ou na documentação do projeto; não suponha que toda edição gere um histórico completo.
+**Alterar a identificação de um espécime seleciona seu táxon; editar um táxon compartilhado muda a entrada usada por outros registros.** Preserve a confiança da identificação, o determinador e as observações explicativas, e revise os registros afetados depois de corrigir táxons ou pessoal compartilhados.
+
+**Preserve as observações originais ao documentar correções.** Use notas ou a documentação do projeto para registrar motivo, fonte, data e responsável por curadorias relevantes. Não presuma que toda edição gera um histórico completo de auditoria.
 
 ## Preserve os anexos
 
-Use Media para fotografias e outros registros de mídia compatíveis. Use Associated Data para arquivos relacionados ou recursos externos, com relação e descrição significativas. Abra os anexos após copiar ou importar. Um link externo não garante disponibilidade futura nem inclusão do conteúdo em uma transferência — Vines et al. (2014) mediram uma queda de 17% ao ano na chance de o conjunto de dados por trás de um artigo publicado ainda existir, e uma URL em um registro de Associated Data está sujeita ao mesmo desgaste. Copie o que puder guardar; use links apenas para o que não puder.
+- **Media** guarda fotografias e outros registros de mídia compatíveis.
+- **Associated Data** guarda arquivos relacionados ou recursos externos, com relação e descrição significativas.
+- **Abra os anexos depois de copiá-los ou importá-los.** Preserve os originais e investigue avisos de arquivo ausente antes de remover as cópias de origem.
 
-Preserve originais e investigue avisos de arquivos ausentes antes de remover cópias de origem. Verifique se fontes personalizadas e imagens de modelos precisam de transferência separada. Ocultar campos não remove valores armazenados nem os exclui das exportações.
+**Copie o que você puder guardar; vincule apenas o que não puder.** Um link externo não garante que o destino continuará disponível nem que será incluído em uma transferência.
 
-## Escolha e confira as exportações
+{% aside type="note" title="A que velocidade os dados vinculados somem" %}
+[Vines et al. (2014)](https://doi.org/10.1016/j.cub.2013.11.014) mediram uma queda de 17% ao ano na probabilidade de que o conjunto de dados por trás de um artigo publicado ainda existisse. Uma URL em um registro de Associated Data está sujeita ao mesmo desgaste.
+{% /aside %}
 
-Use `Export records` com uma predefinição revisada para análise ou curadoria em planilha. Confira colunas, valores repetidos, unidades, filtros e identificadores. Cabeçalhos Darwin Core representam um mapeamento, sem garantir um termo padrão equivalente para cada campo.
+Decida se fontes personalizadas e imagens de modelos precisam ser transferidas separadamente. Alterar a visibilidade do formulário não remove valores armazenados nem os exclui das exportações. As fontes só são usadas para imprimir arquivos dos registros e para criar etiquetas de espécimes e partes.
 
-Use exportações nativas de projeto ou NAHPU Data Packages para os fluxos compatíveis de reimportação. ZIP e TAR.GZ incluem os arquivos disponíveis do projeto; JSON.GZ os omite. Pacotes padronizados, tabelas, imagens e documentos impressos atendem ao intercâmbio ou à publicação e não substituem uma cópia nativa recuperável. Consulte [Pacotes de registros](/pt/usages/export/export-bundles/) para conteúdos e limitações.
+## Escolha e inspecione as exportações
 
-Mantenha um backup de toda a instalação antes de curadoria importante ou mesclagem e verifique a recuperação separadamente. Siga a [rotina de backup](/pt/best-practices/project-management/) da equipe.
+**Use `Export records` com uma predefinição revisada** para análise ou curadoria em planilha. Verifique colunas, valores repetidos, unidades, filtros e identificadores na saída. A escolha de cabeçalhos Darwin Core é um mapeamento, não a garantia de que cada campo tenha um termo padrão equivalente.
+
+**Use exportações nativas de projeto ou NAHPU Data Packages para fluxos de reimportação compatíveis.** As transferências de projeto ZIP e TAR.GZ incluem os arquivos disponíveis do projeto; JSON.GZ os omite. Pacotes de padrões, tabelas, imagens e documentos impressos servem para intercâmbio ou publicação e não substituem uma cópia nativa recuperável. Consulte [Pacotes de registros](/pt/usages/export/export-bundles/) para o conteúdo e as limitações de cada pacote.
+
+**Guarde um backup de toda a instalação antes de curadoria de grande porte ou de mesclagens** e verifique a recuperação separadamente. Siga a [rotina de backup](/pt/best-practices/project-management/) combinada pela equipe.
 
 ## Proteja informações antes de compartilhar
 
-Decida o que divulgar a partir do risco para o táxon, e não por hábito de reter tudo ou publicar tudo. Tulloch et al. (2018) propõem uma árvore de decisão que pondera o risco de exploração — caça ilegal, coleta, perturbação por visitantes — em relação ao benefício de conservação da disponibilidade dos dados, e argumentam que tratar todas as localidades como sensíveis prejudica a conservação das muitas espécies sem esse risco. Aplique-a por táxon e registre a decisão na documentação do projeto, para que uma divulgação posterior siga o mesmo raciocínio.
+**Decida o que divulgar a partir do risco para o táxon**, e não do hábito de reter tudo ou publicar tudo. Aplique esse julgamento por táxon e registre a decisão junto com a documentação do projeto, para que uma divulgação posterior siga o mesmo raciocínio.
 
-Quando uma localidade for sensível, generalize em vez de excluir: uma coordenada arredondada a uma precisão documentada, com a incerteza ampliada na mesma medida, mantém o registro útil para análises em escala de distribuição e remove a linha de armadilhas. Informe no conjunto publicado quais valores foram generalizados ou omitidos e preserve o original protegido.
+**Quando uma localidade for sensível, generalize em vez de excluir.** Uma coordenada arredondada para uma precisão documentada, com a incerteza ampliada na mesma medida, mantém o registro útil para análises em escala de distribuição e elimina a linha de armadilhas. Informe no conjunto divulgado quais valores foram generalizados ou retidos e guarde o original protegido.
 
-Revise restrições sobre localizações exatas, contatos pessoais, notas e metadados de imagens. Exporte apenas informações aprovadas e confira os arquivos, incluindo tabelas complementares e anexos. Ocultar um campo no NAHPU não é uma forma de supressão: um campo oculto mantém o valor armazenado e ainda pode aparecer em uma exportação.
+**Revise localizações exatas, contatos do pessoal, notas e metadados de imagem quanto a restrições.** Exporte apenas informações aprovadas e inspecione os arquivos reais, incluindo tabelas complementares e anexos. Ocultar um campo no NAHPU não é supressão: um campo oculto mantém o valor armazenado e ainda pode aparecer em uma exportação.
 
-## Imprima e confira etiquetas
+## Imprima e confira as etiquetas
 
-Inclua Field ID legível e as informações exigidas pela instituição. Um QR code do UUID do espécime pode vincular a etiqueta ao registro digital; mantenha texto legível para uso sem leitor e porque uma etiqueta sobrevive ao programa que a gerou.
+**Inclua um Field ID legível e as informações de coleção exigidas pela sua instituição.** Um QR do UUID do espécime pode ligar a etiqueta ao registro digital; mantenha o texto legível para que a etiqueta sirva sem leitor, e porque uma etiqueta sobrevive ao programa que a gerou.
 
-Visualize registros representativos, incluindo nomes longos e campos vazios. Imprima nas dimensões previstas, confira cortes e legibilidade e leia o QR code para confirmar o espécime correto. Compare cada etiqueta com o espécime físico e suas partes antes de fixá-la. Consulte [exportação de documentos](/pt/usages/export/export-documents/).
+Antes de fixar qualquer etiqueta:
+
+- Pré-visualize registros representativos, incluindo nomes longos e campos vazios.
+- Imprima nas dimensões pretendidas e verifique cortes e legibilidade.
+- Escaneie o QR para confirmar que ele identifica o espécime pretendido.
+- Confira cada etiqueta com o espécime físico e suas partes.
+
+Consulte [exportação de documentos](/pt/usages/export/export-documents/).
 
 ## Referências
 

@@ -78,18 +78,23 @@ entered wall-clock value remains unchanged.
 
 For example, if the project time zone is `Asia/Jakarta` and a field event is
 entered as **12 May, 08:30**, another device may display the date and time in a
-different local format, but it will not automatically convert the value to a
-different clock time. `Asia/Jakarta` identifies the context in which `08:30`
-should be understood.
+different local format, but it will not convert the value to a
+different clock time. This is important because time zone conversion
+is irrelevant for specimen collection, and would mean something
+different for organism activities. `Asia/Jakarta` identifies the
+context in which `08:30` should be understood.
 
 ### Why the project time zone matters
 
 Keeping the project time zone accurate helps collaborators compare field events
 entered on different devices, preserves temporal context when project data is
 shared or transferred, and supports reproducible interpretation of exported
-records. If a team works across time zones or enters historical data from
-another location, explain the exception in a narrative or other appropriate
-record context.
+records. A third-party database that stores temporal context in UTC
+can use the time zone to interpret the data correctly.
+If a team works across time zones or enters historical data from
+another location, explain the exception in a project description or other
+appropriate record context, such as in a narrative. When appropriate, we
+recommend creating a separate project for a location in a different time zone.
 
 ## Managing projects from the home screen
 

@@ -5,14 +5,14 @@ sidebar:
     order: 13
 ---
 
-Last updated: September 2, 2026
+Last updated: September 9, 2026
 
 ## Agreement and Scope
 
 These Terms and Conditions (the **Terms**) govern your use of the official
 NAHPU application (the **App**) distributed by the NAHPU project. References to
-**we**, **us**, or the **NAHPU project** mean the maintainers who publish the
-official App and website.
+**we**, **us**, the **NAHPU Team**, or the **NAHPU project** mean the
+maintainers who publish the official App and website.
 
 By downloading, accessing, or using the App, you agree to these Terms. If you
 use the App for an institution, employer, research team, or other organization,
@@ -41,6 +41,12 @@ permission, and connectivity.
 You must be legally able to accept these Terms. If applicable law does not
 allow you to do so on your own, use the App only with authorization from a
 parent, guardian, institution, or other responsible party.
+
+The App is intended for users aged 13 and older, or older where your country
+sets a higher age for consent, and it is not directed to children below that
+age. Where a minor uses NAHPU in a class, field course, or supervised project,
+the supervising adult or institution accepts these Terms and remains
+responsible for that use.
 
 An organization that provides or manages a device, project, or dataset may
 apply its own policies to your use of NAHPU. You are responsible for following
@@ -121,11 +127,13 @@ permit details, and sensitive locality records.
 
 ## Maps, Scanning, Sharing, and Other Third-Party Services
 
-Some optional functions depend on your operating system or third parties. For
-example, an online basemap requests styles and tiles from OpenFreeMap, Android
-QR and barcode recognition uses Google ML Kit, and exports or external links
-can be opened with file providers, cloud drives, browsers, email, or messaging
-apps.
+Some functions depend on your operating system or third parties. For example,
+an online basemap requests styles and tiles from OpenFreeMap, maps on macOS and
+Windows load their rendering library from the unpkg content delivery network
+whichever basemap you choose, Android QR and barcode recognition uses Google
+ML Kit, and exports or external links can be opened with file providers, cloud
+drives, browsers, email, or messaging apps. The [Privacy
+Policy](../privacy/) describes what each of these receives.
 
 Third-party services are governed by their own terms, privacy practices,
 availability, and technical limits. We do not control and are not responsible
@@ -217,8 +225,32 @@ the App.
 This limitation includes losses connected with inaccurate records or outputs,
 device or storage failure, fieldwork interruption, unauthorized disclosure,
 third-party services, permit or regulatory noncompliance, or inability to use
-the App. Nothing in these Terms limits liability that applicable law does not
-allow to be limited.
+the App.
+
+NAHPU is provided free of charge. To the fullest extent permitted by law, our
+total liability for all claims relating to the App, taken together, will not
+exceed the greater of the amount you paid for the App, which is nothing, and
+fifty United States dollars (USD 50).
+
+Nothing in these Terms limits liability that applicable law does not allow to
+be limited, including liability for death or personal injury caused by
+negligence, for fraud, or for any other liability that cannot lawfully be
+excluded.
+
+## Indemnification
+
+To the extent permitted by law, you are responsible for claims, demands,
+losses, and costs, including reasonable legal fees, that a third party brings
+against the NAHPU project, its contributors, or its maintainers because of your
+use of the App. This includes claims arising from the records, media, and files
+you enter, export, or share; from a missing or exceeded permit, licence, or
+authorization; from your disclosure of personal information or sensitive
+locality data; and from your breach of these Terms or of applicable law.
+
+This does not apply to claims caused by our own acts or omissions, and nothing
+in this section requires you to cover liability that applicable law does not
+allow to be shifted. If you use the App for an institution, employer, research
+team, or other organization, this section applies to that organization.
 
 ## Ending Use
 

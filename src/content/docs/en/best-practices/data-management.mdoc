@@ -1,46 +1,68 @@
 ---
 title: Data Management and Specimen Curation
+sidebar:
+    label: Data Management and Curation
+    order: 5
 ---
 
 Review records while their field context is available, and preserve the evidence needed for later curation.
 
 ## Review records and relationships
 
-Check Field IDs against physical labels, then verify sites, events, coordinates, collecting personnel, identifications, parts, and preparations. Look for duplicate readable identifiers, unexpected dates, absent values, and inconsistent units. Counts alone cannot establish that the correct records were transferred.
+**Check Field IDs against physical labels**, then verify sites, events, coordinates, collecting personnel, identifications, parts, and preparations. Look for duplicate readable identifiers, unexpected dates, absent values, and inconsistent units. Counts alone cannot establish that the correct records were transferred.
 
-Read the records rather than a summary of them. Barchard & Pace (2011) found that only 0.06% of data-entry errors were blank or outside the allowable range for their variable, and concluded that researchers cannot rely on histograms and frequency tables to detect entry errors. A NAHPU export with no empty cells and no impossible measurements is consistent with hundreds of transposed digits and misassigned identifications. The check that works is the specimen in hand against the record on screen — a swapped Field ID between two shrews is invisible in a frequency table and obvious at the tray.
+**Read the records rather than a summary of them.** A NAHPU export with no empty cells and no impossible measurements is consistent with hundreds of transposed digits and misassigned identifications. The check that works is the specimen in hand against the record on screen: a swapped Field ID between two shrews is invisible in a frequency table and obvious at the tray.
 
-Changing a specimen's identification selects its taxon; editing a shared taxon changes the entry used by other records. Preserve identification confidence, determiner, and explanatory remarks. Review the affected records after correcting shared taxa or personnel.
+{% aside type="note" title="Why summaries miss entry errors" %}
+NAHPU provides summary statistics to aid field decisions, so you can optimize data collection and avoid sampling bias. They are not a substitute for data error prevention. [Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) found that only 0.06% of data-entry errors were blank or outside the allowable range for their variable, and concluded that researchers cannot rely on histograms and frequency tables to detect entry errors.
+{% /aside %}
 
-Retain original observations when documenting corrections. Use notes or project documentation to record the reason, source, date, and responsible person for significant curation; do not assume every edit creates a complete audit history.
+**Changing a specimen's identification selects its taxon; editing a shared taxon changes the entry used by other records.** Preserve identification confidence, determiner, and explanatory remarks, and review the affected records after correcting shared taxa or personnel.
+
+**Retain original observations when documenting corrections.** Use notes or project documentation to record the reason, source, date, and responsible person for significant curation. Do not assume every edit creates a complete audit history.
 
 ## Preserve attachments
 
-Use Media for photographs and other supported media records. Use Associated Data for related files or external resources, with a meaningful relationship and description. Open attachments after copying or importing them. An external link does not guarantee that its target will remain available or be included in a transfer — Vines et al. (2014) measured a 17% decline per year in the odds that a dataset behind a published paper still existed, and a URL in an Associated Data record is subject to the same attrition. Copy what you can hold; link only what you cannot.
+- **Media** holds photographs and other supported media records.
+- **Associated Data** holds related files or external resources, with a meaningful relationship and description.
+- **Open attachments after copying or importing them.** Keep originals, and investigate missing-file warnings before removing source copies.
 
-Keep originals and investigate missing-file warnings before removing source copies. Decide whether custom fonts and template images must be transferred separately. Changing form visibility does not remove stored values or exclude them from exports.
+**Copy what you can hold; link only what you cannot.** An external link does not guarantee that its target will remain available or be included in a transfer.
+
+{% aside type="note" title="How fast linked data disappears" %}
+[Vines et al. (2014)](https://doi.org/10.1016/j.cub.2013.11.014) measured a 17% decline per year in the odds that a dataset behind a published paper still existed. A URL in an Associated Data record is subject to the same attrition.
+{% /aside %}
+
+Decide whether custom fonts and template images must be transferred separately. Changing form visibility does not remove stored values or exclude them from exports. Fonts are only used for printing archives of the records, and for creating specimen and part labels.
 
 ## Choose and inspect exports
 
-Use `Export records` with a reviewed preset for analysis or spreadsheet curation. Verify columns, repeated values, units, filters, and identifiers in the output. A Darwin Core header choice is a mapping, not a guarantee that every field has an equivalent standard term.
+**Use `Export records` with a reviewed preset** for analysis or spreadsheet curation. Verify columns, repeated values, units, filters, and identifiers in the output. A Darwin Core header choice is a mapping, not a guarantee that every field has an equivalent standard term.
 
-Use native project exports or NAHPU Data Packages for supported re-import workflows. ZIP and TAR.GZ project transfers include available project files; JSON.GZ omits them. Standards packages, tables, images, and printed documents serve exchange or publication and do not replace a recoverable native copy. Consult [Bundle records](/en/usages/export/export-bundles/) for each package's contents and limitations.
+**Use native project exports or NAHPU Data Packages for supported re-import workflows.** ZIP and TAR.GZ project transfers include available project files; JSON.GZ omits them. Standards packages, tables, images, and printed documents serve exchange or publication and do not replace a recoverable native copy. Consult [Bundle records](/en/usages/export/export-bundles/) for each package's contents and limitations.
 
-Keep an installation-wide backup before major curation or merging, and verify recovery independently. Follow the [backup routine](/en/best-practices/project-management/) agreed by the team.
+**Keep an installation-wide backup before major curation or merging**, and verify recovery independently. Follow the [backup routine](/en/best-practices/project-management/) agreed by the team.
 
 ## Protect information before sharing
 
-Decide what to release from the risk to the taxon, not from a habit of withholding everything or publishing everything. Tulloch et al. (2018) set out a decision tree that weighs the risk of exploitation — poaching, collection, disturbance by visitors — against the conservation benefit of the data being available, and argue that treating all localities as sensitive obstructs conservation for the many species facing no such risk. Apply it per taxon and record the decision with the project documentation, so a later release can follow the same reasoning.
+**Decide what to release from the risk to the taxon**, not from a habit of withholding everything or publishing everything. Apply that judgement per taxon and record the decision with the project documentation, so a later release can follow the same reasoning.
 
-Where a locality is sensitive, generalize rather than delete: a coordinate rounded to a documented precision with the uncertainty widened to match keeps the record usable for range-scale analysis while removing the trap line. State in the released dataset which values were generalized or withheld, and keep the protected original.
+**Where a locality is sensitive, generalize rather than delete.** A coordinate rounded to a documented precision, with the uncertainty widened to match, keeps the record usable for range-scale analysis while removing the trap line. State in the released dataset which values were generalized or withheld, and keep the protected original.
 
-Review exact locations, personnel contact details, notes, and image metadata for restrictions. Export only approved information and inspect the actual files, including companion tables and attachments. Hiding a field in NAHPU is not redaction: a hidden field keeps its stored value and can still appear in an export.
+**Review exact locations, personnel contact details, notes, and image metadata for restrictions.** Export only approved information and inspect the actual files, including companion tables and attachments. Hiding a field in NAHPU is not redaction: a hidden field keeps its stored value and can still appear in an export.
 
 ## Print and check labels
 
-Include a readable Field ID and the collection information required by your institution. A specimen UUID QR code can link a label to the digital record; retain readable text so the label remains useful without a scanner, and because a label outlives the software that generated it.
+**Include a readable Field ID and the collection information required by your institution.** A specimen UUID QR code can link a label to the digital record; retain readable text so the label remains useful without a scanner, and because a label outlives the software that generated it.
 
-Preview representative records, including long names and missing fields. Print at the intended dimensions, inspect clipping and legibility, and scan the QR code to confirm it identifies the intended specimen. Match each label to the physical specimen and its parts before attachment. See [document export](/en/usages/export/export-documents/).
+Before attaching anything:
+
+- Preview representative records, including long names and missing fields.
+- Print at the intended dimensions, and inspect clipping and legibility.
+- Scan the QR code to confirm it identifies the intended specimen.
+- Match each label to the physical specimen and its parts.
+
+See [document export](/en/usages/export/export-documents/).
 
 ## References
 

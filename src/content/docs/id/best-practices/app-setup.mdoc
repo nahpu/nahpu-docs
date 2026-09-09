@@ -1,34 +1,49 @@
 ---
 title: Penyiapan Aplikasi
+sidebar:
+    label: Penyiapan Aplikasi
+    order: 2
 ---
 
-Siapkan dan uji NAHPU pada setiap perangkat sebelum mengandalkannya untuk pencatatan koleksi. Penyiapan adalah tahap ketika pencegahan kesalahan paling murah: Chapman (2005) menyatakan dua prinsipnya dengan jelas — pencegahan lebih baik daripada koreksi, dan semakin awal sebuah kesalahan ditemukan dalam rantai informasi, semakin murah biaya perbaikannya. Satu pembatasan yang ditambahkan di Pengaturan sebelum berangkat menghapus satu kelas kesalahan yang jika tidak akan ditemukan kurator bertahun-tahun kemudian, itu pun kalau ditemukan.
+Siapkan dan uji NAHPU pada setiap perangkat sebelum mengandalkannya untuk pencatatan koleksi. NAHPU dirancang agar penyiapannya mudah dan berbagi konfigurasinya sederhana. **Penyiapan adalah tahap ketika pencegahan kesalahan paling murah.** Satu pembatasan yang ditambahkan di Pengaturan sebelum berangkat menghapus satu kelas kesalahan yang jika tidak akan ditemukan kurator bertahun-tahun kemudian, itu pun kalau ditemukan.
 
 ## Sepakati konfigurasi
 
-Tentukan takson utama, mode Field ID, zona waktu proyek, satuan pengukuran, dan kosakata terkendali bersama tim. Penomoran personel menggunakan inisial dan nomor terdaftar milik pengatalog; penomoran proyek menggunakan konvensi proyek. Keduanya memerlukan rencana untuk menghindari pengenal ganda antarperangkat.
+**Tetapkan konfigurasi bersama tim, bukan per perangkat.** Cara ini menjaga keseragaman di semua perangkat dan menekan peluang kesalahan. Kami menyarankan satu orang khusus yang menjalankan penyiapan di NAHPU. Setelah itu, bagikan konfigurasinya kepada seluruh anggota agar mereka dapat menyiapkan perangkat masing-masing.
 
-Tinjau visibilitas kolom dan preset dalam [Pengaturan](/id/usages/settings/). Kolom tersembunyi dapat tetap menyimpan data dan muncul dalam ekspor. Buat kolom kustom jika kolom bawaan tidak mewakili pengamatan: sepakati penempatan, tipe, cakupan, katalog yang berlaku, satuan, dan nilai yang diizinkan. Masukkan nilai uji dan periksa hasil ekspornya.
-
-Utamakan kosakata terkendali daripada teks bebas jika pengamatannya memungkinkan. Kondisi habitat yang dipilih dari daftar tidak mungkin tertulis sebagai `disturbed`, `Disturbed`, dan `disturbed ` dalam satu proyek, dan ketiga varian itu tidak akan diselaraskan saat ekspor. Inilah pencegahan yang dimaksud Chapman, diterapkan pada kolom yang akan Anda isi ratusan kali.
+**Tinjau visibilitas kolom dan prasetel di [Pengaturan](/id/usages/settings/).** Kolom yang disembunyikan tetap dapat menyimpan data dan muncul dalam ekspor. Buat kolom khusus hanya bila tidak ada kolom bawaan yang mewakili pengamatan tersebut, lalu sepakati penempatan, tipe, cakupan, katalog yang berlaku, satuan, dan nilai yang diizinkan. Masukkan satu nilai uji dan periksa hasil ekspornya.
 
 ## Siapkan sumber daya bersama
 
-Tambahkan personel yang diperlukan dan tinjau daftar takson, termasuk peringkat serta identifikasi yang belum pasti. Gunakan kembali entri yang ada untuk orang atau takson yang sama. Tentukan perangkat yang memelihara definisi bersama dan membagikan pembaruan.
+- **Personel dan takson.** Tetapkan personel yang diperlukan dan tinjau daftar takson, termasuk tingkat identifikasi dan identifikasi yang belum pasti. Gunakan kembali entri basis data yang sudah ada bila mewakili orang atau takson yang sama.
+- **Satu pemelihara.** Tentukan perangkat mana yang memelihara definisi bersama dan membagikan pembaruannya.
+- **Dokumen dan fonta.** Siapkan prasetel ekspor, templat dokumen, tata letak cetak, dan fonta yang dibutuhkan. Transfer konfigurasi pengguna tidak menyertakan berkas fonta khusus maupun gambar; pasang aset itu secara terpisah dan uji dokumen hasilnya.
+- **Identitas proyek.** Gunakan [identitas proyek](/id/how-to-recipes/prepare/share-project-identity/) untuk menetapkan UUID proyek yang sama ketika beberapa perangkat berkontribusi pada satu proyek. Setiap orang yang memakai perangkat lain mengimpor identitas itu sebelum membuat catatan. Nama proyek yang sama saja tidak menghasilkan UUID bersama.
 
-Siapkan preset ekspor, templat dokumen, tata letak cetak, dan font. Transfer konfigurasi pengguna tidak menyertakan berkas font kustom maupun gambar; pasang sumber daya yang diperlukan secara terpisah dan uji dokumennya. Gunakan [identitas proyek](/id/how-to-recipes/prepare/share-project-identity/) untuk menetapkan UUID bersama pada perangkat yang berkontribusi ke satu proyek; identitas tidak mentransfer catatan koleksi.
+## Latih alur kerjanya
 
-## Latih alur kerja
+Gunakan proyek latihan dengan nama yang jelas. Buat lokasi, koordinat, kegiatan pengumpulan, dan spesimen; ubah satu identifikasi; tambahkan bagian spesimen, media, dan berkas terkait bila relevan. **Tutup dan buka kembali setiap catatan untuk memastikan nilainya tersimpan.** Dialog memerlukan tombol konfirmasi yang eksplisit; banyak kolom catatan tersimpan otomatis.
 
-Gunakan proyek yang jelas ditandai sebagai latihan. Buat lokasi, koordinat, kegiatan, dan spesimen; ubah identifikasi; tambahkan bagian, media, serta berkas terkait bila sesuai. Tinggalkan dan buka kembali catatan untuk memeriksa nilai yang tersimpan. Gunakan tombol konfirmasi dalam dialog; banyak kolom catatan disimpan otomatis.
+Setelah itu, ulangi latihan seperti kondisi lapangan sesungguhnya:
 
-Periksa catatan latihan dengan membuka kembali tiap catatan dan membandingkannya kolom demi kolom dengan label fisik. Menyisir tabel hasil ekspor untuk mencari kolom kosong dan nilai janggal bukanlah padanannya, dan selisihnya terukur. Barchard & Pace (2011) meminta 195 peserta memasukkan 30 lembar data dengan tiga metode dan menemukan hanya 0,06% kesalahan yang muncul berupa nilai kosong atau di luar rentang yang diizinkan untuk variabelnya — jadi hampir semua kesalahan nyata lolos dari pemeriksaan yang mengandalkan nilai hilang dan angka mustahil. Dalam studi yang sama, pemeriksaan visual menghasilkan 29–58% lebih banyak kesalahan daripada entri ganda dan tidak lebih baik daripada entri tunggal. Anggap ekspor yang tampak bersih tidak membuktikan apa pun, lalu bangun langkah pemeriksaan yang membaca catatannya sendiri.
+- Bekerja tanpa internet, termasuk izin lokasi dan kamera yang diperlukan.
+- Periksa tabel hasil ekspor yang sebenarnya dan satu label tercetak.
+- Impor arsip proyek pada instalasi uji terpisah, lalu buka catatan dan berkasnya.
+- Uji penggantian basis data hanya pada instalasi yang isinya boleh dibuang.
 
-Bila sebuah nilai cukup penting, masukkan dua kali dari sumbernya lalu bandingkan. Entri ganda memakan waktu 33% lebih lama daripada pemeriksaan visual dalam studi tersebut, pertukaran yang wajar untuk pengenal dan pengukuran yang tidak dapat dipulihkan setelah spesimen masuk ke dalam toples.
+## Verifikasi dengan membaca catatan, bukan hasil ekspor
 
-Ulangi tanpa internet, termasuk izin lokasi dan kamera yang diperlukan. Periksa tabel hasil ekspor dan label cetak. Impor arsip proyek pada instalasi uji terpisah dan buka catatan serta berkasnya. Uji penggantian basis data hanya pada instalasi yang isinya boleh dibuang.
+**Buka kembali setiap catatan latihan dan bandingkan kolom demi kolom dengan label fisiknya.** Menyisir tabel ekspor untuk mencari kolom kosong dan nilai menyimpang tidaklah setara, dan selisihnya terukur: hampir semua kesalahan pengetikan yang nyata berupa nilai yang masuk akal dan berada dalam rentang yang diizinkan, sehingga lolos dari pemeriksaan berbasis nilai kosong dan angka mustahil. Anggaplah ekspor yang tampak bersih tidak membuktikan apa pun.
 
-Sebelum berangkat, periksa penyimpanan, daya, sumber daya terpasang, tujuan cadangan, dan proyek kerja. Lihat [Perangkat](/id/usages/devices/), [Pemilihan dan Perawatan Perangkat](/id/best-practices/device-care/), dan [pemulihan proyek](/id/how-to-recipes/protect-and-collaborate/import-project/).
+**Bila sebuah nilai cukup penting, masukkan dua kali dari sumbernya lalu bandingkan.** Entri ganda memakan waktu lebih banyak, dan itu pertukaran yang wajar untuk pengenal serta pengukuran yang tak bisa dipulihkan setelah spesimen masuk botol.
+
+{% aside type="note" title="Bukti untuk entri ganda" %}
+[Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) meminta 195 partisipan memasukkan 30 lembar data dengan tiga metode. Hanya 0,06% kesalahan yang berupa nilai kosong atau di luar rentang yang diizinkan bagi peubahnya. Pemeriksaan visual menghasilkan 29–58% lebih banyak kesalahan daripada entri ganda dan tidak lebih baik daripada entri tunggal, sementara entri ganda memakan waktu 33% lebih lama.
+{% /aside %}
+
+## Sebelum berangkat
+
+Pastikan penyimpanan, daya, sumber daya terpasang, tujuan pencadangan, dan proyek kerja tim sudah siap. Lihat [Perangkat](/id/usages/devices/), [Pemilihan dan perawatan perangkat](/id/best-practices/device-care/), dan [pemulihan proyek](/id/how-to-recipes/protect-and-collaborate/import-project/).
 
 ## Referensi
 

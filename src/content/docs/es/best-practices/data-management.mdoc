@@ -1,46 +1,68 @@
 ---
-title: Gestión de Datos
+title: Gestión de Datos y Curación de Especímenes
+sidebar:
+    label: Gestión de Datos y Curación
+    order: 5
 ---
 
 Revise los registros mientras disponga del contexto de campo y preserve las pruebas necesarias para la curación posterior.
 
 ## Revise registros y relaciones
 
-Compare Field IDs con etiquetas físicas y compruebe sitios, eventos, coordenadas, personal, identificaciones, partes y preparaciones. Busque identificadores legibles duplicados, fechas inesperadas, valores ausentes y unidades inconsistentes. Las cantidades no demuestran que se hayan transferido los registros correctos.
+**Compare los Field IDs con las etiquetas físicas** y compruebe sitios, eventos, coordenadas, personal de recolecta, identificaciones, partes y preparaciones. Busque identificadores legibles duplicados, fechas inesperadas, valores ausentes y unidades inconsistentes. Las cantidades por sí solas no demuestran que se hayan transferido los registros correctos.
 
-Lea los registros y no un resumen de ellos. Barchard & Pace (2011) encontraron que solo el 0,06 % de los errores de introducción de datos eran valores en blanco o fuera del rango permitido de su variable, y concluyeron que no se puede confiar en histogramas ni tablas de frecuencias para detectarlos. Una exportación de NAHPU sin celdas vacías ni medidas imposibles es compatible con cientos de dígitos transpuestos e identificaciones mal asignadas. La comprobación que funciona es el espécimen en la mano frente al registro en pantalla: un Field ID intercambiado entre dos musarañas es invisible en una tabla de frecuencias y evidente en la bandeja.
+**Lea los registros y no un resumen de ellos.** Una exportación de NAHPU sin celdas vacías ni medidas imposibles es compatible con cientos de dígitos transpuestos e identificaciones mal asignadas. La comprobación que funciona es el espécimen en la mano frente al registro en pantalla: un Field ID intercambiado entre dos musarañas es invisible en una tabla de frecuencias y evidente en la bandeja.
 
-Cambiar la identificación de un espécimen selecciona su taxón; editar un taxón compartido cambia la entrada usada por otros registros. Preserve confianza de identificación, determinador y observaciones. Revise los registros afectados tras corregir taxones o personas compartidos.
+{% aside type="note" title="Por qué los resúmenes no detectan errores de introducción" %}
+NAHPU ofrece estadísticas de resumen para apoyar las decisiones en campo, de modo que pueda optimizar la recolección de datos y evitar sesgos de muestreo. No sustituyen a la prevención de errores de datos. [Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) encontraron que solo el 0,06 % de los errores de introducción de datos eran valores en blanco o fuera del rango permitido de su variable, y concluyeron que no se puede confiar en histogramas ni tablas de frecuencias para detectarlos.
+{% /aside %}
 
-Conserve las observaciones originales al documentar correcciones. Registre motivo, fuente, fecha y responsable de cambios importantes en notas o documentación del proyecto; no suponga que toda edición genera un historial completo.
+**Cambiar la identificación de un espécimen selecciona su taxón; editar un taxón compartido cambia la entrada usada por otros registros.** Preserve la confianza de identificación, el determinador y las observaciones explicativas, y revise los registros afectados tras corregir taxones o personas compartidos.
+
+**Conserve las observaciones originales al documentar correcciones.** Registre motivo, fuente, fecha y responsable de los cambios importantes en notas o en la documentación del proyecto. No suponga que toda edición genera un historial completo de auditoría.
 
 ## Preserve los adjuntos
 
-Use Media para fotografías y otros registros de medios compatibles. Use Associated Data para archivos relacionados o recursos externos, con una relación y descripción significativas. Abra los adjuntos después de copiar o importar. Un enlace externo no garantiza disponibilidad futura ni inclusión del contenido en una transferencia: Vines et al. (2014) midieron una caída del 17 % anual en la probabilidad de que siguiera existiendo el conjunto de datos de un artículo publicado, y una URL en un registro de Associated Data está sujeta al mismo desgaste. Copie lo que pueda conservar; enlace solo lo que no.
+- **Media** contiene fotografías y otros registros de medios compatibles.
+- **Associated Data** contiene archivos relacionados o recursos externos, con una relación y una descripción significativas.
+- **Abra los adjuntos después de copiarlos o importarlos.** Conserve los originales e investigue los avisos de archivos ausentes antes de eliminar copias de origen.
 
-Preserve originales e investigue avisos de archivos ausentes antes de eliminar copias de origen. Determine si las fuentes personalizadas e imágenes de plantillas necesitan una transferencia separada. Ocultar campos no elimina valores almacenados ni los excluye de las exportaciones.
+**Copie lo que pueda conservar; enlace solo lo que no.** Un enlace externo no garantiza que su destino siga disponible ni que se incluya en una transferencia.
+
+{% aside type="note" title="Con qué rapidez desaparecen los datos enlazados" %}
+[Vines et al. (2014)](https://doi.org/10.1016/j.cub.2013.11.014) midieron una caída del 17 % anual en la probabilidad de que siguiera existiendo el conjunto de datos de un artículo publicado. Una URL en un registro de Associated Data está sujeta al mismo desgaste.
+{% /aside %}
+
+Determine si las fuentes personalizadas e imágenes de plantillas necesitan una transferencia separada. Ocultar campos no elimina valores almacenados ni los excluye de las exportaciones. Las fuentes solo se usan para imprimir archivos de los registros y para crear etiquetas de especímenes y partes.
 
 ## Elija y compruebe las exportaciones
 
-Use `Export records` con un ajuste preestablecido revisado para análisis o curación en hojas de cálculo. Compruebe columnas, valores repetidos, unidades, filtros e identificadores. Los encabezados Darwin Core son un mapeo, sin garantizar un término estándar equivalente para cada campo.
+**Use `Export records` con un ajuste preestablecido revisado** para análisis o curación en hojas de cálculo. Compruebe columnas, valores repetidos, unidades, filtros e identificadores en la salida. Los encabezados Darwin Core son un mapeo, sin garantizar un término estándar equivalente para cada campo.
 
-Use exportaciones nativas de proyecto o NAHPU Data Packages para flujos compatibles de reimportación. ZIP y TAR.GZ incluyen los archivos disponibles del proyecto; JSON.GZ los omite. Los paquetes estandarizados, tablas, imágenes y documentos impresos sirven para intercambio o publicación y no sustituyen una copia nativa recuperable. Consulte [Paquetes de registros](/es/usages/export/export-bundles/) para contenidos y limitaciones.
+**Use exportaciones nativas de proyecto o NAHPU Data Packages para flujos compatibles de reimportación.** ZIP y TAR.GZ incluyen los archivos disponibles del proyecto; JSON.GZ los omite. Los paquetes estandarizados, tablas, imágenes y documentos impresos sirven para intercambio o publicación y no sustituyen una copia nativa recuperable. Consulte [Paquetes de registros](/es/usages/export/export-bundles/) para los contenidos y limitaciones de cada paquete.
 
-Conserve una copia de toda la instalación antes de curación importante o fusiones y verifique la recuperación por separado. Siga la [rutina de copias](/es/best-practices/project-management/) del equipo.
+**Conserve una copia de toda la instalación antes de curación importante o fusiones** y verifique la recuperación por separado. Siga la [rutina de copias](/es/best-practices/project-management/) acordada por el equipo.
 
 ## Proteja información antes de compartir
 
-Decida qué publicar en función del riesgo para el taxón, y no por la costumbre de ocultarlo todo o de publicarlo todo. Tulloch et al. (2018) proponen un árbol de decisión que contrapesa el riesgo de explotación — caza furtiva, recolección, perturbación por visitantes — frente al beneficio de conservación que aporta la disponibilidad de los datos, y sostienen que tratar todas las localidades como sensibles obstaculiza la conservación de las muchas especies que no corren ese riesgo. Aplíquelo por taxón y registre la decisión en la documentación del proyecto, para que una publicación posterior siga el mismo razonamiento.
+**Decida qué publicar en función del riesgo para el taxón**, y no por la costumbre de ocultarlo todo o de publicarlo todo. Aplique ese criterio por taxón y registre la decisión en la documentación del proyecto, para que una publicación posterior siga el mismo razonamiento.
 
-Cuando una localidad sea sensible, generalice en lugar de eliminar: una coordenada redondeada a una precisión documentada, con la incertidumbre ampliada en consecuencia, mantiene el registro útil para análisis a escala de distribución y elimina la línea de trampas. Indique en el conjunto publicado qué valores se generalizaron u omitieron y conserve el original protegido.
+**Cuando una localidad sea sensible, generalice en lugar de eliminar.** Una coordenada redondeada a una precisión documentada, con la incertidumbre ampliada en consecuencia, mantiene el registro útil para análisis a escala de distribución y elimina la línea de trampas. Indique en el conjunto publicado qué valores se generalizaron u omitieron y conserve el original protegido.
 
-Revise restricciones sobre ubicaciones exactas, contactos personales, notas y metadatos de imágenes. Exporte solo información aprobada e inspeccione los archivos, incluidas tablas complementarias y adjuntos. Ocultar un campo en NAHPU no es una redacción: un campo oculto conserva su valor almacenado y puede aparecer en una exportación.
+**Revise restricciones sobre ubicaciones exactas, contactos personales, notas y metadatos de imágenes.** Exporte solo información aprobada e inspeccione los archivos reales, incluidas tablas complementarias y adjuntos. Ocultar un campo en NAHPU no es una redacción: un campo oculto conserva su valor almacenado y puede aparecer en una exportación.
 
 ## Imprima y compruebe etiquetas
 
-Incluya un Field ID legible y la información requerida por su institución. Un QR del UUID del espécimen puede vincular la etiqueta al registro digital; mantenga texto legible para usarla sin escáner y porque una etiqueta sobrevive al programa que la generó.
+**Incluya un Field ID legible y la información de colección que exija su institución.** Un QR del UUID del espécimen puede vincular la etiqueta al registro digital; mantenga texto legible para que la etiqueta sirva sin escáner, y porque una etiqueta sobrevive al programa que la generó.
 
-Previsualice registros representativos, incluidos nombres largos y campos vacíos. Imprima con las dimensiones previstas, compruebe recortes y legibilidad y escanee el QR para confirmar el espécimen correcto. Compare cada etiqueta con el espécimen físico y sus partes antes de colocarla. Consulte [exportación de documentos](/es/usages/export/export-documents/).
+Antes de colocar ninguna etiqueta:
+
+- Previsualice registros representativos, incluidos nombres largos y campos vacíos.
+- Imprima con las dimensiones previstas y compruebe recortes y legibilidad.
+- Escanee el QR para confirmar que identifica el espécimen previsto.
+- Compare cada etiqueta con el espécimen físico y sus partes.
+
+Consulte [exportación de documentos](/es/usages/export/export-documents/).
 
 ## Referencias
 

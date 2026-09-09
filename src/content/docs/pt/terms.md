@@ -5,14 +5,14 @@ sidebar:
     order: 13
 ---
 
-Última atualização: 2 de setembro de 2026
+Última atualização: 9 de setembro de 2026
 
 ## Acordo e Escopo
 
 Estes Termos e Condições (os **Termos**) regem o uso do aplicativo oficial
 NAHPU (o **Aplicativo**) distribuído pelo projeto NAHPU. As referências a
-**nós** ou ao **projeto NAHPU** significam as pessoas responsáveis pela
-manutenção e publicação do Aplicativo e do site oficiais.
+**nós**, à **Equipe do NAHPU** ou ao **projeto NAHPU** significam as pessoas
+responsáveis pela manutenção e publicação do Aplicativo e do site oficiais.
 
 Ao baixar, acessar ou usar o Aplicativo, você concorda com estes Termos. Se
 usar o Aplicativo para uma instituição, empregador, equipe de pesquisa ou outra
@@ -43,6 +43,12 @@ Você deve ter capacidade legal para aceitar estes Termos. Se a legislação
 aplicável não permitir que você faça isso por conta própria, use o Aplicativo
 somente com autorização de pai, mãe, responsável legal, instituição ou outra
 parte responsável.
+
+O Aplicativo destina-se a usuários com 13 anos ou mais, ou à idade superior que
+seu país estabelecer para o consentimento, e não é dirigido a crianças abaixo
+dessa idade. Quando um menor de idade usa o NAHPU em uma aula, um curso de
+campo ou um projeto supervisionado, o adulto ou a instituição responsável pela
+supervisão aceita estes Termos e permanece responsável por esse uso.
 
 Uma organização que forneça ou gerencie um dispositivo, projeto ou conjunto de
 dados pode aplicar suas próprias políticas ao uso do NAHPU. Você é responsável
@@ -126,11 +132,14 @@ publicadas, dados de licenças e registros de localidades sensíveis.
 
 ## Mapas, Digitalização, Compartilhamento e Outros Serviços de Terceiros
 
-Algumas funções opcionais dependem do sistema operacional ou de terceiros. Por
-exemplo, um mapa-base on-line solicita estilos e blocos do OpenFreeMap, o
-reconhecimento de códigos QR e de barras no Android usa o Google ML Kit, e
+Algumas funções dependem do sistema operacional ou de terceiros. Por exemplo,
+um mapa-base on-line solicita estilos e blocos do OpenFreeMap; os mapas no
+macOS e no Windows baixam sua biblioteca de renderização da rede de
+distribuição de conteúdo unpkg, qualquer que seja o mapa-base escolhido; o
+reconhecimento de códigos QR e de barras no Android usa o Google ML Kit; e
 exportações ou links externos podem ser abertos com provedores de arquivos,
-unidades na nuvem, navegadores, e-mail ou aplicativos de mensagens.
+unidades na nuvem, navegadores, e-mail ou aplicativos de mensagens. A [Política
+de Privacidade](../privacy/) descreve o que cada um deles recebe.
 
 Os serviços de terceiros são regidos por seus próprios termos, práticas de
 privacidade, disponibilidade e limites técnicos. Não controlamos nem somos
@@ -230,8 +239,35 @@ decorrente ou relacionada ao Aplicativo.
 Essa limitação inclui perdas relacionadas a registros ou resultados inexatos,
 falha de dispositivo ou armazenamento, interrupção de trabalho de campo,
 divulgação não autorizada, serviços de terceiros, descumprimento de licenças ou
-normas, ou impossibilidade de usar o Aplicativo. Nada nestes Termos limita uma
-responsabilidade que a legislação aplicável não permita limitar.
+normas, ou impossibilidade de usar o Aplicativo.
+
+O NAHPU é fornecido gratuitamente. Na máxima extensão permitida por lei, nossa
+responsabilidade total por todas as reivindicações relativas ao Aplicativo,
+consideradas em conjunto, não excederá o maior destes dois valores: o valor que
+você pagou pelo Aplicativo, que é nada, e cinquenta dólares dos Estados Unidos
+(USD 50).
+
+Nada nestes Termos limita uma responsabilidade que a legislação aplicável não
+permita limitar, incluindo a responsabilidade por morte ou dano pessoal
+causados por negligência, por fraude ou qualquer outra responsabilidade que não
+possa ser legalmente excluída.
+
+## Indenização
+
+Na medida permitida por lei, você responde pelas reivindicações, demandas,
+perdas e custos, incluindo honorários advocatícios razoáveis, que um terceiro
+apresentar contra o projeto NAHPU, seus colaboradores ou responsáveis pela
+manutenção em razão do seu uso do Aplicativo. Isso inclui reivindicações
+decorrentes dos registros, mídias e arquivos que você inserir, exportar ou
+compartilhar; de licença, autorização ou permissão ausente ou excedida; da sua
+divulgação de informações pessoais ou de dados sensíveis de localidade; e do
+seu descumprimento destes Termos ou da legislação aplicável.
+
+Isso não se aplica a reivindicações causadas por atos ou omissões nossos, e
+nada nesta seção exige que você assuma responsabilidade que a legislação
+aplicável não permita transferir. Se você usar o Aplicativo para uma
+instituição, empregador, equipe de pesquisa ou outra organização, esta seção se
+aplica a essa organização.
 
 ## Encerramento do Uso
 

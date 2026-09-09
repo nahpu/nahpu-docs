@@ -5,13 +5,14 @@ sidebar:
     order: 8
 ---
 
-Last updated: September 2, 2026
+Last updated: September 9, 2026
 
 ## Scope and Summary
 
-This Privacy Policy covers the NAHPU application on its supported platforms. It
-does not cover third-party websites, apps, or services that you choose to open
-or use from NAHPU.
+This Privacy Policy covers the NAHPU application on its supported platforms and
+the NAHPU website at [nahpu.app](https://nahpu.app/). It does not cover
+third-party websites, apps, or services that you choose to open or use from
+NAHPU.
 
 NAHPU works without an account. The NAHPU project does not operate a service
 that receives or stores your catalog records, and the app does not include
@@ -83,7 +84,9 @@ original record or the app.
 ## Online Maps
 
 NAHPU provides an offline Natural Earth basemap and an option to show no
-basemap. These options do not contact an online map provider.
+basemap. Neither option requests map styles or tiles from an online map
+provider. On macOS and Windows, the software that draws the map is still
+loaded from a content delivery network, which the next section describes.
 
 If you select an online basemap, NAHPU requests map styles and tiles from
 [OpenFreeMap](https://openfreemap.org/). NAHPU does not upload your catalog
@@ -100,6 +103,38 @@ Policy](https://openfreemap.org/privacy/) for its current practices.
 
 To avoid requests to an online map provider, choose `Natural Earth (Offline)`
 or `None` as the basemap.
+
+## How Maps Are Drawn on macOS and Windows
+
+On Android and iOS, NAHPU draws maps with a map renderer built into the app.
+On macOS and Windows, it draws them inside a system web view instead, and that
+web view loads the MapLibre GL rendering library, its stylesheet, and a
+supporting tile-reading library from the [unpkg](https://unpkg.com/) content
+delivery network.
+
+**This request happens whenever a map is drawn on those platforms, including
+when the basemap is set to `Natural Earth (Offline)` or `None`**, because the
+rendering library has to load before any map can appear. Your operating
+system's web view may cache these files, so the request does not necessarily
+repeat for every map.
+
+The request reveals ordinary network information, including your IP address,
+to unpkg and its hosting providers. It does not include your catalog records,
+your coordinates, your map layers, or anything else about what the map shows.
+unpkg serves files from the public npm registry and may use Cloudflare as a
+content delivery network.
+
+If the rendering library cannot be loaded, NAHPU falls back to the bundled
+Natural Earth map, which is drawn entirely on your device. Working offline on
+macOS or Windows therefore produces a map with no network requests, after a
+short wait while NAHPU determines that the library is unreachable. On Linux,
+the bundled map is the only renderer and no rendering library is requested.
+
+While a map is on screen on macOS or Windows, NAHPU also opens a connection on
+your device's loopback interface (`127.0.0.1`), on a port assigned by the
+operating system, so that the app and the web view can exchange map data. This
+connection stays on your device, is not reachable from other devices, and is
+not used to send anything off your device.
 
 ## QR and Barcode Scanning on Android
 
@@ -129,6 +164,20 @@ website, ORCID profiles, and Google Fonts. Opening a link transfers you to your
 browser or another app, whose privacy practices apply. NAHPU does not send your
 catalog records when opening these links.
 
+## The NAHPU Website
+
+The NAHPU website at [nahpu.app](https://nahpu.app/), including this page and
+the documentation, is a static site published through GitHub Pages. It sets no
+tracking cookies, carries no advertising, embeds no third-party content, and
+runs no analytics script. We do not receive a record of who visits it.
+
+As the host, GitHub receives ordinary network information for each request,
+including your IP address, browser type, and the pages requested, and uses it
+to serve the site and to protect it. See [GitHub's Privacy
+Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement)
+for its practices. Following a link from the site to another website takes you
+to that site, whose own privacy practices apply.
+
 ## Security
 
 NAHPU relies on your operating system's app sandbox, permission system, and
@@ -150,6 +199,18 @@ you control those records on your device. You can:
 
 For information held by a third-party service, contact that provider or use the
 controls described in its privacy policy.
+
+## Children
+
+NAHPU is a field and collection tool intended for research, teaching, and
+curatorial work, and it is not directed to children. It is meant for users aged
+13 and older, or older where your country sets a higher age for consent.
+
+We do not knowingly collect personal information from children. The app has no
+account, no sign-up, and no service that could receive such information. Where
+a student or a minor uses NAHPU in a class, field course, or supervised
+project, the supervising adult or institution is responsible for the records
+entered and for any permission or consent the project requires.
 
 ## Changes to This Policy
 

@@ -1,47 +1,65 @@
 ---
 title: Project Management
+sidebar:
+    label: Project Management
+    order: 3
 ---
 
 Agree on project ownership, identifier allocation, and transfer responsibilities before several people enter records.
 
+## Assign a single source of truth
+
+**Designate one device to maintain the authoritative project copy.** That device holds the master taxon list, personnel, and custom-field definitions. It distributes updates to other devices, which do not edit those definitions. If specimens share the same sites, coordinates, and events, the authoritative device also holds those records. Other devices scan the QR or import the authoritative copy and add their own specimens, but they do not edit the shared records.
+
+**Merging a project should be handled by the authoritative device.** It reviews UUID conflicts and section-level choices.
+
+
 ## Name and identify the project
 
-Use a recognizable name such as `Patah Mammals`; record dates in the project date fields. A project UUID identifies the project for transfers. It is separate from the project catalog number and the specimen's readable Field ID. Recreating a project with the same name does not recreate its UUID.
+**Use a recognizable name** such as `Patah Mammals`, and record dates in the project date fields. A project UUID identifies the project for transfers; it is separate from the project catalog number and from the specimen's readable Field ID. **Recreating a project with the same name does not recreate its UUID.**
 
 Give sites stable IDs and keep their meaning in the locality description. See [site and coordinate naming](/en/best-practices/data-collection/).
 
-## Coordinate numbering
+## Agree on Field ID conventions
 
-Project Field IDs suit a shared processing sequence; personnel Field IDs suit work organized around catalogers' individual sequences. Choose the convention that matches your collection protocol, rather than assigning a project code to a fictitious person.
+**Choose the convention that matches your collection protocol**. Project Field IDs suit a shared processing sequence; personnel Field IDs suit work organized around catalogers' individual sequences.
 
-NAHPU does not automatically synchronize devices. If several devices use one numbering sequence, allocate non-overlapping ranges or designate one device to assign numbers. Do this before the first record, not after the first merge: Chapman (2005) makes the case that prevention beats correction and that an error caught later in the information chain costs more to fix, and duplicate Field IDs are the clearest example in a NAHPU project. Two devices each assigning `HH-001` produce two specimens, two tags, and two jars that no later query can separate — while a range agreed in advance, such as `HH-001` to `HH-400` on one device and `HH-401` onward on the second, costs one conversation.
+**NAHPU does not automatically synchronize devices.** It is purposely designed that way, so that all data sharing is deliberate and reviewed.
 
-Document handoffs and check duplicates after transfers. UUIDs help distinguish records but do not prevent duplicate readable Field IDs or mislabeled specimens.
+**Document handoffs and check duplicates after transfers.** UUIDs help distinguish records but do not prevent duplicate readable Field IDs or mislabeled specimens.
 
+{% aside type="tip" title="Deciding which field ID to use" %}
+If you are starting a lab, or your lab does not yet have a standard Field ID convention, in our experience personnel Field IDs are suitable for parallel specimen processing, where you have multiple people preparing specimens and recording data on their own devices. They carry less risk of ID duplication. A project Field ID is more appropriate if data is being recorded on a single device and specimen preparation is being done in a single sequence, where each person on the team has a different role in the workflow, such as collecting tissues, photographing, preparing voucher specimens, etc.
+
+{% /aside %}
 ## Manage contributions
 
-Establish a common project identity before distributing work. Assign responsibility for shared personnel, taxa, vocabularies, and custom-field definitions. Agree when each device stops editing for a handoff and who reviews the combined project.
+**Establish a common project identity before distributing work.** Assign responsibility for shared personnel, taxa, vocabularies, and custom-field definitions. Agree when each device stops editing for a handoff and who reviews the combined project.
 
-Use `Import project` on the home screen to bring a project onto another installation. Use `Merge project` inside an existing project to combine contributions, reviewing UUID conflicts and section-level choices. Do not force a UUID mismatch merely because two projects have similar names. Keep the source packages and a pre-merge backup until the result has been checked.
+- **`Import project`** on the home screen brings a project onto another installation.
+- **`Merge project`** inside an existing project combines contributions; review UUID conflicts and section-level choices. Do not force a UUID mismatch merely because two projects have similar names.
+- **Keep the source packages and a pre-merge backup** until the result has been checked.
 
-Record who supplied and reviewed each package, and what was decided at each handoff, while the team is still together. Michener et al. (1997) describe this as resisting information entropy: the interpretive content of a dataset degrades over time, and the details that explain a merge — which device held the authoritative taxon list, why one range was abandoned — are the first to go. A note written at camp is worth more than a reconstruction attempted next year.
+**Record who supplied and reviewed each package, and what was decided at each handoff, while the team is still together.** You can record the details that explain a merge in the narrative, so they stay together with the data. A note written at camp is worth more than a reconstruction attempted next year.
+
+{% aside type="note" title="Information entropy" %}
+[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) describe this as resisting information entropy: the interpretive content of a dataset degrades over time as the people who held it in memory disperse.
+{% /aside %}
 
 ## Schedule and verify backups
 
-Export the active project at agreed intervals, for example at the end of each field day and before a major handoff. Choose ZIP or TAR.GZ when available project files must travel with the records. JSON.GZ omits those files. Missing-file warnings require investigation; an archive cannot include files that are already missing.
+**Export the active project at agreed intervals**, for example at the end of each field day and before a major handoff. Choose ZIP or TAR.GZ when available project files must travel with the records; JSON.GZ omits those files. Missing-file warnings require investigation, because an archive cannot include files that are already missing.
 
-Use `Backup database` for installation-wide recovery and before merges or major curation. Choose its frequency from the amount of work at risk, storage, and available power; archive size and duration depend on the installation.
+**Use `Backup database` for installation-wide recovery** and before merges or major curation. Choose its frequency from the amount of work at risk, storage, and available power; archive size and duration depend on the installation.
 
-Plan against attrition, not only against catastrophe. Vines et al. (2014) requested the datasets behind 516 papers published 2 to 22 years earlier and found the odds of a dataset still being extant fell by 17% for every year since publication — data is lost mostly through dead drives, unreadable media, unlabeled files, and people leaving, rather than through a single dramatic event. Keep dated copies beyond the recording device, including a separate physical device when internet is unavailable. A cloud upload is complete only after confirming the remote copy.
+**Plan against attrition, not only against catastrophe.** Data is lost mostly through dead drives, unreadable media, unlabeled files, and people leaving, rather than through a single dramatic event. Keep dated copies beyond the recording device, including a separate physical device when internet is unavailable. A cloud upload is complete only after confirming the remote copy.
 
-Periodically test recovery on another installation and compare record counts, relationships, identifiers, and files. That restore is the only step that distinguishes a backup from a file you have never opened. Retain earlier versions until the newer copy has been verified.
+**Periodically test recovery on another installation** and compare record counts, relationships, identifiers, and files. That restore is the only step that distinguishes a backup from a file you have never opened. Retain earlier versions until the newer copy has been verified.
 
-Name packages clearly, for example `PatahMammals_transfer_20260908.zip`. A name that carries the project, the purpose, and the date stays interpretable when it is the only surviving copy. Follow the [Project Transfer guide](/en/usages/export/project-transfer/) for transfer choices and the [Export guide](/en/usages/export/) for database replacement.
+**Name packages clearly**, for example `PatahMammals_transfer_20260908.zip`. A name that carries the project, the purpose, and the date stays interpretable when it is the only surviving copy. Follow the [Project Transfer guide](/en/usages/export/project-transfer/) for transfer choices and the [Export guide](/en/usages/export/) for database replacement.
 
 ## References
 
 Chapman AD (2005). [Principles of Data Quality](https://www.gbif.org/document/80509/principles-of-data-quality). GBIF Secretariat, Copenhagen.
 
 Michener WK, Brunt JW, Helly JJ, Kirchner TB & Stafford SG (1997). [Nongeospatial metadata for the ecological sciences](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2). *Ecological Applications* 7:330–342.
-
-Vines TH, Albert AYK, Andrew RL, Débarre F, Bock DG, Franklin MT, Gilbert KJ, Moore J-S, Renaut S & Rennison DJ (2014). [The availability of research data declines rapidly with article age](https://doi.org/10.1016/j.cub.2013.11.014). *Current Biology* 24:94–97.

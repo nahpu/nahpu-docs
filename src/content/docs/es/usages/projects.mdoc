@@ -69,8 +69,10 @@ mes o el formato de 12/24 horas—pero el valor introducido permanece igual.
 
 Por ejemplo, si la zona horaria del proyecto es `Asia/Jakarta` y un evento se
 registra como **12 de mayo, 08:30**, otro dispositivo puede mostrar la fecha y
-la hora con un formato diferente, pero no convertirá automáticamente el valor
-a otra hora. `Asia/Jakarta` identifica el contexto en el que debe entenderse
+la hora con un formato diferente, pero no convertirá el valor a otra hora.
+Esto es importante porque la conversión de zona horaria es irrelevante para la
+recolección de especímenes y significaría algo distinto para las actividades de
+los organismos. `Asia/Jakarta` identifica el contexto en el que debe entenderse
 `08:30`.
 
 ### Por qué es importante
@@ -78,9 +80,12 @@ a otra hora. `Asia/Jakarta` identifica el contexto en el que debe entenderse
 Mantener correcta la zona horaria del proyecto ayuda a comparar eventos
 introducidos en distintos dispositivos, conserva el contexto temporal al
 compartir o transferir datos y facilita la interpretación reproducible de las
-exportaciones. Si el equipo trabaja entre zonas horarias o introduce datos
-históricos de otro lugar, explique la excepción en una narrativa u otro
-contexto apropiado del registro.
+exportaciones. Una base de datos de terceros que almacene el contexto temporal
+en UTC puede usar la zona horaria para interpretar los datos correctamente.
+Si el equipo trabaja entre zonas horarias o introduce datos históricos de otro
+lugar, explique la excepción en la descripción del proyecto u otro contexto
+apropiado del registro, como una narrativa. Cuando proceda, recomendamos crear
+un proyecto distinto para una localidad en otra zona horaria.
 
 ## Administrar proyectos desde la pantalla de inicio
 
