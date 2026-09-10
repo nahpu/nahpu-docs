@@ -154,6 +154,10 @@ taxonômicos. `Male`, `Female` e `Unknown` ficam sempre disponíveis. Em
 `Settings` > `Specimens`, adicione `Gynandromorph`, `Hermaphrodite`, `Female?`
 ou `Male?`; o ponto de interrogação registra a incerteza do examinador.
 
+`Life stage` também é compartilhado por todos os grupos taxonômicos e substituiu
+os antigos campos numéricos de idade. É um vocabulário controlado editável; a
+lista é configurada em `Settings` > `Specimens` > `Life stages`.
+
 {% tabs %}
 {% tabitem label="Mamíferos" %}
 
@@ -173,7 +177,7 @@ ou `Male?`; o ponto de interrogação registra a incerteza do examinador.
 Os campos de medição disponíveis dependem do formato do catálogo.
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
-- `Sexo`, `Idade`, `Peso`, `SVL (cm)` e observações.
+- `Sexo`, `Life stage`, `Peso`, `SVL (cm)` e observações.
 {% /tabitem %}
 {% tabitem label="Invertebrados" %}
 
@@ -182,6 +186,7 @@ A seção de interações ecológicas fica visível por padrão. Use
 morfométricos salvos reabrem essa seção automaticamente.
 
 - `Sex`: selecionado no vocabulário controlado de sexo do espécime.
+- `Life stage`: selecionado no vocabulário controlado de estágios de vida.
 - `Caste`: a casta de um inseto social, quando aplicável.
 - Interações ecológicas: `Host organism` e `Host part`.
 - Morfometria opcional: `Head width (mm)`, `Body length (mm)`,
@@ -205,7 +210,7 @@ Catálogos de invertebrados não exibem campos de detecção nem a guia de paras
 Cada espécime pode ter várias partes, como vouchers, tecidos, swabs ou
 parasitas. Uma parte pode conter `Tissue ID`, `QR/barcode ID`, `Preparation type`,
 `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
-`Storage`, `Storage location`, `Date taken`, `PMI`, museu permanente, museu de
+`Storage type`, `Storage location`, `Date taken`, `PMI`, museu permanente, museu de
 empréstimo e `Remarks`. Registros de parasitas também separam o método de
 armazenamento da localização física.
 
@@ -228,8 +233,10 @@ Use `Media` para imagens e outros arquivos de mídia associados ao espécime.
 
 No menu de três pontos do espécime, use:
 
-- `Edit`: atualizar o espécime, medições, partes, dados associados ou mídia.
+- `Create specimen`: adicionar um novo registro de espécime.
 - `Duplicate part`: criar um espécime novo copiando as informações da parte.
+- `Sort records`: escolher o campo e o sentido de ordenação da lista. Cada
+  visualizador de registros mantém a sua própria ordenação.
 - `Export specimen`: salvar um JSON ou arquivo que inclua mídia.
 - `Import specimen`: escolher um espécime novo ou existente e relacionar seus
   eventos, localidades e táxons ao projeto atual.

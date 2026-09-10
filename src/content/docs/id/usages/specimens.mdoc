@@ -153,6 +153,10 @@ Sex adalah kosakata terkontrol terbatas yang dipakai semua kelompok taksonomi.
 tambahkan `Gynandromorph`, `Hermaphrodite`, `Female?`, atau `Male?`; tanda tanya
 mencatat ketidakpastian pemeriksa.
 
+`Life stage` juga dipakai semua kelompok taksonomi dan menggantikan field umur
+numerik yang lama. Kosakata ini dapat disunting; daftarnya diatur di
+`Settings` > `Specimens` > `Life stages`.
+
 {% tabs %}
 {% tabitem label="Mamalia" %}
 
@@ -172,7 +176,7 @@ mencatat ketidakpastian pemeriksa.
 Bidang pengukuran yang tersedia bergantung pada format katalog.
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
-- `Sex`, `Age`, `Weight`, `SVL (cm)`, dan catatan.
+- `Sex`, `Life stage`, `Weight`, `SVL (cm)`, dan catatan.
 {% /tabitem %}
 {% tabitem label="Invertebrata" %}
 
@@ -181,6 +185,7 @@ Bagian interaksi ekologi tampil secara bawaan. Gunakan
 nilai morfometri yang tersimpan akan membuka bagian itu kembali.
 
 - `Sex`: dipilih dari kosakata terkontrol jenis kelamin spesimen.
+- `Life stage`: dipilih dari kosakata terkontrol tahap hidup.
 - `Caste`: kasta serangga sosial, bila berlaku.
 - Interaksi ekologi: `Host organism` dan `Host part`.
 - Morfometri opsional: `Head width (mm)`, `Body length (mm)`,
@@ -203,7 +208,7 @@ Katalog invertebrata tidak menampilkan field deteksi atau tab parasit.
 Setiap spesimen dapat memiliki banyak bagian, seperti voucher, jaringan,
 swab, atau parasit. Bagian dapat berisi `Tissue ID`, `QR/barcode ID`,
 `Preparation type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`,
-`Preparator`, `Storage`, `Storage location`, `Date taken`, `PMI`, museum
+`Preparator`, `Storage type`, `Storage location`, `Date taken`, `PMI`, museum
 permanen, museum pinjaman, dan `Remarks`. Catatan parasit juga memisahkan metode
 penyimpanan dari lokasi fisiknya.
 
@@ -227,8 +232,10 @@ spesimen.
 
 Gunakan menu titik tiga pada spesimen untuk tindakan berikut:
 
-- `Edit`: memperbarui spesimen, pengukuran, bagian, data terkait, atau media.
+- `Create specimen`: menambahkan catatan spesimen baru.
 - `Duplicate part`: membuat spesimen baru dengan menyalin informasi bagian.
+- `Sort records`: memilih field dan arah pengurutan daftar spesimen. Setiap
+  penampil catatan menyimpan urutannya sendiri.
 - `Export specimen`: menyimpan JSON atau arsip yang menyertakan media.
 - `Import specimen`: memilih spesimen baru atau yang ada, lalu menghubungkan
   kegiatan, lokasi, dan takson ke catatan dalam proyek saat ini.

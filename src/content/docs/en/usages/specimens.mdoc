@@ -111,8 +111,9 @@ See [Settings](../settings) for the complete configuration map.
 
 7. Select the specimen `Condition`.
 
-    Current condition values are `Freshly Euthanized`, `Good`, `Fair`, `Poor`,
-    `Rotten`, `Released`, and `Unknown`.
+    The default values are `Freshly euthanized`, `Good`, `Fair`, `Poor`,
+    `Rotten`, `Released`, and `Unknown`. Conditions are a controlled
+    vocabulary: edit the list in `Settings` > `Specimens` > `Conditions`.
 
 8. Add the `Collection date`, `Collection time`, `Prep. date`, and `Prep. time`
    when available.
@@ -177,7 +178,12 @@ is used by itself. Empty, zero, and negative values are ignored.
 
 ## Measurements
 
-Select the tab below to view measurement options for each taxonomic group.
+The catalog format selected in `Settings` decides which measurement form a
+specimen shows: Mammalogy shows the mammal form, Ornithology the bird form,
+Herpetology the herpetofauna form, and Invertebrate zoology the invertebrate
+form. Select the tab below to view measurement options for each taxonomic
+group.
+
 Mammal, bird, and herpetofauna weight fields support `g`, `kg`, and `lbs` and
 default to `g`. Changing the unit only changes the label; it does not convert
 the entered number.
@@ -186,6 +192,12 @@ Sex is a restricted controlled vocabulary shared by every taxon group. `Male`,
 `Female`, and `Unknown` are always available. In `Settings` > `Specimens`, add
 `Gynandromorph`, `Hermaphrodite`, `Female?`, or `Male?` to the dropdown. The
 question mark records that the examiner is uncertain.
+
+`Life stage` is also shared by every taxon group, and replaced the older
+numeric age fields. It is an editable controlled vocabulary: the defaults are
+`Egg`, `Larva`, `Nymph`, `Pupa`, `Neonate`, `Juvenile`, `Subadult`, `Adult`,
+`Metamorph`, and `Unknown`, and the list is configured in `Settings` >
+`Specimens` > `Life stages`.
 
 {% tabs %}
 {% tabitem label="Mammals" %}
@@ -200,7 +212,7 @@ question mark records that the examiner is uncertain.
 - `Weight`: specimen weight in the selected unit.
 - `Accuracy`: measurement accuracy or reason measurements may be inaccurate.
 - `Sex`: select from the configured specimen-sex vocabulary.
-- `Age`: `Adult`, `Subadult`, `Juvenile`, or `Unknown`.
+- `Life stage`: select from the configured life-stage vocabulary.
 - Male reproductive fields: testis position, testis length and width, and
   epididymis appearance.
 - Female reproductive fields: vagina opening, pubic symphysis, reproductive
@@ -215,8 +227,10 @@ question mark records that the examiner is uncertain.
 
 - `Weight`: specimen weight in the selected unit.
 - `Wingspan (mm)`: wingspan length.
-- Soft-part colors: bill color, iris color, foot color, and tarsus color.
+- Soft-part colors: `Bill color`, `Maxilla color`, `Mandible color`,
+  `Iris color`, `Tarsus color`, and `Toe color`.
 - `Sex`: select from the configured specimen-sex vocabulary.
+- `Life stage`: select from the configured life-stage vocabulary.
 - `Brood patch`: whether a brood patch is present.
 - `Bursa present`: whether a bursa is present. If present, record bursa length
   and width.
@@ -233,7 +247,7 @@ question mark records that the examiner is uncertain.
 {% tabitem label="Herpetofauna" %}
 
 - `Sex`: select from the configured specimen-sex vocabulary.
-- `Age`: `Adult`, `Juvenile`, `Neonate`, `Metamorph`, or `Unknown`.
+- `Life stage`: select from the configured life-stage vocabulary.
 - `Weight`: specimen weight in the selected unit.
 - `SVL (cm)`: snout-vent length.
 - `Remarks`: additional information about the specimen.
@@ -246,6 +260,7 @@ The ecological-interaction section is visible by default. Use
 morphometric values automatically reopen that section.
 
 - `Sex`: select from the configured specimen-sex vocabulary.
+- `Life stage`: select from the configured life-stage vocabulary.
 - `Caste`: the caste of a social insect, when applicable.
 - Ecological interactions: `Host organism` and `Host part`.
 - Optional morphometrics: `Head width (mm)`, `Body length (mm)`,
@@ -288,7 +303,7 @@ Part fields include:
 - `Counts`: number of parts or containers.
 - `Treatment`: preservation treatment.
 - `Additional treatment`: optional second treatment.
-- `Storage`: storage medium or method.
+- `Storage type`: storage medium or method.
 - `Storage location`: freezer, cabinet, shelf, or container location.
 - `Time taken`: time the part was taken, recommended for fresh tissues.
 - `Preparator`: part-level preparator when different from the voucher preparator.
@@ -301,8 +316,9 @@ Part fields include:
 The part list displays the part type, count, barcode ID, preparator, tissue ID,
 treatment, date/time, PMI, and whether a remark exists.
 
-Parasite curation records likewise provide `Storage` and `Storage location` so
-the preservation method and physical location can be recorded separately.
+Parasite curation records carry their own `Storage` and `Storage location`
+fields so the preservation method and physical location can be recorded
+separately.
 
 ## Associated Data
 
@@ -329,11 +345,13 @@ through the specimen-media relationship.
 
 ## Managing specimen records
 
-Open the three-dot menu on the specimen page to manage the current record:
+Open the three-dot menu on the specimen page to manage records:
 
-- `Edit`: update the specimen, measurements, parts, associated data, or media.
+- `Create specimen`: add a new specimen record.
 - `Duplicate part`: create a new specimen using the current specimen's part
   information. Review IDs, dates, times, and treatments before saving.
+- `Sort records`: choose the field and direction used to order the specimen
+  list. Each record viewer keeps its own sort.
 - `Export specimen`: save a JSON record or an archive that includes specimen
   media.
 - `Import specimen`: choose a new or existing target specimen, then map the

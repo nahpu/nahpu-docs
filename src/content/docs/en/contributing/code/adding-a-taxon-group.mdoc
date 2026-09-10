@@ -23,7 +23,8 @@ the first UI switch.
 - Define behavior for records with an unknown or legacy group. Never silently
   fall back to mammals.
 
-The arthropod catalog is the reference implementation for promoting an existing
+The invertebrate zoology catalog is the reference implementation for promoting
+an existing
 attribute table into a complete, user-selectable catalog format. The
 `fossilAttribute` table still shows why this decision matters: a table can exist
 in the schema before the surrounding product support is complete.
@@ -58,7 +59,15 @@ Audit and update every group-dependent type and switch, including:
 - parasite or associated-data capability lists where applicable.
 
 Use an exhaustive switch or an explicit unsupported state. A default that
-returns `CatalogFmt.mammals` can corrupt interpretation of the new group.
+returns `CatalogFmt.mammalogy` can corrupt interpretation of the new group.
+
+`CatalogFmt` names the discipline a collection is curated under — `mammalogy`,
+`ornithology`, `herpetology`, `invertebrateZoology` — while
+`specimen.taxonGroup` names the taxon. Keep the two apart: the discipline is
+persisted as the enum name in `customFieldDefinition.catalogFormat`, and the
+custom-field triggers in `tables.drift` translate one to the other. Any change
+to that mapping must be made in `matchTaxonGroupToCatFmt` and in all six copies
+of the trigger CASE together.
 
 ## 4. Add specimen UI and CRUD
 
@@ -119,7 +128,7 @@ Updating only the database schema will produce incomplete transfers.
 - Confirm the new group appears in record export, project transfer, bundles,
   backups, and documents as intended.
 
-For the arthropod implementation, `sex`, host association, and remarks map to
+For the invertebrate implementation, `sex`, host association, and remarks map to
 occurrence terms. Host-part, canopy, environmental, and morphometric values map
 to MeasurementOrFact rows; do not invent an OrganismInteraction row unless the
 schema can identify both interacting occurrence records.

@@ -29,11 +29,45 @@ The reusable Rust logic comes from these NAHPU API crates:
 |---|---|
 | `nahpu_archive` | ZIP, tar.gz, and gzip archive creation and extraction |
 | `nahpu_configs` | `redb` storage and export/import for user configs, record export presets, template presets, and document layouts |
-| `nahpu_db` | Drift-derived Rust record models plus CSV, TSV, Excel, and JSON import/export helpers |
+| `nahpu_db` | Drift-derived Rust record models plus CSV, TSV, Excel, and JSON import/export helpers. Carries the mirrored `tables.drift`, so a schema change bumps it |
 | `nahpu_dp` | Reproducible NAHPU Data Package planning, validation, and writing |
 | `nahpu_dwc` | Darwin Core mappings, Darwin Core Archive, and Darwin Core Data Package bundles |
 | `nahpu_export` | Markdown/Typst document rendering and PDF compilation |
 | `nahpu_gis` | Coordinate conversion, GIS import/export, and vector-layer normalization |
+
+## Building against an unpublished API
+
+A schema or mapper change usually lands in `nahpu_api` before the affected
+crates are published to crates.io. Until they are, `rust/Cargo.toml` resolves
+them from a sibling checkout through `[patch.crates-io]`:
+
+```toml
+[patch.crates-io]
+nahpu_db = { path = "../../../Rust/nahpu_api/crates/nahpu_db" }
+nahpu_dwc = { path = "../../../Rust/nahpu_api/crates/nahpu_dwc" }
+nahpu_export = { path = "../../../Rust/nahpu_api/crates/nahpu_export" }
+```
+
+The path is relative to `rust/Cargo.toml`, so the `nahpu_api` checkout must sit
+beside the Flutter repository as `Rust/nahpu_api`. A contributor without that
+layout cannot build the app while the section is active.
+
+Three rules keep the patch working:
+
+- **Raise the version requirement in `[dependencies]` as well.** Cargo only
+  applies a patch whose local version satisfies the requirement, so a
+  requirement left on the published version silently ignores the patch.
+- **Patch every crate that shares a patched type**, not only the one you
+  changed. Patching `nahpu_db` alone while `nahpu_gis` still comes from the
+  registry links two copies of `nahpu_archive`, and types stop matching across
+  the boundary.
+- **Bump the API crate before patching it.** The patched version must differ
+  from the published one, or the local build and a released build resolve to
+  different code under the same number.
+
+Re-comment each entry as its crate is published, and remove the section once
+none are left. `Cargo.lock` records a path dependency with no `source` field,
+which is the quickest way to confirm which crates are local.
 
 ## Data ownership
 
@@ -114,5 +148,7 @@ or package writer, implement it in the appropriate NAHPU API crate first.
 {% aside type="note" title="Keep the two repositories aligned" %}
 
 The app wrapper’s dependency versions and the `nahpu_api` workspace crate versions must remain compatible. When a bridge feature changes both the app and API repositories, update and verify them together before regenerating bindings.
+
+A schema change touches both: mirror `tables.drift` into `crates/nahpu_db/schema/`, bump `nahpu_db`, update the exact pins in `nahpu_dwc` and `nahpu_export`, then raise the requirements in `rust/Cargo.toml` and patch the unpublished crates. See [Persistence data](../database) for the full schema workflow.
 
 {% /aside %}

@@ -155,6 +155,10 @@ grupos taxonómicos. `Male`, `Female` y `Unknown` siempre están disponibles. En
 `Female?` o `Male?`; el signo de interrogación indica incertidumbre del
 examinador.
 
+`Life stage` también se comparte entre todos los grupos taxonómicos y sustituyó
+a los antiguos campos numéricos de edad. Es un vocabulario controlado editable;
+la lista se configura en `Settings` > `Specimens` > `Life stages`.
+
 {% tabs %}
 {% tabitem label="Mamíferos" %}
 
@@ -174,7 +178,7 @@ examinador.
 Los campos de medición disponibles dependen del formato del catálogo.
 {% /tabitem %}
 {% tabitem label="Herpetofauna" %}
-- `Sexo`, `Edad`, `Peso`, `SVL (cm)` y observaciones.
+- `Sexo`, `Life stage`, `Peso`, `SVL (cm)` y observaciones.
 {% /tabitem %}
 {% tabitem label="Invertebrados" %}
 
@@ -183,6 +187,7 @@ La sección de interacciones ecológicas se muestra de forma predeterminada. Use
 morfométricos guardados vuelven a abrir esa sección.
 
 - `Sex`: se elige del vocabulario controlado de sexo del espécimen.
+- `Life stage`: se elige del vocabulario controlado de etapas de vida.
 - `Caste`: la casta de un insecto social, cuando corresponda.
 - Interacciones ecológicas: `Host organism` y `Host part`.
 - Morfometría opcional: `Head width (mm)`, `Body length (mm)`,
@@ -207,7 +212,7 @@ de parásitos.
 Cada espécimen puede tener varias partes, como vouchers, tejidos, hisopos o
 parásitos. Una parte puede incluir `Tissue ID`, `QR/barcode ID`, `Preparation
 type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
-`Storage`, `Storage location`, `Date taken`, `PMI`, museos permanente y de
+`Storage type`, `Storage location`, `Date taken`, `PMI`, museos permanente y de
 préstamo, y `Remarks`. Los registros de parásitos también separan el método de
 almacenamiento de la ubicación física.
 
@@ -230,8 +235,10 @@ Use `Media` para imágenes y otros archivos multimedia asociados al espécimen.
 
 En el menú de tres puntos del espécimen puede usar:
 
-- `Edit`: actualizar el espécimen, sus mediciones, partes, datos y multimedia.
+- `Create specimen`: agregar un registro de espécimen nuevo.
 - `Duplicate part`: crear un espécimen nuevo copiando la información de partes.
+- `Sort records`: elegir el campo y el sentido de ordenación de la lista. Cada
+  visor de registros conserva su propio orden.
 - `Export specimen`: guardar un JSON o un archivo que incluya multimedia.
 - `Import specimen`: elegir un espécimen nuevo o existente y relacionar sus
   eventos, sitios y taxones con registros del proyecto actual.
