@@ -71,13 +71,20 @@
   --sl-z-index-menu: 6;
 }
 
+/* Freeze the page behind the mobile navigation overlay. */
+html.nh-menu-open,
+html.nh-menu-open body {
+  overflow: hidden;
+}
+
 /* Transparent navigation bar for pages that draw their hero to the top edge. */
 .nh-nav-overlay {
   background-color: transparent;
+  /* `backdrop-filter` is deliberately not transitioned: WebKit re-rasterises
+     the blurred backdrop on every frame of such a fade. */
   transition:
     background-color 0.4s ease,
-    box-shadow 0.4s ease,
-    backdrop-filter 0.4s ease;
+    box-shadow 0.4s ease;
 }
 
 .nh-nav-overlay.nh-nav-scrolled {

@@ -663,6 +663,80 @@
   animation: nh-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ------------------------------------------------------ mobile budget ----- */
+
+/* WebKit re-rasterises a blurred layer every time it is scaled, and it cannot
+   composite `mix-blend-mode` content independently while that content
+   animates. Together the drifting blobs and the zooming hero photograph keep
+   a phone's compositor busy at rest, which is why opening the navigation
+   overlay stalls on mobile Safari but not on Gecko. Small screens keep the
+   same treatment from a translate-only drift and a static photograph. */
+@media (max-width: 1023px), (pointer: coarse) {
+  .nh-blob {
+    filter: blur(60px);
+  }
+
+  .nh-blob-teal {
+    animation-name: nh-drift-a-flat;
+  }
+
+  .nh-blob-gold {
+    animation-name: nh-drift-b-flat;
+  }
+
+  .nh-blob-deep {
+    animation-name: nh-drift-c-flat;
+  }
+
+  .nh-hero-photo {
+    animation: none;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes nh-drift-a-flat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(6%, 5%, 0);
+  }
+}
+
+@keyframes nh-drift-b-flat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-7%, 6%, 0);
+  }
+}
+
+@keyframes nh-drift-c-flat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-5%, -6%, 0);
+  }
+}
+
+/* Nothing behind the navigation overlay is worth a frame while it is open. */
+.nh-menu-open .nh-blob,
+.nh-menu-open .nh-hero-photo,
+.nh-menu-open .nh-mote,
+.nh-menu-open .nh-scan,
+.nh-menu-open .nh-flag,
+.nh-menu-open .nh-draw,
+.nh-menu-open .nh-packet,
+.nh-menu-open .nh-stack-bar,
+.nh-menu-open .nh-orbit {
+  animation-play-state: paused;
+}
+
 /* ----------------------------------------------------- reduced motion ----- */
 
 @media (prefers-reduced-motion: reduce) {

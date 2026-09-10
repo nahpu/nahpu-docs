@@ -114,10 +114,10 @@ const githubIconClasses = cntl`
   h-5
 `;
 const mobileMenuPanelClasses = cntl`
-  fixed
+  nh-menu-panel
+  absolute
   inset-x-0
   top-0
-  z-50
   bg-silver-tree-100
   dark:bg-silver-tree-900
   border-b
@@ -126,10 +126,6 @@ const mobileMenuPanelClasses = cntl`
   py-6
   rounded-b-2xl
   shadow-xl
-  transform
-  transition-transform
-  ease-in-out
-  duration-300
 `;
 
 const mobileLinkActiveClasses = cntl`
@@ -147,7 +143,8 @@ const mobileLinkInactiveClasses = cntl`
 `;
 
 const mobileMenuRootClasses = cntl`
-  hidden
+  nh-mobile-menu
+  lg:hidden
   no-underline
 `;
 
@@ -247,40 +244,41 @@ const mobileLinkBaseClasses = cntl`
 <div
   id="mobile-menu"
   class={mobileMenuRootClasses}
+  data-open="false"
   role="dialog"
   aria-modal="true"
+  aria-label="Site menu"
 >
-  <div class="fixed inset-0 z-50">
-    <div id="menu-panel" class={mobileMenuPanelClasses}>
-      <div class={mobileHeaderClasses}>
-        <a href="/" class="flex items-center gap-3">
-          <Image
-            src={logo}
-            alt="NAHPU logo"
-            width={28}
-            height={28}
-            class="w-8 h-8"
-          />
-        </a>
-        <CloseMenuButton />
-      </div>
+  <div id="menu-backdrop" class="nh-menu-backdrop"></div>
+  <div id="menu-panel" class={mobileMenuPanelClasses}>
+    <div class={mobileHeaderClasses}>
+      <a href="/" class="flex items-center gap-3">
+        <Image
+          src={logo}
+          alt="NAHPU logo"
+          width={28}
+          height={28}
+          class="w-8 h-8"
+        />
+      </a>
+      <CloseMenuButton />
+    </div>
 
-      <div class={mobileLinksWrapperClasses}>
-        {
-          navItems.map(({ path, label }) => {
-            const isActive = currentPath === path || currentPath === `${path}/`;
-            const classes = cntl`
-              ${mobileLinkBaseClasses}
-              ${isActive ? mobileLinkActiveClasses : mobileLinkInactiveClasses}
-            `;
-            return (
-              <a href={path} class={classes}>
-                {label}
-              </a>
-            );
-          })
-        }
-      </div>
+    <div class={mobileLinksWrapperClasses}>
+      {
+        navItems.map(({ path, label }) => {
+          const isActive = currentPath === path || currentPath === `${path}/`;
+          const classes = cntl`
+            ${mobileLinkBaseClasses}
+            ${isActive ? mobileLinkActiveClasses : mobileLinkInactiveClasses}
+          `;
+          return (
+            <a href={path} class={classes}>
+              {label}
+            </a>
+          );
+        })
+      }
     </div>
   </div>
 </div>
@@ -299,16 +297,85 @@ const mobileLinkBaseClasses = cntl`
   const menuButton = document.getElementById("menu-button");
   const closeButton = document.getElementById("close-button");
   const mobileMenu = document.getElementById("mobile-menu");
+  const menuBackdrop = document.getElementById("menu-backdrop");
 
-  if (menuButton && mobileMenu) {
-    menuButton.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
-    });
-  }
+  const setMenu = (open: boolean) => {
+    if (!mobileMenu || !menuButton) return;
+    mobileMenu.dataset.open = open ? "true" : "false";
+    mobileMenu.inert = !open;
+    menuButton.setAttribute("aria-expanded", open ? "true" : "false");
+    /* `nh-menu-open` locks the page scroll and lets the landing hero drop the
+       blurs and blends it is paying for behind the overlay. Mobile Safari
+       otherwise re-rasterises the whole hero to raise the panel. */
+    document.documentElement.classList.toggle("nh-menu-open", open);
+  };
 
-  if (closeButton && mobileMenu) {
-    closeButton.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
-    });
-  }
+  setMenu(false);
+
+  menuButton?.addEventListener("click", () => {
+    setMenu(mobileMenu?.dataset.open !== "true");
+  });
+
+  closeButton?.addEventListener("click", () => setMenu(false));
+  menuBackdrop?.addEventListener("click", () => setMenu(false));
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setMenu(false);
+  });
 </script>
+
+<style>
+  /* The overlay stays in the layer tree and is switched with `visibility`, so
+     opening it costs a composite rather than a fresh layout and paint. */
+  .nh-mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    visibility: hidden;
+    /* Held visible until the panel has finished sliding back out. */
+    transition: visibility 0s linear 0.24s;
+  }
+
+  .nh-mobile-menu[data-open="true"] {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .nh-menu-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: color-mix(in srgb, black 45%, transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+  }
+
+  .nh-mobile-menu[data-open="true"] .nh-menu-backdrop {
+    opacity: 1;
+  }
+
+  /* Only `transform` and `opacity` change, which keeps the slide on the
+     compositor instead of the main thread. */
+  .nh-menu-panel {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+    transition:
+      transform 0.24s ease-out,
+      opacity 0.24s ease-out;
+  }
+
+  .nh-mobile-menu[data-open="true"] .nh-menu-panel {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nh-mobile-menu {
+      transition: none;
+    }
+
+    .nh-menu-backdrop,
+    .nh-menu-panel {
+      transition: none;
+    }
+  }
+</style>
