@@ -41,7 +41,7 @@ Halaman + pratinjau/ekspor = PDF
 Buka `Settings` > `Documents`, pilih `Templates`, lalu pilih `Create new
 template`.
 
-1. Masukkan `Template name` yang unik dan `Description` yang jelas.
+1. Masukkan `Template name` yang unik dan, bila perlu, `Description` singkat hingga 80 karakter.
 2. Pilih `Record type`: `Specimen`, `Specimen Part`, `Site`, `Collecting Event`,
    `Narrative`, atau `None`.
 3. Pilih `1 sided` atau `2 sided`. Templat dua sisi memiliki desain Front dan
@@ -88,7 +88,7 @@ tidak pasti mempertahankan akhiran (`Female?`, `F?`, `♀?`; `Male?`, `M?`,
 `♂?`). Kondisi lama dengan kode `0`, `1`, dan `2` tetap berlaku.
 
 Setiap jenis teks dan opsi formatnya tercantum di
-[Referensi editor templat](../template-editor-reference#text-types-and-their-formats).
+[Ekspresi ekspor](../export-expressions#text-types-and-their-formats).
 
 ## Menangani field kosong
 
@@ -126,9 +126,18 @@ menandai identifikasi spesies yang tingkat keyakinannya bukan tinggi:
 [taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
 ```
 
+Bentuk ketiga, teks kondisional, tidak memiliki field sasaran. Bentuk ini
+menulis teks bila kondisinya cocok dan, bila perlu, teks lain setelah `|` bila
+tidak cocok. Di sini satuan hanya muncul bila lebar tercatat:
+
+```text
+[mammalAttribute::testisWidth][[if][mammalAttribute::testisWidth!=""]=>" mm"]]
+```
+
 Yang pertama mencetak `[82.5]` untuk bobot perkiraan dan `82.5` untuk lainnya.
 Yang kedua mencetak `Rattus rattus` untuk identifikasi berkeyakinan tinggi dan
-`Rattus ?` untuk tingkat di bawahnya.
+`Rattus ?` untuk tingkat di bawahnya. Yang ketiga mencetak `6.5 mm`, atau tidak
+mencetak apa pun bila lebarnya tidak ada.
 
 Simbol-simbolnya:
 
@@ -136,10 +145,16 @@ Simbol-simbolnya:
 |---|---|
 | `[[` … `]]` | Membuka dan menutup ekspresi |
 | `][` | Mengakhiri field sasaran dan memulai daftar kondisi |
+| `if` | Menggantikan posisi sasaran pada teks kondisional |
 | `==` `!=` `~=` | Sama dengan, tidak sama dengan, memuat |
 | `&&` `\|\|` | Semua kondisi, salah satu kondisi |
-| `"` … `"` | Mengapit setiap nilai pembanding |
-| `]=>` | Mengakhiri kondisi dan memulai teks pengganti |
+| `"` … `"` | Mengapit setiap nilai pembanding dan setiap teks |
+| `]=>` | Mengakhiri kondisi dan memulai teks pengganti atau teks kondisional |
+| `\|` | Memisahkan teks yang ditulis bila kondisinya tidak cocok |
+
+Teks kondisional dapat memuat field, dan
+`[mammalAttribute::testisPosition#label]` mencetak label field berkode; lihat
+[Ekspor Ekspresi](../export-expressions#conditional-text).
 
 Perbandingan memangkas spasi di tepi dan membedakan huruf besar-kecil. Nilai yang dibaca adalah nilai tersimpan: bandingkan `"2"`, bukan `"High"`, untuk keyakinan identifikasi. Gunakan `Is empty` (`==""`) atau `Is not empty` (`!=""`) untuk menguji keberadaan nilai kolom sumber. Perbandingan lain tidak cocok dengan sumber kosong. Jangan campur `&&` dan `||` dalam satu ekspresi.
 
@@ -151,7 +166,7 @@ bentuk dilewati tanpa laporan, sehingga tercetak apa adanya.
 
 Kumpulan simbol lengkap, tiga jenis kondisional pada dialognya, dan seluruh
 aturan evaluasinya ada di
-[Referensi editor templat](../template-editor-reference#conditional-output).
+[Ekspresi ekspor](../export-expressions#conditional-output).
 
 Replacement rule adalah cara lain untuk menulis ulang sebuah nilai. Aturan ini
 berjalan setelah pemformatan, mencocokkan berdasarkan nilai persis atau
@@ -174,7 +189,9 @@ mengimpor templat ke perangkat lain.
 
 Di `Settings` > `Documents`, pilih `Print layouts`. Buat tata letak baru
 atau gunakan `Save as...` sebelum mencoba perubahan pada tata letak yang sudah
-dipakai.
+dipakai. Di bawah nama, tambahkan deskripsi opsional hingga 80 karakter;
+`Update` menyimpan nama dan deskripsi sekaligus, dan deskripsinya tampil di
+daftar preset.
 
 ### Penyiapan halaman
 
@@ -262,8 +279,12 @@ Templat diekspor dari `Settings` > `Documents` > `Templates`, dan tata letak
 dari `Print layouts`. Keduanya menawarkan dua cakupan: `Export this ...` pada
 sebuah baris atau di menu opsi menulis satu item, dan `Export all ...` menulis
 semuanya. Keduanya menulis format berkas yang sama, jadi salah satunya dapat
-diimpor dengan tindakan `Import` yang sama. Satu templat atau tata letak juga
-dapat dikirim sebagai kode QR selama ukurannya muat.
+diimpor dengan tindakan `Import` yang sama. Dialog ekspor mengatur nama dan
+folder berkas, dan `Share` mengirim berkas setelah ditulis. Ekspor tata letak
+menyertakan templat yang dipakai bloknya; matikan `Include linked templates`
+untuk mengekspor tata letak saja. Mengimpor berkas tersebut juga menambahkan
+templatnya, dan templat hanya diganti namanya bila sudah ada templat lain yang
+berbeda dengan nama yang sama.
 
 Impor templat akan meminta pilihan untuk mengganti atau memakai nama baru, dan
 menambahkan akhiran bernomor bila beberapa templat datang sekaligus; impor tata
@@ -371,5 +392,5 @@ proyek, atau ekspor catatan terstruktur. Lihat
 | Impor mengubah banyak preset | Impor satu bagian mengganti seluruh bagian tersebut. |
 
 Setiap opsi di editor templat tercantum di
-[Referensi editor templat](../template-editor-reference). Untuk detail
+[Ekspresi ekspor](../export-expressions#template-editor-options). Untuk detail
 penyimpanan dan rendering, lihat [Templates and presets (bahasa Inggris)](/en/contributing/code/templates-and-presets/) dan [Export workflows (bahasa Inggris)](/en/contributing/code/data-export-workflows/).

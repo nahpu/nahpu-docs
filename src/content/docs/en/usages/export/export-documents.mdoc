@@ -45,7 +45,7 @@ field sheets.
 Open `Settings` > `Documents`, switch to `Templates`, and select `Create
 new template`.
 
-1. Enter a unique `Template name` and a useful `Description`.
+1. Enter a unique `Template name` and, optionally, a short `Description` of up to 80 characters.
 2. Choose the correct `Record type`: `Specimen`, `Specimen Part`, `Site`,
    `Collecting Event`, `Narrative`, or `None`.
 3. Choose `1 sided` or `2 sided`. A two-sided template has separate Front and
@@ -100,8 +100,8 @@ Uncertain values keep their suffix (`Female?`, `F?`, `♀?`; `Male?`, `M?`,
 `♂?`). Existing template conditions that compare legacy codes `0`, `1`, and
 `2` remain valid.
 
-Every text type and format option is listed in the
-[Template editor reference](../template-editor-reference#text-types-and-their-formats).
+Every text type and format option is listed in 
+[Export expressions](../export-expressions#text-types-and-their-formats).
 
 ## Handle empty fields
 
@@ -137,9 +137,18 @@ identification that is not high confidence:
 [taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
 ```
 
+A third shape, conditional text, has no target field. It writes text when the
+conditions match, and optionally other text after `|` when they do not. Here a
+unit appears only when a width was recorded:
+
+```text
+[mammalAttribute::testisWidth][[if][mammalAttribute::testisWidth!=""]=>" mm"]]
+```
+
 The first prints `[82.5]` for an estimated weight and `82.5` otherwise. The
 second prints `Rattus rattus` for a high-confidence identification and
-`Rattus ?` for anything less.
+`Rattus ?` for anything less. The third prints `6.5 mm`, or nothing when the
+width is missing.
 
 The symbols are:
 
@@ -147,10 +156,16 @@ The symbols are:
 |---|---|
 | `[[` … `]]` | Open and close the expression |
 | `][` | Ends the target field, starts the conditions |
+| `if` | Takes the target's place for conditional text |
 | `==` `!=` `~=` | Equals, not equals, contains |
 | `&&` `\|\|` | All conditions, any condition |
-| `"` … `"` | Wrap every comparison value |
-| `]=>` | Ends the conditions, starts the replacement text |
+| `"` … `"` | Wrap every comparison value and text |
+| `]=>` | Ends the conditions, starts the replacement or conditional text |
+| `\|` | Separates the text written when the conditions do not match |
+
+Conditional text can include fields, and
+`[mammalAttribute::testisPosition#label]` prints an encoded field's label; see
+[Export expressions](../export-expressions#conditional-text).
 
 Comparisons trim surrounding whitespace and are case-sensitive. They read stored values: compare `"2"`, not `"High"`, for identification confidence. Use `Is empty` (`==""`) or `Is not empty` (`!=""`) to test whether a source field has a value. Other comparisons do not match a blank source. Do not mix `&&` and `||` in one expression.
 
@@ -161,8 +176,8 @@ Test both the matching and the non-matching case in the preview. A malformed
 expression is skipped rather than reported, so it prints literally.
 
 The complete symbol set, the three conditional types in the dialog, and the
-full evaluation rules are in the
-[Template editor reference](../template-editor-reference#conditional-output).
+full evaluation rules are in 
+[Export expressions](../export-expressions#conditional-output).
 
 Replacement rules are the other way to rewrite a value. They run after
 formatting, match by exact value or substring, and can be case-sensitive or
@@ -190,6 +205,9 @@ the definition; it is not a copy of every external image file.
 
 In `Settings` > `Documents`, switch to `Print layouts`. Create a new
 layout or use `Save as...` before experimenting with a known-good layout.
+Under the preset name, add an optional description of up to 80 characters;
+`Update` saves the name and description together, and the description appears
+in the preset list.
 
 ### Page setup
 
@@ -282,8 +300,11 @@ Templates are exported from `Settings` > `Documents` > `Templates`, and
 layouts from `Print layouts`. Both offer two scopes: `Export this ...` on a
 row or in the options menu writes one item, and `Export all ...` writes every
 item. Both write the same file format, so either file can be imported through
-the same `Import` action. A single template or layout can also travel as a QR
-code when it is small enough to fit one.
+the same `Import` action. The export dialog sets the file name and folder, and
+`Share` sends the file once it is written. A layout export includes the templates
+its blocks use; turn off `Include linked templates` to export the layouts alone.
+Importing such a file adds the templates too, renaming one only when a different
+template already has its name.
 
 Duplicate names are handled separately:
 
@@ -393,6 +414,6 @@ export, or a structured record export. See
 | Preview is marked stale | Generate a new preview after the last edit. |
 | Import changes many settings | A selected-section settings import replaces that entire section. |
 
-Every option in the template editor is listed in the
-[Template editor reference](../template-editor-reference). For developer-level
+Every option in the template editor is listed in 
+[Export expressions](../export-expressions#template-editor-options). For developer-level
 storage and rendering details, see [Templates and presets](../../../contributing/code/templates-and-presets) and [Export workflows](../../../contributing/code/data-export-workflows).

@@ -42,7 +42,7 @@ Páginas + vista previa/exportación = PDF
 Abra `Settings` > `Documents`, cambie a `Templates` y seleccione `Create
 new template`.
 
-1. Introduzca un `Template name` único y una `Description` útil.
+1. Introduzca un `Template name` único y, si lo desea, una `Description` breve de hasta 80 caracteres.
 2. Elija el `Record type` correcto: `Specimen`, `Specimen Part`, `Site`,
    `Collecting Event`, `Narrative` o `None`.
 3. Elija `1 sided` o `2 sided`. Una plantilla a dos caras tiene diseños
@@ -90,8 +90,8 @@ Los valores inciertos conservan el sufijo (`Female?`, `F?`, `♀?`; `Male?`,
 `M?`, `♂?`). Las condiciones existentes con los códigos heredados `0`, `1` y
 `2` siguen siendo válidas.
 
-Todos los tipos de texto y sus opciones de formato están listados en la
-[Referencia del editor de plantillas](../template-editor-reference#text-types-and-their-formats).
+Todos los tipos de texto y sus opciones de formato están listados en
+[Expresiones de exportación](../export-expressions#text-types-and-their-formats).
 
 ## Manejar campos vacíos
 
@@ -129,9 +129,19 @@ identificación de especie que no tiene confianza alta:
 [taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
 ```
 
+Una tercera forma, el texto condicional, no tiene campo objetivo. Escribe un
+texto cuando las condiciones coinciden y, opcionalmente, otro texto después de
+`|` cuando no coinciden. Aquí la unidad aparece solo cuando se registró el
+ancho:
+
+```text
+[mammalAttribute::testisWidth][[if][mammalAttribute::testisWidth!=""]=>" mm"]]
+```
+
 La primera imprime `[82.5]` para un peso estimado y `82.5` en los demás casos.
 La segunda imprime `Rattus rattus` para una identificación de confianza alta y
-`Rattus ?` para cualquier valor menor.
+`Rattus ?` para cualquier valor menor. La tercera imprime `6.5 mm`, o nada
+cuando falta el ancho.
 
 Los símbolos son:
 
@@ -139,10 +149,17 @@ Los símbolos son:
 |---|---|
 | `[[` … `]]` | Abre y cierra la expresión |
 | `][` | Termina el campo objetivo e inicia las condiciones |
+| `if` | Ocupa el lugar del objetivo en el texto condicional |
 | `==` `!=` `~=` | Igual, distinto, contiene |
 | `&&` `\|\|` | Todas las condiciones, cualquier condición |
-| `"` … `"` | Encierran cada valor de comparación |
-| `]=>` | Termina las condiciones e inicia el texto de reemplazo |
+| `"` … `"` | Encierran cada valor de comparación y cada texto |
+| `]=>` | Termina las condiciones e inicia el texto de reemplazo o condicional |
+| `\|` | Separa el texto que se escribe cuando las condiciones no coinciden |
+
+El texto condicional puede incluir campos, y
+`[mammalAttribute::testisPosition#label]` imprime la etiqueta de un campo
+codificado; consulte
+[Expresiones de exportación](../export-expressions#conditional-text).
 
 Las comparaciones eliminan espacios en los extremos y distinguen mayúsculas. Leen valores almacenados: compare `"2"`, no `"High"`, para confianza de identificación. Use `Is empty` (`==""`) o `Is not empty` (`!=""`) para comprobar si el campo de origen tiene valor. Otras comparaciones no coinciden con un origen vacío. No mezcle `&&` y `||` en una expresión.
 
@@ -153,8 +170,8 @@ Pruebe en la vista previa tanto el caso que coincide como el que no. Una
 expresión mal formada se omite sin avisar, así que se imprime literalmente.
 
 El conjunto completo de símbolos, los tres tipos de condicional del diálogo y
-todas las reglas de evaluación están en la
-[Referencia del editor de plantillas](../template-editor-reference#conditional-output).
+todas las reglas de evaluación están en
+[Expresiones de exportación](../export-expressions#conditional-output).
 
 Las reglas de reemplazo son la otra manera de reescribir un valor. Se aplican
 después del formato, coinciden por valor exacto o por subcadena y pueden
@@ -177,6 +194,9 @@ compruebe las imágenes después de importar en otro dispositivo.
 
 En `Settings` > `Documents`, cambie a `Print layouts`. Cree un diseño o
 use `Save as...` antes de experimentar con uno ya aprobado.
+Bajo el nombre, añada una descripción opcional de hasta 80 caracteres; `Update`
+guarda el nombre y la descripción a la vez, y la descripción aparece en la
+lista de presets.
 
 ### Configuración de la página
 
@@ -264,8 +284,12 @@ Las plantillas se exportan desde `Settings` > `Documents` > `Templates`, y los
 diseños desde `Print layouts`. Ambos ofrecen dos alcances: `Export this ...`
 en una fila o en el menú de opciones escribe un solo elemento, y
 `Export all ...` escribe todos. Ambos escriben el mismo formato de archivo, así
-que cualquiera se importa con la misma acción `Import`. Una sola plantilla o
-diseño también puede viajar como código QR cuando cabe en uno.
+que cualquiera se importa con la misma acción `Import`. El diálogo de
+exportación define el nombre y la carpeta del archivo, y `Share` lo envía una vez
+escrito. Exportar un diseño incluye las plantillas que usan sus bloques; desactive
+`Include linked templates` para exportar solo los diseños. Al importar ese archivo
+también se añaden las plantillas, y solo se renombra una cuando ya existe otra
+distinta con el mismo nombre.
 
 La importación de plantillas pregunta si se debe reemplazar o usar otro nombre,
 y añade un sufijo numerado cuando llegan varias a la vez; la importación de
@@ -376,6 +400,6 @@ exportación del proyecto o la exportación estructurada de registros. Consulte
 | La vista previa está desactualizada | Genere una vista previa nueva. |
 | La importación cambia muchos presets | La transferencia de una sección reemplaza toda esa sección. |
 
-Todas las opciones del editor de plantillas están listadas en la
-[Referencia del editor de plantillas](../template-editor-reference). Para
+Todas las opciones del editor de plantillas están listadas en
+[Expresiones de exportación](../export-expressions#template-editor-options). Para
 detalles de almacenamiento y renderizado, consulte [Templates and presets (en inglés)](/en/contributing/code/templates-and-presets/) y [Export workflows (en inglés)](/en/contributing/code/data-export-workflows/).

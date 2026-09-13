@@ -41,7 +41,7 @@ Páginas + pré-visualização/exportação = PDF
 Abra `Settings` > `Documents`, mude para `Templates` e selecione `Create
 new template`.
 
-1. Informe um `Template name` único e uma `Description` útil.
+1. Informe um `Template name` único e, se quiser, uma `Description` curta de até 80 caracteres.
 2. Escolha o `Record type` correto: `Specimen`, `Specimen Part`, `Site`,
    `Collecting Event`, `Narrative` ou `None`.
 3. Escolha `1 sided` ou `2 sided`. Um modelo frente e verso tem desenhos
@@ -88,8 +88,8 @@ A formatação de sexo aceita texto, letras e símbolos para todos os termos.
 Valores incertos mantêm o sufixo (`Female?`, `F?`, `♀?`; `Male?`, `M?`, `♂?`).
 Condições existentes com os códigos legados `0`, `1` e `2` continuam válidas.
 
-Todos os tipos de texto e as suas opções de formato estão listados na
-[Referência do editor de modelos](../template-editor-reference#text-types-and-their-formats).
+Todos os tipos de texto e as suas opções de formato estão listados em
+[Expressões de exportação](../export-expressions#text-types-and-their-formats).
 
 ## Lidar com campos vazios
 
@@ -126,9 +126,19 @@ marcar uma identificação de espécie que não tem confiança alta:
 [taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
 ```
 
+Uma terceira forma, o texto condicional, não tem campo alvo. Ela escreve um
+texto quando as condições coincidem e, opcionalmente, outro texto após `|`
+quando não coincidem. Aqui a unidade aparece apenas quando a largura foi
+registrada:
+
+```text
+[mammalAttribute::testisWidth][[if][mammalAttribute::testisWidth!=""]=>" mm"]]
+```
+
 A primeira imprime `[82.5]` para um peso estimado e `82.5` nos demais casos. A
 segunda imprime `Rattus rattus` para uma identificação de confiança alta e
-`Rattus ?` para qualquer nível inferior.
+`Rattus ?` para qualquer nível inferior. A terceira imprime `6.5 mm`, ou nada
+quando falta a largura.
 
 Os símbolos são:
 
@@ -136,10 +146,17 @@ Os símbolos são:
 |---|---|
 | `[[` … `]]` | Abre e fecha a expressão |
 | `][` | Encerra o campo alvo e inicia as condições |
+| `if` | Ocupa o lugar do alvo no texto condicional |
 | `==` `!=` `~=` | Igual, diferente, contém |
 | `&&` `\|\|` | Todas as condições, qualquer condição |
-| `"` … `"` | Delimitam cada valor de comparação |
-| `]=>` | Encerra as condições e inicia o texto de substituição |
+| `"` … `"` | Delimitam cada valor de comparação e cada texto |
+| `]=>` | Encerra as condições e inicia o texto de substituição ou condicional |
+| `\|` | Separa o texto escrito quando as condições não coincidem |
+
+O texto condicional pode incluir campos, e
+`[mammalAttribute::testisPosition#label]` imprime o rótulo de um campo
+codificado; consulte
+[Expressões de exportação](../export-expressions#conditional-text).
 
 As comparações removem espaços nas extremidades e diferenciam maiúsculas de minúsculas. Leem valores armazenados: compare `"2"`, não `"High"`, para confiança da identificação. Use `Is empty` (`==""`) ou `Is not empty` (`!=""`) para testar se o campo de origem tem valor. Outras comparações não coincidem com uma origem vazia. Não misture `&&` e `||` na mesma expressão.
 
@@ -150,8 +167,8 @@ Teste na prévia tanto o caso que coincide quanto o que não coincide. Uma
 expressão malformada é ignorada sem aviso, então ela é impressa literalmente.
 
 O conjunto completo de símbolos, os três tipos de condicional da caixa de
-diálogo e todas as regras de avaliação estão na
-[Referência do editor de modelos](../template-editor-reference#conditional-output).
+diálogo e todas as regras de avaliação estão em
+[Expressões de exportação](../export-expressions#conditional-output).
 
 As regras de substituição são a outra maneira de reescrever um valor. Elas são
 aplicadas após a formatação, correspondem por valor exato ou por substring e
@@ -174,6 +191,8 @@ as imagens depois de importar em outro dispositivo.
 
 Em `Settings` > `Documents`, mude para `Print layouts`. Crie um layout ou
 use `Save as...` antes de experimentar com um layout já aprovado.
+Abaixo do nome, adicione uma descrição opcional de até 80 caracteres; `Update`
+salva o nome e a descrição juntos, e a descrição aparece na lista de presets.
 
 ### Configuração da página
 
@@ -261,8 +280,12 @@ Modelos são exportados em `Settings` > `Documents` > `Templates`, e layouts em
 `Print layouts`. Ambos oferecem dois escopos: `Export this ...` em uma linha ou
 no menu de opções grava um único item, e `Export all ...` grava todos. Ambos
 escrevem o mesmo formato de arquivo, então qualquer um é importado pela mesma
-ação `Import`. Um único modelo ou layout também pode viajar como código QR
-quando couber em um.
+ação `Import`. A caixa de diálogo de exportação define o nome e a pasta do
+arquivo, e `Share` o envia depois de gravado. Exportar um layout inclui os
+modelos usados pelos seus blocos; desative `Include linked templates` para
+exportar só os layouts. Ao importar esse arquivo, os modelos também são
+adicionados, e um modelo só é renomeado quando já existe outro diferente com o
+mesmo nome.
 
 A importação de modelo pergunta se deve substituir ou usar outro nome, e
 acrescenta um sufixo numerado quando vários chegam de uma vez; a importação de
@@ -373,6 +396,6 @@ exportação do projeto ou da exportação estruturada de registros. Consulte
 | Prévia desatualizada | Gere a prévia novamente. |
 | Importação altera muitos presets | A transferência de uma seção substitui toda aquela seção. |
 
-Todas as opções do editor de modelos estão listadas na
-[Referência do editor de modelos](../template-editor-reference). Para detalhes
+Todas as opções do editor de modelos estão listadas em
+[Expressões de exportação](../export-expressions#template-editor-options). Para detalhes
 de armazenamento e renderização, consulte [Templates and presets (em inglês)](/en/contributing/code/templates-and-presets/) e [Export workflows (em inglês)](/en/contributing/code/data-export-workflows/).

@@ -66,20 +66,27 @@ backup file.
 {% steps %}
 
 1. Open `Settings`.
-2. Under `Database`, select `Replace database` to open `Database Settings`.
-3. Use `Choose database` to select a `.sqlite3` database file, ZIP archive, or
-   TAR.GZ archive.
-4. Keep `Back up current data first` enabled unless you are certain you do not
-   need the current data.
-5. Select `Replace`.
-6. Confirm the warning.
+2. Under `Database`, select `Replace database`.
+3. Under `Replace with`, select `Browse` to choose a `.sqlite3` database file,
+   ZIP archive, or TAR.GZ archive.
+4. Review the comparison. After you choose a file, NAHPU reads it and shows its
+   schema version, records, files, and size next to the current database. An
+   older schema is upgraded after the restore. A file that is not a NAHPU
+   database, or that was made by a newer NAHPU version, cannot be restored;
+   update NAHPU first to restore a newer backup.
+5. Keep `Back up current data first` enabled unless you are certain you do not
+   need the current data. The backup is saved as a TAR.GZ archive in the NAHPU
+   backup folder.
+6. Select `Replace database`.
+7. Confirm the warning.
 
 {% /steps %}
 
 Restoring a database replaces the current project database. If you restore an
 archive, NAHPU extracts it, copies included project files into the app documents
 directory, imports any included user configs, and then replaces the active
-SQLite database.
+SQLite database. Personnel photos from older backups, which kept them in the
+project folder, are restored to the app's personnel photo folder.
 
 A restore overwrites any media or config file whose name matches one in the
 archive, in place and without a second copy; a file that is already identical is

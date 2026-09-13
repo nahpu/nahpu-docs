@@ -52,6 +52,14 @@ export default defineConfig({
     "/pt/usages/export-records": "/pt/usages/export/export-records/",
     "/pt/usages/export-documents": "/pt/usages/export/export-documents/",
     "/pt/usages/export-bundles": "/pt/usages/export/export-bundles/",
+    "/en/usages/export/template-editor-reference":
+      "/en/usages/export/export-expressions/",
+    "/es/usages/export/template-editor-reference":
+      "/es/usages/export/export-expressions/",
+    "/id/usages/export/template-editor-reference":
+      "/id/usages/export/export-expressions/",
+    "/pt/usages/export/template-editor-reference":
+      "/pt/usages/export/export-expressions/",
   },
   integrations: [
     starlight({
