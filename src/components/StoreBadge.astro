@@ -1,0 +1,73 @@
+---
+import googlePlayEnglish from "../assets/store-badges/GetItOnGooglePlay_Badge_Web_color_English.svg";
+import googlePlayIndonesian from "../assets/store-badges/GetItOnGooglePlay_Badge_Web_color_Indonesian.svg";
+import googlePlayPortuguese from "../assets/store-badges/GetItOnGooglePlay_Badge_Web_color_Portuguese-Brazil.svg";
+import googlePlaySpanish from "../assets/store-badges/GetItOnGooglePlay_Badge_Web_color_Spanish-LATAM.svg";
+import microsoftStore from "../assets/store-badges/GetItFromMicrosoft_Badge_English_dark.svg";
+
+type Store = "google-play" | "microsoft-store";
+type Locale = "en" | "pt" | "es" | "id";
+
+interface Props {
+  store: Store;
+  locale?: Locale;
+}
+
+const { store, locale = "en" } = Astro.props;
+
+/// Google Play badges follow the page language; Microsoft publishes the
+/// English badge NAHPU uses on every locale.
+const googlePlayBadges = {
+  en: { image: googlePlayEnglish, alt: "Get it on Google Play" },
+  pt: { image: googlePlayPortuguese, alt: "Disponível no Google Play" },
+  es: { image: googlePlaySpanish, alt: "Disponible en Google Play" },
+  id: { image: googlePlayIndonesian, alt: "Temukan di Google Play" },
+};
+
+const badge =
+  store === "google-play"
+    ? {
+        ...(googlePlayBadges[locale] ?? googlePlayBadges.en),
+        href: "https://play.google.com/store/apps/details?id=com.hhandika.nahpu",
+        target: "_blank",
+      }
+    : {
+        image: microsoftStore,
+        alt: "Download from the Microsoft Store",
+        href: "https://get.microsoft.com/installer/download/9nx3z8p3nsml?referrer=appbadge",
+        target: "_self",
+      };
+---
+
+<div class="nh-store-badge not-content">
+  <a
+    href={badge.href}
+    target={badge.target}
+    rel={badge.target === "_blank" ? "noopener noreferrer" : undefined}
+  >
+    <img
+      src={badge.image.src}
+      width={badge.image.width}
+      height={badge.image.height}
+      alt={badge.alt}
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
+</div>
+
+<style>
+  @layer components {
+    .nh-store-badge a {
+      display: inline-block;
+      line-height: 0;
+    }
+
+    .nh-store-badge img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: 3.5rem;
+    }
+  }
+</style>

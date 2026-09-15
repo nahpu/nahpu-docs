@@ -132,7 +132,7 @@ const platforms: Platform[] = [
         color: "#2f9e7d",
         name: "Android",
         devices: "Phone and tablet",
-        requirements: ["Android 8.0 (Oreo) or later"],
+        requirements: ["Android 7.0 (Nougat) or later"],
         steps: [
             "Open the Google Play listing with the button below.",
             "Tap <strong>Install</strong> and wait for the download to finish.",
@@ -181,7 +181,7 @@ const platforms: Platform[] = [
         name: "Linux",
         devices: "Desktop and laptop",
         requirements: [
-            "Ubuntu 22.04 or later, or another distribution with GLIBC 2.34 or later",
+            "Ubuntu 24.04 or later, or another x86_64 distribution with GLIBC 2.35 and GLIBCXX 3.4.31 or later",
         ],
         steps: [
             "Download the archive with the button below.",
@@ -199,17 +199,15 @@ const platforms: Platform[] = [
         color: "#7c72d8",
         name: "Windows",
         devices: "Desktop and laptop",
-        requirements: ["Windows 10 or later"],
+        requirements: ["Windows 10 version 1809 (build 17763) or later (x64)"],
         steps: [
-            "Download the archive with the button below.",
-            "Extract the downloaded ZIP file into a folder on your computer.",
-            "For easier access, create a shortcut to <code>nahpu.exe</code> on your desktop or taskbar.",
-            "Open the app by double-clicking <code>nahpu.exe</code> or the shortcut you created.",
-            "If you see a warning about an unrecognized publisher, choose <strong>More info</strong>, then <strong>Run anyway</strong>.",
+            "Download the NAHPU installer from Microsoft with the button below, or search for NAHPU in the Microsoft Store app.",
+            "Open the downloaded installer, or select <strong>Get</strong> in the Microsoft Store app, and wait for the installation to finish.",
+            "Open NAHPU from the Start menu.",
         ],
         cta: {
-            label: "Download for Windows (x86_64)",
-            href: "https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Windows-x86_64.zip",
+            label: "Download from the Microsoft Store",
+            href: "https://get.microsoft.com/installer/download/9nx3z8p3nsml?referrer=appbadge",
         },
         links: [],
     },
@@ -303,10 +301,11 @@ const nextSteps = [
                     NAHPU v1 &ldquo;Tropical Mountains&rdquo; is out
                 </h2>
                 <p class={`${bodyTextClasses} mt-3 max-w-3xl`}>
-                    Version 1 is available now on Google Play for Android. The
-                    same release is out for Apple devices, Linux, and Windows,
-                    and their store listings will follow soon. Until then,
-                    install those platforms with the downloads below. If
+                    Version 1 is available now on Google Play for Android and
+                    the Microsoft Store for Windows. The same release is out for
+                    Apple devices and Linux, and their store listings will
+                    follow soon. Until then, install those platforms with the
+                    downloads below. If
                     something looks wrong, please <a
                         class={linkClasses}
                         href="https://github.com/nahpu/nahpu/issues"
