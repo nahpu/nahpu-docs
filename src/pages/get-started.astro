@@ -109,562 +109,550 @@ const downloadBtnClasses = cntl`
 `;
 
 interface PlatformLink {
-    label: string;
-    href: string;
+  label: string;
+  href: string;
 }
 
 interface Platform {
-    id: string;
-    color: string;
-    name: string;
-    devices: string;
-    requirements: string[];
-    /// Rendered as HTML so steps can carry inline `code` and emphasis.
-    steps: string[];
-    cta: PlatformLink;
-    links: PlatformLink[];
-    note?: string;
+  id: string;
+  color: string;
+  name: string;
+  devices: string;
+  requirements: string[];
+  /// Rendered as HTML so steps can carry inline `code` and emphasis.
+  steps: string[];
+  cta: PlatformLink;
+  links: PlatformLink[];
+  note?: string;
 }
 
 const platforms: Platform[] = [
-    {
-        id: "android",
-        color: "#2f9e7d",
-        name: "Android",
-        devices: "Phone and tablet",
-        requirements: ["Android 7.0 (Nougat) or later"],
-        steps: [
-            "Open the Google Play listing with the button below.",
-            "Tap <strong>Install</strong> and wait for the download to finish.",
-            "Open NAHPU from your app drawer or home screen.",
-        ],
-        cta: {
-            label: "Get it on Google Play",
-            href: "https://play.google.com/store/apps/details?id=com.hhandika.nahpu",
-        },
-        links: [],
+  {
+    id: "android",
+    color: "#2f9e7d",
+    name: "Android",
+    devices: "Phone and tablet",
+    requirements: ["Android 7.0 (Nougat) or later"],
+    steps: [
+      "Open the Google Play listing with the button below.",
+      "Tap <strong>Install</strong> and wait for the download to finish.",
+      "Open NAHPU from your app drawer or home screen.",
+    ],
+    cta: {
+      label: "Get it on Google Play",
+      href: "https://play.google.com/store/apps/details?id=com.hhandika.nahpu",
     },
-    {
-        id: "apple",
-        color: "#3f9fd6",
-        name: "Apple devices",
-        devices: "iPhone, iPad, and Mac",
-        requirements: [
-            "iOS 15.6 or later",
-            "iPadOS 15.6 or later",
-            "macOS 12.4 or later (arm64 and x86_64)",
-        ],
-        note: "The App Store listing is on its way. Until it lands, Apple distributes NAHPU through TestFlight.",
-        steps: [
-            "Install TestFlight from the App Store on your iPhone, iPad, or Mac.",
-            "Open the invitation below on the same device where you installed TestFlight.",
-            "Follow the TestFlight instructions, then open NAHPU from your home screen or Applications folder.",
-        ],
-        cta: {
-            label: "Install through TestFlight",
-            href: "https://testflight.apple.com/join/DRG6yUfb",
-        },
-        links: [
-            {
-                label: "Oldest supported macOS devices",
-                href: "https://support.apple.com/en-us/102861",
-            },
-            {
-                label: "Device support for iOS and iPadOS",
-                href: "https://iosref.com/ios",
-            },
-        ],
+    links: [],
+  },
+  {
+    id: "apple",
+    color: "#3f9fd6",
+    name: "Apple devices",
+    devices: "iPhone, iPad, and Mac",
+    requirements: [
+      "iOS 15.6 or later",
+      "iPadOS 15.6 or later",
+      "macOS 12.4 or later (arm64 and x86_64)",
+    ],
+    note: "The App Store listing is on its way. Until it lands, Apple distributes NAHPU through TestFlight.",
+    steps: [
+      "Install TestFlight from the App Store on your iPhone, iPad, or Mac.",
+      "Open the invitation below on the same device where you installed TestFlight.",
+      "Follow the TestFlight instructions, then open NAHPU from your home screen or Applications folder.",
+    ],
+    cta: {
+      label: "Install through TestFlight",
+      href: "https://testflight.apple.com/join/DRG6yUfb",
     },
-    {
-        id: "linux",
-        color: "#e0913a",
-        name: "Linux",
-        devices: "Desktop and laptop",
-        requirements: [
-            "Ubuntu 24.04 or later, or another x86_64 distribution with GLIBC 2.35 and GLIBCXX 3.4.31 or later",
-        ],
-        steps: [
-            "Download the archive with the button below.",
-            "Extract <code>nahpu-Linux-x86_64.tar.gz</code> into a folder on your computer.",
-            "Run the <code>nahpu</code> executable.",
-        ],
-        cta: {
-            label: "Download for Linux (x86_64)",
-            href: "https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.tar.gz",
-        },
-        links: [],
+    links: [
+      {
+        label: "Oldest supported macOS devices",
+        href: "https://support.apple.com/en-us/102861",
+      },
+      {
+        label: "Device support for iOS and iPadOS",
+        href: "https://iosref.com/ios",
+      },
+    ],
+  },
+  {
+    id: "linux",
+    color: "#e0913a",
+    name: "Linux",
+    devices: "Desktop and laptop",
+    requirements: [
+      "An x86_64 distribution with GLIBC 2.35 or later, such as Ubuntu 22.04, Debian 12, Fedora 36, or RHEL and Rocky Linux 9",
+    ],
+    note: "NAHPU signs its RPM packages. On Fedora, RHEL, and Rocky Linux, run sudo rpm --import https://nahpu.app/nahpu.asc once before installing.",
+    steps: [
+      "Download the package for your distribution with the button below, or take the <code>.rpm</code> from the links that follow.",
+      "Install it with <code>sudo apt install ./nahpu-Linux-x86_64.deb</code> on Debian and Ubuntu, or <code>sudo dnf install ./nahpu-Linux-x86_64.rpm</code> on Fedora, RHEL, and Rocky Linux.",
+      "Open NAHPU from your application menu, or run <code>nahpu</code> in a terminal.",
+    ],
+    cta: {
+      label: "Download for Debian and Ubuntu (.deb)",
+      href: "https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.deb",
     },
-    {
-        id: "windows",
-        color: "#7c72d8",
-        name: "Windows",
-        devices: "Desktop and laptop",
-        requirements: ["Windows 10 version 1809 (build 17763) or later (x64)"],
-        steps: [
-            "Download the NAHPU installer from Microsoft with the button below, or search for NAHPU in the Microsoft Store app.",
-            "Open the downloaded installer, or select <strong>Get</strong> in the Microsoft Store app, and wait for the installation to finish.",
-            "Open NAHPU from the Start menu.",
-        ],
-        cta: {
-            label: "Download from the Microsoft Store",
-            href: "https://get.microsoft.com/installer/download/9nx3z8p3nsml?referrer=appbadge",
-        },
-        links: [],
+    links: [
+      {
+        label: "RPM package for Fedora, RHEL, and Rocky Linux",
+        href: "https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.rpm",
+      },
+      {
+        label: "Portable archive for other distributions",
+        href: "https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.tar.gz",
+      },
+      {
+        label: "Package signing key",
+        href: "https://nahpu.app/nahpu.asc",
+      },
+    ],
+  },
+  {
+    id: "windows",
+    color: "#7c72d8",
+    name: "Windows",
+    devices: "Desktop and laptop",
+    requirements: ["Windows 10 version 1809 (build 17763) or later (x64)"],
+    steps: [
+      "Download the NAHPU installer from Microsoft with the button below, or search for NAHPU in the Microsoft Store app.",
+      "Open the downloaded installer, or select <strong>Get</strong> in the Microsoft Store app, and wait for the installation to finish.",
+      "Open NAHPU from the Start menu.",
+    ],
+    cta: {
+      label: "Download from the Microsoft Store",
+      href: "https://get.microsoft.com/installer/download/9nx3z8p3nsml?referrer=appbadge",
     },
+    links: [],
+  },
 ];
 
 const nextSteps = [
-    {
-        title: "Set up the app",
-        desc: "The setup wizard on the home screen walks you through field identifiers and the controlled vocabularies your team uses. Setup is done once and can be shared with everyone else.",
-    },
-    {
-        title: "Create your first project",
-        desc: "A project holds the specimens, sites, collecting events, samples, and media of one expedition or season. Start one in the lab with a real specimen before you rely on it in the field.",
-    },
-    {
-        title: "Learn the workflow",
-        desc: "The Quick Start in the documentation introduction links the Day 1 guide, best practices, and the device notes for fieldwork, in the order they are useful.",
-    },
+  {
+    title: "Set up the app",
+    desc: "The setup wizard on the home screen walks you through field identifiers and the controlled vocabularies your team uses. Setup is done once and can be shared with everyone else.",
+  },
+  {
+    title: "Create your first project",
+    desc: "A project holds the specimens, sites, collecting events, samples, and media of one expedition or season. Start one in the lab with a real specimen before you rely on it in the field.",
+  },
+  {
+    title: "Learn the workflow",
+    desc: "The Quick Start in the documentation introduction links the Day 1 guide, best practices, and the device notes for fieldwork, in the order they are useful.",
+  },
 ];
 ---
 
 <Layout
-    title="Get Started"
-    description="Install NAHPU on Android, Apple devices, Linux, or Windows, then continue with the Quick Start."
-    overlayNav
+  title="Get Started"
+  description="Install NAHPU on Android, Apple devices, Linux, or Windows, then continue with the Quick Start."
+  overlayNav
 >
-    <!-- Header -------------------------------------------------------------->
-    <section
-        class="nh-hero relative flex min-h-[52svh] items-end px-6 pt-32 pb-12"
-    >
-        <div class="nh-hero-bg" aria-hidden="true">
-            <div class="nh-blob nh-blob-teal"></div>
-            <div class="nh-blob nh-blob-gold"></div>
-            <Image
-                src={mtGede}
-                alt=""
-                widths={[1200, 2400]}
-                sizes="100vw"
-                class="nh-hero-photo"
-                loading="eager"
-            />
-            <div class="nh-hero-scrim"></div>
-            <div class="nh-hero-fade"></div>
-        </div>
+  <!-- Header -------------------------------------------------------------->
+  <section
+    class="nh-hero relative flex min-h-[52svh] items-end px-6 pt-32 pb-12"
+  >
+    <div class="nh-hero-bg" aria-hidden="true">
+      <div class="nh-blob nh-blob-teal"></div>
+      <div class="nh-blob nh-blob-gold"></div>
+      <Image
+        src={mtGede}
+        alt=""
+        widths={[1200, 2400]}
+        sizes="100vw"
+        class="nh-hero-photo"
+        loading="eager"
+      />
+      <div class="nh-hero-scrim"></div>
+      <div class="nh-hero-fade"></div>
+    </div>
 
-        <div class={`${innerClasses} w-full`}>
-            <p class={kickerClasses}>Get started</p>
-            <h1
-                class="mt-3 text-4xl font-bold text-silver-tree-950 sm:text-5xl dark:text-silver-tree-50"
+    <div class={`${innerClasses} w-full`}>
+      <p class={kickerClasses}>Get started</p>
+      <h1
+        class="mt-3 text-4xl font-bold text-silver-tree-950 sm:text-5xl dark:text-silver-tree-50"
+      >
+        Install NAHPU on any device you already have
+      </h1>
+      <p
+        class="mt-5 max-w-2xl text-lg text-silver-tree-800 dark:text-silver-tree-200"
+      >
+        NAHPU is free, open source, and runs on Android, Apple devices, Linux,
+        and Windows. Install it on a phone, a tablet, a laptop, or a desktop,
+        whichever is with you, then follow the Quick Start to build your first
+        project.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="#install" class={mainBtnClasses}>Install NAHPU</a>
+        <a href="/en/#quick-start" class={secondaryBtnClasses}
+          >Read the Quick Start</a
+        >
+      </div>
+
+      <p
+        class="mt-6 text-[11px] tracking-wide text-silver-tree-700 dark:text-silver-tree-400"
+      >
+        Taken at Mt. Gede by Heru Handika.
+      </p>
+    </div>
+  </section>
+
+  <!-- Release status ------------------------------------------------------->
+  <section
+    class="relative isolate overflow-hidden bg-silver-tree-100 px-6 pt-32 pb-16 sm:pt-40 sm:pb-20 dark:bg-silver-tree-950"
+  >
+    <TropicalMountains />
+
+    <div class={innerClasses}>
+      <div
+        class="nh-reveal rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/90 p-6 backdrop-blur-sm dark:border-silver-tree-700/70 dark:bg-silver-tree-900/80"
+      >
+        <p class={labelClasses}>Release</p>
+        <h2
+          class="mt-3 text-xl font-semibold text-silver-tree-900 dark:text-silver-tree-50"
+        >
+          NAHPU v1 &ldquo;Tropical Mountains&rdquo; is out
+        </h2>
+        <p class={`${bodyTextClasses} mt-3 max-w-3xl`}>
+          Version 1 is available now on Google Play for Android and the
+          Microsoft Store for Windows. Linux installs from the signed packages
+          below. The same release is out for Apple devices, and its App Store
+          listing will follow soon. Until then, install it through TestFlight.
+          If something looks wrong, please <a
+            class={linkClasses}
+            href="https://github.com/nahpu/nahpu/issues"
+            target="_blank"
+            rel="noopener noreferrer">report it on GitHub</a
+          >.
+        </p>
+        <p
+          class={`${bodyTextClasses} mt-4 max-w-3xl text-silver-tree-600 dark:text-silver-tree-400`}
+        >
+          The codename comes from NAHPU’s first real-world field test on Mt.
+          Gede in West Java, Indonesia. The mountain also exemplifies the
+          importance of biodiversity inventories, and the need for tools like
+          NAHPU that aim to accelerate the discovery and documentation of
+          biodiversity. Despite the mountain’s close proximity to Jakarta, <a
+            class={linkClasses}
+            href="https://www.theguardian.com/world/2025/nov/27/jakarta-overtakes-tokyo-most-populous-city-world"
+            target="_blank">the world’s most populous city</a
+          >, and to Indonesia’s largest natural history museum, <a
+            class={linkClasses}
+            href="https://brin.go.id/en/news/125996/home-to-millions-of-specimens-the-bogor-zoological-museum-preserves-southeast-asias-largest-faunal-collection"
+            target="_blank">MZB</a
+          >, undescribed species continue to be discovered there (noted in <a
+            class={linkClasses}
+            href="https://doi.org/10.1644/13-MAMM-A-215"
+            target="_blank">Esselstyn et al., 2014</a
+          > and <a
+            class={linkClasses}
+            href="https://doi.org/10.1093/jmammal/gyw183"
+            target="_blank">Demos et al., 2017)</a
+          >.
+        </p>
+
+        <a
+          class={downloadBtnClasses}
+          href="https://play.google.com/store/apps/details?id=com.hhandika.nahpu"
+          target="_blank"
+          rel="noopener noreferrer">Get it on Google Play</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- Installation --------------------------------------------------------->
+  <section
+    id="install"
+    class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
+  >
+    <div class={innerClasses}>
+      <header class="nh-reveal max-w-3xl">
+        <p class={kickerClasses}>Step 1</p>
+        <h2 class={titleClasses}>Install NAHPU</h2>
+        <p class={leadClasses}>
+          Every platform installs the same catalog and reads the same project
+          files, so you can start on a phone and continue on a desktop.
+          Downloads always point at the latest release.
+        </p>
+      </header>
+
+      <div
+        id="detected-panel"
+        class="nh-reveal nh-in mt-8 hidden rounded-2xl border border-silver-tree-400/70 bg-silver-tree-50/80 p-6 sm:p-8 dark:border-silver-tree-500/60 dark:bg-silver-tree-950/50"
+      >
+        <div
+          class="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_auto] lg:items-center"
+        >
+          <div>
+            <p class={labelClasses}>Detected on this device</p>
+            <h3
+              class="mt-3 text-xl font-semibold text-silver-tree-900 sm:text-2xl dark:text-silver-tree-50"
             >
-                Install NAHPU on any device you already have
-            </h1>
-            <p
-                class="mt-5 max-w-2xl text-lg text-silver-tree-800 dark:text-silver-tree-200"
-            >
-                NAHPU is free, open source, and runs on Android, Apple devices,
-                Linux, and Windows. Install it on a phone, a tablet, a laptop,
-                or a desktop, whichever is with you, then follow the Quick Start
-                to build your first project.
+              <span id="detected-name"></span>
+            </h3>
+            <p id="detected-requirements" class={`${bodyTextClasses} mt-2`}></p>
+            <p class={`${bodyTextClasses} mt-3`}>
+              Start here, or pick a different platform below if you are
+              installing on another device.
             </p>
+          </div>
 
-            <div class="mt-8 flex flex-wrap gap-4">
-                <a href="#install" class={mainBtnClasses}>Install NAHPU</a>
-                <a href="/en/#quick-start" class={secondaryBtnClasses}
-                    >Read the Quick Start</a
-                >
-            </div>
-
-            <p
-                class="mt-6 text-[11px] tracking-wide text-silver-tree-700 dark:text-silver-tree-400"
+          <div class="flex flex-col items-start gap-3 lg:items-end">
+            <a
+              id="detected-cta"
+              class={`${downloadBtnClasses} mt-0`}
+              href="#install"
+              target="_blank"
+              rel="noopener noreferrer"></a>
+            <a id="detected-steps" class={linkClasses} href="#install"
+              >See the full steps</a
             >
-                Taken at Mt. Gede by Heru Handika.
-            </p>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- Release status ------------------------------------------------------->
-    <section
-        class="relative isolate overflow-hidden bg-silver-tree-100 px-6 pt-32 pb-16 sm:pt-40 sm:pb-20 dark:bg-silver-tree-950"
-    >
-        <TropicalMountains />
-
-        <div class={innerClasses}>
-            <div
-                class="nh-reveal rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/90 p-6 backdrop-blur-sm dark:border-silver-tree-700/70 dark:bg-silver-tree-900/80"
+      <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+        {
+          platforms.map((platform, index) => (
+            <article
+              id={platform.id}
+              class={cardClasses}
+              style={`transition-delay: ${index * 60}ms`}
             >
-                <p class={labelClasses}>Release</p>
-                <h2
-                    class="mt-3 text-xl font-semibold text-silver-tree-900 dark:text-silver-tree-50"
+              <div class="flex items-center gap-2">
+                <span
+                  class="block h-2.5 w-2.5 rounded-full"
+                  style={`background:${platform.color}`}
+                />
+                <span class={labelClasses}>{platform.devices}</span>
+                <span
+                  data-current-badge
+                  class="ml-auto hidden rounded-full bg-silver-tree-200 px-2.5 py-0.5 text-[11px] font-semibold whitespace-nowrap text-silver-tree-800 dark:bg-silver-tree-800 dark:text-silver-tree-100"
                 >
-                    NAHPU v1 &ldquo;Tropical Mountains&rdquo; is out
-                </h2>
-                <p class={`${bodyTextClasses} mt-3 max-w-3xl`}>
-                    Version 1 is available now on Google Play for Android and
-                    the Microsoft Store for Windows. The same release is out for
-                    Apple devices and Linux, and their store listings will
-                    follow soon. Until then, install those platforms with the
-                    downloads below. If
-                    something looks wrong, please <a
+                  This device
+                </span>
+              </div>
+
+              <h3 class={`${cardTitleClasses} mt-3`}>{platform.name}</h3>
+
+              <p class={`${labelClasses} mt-5`}>Requirements</p>
+              <ul class="mt-2 flex flex-col gap-1">
+                {platform.requirements.map((requirement) => (
+                  <li class={bodyTextClasses}>{requirement}</li>
+                ))}
+              </ul>
+
+              {platform.note && (
+                <p class={`${bodyTextClasses} mt-4`}>{platform.note}</p>
+              )}
+
+              <p class={`${labelClasses} mt-6`}>Installation</p>
+              <ol class="mt-3 flex flex-col gap-3">
+                {platform.steps.map((step, stepIndex) => (
+                  <li class="flex gap-3">
+                    <span class={stepNumberClasses}>{stepIndex + 1}</span>
+                    <span class={bodyTextClasses} set:html={step} />
+                  </li>
+                ))}
+              </ol>
+
+              {platform.links.length > 0 && (
+                <ul class="mt-5 flex flex-col gap-1">
+                  {platform.links.map((link) => (
+                    <li class={bodyTextClasses}>
+                      <a
                         class={linkClasses}
-                        href="https://github.com/nahpu/nahpu/issues"
+                        href={link.href}
                         target="_blank"
-                        rel="noopener noreferrer">report it on GitHub</a
-                    >.
-                </p>
-                <p
-                    class={`${bodyTextClasses} mt-4 max-w-3xl text-silver-tree-600 dark:text-silver-tree-400`}
-                >
-                    The codename comes from NAHPU’s first real-world field test
-                    on Mt. Gede in West Java, Indonesia. The mountain also
-                    exemplifies the importance of biodiversity inventories, and
-                    the need for tools like NAHPU that aim to accelerate the
-                    discovery and documentation of biodiversity. Despite the
-                    mountain’s close proximity to Jakarta, <a
-                        class={linkClasses}
-                        href="https://www.theguardian.com/world/2025/nov/27/jakarta-overtakes-tokyo-most-populous-city-world"
-                        target="_blank">the world’s most populous city</a
-                    >, and to Indonesia’s largest natural history museum, <a
-                        class={linkClasses}
-                        href="https://brin.go.id/en/news/125996/home-to-millions-of-specimens-the-bogor-zoological-museum-preserves-southeast-asias-largest-faunal-collection"
-                        target="_blank">MZB</a
-                    >, undescribed species continue to be discovered there
-                    (noted in <a
-                        class={linkClasses}
-                        href="https://doi.org/10.1644/13-MAMM-A-215"
-                        target="_blank">Esselstyn et al., 2014</a
-                    > and <a
-                        class={linkClasses}
-                        href="https://doi.org/10.1093/jmammal/gyw183"
-                        target="_blank">Demos et al., 2017)</a
-                    >.
-                </p>
+                        rel="noopener noreferrer"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
 
+              <div class="mt-auto">
                 <a
-                    class={downloadBtnClasses}
-                    href="https://play.google.com/store/apps/details?id=com.hhandika.nahpu"
-                    target="_blank"
-                    rel="noopener noreferrer">Get it on Google Play</a
+                  class={downloadBtnClasses}
+                  href={platform.cta.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-            </div>
-        </div>
-    </section>
+                  {platform.cta.label}
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
 
-    <!-- Installation --------------------------------------------------------->
-    <section
-        id="install"
-        class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
-    >
-        <div class={innerClasses}>
-            <header class="nh-reveal max-w-3xl">
-                <p class={kickerClasses}>Step 1</p>
-                <h2 class={titleClasses}>Install NAHPU</h2>
-                <p class={leadClasses}>
-                    Every platform installs the same catalog and reads the same
-                    project files, so you can start on a phone and continue on a
-                    desktop. Downloads always point at the latest release.
-                </p>
-            </header>
+      <p class={`${bodyTextClasses} nh-reveal mt-6`}>
+        Looking for an older build or the release notes? Every version is listed
+        on the <a
+          class={linkClasses}
+          href="https://github.com/nahpu/nahpu/releases"
+          target="_blank"
+          rel="noopener noreferrer">NAHPU releases page</a
+        >. The full guide also lives in the <a
+          class={linkClasses}
+          href="/en/installation/">installation documentation</a
+        >.
+      </p>
+    </div>
+  </section>
 
-            <div
-                id="detected-panel"
-                class="nh-reveal nh-in mt-8 hidden rounded-2xl border border-silver-tree-400/70 bg-silver-tree-50/80 p-6 sm:p-8 dark:border-silver-tree-500/60 dark:bg-silver-tree-950/50"
+  <!-- Next step ------------------------------------------------------------>
+  <section
+    class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
+  >
+    <div class={innerClasses}>
+      <header class="nh-reveal max-w-3xl">
+        <p class={kickerClasses}>Step 2</p>
+        <h2 class={titleClasses}>Continue with the Quick Start</h2>
+        <p class={leadClasses}>
+          With the app installed, the next step is the <a
+            class={linkClasses}
+            href="/en/#quick-start">Quick Start</a
+          > in the documentation introduction. It takes you from a fresh install to
+          a project you can trust in the field.
+        </p>
+      </header>
+
+      <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+        {
+          nextSteps.map((item, index) => (
+            <article
+              class={cardClasses}
+              style={`transition-delay: ${index * 60}ms`}
             >
-                <div
-                    class="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_auto] lg:items-center"
-                >
-                    <div>
-                        <p class={labelClasses}>Detected on this device</p>
-                        <h3
-                            class="mt-3 text-xl font-semibold text-silver-tree-900 sm:text-2xl dark:text-silver-tree-50"
-                        >
-                            <span id="detected-name"></span>
-                        </h3>
-                        <p
-                            id="detected-requirements"
-                            class={`${bodyTextClasses} mt-2`}
-                        >
-                        </p>
-                        <p class={`${bodyTextClasses} mt-3`}>
-                            Start here, or pick a different platform below if
-                            you are installing on another device.
-                        </p>
-                    </div>
+              <span class={stepNumberClasses}>{index + 1}</span>
+              <h3 class={`${cardTitleClasses} mt-3`}>{item.title}</h3>
+              <p class={`${bodyTextClasses} mt-3`}>{item.desc}</p>
+            </article>
+          ))
+        }
+      </div>
 
-                    <div class="flex flex-col items-start gap-3 lg:items-end">
-                        <a
-                            id="detected-cta"
-                            class={`${downloadBtnClasses} mt-0`}
-                            href="#install"
-                            target="_blank"
-                            rel="noopener noreferrer"></a>
-                        <a
-                            id="detected-steps"
-                            class={linkClasses}
-                            href="#install">See the full steps</a
-                        >
-                    </div>
-                </div>
-            </div>
+      <div class="nh-reveal mt-10 flex flex-wrap gap-4">
+        <a href="/en/#quick-start" class={mainBtnClasses}
+          >Go to the Quick Start</a
+        >
+        <a href="/en/day-one/" class={secondaryBtnClasses}
+          >Read the Day 1 guide</a
+        >
+      </div>
+    </div>
+  </section>
 
-            <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
-                {
-                    platforms.map((platform, index) => (
-                        <article
-                            id={platform.id}
-                            class={cardClasses}
-                            style={`transition-delay: ${index * 60}ms`}
-                        >
-                            <div class="flex items-center gap-2">
-                                <span
-                                    class="block h-2.5 w-2.5 rounded-full"
-                                    style={`background:${platform.color}`}
-                                />
-                                <span class={labelClasses}>
-                                    {platform.devices}
-                                </span>
-                                <span
-                                    data-current-badge
-                                    class="ml-auto hidden rounded-full bg-silver-tree-200 px-2.5 py-0.5 text-[11px] font-semibold whitespace-nowrap text-silver-tree-800 dark:bg-silver-tree-800 dark:text-silver-tree-100"
-                                >
-                                    This device
-                                </span>
-                            </div>
-
-                            <h3 class={`${cardTitleClasses} mt-3`}>
-                                {platform.name}
-                            </h3>
-
-                            <p class={`${labelClasses} mt-5`}>Requirements</p>
-                            <ul class="mt-2 flex flex-col gap-1">
-                                {platform.requirements.map((requirement) => (
-                                    <li class={bodyTextClasses}>
-                                        {requirement}
-                                    </li>
-                                ))}
-                            </ul>
-
-                            {platform.note && (
-                                <p class={`${bodyTextClasses} mt-4`}>
-                                    {platform.note}
-                                </p>
-                            )}
-
-                            <p class={`${labelClasses} mt-6`}>Installation</p>
-                            <ol class="mt-3 flex flex-col gap-3">
-                                {platform.steps.map((step, stepIndex) => (
-                                    <li class="flex gap-3">
-                                        <span class={stepNumberClasses}>
-                                            {stepIndex + 1}
-                                        </span>
-                                        <span
-                                            class={bodyTextClasses}
-                                            set:html={step}
-                                        />
-                                    </li>
-                                ))}
-                            </ol>
-
-                            {platform.links.length > 0 && (
-                                <ul class="mt-5 flex flex-col gap-1">
-                                    {platform.links.map((link) => (
-                                        <li class={bodyTextClasses}>
-                                            <a
-                                                class={linkClasses}
-                                                href={link.href}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                {link.label}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-
-                            <div class="mt-auto">
-                                <a
-                                    class={downloadBtnClasses}
-                                    href={platform.cta.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {platform.cta.label}
-                                </a>
-                            </div>
-                        </article>
-                    ))
-                }
-            </div>
-
-            <p class={`${bodyTextClasses} nh-reveal mt-6`}>
-                Looking for an older build or the release notes? Every version
-                is listed on the <a
-                    class={linkClasses}
-                    href="https://github.com/nahpu/nahpu/releases"
-                    target="_blank"
-                    rel="noopener noreferrer">NAHPU releases page</a
-                >. The full guide also lives in the <a
-                    class={linkClasses}
-                    href="/en/installation/">installation documentation</a
-                >.
-            </p>
-        </div>
-    </section>
-
-    <!-- Next step ------------------------------------------------------------>
-    <section
-        class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
-    >
-        <div class={innerClasses}>
-            <header class="nh-reveal max-w-3xl">
-                <p class={kickerClasses}>Step 2</p>
-                <h2 class={titleClasses}>Continue with the Quick Start</h2>
-                <p class={leadClasses}>
-                    With the app installed, the next step is the <a
-                        class={linkClasses}
-                        href="/en/#quick-start">Quick Start</a
-                    > in the documentation introduction. It takes you from a fresh
-                    install to a project you can trust in the field.
-                </p>
-            </header>
-
-            <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-                {
-                    nextSteps.map((item, index) => (
-                        <article
-                            class={cardClasses}
-                            style={`transition-delay: ${index * 60}ms`}
-                        >
-                            <span class={stepNumberClasses}>{index + 1}</span>
-                            <h3 class={`${cardTitleClasses} mt-3`}>
-                                {item.title}
-                            </h3>
-                            <p class={`${bodyTextClasses} mt-3`}>{item.desc}</p>
-                        </article>
-                    ))
-                }
-            </div>
-
-            <div class="nh-reveal mt-10 flex flex-wrap gap-4">
-                <a href="/en/#quick-start" class={mainBtnClasses}
-                    >Go to the Quick Start</a
-                >
-                <a href="/en/day-one/" class={secondaryBtnClasses}
-                    >Read the Day 1 guide</a
-                >
-            </div>
-        </div>
-    </section>
-
-    <script
-        id="platform-data"
-        type="application/json"
-        is:inline
-        set:html={JSON.stringify(platforms)}
-    />
+  <script
+    id="platform-data"
+    type="application/json"
+    is:inline
+    set:html={JSON.stringify(platforms)}
+  />
 </Layout>
 
 <script>
-    /// Offer the download for the visitor's own operating system, while every
-    /// platform stays available below. Android is matched before Linux because
-    /// Android user agents also carry the word "Linux".
-    interface DetectablePlatform {
-        id: string;
-        name: string;
-        devices: string;
-        requirements: string[];
-        cta: { label: string; href: string };
+  /// Offer the download for the visitor's own operating system, while every
+  /// platform stays available below. Android is matched before Linux because
+  /// Android user agents also carry the word "Linux".
+  interface DetectablePlatform {
+    id: string;
+    name: string;
+    devices: string;
+    requirements: string[];
+    cta: { label: string; href: string };
+  }
+
+  const detectPlatformId = (): string | null => {
+    const agent = navigator.userAgent;
+    const uaData = (
+      navigator as Navigator & { userAgentData?: { platform?: string } }
+    ).userAgentData;
+    const hint = `${uaData?.platform ?? ""} ${agent}`;
+
+    // ChromeOS installs the Android build rather than the Linux archive.
+    if (/Android|CrOS/i.test(hint)) return "android";
+    // iPadOS reports a Macintosh user agent, so both land on Apple anyway.
+    if (/iPhone|iPad|iPod|Macintosh|Mac OS X|macOS/i.test(hint)) {
+      return "apple";
+    }
+    if (/Windows/i.test(hint)) return "windows";
+    if (/Linux|X11/i.test(hint)) return "linux";
+    return null;
+  };
+
+  const showDetectedPlatform = () => {
+    const dataElement = document.getElementById("platform-data");
+    const panel = document.getElementById("detected-panel");
+    const nameElement = document.getElementById("detected-name");
+    const requirementsElement = document.getElementById(
+      "detected-requirements",
+    );
+    const cta = document.getElementById("detected-cta");
+    const stepsLink = document.getElementById("detected-steps");
+
+    if (
+      !dataElement?.textContent ||
+      !panel ||
+      !nameElement ||
+      !requirementsElement ||
+      !(cta instanceof HTMLAnchorElement) ||
+      !(stepsLink instanceof HTMLAnchorElement)
+    ) {
+      return;
     }
 
-    const detectPlatformId = (): string | null => {
-        const agent = navigator.userAgent;
-        const uaData = (
-            navigator as Navigator & { userAgentData?: { platform?: string } }
-        ).userAgentData;
-        const hint = `${uaData?.platform ?? ""} ${agent}`;
+    const platformId = detectPlatformId();
+    if (!platformId) return;
 
-        // ChromeOS installs the Android build rather than the Linux archive.
-        if (/Android|CrOS/i.test(hint)) return "android";
-        // iPadOS reports a Macintosh user agent, so both land on Apple anyway.
-        if (/iPhone|iPad|iPod|Macintosh|Mac OS X|macOS/i.test(hint)) {
-            return "apple";
-        }
-        if (/Windows/i.test(hint)) return "windows";
-        if (/Linux|X11/i.test(hint)) return "linux";
-        return null;
-    };
+    const platforms: DetectablePlatform[] = JSON.parse(dataElement.textContent);
+    const platform = platforms.find((item) => item.id === platformId);
+    if (!platform) return;
 
-    const showDetectedPlatform = () => {
-        const dataElement = document.getElementById("platform-data");
-        const panel = document.getElementById("detected-panel");
-        const nameElement = document.getElementById("detected-name");
-        const requirementsElement = document.getElementById(
-            "detected-requirements",
-        );
-        const cta = document.getElementById("detected-cta");
-        const stepsLink = document.getElementById("detected-steps");
+    nameElement.textContent = platform.name;
+    requirementsElement.textContent = [
+      platform.devices,
+      ...platform.requirements,
+    ].join(" · ");
+    cta.textContent = platform.cta.label;
+    cta.href = platform.cta.href;
+    stepsLink.href = `#${platform.id}`;
+    panel.classList.remove("hidden");
 
-        if (
-            !dataElement?.textContent ||
-            !panel ||
-            !nameElement ||
-            !requirementsElement ||
-            !(cta instanceof HTMLAnchorElement) ||
-            !(stepsLink instanceof HTMLAnchorElement)
-        ) {
-            return;
-        }
+    const card = document.getElementById(platform.id);
+    card?.querySelector("[data-current-badge]")?.classList.remove("hidden");
+    card?.classList.add(
+      "ring-2",
+      "ring-silver-tree-500/60",
+      "dark:ring-silver-tree-400/50",
+    );
+  };
 
-        const platformId = detectPlatformId();
-        if (!platformId) return;
+  showDetectedPlatform();
 
-        const platforms: DetectablePlatform[] = JSON.parse(
-            dataElement.textContent,
-        );
-        const platform = platforms.find((item) => item.id === platformId);
-        if (!platform) return;
+  const revealed = document.querySelectorAll<HTMLElement>(".nh-reveal");
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
 
-        nameElement.textContent = platform.name;
-        requirementsElement.textContent = [
-            platform.devices,
-            ...platform.requirements,
-        ].join(" · ");
-        cta.textContent = platform.cta.label;
-        cta.href = platform.cta.href;
-        stepsLink.href = `#${platform.id}`;
-        panel.classList.remove("hidden");
-
-        const card = document.getElementById(platform.id);
-        card?.querySelector("[data-current-badge]")?.classList.remove("hidden");
-        card?.classList.add(
-            "ring-2",
-            "ring-silver-tree-500/60",
-            "dark:ring-silver-tree-400/50",
-        );
-    };
-
-    showDetectedPlatform();
-
-    const revealed = document.querySelectorAll<HTMLElement>(".nh-reveal");
-    const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (reduceMotion || !("IntersectionObserver" in window)) {
-        revealed.forEach((element) => element.classList.add("nh-in"));
-    } else {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return;
-                    entry.target.classList.add("nh-in");
-                    observer.unobserve(entry.target);
-                });
-            },
-            { rootMargin: "0px 0px -12% 0px", threshold: 0.1 },
-        );
-        revealed.forEach((element) => observer.observe(element));
-    }
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    revealed.forEach((element) => element.classList.add("nh-in"));
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("nh-in");
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.1 },
+    );
+    revealed.forEach((element) => observer.observe(element));
+  }
 </script>

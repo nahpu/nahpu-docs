@@ -7,7 +7,7 @@ sidebar:
 
 {% aside type="tip" title="NAHPU v1 Tropical Mountains" %}
 
-NAHPU v1, nombre en clave Tropical Mountains, ya está disponible. Puede instalarlo desde [Google Play](https://play.google.com/store/apps/details?id=com.hhandika.nahpu) en Android y desde [Microsoft Store](https://apps.microsoft.com/detail/9nx3z8p3nsml) en Windows. La misma versión está disponible para dispositivos Apple y Linux, y sus fichas en las tiendas llegarán pronto. Hasta entonces, instale esas plataformas con las descargas de abajo.
+NAHPU v1, nombre en clave Tropical Mountains, ya está disponible. Puede instalarlo desde [Google Play](https://play.google.com/store/apps/details?id=com.hhandika.nahpu) en Android y desde [Microsoft Store](https://apps.microsoft.com/detail/9nx3z8p3nsml) en Windows. En Linux, la instalación se hace desde los paquetes firmados de abajo. La misma versión está disponible para dispositivos Apple, y su ficha en la App Store llegará pronto; hasta entonces, instálela mediante TestFlight.
 
 El nombre en clave viene de la primera prueba de NAHPU en una expedición de campo real, en el monte Gede, Java Occidental, Indonesia.
 
@@ -57,15 +57,108 @@ Para instalar la aplicación, siga estos pasos:
 
 {% tabitem label="Linux" %}
 
-Requisitos: Ubuntu 24.04 o posterior, u otra distribución x86_64 con GLIBC 2.35 y GLIBCXX 3.4.31 o posterior.
+Requisitos: una distribución x86_64 con GLIBC 2.35 o posterior. Ubuntu 22.04, Debian 12, Fedora 36 y RHEL o Rocky Linux 9 y posteriores cumplen este requisito.
 
-Para instalar la aplicación, siga estos pasos:
+{% tabs %}
+
+{% tabitem label="Ubuntu y Debian" %}
 
 {% steps %}
-1. Descargue la última versión de la aplicación desde [GitHub](https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.tar.gz).
-2. Extraiga el archivo `nahpu-Linux-x86_64.tar.gz` descargado en una carpeta de su computadora.
-3. Ejecute el ejecutable `nahpu`.
+1. Descargue el paquete.
+
+   ```bash
+   curl -LO https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.deb
+   ```
+
+2. Instálelo. `apt` también instala las bibliotecas que NAHPU necesita, incluidas `ffmpeg` y `pulseaudio-utils` para la grabación de audio.
+
+   ```bash
+   sudo apt install ./nahpu-Linux-x86_64.deb
+   ```
+
+3. Abra NAHPU desde el menú de aplicaciones o ejecute `nahpu` en una terminal.
 {% /steps %}
+{% /tabitem %}
+
+{% tabitem label="Fedora y RHEL" %}
+
+Estos pasos sirven para Fedora, RHEL, Rocky Linux, AlmaLinux y otras redistribuciones de RHEL.
+
+NAHPU firma sus paquetes RPM. Importe la clave de firma una vez, antes de la primera instalación:
+
+```bash
+sudo rpm --import https://nahpu.app/nahpu.asc
+```
+
+La huella digital de la clave es `6D60 D3B0 D903 58AC 418A 886E 4A7A 5114 7237 7563`, publicada también en [nahpu.app/nahpu-fingerprint.txt](https://nahpu.app/nahpu-fingerprint.txt).
+
+{% steps %}
+1. Descargue el paquete.
+
+   ```bash
+   curl -LO https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.rpm
+   ```
+
+2. Verifique la firma. La salida termina con `digests signatures OK` cuando el paquete está íntegro.
+
+   ```bash
+   rpm -K nahpu-Linux-x86_64.rpm
+   ```
+
+3. Instálelo.
+
+   ```bash
+   sudo dnf install ./nahpu-Linux-x86_64.rpm
+   ```
+
+4. Abra NAHPU desde el menú de aplicaciones o ejecute `nahpu` en una terminal.
+{% /steps %}
+
+La grabación de audio necesita `ffmpeg`, que Fedora empaqueta como `ffmpeg-free`. `dnf` lo instala junto con `pulseaudio-utils` cuando están disponibles; si la grabación no funciona, instálelos manualmente con `sudo dnf install ffmpeg-free pulseaudio-utils`.
+{% /tabitem %}
+
+{% tabitem label="Otras distribuciones" %}
+
+Use el archivo portátil en distribuciones sin paquetes `.deb` o `.rpm`, como Arch Linux, openSUSE y NixOS, o cuando no pueda instalar paquetes del sistema.
+
+{% steps %}
+1. Descargue el archivo.
+
+   ```bash
+   curl -LO https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.tar.gz
+   ```
+
+2. Extráigalo en una carpeta de su computadora.
+
+   ```bash
+   tar -xzf nahpu-Linux-x86_64.tar.gz
+   ```
+
+3. Instale las dependencias de ejecución. El archivo no incluye información de dependencias, así que su gestor de paquetes no puede hacerlo por usted. NAHPU necesita el entorno de ejecución de GTK 3, que la mayoría de los escritorios ya proporciona, además de `ffmpeg` y las utilidades de línea de comandos de PulseAudio para la grabación de audio.
+
+   ```bash
+   # Arch Linux
+   sudo pacman -S --needed gtk3 ffmpeg libpulse
+
+   # openSUSE, donde ffmpeg proviene del repositorio Packman
+   sudo zypper install libgtk-3-0 pulseaudio-utils ffmpeg
+   ```
+
+   En NixOS el archivo necesita un entorno FHS, por ejemplo `nix-shell -p steam-run --run "steam-run ./nahpu"`.
+
+4. Ejecute el ejecutable `nahpu` dentro de la carpeta extraída.
+{% /steps %}
+
+Si NAHPU no arranca, pregunte al cargador qué falta. Ejecute esto dentro de la carpeta extraída:
+
+```bash
+ldd nahpu | grep "not found"
+```
+
+Cada línea nombra una biblioteca que NAHPU no puede cargar. Instale el paquete en el que su distribución la incluye y vuelva a intentarlo. El comando no muestra nada cuando todas las dependencias están satisfechas.
+{% /tabitem %}
+
+{% /tabs %}
 {% /tabitem %}
 
 {% tabitem label="Windows" %}

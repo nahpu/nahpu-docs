@@ -7,7 +7,7 @@ sidebar:
 
 {% aside type="tip" title="NAHPU v1 Tropical Mountains" %}
 
-NAHPU v1, dengan nama sandi Tropical Mountains, telah dirilis. Aplikasi ini sudah tersedia di [Google Play](https://play.google.com/store/apps/details?id=com.hhandika.nahpu) untuk Android dan di [Microsoft Store](https://apps.microsoft.com/detail/9nx3z8p3nsml) untuk Windows. Rilis yang sama juga tersedia untuk perangkat Apple dan Linux, dan daftarnya di toko aplikasi masing-masing akan menyusul. Sementara itu, pasang platform tersebut melalui unduhan di bawah ini.
+NAHPU v1, dengan nama sandi Tropical Mountains, telah dirilis. Aplikasi ini sudah tersedia di [Google Play](https://play.google.com/store/apps/details?id=com.hhandika.nahpu) untuk Android dan di [Microsoft Store](https://apps.microsoft.com/detail/9nx3z8p3nsml) untuk Windows. Di Linux, pemasangan menggunakan paket bertanda tangan di bawah ini. Rilis yang sama juga tersedia untuk perangkat Apple, dan daftarnya di App Store akan menyusul; sementara itu, pasang melalui TestFlight.
 
 Nama sandi ini berasal dari uji coba NAHPU pertama pada ekspedisi lapangan sungguhan, di Gunung Gede, Jawa Barat, Indonesia.
 
@@ -57,15 +57,108 @@ Untuk memasang aplikasi, ikuti langkah berikut:
 
 {% tabitem label="Linux" %}
 
-Persyaratan: Ubuntu 24.04 atau yang lebih baru, atau distribusi x86_64 lain dengan GLIBC 2.35 dan GLIBCXX 3.4.31 atau yang lebih baru.
+Persyaratan: distribusi x86_64 dengan GLIBC 2.35 atau yang lebih baru. Ubuntu 22.04, Debian 12, Fedora 36, serta RHEL atau Rocky Linux 9 dan yang lebih baru memenuhi persyaratan ini.
 
-Untuk memasang aplikasi, ikuti langkah berikut:
+{% tabs %}
+
+{% tabitem label="Ubuntu dan Debian" %}
 
 {% steps %}
-1. Unduh versi terbaru aplikasi dari [GitHub](https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.tar.gz).
-2. Ekstrak berkas `nahpu-Linux-x86_64.tar.gz` yang telah diunduh ke sebuah folder di komputer Anda.
-3. Jalankan berkas eksekusi `nahpu`.
+1. Unduh paketnya.
+
+   ```bash
+   curl -LO https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.deb
+   ```
+
+2. Pasang paket tersebut. `apt` juga memasang pustaka yang dibutuhkan NAHPU, termasuk `ffmpeg` dan `pulseaudio-utils` untuk perekaman audio.
+
+   ```bash
+   sudo apt install ./nahpu-Linux-x86_64.deb
+   ```
+
+3. Buka NAHPU dari menu aplikasi, atau jalankan `nahpu` di terminal.
 {% /steps %}
+{% /tabitem %}
+
+{% tabitem label="Fedora dan RHEL" %}
+
+Langkah-langkah ini berlaku untuk Fedora, RHEL, Rocky Linux, AlmaLinux, dan turunan RHEL lainnya.
+
+NAHPU menandatangani paket RPM-nya. Impor kunci penanda tangan sekali saja, sebelum pemasangan pertama:
+
+```bash
+sudo rpm --import https://nahpu.app/nahpu.asc
+```
+
+Sidik jari kunci tersebut adalah `6D60 D3B0 D903 58AC 418A 886E 4A7A 5114 7237 7563`, yang juga diterbitkan di [nahpu.app/nahpu-fingerprint.txt](https://nahpu.app/nahpu-fingerprint.txt).
+
+{% steps %}
+1. Unduh paketnya.
+
+   ```bash
+   curl -LO https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.rpm
+   ```
+
+2. Periksa tanda tangannya. Keluarannya berakhir dengan `digests signatures OK` bila paket masih utuh.
+
+   ```bash
+   rpm -K nahpu-Linux-x86_64.rpm
+   ```
+
+3. Pasang paket tersebut.
+
+   ```bash
+   sudo dnf install ./nahpu-Linux-x86_64.rpm
+   ```
+
+4. Buka NAHPU dari menu aplikasi, atau jalankan `nahpu` di terminal.
+{% /steps %}
+
+Perekaman audio membutuhkan `ffmpeg`, yang dipaketkan Fedora sebagai `ffmpeg-free`. `dnf` memasangnya bersama `pulseaudio-utils` bila tersedia; jika perekaman tidak berfungsi, pasang sendiri dengan `sudo dnf install ffmpeg-free pulseaudio-utils`.
+{% /tabitem %}
+
+{% tabitem label="Distribusi lain" %}
+
+Gunakan arsip portabel pada distribusi tanpa paket `.deb` atau `.rpm`, seperti Arch Linux, openSUSE, dan NixOS, atau bila Anda tidak dapat memasang paket sistem.
+
+{% steps %}
+1. Unduh arsipnya.
+
+   ```bash
+   curl -LO https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.tar.gz
+   ```
+
+2. Ekstrak arsip tersebut ke sebuah folder di komputer Anda.
+
+   ```bash
+   tar -xzf nahpu-Linux-x86_64.tar.gz
+   ```
+
+3. Pasang dependensi runtime-nya. Arsip ini tidak membawa informasi dependensi, sehingga pengelola paket Anda tidak dapat melakukannya untuk Anda. NAHPU membutuhkan runtime GTK 3, yang biasanya sudah disediakan sebagian besar lingkungan desktop, serta `ffmpeg` dan utilitas baris perintah PulseAudio untuk perekaman audio.
+
+   ```bash
+   # Arch Linux
+   sudo pacman -S --needed gtk3 ffmpeg libpulse
+
+   # openSUSE, dengan ffmpeg berasal dari repositori Packman
+   sudo zypper install libgtk-3-0 pulseaudio-utils ffmpeg
+   ```
+
+   Pada NixOS, arsip ini membutuhkan lingkungan FHS, misalnya `nix-shell -p steam-run --run "steam-run ./nahpu"`.
+
+4. Jalankan berkas eksekusi `nahpu` di dalam folder hasil ekstraksi.
+{% /steps %}
+
+Jika NAHPU tidak mau berjalan, tanyakan kepada loader apa yang kurang. Jalankan perintah ini dari dalam folder hasil ekstraksi:
+
+```bash
+ldd nahpu | grep "not found"
+```
+
+Setiap baris menyebutkan pustaka yang tidak dapat dimuat NAHPU. Pasang paket yang menyediakannya pada distribusi Anda, lalu coba lagi. Perintah ini tidak menampilkan apa pun bila semua dependensi sudah terpenuhi.
+{% /tabitem %}
+
+{% /tabs %}
 {% /tabitem %}
 
 {% tabitem label="Windows" %}
