@@ -107,8 +107,70 @@
   opacity: 0.38;
 }
 
-/* Contour overlay and bottom fade into the page background. */
+/* The contour map of Gede-Pangrango, filling the width at the foot of the
+   hero and carrying up towards the copy. Where it meets the text it is taken
+   out by a fade rather than by an edge, so the lines thin away instead of
+   stopping in a line across the page, and the copy keeps clear ground while
+   the sheet still reads as one piece. The mask is a single linear gradient on
+   one element, which is cheap; the radial mask over the whole hero that this
+   replaces was not. Opacity lives here and nowhere else, so there is one
+   knob. */
 .nh-hero-contours {
+  /* The ink, themed rather than dialled with opacity: on a pale hero the
+     lighter tones of the palette all but vanish, and the answer to that is a
+     darker line, not a louder one. */
+  --nh-contour-1: var(--color-silver-tree-600);
+  --nh-contour-2: var(--color-silver-tree-500);
+  --nh-contour-3: var(--color-golden-grass-600);
+  --nh-contour-fade: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.14) 28%,
+    rgba(0, 0, 0, 0.38) 56%,
+    rgba(0, 0, 0, 0.72) 82%,
+    #000 100%
+  );
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  /* Width has to be stated: an SVG is a replaced element, so left/right alone
+     leave it at the width its own aspect ratio implies. */
+  width: 100%;
+  /* Shallower on a phone, where the sheet is cropped to a narrow window and
+     the same share of the hero would blow the map up too far. */
+  height: 34%;
+  opacity: 0.36;
+  -webkit-mask-image: var(--nh-contour-fade);
+  mask-image: var(--nh-contour-fade);
+}
+
+@media (min-width: 640px) {
+  .nh-hero-contours {
+    height: 45%;
+  }
+}
+
+:root[data-theme="dark"] .nh-hero-contours {
+  --nh-contour-1: var(--color-silver-tree-400);
+  --nh-contour-2: var(--color-silver-tree-200);
+  --nh-contour-3: var(--color-golden-grass-300);
+  opacity: 0.26;
+}
+
+/* The elevations on the map. They carry their own colour rather than the
+   contour gradient: at this size a gradient across a few figures only muddies
+   them, and each theme needs its own tone to stay legible. */
+.nh-hero-elev {
+  fill: var(--color-silver-tree-600);
+}
+
+:root[data-theme="dark"] .nh-hero-elev {
+  fill: var(--color-silver-tree-300);
+}
+
+/* The motes drift over the whole hero, so they keep their own layer above the
+   map, which is only a band at its foot and is carried fainter. */
+.nh-hero-motes {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -116,6 +178,7 @@
   opacity: 0.5;
 }
 
+/* Light centre for the hero copy, fading into the page background. */
 .nh-hero-scrim {
   position: absolute;
   inset: 0;
@@ -230,6 +293,19 @@
 
   :root[data-theme="dark"] .nh-ridge-svg {
     opacity: 0.4;
+  }
+}
+
+/* The hero map is cropped to a narrow strip at this width, which magnifies
+   every line; the same opacity that is quiet on a desktop reads as hatching
+   here. */
+@media (max-width: 639px) {
+  .nh-hero-contours {
+    opacity: 0.3;
+  }
+
+  :root[data-theme="dark"] .nh-hero-contours {
+    opacity: 0.22;
   }
 }
 
