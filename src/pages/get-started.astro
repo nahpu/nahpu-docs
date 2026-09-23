@@ -122,6 +122,8 @@ interface Platform {
   /// Rendered as HTML so steps can carry inline `code` and emphasis.
   steps: string[];
   cta: PlatformLink;
+  /// Offered instead of `cta` when the visitor is detected on a Mac.
+  macCta?: PlatformLink;
   links: PlatformLink[];
   note?: string;
 }
@@ -154,17 +156,25 @@ const platforms: Platform[] = [
       "iPadOS 15.6 or later",
       "macOS 12.4 or later (arm64 and x86_64)",
     ],
-    note: "The App Store listing is on its way. Until it lands, Apple distributes NAHPU through TestFlight.",
+    note: "The macOS release is still in App Store review. Until it is approved, install NAHPU on a Mac through TestFlight with the link below.",
     steps: [
-      "Install TestFlight from the App Store on your iPhone, iPad, or Mac.",
-      "Open the invitation below on the same device where you installed TestFlight.",
-      "Follow the TestFlight instructions, then open NAHPU from your home screen or Applications folder.",
+      "On iPhone or iPad, open the App Store listing with the button below.",
+      "Tap <strong>Get</strong> and wait for the download to finish, then open NAHPU from your home screen.",
+      "On a Mac, install TestFlight from the App Store, open the TestFlight invitation below on the same Mac, and follow its instructions.",
     ],
     cta: {
-      label: "Install through TestFlight",
+      label: "Download on the App Store",
+      href: "https://apps.apple.com/us/app/nahpu/id1661448584?itscg=30200&itsct=apps_box_link&mttnsubad=1661448584",
+    },
+    macCta: {
+      label: "Install on Mac through TestFlight",
       href: "https://testflight.apple.com/join/DRG6yUfb",
     },
     links: [
+      {
+        label: "TestFlight invitation for Mac",
+        href: "https://testflight.apple.com/join/DRG6yUfb",
+      },
       {
         label: "Oldest supported macOS devices",
         href: "https://support.apple.com/en-us/102861",
@@ -185,15 +195,19 @@ const platforms: Platform[] = [
     ],
     note: "NAHPU signs its RPM packages. On Fedora, RHEL, and Rocky Linux, run sudo rpm --import https://nahpu.app/nahpu.asc once before installing.",
     steps: [
-      "Download the package for your distribution with the button below, or take the <code>.rpm</code> from the links that follow.",
-      "Install it with <code>sudo apt install ./nahpu-Linux-x86_64.deb</code> on Debian and Ubuntu, or <code>sudo dnf install ./nahpu-Linux-x86_64.rpm</code> on Fedora, RHEL, and Rocky Linux.",
+      "Install NAHPU from the Snap Store with the button below, or run <code>sudo snap install nahpu</code>. The Snap works on any distribution with <code>snapd</code> and updates itself.",
+      "Prefer a system package? Download the <code>.deb</code> or <code>.rpm</code> from the links below, then install it with <code>sudo apt install ./nahpu-Linux-x86_64.deb</code> on Debian and Ubuntu, or <code>sudo dnf install ./nahpu-Linux-x86_64.rpm</code> on Fedora, RHEL, and Rocky Linux.",
       "Open NAHPU from your application menu, or run <code>nahpu</code> in a terminal.",
     ],
     cta: {
-      label: "Download for Debian and Ubuntu (.deb)",
-      href: "https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.deb",
+      label: "Get it from the Snap Store",
+      href: "https://snapcraft.io/nahpu",
     },
     links: [
+      {
+        label: "Debian and Ubuntu package (.deb)",
+        href: "https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.deb",
+      },
       {
         label: "RPM package for Fedora, RHEL, and Rocky Linux",
         href: "https://github.com/nahpu/nahpu/releases/latest/download/nahpu-Linux-x86_64.rpm",
@@ -315,10 +329,9 @@ const nextSteps = [
           NAHPU v1 &ldquo;Tropical Mountains&rdquo; is out
         </h2>
         <p class={`${bodyTextClasses} mt-3 max-w-3xl`}>
-          Version 1 is available now on Google Play for Android and the
-          Microsoft Store for Windows. Linux installs from the signed packages
-          below. The same release is out for Apple devices, and its App Store
-          listing will follow soon. Until then, install it through TestFlight.
+          Version 1 is available now on every platform. The macOS release is
+          still in App Store review. Until it is approved, install it on a Mac
+          through TestFlight.
           If something looks wrong, please <a
             class={linkClasses}
             href="https://github.com/nahpu/nahpu/issues"
@@ -352,11 +365,8 @@ const nextSteps = [
           >.
         </p>
 
-        <a
-          class={downloadBtnClasses}
-          href="https://play.google.com/store/apps/details?id=com.hhandika.nahpu"
-          target="_blank"
-          rel="noopener noreferrer">Get it on Google Play</a
+        <a id="release-cta" class={downloadBtnClasses} href="#install"
+          >Install NAHPU</a
         >
       </div>
     </div>
@@ -566,7 +576,14 @@ const nextSteps = [
     devices: string;
     requirements: string[];
     cta: { label: string; href: string };
+    macCta?: { label: string; href: string };
   }
+
+  /// iPadOS also reports a Macintosh user agent, but unlike a Mac it has a
+  /// touch screen.
+  const isMac = (): boolean =>
+    /Macintosh|Mac OS X|macOS/i.test(navigator.userAgent) &&
+    navigator.maxTouchPoints <= 1;
 
   const detectPlatformId = (): string | null => {
     const agent = navigator.userAgent;
@@ -594,6 +611,7 @@ const nextSteps = [
       "detected-requirements",
     );
     const cta = document.getElementById("detected-cta");
+    const releaseCta = document.getElementById("release-cta");
     const stepsLink = document.getElementById("detected-steps");
 
     if (
@@ -602,6 +620,7 @@ const nextSteps = [
       !nameElement ||
       !requirementsElement ||
       !(cta instanceof HTMLAnchorElement) ||
+      !(releaseCta instanceof HTMLAnchorElement) ||
       !(stepsLink instanceof HTMLAnchorElement)
     ) {
       return;
@@ -619,8 +638,13 @@ const nextSteps = [
       platform.devices,
       ...platform.requirements,
     ].join(" · ");
-    cta.textContent = platform.cta.label;
-    cta.href = platform.cta.href;
+    const detectedCta = (isMac() && platform.macCta) || platform.cta;
+    cta.textContent = detectedCta.label;
+    cta.href = detectedCta.href;
+    releaseCta.textContent = detectedCta.label;
+    releaseCta.href = detectedCta.href;
+    releaseCta.target = "_blank";
+    releaseCta.rel = "noopener noreferrer";
     stepsLink.href = `#${platform.id}`;
     panel.classList.remove("hidden");
 
