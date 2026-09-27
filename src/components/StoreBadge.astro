@@ -4,8 +4,10 @@ import googlePlayIndonesian from "../assets/store-badges/GetItOnGooglePlay_Badge
 import googlePlayPortuguese from "../assets/store-badges/GetItOnGooglePlay_Badge_Web_color_Portuguese-Brazil.svg";
 import googlePlaySpanish from "../assets/store-badges/GetItOnGooglePlay_Badge_Web_color_Spanish-LATAM.svg";
 import microsoftStore from "../assets/store-badges/GetItFromMicrosoft_Badge_English_dark.svg";
+import appStore from "../assets/store-badges/appstore-black.svg";
+import snapStore from "../assets/store-badges/snapstore-black.svg";
 
-type Store = "google-play" | "microsoft-store";
+type Store = "google-play" | "microsoft-store" | "app-store" | "snap-store";
 type Locale = "en" | "pt" | "es" | "id";
 
 interface Props {
@@ -15,8 +17,8 @@ interface Props {
 
 const { store, locale = "en" } = Astro.props;
 
-/// Google Play badges follow the page language; Microsoft publishes the
-/// English badge NAHPU uses on every locale.
+/// Google Play badges follow the page language; the App Store, Microsoft, and
+/// Snap Store badges NAHPU uses are English on every locale.
 const googlePlayBadges = {
   en: { image: googlePlayEnglish, alt: "Get it on Google Play" },
   pt: { image: googlePlayPortuguese, alt: "Disponível no Google Play" },
@@ -24,19 +26,35 @@ const googlePlayBadges = {
   id: { image: googlePlayIndonesian, alt: "Temukan di Google Play" },
 };
 
-const badge =
-  store === "google-play"
-    ? {
-        ...(googlePlayBadges[locale] ?? googlePlayBadges.en),
-        href: "https://play.google.com/store/apps/details?id=com.hhandika.nahpu",
-        target: "_blank",
-      }
-    : {
-        image: microsoftStore,
-        alt: "Download from the Microsoft Store",
-        href: "https://get.microsoft.com/installer/download/9nx3z8p3nsml?referrer=appbadge",
-        target: "_self",
-      };
+const badges = {
+  "google-play": {
+    ...(googlePlayBadges[locale] ?? googlePlayBadges.en),
+    href: "https://play.google.com/store/apps/details?id=com.hhandika.nahpu",
+    target: "_blank",
+  },
+  /// One listing serves iPhone, iPad, and Mac; Apple opens the right store
+  /// for the visitor's device.
+  "app-store": {
+    image: appStore,
+    alt: "Download on the App Store",
+    href: "https://apps.apple.com/us/app/nahpu/id1661448584?itscg=30200&itsct=apps_box_link&mttnsubad=1661448584",
+    target: "_blank",
+  },
+  "microsoft-store": {
+    image: microsoftStore,
+    alt: "Download from the Microsoft Store",
+    href: "https://get.microsoft.com/installer/download/9nx3z8p3nsml?referrer=appbadge",
+    target: "_self",
+  },
+  "snap-store": {
+    image: snapStore,
+    alt: "Get it from the Snap Store",
+    href: "https://snapcraft.io/nahpu",
+    target: "_blank",
+  },
+};
+
+const badge = badges[store];
 ---
 
 <div class="nh-store-badge not-content">

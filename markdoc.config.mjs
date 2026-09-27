@@ -15,7 +15,7 @@ export default defineMarkdocConfig({
         store: {
           type: String,
           required: true,
-          matches: ["google-play", "microsoft-store"],
+          matches: ["google-play", "microsoft-store", "app-store", "snap-store"],
         },
         locale: {
           type: String,

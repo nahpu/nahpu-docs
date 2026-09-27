@@ -122,8 +122,6 @@ interface Platform {
   /// Rendered as HTML so steps can carry inline `code` and emphasis.
   steps: string[];
   cta: PlatformLink;
-  /// Offered instead of `cta` when the visitor is detected on a Mac.
-  macCta?: PlatformLink;
   links: PlatformLink[];
   note?: string;
 }
@@ -156,25 +154,17 @@ const platforms: Platform[] = [
       "iPadOS 15.6 or later",
       "macOS 12.4 or later (arm64 and x86_64)",
     ],
-    note: "The macOS release is still in App Store review. Until it is approved, install NAHPU on a Mac through TestFlight with the link below.",
+    note: "One App Store listing serves iPhone, iPad, and Mac. Apple opens the version for the device you use.",
     steps: [
-      "On iPhone or iPad, open the App Store listing with the button below.",
-      "Tap <strong>Get</strong> and wait for the download to finish, then open NAHPU from your home screen.",
-      "On a Mac, install TestFlight from the App Store, open the TestFlight invitation below on the same Mac, and follow its instructions.",
+      "Open the App Store listing with the button below on your iPhone, iPad, or Mac.",
+      "Tap or click <strong>Get</strong> and wait for the download to finish.",
+      "Open NAHPU from your home screen, or on a Mac from the Applications folder or Launchpad.",
     ],
     cta: {
       label: "Download on the App Store",
       href: "https://apps.apple.com/us/app/nahpu/id1661448584?itscg=30200&itsct=apps_box_link&mttnsubad=1661448584",
     },
-    macCta: {
-      label: "Install on Mac through TestFlight",
-      href: "https://testflight.apple.com/join/DRG6yUfb",
-    },
     links: [
-      {
-        label: "TestFlight invitation for Mac",
-        href: "https://testflight.apple.com/join/DRG6yUfb",
-      },
       {
         label: "Oldest supported macOS devices",
         href: "https://support.apple.com/en-us/102861",
@@ -329,9 +319,7 @@ const nextSteps = [
           NAHPU v1 &ldquo;Tropical Mountains&rdquo; is out
         </h2>
         <p class={`${bodyTextClasses} mt-3 max-w-3xl`}>
-          Version 1 is available now on every platform. The macOS release is
-          still in App Store review. Until it is approved, install it on a Mac
-          through TestFlight.
+          Version 1 is available now on every platform.
           If something looks wrong, please <a
             class={linkClasses}
             href="https://github.com/nahpu/nahpu/issues"
@@ -576,14 +564,7 @@ const nextSteps = [
     devices: string;
     requirements: string[];
     cta: { label: string; href: string };
-    macCta?: { label: string; href: string };
   }
-
-  /// iPadOS also reports a Macintosh user agent, but unlike a Mac it has a
-  /// touch screen.
-  const isMac = (): boolean =>
-    /Macintosh|Mac OS X|macOS/i.test(navigator.userAgent) &&
-    navigator.maxTouchPoints <= 1;
 
   const detectPlatformId = (): string | null => {
     const agent = navigator.userAgent;
@@ -638,11 +619,10 @@ const nextSteps = [
       platform.devices,
       ...platform.requirements,
     ].join(" · ");
-    const detectedCta = (isMac() && platform.macCta) || platform.cta;
-    cta.textContent = detectedCta.label;
-    cta.href = detectedCta.href;
-    releaseCta.textContent = detectedCta.label;
-    releaseCta.href = detectedCta.href;
+    cta.textContent = platform.cta.label;
+    cta.href = platform.cta.href;
+    releaseCta.textContent = platform.cta.label;
+    releaseCta.href = platform.cta.href;
     releaseCta.target = "_blank";
     releaseCta.rel = "noopener noreferrer";
     stepsLink.href = `#${platform.id}`;
