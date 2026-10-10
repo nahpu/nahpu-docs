@@ -4,6 +4,20 @@ sidebar:
   order: 10
 ---
 
+{% screenshots
+   large="app-screenshots/usage/transfer-large.webp"
+   largeAlt="NAHPU Export project screen on a tablet"
+   small="app-screenshots/usage/transfer-small.webp"
+   smallAlt="NAHPU Merge project screen on a phone" %}
+{% pin id="A" screen="large" x=24.5 y=28.3 label="Archive format" /%}
+{% pin id="B" screen="large" x=47.5 y=32.5 label="Light export" /%}
+{% pin id="C" screen="large" x=50.0 y=15.7 label="Archive contents" /%}
+{% pin id="D" screen="large" x=58.0 y=93.2 label="Export project" /%}
+{% pin id="E" screen="small" x=72.6 y=39.7 label="Choose archive" /%}
+{% pin id="F" screen="small" x=70.2 y=60.7 label="Back up now" /%}
+{% pin id="G" screen="small" x=5.7 y=66.8 label="Backup reminder" /%}
+{% /screenshots %}
+
 Use `Export project` to create a transfer. On the receiving installation, home-screen `Import project` creates a local project; `Merge project` combines data with a project that already exists. Importing project-info JSON or a project QR code creates only the project identity, without records or media.
 
 ZIP and TAR.GZ project exports include available media. Light JSON.GZ includes records only. Review missing-file warnings and keep the source until records and attachments on the receiving device are verified.
@@ -16,12 +30,12 @@ A compatible NAHPU Data Package can also be imported or merged because it includ
 
 1. Open the project on the source device.
 2. Open the dashboard menu and select `Export project`.
-3. Review the counts for personnel, taxonomy, sites, events, specimens,
+3. Review the counts for personnel {% ref id="C" /%}, taxonomy, sites, events, specimens,
    narratives, and media. Review warnings for missing media.
 4. For a full project transfer or backup, leave `Light export` off and select
-   `ZIP` or `TAR.GZ`. For a limited-internet upload, turn on `Light export` to
+   `ZIP` or `TAR.GZ` {% ref id="A" /%}. For a limited-internet upload, turn on `Light export` {% ref id="B" /%} to
    use `JSON.GZ` without media.
-5. Select `Export project`, then store or share the archive securely.
+5. Select `Export project` {% ref id="D" /%}, then store or share the archive securely.
 
 {% /steps %}
 
@@ -41,7 +55,7 @@ it.
 
 {% aside type="caution" %}
 
-Create a database backup before merging. The wizard provides `Back up now` and requires acknowledgment of the reminder.
+Create a database backup before merging. The wizard provides `Back up now` {% ref id="F" /%} and requires acknowledgment of the reminder.
 
 {% /aside %}
 
@@ -49,8 +63,8 @@ Create a database backup before merging. The wizard provides `Back up now` and r
 
 1. Open the receiving copy of the project.
 2. Open the dashboard menu and select `Merge project`.
-3. Choose a `JSON.GZ`, ZIP, or TAR.GZ project export, or a NAHPU Data Package.
-4. Confirm the backup reminder.
+3. Choose a `JSON.GZ` {% ref id="E" /%}, ZIP, or TAR.GZ project export, or a NAHPU Data Package.
+4. Confirm the backup reminder {% ref id="G" /%}.
 5. Review project info, personnel, taxonomy, sites, events, specimens, and
    narratives one section at a time.
 6. Resolve each match or conflict.

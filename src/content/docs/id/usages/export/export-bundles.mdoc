@@ -4,6 +4,23 @@ sidebar:
   order: 11
 ---
 
+{% screenshots
+   large="app-screenshots/usage/bundles-large.webp"
+   largeAlt="Layar Bundel catatan NAHPU di tablet"
+   small="app-screenshots/usage/bundles-small.webp"
+   smallAlt="Layar Format bundel NAHPU di ponsel" %}
+{% pin id="A" screen="large" x=12.0 y=37.9 label="Takson yang disertakan" /%}
+{% pin id="B" screen="large" x=48.0 y=56.9 label="Format bundel" /%}
+{% pin id="C" screen="large" x=48.0 y=65.6 label="Format arsip" /%}
+{% pin id="D" screen="large" x=48.0 y=74.3 label="Nama berkas" /%}
+{% pin id="E" screen="large" x=64.5 y=17.1 label="Isi paket" /%}
+{% pin id="F" screen="large" x=97.0 y=49.1 label="Buka sumber daya" /%}
+{% pin id="G" screen="large" x=58.2 y=93.2 label="Buat bundel" /%}
+{% pin id="H" screen="small" x=94.0 y=65.6 label="Darwin Core Archive" /%}
+{% pin id="I" screen="small" x=94.0 y=70.8 label="Darwin Core Data Package" /%}
+{% pin id="J" screen="small" x=94.0 y=76.1 label="NAHPU Data Package" /%}
+{% /screenshots %}
+
 Gunakan `Bundle records` untuk mengemas data dan berkas NAHPU yang saling
 terkait untuk pertukaran, publikasi, pengarsipan, atau reproduksibilitas. Layar
 pengemasan menampilkan pratinjau berkas dan kolom tabel yang tepat sebelum
@@ -11,12 +28,12 @@ apa pun ditulis.
 
 NAHPU menyediakan tiga jenis paket:
 
-- **Darwin Core Archive (DCA)** untuk sistem publikasi keanekaragaman hayati
+- **Darwin Core Archive (DCA)** {% ref id="H" /%} untuk sistem publikasi keanekaragaman hayati
   mapan yang mengharapkan kumpulan data linear, didukung oleh sebagian besar
   sistem manajemen koleksi utama dan agregator data keanekaragaman hayati.
-- **Darwin Core Data Package (DwC-DP)** adalah versi lanjutan dari Darwin Core
+- **Darwin Core Data Package (DwC-DP)** {% ref id="I" /%} adalah versi lanjutan dari Darwin Core
   Archive, dikemas sebagai data Darwin Core relasional.
-- **NAHPU Data Package** untuk salinan proyek aktif yang dapat direproduksi;
+- **NAHPU Data Package** {% ref id="J" /%} untuk salinan proyek aktif yang dapat direproduksi;
   mencakup JSON proyek lengkap, konfigurasi pengguna, dan seluruh berkas
   terkait. Paket ini cocok untuk analisis di Python, R, dan
   [perkakas lain yang kompatibel dengan Frictionless](https://frictionlessdata.io).
@@ -27,21 +44,21 @@ NAHPU menyediakan tiga jenis paket:
 
 1. Buka halaman `Dashboard`.
 2. Buka menu proyek lalu pilih `Bundle records`.
-3. Pilih `Bundle format`.
-4. Pilih `Archive format` bila paket yang dipilih mendukung lebih dari satu
+3. Pilih `Bundle format` {% ref id="B" /%}.
+4. Pilih `Archive format` {% ref id="C" /%} bila paket yang dipilih mendukung lebih dari satu
    wadah.
    - `TAR.GZ` adalah bawaan untuk Data Package.
    - `ZIP` tersedia untuk perkakas dan sistem operasi yang lebih menyukai arsip
      ZIP baku.
    - Darwin Core Archive selalu memakai ZIP.
-5. Untuk paket Darwin Core, pilih `All taxa` atau `Selected taxa`. Memilih
+5. Untuk paket Darwin Core, pilih `All taxa` {% ref id="A" /%} atau `Selected taxa`. Memilih
    Mammals juga menyertakan Bats.
-6. Masukkan `File name` dan pilih `Directory` tujuan.
-7. Tinjau `Package contents`. Bentangkan sebuah sumber daya CSV untuk melihat
+6. Masukkan `File name` {% ref id="D" /%} dan pilih `Directory` tujuan.
+7. Tinjau `Package contents` {% ref id="E" /%}. Bentangkan sebuah sumber daya CSV {% ref id="F" /%} untuk melihat
    kolom yang diekspor.
 8. Tinjau peringatan yang muncul, terutama media yang hilang atau pemberitahuan
    kompatibilitas ZIP untuk DwC-DP.
-9. Klik `Create bundle`.
+9. Klik `Create bundle` {% ref id="G" /%}.
 
 {% /steps %}
 

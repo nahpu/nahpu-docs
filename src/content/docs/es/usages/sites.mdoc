@@ -4,12 +4,29 @@ sidebar:
   order: 5
 ---
 
+{% screenshots
+   large="app-screenshots/usage/sites-large.webp"
+   largeAlt="Página Sitios de NAHPU en una tableta con los paneles de identidad, geografía, hábitat y coordenadas"
+   small="app-screenshots/phone-coordinates.png"
+   smallAlt="Página Agregar coordenadas de NAHPU en un teléfono con la opción Importar seleccionada" %}
+{% pin id="A" screen="large" x=3.9 y=31.6 label="Página de sitios" /%}
+{% pin id="B" screen="large" x=96.0 y=10.4 label="Crear un sitio" /%}
+{% pin id="C" screen="large" x=43 y=13.9 label="Identidad del sitio" /%}
+{% pin id="D" screen="large" x=46 y=31.4 label="Geografía" /%}
+{% pin id="E" screen="large" x=22.0 y=69.4 label="Hábitat" /%}
+{% pin id="F" screen="large" x=88.5 y=95.1 label="Agregar coordenada" /%}
+{% pin id="G" screen="large" x=67.5 y=75.6 label="Panel de coordenadas" /%}
+{% pin id="H" screen="small" x=73.7 y=17.1 label="Importar coordenadas" /%}
+{% pin id="I" screen="small" x=90 y=58.4 label="Seleccionar archivo de coordenadas" /%}
+{% pin id="J" screen="small" x=83 y=90.9 label="Agregar puntos seleccionados" /%}
+{% /screenshots %}
+
 ## Crear un nuevo sitio
 
 {% steps %}
-1. Navegue a la página de sitios utilizando la barra de navegación inferior.
+1. Navegue a la página de sitios utilizando la barra de navegación inferior {% ref id="A" /%}.
 
-2. Utilice el botón `+` en la esquina superior derecha para crear un nuevo sitio. 
+2. Utilice el botón `+` {% ref id="B" /%} en la esquina superior derecha para crear un nuevo sitio. 
     
     También puede utilizar el icono del menú de tres puntos y tocar en `Crear sitio`.
 
@@ -19,7 +36,7 @@ sidebar:
 
     {% /aside %}
 
-3. Cree un ID de sitio. 
+3. Cree un ID de sitio {% ref id="C" /%}.
 
     Recomendamos crear una convención de ID de sitio para su equipo. Un ejemplo de convención de ID de sitio para el trabajo de campo en mastozoología:
     
@@ -36,16 +53,16 @@ sidebar:
 
     {% /aside %}
 
-4. Agregue al líder del sitio.
+4. Agregue al líder del sitio {% ref id="C" /%}.
     
     Si se trata de un campamento de campo, puede poner el nombre del líder del equipo. Si es una línea de trampas, puede designar a una persona encargada de esa línea de trampas como líder del sitio.
 
-5. Agregue el tipo de sitio.
+5. Agregue el tipo de sitio {% ref id="C" /%}.
 
     El tipo de sitio ayuda a categorizar el sitio según sus características o
     uso. Seleccione un valor de la lista de tipos configurada para el proyecto.
 
-6. Complete los detalles geográficos.
+6. Complete los detalles geográficos {% ref id="D" /%}.
 
     Recomendamos seguir la convención de su museo para escribir la localidad precisa y las observaciones.
 
@@ -61,7 +78,7 @@ sidebar:
 
     {% /aside %}
 
-7. Complete la información del hábitat.
+7. Complete la información del hábitat {% ref id="E" /%}.
 
     - Tipo: El tipo de hábitat: plantación, selva tropical de tierras bajas, bosque montano alto, etc.
     - Condición: La condición del hábitat: perturbado, no perturbado, perturbación mínima, etc.
@@ -162,7 +179,7 @@ importar puntos desde un archivo GIS/GPS.
 {% steps %}
 
 1. En la página del sitio, abra el panel de coordenadas y toque/haga clic en
-   `Add coordinate`.
+   `Add coordinate` {% ref id="F" /%}.
 
 2. En la página `Add coordinates`, use la tarjeta `Device GPS` y toque/haga
    clic en su botón de ubicación.
@@ -236,11 +253,11 @@ importar puntos desde un archivo GIS/GPS.
 
 ### Importar coordenadas desde un archivo {% #import-coordinates-from-a-file %}
 
-Use `Add coordinate` > `Import` > `Select coordinate file` para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile comprimido o GPX.
+Use `Add coordinate` > `Import` {% ref id="H" /%} > `Select coordinate file` {% ref id="I" /%} para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile comprimido o GPX.
 
 En archivos tabulares, `Match columns` requiere `Latitude` y `Longitude` en grados decimales. Los campos opcionales son `Name / ID`, `Elevation (m)`, `GPS unit` y `Notes`. Revise la asignación sugerida, deje campos no deseados como `Not included` y seleccione `Review coordinates`. Use `Edit column mapping` para corregir una vista previa inesperada.
 
-Revise avisos y posiciones en el mapa. Use casillas individuales, `Select all` o `Clear all` y después `Add N selected` para añadir los puntos al sitio actual. Compruebe los puntos guardados antes de usarlos para especímenes.
+Revise avisos y posiciones en el mapa. Use casillas individuales, `Select all` o `Clear all` y después `Add N selected` {% ref id="J" /%} para añadir los puntos al sitio actual. Compruebe los puntos guardados antes de usarlos para especímenes.
 
 Las posiciones importadas usan WGS84. Confirme el datum de origen; este flujo no convierte otro datum a WGS84. La elevación está en metros. La importación no proporciona incertidumbre de la coordenada; revise y añada la información de origen cuando se conozca. Los archivos tabulares pueden proporcionar la unidad GPS; las importaciones GIS no la proporcionan.
 
@@ -255,7 +272,7 @@ en pantalla completa.
 
 {% steps %}
 
-1. Abra el panel de coordenadas de un sitio y toque/haga clic en `Manage`.
+1. Abra el panel de coordenadas de un sitio y toque/haga clic en `Manage` {% ref id="G" /%}.
 
 2. Filtre por sitio si es necesario y seleccione las coordenadas que desea
    exportar.

@@ -4,6 +4,22 @@ sidebar:
   order: 7
 ---
 
+{% screenshots
+   large="app-screenshots/usage/specimens-large.webp"
+   largeAlt="Layar Catatan Spesimen NAHPU di tablet"
+   small="app-screenshots/usage/specimens-small.webp"
+   smallAlt="Layar Pengukuran NAHPU di ponsel" %}
+{% pin id="A" screen="large" x=96.0 y=10.4 label="Tambah spesimen" /%}
+{% pin id="B" screen="large" x=20.0 y=32.8 label="Katalogis" /%}
+{% pin id="C" screen="large" x=18.0 y=46.2 label="Kondisi" /%}
+{% pin id="D" screen="large" x=16.0 y=70.7 label="Takson" /%}
+{% pin id="E" screen="large" x=69.5 y=15.2 label="Info takson" /%}
+{% pin id="F" screen="large" x=66.5 y=38.0 label="Catatan penangkapan" /%}
+{% pin id="G" screen="small" x=35.7 y=20.6 label="Pengukuran" /%}
+{% pin id="H" screen="small" x=41.7 y=64.7 label="Kolom kelelawar" /%}
+{% pin id="I" screen="small" x=71.4 y=78.7 label="Bagian spesimen" /%}
+{% /screenshots %}
+
 ## Menyiapkan catatan spesimen
 
 Catatan spesimen menggabungkan identifikasi, persiapan, data tangkapan, dan
@@ -69,7 +85,7 @@ ekspor tetap sama di instalasi NAHPU lain.
 {% steps %}
 1. Buka halaman spesimen menggunakan bilah navigasi bawah.
 
-2. Klik tombol `+` untuk menambahkan catatan spesimen baru.
+2. Klik tombol `+` {% ref id="A" /%} untuk menambahkan catatan spesimen baru.
 
     Anda juga dapat menggunakan menu titik tiga dan memilih tindakan duplikasi.
 
@@ -81,7 +97,7 @@ ekspor tetap sama di instalasi NAHPU lain.
 
     {% /aside %}
 
-3. Pilih `Kataloger` (Cataloger).
+3. Pilih `Kataloger` (Cataloger) {% ref id="B" /%}.
 
     Ini adalah orang yang bertanggung jawab untuk mengkatalogkan spesimen ini di lapangan.
 
@@ -89,7 +105,7 @@ ekspor tetap sama di instalasi NAHPU lain.
 
     Aplikasi secara otomatis memasukkan personel yang sama dengan kataloger. Jika orang yang berbeda menyiapkan spesimen, Anda harus memperbarui bidang tersebut dengan nama orang tersebut.
 
-5. Pilih `Spesies` (Species).
+5. Pilih `Spesies` (Species) {% ref id="D" /%}.
 
     Mulai mengetik, bidang tersebut akan menunjukkan spesies terdekat yang sesuai dengan namanya. Ketuk/klik pada nama spesies. Aplikasi juga akan mengisi panel `Taksonomi` secara otomatis berdasarkan spesies yang dipilih.
 
@@ -98,7 +114,7 @@ ekspor tetap sama di instalasi NAHPU lain.
     Ini memberi tahu pengguna yang membaca data tentang seberapa yakin Anda terhadap identifikasi spesies tersebut. Ini juga membantu kurator museum/manajer koleksi untuk memprioritaskan spesimen mana yang memerlukan pemeriksaan teliti untuk mengecek identifikasinya.
 
 
-7. Pilih `Kondisi` (Condition) spesimen.
+7. Pilih `Kondisi` (Condition) {% ref id="C" /%} spesimen.
 
 8. Tambahkan `Tanggal Koleksi`, `Waktu Koleksi`, `Tanggal Persiapan`, dan
    `Waktu Persiapan` jika tersedia.
@@ -118,7 +134,7 @@ dipakai tidak digunakan kembali.
 
 ## Taksonomi
 
-Panel `Taxon Info` diisi dari spesies yang dipilih. Panel ini menampilkan
+Panel `Taxon Info` {% ref id="E" /%} diisi dari spesies yang dipilih. Panel ini menampilkan
 klasifikasi dan rincian taksonomi, termasuk penulis, nama umum, kategori Daftar
 Merah, status CITES, dan catatan jika tersedia.
 
@@ -127,7 +143,7 @@ Merah, status CITES, dan catatan jika tersedia.
 Catatan tangkapan menghubungkan spesimen dengan kegiatan:
 
 - `Site ID` dan `Event ID`: lokasi dan kegiatan pengumpulan.
-- `Capture date` dan `Capture time`: tanggal dan waktu tangkapan; `Relative time`
+- `Capture date` {% ref id="F" /%} dan `Capture time`: tanggal dan waktu tangkapan; `Relative time`
   dapat menggunakan Dawn, Morning, Afternoon, Dusk, atau Night.
 - `Method` dan `Method ID`: upaya dan ID metode dari kegiatan.
 - `Coordinate ID`: koordinat yang terkait dengan lokasi kegiatan.
@@ -160,7 +176,7 @@ numerik yang lama. Kosakata ini dapat disunting; daftarnya diatur di
 {% tabs %}
 {% tabitem label="Mamalia" %}
 
-- `Panjang total (mm)`: panjang total spesimen termasuk dari ujung hidung hingga ujung ekor.
+- `Panjang total (mm)` {% ref id="G" /%}: panjang total spesimen termasuk dari ujung hidung hingga ujung ekor.
 - `Panjang ekor (mm)`: panjang ekor dari pangkal hingga ujung.
 - `Panjang kepala dan tubuh (mm)`: Dihitung secara otomatis dari `Panjang total (mm) - Panjang ekor (mm)`.
 - Persentase panjang `Ekor/KT`: Dihitung secara otomatis dari `Panjang ekor (mm) / Panjang kepala dan tubuh (mm)`.
@@ -205,7 +221,7 @@ Katalog invertebrata tidak menampilkan field deteksi atau tab parasit.
 {% /tabs %}
 ## Bagian Spesimen {% #specimen-parts %}
 
-Setiap spesimen dapat memiliki banyak bagian, seperti voucher, jaringan,
+Setiap spesimen dapat memiliki banyak bagian {% ref id="I" /%}, seperti voucher, jaringan,
 swab, atau parasit. Bagian dapat berisi `Tissue ID`, `QR/barcode ID`,
 `Preparation type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`,
 `Preparator`, `Storage type`, `Storage location`, `Date taken`, `PMI`, museum

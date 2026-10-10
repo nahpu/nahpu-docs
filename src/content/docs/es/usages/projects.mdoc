@@ -4,6 +4,22 @@ sidebar:
   order: 2
 ---
 
+{% screenshots
+   large="app-screenshots/usage/projects-large.webp"
+   largeAlt="Pantalla Panel del proyecto de NAHPU en una tableta"
+   small="app-screenshots/usage/projects-small.webp"
+   smallAlt="Pantalla Crear proyecto de NAHPU en un teléfono" %}
+{% pin id="A" screen="large" x=22.0 y=15.2 label="Resumen del proyecto" /%}
+{% pin id="B" screen="large" x=23.0 y=61.4 label="Editar proyecto" /%}
+{% pin id="C" screen="large" x=39.2 y=61.4 label="Exportar información" /%}
+{% pin id="D" screen="large" x=69.0 y=15.2 label="Personal" /%}
+{% pin id="E" screen="large" x=22.5 y=71.6 label="Registro de taxones" /%}
+{% pin id="F" screen="large" x=67.5 y=71.6 label="Estadísticas de registros" /%}
+{% pin id="G" screen="small" x=94.0 y=36.7 label="Crear nuevo proyecto" /%}
+{% pin id="H" screen="small" x=6.0 y=42.9 label="Importar información del proyecto" /%}
+{% pin id="I" screen="small" x=94.0 y=49.0 label="Escanear QR del proyecto" /%}
+{% /screenshots %}
+
 Los proyectos organizan los datos de NAHPU. Un proyecto puede contener
 personal, taxones, sitios, eventos de recolección, registros de especímenes,
 narrativas y archivos multimedia vinculados.
@@ -19,8 +35,8 @@ crear una identidad nueva o reutilizar la información de otro dispositivo.
 
 {% steps %}
 
-1. En `Welcome`, seleccione `Create new project`. Para reutilizar una
-   identidad, use `Import project-info JSON` o `Scan project QR` en un móvil.
+1. En `Welcome`, seleccione `Create new project` {% ref id="G" /%}. Para reutilizar una
+   identidad, use `Import project-info JSON` {% ref id="H" /%} o `Scan project QR` {% ref id="I" /%} en un móvil.
 2. En `Project information`, introduzca un nombre único de 3 a 25 caracteres.
    Puede añadir descripción, investigador principal, acceso institucional,
    ubicación, zona horaria IANA y fechas.
@@ -102,13 +118,13 @@ Cada proyecto tiene un menú de acciones:
 
 El panel contiene cuatro secciones:
 
-- **Project Overview** - Muestra el nombre, UUID, descripción, investigador
+- **Project Overview** {% ref id="A" /%} - Muestra el nombre, UUID, descripción, investigador
   principal, acceso, ubicación, zona horaria, fechas, creación y último acceso.
-- **Personnel** - Lista el personal asignado y permite usar `Add personnel`
+- **Personnel** {% ref id="D" /%} - Lista el personal asignado y permite usar `Add personnel`
   para seleccionar una persona existente o crear una nueva.
-- **Taxon Registry** - Lista los taxones registrados y permite añadirlos o
+- **Taxon Registry** {% ref id="E" /%} - Lista los taxones registrados y permite añadirlos o
   importarlos.
-- **Record Statistics** - Resume los registros del proyecto y ofrece
+- **Record Statistics** {% ref id="F" /%} - Resume los registros del proyecto y ofrece
   estadísticas detalladas.
 
 El menú del proyecto también contiene acciones para transferir, exportar,
@@ -116,7 +132,7 @@ respaldar, configurar y eliminar el proyecto.
 
 ## Actualizar la información del proyecto
 
-Desde el panel, seleccione `Edit` en Project Overview. Desde la pantalla de
+Desde el panel, seleccione `Edit` {% ref id="B" /%} en Project Overview. Desde la pantalla de
 inicio, abra el menú de acciones y seleccione `Edit info`. El formulario agrupa
 los detalles, lugar y tiempo, y fechas. Cambie el taxón principal o los ID en
 [Configuración](../settings).
@@ -125,7 +141,7 @@ los detalles, lugar y tiempo, y fechas. Cambie el taxón principal o los ID en
 
 Para copiar la información sin transferir registros:
 
-1. En el dispositivo de origen, seleccione `Export info` o `Show QR`.
+1. En el dispositivo de origen, seleccione `Export info` {% ref id="C" /%} o `Show QR`.
 2. En el dispositivo receptor, seleccione `Create project` y use `Import
    project-info JSON` o `Scan project QR` en un móvil.
 

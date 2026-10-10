@@ -4,6 +4,23 @@ sidebar:
   order: 11
 ---
 
+{% screenshots
+   large="app-screenshots/usage/bundles-large.webp"
+   largeAlt="Tela Empacotar registros do NAHPU em um tablet"
+   small="app-screenshots/usage/bundles-small.webp"
+   smallAlt="Tela Formato do pacote do NAHPU em um celular" %}
+{% pin id="A" screen="large" x=12.0 y=37.9 label="Táxons incluídos" /%}
+{% pin id="B" screen="large" x=48.0 y=56.9 label="Formato do pacote" /%}
+{% pin id="C" screen="large" x=48.0 y=65.6 label="Formato do arquivo" /%}
+{% pin id="D" screen="large" x=48.0 y=74.3 label="Nome do arquivo" /%}
+{% pin id="E" screen="large" x=64.5 y=17.1 label="Conteúdo do pacote" /%}
+{% pin id="F" screen="large" x=97.0 y=49.1 label="Expandir um recurso" /%}
+{% pin id="G" screen="large" x=58.2 y=93.2 label="Criar pacote" /%}
+{% pin id="H" screen="small" x=94.0 y=65.6 label="Darwin Core Archive" /%}
+{% pin id="I" screen="small" x=94.0 y=70.8 label="Darwin Core Data Package" /%}
+{% pin id="J" screen="small" x=94.0 y=76.1 label="NAHPU Data Package" /%}
+{% /screenshots %}
+
 Use `Bundle records` para empacotar dados e arquivos do NAHPU para intercâmbio,
 publicação, arquivamento ou reprodutibilidade. A tela de empacotamento
 pré-visualiza exatamente os arquivos e campos de tabela antes de gravar
@@ -11,13 +28,13 @@ qualquer coisa.
 
 O NAHPU oferece três tipos de pacote:
 
-- **Darwin Core Archive (DCA)** para sistemas consolidados de publicação de
+- **Darwin Core Archive (DCA)** {% ref id="H" /%} para sistemas consolidados de publicação de
   biodiversidade que esperam conjuntos de dados lineares, compatíveis com a
   maioria dos principais sistemas de gestão de coleções e agregadores de dados
   de biodiversidade.
-- **Darwin Core Data Package (DwC-DP)** é a versão aprimorada do Darwin Core
+- **Darwin Core Data Package (DwC-DP)** {% ref id="I" /%} é a versão aprimorada do Darwin Core
   Archive, empacotada como dados Darwin Core relacionais.
-- **NAHPU Data Package** para uma cópia reprodutível do projeto ativo; inclui o
+- **NAHPU Data Package** {% ref id="J" /%} para uma cópia reprodutível do projeto ativo; inclui o
   JSON completo do projeto, a configuração do usuário e todos os arquivos
   relacionados. É adequado para análise em Python, R e outras
   [ferramentas compatíveis com Frictionless](https://frictionlessdata.io).
@@ -28,21 +45,21 @@ O NAHPU oferece três tipos de pacote:
 
 1. Vá para a página `Dashboard`.
 2. Abra o menu do projeto e selecione `Bundle records`.
-3. Selecione o `Bundle format`.
-4. Selecione o `Archive format` quando o pacote escolhido aceitar mais de um
+3. Selecione o `Bundle format` {% ref id="B" /%}.
+4. Selecione o `Archive format` {% ref id="C" /%} quando o pacote escolhido aceitar mais de um
    contêiner.
    - `TAR.GZ` é o padrão para os Data Packages.
    - `ZIP` está disponível para ferramentas e sistemas operacionais que preferem
      arquivos ZIP padrão.
    - O Darwin Core Archive sempre usa ZIP.
-5. Para um pacote Darwin Core, escolha `All taxa` ou `Selected taxa`.
+5. Para um pacote Darwin Core, escolha `All taxa` {% ref id="A" /%} ou `Selected taxa`.
    Selecionar Mammals também inclui Bats.
-6. Adicione um `File name` e selecione o `Directory` de destino.
-7. Revise `Package contents`. Expanda um recurso CSV para ver os campos
+6. Adicione um `File name` {% ref id="D" /%} e selecione o `Directory` de destino.
+7. Revise `Package contents` {% ref id="E" /%}. Expanda um recurso CSV {% ref id="F" /%} para ver os campos
    exportados.
 8. Revise os avisos, especialmente sobre mídia ausente ou sobre a
    compatibilidade de ZIP no DwC-DP.
-9. Clique em `Create bundle`.
+9. Clique em `Create bundle` {% ref id="G" /%}.
 
 {% /steps %}
 

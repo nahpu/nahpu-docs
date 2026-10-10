@@ -4,6 +4,21 @@ sidebar:
   order: 3
 ---
 
+{% screenshots
+   large="app-screenshots/usage/personnel-large.webp"
+   largeAlt="NAHPU Manage personnel screen on a tablet"
+   small="app-screenshots/usage/personnel-small.webp"
+   smallAlt="NAHPU Add personnel screen on a phone" %}
+{% pin id="A" screen="large" x=40.0 y=7.3 label="Manage personnel" /%}
+{% pin id="B" screen="large" x=34.0 y=64.0 label="Specimen care role" /%}
+{% pin id="C" screen="large" x=34.0 y=73.1 label="Field number" /%}
+{% pin id="D" screen="large" x=83.5 y=90.9 label="Edit personnel" /%}
+{% pin id="E" screen="small" x=21.0 y=17.1 label="Select from database" /%}
+{% pin id="F" screen="small" x=81.0 y=17.1 label="Add new personnel" /%}
+{% pin id="G" screen="small" x=95.2 y=49.3 label="Name" /%}
+{% pin id="H" screen="small" x=62.4 y=81.6 label="Show more" /%}
+{% /screenshots %}
+
 Personnel records are shared in the NAHPU database and can be assigned to
 multiple projects. A project only displays the personnel assigned to it.
 
@@ -14,23 +29,23 @@ Personnel Field IDs require a `Cataloger` with a registered personal field numbe
 {% /aside %}
 
 From the Personnel panel on the project dashboard, select `Add personnel`.
-If personnel already exist in the database, choose `Select from database` and
-select the people to assign. Otherwise, choose `Add new personnel`.
+If personnel already exist in the database, choose `Select from database` {% ref id="E" /%} and
+select the people to assign. Otherwise, choose `Add new personnel` {% ref id="F" /%}.
 
 The form includes:
 
-- **Name (required)** - The person's name.
+- **Name (required)** {% ref id="G" /%} - The person's name.
 - **Photo** - An avatar or personnel photo.
 - **Affiliation** - The person's institution.
 - **Email** - The person's email address.
 - **Phone** - The person's phone number.
 - **ORCID** - An optional hyphenated ORCID iD with a valid checksum, such as
   `0000-0002-1825-0097`.
-- **Specimen care role** - `Cataloger`, `Preparator only`, `Determiner only`,
+- **Specimen care role** {% ref id="B" /%} - `Cataloger`, `Preparator only`, `Determiner only`,
   or `None`.
 - **Notes** - Additional information about the person.
 
-Use `Show more` to reveal optional fields. Email addresses are normalized to
+Use `Show more` {% ref id="H" /%} to reveal optional fields. Email addresses are normalized to
 lowercase and phone numbers accept digits.
 
 Darwin Core exports use the canonical `https://orcid.org/...` URL as the
@@ -39,7 +54,7 @@ personnel UUID.
 
 ## Field numbers for catalogers
 
-When the role is `Cataloger`, NAHPU provides the `Register personal field
+When the role is `Cataloger`, {% ref id="C" /%} NAHPU provides the `Register personal field
 number` option. Turn it on when the cataloger's initials and number should
 generate specimen field IDs. Enter the field initial and starting number; the
 number advances as specimens are created.
@@ -56,8 +71,8 @@ or remove that person from the project. Removing a person from a project does
 not delete the shared personnel record. A person cannot be removed while
 project records still use that person.
 
-To search, edit, or permanently delete database personnel, open `Settings` and
-choose `Personnel` or `Manage personnel`. NAHPU prevents permanent deletion
+To search, edit, or permanently delete database personnel {% ref id="D" /%}, open `Settings` and
+choose `Personnel` or `Manage personnel` {% ref id="A" /%}. NAHPU prevents permanent deletion
 when a person is still assigned to a project.
 
 ## Terminology

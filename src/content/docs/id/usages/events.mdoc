@@ -4,6 +4,22 @@ sidebar:
   order: 6
 ---
 
+{% screenshots
+   large="app-screenshots/usage/events-large.webp"
+   largeAlt="Layar Peristiwa NAHPU di tablet"
+   small="app-screenshots/usage/events-small.webp"
+   smallAlt="Layar Data lingkungan NAHPU di ponsel" %}
+{% pin id="A" screen="large" x=96.0 y=10.4 label="Buat peristiwa" /%}
+{% pin id="B" screen="large" x=11.8 y=19.2 label="ID peristiwa" /%}
+{% pin id="C" screen="large" x=16.5 y=39.0 label="ID lokasi" /%}
+{% pin id="D" screen="large" x=19.0 y=45.7 label="Tanggal dan waktu" /%}
+{% pin id="E" screen="large" x=65.0 y=27.6 label="Aktivitas utama" /%}
+{% pin id="F" screen="large" x=37.8 y=87.1 label="Tambah upaya" /%}
+{% pin id="G" screen="large" x=84.0 y=89.3 label="Tambah personel" /%}
+{% pin id="H" screen="small" x=56.7 y=36.2 label="Data lingkungan" /%}
+{% pin id="I" screen="small" x=39.3 y=47.0 label="Tutupan awan" /%}
+{% /screenshots %}
+
 Kegiatan pengumpulan membantu Anda melacak aktivitas, upaya, personel, data
 lingkungan, dan data astronomi untuk satu periode kerja di sebuah lokasi.
 Catatan spesimen terhubung ke kegiatan pengumpulan, bukan langsung ke lokasi,
@@ -65,7 +81,7 @@ pengemudi, perekam, atau pengamat, sesuai protokol Anda.
 {% steps %}
 1. Buka halaman kegiatan melalui bilah navigasi bawah.
 
-2. Gunakan tombol `+` di sudut kanan atas untuk membuat kegiatan baru.
+2. Gunakan tombol `+` {% ref id="A" /%} di sudut kanan atas untuk membuat kegiatan baru.
 
     Anda juga dapat memakai menu tiga titik lalu mengetuk `Create event`.
 
@@ -74,16 +90,16 @@ pengemudi, perekam, atau pengamat, sesuai protokol Anda.
     Anda dapat mengurangi pengetikan berulang dengan menduplikasi kegiatan.
     Ketuk atau klik menu tiga titik, lalu pilih `Duplicate event`. NAHPU
     menyalin lokasi, waktu, aktivitas, catatan, upaya, dan personel, memajukan
-    `Start Date` dan `End Date` satu hari, serta membuat catatan data lingkungan
+    `Start Date` {% ref id="D" /%} dan `End Date` satu hari, serta membuat catatan data lingkungan
     baru yang kosong.
 
     {% /aside %}
 
-3. Pilih `Site ID`.
+3. Pilih `Site ID` {% ref id="C" /%}.
 
 4. Masukkan `Start Date` dan `End Date`.
 
-    `Event ID` dibuat dari `{Site ID}-{Start Date}`.
+    `Event ID` {% ref id="B" /%} dibuat dari `{Site ID}-{Start Date}`.
 
 5. Sunting `Event ID` (opsional).
 
@@ -94,7 +110,7 @@ pengemudi, perekam, atau pengamat, sesuai protokol Anda.
 
 6. Masukkan `Start Time` dan `End Time`.
 
-7. Tambahkan `Primary activity`.
+7. Tambahkan `Primary activity` {% ref id="E" /%}.
 
     Nilai bawaannya adalah `Collecting`, `Recording`, dan `Observing`. `Other`
     bukan nilai bawaan; tambahkan di `Settings` > `Events` bila protokol Anda
@@ -132,7 +148,7 @@ Kartu `Activity` menyimpan tujuan umum kegiatan.
 
 {% steps %}
 
-1. Gunakan tombol `+ Add effort` untuk membuat upaya baru.
+1. Gunakan tombol `+ Add effort` {% ref id="F" /%} untuk membuat upaya baru.
 
 2. Pilih sebuah metode.
 
@@ -169,7 +185,7 @@ kegiatan.
 {% steps %}
 
 1. Buka tab personel di panel kanan bawah kegiatan.
-2. Gunakan `+ Add personnel`.
+2. Gunakan `+ Add personnel` {% ref id="G" /%}.
 3. Pilih satu entri `Personnel` dari daftar personel proyek.
 4. Pilih sebuah `Role`.
 
@@ -185,7 +201,7 @@ tangkapan spesimen nantinya dapat memilih satu entri personel kegiatan sebagai
 
 Masukkan data astronomi berdasarkan pengamatan atau sumber yang dicatat; NAHPU tidak menghitung waktu matahari terbit, terbenam, atau fase bulan. Ikuti ketentuan waktu lokal dan kosongkan nilai yang tidak diukur. Bidang diperbarui saat diedit; periksa pesan validasi sebelum meninggalkan formulir.
 
-NAHPU membuat satu catatan data lingkungan untuk setiap kegiatan pengumpulan. Di
+NAHPU membuat satu catatan data lingkungan {% ref id="H" /%} untuk setiap kegiatan pengumpulan. Di
 `Settings` > `Events`, pilih kolom bawaan mana yang muncul pada formulir.
 Menyembunyikan sebuah kolom hanya mengubah formulir: nilai yang sudah tersimpan
 tetap ada di basis data dan dalam hasil ekspor.
@@ -196,7 +212,7 @@ Kolom bawaan yang tersedia mencakup:
 - `Night Lowest` dan `Night Highest`: rentang suhu malam dalam derajat Celsius.
 - `Average`: persentase kelembapan rata-rata.
 - `Dew Point`: suhu titik embun.
-- `Cloud cover`: kode dari `0` (cerah) hingga `8` (tertutup penuh), atau `9`
+- `Cloud cover` {% ref id="I" /%}: kode dari `0` (cerah) hingga `8` (tertutup penuh), atau `9`
   bila langit terhalang. Satu okta mewakili seperdelapan langit yang terlihat.
 - `Rainfall`, `Ambient temperature`, dan `Ambient humidity`: kondisi pada
   kegiatan tersebut.

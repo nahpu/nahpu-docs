@@ -4,6 +4,20 @@ sidebar:
   order: 10
 ---
 
+{% screenshots
+   large="app-screenshots/usage/transfer-large.webp"
+   largeAlt="Pantalla Exportar proyecto de NAHPU en una tableta"
+   small="app-screenshots/usage/transfer-small.webp"
+   smallAlt="Pantalla Fusionar proyecto de NAHPU en un teléfono" %}
+{% pin id="A" screen="large" x=24.5 y=28.3 label="Formato de archivo comprimido" /%}
+{% pin id="B" screen="large" x=47.5 y=32.5 label="Exportación ligera" /%}
+{% pin id="C" screen="large" x=50.0 y=15.7 label="Contenido del archivo" /%}
+{% pin id="D" screen="large" x=58.0 y=93.2 label="Exportar proyecto" /%}
+{% pin id="E" screen="small" x=72.6 y=39.7 label="Elegir archivo" /%}
+{% pin id="F" screen="small" x=70.2 y=60.7 label="Respaldar ahora" /%}
+{% pin id="G" screen="small" x=5.7 y=66.8 label="Recordatorio de respaldo" /%}
+{% /screenshots %}
+
 Use `Export project` para crear una transferencia. En el destino, `Import project` en la pantalla inicial crea un proyecto local; `Merge project` combina datos con un proyecto existente. Importar JSON de información o QR del proyecto crea solo la identidad, sin registros ni archivos multimedia.
 
 Las exportaciones ZIP y TAR.GZ incluyen los archivos multimedia disponibles. JSON.GZ ligero incluye solo registros. Revise avisos de archivos ausentes y conserve el origen hasta verificar registros y adjuntos en el destino.
@@ -16,12 +30,12 @@ Un NAHPU Data Package compatible también puede importarse o combinarse porque i
 
 1. Abra el proyecto en el dispositivo de origen.
 2. Abra el menú del panel y seleccione `Export project`.
-3. Revise los conteos de personal, taxonomía, sitios, eventos, especímenes,
+3. Revise los conteos de personal {% ref id="C" /%}, taxonomía, sitios, eventos, especímenes,
    narrativas y medios. Revise las advertencias por medios faltantes.
-4. Para una transferencia o copia de seguridad completa, deje `Light export`
-   desactivado y seleccione `ZIP` o `TAR.GZ`. Para una carga con internet
+4. Para una transferencia o copia de seguridad completa, deje `Light export` {% ref id="B" /%}
+   desactivado y seleccione `ZIP` o `TAR.GZ` {% ref id="A" /%}. Para una carga con internet
    limitada, active `Light export` para usar `JSON.GZ` sin medios.
-5. Seleccione `Export project` y luego guarde o comparta el archivo de forma
+5. Seleccione `Export project` y luego {% ref id="D" /%} guarde o comparta el archivo de forma
    segura.
 
 {% /steps %}
@@ -36,7 +50,7 @@ rotos se omiten.
 
 {% aside type="caution" %}
 
-Haga una copia del banco antes de combinar. El asistente ofrece `Back up now` y exige confirmar el recordatorio.
+Haga una copia del banco antes de combinar. El asistente ofrece `Back up now` {% ref id="F" /%} y exige confirmar el recordatorio.
 
 {% /aside %}
 
@@ -44,9 +58,9 @@ Haga una copia del banco antes de combinar. El asistente ofrece `Back up now` y 
 
 1. Abra la copia del proyecto que recibirá los datos.
 2. Abra el menú del panel y seleccione `Merge project`.
-3. Elija una exportación de proyecto `JSON.GZ`, ZIP o TAR.GZ, o un NAHPU Data
+3. Elija una exportación de proyecto `JSON.GZ` {% ref id="E" /%}, ZIP o TAR.GZ, o un NAHPU Data
    Package.
-4. Confirme el recordatorio de copia de seguridad.
+4. Confirme el recordatorio de copia de seguridad {% ref id="G" /%}.
 5. Revise la información del proyecto, el personal, la taxonomía, los sitios,
    los eventos, los especímenes y las narrativas, una sección a la vez.
 6. Resuelva cada coincidencia o conflicto.

@@ -4,6 +4,22 @@ sidebar:
   order: 7
 ---
 
+{% screenshots
+   large="app-screenshots/usage/specimens-large.webp"
+   largeAlt="NAHPU Specimen Records screen on a tablet"
+   small="app-screenshots/usage/specimens-small.webp"
+   smallAlt="NAHPU Measurements screen on a phone" %}
+{% pin id="A" screen="large" x=96.0 y=10.4 label="Add specimen" /%}
+{% pin id="B" screen="large" x=20.0 y=32.8 label="Cataloger" /%}
+{% pin id="C" screen="large" x=18.0 y=46.2 label="Condition" /%}
+{% pin id="D" screen="large" x=16.0 y=70.7 label="Taxon" /%}
+{% pin id="E" screen="large" x=69.5 y=15.2 label="Taxon info" /%}
+{% pin id="F" screen="large" x=66.5 y=38.0 label="Capture records" /%}
+{% pin id="G" screen="small" x=35.7 y=20.6 label="Measurements" /%}
+{% pin id="H" screen="small" x=41.7 y=64.7 label="Bat fields" /%}
+{% pin id="I" screen="small" x=71.4 y=78.7 label="Specimen parts" /%}
+{% /screenshots %}
+
 ## Setting up specimen records
 
 The NAHPU default lists for `Specimen parts` and `Treatments` are intentionally
@@ -70,7 +86,7 @@ See [Settings](../settings) for the complete configuration map.
 {% steps %}
 1. Navigate to the specimen page using the bottom navigation bar.
 
-2. Click the `+` button to add a new specimen record.
+2. Click the `+` button {% ref id="A" /%} to add a new specimen record.
 
     You can also use the three-dot menu and choose a duplicate action when you
     want to reuse part of the current specimen record.
@@ -84,7 +100,7 @@ See [Settings](../settings) for the complete configuration map.
 
     {% /aside %}
 
-3. Select `Cataloger`.
+3. Select `Cataloger` {% ref id="B" /%}.
 
     This is the person responsible for cataloging the specimen. Depending on the
     project field ID mode, NAHPU can use the cataloger's field number or a
@@ -95,10 +111,10 @@ See [Settings](../settings) for the complete configuration map.
     NAHPU defaults the preparator to the cataloger. If a different person
     prepares the voucher or part, update the preparator field.
 
-5. Select the `Taxon`.
+5. Select the `Taxon` {% ref id="D" /%}.
 
     Start typing to search the project's taxon registry, then select the
-    matching record from the list. NAHPU populates the `Taxon Info` panel from
+    matching record from the list. NAHPU populates the `Taxon Info` {% ref id="E" /%} panel from
     that taxon record. Because the registry holds records at any rank, material
     that is not yet identified to species can be linked to its family or genus
     and refined later.
@@ -109,7 +125,7 @@ See [Settings](../settings) for the complete configuration map.
     helps curators prioritize records that need review. The values are `Low`,
     `Medium`, and `High`.
 
-7. Select the specimen `Condition`.
+7. Select the specimen `Condition` {% ref id="C" /%}.
 
     The default values are `Freshly euthanized`, `Good`, `Fair`, `Poor`,
     `Rotten`, `Released`, and `Unknown`. Conditions are a controlled
@@ -160,7 +176,7 @@ method, and collector that produced it.
 - `Site ID`: the site associated with a collecting event.
 - `Event ID`: the collecting event for the specimen. Changing the event clears
   event-dependent fields in this card except capture date and capture time.
-- `Capture date`: the date the specimen was captured.
+- `Capture date` {% ref id="F" /%}: the date the specimen was captured.
 - `Capture time`: exact time, or a relative time when `Relative time` is enabled.
 - `Relative time`: switches capture time to one of `Dawn`, `Morning`,
   `Afternoon`, `Dusk`, or `Night`.
@@ -202,7 +218,7 @@ numeric age fields. It is an editable controlled vocabulary: the defaults are
 {% tabs %}
 {% tabitem label="Mammals" %}
 
-- `Total length (mm)`: the total length from the tip of the nose to the tip of
+- `Total length (mm)` {% ref id="G" /%}: the total length from the tip of the nose to the tip of
   the tail.
 - `Tail length (mm)`: the length of the tail from the base to the tip.
 - `Head and body length (mm)`: auto-calculated from `Total length (mm) - Tail length (mm)`.
@@ -218,7 +234,7 @@ numeric age fields. It is an editable controlled vocabulary: the defaults are
 - Female reproductive fields: vagina opening, pubic symphysis, reproductive
   stage, mammae condition, mammae counts, placental scar counts, embryo counts,
   and embryo crown-rump length.
-- Bat fields, when enabled: forearm length, tibia length, echolocation type,
+- Bat fields, when enabled {% ref id="H" /%}: forearm length, tibia length, echolocation type,
   maximum and minimum frequency, frequency at maximum energy, and duration.
 - `Remarks`: additional notes about measurements.
 
@@ -286,7 +302,7 @@ Invertebrate catalogs do not show parasite-detection fields or the parasite tab.
 
 ## Specimen Parts
 
-Use `Specimen Parts` for voucher preparations, tissues, swabs, parasites, and
+Use `Specimen Parts` {% ref id="I" /%} for voucher preparations, tissues, swabs, parasites, and
 other physical parts derived from the specimen. Each specimen can have multiple
 parts.
 

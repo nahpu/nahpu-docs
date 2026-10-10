@@ -5,10 +5,22 @@ sidebar:
   order: 15
 ---
 
+{% screenshots
+   large="app-screenshots/usage/expressions-large.webp"
+   largeAlt="NAHPU Template Editor screen on a tablet"
+   small="app-screenshots/usage/expressions-small.webp"
+   smallAlt="NAHPU Document templates screen on a phone" %}
+{% pin id="A" screen="large" x=22.2 y=12.3 label="Preset template" /%}
+{% pin id="B" screen="large" x=29.0 y=18.9 label="Add text" /%}
+{% pin id="C" screen="large" x=44.5 y=54.7 label="Rendered expression" /%}
+{% pin id="D" screen="large" x=93.0 y=18.9 label="Template settings" /%}
+{% pin id="E" screen="small" x=94.0 y=48.2 label="Template list" /%}
+{% /screenshots %}
+
 Export expressions are the placeholders, fallbacks, and conditional syntax
 that NAHPU uses to turn record fields into output. The same expressions drive
 document template text elements and tabular export presets, so a value written
-as `[taxonomy::genus] [taxonomy::specificEpithet]` resolves the same way on a
+as `[taxonomy::genus] [taxonomy::specificEpithet]` {% ref id="C" /%} resolves the same way on a
 printed label and in an exported column. For the workflows that use them, see
 [Export documents](../export-documents) and [Export records](../export-records).
 
@@ -161,7 +173,7 @@ The custom field editor writes the expression for you:
 | Control | What it does |
 |---|---|
 | `Add field` | Appends a field placeholder chosen from the field picker. |
-| `Add text` | Appends a text or separator segment. |
+| `Add text` {% ref id="B" /%} | Appends a text or separator segment. |
 | `Add conditional text` | Appends [conditional text](#conditional-text) built from conditions, the text to write, and an optional text otherwise. |
 | `Show label` | On an encoded field, adds `#label` so the column shows the label rather than the stored code. |
 | `Edit conditional text` | Reopens a conditional text segment. |
@@ -519,7 +531,7 @@ An uncertain determination keeps its suffix in every presentation: `Female?`,
 
 ## Template editor options
 
-The options below belong to the document template editor only. Tabular export
+The options below belong to the document template editor only {% ref id="E" /%}. Tabular export
 presets do not use them.
 
 Sizes on the canvas are in millimetres (`mm`). Stroke widths, font sizes, and
@@ -541,8 +553,8 @@ as `0xAARRGGBB` values but are always chosen through the colour picker.
 | `Enable snap` / `Disable snap` | Toggles snapping to the grid and to other elements. |
 | Canvas lock | Freezes panning so a drag never moves the canvas. |
 | `Select specimen for text preview` | Chooses the record whose values fill the placeholders while you design. |
-| `Template settings` | Name, description, side count, and template size. |
-| `Preset template` | Loads a bundled starting point. |
+| `Template settings` {% ref id="D" /%} | Name, description, side count, and template size. |
+| `Preset template` {% ref id="A" /%} | Loads a bundled starting point. |
 | `Zoom in` / `Zoom out` | Scales the canvas view only; nothing in the output changes. |
 | `1 sided` / `Front` / `Back` | Switches side mode and the side being edited. |
 | Mirror | Mirrors a side, for tags folded along an edge. |

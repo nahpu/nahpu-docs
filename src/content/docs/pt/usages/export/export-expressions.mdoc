@@ -5,11 +5,23 @@ sidebar:
   order: 15
 ---
 
+{% screenshots
+   large="app-screenshots/usage/expressions-large.webp"
+   largeAlt="Tela Editor de modelos do NAHPU em um tablet"
+   small="app-screenshots/usage/expressions-small.webp"
+   smallAlt="Tela Modelos de documentos do NAHPU em um celular" %}
+{% pin id="A" screen="large" x=22.2 y=12.3 label="Modelo predefinido" /%}
+{% pin id="B" screen="large" x=29.0 y=18.9 label="Adicionar texto" /%}
+{% pin id="C" screen="large" x=44.5 y=54.7 label="Expressão resolvida" /%}
+{% pin id="D" screen="large" x=93.0 y=18.9 label="Configurações do modelo" /%}
+{% pin id="E" screen="small" x=94.0 y=48.2 label="Lista de modelos" /%}
+{% /screenshots %}
+
 As expressões de exportação são os placeholders, os fallbacks e a sintaxe
 condicional que o NAHPU usa para transformar campos de registro em saída. As
 mesmas expressões controlam os elementos de texto dos modelos de documento e as
 predefinições de exportação tabular, de modo que um valor escrito como
-`[taxonomy::genus] [taxonomy::specificEpithet]` é resolvido da mesma forma em
+`[taxonomy::genus] [taxonomy::specificEpithet]` {% ref id="C" /%} é resolvido da mesma forma em
 uma etiqueta impressa e em uma coluna exportada. Para os fluxos de trabalho que
 as usam, consulte [Exportar documentos](../export-documents) e
 [Exportar registros](../export-records).
@@ -173,7 +185,7 @@ O editor de campos personalizados escreve a expressão para você:
 | Controle | O que faz |
 |---|---|
 | `Add field` | Acrescenta um placeholder de campo escolhido no seletor de campos. |
-| `Add text` | Acrescenta um segmento de texto ou separador. |
+| `Add text` {% ref id="B" /%} | Acrescenta um segmento de texto ou separador. |
 | `Add conditional text` | Acrescenta um [texto condicional](#conditional-text) montado com condições, o texto a escrever e, opcionalmente, um texto para os demais casos. |
 | `Show label` | Em um campo codificado, acrescenta `#label` para que a coluna mostre o rótulo em vez do código armazenado. |
 | `Edit conditional text` | Reabre um segmento de texto condicional. |
@@ -541,7 +553,7 @@ Uma determinação incerta mantém o seu sufixo em todas as apresentações:
 
 ## Opções do editor de modelos {% #template-editor-options %}
 
-As opções abaixo pertencem apenas ao editor de modelos de documento. As
+As opções abaixo pertencem apenas ao editor de modelos de documento {% ref id="E" /%}. As
 predefinições de exportação tabular não as usam.
 
 Os tamanhos no canvas estão em milímetros (`mm`). As espessuras de traço, os
@@ -564,8 +576,8 @@ escolhidas pelo seletor de cores.
 | `Enable snap` / `Disable snap` | Alterna o encaixe na grade e em outros elementos. |
 | Bloqueio do canvas | Congela o deslocamento para que um arraste nunca mova o canvas. |
 | `Select specimen for text preview` | Escolhe o registro cujos valores preenchem os placeholders enquanto você desenha. |
-| `Template settings` | Nome, descrição, número de lados e tamanho do modelo. |
-| `Preset template` | Carrega um ponto de partida já incluído. |
+| `Template settings` {% ref id="D" /%} | Nome, descrição, número de lados e tamanho do modelo. |
+| `Preset template` {% ref id="A" /%} | Carrega um ponto de partida já incluído. |
 | `Zoom in` / `Zoom out` | Ajusta apenas a visualização do canvas; nada muda na saída. |
 | `1 sided` / `Front` / `Back` | Alterna o modo de lados e o lado que está sendo editado. |
 | Espelhar | Espelha um lado, para tags dobradas em uma borda. |

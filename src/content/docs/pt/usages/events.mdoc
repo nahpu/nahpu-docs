@@ -4,6 +4,22 @@ sidebar:
   order: 6
 ---
 
+{% screenshots
+   large="app-screenshots/usage/events-large.webp"
+   largeAlt="Tela Eventos do NAHPU em um tablet"
+   small="app-screenshots/usage/events-small.webp"
+   smallAlt="Tela Dados ambientais do NAHPU em um celular" %}
+{% pin id="A" screen="large" x=96.0 y=10.4 label="Criar evento" /%}
+{% pin id="B" screen="large" x=11.8 y=19.2 label="ID do evento" /%}
+{% pin id="C" screen="large" x=16.5 y=39.0 label="ID da localidade" /%}
+{% pin id="D" screen="large" x=19.0 y=45.7 label="Datas e horários" /%}
+{% pin id="E" screen="large" x=65.0 y=27.6 label="Atividade principal" /%}
+{% pin id="F" screen="large" x=37.8 y=87.1 label="Adicionar esforço" /%}
+{% pin id="G" screen="large" x=84.0 y=89.3 label="Adicionar equipe" /%}
+{% pin id="H" screen="small" x=56.7 y=36.2 label="Dados ambientais" /%}
+{% pin id="I" screen="small" x=39.3 y=47.0 label="Cobertura de nuvens" /%}
+{% /screenshots %}
+
 Os eventos de coleta ajudam você a acompanhar a atividade, o esforço, o
 pessoal, os dados ambientais e os dados astronômicos de um período de trabalho
 em um local. Os registros de espécimes se vinculam a um evento de coleta, e não
@@ -67,7 +83,7 @@ visual, motorista, gravador ou observador, conforme o seu protocolo.
 {% steps %}
 1. Vá para a página de eventos usando a barra de navegação inferior.
 
-2. Use o botão `+` no canto superior direito para criar um novo evento.
+2. Use o botão `+` {% ref id="A" /%} no canto superior direito para criar um novo evento.
 
     Você também pode usar o menu de três pontos e tocar em `Create event`.
 
@@ -76,16 +92,16 @@ visual, motorista, gravador ou observador, conforme o seu protocolo.
     Você pode reduzir a digitação repetida duplicando um evento. Toque ou clique
     no menu de três pontos e escolha `Duplicate event`. O NAHPU copia o local,
     os horários, a atividade, as notas, o esforço e o pessoal, avança
-    `Start Date` e `End Date` em um dia e cria um novo registro de dados
+    `Start Date` {% ref id="D" /%} e `End Date` em um dia e cria um novo registro de dados
     ambientais vazio.
 
     {% /aside %}
 
-3. Selecione o `Site ID`.
+3. Selecione o `Site ID` {% ref id="C" /%}.
 
 4. Adicione `Start Date` e `End Date`.
 
-    O `Event ID` é gerado a partir de `{Site ID}-{Start Date}`.
+    O `Event ID` {% ref id="B" /%} é gerado a partir de `{Site ID}-{Start Date}`.
 
 5. Edite o `Event ID` (opcional).
 
@@ -96,7 +112,7 @@ visual, motorista, gravador ou observador, conforme o seu protocolo.
 
 6. Adicione `Start Time` e `End Time`.
 
-7. Adicione a `Primary activity`.
+7. Adicione a `Primary activity` {% ref id="E" /%}.
 
     Os padrões são `Collecting`, `Recording` e `Observing`. `Other` não é um
     padrão; adicione-o em `Settings` > `Events` se o seu protocolo precisar
@@ -136,7 +152,7 @@ O cartão `Activity` armazena a finalidade geral do evento.
 
 {% steps %}
 
-1. Use o botão `+ Add effort` para criar um novo esforço.
+1. Use o botão `+ Add effort` {% ref id="F" /%} para criar um novo esforço.
 
 2. Selecione um método.
 
@@ -173,7 +189,7 @@ evento.
 {% steps %}
 
 1. Abra a aba de pessoal no painel inferior direito do evento.
-2. Use `+ Add personnel`.
+2. Use `+ Add personnel` {% ref id="G" /%}.
 3. Selecione uma entrada de `Personnel` na lista de pessoal do projeto.
 4. Selecione uma `Role`.
 
@@ -189,7 +205,7 @@ selecionar uma entrada de pessoal do evento como o `Collector` do espécime.
 
 Informe os dados astronômicos a partir de observações ou de uma fonte documentada; o NAHPU não calcula nascer e pôr do sol nem fase da Lua. Siga a convenção de horário local e deixe vazios os valores não medidos. Os campos são atualizados durante a edição; confira as mensagens de validação antes de sair.
 
-O NAHPU cria um registro de dados ambientais para cada evento de coleta. Em
+O NAHPU cria um registro de dados ambientais {% ref id="H" /%} para cada evento de coleta. Em
 `Settings` > `Events`, selecione quais campos internos aparecem no formulário.
 Ocultar um campo altera apenas o formulário: os valores já armazenados
 permanecem no banco de dados e nas exportações.
@@ -202,7 +218,7 @@ Os campos internos disponíveis incluem:
   Celsius.
 - `Average`: percentual médio de umidade.
 - `Dew Point`: temperatura do ponto de orvalho.
-- `Cloud cover`: um código de `0` (céu limpo) a `8` (totalmente encoberto), ou
+- `Cloud cover` {% ref id="I" /%}: um código de `0` (céu limpo) a `8` (totalmente encoberto), ou
   `9` quando o céu está obscurecido. Um oitavo representa um oitavo do céu
   visível.
 - `Rainfall`, `Ambient temperature` e `Ambient humidity`: condições no evento.

@@ -4,6 +4,20 @@ sidebar:
   order: 4
 ---
 
+{% screenshots
+   large="app-screenshots/usage/taxon-large.webp"
+   largeAlt="Layar Kelola takson NAHPU di tablet"
+   small="app-screenshots/usage/taxon-small.webp"
+   smallAlt="Layar Tambah takson NAHPU di ponsel" %}
+{% pin id="A" screen="large" x=31.8 y=28.9 label="Takson terdaftar" /%}
+{% pin id="B" screen="large" x=89.0 y=26.1 label="Kode QR takson" /%}
+{% pin id="C" screen="large" x=85.5 y=90.9 label="Edit takson" /%}
+{% pin id="D" screen="small" x=26.7 y=17.1 label="Mode manual" /%}
+{% pin id="E" screen="small" x=74.3 y=17.1 label="Mode impor" /%}
+{% pin id="F" screen="small" x=95.2 y=26.9 label="Peringkat takson" /%}
+{% pin id="G" screen="small" x=76.2 y=89.4 label="Tambah takson" /%}
+{% /screenshots %}
+
 Anda dapat mendaftarkan takson secara manual, mengimpor berkas, atau memindai kode QR takson NAHPU.
 
 Mengimpor takson menambahkan data ke registri. Tindakan ini tidak menambahkan
@@ -55,15 +69,15 @@ pada material yang masih menunggu determinasi.
 ### Pendaftaran manual
 
 1. Buka dasbor proyek.
-2. Pada panel takson, pilih `Add taxon` lalu pilih mode `Manual`.
-3. Pilih `Taxon rank`.
+2. Pada panel takson, pilih `Add taxon` {% ref id="G" /%} lalu pilih mode `Manual` {% ref id="D" /%}.
+3. Pilih `Taxon rank` {% ref id="F" /%}.
 4. Isi informasi takson.
 
 ### Impor dari berkas {% #import-from-file %}
 
 1. Siapkan berkas impor Anda. Format yang disarankan adalah `.xlsx`, `.csv`, dan `.tsv`.
 2. Buka dasbor proyek.
-3. Pada panel takson, pilih `Add taxon` lalu pilih mode `Import`.
+3. Pada panel takson, pilih `Add taxon` lalu pilih mode `Import` {% ref id="E" /%}.
 4. Gunakan tombol `Select file` untuk menambahkan berkas. Aplikasi akan memetakan kolom ke kolom yang sesuai secara otomatis. Pada layar sempit, gunakan tab `Setup` dan `Preview` untuk mengatur impor dan meninjau baris yang terdeteksi.
 
 Perilaku pemisah:
@@ -107,7 +121,7 @@ Kontrol pemisah dan detail penguraian berada di `Advanced options`, yang terbuka
 
 ### Impor dari QR {% #import-from-qr %}
 
-1. Buka takson di `Taxon Registry`, lalu pilih kode QR-nya untuk ditampilkan dan dibagikan.
+1. Buka takson di `Taxon Registry`, lalu pilih kode QR-nya {% ref id="B" /%} untuk ditampilkan dan dibagikan.
 2. Pada perangkat penerima, pilih `Add taxon` → `Import` → `Scan QR`.
 3. Pilih `Single taxon` untuk membuka pratinjau setelah pemindaian valid pertama, atau `Multiple taxa` untuk terus memindai. Pemindai beberapa takson menampilkan hasil terakhir dan jumlah takson yang siap diimpor; pilih `Done` untuk meninjaunya.
 4. Periksa pratinjau, pilih takson yang ingin disimpan, lalu konfirmasi dengan tombol impor. Tidak ada data yang disimpan sebelum konfirmasi.
@@ -121,5 +135,5 @@ Pemindaian menggunakan kamera pada Android, iOS, macOS, dan peramban web yang me
 ## Mengedit takson
 
 1. Buka dasbor proyek.
-2. Pada panel takson, pilih `Manage` untuk membuka registri lengkap.
-3. Klik ikon pensil untuk mengedit takson.
+2. Pada panel takson, pilih `Manage` {% ref id="A" /%} untuk membuka registri lengkap.
+3. Klik ikon pensil {% ref id="C" /%} untuk mengedit takson.

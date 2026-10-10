@@ -4,6 +4,20 @@ sidebar:
   order: 4
 ---
 
+{% screenshots
+   large="app-screenshots/usage/taxon-large.webp"
+   largeAlt="NAHPU Manage taxa screen on a tablet"
+   small="app-screenshots/usage/taxon-small.webp"
+   smallAlt="NAHPU Add taxon screen on a phone" %}
+{% pin id="A" screen="large" x=31.8 y=28.9 label="Registered taxa" /%}
+{% pin id="B" screen="large" x=89.0 y=26.1 label="Taxon QR code" /%}
+{% pin id="C" screen="large" x=85.5 y=90.9 label="Edit taxon" /%}
+{% pin id="D" screen="small" x=26.7 y=17.1 label="Manual mode" /%}
+{% pin id="E" screen="small" x=74.3 y=17.1 label="Import mode" /%}
+{% pin id="F" screen="small" x=95.2 y=26.9 label="Taxon rank" /%}
+{% pin id="G" screen="small" x=76.2 y=89.4 label="Add taxon" /%}
+{% /screenshots %}
+
 You can register a new taxon manually, import a file, or scan a NAHPU taxon QR code.
 
 Importing a taxon adds registry data. It does not add a new specimen catalog
@@ -54,15 +68,15 @@ determination.
 ### Manual registration
 
 1. Go to the project dashboard.
-2. At the taxon panel, select `Add taxon`, then choose the `Manual` mode.
-3. Select the `Taxon rank`.
+2. At the taxon panel, select `Add taxon` {% ref id="G" /%}, then choose the `Manual` {% ref id="D" /%} mode.
+3. Select the `Taxon rank` {% ref id="F" /%}.
 4. Fill in the taxon information.
 
 ### Import from file {% #import-from-file %}
 
 1. Prepare your import file. Preferred formats are `.xlsx`, `.csv`, and `.tsv`.
 2. Go to the project dashboard.
-3. At the taxon panel, select `Add taxon`, then choose the `Import` mode.
+3. At the taxon panel, select `Add taxon`, then choose the `Import` {% ref id="E" /%} mode.
 4. Use the `Select file` button to add the file. The app will automatically map the columns to the correct fields. On a narrow screen, use the `Setup` and `Preview` tabs to configure the import and review the detected rows.
 
 Delimiter behavior:
@@ -104,7 +118,7 @@ Delimiter controls and parsing details are under `Advanced options`, which opens
 
 ### Import from QR {% #import-from-qr %}
 
-1. Open a taxon in the `Taxon Registry` and select its QR code to display it for sharing.
+1. Open a taxon in the `Taxon Registry` and select its QR code {% ref id="B" /%} to display it for sharing.
 2. On the receiving device, choose `Add taxon` → `Import` → `Scan QR`.
 3. Choose `Single taxon` to open the preview after the first valid scan, or `Multiple taxa` to keep scanning. The batch scanner shows the latest result and the number of taxa ready to import; select `Done` to review them.
 4. Check the preview, select the taxa to keep, and confirm with the import button. Nothing is saved before confirmation.
@@ -118,5 +132,5 @@ Scanning uses the camera on Android, iOS, macOS, and supported web browsers. If 
 ## Edit a taxon
 
 1. Go to the project dashboard.
-2. At the taxon panel, select `Manage` to open the full registry.
-3. Click on the pencil icon to edit the taxon.
+2. At the taxon panel, select `Manage` {% ref id="A" /%} to open the full registry.
+3. Click on the pencil icon {% ref id="C" /%} to edit the taxon.

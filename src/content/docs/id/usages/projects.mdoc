@@ -4,6 +4,22 @@ sidebar:
   order: 2
 ---
 
+{% screenshots
+   large="app-screenshots/usage/projects-large.webp"
+   largeAlt="Layar Dasbor Proyek NAHPU di tablet"
+   small="app-screenshots/usage/projects-small.webp"
+   smallAlt="Layar Buat proyek NAHPU di ponsel" %}
+{% pin id="A" screen="large" x=22.0 y=15.2 label="Ikhtisar proyek" /%}
+{% pin id="B" screen="large" x=23.0 y=61.4 label="Edit proyek" /%}
+{% pin id="C" screen="large" x=39.2 y=61.4 label="Ekspor info" /%}
+{% pin id="D" screen="large" x=69.0 y=15.2 label="Personel" /%}
+{% pin id="E" screen="large" x=22.5 y=71.6 label="Registri takson" /%}
+{% pin id="F" screen="large" x=67.5 y=71.6 label="Statistik catatan" /%}
+{% pin id="G" screen="small" x=94.0 y=36.7 label="Buat proyek baru" /%}
+{% pin id="H" screen="small" x=6.0 y=42.9 label="Impor info proyek" /%}
+{% pin id="I" screen="small" x=94.0 y=49.0 label="Pindai QR proyek" /%}
+{% /screenshots %}
+
 Proyek mengatur data NAHPU. Satu proyek dapat berisi personel, takson, situs,
 kegiatan pengumpulan, catatan spesimen, narasi, dan media terkait.
 
@@ -18,8 +34,8 @@ akan membuat identitas baru atau memakai informasi dari perangkat lain.
 
 {% steps %}
 
-1. Pada `Welcome`, pilih `Create new project`. Untuk memakai identitas yang
-   sama, gunakan `Import project-info JSON` atau `Scan project QR` di perangkat
+1. Pada `Welcome`, pilih `Create new project` {% ref id="G" /%}. Untuk memakai identitas yang
+   sama, gunakan `Import project-info JSON` {% ref id="H" /%} atau `Scan project QR` {% ref id="I" /%} di perangkat
    seluler.
 2. Pada `Project information`, masukkan nama unik sepanjang 3–25 karakter.
    Deskripsi, peneliti utama, nomor akses institusi, lokasi, zona waktu IANA,
@@ -98,21 +114,21 @@ Setiap proyek memiliki menu tindakan:
 
 Dasbor memiliki empat panel:
 
-- **Project Overview** - Menampilkan nama, UUID, deskripsi, peneliti utama,
+- **Project Overview** {% ref id="A" /%} - Menampilkan nama, UUID, deskripsi, peneliti utama,
   nomor akses, lokasi, zona waktu, tanggal, tanggal pembuatan, dan akses
   terakhir.
-- **Personnel** - Menampilkan personel yang ditugaskan dan menyediakan
+- **Personnel** {% ref id="D" /%} - Menampilkan personel yang ditugaskan dan menyediakan
   `Add personnel` untuk memilih data yang sudah ada atau membuat data baru.
-- **Taxon Registry** - Menampilkan takson terdaftar serta kontrol untuk
+- **Taxon Registry** {% ref id="E" /%} - Menampilkan takson terdaftar serta kontrol untuk
   menambah atau mengimpor takson.
-- **Record Statistics** - Merangkum catatan proyek dan statistik terperinci.
+- **Record Statistics** {% ref id="F" /%} - Merangkum catatan proyek dan statistik terperinci.
 
 Menu proyek juga berisi tindakan transfer, ekspor, pencadangan, pengaturan,
 dan penghapusan proyek.
 
 ## Memperbarui informasi proyek
 
-Dari dasbor, pilih `Edit` pada Project Overview. Dari layar beranda, buka menu
+Dari dasbor, pilih `Edit` {% ref id="B" /%} pada Project Overview. Dari layar beranda, buka menu
 tindakan proyek dan pilih `Edit info`. Formulir mengelompokkan detail, tempat
 dan waktu, serta tanggal proyek. Ubah takson utama atau ID lapangan melalui
 [Pengaturan](../settings).
@@ -121,7 +137,7 @@ dan waktu, serta tanggal proyek. Ubah takson utama atau ID lapangan melalui
 
 Untuk menyalin informasi tanpa mentransfer catatan:
 
-1. Pada perangkat sumber, pilih `Export info` atau `Show QR`.
+1. Pada perangkat sumber, pilih `Export info` {% ref id="C" /%} atau `Show QR`.
 2. Pada perangkat penerima, pilih `Create project`, lalu gunakan `Import
    project-info JSON` atau `Scan project QR` di perangkat seluler.
 

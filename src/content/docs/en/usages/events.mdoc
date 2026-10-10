@@ -4,6 +4,22 @@ sidebar:
   order: 6
 ---
 
+{% screenshots
+   large="app-screenshots/usage/events-large.webp"
+   largeAlt="NAHPU Events screen on a tablet"
+   small="app-screenshots/usage/events-small.webp"
+   smallAlt="NAHPU Environmental data screen on a phone" %}
+{% pin id="A" screen="large" x=96.0 y=10.4 label="Create event" /%}
+{% pin id="B" screen="large" x=11.8 y=19.2 label="Event ID" /%}
+{% pin id="C" screen="large" x=16.5 y=39.0 label="Site ID" /%}
+{% pin id="D" screen="large" x=19.0 y=45.7 label="Dates and times" /%}
+{% pin id="E" screen="large" x=65.0 y=27.6 label="Primary activity" /%}
+{% pin id="F" screen="large" x=37.8 y=87.1 label="Add effort" /%}
+{% pin id="G" screen="large" x=84.0 y=89.3 label="Add personnel" /%}
+{% pin id="H" screen="small" x=56.7 y=36.2 label="Environmental data" /%}
+{% pin id="I" screen="small" x=39.3 y=47.0 label="Cloud cover" /%}
+{% /screenshots %}
+
 Collecting events help you keep track of activity, effort, personnel, environmental,
 and astronomy data for a period of work at a site. Specimen records link to a
 collecting event, not directly to a site, so the event is the bridge between a
@@ -62,7 +78,7 @@ observer, depending on your protocol.
 {% steps %}
 1. Navigate to the event page using the bottom navigation bar.
 
-2. Use the `+` button at the top right corner to create a new event.
+2. Use the `+` button {% ref id="A" /%} at the top right corner to create a new event.
 
     You can also use the three dot menu icon and tap on `Create event`.
 
@@ -70,16 +86,16 @@ observer, depending on your protocol.
 
     You can minimize repeated entry by duplicating an event. Tap/click the
     three-dot menu, then choose `Duplicate event`. NAHPU copies the site, times,
-    activity, notes, effort, and personnel, increments the `Start Date` and
+    activity, notes, effort, and personnel, increments the `Start Date` {% ref id="D" /%} and
     `End Date` by one day, and creates a new empty environmental-data record.
 
     {% /aside %}
 
-3. Select the `Site ID`.
+3. Select the `Site ID` {% ref id="C" /%}.
 
 4. Add the `Start Date` and `End Date`.
 
-    The `Event ID` is generated from `{Site ID}-{Start Date}`.
+    The `Event ID` {% ref id="B" /%} is generated from `{Site ID}-{Start Date}`.
 
 5. Edit the `Event ID` (optional).
 
@@ -90,7 +106,7 @@ observer, depending on your protocol.
 
 6. Add `Start Time` and `End Time`.
 
-7. Add `Primary activity`.
+7. Add `Primary activity` {% ref id="E" /%}.
 
     The defaults are `Collecting`, `Recording`, and `Observing`. `Other` is not
     a default; add it in `Settings` > `Events` if your protocol needs it. For
@@ -127,7 +143,7 @@ The `Activity` card stores the broad purpose of the event.
 
 {% steps %}
 
-1. Use the `+ Add effort` button to create a new effort.
+1. Use the `+ Add effort` {% ref id="F" /%} button to create a new effort.
 
 2. Select a method.
 
@@ -162,7 +178,7 @@ Use the `Event Personnel` tab to record everyone involved in the event.
 {% steps %}
 
 1. Open the personnel tab in the lower right event panel.
-2. Use `+ Add personnel`.
+2. Use `+ Add personnel` {% ref id="G" /%}.
 3. Select a `Personnel` entry from the project personnel list.
 4. Select a `Role`.
 
@@ -177,7 +193,7 @@ later select an event personnel entry as the specimen's `Collector`.
 
 Enter astronomy values from observations or a documented source; NAHPU does not calculate sunrise, sunset, or moon phase. Use the project’s local-time convention and leave unmeasured values empty. Fields update as you edit; check validation messages before leaving the form.
 
-NAHPU creates one environmental-data record for each collecting event. In
+NAHPU creates one environmental-data record {% ref id="H" /%} for each collecting event. In
 `Settings` > `Events`, select which built-in fields appear in the form. Hiding
 a field changes only the form: previously stored values remain in the database
 and in exports.
@@ -189,7 +205,7 @@ Available built-in fields include:
   Celsius.
 - `Average`: average humidity percentage.
 - `Dew Point`: dew point temperature.
-- `Cloud cover`: a code from `0` (clear) through `8` (fully overcast), or `9`
+- `Cloud cover` {% ref id="I" /%}: a code from `0` (clear) through `8` (fully overcast), or `9`
   when the sky is obscured. One okta represents one eighth of the visible sky.
 - `Rainfall`, `Ambient temperature`, and `Ambient humidity`: conditions at the
   event.

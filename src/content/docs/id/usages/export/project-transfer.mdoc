@@ -4,6 +4,20 @@ sidebar:
   order: 10
 ---
 
+{% screenshots
+   large="app-screenshots/usage/transfer-large.webp"
+   largeAlt="Layar Ekspor proyek NAHPU di tablet"
+   small="app-screenshots/usage/transfer-small.webp"
+   smallAlt="Layar Gabungkan proyek NAHPU di ponsel" %}
+{% pin id="A" screen="large" x=24.5 y=28.3 label="Format arsip" /%}
+{% pin id="B" screen="large" x=47.5 y=32.5 label="Ekspor ringan" /%}
+{% pin id="C" screen="large" x=50.0 y=15.7 label="Isi arsip" /%}
+{% pin id="D" screen="large" x=58.0 y=93.2 label="Ekspor proyek" /%}
+{% pin id="E" screen="small" x=72.6 y=39.7 label="Pilih arsip" /%}
+{% pin id="F" screen="small" x=70.2 y=60.7 label="Cadangkan sekarang" /%}
+{% pin id="G" screen="small" x=5.7 y=66.8 label="Pengingat cadangan" /%}
+{% /screenshots %}
+
 Gunakan `Export project` untuk membuat transfer. Pada penerima, `Import project` di layar awal membuat proyek lokal; `Merge project` menggabungkan data dengan proyek yang sudah ada. Impor JSON informasi atau QR proyek hanya membuat identitas tanpa catatan atau media.
 
 Ekspor ZIP dan TAR.GZ menyertakan media yang tersedia. JSON.GZ ringan hanya berisi catatan. Tinjau peringatan berkas yang hilang dan simpan sumber hingga catatan serta lampiran pada penerima diperiksa.
@@ -16,12 +30,12 @@ NAHPU Data Package yang kompatibel juga dapat diimpor atau digabungkan karena be
 
 1. Buka proyek pada perangkat sumber.
 2. Buka menu dasbor lalu pilih `Export project`.
-3. Tinjau jumlah personel, taksonomi, lokasi, kegiatan, spesimen, narasi, dan
+3. Tinjau jumlah personel {% ref id="C" /%}, taksonomi, lokasi, kegiatan, spesimen, narasi, dan
    media. Tinjau peringatan untuk media yang hilang.
-4. Untuk transfer atau cadangan proyek yang lengkap, biarkan `Light export`
-   nonaktif lalu pilih `ZIP` atau `TAR.GZ`. Untuk unggahan dengan internet
+4. Untuk transfer atau cadangan proyek yang lengkap, biarkan `Light export` {% ref id="B" /%}
+   nonaktif lalu pilih `ZIP` atau `TAR.GZ` {% ref id="A" /%}. Untuk unggahan dengan internet
    terbatas, aktifkan `Light export` agar memakai `JSON.GZ` tanpa media.
-5. Pilih `Export project`, lalu simpan atau bagikan arsipnya dengan aman.
+5. Pilih `Export project`, lalu {% ref id="D" /%} simpan atau bagikan arsipnya dengan aman.
 
 {% /steps %}
 
@@ -34,7 +48,7 @@ dan tautan rusaknya tidak disertakan.
 
 {% aside type="caution" %}
 
-Cadangkan basis data sebelum menggabungkan. Panduan menyediakan `Back up now` dan memerlukan konfirmasi pengingat.
+Cadangkan basis data sebelum menggabungkan. Panduan menyediakan `Back up now` {% ref id="F" /%} dan memerlukan konfirmasi pengingat.
 
 {% /aside %}
 
@@ -42,9 +56,9 @@ Cadangkan basis data sebelum menggabungkan. Panduan menyediakan `Back up now` da
 
 1. Buka salinan proyek yang akan menerima data.
 2. Buka menu dasbor lalu pilih `Merge project`.
-3. Pilih hasil ekspor proyek `JSON.GZ`, ZIP, atau TAR.GZ, atau sebuah NAHPU Data
+3. Pilih hasil ekspor proyek `JSON.GZ` {% ref id="E" /%}, ZIP, atau TAR.GZ, atau sebuah NAHPU Data
    Package.
-4. Konfirmasi pengingat pencadangan.
+4. Konfirmasi pengingat pencadangan {% ref id="G" /%}.
 5. Tinjau informasi proyek, personel, taksonomi, lokasi, kegiatan, spesimen, dan
    narasi, satu bagian pada satu waktu.
 6. Selesaikan setiap kecocokan atau konflik.

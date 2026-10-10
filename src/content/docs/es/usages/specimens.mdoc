@@ -4,6 +4,22 @@ sidebar:
   order: 7
 ---
 
+{% screenshots
+   large="app-screenshots/usage/specimens-large.webp"
+   largeAlt="Pantalla Registros de especímenes de NAHPU en una tableta"
+   small="app-screenshots/usage/specimens-small.webp"
+   smallAlt="Pantalla Medidas de NAHPU en un teléfono" %}
+{% pin id="A" screen="large" x=96.0 y=10.4 label="Agregar espécimen" /%}
+{% pin id="B" screen="large" x=20.0 y=32.8 label="Catalogador" /%}
+{% pin id="C" screen="large" x=18.0 y=46.2 label="Condición" /%}
+{% pin id="D" screen="large" x=16.0 y=70.7 label="Taxón" /%}
+{% pin id="E" screen="large" x=69.5 y=15.2 label="Información del taxón" /%}
+{% pin id="F" screen="large" x=66.5 y=38.0 label="Registros de captura" /%}
+{% pin id="G" screen="small" x=35.7 y=20.6 label="Medidas" /%}
+{% pin id="H" screen="small" x=41.7 y=64.7 label="Campos de murciélagos" /%}
+{% pin id="I" screen="small" x=71.4 y=78.7 label="Partes del espécimen" /%}
+{% /screenshots %}
+
 ## Configuración de registros de especímenes
 
 Un registro de espécimen reúne la identificación, la preparación, los datos de
@@ -69,7 +85,7 @@ misma terminología y el mismo comportamiento de exportación.
 {% steps %}
 1. Navegue a la página de especímenes usando la barra de navegación inferior.
 
-2. Haga clic en el botón `+` para agregar un nuevo registro de espécimen.
+2. Haga clic en el botón `+` {% ref id="A" /%} para agregar un nuevo registro de espécimen.
 
     También puede usar el icono del menú de tres puntos y elegir una acción de
     duplicación.
@@ -82,7 +98,7 @@ misma terminología y el mismo comportamiento de exportación.
 
     {% /aside %}
 
-3. Seleccione `Catalogador`.
+3. Seleccione `Catalogador` {% ref id="B" /%}.
 
     Esta es la persona responsable de catalogar este espécimen en el campo.
 
@@ -90,7 +106,7 @@ misma terminología y el mismo comportamiento de exportación.
 
     La aplicación ingresa automáticamente al mismo personal que el catalogador. Si una persona diferente prepara el espécimen, debe actualizar el campo con el nombre de la persona.
 
-5. Seleccione `Especie`.
+5. Seleccione `Especie` {% ref id="D" /%}.
 
     Comience a escribir, el campo mostrará la especie más cercana que coincida con el nombre. Toque/haga clic en el nombre de la especie. La aplicación también completará automáticamente el panel de `Taxonomía` según la especie seleccionada.
 
@@ -99,7 +115,7 @@ misma terminología y el mismo comportamiento de exportación.
     Esto informa a los usuarios que leen los datos sobre qué tan seguro está de la identificación de la especie. También ayuda a los curadores/gestores de colecciones del museo a priorizar qué especímenes necesitan una revisión cuidadosa para verificar la identificación.
 
 
-7. Seleccione la `Condición` del espécimen.
+7. Seleccione la `Condición` {% ref id="C" /%} del espécimen.
 
 8. Agregue la `Fecha de recolección`, `Hora de recolección`, `Fecha de prep.` y
    `Hora de prep.` cuando estén disponibles.
@@ -119,7 +135,7 @@ reutilizan los números ya consumidos.
 
 ## Taxonomía
 
-La tarjeta `Taxon Info` se completa desde la especie seleccionada. Muestra la
+La tarjeta `Taxon Info` {% ref id="E" /%} se completa desde la especie seleccionada. Muestra la
 clasificación y permite consultar el registro taxonómico, incluidos autores,
 nombre común, categoría de Lista Roja, estado CITES y notas si están presentes.
 
@@ -128,7 +144,7 @@ nombre común, categoría de Lista Roja, estado CITES y notas si están presente
 Los registros de captura vinculan el espécimen con su evento:
 
 - `Site ID` y `Event ID`: sitio y evento de recolección.
-- `Capture date` y `Capture time`: fecha y hora de captura; `Relative time`
+- `Capture date` {% ref id="F" /%} y `Capture time`: fecha y hora de captura; `Relative time`
   permite usar Dawn, Morning, Afternoon, Dusk o Night.
 - `Method` y `Method ID`: esfuerzo y código del método del evento.
 - `Coordinate ID`: coordenada vinculada al sitio del evento.
@@ -162,7 +178,7 @@ la lista se configura en `Settings` > `Specimens` > `Life stages`.
 {% tabs %}
 {% tabitem label="Mamíferos" %}
 
-- `Longitud total (mm)`: la longitud total del espécimen, desde la punta de la nariz hasta la punta de la cola.
+- `Longitud total (mm)` {% ref id="G" /%}: la longitud total del espécimen, desde la punta de la nariz hasta la punta de la cola.
 - `Longitud de la cola (mm)`: la longitud de la cola desde la base hasta la punta.
 - `Longitud de cabeza y cuerpo (mm)`: calculada automáticamente como `Longitud total (mm) - Longitud de la cola (mm)`.
 - Porcentaje de `Longitud Cola/CC`: calculado automáticamente como `Longitud de la cola (mm) / Longitud de cabeza y cuerpo (mm)`.
@@ -209,7 +225,7 @@ de parásitos.
 {% /tabs %}
 ## Partes de especímenes {% #specimen-parts %}
 
-Cada espécimen puede tener varias partes, como vouchers, tejidos, hisopos o
+Cada espécimen puede tener varias partes {% ref id="I" /%}, como vouchers, tejidos, hisopos o
 parásitos. Una parte puede incluir `Tissue ID`, `QR/barcode ID`, `Preparation
 type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
 `Storage type`, `Storage location`, `Date taken`, `PMI`, museos permanente y de

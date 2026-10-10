@@ -4,6 +4,21 @@ sidebar:
   order: 3
 ---
 
+{% screenshots
+   large="app-screenshots/usage/personnel-large.webp"
+   largeAlt="Layar Kelola personel NAHPU di tablet"
+   small="app-screenshots/usage/personnel-small.webp"
+   smallAlt="Layar Tambah personel NAHPU di ponsel" %}
+{% pin id="A" screen="large" x=40.0 y=7.3 label="Kelola personel" /%}
+{% pin id="B" screen="large" x=34.0 y=64.0 label="Peran perawatan spesimen" /%}
+{% pin id="C" screen="large" x=34.0 y=73.1 label="Nomor lapangan" /%}
+{% pin id="D" screen="large" x=83.5 y=90.9 label="Edit personel" /%}
+{% pin id="E" screen="small" x=21.0 y=17.1 label="Pilih dari basis data" /%}
+{% pin id="F" screen="small" x=81.0 y=17.1 label="Tambah personel baru" /%}
+{% pin id="G" screen="small" x=95.2 y=49.3 label="Nama" /%}
+{% pin id="H" screen="small" x=62.4 y=81.6 label="Tampilkan lebih" /%}
+{% /screenshots %}
+
 Catatan personel dipakai bersama di basis data NAHPU dan dapat ditugaskan ke
 beberapa proyek. Sebuah proyek hanya menampilkan personel yang ditugaskan
 padanya.
@@ -15,23 +30,23 @@ Field ID personel memerlukan `Cataloger` dengan nomor lapangan pribadi terdaftar
 {% /aside %}
 
 Pada panel Personel di dasbor proyek, pilih `Add personnel`. Bila sudah ada
-orang di basis data, pilih `Select from database` lalu pilih siapa yang akan
-ditugaskan. Bila belum, pilih `Add new personnel`.
+orang di basis data, pilih `Select from database` {% ref id="E" /%} lalu pilih siapa yang akan
+ditugaskan. Bila belum, pilih `Add new personnel` {% ref id="F" /%}.
 
 Formulirnya memuat:
 
-- **Name (wajib)** - nama orang tersebut.
+- **Name (wajib)** {% ref id="G" /%} - nama orang tersebut.
 - **Photo** - avatar atau foto personel.
 - **Affiliation** - institusi orang tersebut.
 - **Email** - alamat surel orang tersebut.
 - **Phone** - nomor telepon orang tersebut.
 - **ORCID** - ORCID iD opsional bertanda hubung dengan digit pemeriksa yang
   sahih, misalnya `0000-0002-1825-0097`.
-- **Specimen care role** - `Cataloger`, `Preparator only`, `Determiner only`,
+- **Specimen care role** {% ref id="B" /%} - `Cataloger`, `Preparator only`, `Determiner only`,
   atau `None`.
 - **Notes** - informasi tambahan tentang orang tersebut.
 
-Gunakan `Show more` untuk menampilkan kolom opsional. Alamat surel dibakukan
+Gunakan `Show more` {% ref id="H" /%} untuk menampilkan kolom opsional. Alamat surel dibakukan
 menjadi huruf kecil dan nomor telepon hanya menerima angka.
 
 Ekspor Darwin Core memakai URL kanonis `https://orcid.org/...` sebagai pengenal
@@ -40,7 +55,7 @@ NAHPU.
 
 ## Nomor lapangan untuk pengatalog
 
-Bila perannya `Cataloger`, NAHPU menyediakan opsi
+Bila perannya `Cataloger`, {% ref id="C" /%} NAHPU menyediakan opsi
 `Register personal field number`. Aktifkan bila inisial dan nomor orang tersebut
 harus menghasilkan Field ID spesimen. Masukkan inisial lapangan dan nomor awal;
 nomornya bertambah seiring pembuatan spesimen.
@@ -57,8 +72,8 @@ menyunting atau mengeluarkannya dari proyek. Mengeluarkan seseorang dari proyek
 tidak menghapus catatan personel bersama. Seseorang tidak dapat dikeluarkan
 selama catatan proyek masih memakainya.
 
-Untuk mencari, menyunting, atau menghapus personel basis data secara permanen,
-buka `Settings` lalu pilih `Personnel` atau `Manage personnel`. NAHPU mencegah
+Untuk mencari, menyunting, atau menghapus personel basis data secara permanen {% ref id="D" /%},
+buka `Settings` lalu pilih `Personnel` atau `Manage personnel` {% ref id="A" /%}. NAHPU mencegah
 penghapusan permanen bila orang tersebut masih ditugaskan pada suatu proyek.
 
 ## Peristilahan

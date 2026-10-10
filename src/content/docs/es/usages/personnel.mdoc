@@ -4,6 +4,21 @@ sidebar:
   order: 3
 ---
 
+{% screenshots
+   large="app-screenshots/usage/personnel-large.webp"
+   largeAlt="Pantalla Gestionar personal de NAHPU en una tableta"
+   small="app-screenshots/usage/personnel-small.webp"
+   smallAlt="Pantalla Agregar personal de NAHPU en un teléfono" %}
+{% pin id="A" screen="large" x=40.0 y=7.3 label="Gestionar personal" /%}
+{% pin id="B" screen="large" x=34.0 y=64.0 label="Función en el cuidado de especímenes" /%}
+{% pin id="C" screen="large" x=34.0 y=73.1 label="Número de campo" /%}
+{% pin id="D" screen="large" x=83.5 y=90.9 label="Editar personal" /%}
+{% pin id="E" screen="small" x=21.0 y=17.1 label="Seleccionar de la base de datos" /%}
+{% pin id="F" screen="small" x=81.0 y=17.1 label="Agregar nuevo personal" /%}
+{% pin id="G" screen="small" x=95.2 y=49.3 label="Nombre" /%}
+{% pin id="H" screen="small" x=62.4 y=81.6 label="Mostrar más" /%}
+{% /screenshots %}
+
 Los registros de personal se comparten en la base de datos de NAHPU y pueden
 asignarse a varios proyectos. Un proyecto solo muestra el personal asignado a
 él.
@@ -15,23 +30,23 @@ Los Field IDs por persona requieren un `Cataloger` con número de campo personal
 {% /aside %}
 
 En el panel Personal del panel del proyecto, seleccione `Add personnel`. Si ya
-hay personas en la base de datos, elija `Select from database` y seleccione a
-quienes desea asignar. De lo contrario, elija `Add new personnel`.
+hay personas en la base de datos, elija `Select from database` {% ref id="E" /%} y seleccione a
+quienes desea asignar. De lo contrario, elija `Add new personnel` {% ref id="F" /%}.
 
 El formulario incluye:
 
-- **Name (obligatorio)** - el nombre de la persona.
+- **Name (obligatorio)** {% ref id="G" /%} - el nombre de la persona.
 - **Photo** - un avatar o una foto del personal.
 - **Affiliation** - la institución de la persona.
 - **Email** - la dirección de correo electrónico de la persona.
 - **Phone** - el teléfono de la persona.
 - **ORCID** - un ORCID iD opcional, con guiones y dígito de verificación válido,
   como `0000-0002-1825-0097`.
-- **Specimen care role** - `Cataloger`, `Preparator only`, `Determiner only` o
+- **Specimen care role** {% ref id="B" /%} - `Cataloger`, `Preparator only`, `Determiner only` o
   `None`.
 - **Notes** - información adicional sobre la persona.
 
-Use `Show more` para mostrar los campos opcionales. Los correos electrónicos se
+Use `Show more` {% ref id="H" /%} para mostrar los campos opcionales. Los correos electrónicos se
 normalizan a minúsculas y los teléfonos aceptan dígitos.
 
 Las exportaciones Darwin Core usan la URL canónica `https://orcid.org/...` como
@@ -40,7 +55,7 @@ el UUID de personal de NAHPU.
 
 ## Números de campo para catalogadores
 
-Cuando el rol es `Cataloger`, NAHPU ofrece la opción
+Cuando el rol es `Cataloger`, {% ref id="C" /%} NAHPU ofrece la opción
 `Register personal field number`. Actívela cuando las iniciales y el número de
 la persona deban generar los Field IDs de los especímenes. Ingrese la inicial de
 campo y el número inicial; el número avanza a medida que se crean especímenes.
@@ -57,8 +72,8 @@ para editarla o quitarla del proyecto. Quitar a una persona de un proyecto no
 elimina el registro compartido de personal. No se puede quitar a una persona
 mientras los registros del proyecto sigan usándola.
 
-Para buscar, editar o eliminar permanentemente al personal de la base de datos,
-abra `Settings` y elija `Personnel` o `Manage personnel`. NAHPU impide la
+Para buscar, editar o eliminar permanentemente al personal de la base de datos {% ref id="D" /%},
+abra `Settings` y elija `Personnel` o `Manage personnel` {% ref id="A" /%}. NAHPU impide la
 eliminación permanente cuando la persona sigue asignada a un proyecto.
 
 ## Terminología

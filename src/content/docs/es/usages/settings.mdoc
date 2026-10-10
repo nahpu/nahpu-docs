@@ -2,6 +2,20 @@
 title: Configuración
 ---
 
+{% screenshots
+   large="app-screenshots/usage/settings-large.webp"
+   largeAlt="Pantalla Configuración de NAHPU en una tableta"
+   small="app-screenshots/usage/settings-small.webp"
+   smallAlt="Pantalla Configuración de eventos de colecta de NAHPU en un teléfono" %}
+{% pin id="A" screen="large" x=30.0 y=22.2 label="Formato" /%}
+{% pin id="B" screen="large" x=30.0 y=31.8 label="Sitios" /%}
+{% pin id="C" screen="large" x=30.0 y=41.4 label="Eventos" /%}
+{% pin id="D" screen="large" x=30.0 y=50.9 label="Especímenes" /%}
+{% pin id="E" screen="large" x=30.0 y=60.5 label="Campos personalizados" /%}
+{% pin id="F" screen="large" x=30.0 y=77.9 label="Taxones" /%}
+{% pin id="G" screen="small" x=70.2 y=17.1 label="Actividades principales" /%}
+{% /screenshots %}
+
 NAHPU separa los registros del proyecto, los registros compartidos de la base de
 datos, las configuraciones de usuario reproducibles y las preferencias que solo
 viven en la instalación. Abra un proyecto, abra el menú `Dashboard` y seleccione
@@ -24,28 +38,28 @@ transferidas antes de reemplazar su configuración actual.
 
 ### Format
 
-`Format` selecciona el taxón principal que se usa en los formularios de
+`Format` selecciona {% ref id="A" /%} el taxón principal que se usa en los formularios de
 espécimen nuevos de este dispositivo. Un proyecto puede contener más de un grupo
 taxonómico; esta configuración solo controla el formato de espécimen activo y
 sus campos de medición.
 
 ### Events y Sites
 
-Use `Events` para gestionar la lista controlada de actividades principales, los
+Use `Events` {% ref id="C" /%} para gestionar la lista controlada de actividades principales {% ref id="G" /%}, los
 métodos de recolecta, los roles del personal del evento y los campos ambientales
 que se muestran en los formularios de evento. Las actividades principales
 comienzan con `Collecting`, `Recording` y `Observing`; `Other` no se incluye a
 menos que usted lo agregue. Los formularios ambientales muestran inicialmente
 temperatura ambiente, humedad ambiente, nubosidad, lluvia y notas. Al igual que
 en la configuración de Geografía, los demás campos integrados pueden mostrarse u
-ocultarse sin borrar los valores almacenados. Use `Sites` para gestionar los
+ocultarse sin borrar los valores almacenados. Use `Sites` {% ref id="B" /%} para gestionar los
 vocabularios controlados de tipos de sitio y de hábitat. Mantenga estas
 configuraciones coherentes entre los dispositivos de campo transfiriendo las
 configuraciones de usuario.
 
 ### Specimens
 
-`Specimens` contiene la visibilidad de los campos de captura, los Field IDs, los
+`Specimens` contiene {% ref id="D" /%} la visibilidad de los campos de captura, los Field IDs, los
 tissue IDs, los sexos de espécimen, los tipos de espécimen, los tratamientos,
 las condiciones y las configuraciones de parásitos que dependen del taxón.
 
@@ -75,7 +89,7 @@ identificadores ya se exportaron o se escribieron en etiquetas.
 
 ## Database
 
-- `Taxa` gestiona los registros de taxonomía disponibles para los proyectos.
+- `Taxa` {% ref id="F" /%} gestiona los registros de taxonomía disponibles para los proyectos.
 - `Personnel` gestiona a las personas de la base de datos y sus roles de cuidado
   del espécimen.
 - `Replace database` reemplaza la base SQLite activa a partir de una copia de
@@ -156,7 +170,7 @@ Defina campos adicionales y compruebe cómo aparecen en los registros del proyec
 
 {% steps %}
 
-1. Abra el proyecto deseado y vaya a `Settings` > `Custom fields`; cree un campo y elija la sección de destino.
+1. Abra el proyecto deseado y vaya a `Settings` > `Custom fields` {% ref id="E" /%}; cree un campo y elija la sección de destino.
 2. Defina `Label` y `Type`. Para una lista desplegable, introduzca las opciones permitidas. Elija el ámbito `Current project` o `Global`; las definiciones globales se aplican a toda la instalación.
 3. Para campos de especímenes, compruebe el catálogo aplicable. Consulte la guía de referencia para asignaciones Darwin Core opcionales.
 4. Guarde la definición, abra un registro en la sección de destino e introduzca un valor de prueba con la unidad acordada. Vuelva a abrir el registro para comprobarlo.

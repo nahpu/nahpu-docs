@@ -4,6 +4,20 @@ sidebar:
   order: 10
 ---
 
+{% screenshots
+   large="app-screenshots/usage/records-large.webp"
+   largeAlt="Tela Exportar registros do NAHPU em um tablet"
+   small="app-screenshots/usage/records-small.webp"
+   smallAlt="Tela Exportar registros do NAHPU em um celular" %}
+{% pin id="A" screen="large" x=47.2 y=33.7 label="Predefinição de exportação" /%}
+{% pin id="B" screen="large" x=34.0 y=43.1 label="Gerenciar predefinições" /%}
+{% pin id="C" screen="large" x=47.2 y=59.5 label="Formato do arquivo" /%}
+{% pin id="D" screen="large" x=83.0 y=83.5 label="Pré-visualizar tabela" /%}
+{% pin id="E" screen="large" x=57.5 y=93.2 label="Exportar registros" /%}
+{% pin id="F" screen="small" x=85.7 y=16.4 label="Aba de pré-visualização" /%}
+{% pin id="G" screen="small" x=94.0 y=79.5 label="Acrescentar data" /%}
+{% /screenshots %}
+
 Use `Export records` para gravar dados do projeto ativo em CSV, TSV, Excel ou JSON usando uma predefinição de exportação salva.
 
 ## Forma rápida de exportar registros
@@ -11,10 +25,10 @@ Use `Export records` para gravar dados do projeto ativo em CSV, TSV, Excel ou JS
 {% steps %}
 
 1. Abra o menu do projeto e selecione `Export records`.
-2. Escolha uma `Export preset`. Se não houver nenhuma, abra `Manage Presets` para criar uma; use `Manage presets` para revisar uma existente.
-3. Confira tipo de registro, escopo taxonômico, cabeçalhos e mapeamentos. Use `Preview Table` para inspecionar linhas reais. No celular, mude para `Preview` para acessar esses controles.
-4. Escolha formato e nome do arquivo e configure `Append date` se necessário. Cabeçalhos Darwin Core não estão disponíveis para JSON.
-5. Selecione o destino e escolha `Export records`.
+2. Escolha uma `Export preset` {% ref id="A" /%}. Se não houver nenhuma, abra `Manage Presets` para criar uma; use `Manage presets` {% ref id="B" /%} para revisar uma existente.
+3. Confira tipo de registro, escopo taxonômico, cabeçalhos e mapeamentos. Use `Preview Table` {% ref id="D" /%} para inspecionar linhas reais. No celular, mude para `Preview` {% ref id="F" /%} para acessar esses controles.
+4. Escolha formato e nome do arquivo {% ref id="C" /%} e configure `Append date` {% ref id="G" /%} se necessário. Cabeçalhos Darwin Core não estão disponíveis para JSON.
+5. Selecione o destino e escolha `Export records` {% ref id="E" /%}.
 6. Abra o arquivo e confira linhas, cabeçalhos, unidades e valores repetidos. Use `Share` no resultado para transferir o arquivo ou `Export another` para outra exportação.
 
 {% /steps %}

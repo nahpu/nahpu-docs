@@ -4,6 +4,22 @@ sidebar:
   order: 2
 ---
 
+{% screenshots
+   large="app-screenshots/usage/projects-large.webp"
+   largeAlt="NAHPU Project Dashboard screen on a tablet"
+   small="app-screenshots/usage/projects-small.webp"
+   smallAlt="NAHPU Create project screen on a phone" %}
+{% pin id="A" screen="large" x=22.0 y=15.2 label="Project overview" /%}
+{% pin id="B" screen="large" x=23.0 y=61.4 label="Edit project" /%}
+{% pin id="C" screen="large" x=39.2 y=61.4 label="Export info" /%}
+{% pin id="D" screen="large" x=69.0 y=15.2 label="Personnel" /%}
+{% pin id="E" screen="large" x=22.5 y=71.6 label="Taxon registry" /%}
+{% pin id="F" screen="large" x=67.5 y=71.6 label="Record statistics" /%}
+{% pin id="G" screen="small" x=94.0 y=36.7 label="Create new project" /%}
+{% pin id="H" screen="small" x=6.0 y=42.9 label="Import project info" /%}
+{% pin id="I" screen="small" x=94.0 y=49.0 label="Scan project QR" /%}
+{% /screenshots %}
+
 Projects keep NAHPU data organized. A project can contain personnel, taxa,
 sites, collecting events, specimen records, narratives, and linked media.
 
@@ -18,8 +34,8 @@ to create a new identity or reuse project information from another device.
 
 {% steps %}
 
-1. On `Welcome`, select `Create new project`. To reuse an existing project
-   identity instead, select `Import project-info JSON` or, on mobile, `Scan
+1. On `Welcome`, select `Create new project` {% ref id="G" /%}. To reuse an existing project
+   identity instead, select `Import project-info JSON` {% ref id="H" /%} or, on mobile, `Scan
    project QR`.
 2. Under `Project information`, enter a unique project name between 3 and 25
    characters. Optionally add a description, principal investigator,
@@ -110,16 +126,16 @@ Each project has an action menu with these options:
 
 The dashboard contains four panels:
 
-- **Project Overview** - Shows the project name, UUID, description, principal
+- **Project Overview** {% ref id="A" /%} - Shows the project name, UUID, description, principal
   investigator, accession, location, time zone, dates, creation date, and last
   access. Information is grouped as Identity, Description, Project details,
   Schedule, and Record metadata.
-  Use `Edit` to change the project and `Export info` to share its information.
-- **Personnel** - Lists personnel assigned to the project. Use `Add personnel`
+  Use `Edit` {% ref id="B" /%} to change the project and `Export info` to share {% ref id="C" /%} its information.
+- **Personnel** {% ref id="D" /%} - Lists personnel assigned to the project. Use `Add personnel`
   to select an existing database entry or create a new one.
-- **Taxon Registry** - Lists registered taxa and provides controls to add or
+- **Taxon Registry** {% ref id="E" /%} - Lists registered taxa and provides controls to add or
   import taxa.
-- **Record Statistics** - Summarizes records in the project and provides
+- **Record Statistics** {% ref id="F" /%} - Summarizes records in the project and provides
   access to more detailed statistics.
 
 The project menu also contains project transfer, export, backup, settings, and
@@ -140,7 +156,7 @@ records:
 1. On the source device, choose `Export info` or `Show QR` from the project's
    home-screen action menu.
 2. On the receiving device, choose `Create project`, then use `Import project-info
-   JSON` or `Scan project QR` on mobile.
+   JSON` or `Scan project QR` {% ref id="I" /%} on mobile.
 
 These methods retain the source project's UUID and create a project with the
 same project information. To transfer records, media, and related data, use

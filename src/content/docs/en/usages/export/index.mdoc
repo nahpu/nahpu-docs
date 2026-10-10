@@ -4,7 +4,23 @@ sidebar:
   order: 9
 ---
 
-Use `Export project` to create a transfer. On the receiving installation, home-screen `Import project` creates a local project; `Merge project` combines data with a project that already exists. Importing project-info JSON or a project QR code creates only the project identity, without records or media.
+{% screenshots
+   large="app-screenshots/usage/export-large.webp"
+   largeAlt="NAHPU project menu screen on a tablet"
+   small="app-screenshots/usage/export-small.webp"
+   smallAlt="NAHPU Backup database screen on a phone" %}
+{% pin id="A" screen="large" x=36.0 y=28.4 label="Merge project" /%}
+{% pin id="B" screen="large" x=36.0 y=35.1 label="Export project" /%}
+{% pin id="C" screen="large" x=36.0 y=43.7 label="Bundle records" /%}
+{% pin id="D" screen="large" x=36.0 y=50.5 label="Export records" /%}
+{% pin id="E" screen="large" x=36.0 y=57.2 label="Export documents" /%}
+{% pin id="F" screen="large" x=36.0 y=65.7 label="Backup database" /%}
+{% pin id="G" screen="large" x=36.0 y=81.1 label="Export user configs" /%}
+{% pin id="H" screen="small" x=57.1 y=36.0 label="Archive format" /%}
+{% pin id="I" screen="small" x=69.0 y=92.3 label="Save backup" /%}
+{% /screenshots %}
+
+Use `Export project` {% ref id="B" /%} to create a transfer. On the receiving installation, home-screen `Import project` creates a local project; `Merge project` {% ref id="A" /%} combines data with a project that already exists. Importing project-info JSON or a project QR code creates only the project identity, without records or media.
 
 ZIP and TAR.GZ project exports include available media. Light JSON.GZ includes records only. Review missing-file warnings and keep the source until records and attachments on the receiving device are verified.
 
@@ -12,9 +28,9 @@ A compatible NAHPU Data Package can also be imported or merged because it includ
 
 ## Choose an output
 
-- [Export Records](/en/usages/export/export-records/)
-- [Bundle Records](/en/usages/export/export-bundles/)
-- [Export Documents](/en/usages/export/export-documents/)
+- [Export Records](/en/usages/export/export-records/) {% ref id="D" /%}
+- [Bundle Records](/en/usages/export/export-bundles/) {% ref id="C" /%}
+- [Export Documents](/en/usages/export/export-documents/) {% ref id="E" /%}
 - [Export Statistics](/en/usages/export/export-statistics/)
 - [Export Images](/en/usages/export/export-images/)
 
@@ -31,18 +47,18 @@ Keep a verified copy of each field day’s project data away from the working de
 3. Save the export with the project name and date, and copy it to separate storage or another device.
 4. Check that the copy is accessible and review warnings before treating the backup as complete. Periodically test recovery on another installation.
 5. Use `Import project` on the home screen to recover onto a receiving installation, or `Merge project` within an existing project.
-6. Create a full `Backup database` at a regular checkpoint, such as weekly, and before importing, merging, or replacing data. Retain the previous verified backup until the new one is checked.
+6. Create a full `Backup database` {% ref id="F" /%} at a regular checkpoint, such as weekly, and before importing, merging, or replacing data. Retain the previous verified backup until the new one is checked.
 {% /steps %}
 
 ## Backup database {% #backup-database %}
 
-`Backup database` creates ZIP or TAR.GZ containing the SQLite database and the managed project, personnel, and user-configuration directories, including files not linked to current project records. A standalone SQLite file contains database records but does not supply media or other managed files.
+`Backup database` creates ZIP or TAR.GZ {% ref id="H" /%} containing the SQLite database and the managed project, personnel, and user-configuration directories, including files not linked to current project records. A standalone SQLite file contains database records but does not supply media or other managed files.
 
-Open the project menu, select `Backup database`, choose the format, file name, and destination, then select `Save backup`. Keep a copy outside the working device and verify it before replacing a previous backup.
+Open the project menu, select `Backup database`, choose the format, file name, and destination, then select `Save backup` {% ref id="I" /%}. Keep a copy outside the working device and verify it before replacing a previous backup.
 
 ## Export user configs
 
-`Export user configs` writes selected reproducibility-related user configs, including
+`Export user configs` {% ref id="G" /%} writes selected reproducibility-related user configs, including
 saved export and document presets, to a settings file.
 
 {% steps %}

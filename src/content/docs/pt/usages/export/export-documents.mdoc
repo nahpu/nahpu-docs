@@ -4,6 +4,18 @@ sidebar:
   order: 12
 ---
 
+{% screenshots
+   large="app-screenshots/usage/documents-large.webp"
+   largeAlt="Tela Exportar documentos do NAHPU em um tablet"
+   small="app-screenshots/usage/documents-small.webp"
+   smallAlt="Tela Exportar documentos do NAHPU em um celular" %}
+{% pin id="A" screen="large" x=47.5 y=36.0 label="Perfil de layout" /%}
+{% pin id="B" screen="large" x=23.8 y=64.2 label="Tamanho da página" /%}
+{% pin id="C" screen="large" x=82.2 y=17.7 label="Pré-visualização" /%}
+{% pin id="D" screen="large" x=59.0 y=93.2 label="Exportar documentos" /%}
+{% pin id="E" screen="small" x=52.5 y=51.3 label="Gerenciar predefinições" /%}
+{% /screenshots %}
+
 Use `Export documents` para criar PDFs imprimíveis a partir dos registros do
 NAHPU. Esse fluxo serve para etiquetas, rótulos, folhas, relatórios e outros
 documentos formatados. Para dados tabulares, use [Export records](../export-records);
@@ -27,18 +39,18 @@ Páginas + pré-visualização/exportação = PDF
 
 1. Navegue até `Dashboard`.
 2. Abra o menu do projeto e selecione `Export documents`.
-3. Selecione um `Layout profile`.
+3. Selecione um `Layout profile` {% ref id="A" /%}.
 4. Revise a configuração da página, os blocos e a seleção de registros.
-5. Selecione `Preview` e gere uma prévia.
+5. Selecione `Preview` {% ref id="C" /%} e gere uma prévia.
 6. Informe `File name` e escolha o diretório de salvamento quando solicitado.
-7. Selecione `Export documents`.
+7. Selecione `Export documents` {% ref id="D" /%}.
 8. No celular, use `Share` depois da exportação para enviar o PDF.
 
 {% /steps %}
 
 ## Criar um modelo {% #create-a-template %}
 
-Abra `Settings` > `Documents`, mude para `Templates` e selecione `Create
+Abra `Settings` > `Documents` {% ref id="E" /%}, mude para `Templates` e selecione `Create
 new template`.
 
 1. Informe um `Template name` único e, se quiser, uma `Description` curta de até 80 caracteres.
@@ -196,7 +208,7 @@ salva o nome e a descrição juntos, e a descrição aparece na lista de presets
 
 ### Configuração da página
 
-Escolha `Page size`, `Orientation`, dimensões personalizadas quando necessário e
+Escolha `Page size` {% ref id="B" /%}, `Orientation`, dimensões personalizadas quando necessário e
 o espaçamento da página. As configurações de página descrevem a folha; o modelo
 descreve um bloco.
 

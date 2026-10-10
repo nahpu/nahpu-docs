@@ -4,6 +4,23 @@ sidebar:
   order: 5
 ---
 
+{% screenshots
+   large="app-screenshots/usage/sites-large.webp"
+   largeAlt="NAHPU Sites page on a tablet with site identity, geography, habitat, and coordinate panels"
+   small="app-screenshots/phone-coordinates.png"
+   smallAlt="NAHPU Add coordinates page on a phone with the Import option selected" %}
+{% pin id="A" screen="large" x=3.9 y=31.6 label="Sites page" /%}
+{% pin id="B" screen="large" x=96.0 y=10.4 label="Create a site" /%}
+{% pin id="C" screen="large" x=43 y=13.9 label="Site identity" /%}
+{% pin id="D" screen="large" x=46 y=31.4 label="Geography" /%}
+{% pin id="E" screen="large" x=22.0 y=69.4 label="Habitat" /%}
+{% pin id="F" screen="large" x=88.5 y=95.1 label="Add coordinate" /%}
+{% pin id="G" screen="large" x=67.5 y=75.6 label="Coordinate panel" /%}
+{% pin id="H" screen="small" x=73.7 y=17.1 label="Import coordinates" /%}
+{% pin id="I" screen="small" x=90 y=58.4 label="Select coordinate file" /%}
+{% pin id="J" screen="small" x=83 y=90.9 label="Add selected points" /%}
+{% /screenshots %}
+
 ## Creating a new Site
 
 A site is a reusable place record. Collecting events belong to a site, and
@@ -12,9 +29,9 @@ one site for each distinct camp, trap line, locality, or other place used by
 your project.
 
 {% steps %}
-1. Navigate to the site page using the bottom navigation bar.
+1. Navigate to the site page using the bottom navigation bar {% ref id="A" /%}.
 
-2. Use the `+` button at the top right corner to create a new site.
+2. Use the `+` button {% ref id="B" /%} at the top right corner to create a new site.
 
     You can also use the three-dot menu icon and tap `Create site`.
 
@@ -27,7 +44,7 @@ your project.
 
     {% /aside %}
 
-3. Create a site ID.
+3. Create a site ID {% ref id="C" /%}.
 
 
 
@@ -46,16 +63,16 @@ your project.
 
     {% /aside %}
 
-4. Add the Site leader
+4. Add the Site leader {% ref id="C" /%}
 
     If this is a field camp, you can put the team leader name. If it is a trap line, you can designate the person in charge of that trap line as the site leader.
 
-5. Add the site type
+5. Add the site type {% ref id="C" /%}
 
     The site type categorizes the site by its characteristics or use. Choose a
     value from the project's configured site-type list.
 
-6. Fill in the geography details
+6. Fill in the geography details {% ref id="D" /%}
 
     Start with `Find existing locality`. It matches what you type against every
     locality already saved in the project, and selecting a suggestion fills the
@@ -81,7 +98,7 @@ your project.
 
     {% /aside %}
 
-7. Fill in the habitat information
+7. Fill in the habitat information {% ref id="E" /%}
 
     - Type: The type of habitats: plantation, lowland rainforest, upper montane forest, etc.
     - Condition: The condition of the habitat: disturbed, undisturbed, minimal disturbance, etc.
@@ -196,7 +213,7 @@ coordinate manually, use the device GPS, or import points from a GIS/GPS file.
 
 {% steps %}
 
-1. On the site page, open the coordinate panel and tap/click `Add coordinate`.
+1. On the site page, open the coordinate panel and tap/click `Add coordinate` {% ref id="F" /%}.
 
 2. On the `Add coordinates` page, use the `Device GPS` card and tap/click its
    location button.
@@ -273,11 +290,11 @@ coordinate manually, use the device GPS, or import points from a GIS/GPS file.
 
 ### Import coordinates from a file {% #import-coordinates-from-a-file %}
 
-Use `Add coordinate` > `Import` > `Select coordinate file` for CSV, TSV, Excel, GeoJSON/JSON, KML, zipped Shapefile, or GPX.
+Use `Add coordinate` > `Import` {% ref id="H" /%} > `Select coordinate file` {% ref id="I" /%} for CSV, TSV, Excel, GeoJSON/JSON, KML, zipped Shapefile, or GPX.
 
 For tabular files, `Match columns` requires `Latitude` and `Longitude` in decimal degrees. Optional fields are `Name / ID`, `Elevation (m)`, `GPS unit`, and `Notes`. Review the inferred mapping, leave unwanted fields as `Not included`, and select `Review coordinates`. Use `Edit column mapping` to correct an unexpected preview.
 
-Review warnings and the mapped positions. Use individual checkboxes, `Select all`, or `Clear all`, then `Add N selected` to add the chosen points to the current site. Check the saved points before using them for specimens.
+Review warnings and the mapped positions. Use individual checkboxes, `Select all`, or `Clear all`, then `Add N selected` {% ref id="J" /%} to add the chosen points to the current site. Check the saved points before using them for specimens.
 
 Imported positions use WGS84. Confirm the source datum before import; this workflow does not convert another datum to WGS84. Elevation is in meters. Coordinate uncertainty is not supplied by this import; review and add it from the source when known. Tabular files can supply the GPS unit, while GIS imports do not supply it.
 
@@ -291,7 +308,7 @@ points, focus a point on the map, and open the map in full screen.
 
 {% steps %}
 
-1. Open a site's coordinate panel and tap/click `Manage`.
+1. Open a site's coordinate panel and tap/click `Manage` {% ref id="G" /%}.
 
 2. Filter by site if needed, then select the coordinates to export.
 
