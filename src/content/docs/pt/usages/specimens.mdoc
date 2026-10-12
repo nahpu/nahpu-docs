@@ -7,17 +7,19 @@ sidebar:
 {% screenshots
    large="app-screenshots/usage/specimens-large.webp"
    largeAlt="Tela Registros de espécimes do NAHPU em um tablet"
+   large2="app-screenshots/usage/specimens-large-2.webp"
+   large2Alt="Tela Atributos e Partes do espécime do NAHPU em um tablet"
    small="app-screenshots/usage/specimens-small.webp"
-   smallAlt="Tela Medidas do NAHPU em um celular" %}
-{% pin id="A" screen="large" x=96.0 y=10.4 label="Adicionar espécime" /%}
-{% pin id="B" screen="large" x=20.0 y=32.8 label="Catalogador" /%}
-{% pin id="C" screen="large" x=18.0 y=46.2 label="Condição" /%}
-{% pin id="D" screen="large" x=16.0 y=70.7 label="Táxon" /%}
-{% pin id="E" screen="large" x=69.5 y=15.2 label="Informações do táxon" /%}
-{% pin id="F" screen="large" x=66.5 y=38.0 label="Registros de captura" /%}
-{% pin id="G" screen="small" x=35.7 y=20.6 label="Medidas" /%}
-{% pin id="H" screen="small" x=41.7 y=64.7 label="Campos de morcegos" /%}
-{% pin id="I" screen="small" x=71.4 y=78.7 label="Partes do espécime" /%}
+   smallAlt="Tela Registros de espécimes do NAHPU em um celular"
+   small2="app-screenshots/usage/specimens-small-2.webp"
+   small2Alt="Tela Medidas do NAHPU em um celular" %}
+{% pin id="A" label="Adicionar espécime" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="B" label="Catalogador" large=[20, 32.8] small=[23.8, 16.6] /%}
+{% pin id="C" label="Condição" large=[18, 46.2] small=[23.8, 28.8] /%}
+{% pin id="D" label="Táxon" large=[16, 70.7] small=[20.2, 63.5] /%}
+{% pin id="E" label="Medidas" large2=[21.1, 60.4] small2=[35.7, 20.6] /%}
+{% pin id="F" label="Campos de morcegos" large2=[20.2, 88.5] small2=[41.7, 64.7] /%}
+{% pin id="G" label="Partes do espécime" large2=[69, 55.3] small2=[71.4, 78.7] /%}
 {% /screenshots %}
 
 ## Configurando registros de espécimes
@@ -134,7 +136,7 @@ são reutilizados.
 
 ## Taxonomia
 
-O cartão `Taxon Info` {% ref id="E" /%} é preenchido a partir da espécie selecionada. Ele mostra a
+O cartão `Taxon Info` é preenchido a partir da espécie selecionada. Ele mostra a
 classificação e permite consultar o registro taxonômico, incluindo autores,
 nome comum, categoria da Lista Vermelha, status CITES e observações quando
 existentes.
@@ -144,7 +146,7 @@ existentes.
 Os registros de captura vinculam o espécime ao evento:
 
 - `Site ID` e `Event ID`: localidade e evento de coleta.
-- `Capture date` {% ref id="F" /%} e `Capture time`: data e horário da captura; `Relative time`
+- `Capture date` e `Capture time`: data e horário da captura; `Relative time`
   pode usar Dawn, Morning, Afternoon, Dusk ou Night.
 - `Method` e `Method ID`: esforço e identificador do método do evento.
 - `Coordinate ID`: coordenada associada à localidade do evento.
@@ -177,7 +179,7 @@ lista é configurada em `Settings` > `Specimens` > `Life stages`.
 {% tabs %}
 {% tabitem label="Mamíferos" %}
 
-- `Comprimento total (mm)` {% ref id="G" /%}: o comprimento total do espécime, incluindo da ponta do nariz até a ponta da cauda.
+- `Comprimento total (mm)` {% ref id="E" /%}: o comprimento total do espécime, incluindo da ponta do nariz até a ponta da cauda.
 - `Comprimento da cauda (mm)`: o comprimento da cauda da base até a ponta.
 - `Comprimento cabeça-corpo (mm)`: Calculado automaticamente a partir de `Comprimento total (mm) - Comprimento da cauda (mm)`.
 - `Porcentagem Cauda/CC`: Calculado automaticamente a partir de `Comprimento da cauda (mm) / Comprimento cabeça-corpo (mm)`.
@@ -223,7 +225,7 @@ Catálogos de invertebrados não exibem campos de detecção nem a guia de paras
 {% /tabs %}
 ## Partes do Espécime {% #specimen-parts %}
 
-Cada espécime pode ter várias partes {% ref id="I" /%}, como vouchers, tecidos, swabs ou
+Cada espécime pode ter várias partes {% ref id="G" /%}, como vouchers, tecidos, swabs ou
 parasitas. Uma parte pode conter `Tissue ID`, `QR/barcode ID`, `Preparation type`,
 `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
 `Storage type`, `Storage location`, `Date taken`, `PMI`, museu permanente, museu de

@@ -7,18 +7,20 @@ sidebar:
 {% screenshots
    large="app-screenshots/usage/sites-large.webp"
    largeAlt="Página Localidades do NAHPU em um tablet com os painéis de identidade, geografia, habitat e coordenadas"
-   small="app-screenshots/phone-coordinates.png"
-   smallAlt="Página Adicionar coordenadas do NAHPU em um celular com a opção Importar selecionada" %}
-{% pin id="A" screen="large" x=3.9 y=31.6 label="Página de localidades" /%}
-{% pin id="B" screen="large" x=96.0 y=10.4 label="Criar uma localidade" /%}
-{% pin id="C" screen="large" x=43 y=13.9 label="Identidade da localidade" /%}
-{% pin id="D" screen="large" x=46 y=31.4 label="Geografia" /%}
-{% pin id="E" screen="large" x=22.0 y=69.4 label="Habitat" /%}
-{% pin id="F" screen="large" x=88.5 y=95.1 label="Adicionar coordenada" /%}
-{% pin id="G" screen="large" x=67.5 y=75.6 label="Painel de coordenadas" /%}
-{% pin id="H" screen="small" x=73.7 y=17.1 label="Importar coordenadas" /%}
-{% pin id="I" screen="small" x=90 y=58.4 label="Selecionar arquivo de coordenadas" /%}
-{% pin id="J" screen="small" x=83 y=90.9 label="Adicionar pontos selecionados" /%}
+   large2="app-screenshots/usage/sites-large-2.webp"
+   large2Alt="Página Adicionar coordenadas do NAHPU em um tablet com a opção Importar selecionada"
+   small="app-screenshots/usage/sites-small.webp"
+   smallAlt="Página Localidades do NAHPU em um celular com os painéis de identidade e geografia"
+   small2="app-screenshots/usage/sites-small-2.webp"
+   small2Alt="Página Adicionar coordenadas do NAHPU em um celular com a opção Importar selecionada" %}
+{% pin id="A" label="Página de localidades" large=[3.9, 31.6] small=[39.3, 90.6] /%}
+{% pin id="B" label="Criar uma localidade" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="C" label="Identidade da localidade" large=[43, 13.9] small=[32.1, 17.9] /%}
+{% pin id="D" label="Geografia" large=[46, 31.4] small=[33.3, 45] /%}
+{% pin id="E" label="Adicionar coordenada" large=[88.5, 95.1] small2=[23.8, 10.5] /%}
+{% pin id="F" label="Importar coordenadas" large2=[58.5, 14.4] small2=[74.5, 17.1] /%}
+{% pin id="G" label="Selecionar arquivo de coordenadas" large2=[40.2, 56.5] small2=[91.4, 58.7] /%}
+{% pin id="H" label="Adicionar pontos selecionados" large2=[61.9, 91.8] small2=[84.3, 91] /%}
 {% /screenshots %}
 
 ## Criando uma nova Localidade
@@ -79,7 +81,7 @@ sidebar:
 
     {% /aside %}
 
-7. Preencha as informações do habitat {% ref id="E" /%}
+7. Preencha as informações do habitat
 
     - Tipo: O tipo de habitat: plantação, floresta tropical de terras baixas, floresta montana alta, etc.
     - Condição: A condição do habitat: perturbado, não perturbado, perturbação mínima, etc.
@@ -178,7 +180,7 @@ dispositivo ou importar pontos de um arquivo GIS/GPS.
 {% steps %}
 
 1. Na página da localidade, abra o painel de coordenadas e toque/clique em
-   `Add coordinate` {% ref id="F" /%}.
+   `Add coordinate` {% ref id="E" /%}.
 
 2. Na página `Add coordinates`, use o cartão `Device GPS` e toque/clique no
    botão de localização.
@@ -252,11 +254,11 @@ dispositivo ou importar pontos de um arquivo GIS/GPS.
 
 ### Importar coordenadas de um arquivo {% #import-coordinates-from-a-file %}
 
-Use `Add coordinate` > `Import` {% ref id="H" /%} > `Select coordinate file` {% ref id="I" /%} para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile compactado ou GPX.
+Use `Add coordinate` > `Import` {% ref id="F" /%} > `Select coordinate file` {% ref id="G" /%} para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile compactado ou GPX.
 
 Em arquivos tabulares, `Match columns` exige `Latitude` e `Longitude` em graus decimais. Os campos opcionais são `Name / ID`, `Elevation (m)`, `GPS unit` e `Notes`. Revise o mapeamento sugerido, deixe campos indesejados como `Not included` e selecione `Review coordinates`. Use `Edit column mapping` para corrigir uma prévia inesperada.
 
-Revise os avisos e as posições no mapa. Use caixas individuais, `Select all` ou `Clear all` e depois `Add N selected` {% ref id="J" /%} para adicionar os pontos ao local atual. Confira os pontos salvos antes de usá-los para espécimes.
+Revise os avisos e as posições no mapa. Use caixas individuais, `Select all` ou `Clear all` e depois `Add N selected` {% ref id="H" /%} para adicionar os pontos ao local atual. Confira os pontos salvos antes de usá-los para espécimes.
 
 As posições importadas usam WGS84. Confirme o datum da origem; esse fluxo não converte outro datum para WGS84. A elevação é em metros. A importação não fornece incerteza da coordenada; revise e adicione a informação da origem quando conhecida. Arquivos tabulares podem fornecer a unidade GPS; importações GIS não a fornecem.
 
@@ -271,7 +273,7 @@ cheia.
 
 {% steps %}
 
-1. Abra o painel de coordenadas de uma localidade e toque/clique em `Manage` {% ref id="G" /%}.
+1. Abra o painel de coordenadas de uma localidade e toque/clique em `Manage`.
 
 2. Filtre por localidade, se necessário, e selecione as coordenadas a exportar.
 

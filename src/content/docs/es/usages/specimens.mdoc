@@ -7,17 +7,19 @@ sidebar:
 {% screenshots
    large="app-screenshots/usage/specimens-large.webp"
    largeAlt="Pantalla Registros de especímenes de NAHPU en una tableta"
+   large2="app-screenshots/usage/specimens-large-2.webp"
+   large2Alt="Pantalla Atributos y Partes del espécimen de NAHPU en una tableta"
    small="app-screenshots/usage/specimens-small.webp"
-   smallAlt="Pantalla Medidas de NAHPU en un teléfono" %}
-{% pin id="A" screen="large" x=96.0 y=10.4 label="Agregar espécimen" /%}
-{% pin id="B" screen="large" x=20.0 y=32.8 label="Catalogador" /%}
-{% pin id="C" screen="large" x=18.0 y=46.2 label="Condición" /%}
-{% pin id="D" screen="large" x=16.0 y=70.7 label="Taxón" /%}
-{% pin id="E" screen="large" x=69.5 y=15.2 label="Información del taxón" /%}
-{% pin id="F" screen="large" x=66.5 y=38.0 label="Registros de captura" /%}
-{% pin id="G" screen="small" x=35.7 y=20.6 label="Medidas" /%}
-{% pin id="H" screen="small" x=41.7 y=64.7 label="Campos de murciélagos" /%}
-{% pin id="I" screen="small" x=71.4 y=78.7 label="Partes del espécimen" /%}
+   smallAlt="Pantalla Registros de especímenes de NAHPU en un teléfono"
+   small2="app-screenshots/usage/specimens-small-2.webp"
+   small2Alt="Pantalla Medidas de NAHPU en un teléfono" %}
+{% pin id="A" label="Agregar espécimen" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="B" label="Catalogador" large=[20, 32.8] small=[23.8, 16.6] /%}
+{% pin id="C" label="Condición" large=[18, 46.2] small=[23.8, 28.8] /%}
+{% pin id="D" label="Taxón" large=[16, 70.7] small=[20.2, 63.5] /%}
+{% pin id="E" label="Medidas" large2=[21.1, 60.4] small2=[35.7, 20.6] /%}
+{% pin id="F" label="Campos de murciélagos" large2=[20.2, 88.5] small2=[41.7, 64.7] /%}
+{% pin id="G" label="Partes del espécimen" large2=[69, 55.3] small2=[71.4, 78.7] /%}
 {% /screenshots %}
 
 ## Configuración de registros de especímenes
@@ -135,7 +137,7 @@ reutilizan los números ya consumidos.
 
 ## Taxonomía
 
-La tarjeta `Taxon Info` {% ref id="E" /%} se completa desde la especie seleccionada. Muestra la
+La tarjeta `Taxon Info` se completa desde la especie seleccionada. Muestra la
 clasificación y permite consultar el registro taxonómico, incluidos autores,
 nombre común, categoría de Lista Roja, estado CITES y notas si están presentes.
 
@@ -144,7 +146,7 @@ nombre común, categoría de Lista Roja, estado CITES y notas si están presente
 Los registros de captura vinculan el espécimen con su evento:
 
 - `Site ID` y `Event ID`: sitio y evento de recolección.
-- `Capture date` {% ref id="F" /%} y `Capture time`: fecha y hora de captura; `Relative time`
+- `Capture date` y `Capture time`: fecha y hora de captura; `Relative time`
   permite usar Dawn, Morning, Afternoon, Dusk o Night.
 - `Method` y `Method ID`: esfuerzo y código del método del evento.
 - `Coordinate ID`: coordenada vinculada al sitio del evento.
@@ -178,7 +180,7 @@ la lista se configura en `Settings` > `Specimens` > `Life stages`.
 {% tabs %}
 {% tabitem label="Mamíferos" %}
 
-- `Longitud total (mm)` {% ref id="G" /%}: la longitud total del espécimen, desde la punta de la nariz hasta la punta de la cola.
+- `Longitud total (mm)` {% ref id="E" /%}: la longitud total del espécimen, desde la punta de la nariz hasta la punta de la cola.
 - `Longitud de la cola (mm)`: la longitud de la cola desde la base hasta la punta.
 - `Longitud de cabeza y cuerpo (mm)`: calculada automáticamente como `Longitud total (mm) - Longitud de la cola (mm)`.
 - Porcentaje de `Longitud Cola/CC`: calculado automáticamente como `Longitud de la cola (mm) / Longitud de cabeza y cuerpo (mm)`.
@@ -225,7 +227,7 @@ de parásitos.
 {% /tabs %}
 ## Partes de especímenes {% #specimen-parts %}
 
-Cada espécimen puede tener varias partes {% ref id="I" /%}, como vouchers, tejidos, hisopos o
+Cada espécimen puede tener varias partes {% ref id="G" /%}, como vouchers, tejidos, hisopos o
 parásitos. Una parte puede incluir `Tissue ID`, `QR/barcode ID`, `Preparation
 type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
 `Storage type`, `Storage location`, `Date taken`, `PMI`, museos permanente y de
