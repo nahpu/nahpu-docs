@@ -87,6 +87,11 @@ export default defineMarkdocConfig({
         id: { type: String, required: true, matches: /^[A-Z]$/ },
       },
     },
+    // Static NAHPU architecture diagram for the contributing guide.
+    architecture: {
+      render: component("./src/components/NahpuArchitecture.astro"),
+      selfClosing: true,
+    },
     carbonbadge: {
       render: component("./src/components/WebCarbonBadge.astro"),
       selfClosing: true,
