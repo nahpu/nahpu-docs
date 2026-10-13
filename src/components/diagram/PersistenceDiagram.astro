@@ -1,0 +1,216 @@
+---
+// NAHPU persistence boundaries diagram for the contributing "Persistence data"
+// page: which store holds what, who owns it, and whether it is exported.
+import LayeredDiagram from "./LayeredDiagram.astro";
+import type { Layout, NodeDef } from "./diagram";
+
+const nodes: NodeDef[] = [
+    {
+        id: "app",
+        tone: "app",
+        title: "NAHPU app",
+        sub: "Offline-first · all data stores on the device",
+    },
+    {
+        id: "services",
+        tone: "dart",
+        badge: "Dart",
+        title: "Dart services",
+        path: "lib/services/",
+        sub: "Own every read, write, migration, and file operation",
+    },
+    {
+        id: "drift",
+        tone: "data",
+        badge: "SQLite",
+        title: "Drift + SQLite",
+        path: "Documents/nahpu/nahpu.db",
+        sub: "Canonical project data · exportable as NAHPU Data Packages",
+        chips: [
+            "projects",
+            "sites",
+            "events",
+            "specimens",
+            "taxonomy",
+            "personnel",
+            "media metadata",
+            "custom fields",
+        ],
+    },
+    {
+        id: "configs",
+        tone: "rust",
+        badge: "redb",
+        title: "nahpu_configs + redb",
+        path: "Documents/nahpu/nahpu_configs.db",
+        sub: "Reproducible configuration · exportable",
+        chips: [
+            "option lists",
+            "export presets",
+            "template presets",
+            "document layouts",
+        ],
+    },
+    {
+        id: "files",
+        tone: "data",
+        badge: "Files",
+        title: "App-managed files",
+        path: "Documents/nahpu/",
+        sub: "Managed by app, backup, and package workflows",
+        chips: [
+            "backup/",
+            "appMedia/personnel/",
+            "UserConfigs/fonts/",
+            "UserConfigs/maps/",
+            "<project>/media/",
+        ],
+    },
+    {
+        id: "prefs",
+        tone: "dart",
+        badge: "Device",
+        title: "SharedPreferences",
+        path: "Platform preference key-value database",
+        sub: "Installation-local UI state · never exported",
+        chips: ["theme", "display settings", "migration markers"],
+    },
+    {
+        id: "temp",
+        tone: "data",
+        badge: "Temp",
+        title: "Temporary directory",
+        path: "Platform temporary directory",
+        sub: "Staging snapshots and archives · disposable",
+    },
+];
+
+const L = 240; // left column centre (wide)
+const R = 720; // right column centre (wide)
+const T = 480; // trunk between the columns (wide)
+const wide: Layout = {
+    name: "wide",
+    width: 960,
+    height: 608,
+    badges: true,
+    chipCharW: 6.4,
+    boxes: {
+        app: { x: 40, y: 16, w: 880, h: 60 },
+        services: { x: 40, y: 108, w: 880, h: 66 },
+        drift: { x: 40, y: 206, w: 400, h: 126 },
+        configs: { x: 520, y: 206, w: 400, h: 126 },
+        files: { x: 40, y: 364, w: 400, h: 126 },
+        prefs: { x: 520, y: 364, w: 400, h: 100 },
+        temp: { x: 40, y: 522, w: 400, h: 66 },
+    },
+    edges: [
+        {
+            x1: L,
+            y1: 76,
+            x2: L,
+            y2: 108,
+            label: "screens and providers call services",
+        },
+        {
+            x1: L,
+            y1: 174,
+            x2: L,
+            y2: 206,
+            label: "Drift queries and migrations",
+        },
+        { x1: R, y1: 174, x2: R, y2: 206 },
+        { x1: L, y1: 332, x2: L, y2: 364, label: "media rows point to files" },
+        { x1: T, y1: 174, x2: T, y2: 555, arrow: false },
+        { x1: T, y1: 414, x2: 440, y2: 414 },
+        { x1: T, y1: 414, x2: 520, y2: 414 },
+        { x1: T, y1: 555, x2: 440, y2: 555 },
+    ],
+    boundary: { x1: 520, x2: 920, y: 190 },
+    legend: { x: 536, y: 538, vertical: true },
+};
+
+const t = 20; // trunk left of the stores (narrow)
+const narrow: Layout = {
+    name: "narrow",
+    width: 360,
+    height: 870,
+    badges: true,
+    chipCharW: 6,
+    boxes: {
+        app: {
+            x: 12,
+            y: 12,
+            w: 336,
+            h: 60,
+            text: { sub: "Offline-first · on-device stores" },
+        },
+        services: {
+            x: 12,
+            y: 96,
+            w: 336,
+            h: 66,
+            text: { sub: "Own every read, write, and migration" },
+        },
+        drift: {
+            x: 36,
+            y: 186,
+            w: 312,
+            h: 126,
+            text: {
+                chips: [
+                    "projects",
+                    "sites",
+                    "events",
+                    "specimens",
+                    "taxonomy",
+                    "people",
+                    "media",
+                    "custom fields",
+                ],
+            },
+        },
+        configs: { x: 36, y: 336, w: 312, h: 126 },
+        files: {
+            x: 36,
+            y: 486,
+            w: 312,
+            h: 126,
+            text: {
+                chips: [
+                    "backup/",
+                    "appMedia/",
+                    "fonts/",
+                    "maps/",
+                    "<project>/media/",
+                ],
+            },
+        },
+        prefs: {
+            x: 36,
+            y: 636,
+            w: 312,
+            h: 100,
+            text: { chips: ["theme", "display", "migration markers"] },
+        },
+        temp: { x: 36, y: 760, w: 312, h: 66 },
+    },
+    edges: [
+        { x1: 92, y1: 72, x2: 92, y2: 96 },
+        { x1: t, y1: 162, x2: t, y2: 793, arrow: false },
+        { x1: t, y1: 249, x2: 36, y2: 249 },
+        { x1: t, y1: 399, x2: 36, y2: 399 },
+        { x1: t, y1: 549, x2: 36, y2: 549 },
+        { x1: t, y1: 686, x2: 36, y2: 686 },
+        { x1: t, y1: 793, x2: 36, y2: 793 },
+    ],
+    legend: { x: 20, y: 854, vertical: false },
+};
+---
+
+<LayeredDiagram
+    nodes={nodes}
+    wide={wide}
+    narrow={narrow}
+    label="NAHPU persistence boundaries: Dart services own a Drift SQLite project database, a redb configuration store reached through the Rust bridge, app-managed files, SharedPreferences, and a temporary directory"
+    caption="Project data lives in Drift, reproducible configuration in redb, and nothing export-relevant in SharedPreferences."
+/>

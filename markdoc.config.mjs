@@ -89,7 +89,12 @@ export default defineMarkdocConfig({
     },
     // Static NAHPU architecture diagram for the contributing guide.
     architecture: {
-      render: component("./src/components/NahpuArchitecture.astro"),
+      render: component("./src/components/diagram/NahpuArchitecture.astro"),
+      selfClosing: true,
+    },
+    // Static NAHPU persistence boundaries diagram for the contributing guide.
+    persistence: {
+      render: component("./src/components/diagram/PersistenceDiagram.astro"),
       selfClosing: true,
     },
     carbonbadge: {
