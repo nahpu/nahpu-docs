@@ -2,6 +2,22 @@
 title: Configurações
 ---
 
+{% screenshots
+   large="app-screenshots/usage/settings-large.webp"
+   largeAlt="Tela Configurações de eventos de coleta do NAHPU em um tablet"
+   small="app-screenshots/usage/settings-small.webp"
+   smallAlt="Tela Configurações do NAHPU em um celular"
+   small2="app-screenshots/usage/settings-small-2.webp"
+   small2Alt="Tela Configurações de eventos de coleta do NAHPU em um celular" %}
+{% pin id="A" label="Formato" large=[30, 22.1] small=[96.2, 24.2] /%}
+{% pin id="B" label="Localidades" large=[30, 31.7] small=[96.2, 33] /%}
+{% pin id="C" label="Eventos" large=[30, 41.2] small=[96.2, 41.8] /%}
+{% pin id="D" label="Espécimes" large=[30, 50.8] small=[96.2, 50.5] /%}
+{% pin id="E" label="Campos personalizados" large=[30, 60.4] small=[96.2, 59.3] /%}
+{% pin id="F" label="Táxons" large=[30, 77.9] small=[96.2, 75.2] /%}
+{% pin id="G" label="Atividades principais" large=[55.5, 21.1] small2=[70.2, 17.1] /%}
+{% /screenshots %}
+
 O NAHPU separa os registros do projeto, os registros compartilhados do banco de
 dados, as configurações de usuário reprodutíveis e as preferências que ficam
 apenas na instalação. Abra um projeto, abra o menu do `Dashboard` e selecione
@@ -24,28 +40,28 @@ antes de substituir a sua configuração atual.
 
 ### Format
 
-`Format` seleciona o táxon principal usado nos novos formulários de espécime
+`Format` seleciona {% ref id="A" /%} o táxon principal usado nos novos formulários de espécime
 deste dispositivo. Um projeto pode conter mais de um grupo taxonômico; esta
 configuração controla apenas o formato de espécime ativo e os seus campos de
 medição.
 
 ### Events e Sites
 
-Use `Events` para gerenciar a lista controlada de atividades principais, os
+Use `Events` {% ref id="C" /%} para gerenciar a lista controlada de atividades principais {% ref id="G" /%}, os
 métodos de coleta, as funções do pessoal do evento e os campos ambientais
 exibidos nos formulários de evento. As atividades principais começam com
 `Collecting`, `Recording` e `Observing`; `Other` não é incluído a menos que você
 o adicione. Os formulários ambientais mostram inicialmente temperatura ambiente,
 umidade ambiente, cobertura de nuvens, chuva e notas. Assim como nas
 configurações de Geografia, os demais campos internos podem ser exibidos ou
-ocultados sem apagar os valores armazenados. Use `Sites` para gerenciar os
+ocultados sem apagar os valores armazenados. Use `Sites` {% ref id="B" /%} para gerenciar os
 vocabulários controlados de tipos de local e de habitat. Mantenha essas
 configurações consistentes entre os dispositivos de campo transferindo as
 configurações de usuário.
 
 ### Specimens
 
-`Specimens` contém a visibilidade dos campos de captura, os Field IDs, os
+`Specimens` contém {% ref id="D" /%} a visibilidade dos campos de captura, os Field IDs, os
 tissue IDs, os sexos de espécime, os tipos de espécime, os tratamentos, as
 condições e as configurações de parasitas dependentes do táxon.
 
@@ -73,7 +89,7 @@ identificadores já tiverem sido exportados ou escritos em etiquetas.
 
 ## Database
 
-- `Taxa` gerencia os registros de taxonomia disponíveis para os projetos.
+- `Taxa` {% ref id="F" /%} gerencia os registros de taxonomia disponíveis para os projetos.
 - `Personnel` gerencia as pessoas do banco de dados e as suas funções de cuidado
   com o espécime.
 - `Replace database` substitui o banco SQLite ativo a partir de um backup.
@@ -150,7 +166,7 @@ Defina campos adicionais e confira como aparecem nos registros do projeto.
 
 {% steps %}
 
-1. Abra o projeto desejado e acesse `Settings` > `Custom fields`; crie um campo e escolha a seção de destino.
+1. Abra o projeto desejado e acesse `Settings` > `Custom fields` {% ref id="E" /%}; crie um campo e escolha a seção de destino.
 2. Defina `Label` e `Type`. Para uma lista suspensa, informe as opções permitidas. Escolha o escopo `Current project` ou `Global`; definições globais se aplicam à instalação inteira.
 3. Para campos de espécimes, confira o catálogo aplicável. Consulte o guia de referência para mapeamentos Darwin Core opcionais.
 4. Salve a definição, abra um registro na seção de destino e preencha um valor de teste com a unidade acordada. Reabra o registro para conferir o valor.

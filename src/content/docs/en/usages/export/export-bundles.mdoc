@@ -4,6 +4,22 @@ sidebar:
   order: 11
 ---
 
+{% screenshots
+   large="app-screenshots/usage/bundles-large.webp"
+   largeAlt="NAHPU Bundle records screen on a tablet"
+   small="app-screenshots/usage/bundles-small.webp"
+   smallAlt="NAHPU Bundle records screen on a phone"
+   small2="app-screenshots/usage/bundles-small-2.webp"
+   small2Alt="NAHPU Package contents screen on a phone" %}
+{% pin id="A" label="Taxa to include" large=[12, 37.9] small=[15, 46.7] /%}
+{% pin id="B" label="Bundle format" large=[48, 56.9] small=[29.8, 64] /%}
+{% pin id="C" label="Archive format" large=[48, 65.6] small=[31, 71.9] /%}
+{% pin id="D" label="File name" large=[48, 74.3] small=[27.4, 78.5] /%}
+{% pin id="E" label="Package contents" large=[64.5, 17.1] small2=[26.2, 27.9] /%}
+{% pin id="F" label="Expand a resource" large=[97, 49.1] small2=[93.3, 57] /%}
+{% pin id="G" label="Create bundle" large=[58.2, 93.2] small=[69.3, 92.3] /%}
+{% /screenshots %}
+
 Use `Bundle records` to package related NAHPU data and files for exchange,
 publication, archiving, or reproducibility. The bundle screen previews the
 exact files and table fields before writing anything.
@@ -25,21 +41,21 @@ NAHPU provides three bundle types:
 
 1. Navigate to the `Dashboard` page.
 2. Open the project menu and select `Bundle records`.
-3. Select the `Bundle format`.
-4. Select the `Archive format` when the chosen bundle supports more than one
+3. Select the `Bundle format` {% ref id="B" /%}.
+4. Select the `Archive format` {% ref id="C" /%} when the chosen bundle supports more than one
    container.
    - `TAR.GZ` is the default for Data Packages.
    - `ZIP` is available for tools and operating systems that prefer standard
      ZIP archives.
    - Darwin Core Archive always uses ZIP.
-5. For a Darwin Core bundle, choose `All taxa` or `Selected taxa`.
+5. For a Darwin Core bundle, choose `All taxa` {% ref id="A" /%} or `Selected taxa`.
    Selecting Mammals also includes Bats.
-6. Add a `File name` and select the destination `Directory`.
-7. Review `Package contents`. Expand a CSV resource to see its exported
+6. Add a `File name` {% ref id="D" /%} and select the destination `Directory`.
+7. Review `Package contents` {% ref id="E" /%}. Expand a CSV resource {% ref id="F" /%} to see its exported
    fields.
 8. Review any warnings, especially missing media or a DwC-DP ZIP compatibility
    notice.
-9. Click `Create bundle`.
+9. Click `Create bundle` {% ref id="G" /%}.
 
 {% /steps %}
 

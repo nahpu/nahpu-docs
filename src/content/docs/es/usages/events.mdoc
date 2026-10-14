@@ -4,6 +4,23 @@ sidebar:
   order: 6
 ---
 
+{% screenshots
+   large="app-screenshots/usage/events-large.webp"
+   largeAlt="Pantalla Eventos de NAHPU en una tableta"
+   small="app-screenshots/usage/events-small.webp"
+   smallAlt="Pantalla Eventos de NAHPU en un teléfono"
+   small2="app-screenshots/usage/events-small-2.webp"
+   small2Alt="Pantalla Datos ambientales de NAHPU en un teléfono" %}
+{% pin id="A" label="Crear evento" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="B" label="ID del evento" large=[11.8, 19.2] small=[48.8, 24.1] /%}
+{% pin id="C" label="ID del sitio" large=[16.5, 39] small=[20.2, 40.5] /%}
+{% pin id="D" label="Fechas y horas" large=[19, 45.7] small=[23.8, 46.6] /%}
+{% pin id="E" label="Actividad principal" large=[65, 27.6] small=[32.1, 81.6] /%}
+{% pin id="F" label="Agregar esfuerzo" large=[37.8, 87.1] small2=[69, 16.1] /%}
+{% pin id="G" label="Agregar personal" large=[84, 89.3] small2=[12.4, 57.9] /%}
+{% pin id="H" label="Datos ambientales" large=[80.5, 63.8] small2=[23.8, 64.5] /%}
+{% /screenshots %}
+
 Los eventos de recolecta le ayudan a llevar registro de la actividad, el
 esfuerzo, el personal, los datos ambientales y los datos astronómicos de un
 período de trabajo en un sitio. Los registros de especímenes se vinculan a un
@@ -67,7 +84,7 @@ encuentro visual, conductor, grabador u observador, según su protocolo.
 {% steps %}
 1. Vaya a la página de eventos usando la barra de navegación inferior.
 
-2. Use el botón `+` de la esquina superior derecha para crear un nuevo evento.
+2. Use el botón `+` {% ref id="A" /%} de la esquina superior derecha para crear un nuevo evento.
 
     También puede usar el menú de tres puntos y tocar `Create event`.
 
@@ -76,16 +93,16 @@ encuentro visual, conductor, grabador u observador, según su protocolo.
     Puede reducir la escritura repetida duplicando un evento. Toque o haga clic
     en el menú de tres puntos y elija `Duplicate event`. NAHPU copia el sitio,
     los horarios, la actividad, las notas, el esfuerzo y el personal, adelanta
-    `Start Date` y `End Date` un día, y crea un registro de datos ambientales
+    `Start Date` {% ref id="D" /%} y `End Date` un día, y crea un registro de datos ambientales {% ref id="H" /%}
     vacío.
 
     {% /aside %}
 
-3. Seleccione el `Site ID`.
+3. Seleccione el `Site ID` {% ref id="C" /%}.
 
 4. Agregue `Start Date` y `End Date`.
 
-    El `Event ID` se genera a partir de `{Site ID}-{Start Date}`.
+    El `Event ID` {% ref id="B" /%} se genera a partir de `{Site ID}-{Start Date}`.
 
 5. Edite el `Event ID` (opcional).
 
@@ -96,7 +113,7 @@ encuentro visual, conductor, grabador u observador, según su protocolo.
 
 6. Agregue `Start Time` y `End Time`.
 
-7. Agregue la `Primary activity`.
+7. Agregue la `Primary activity` {% ref id="E" /%}.
 
     Los valores predeterminados son `Collecting`, `Recording` y `Observing`.
     `Other` no es predeterminado; agréguelo en `Settings` > `Events` si su
@@ -136,7 +153,7 @@ La tarjeta `Activity` almacena el propósito general del evento.
 
 {% steps %}
 
-1. Use el botón `+ Add effort` para crear un nuevo esfuerzo.
+1. Use el botón `+ Add effort` {% ref id="F" /%} para crear un nuevo esfuerzo.
 
 2. Seleccione un método.
 
@@ -173,7 +190,7 @@ involucradas en el evento.
 {% steps %}
 
 1. Abra la pestaña de personal en el panel inferior derecho del evento.
-2. Use `+ Add personnel`.
+2. Use `+ Add personnel` {% ref id="G" /%}.
 3. Seleccione una entrada de `Personnel` de la lista de personal del proyecto.
 4. Seleccione un `Role`.
 

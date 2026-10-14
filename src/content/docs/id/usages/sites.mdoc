@@ -4,12 +4,31 @@ sidebar:
   order: 5
 ---
 
+{% screenshots
+   large="app-screenshots/usage/sites-large.webp"
+   largeAlt="Halaman Lokasi NAHPU di tablet dengan panel identitas, geografi, habitat, dan koordinat"
+   large2="app-screenshots/usage/sites-large-2.webp"
+   large2Alt="Halaman Tambah koordinat NAHPU di tablet dengan opsi Impor dipilih"
+   small="app-screenshots/usage/sites-small.webp"
+   smallAlt="Halaman Lokasi NAHPU di ponsel dengan panel identitas dan geografi"
+   small2="app-screenshots/usage/sites-small-2.webp"
+   small2Alt="Halaman Tambah koordinat NAHPU di ponsel dengan opsi Impor dipilih" %}
+{% pin id="A" label="Halaman lokasi" large=[3.9, 31.6] small=[39.3, 90.6] /%}
+{% pin id="B" label="Buat lokasi" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="C" label="Identitas lokasi" large=[43, 13.9] small=[32.1, 17.9] /%}
+{% pin id="D" label="Geografi" large=[46, 31.4] small=[33.3, 45] /%}
+{% pin id="E" label="Tambah koordinat" large=[88.5, 95.1] small2=[23.8, 10.5] /%}
+{% pin id="F" label="Impor koordinat" large2=[58.5, 14.4] small2=[74.5, 17.1] /%}
+{% pin id="G" label="Pilih berkas koordinat" large2=[40.2, 56.5] small2=[91.4, 58.7] /%}
+{% pin id="H" label="Tambahkan titik terpilih" large2=[61.9, 91.8] small2=[84.3, 91] /%}
+{% /screenshots %}
+
 ## Membuat Lokasi Baru
 
 {% steps %}
-1. Navigasi ke halaman lokasi menggunakan bilah navigasi bawah.
+1. Navigasi ke halaman lokasi menggunakan bilah navigasi bawah {% ref id="A" /%}.
 
-2. Gunakan tombol `+` di pojok kanan atas untuk membuat lokasi baru. 
+2. Gunakan tombol `+` {% ref id="B" /%} di pojok kanan atas untuk membuat lokasi baru. 
     
     Anda juga dapat menggunakan ikon menu tiga titik dan ketuk pada `Buat lokasi`.
 
@@ -19,7 +38,7 @@ sidebar:
 
     {% /aside %}
 
-3. Buat ID lokasi. 
+3. Buat ID lokasi {% ref id="C" /%}.
 
     Kami merekomendasikan pembuatan konvensi ID lokasi untuk tim Anda. Contoh konvensi ID lokasi untuk kerja lapangan mamalogi:
     
@@ -36,16 +55,16 @@ sidebar:
 
     {% /aside %}
 
-4. Tambahkan Pemimpin Lokasi
+4. Tambahkan Pemimpin Lokasi {% ref id="C" /%}
     
     Jika ini adalah kamp lapangan, Anda dapat memasukkan nama pemimpin tim. Jika ini adalah jalur jebakan, Anda dapat menunjuk seseorang yang bertanggung jawab atas jalur jebakan tersebut sebagai pemimpin lokasi.
 
-5. Tambahkan tipe lokasi
+5. Tambahkan tipe lokasi {% ref id="C" /%}
 
     Tipe lokasi membantu mengategorikan lokasi berdasarkan karakteristik atau
     kegunaannya. Pilih nilai dari daftar tipe yang dikonfigurasi untuk proyek.
 
-6. Isi detail geografi
+6. Isi detail geografi {% ref id="D" /%}
 
     Kami merekomendasikan untuk mengikuti konvensi museum Anda untuk menulis lokalitas dan keterangan yang tepat.
 
@@ -161,7 +180,7 @@ GPS perangkat, atau mengimpor titik dari file GIS/GPS.
 
 {% steps %}
 
-1. Pada halaman lokasi, buka panel koordinat lalu ketuk/klik `Add coordinate`.
+1. Pada halaman lokasi, buka panel koordinat lalu ketuk/klik `Add coordinate` {% ref id="E" /%}.
 
 2. Pada halaman `Add coordinates`, gunakan kartu `Device GPS` lalu ketuk/klik
    tombol lokasinya.
@@ -235,11 +254,11 @@ GPS perangkat, atau mengimpor titik dari file GIS/GPS.
 
 ### Mengimpor koordinat dari file {% #import-coordinates-from-a-file %}
 
-Gunakan `Add coordinate` > `Import` > `Select coordinate file` untuk CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile terkompresi, atau GPX.
+Gunakan `Add coordinate` > `Import` {% ref id="F" /%} > `Select coordinate file` {% ref id="G" /%} untuk CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile terkompresi, atau GPX.
 
 Untuk berkas tabel, `Match columns` memerlukan `Latitude` dan `Longitude` dalam derajat desimal. Bidang opsional meliputi `Name / ID`, `Elevation (m)`, `GPS unit`, dan `Notes`. Tinjau pemetaan yang disarankan, biarkan bidang yang tidak diperlukan sebagai `Not included`, lalu pilih `Review coordinates`. Gunakan `Edit column mapping` untuk memperbaiki pratinjau yang tidak sesuai.
 
-Tinjau peringatan dan posisi peta. Gunakan kotak centang, `Select all`, atau `Clear all`, lalu `Add N selected` untuk menambahkan titik ke lokasi aktif. Periksa titik tersimpan sebelum menggunakannya untuk spesimen.
+Tinjau peringatan dan posisi peta. Gunakan kotak centang, `Select all`, atau `Clear all`, lalu `Add N selected` {% ref id="H" /%} untuk menambahkan titik ke lokasi aktif. Periksa titik tersimpan sebelum menggunakannya untuk spesimen.
 
 Posisi impor menggunakan WGS84. Pastikan datum sumber; alur ini tidak mengonversi datum lain ke WGS84. Elevasi menggunakan meter. Impor tidak menyediakan ketidakpastian koordinat; tinjau dan tambahkan dari sumber jika diketahui. Berkas tabel dapat menyediakan unit GPS, sedangkan impor GIS tidak.
 

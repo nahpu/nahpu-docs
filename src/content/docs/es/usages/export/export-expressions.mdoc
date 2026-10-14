@@ -5,11 +5,27 @@ sidebar:
   order: 15
 ---
 
+{% screenshots
+   large="app-screenshots/usage/expressions-large.webp"
+   largeAlt="Pantalla Editor de plantillas de NAHPU en una tableta"
+   large2="app-screenshots/usage/expressions-large-2.webp"
+   large2Alt="Pantalla Plantillas de documentos de NAHPU en una tableta"
+   small="app-screenshots/usage/expressions-small.webp"
+   smallAlt="Pantalla Editor de plantillas de NAHPU en un teléfono"
+   small2="app-screenshots/usage/expressions-small-2.webp"
+   small2Alt="Pantalla Plantillas de documentos de NAHPU en un teléfono" %}
+{% pin id="A" label="Plantilla predefinida" large=[22.2, 12.3] small=[13.5, 10.5] /%}
+{% pin id="B" label="Agregar texto" large=[29, 18.9] small=[14.8, 19.7] /%}
+{% pin id="C" label="Expresión resuelta" large=[44.5, 54.7] small=[44, 55.9] /%}
+{% pin id="D" label="Configuración de la plantilla" large=[93, 18.9] small=[96.5, 16.4] /%}
+{% pin id="E" label="Lista de plantillas" large2=[93, 40.3] small2=[94, 48.2] /%}
+{% /screenshots %}
+
 Las expresiones de exportación son los placeholders, los valores de reserva y
 la sintaxis condicional que NAHPU usa para convertir campos de registro en
 salida. Las mismas expresiones controlan los elementos de texto de las
 plantillas de documentos y los preajustes de exportación tabular, de modo que un
-valor escrito como `[taxonomy::genus] [taxonomy::specificEpithet]` se resuelve
+valor escrito como `[taxonomy::genus] [taxonomy::specificEpithet]` {% ref id="C" /%} se resuelve
 igual en una etiqueta impresa y en una columna exportada. Para los flujos de
 trabajo que las usan, consulte [Exportar documentos](../export-documents) y
 [Exportar registros](../export-records).
@@ -176,7 +192,7 @@ El editor de campos personalizados escribe la expresión por usted:
 | Control | Qué hace |
 |---|---|
 | `Add field` | Añade un placeholder de campo elegido en el selector de campos. |
-| `Add text` | Añade un segmento de texto o separador. |
+| `Add text` {% ref id="B" /%} | Añade un segmento de texto o separador. |
 | `Add conditional text` | Añade un [texto condicional](#conditional-text) formado por condiciones, el texto que se escribe y, opcionalmente, un texto para los demás casos. |
 | `Show label` | En un campo codificado, añade `#label` para que la columna muestre la etiqueta en lugar del código almacenado. |
 | `Edit conditional text` | Vuelve a abrir un segmento de texto condicional. |
@@ -543,7 +559,7 @@ Una determinación incierta conserva su sufijo en todas las presentaciones:
 
 ## Opciones del editor de plantillas {% #template-editor-options %}
 
-Las opciones siguientes pertenecen solo al editor de plantillas de documentos.
+Las opciones siguientes pertenecen solo al editor de plantillas de documentos {% ref id="E" /%}.
 Los preajustes de exportación tabular no las usan.
 
 Los tamaños en el lienzo están en milímetros (`mm`). Los grosores de trazo, los
@@ -566,8 +582,8 @@ eligen mediante el selector de color.
 | `Enable snap` / `Disable snap` | Alterna el ajuste a la cuadrícula y a otros elementos. |
 | Bloqueo del lienzo | Congela el desplazamiento para que un arrastre nunca mueva el lienzo. |
 | `Select specimen for text preview` | Elige el registro cuyos valores rellenan los placeholders mientras diseña. |
-| `Template settings` | Nombre, descripción, número de caras y tamaño de la plantilla. |
-| `Preset template` | Carga un punto de partida incluido. |
+| `Template settings` {% ref id="D" /%} | Nombre, descripción, número de caras y tamaño de la plantilla. |
+| `Preset template` {% ref id="A" /%} | Carga un punto de partida incluido. |
 | `Zoom in` / `Zoom out` | Escala solo la vista del lienzo; nada cambia en la salida. |
 | `1 sided` / `Front` / `Back` | Cambia el modo de caras y la cara que se edita. |
 | Espejar | Refleja una cara, para marbetes que se doblan por un borde. |

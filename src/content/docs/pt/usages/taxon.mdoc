@@ -4,6 +4,24 @@ sidebar:
   order: 4
 ---
 
+{% screenshots
+   large="app-screenshots/usage/taxon-large.webp"
+   largeAlt="Tela Gerenciar táxons do NAHPU em um tablet"
+   large2="app-screenshots/usage/taxon-large-2.webp"
+   large2Alt="Tela Adicionar táxon do NAHPU em um tablet"
+   small="app-screenshots/usage/taxon-small.webp"
+   smallAlt="Tela Detalhes do táxon do NAHPU em um celular"
+   small2="app-screenshots/usage/taxon-small-2.webp"
+   small2Alt="Tela Adicionar táxon do NAHPU em um celular" %}
+{% pin id="A" label="Táxons registrados" large=[31.8, 28.9] small=[19, 15.9] /%}
+{% pin id="B" label="Código QR do táxon" large=[89, 26.1] small=[65.5, 29.6] /%}
+{% pin id="C" label="Editar táxon" large=[85.5, 90.9] small=[65.5, 91.9] /%}
+{% pin id="D" label="Modo manual" large2=[41.5, 14.4] small2=[26.7, 17.1] /%}
+{% pin id="E" label="Modo de importação" large2=[58.4, 14.4] small2=[74.3, 17.1] /%}
+{% pin id="F" label="Categoria taxonômica" large2=[69.4, 27.5] small2=[95.2, 26.9] /%}
+{% pin id="G" label="Adicionar táxon" large2=[58.4, 91.8] small2=[76.2, 89.4] /%}
+{% /screenshots %}
+
 Você pode registrar um táxon manualmente, importar um arquivo ou escanear um código QR de táxon do NAHPU.
 
 Importar um táxon adiciona dados ao registro. Isso não adiciona um novo grupo de
@@ -56,15 +74,15 @@ determinação.
 ### Registro manual
 
 1. Vá para o painel do projeto.
-2. No painel de táxons, selecione `Add taxon` e escolha o modo `Manual`.
-3. Selecione a `Taxon rank`.
+2. No painel de táxons, selecione `Add taxon` {% ref id="G" /%} e escolha o modo `Manual` {% ref id="D" /%}.
+3. Selecione a `Taxon rank` {% ref id="F" /%}.
 4. Preencha as informações do táxon.
 
 ### Importar de arquivo {% #import-from-file %}
 
 1. Prepare o arquivo de importação. Os formatos preferidos são `.xlsx`, `.csv` e `.tsv`.
 2. Vá para o painel do projeto.
-3. No painel de táxons, selecione `Add taxon` e escolha o modo `Import`.
+3. No painel de táxons, selecione `Add taxon` e escolha o modo `Import` {% ref id="E" /%}.
 4. Use o botão `Select file` para adicionar o arquivo. O aplicativo mapeia automaticamente as colunas para os campos corretos. Em telas estreitas, use as abas `Setup` e `Preview` para configurar a importação e revisar as linhas detectadas.
 
 Comportamento do delimitador:
@@ -107,7 +125,7 @@ Os controles de delimitador e os detalhes da análise ficam em `Advanced options
 
 ### Importar de QR {% #import-from-qr %}
 
-1. Abra um táxon no `Taxon Registry` e selecione seu código QR para exibi-lo e compartilhá-lo.
+1. Abra um táxon no `Taxon Registry` e selecione seu código QR {% ref id="B" /%} para exibi-lo e compartilhá-lo.
 2. No dispositivo que receberá os dados, escolha `Add taxon` → `Import` → `Scan QR`.
 3. Escolha `Single taxon` para abrir a prévia após o primeiro escaneamento válido, ou `Multiple taxa` para continuar escaneando. O leitor em lote mostra o último resultado e quantos táxons estão prontos para importar; selecione `Done` para revisá-los.
 4. Confira a prévia, selecione os táxons que deseja manter e confirme com o botão de importação. Nada é salvo antes da confirmação.
@@ -121,5 +139,5 @@ O escaneamento usa a câmera no Android, iOS, macOS e em navegadores compatívei
 ## Editar um táxon
 
 1. Vá para o painel do projeto.
-2. No painel de táxons, selecione `Manage` para abrir o registro completo.
-3. Clique no ícone de lápis para editar o táxon.
+2. No painel de táxons, selecione `Manage` {% ref id="A" /%} para abrir o registro completo.
+3. Clique no ícone de lápis {% ref id="C" /%} para editar o táxon.

@@ -4,6 +4,23 @@ sidebar:
   order: 6
 ---
 
+{% screenshots
+   large="app-screenshots/usage/events-large.webp"
+   largeAlt="NAHPU Events screen on a tablet"
+   small="app-screenshots/usage/events-small.webp"
+   smallAlt="NAHPU Events screen on a phone"
+   small2="app-screenshots/usage/events-small-2.webp"
+   small2Alt="NAHPU Environmental data screen on a phone" %}
+{% pin id="A" label="Create event" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="B" label="Event ID" large=[11.8, 19.2] small=[48.8, 24.1] /%}
+{% pin id="C" label="Site ID" large=[16.5, 39] small=[20.2, 40.5] /%}
+{% pin id="D" label="Dates and times" large=[19, 45.7] small=[23.8, 46.6] /%}
+{% pin id="E" label="Primary activity" large=[65, 27.6] small=[32.1, 81.6] /%}
+{% pin id="F" label="Add effort" large=[37.8, 87.1] small2=[69, 16.1] /%}
+{% pin id="G" label="Add personnel" large=[84, 89.3] small2=[12.4, 57.9] /%}
+{% pin id="H" label="Environmental data" large=[80.5, 63.8] small2=[23.8, 64.5] /%}
+{% /screenshots %}
+
 Collecting events help you keep track of activity, effort, personnel, environmental,
 and astronomy data for a period of work at a site. Specimen records link to a
 collecting event, not directly to a site, so the event is the bridge between a
@@ -62,7 +79,7 @@ observer, depending on your protocol.
 {% steps %}
 1. Navigate to the event page using the bottom navigation bar.
 
-2. Use the `+` button at the top right corner to create a new event.
+2. Use the `+` button {% ref id="A" /%} at the top right corner to create a new event.
 
     You can also use the three dot menu icon and tap on `Create event`.
 
@@ -70,16 +87,16 @@ observer, depending on your protocol.
 
     You can minimize repeated entry by duplicating an event. Tap/click the
     three-dot menu, then choose `Duplicate event`. NAHPU copies the site, times,
-    activity, notes, effort, and personnel, increments the `Start Date` and
+    activity, notes, effort, and personnel, increments the `Start Date` {% ref id="D" /%} and
     `End Date` by one day, and creates a new empty environmental-data record.
 
     {% /aside %}
 
-3. Select the `Site ID`.
+3. Select the `Site ID` {% ref id="C" /%}.
 
 4. Add the `Start Date` and `End Date`.
 
-    The `Event ID` is generated from `{Site ID}-{Start Date}`.
+    The `Event ID` {% ref id="B" /%} is generated from `{Site ID}-{Start Date}`.
 
 5. Edit the `Event ID` (optional).
 
@@ -90,7 +107,7 @@ observer, depending on your protocol.
 
 6. Add `Start Time` and `End Time`.
 
-7. Add `Primary activity`.
+7. Add `Primary activity` {% ref id="E" /%}.
 
     The defaults are `Collecting`, `Recording`, and `Observing`. `Other` is not
     a default; add it in `Settings` > `Events` if your protocol needs it. For
@@ -127,7 +144,7 @@ The `Activity` card stores the broad purpose of the event.
 
 {% steps %}
 
-1. Use the `+ Add effort` button to create a new effort.
+1. Use the `+ Add effort` {% ref id="F" /%} button to create a new effort.
 
 2. Select a method.
 
@@ -162,7 +179,7 @@ Use the `Event Personnel` tab to record everyone involved in the event.
 {% steps %}
 
 1. Open the personnel tab in the lower right event panel.
-2. Use `+ Add personnel`.
+2. Use `+ Add personnel` {% ref id="G" /%}.
 3. Select a `Personnel` entry from the project personnel list.
 4. Select a `Role`.
 
@@ -177,7 +194,7 @@ later select an event personnel entry as the specimen's `Collector`.
 
 Enter astronomy values from observations or a documented source; NAHPU does not calculate sunrise, sunset, or moon phase. Use the project’s local-time convention and leave unmeasured values empty. Fields update as you edit; check validation messages before leaving the form.
 
-NAHPU creates one environmental-data record for each collecting event. In
+NAHPU creates one environmental-data record {% ref id="H" /%} for each collecting event. In
 `Settings` > `Events`, select which built-in fields appear in the form. Hiding
 a field changes only the form: previously stored values remain in the database
 and in exports.

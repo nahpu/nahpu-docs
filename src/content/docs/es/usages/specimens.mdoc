@@ -4,6 +4,24 @@ sidebar:
   order: 7
 ---
 
+{% screenshots
+   large="app-screenshots/usage/specimens-large.webp"
+   largeAlt="Pantalla Registros de especímenes de NAHPU en una tableta"
+   large2="app-screenshots/usage/specimens-large-2.webp"
+   large2Alt="Pantalla Atributos y Partes del espécimen de NAHPU en una tableta"
+   small="app-screenshots/usage/specimens-small.webp"
+   smallAlt="Pantalla Registros de especímenes de NAHPU en un teléfono"
+   small2="app-screenshots/usage/specimens-small-2.webp"
+   small2Alt="Pantalla Medidas de NAHPU en un teléfono" %}
+{% pin id="A" label="Agregar espécimen" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="B" label="Catalogador" large=[20, 32.8] small=[23.8, 16.6] /%}
+{% pin id="C" label="Condición" large=[18, 46.2] small=[23.8, 28.8] /%}
+{% pin id="D" label="Taxón" large=[16, 70.7] small=[20.2, 63.5] /%}
+{% pin id="E" label="Medidas" large2=[21.1, 60.4] small2=[35.7, 20.6] /%}
+{% pin id="F" label="Campos de murciélagos" large2=[20.2, 88.5] small2=[41.7, 64.7] /%}
+{% pin id="G" label="Partes del espécimen" large2=[69, 55.3] small2=[71.4, 78.7] /%}
+{% /screenshots %}
+
 ## Configuración de registros de especímenes
 
 Un registro de espécimen reúne la identificación, la preparación, los datos de
@@ -69,7 +87,7 @@ misma terminología y el mismo comportamiento de exportación.
 {% steps %}
 1. Navegue a la página de especímenes usando la barra de navegación inferior.
 
-2. Haga clic en el botón `+` para agregar un nuevo registro de espécimen.
+2. Haga clic en el botón `+` {% ref id="A" /%} para agregar un nuevo registro de espécimen.
 
     También puede usar el icono del menú de tres puntos y elegir una acción de
     duplicación.
@@ -82,7 +100,7 @@ misma terminología y el mismo comportamiento de exportación.
 
     {% /aside %}
 
-3. Seleccione `Catalogador`.
+3. Seleccione `Catalogador` {% ref id="B" /%}.
 
     Esta es la persona responsable de catalogar este espécimen en el campo.
 
@@ -90,7 +108,7 @@ misma terminología y el mismo comportamiento de exportación.
 
     La aplicación ingresa automáticamente al mismo personal que el catalogador. Si una persona diferente prepara el espécimen, debe actualizar el campo con el nombre de la persona.
 
-5. Seleccione `Especie`.
+5. Seleccione `Especie` {% ref id="D" /%}.
 
     Comience a escribir, el campo mostrará la especie más cercana que coincida con el nombre. Toque/haga clic en el nombre de la especie. La aplicación también completará automáticamente el panel de `Taxonomía` según la especie seleccionada.
 
@@ -99,7 +117,7 @@ misma terminología y el mismo comportamiento de exportación.
     Esto informa a los usuarios que leen los datos sobre qué tan seguro está de la identificación de la especie. También ayuda a los curadores/gestores de colecciones del museo a priorizar qué especímenes necesitan una revisión cuidadosa para verificar la identificación.
 
 
-7. Seleccione la `Condición` del espécimen.
+7. Seleccione la `Condición` {% ref id="C" /%} del espécimen.
 
 8. Agregue la `Fecha de recolección`, `Hora de recolección`, `Fecha de prep.` y
    `Hora de prep.` cuando estén disponibles.
@@ -162,7 +180,7 @@ la lista se configura en `Settings` > `Specimens` > `Life stages`.
 {% tabs %}
 {% tabitem label="Mamíferos" %}
 
-- `Longitud total (mm)`: la longitud total del espécimen, desde la punta de la nariz hasta la punta de la cola.
+- `Longitud total (mm)` {% ref id="E" /%}: la longitud total del espécimen, desde la punta de la nariz hasta la punta de la cola.
 - `Longitud de la cola (mm)`: la longitud de la cola desde la base hasta la punta.
 - `Longitud de cabeza y cuerpo (mm)`: calculada automáticamente como `Longitud total (mm) - Longitud de la cola (mm)`.
 - Porcentaje de `Longitud Cola/CC`: calculado automáticamente como `Longitud de la cola (mm) / Longitud de cabeza y cuerpo (mm)`.
@@ -209,7 +227,7 @@ de parásitos.
 {% /tabs %}
 ## Partes de especímenes {% #specimen-parts %}
 
-Cada espécimen puede tener varias partes, como vouchers, tejidos, hisopos o
+Cada espécimen puede tener varias partes {% ref id="G" /%}, como vouchers, tejidos, hisopos o
 parásitos. Una parte puede incluir `Tissue ID`, `QR/barcode ID`, `Preparation
 type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
 `Storage type`, `Storage location`, `Date taken`, `PMI`, museos permanente y de

@@ -4,6 +4,22 @@ sidebar:
   order: 11
 ---
 
+{% screenshots
+   large="app-screenshots/usage/bundles-large.webp"
+   largeAlt="Layar Bundel catatan NAHPU di tablet"
+   small="app-screenshots/usage/bundles-small.webp"
+   smallAlt="Layar Bundel catatan NAHPU di ponsel"
+   small2="app-screenshots/usage/bundles-small-2.webp"
+   small2Alt="Layar Isi paket NAHPU di ponsel" %}
+{% pin id="A" label="Takson yang disertakan" large=[12, 37.9] small=[15, 46.7] /%}
+{% pin id="B" label="Format bundel" large=[48, 56.9] small=[29.8, 64] /%}
+{% pin id="C" label="Format arsip" large=[48, 65.6] small=[31, 71.9] /%}
+{% pin id="D" label="Nama berkas" large=[48, 74.3] small=[27.4, 78.5] /%}
+{% pin id="E" label="Isi paket" large=[64.5, 17.1] small2=[26.2, 27.9] /%}
+{% pin id="F" label="Buka sumber daya" large=[97, 49.1] small2=[93.3, 57] /%}
+{% pin id="G" label="Buat bundel" large=[58.2, 93.2] small=[69.3, 92.3] /%}
+{% /screenshots %}
+
 Gunakan `Bundle records` untuk mengemas data dan berkas NAHPU yang saling
 terkait untuk pertukaran, publikasi, pengarsipan, atau reproduksibilitas. Layar
 pengemasan menampilkan pratinjau berkas dan kolom tabel yang tepat sebelum
@@ -27,21 +43,21 @@ NAHPU menyediakan tiga jenis paket:
 
 1. Buka halaman `Dashboard`.
 2. Buka menu proyek lalu pilih `Bundle records`.
-3. Pilih `Bundle format`.
-4. Pilih `Archive format` bila paket yang dipilih mendukung lebih dari satu
+3. Pilih `Bundle format` {% ref id="B" /%}.
+4. Pilih `Archive format` {% ref id="C" /%} bila paket yang dipilih mendukung lebih dari satu
    wadah.
    - `TAR.GZ` adalah bawaan untuk Data Package.
    - `ZIP` tersedia untuk perkakas dan sistem operasi yang lebih menyukai arsip
      ZIP baku.
    - Darwin Core Archive selalu memakai ZIP.
-5. Untuk paket Darwin Core, pilih `All taxa` atau `Selected taxa`. Memilih
+5. Untuk paket Darwin Core, pilih `All taxa` {% ref id="A" /%} atau `Selected taxa`. Memilih
    Mammals juga menyertakan Bats.
-6. Masukkan `File name` dan pilih `Directory` tujuan.
-7. Tinjau `Package contents`. Bentangkan sebuah sumber daya CSV untuk melihat
+6. Masukkan `File name` {% ref id="D" /%} dan pilih `Directory` tujuan.
+7. Tinjau `Package contents` {% ref id="E" /%}. Bentangkan sebuah sumber daya CSV {% ref id="F" /%} untuk melihat
    kolom yang diekspor.
 8. Tinjau peringatan yang muncul, terutama media yang hilang atau pemberitahuan
    kompatibilitas ZIP untuk DwC-DP.
-9. Klik `Create bundle`.
+9. Klik `Create bundle` {% ref id="G" /%}.
 
 {% /steps %}
 

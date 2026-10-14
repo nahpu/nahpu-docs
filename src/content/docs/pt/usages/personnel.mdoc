@@ -4,6 +4,25 @@ sidebar:
   order: 3
 ---
 
+{% screenshots
+   large="app-screenshots/usage/personnel-large.webp"
+   largeAlt="Tela Gerenciar equipe do NAHPU em um tablet"
+   large2="app-screenshots/usage/personnel-large-2.webp"
+   large2Alt="Tela Adicionar equipe do NAHPU em um tablet"
+   small="app-screenshots/usage/personnel-small.webp"
+   smallAlt="Tela Detalhes da equipe do NAHPU em um celular"
+   small2="app-screenshots/usage/personnel-small-2.webp"
+   small2Alt="Tela Adicionar equipe do NAHPU em um celular" %}
+{% pin id="A" label="Gerenciar equipe" large=[40, 7.3] small=[38.1, 8.6] /%}
+{% pin id="B" label="Função no cuidado de espécimes" large=[34, 64] small=[63.1, 62.4] /%}
+{% pin id="C" label="Número de campo" large=[34, 73.1] small=[54.5, 70.7] /%}
+{% pin id="D" label="Editar equipe" large=[83.5, 90.9] small=[57.5, 91.9] /%}
+{% pin id="E" label="Selecionar do banco de dados" large2=[36, 14.4] small2=[21, 17.1] /%}
+{% pin id="F" label="Adicionar novo membro" large2=[64, 14.4] small2=[81, 17.1] /%}
+{% pin id="G" label="Nome" large2=[71.9, 48.1] small2=[95.2, 49.3] /%}
+{% pin id="H" label="Mostrar mais" large2=[44.8, 84.9] small2=[62.4, 81.6] /%}
+{% /screenshots %}
+
 Os registros de pessoal são compartilhados no banco de dados do NAHPU e podem
 ser atribuídos a vários projetos. Um projeto exibe apenas o pessoal atribuído a
 ele.
@@ -15,23 +34,23 @@ Field IDs por pessoa exigem um `Cataloger` com número de campo pessoal registra
 {% /aside %}
 
 No painel Pessoal do painel do projeto, selecione `Add personnel`. Se já
-houver pessoas no banco de dados, escolha `Select from database` e selecione
-quem deseja atribuir. Caso contrário, escolha `Add new personnel`.
+houver pessoas no banco de dados, escolha `Select from database` {% ref id="E" /%} e selecione
+quem deseja atribuir. Caso contrário, escolha `Add new personnel` {% ref id="F" /%}.
 
 O formulário inclui:
 
-- **Name (obrigatório)** - o nome da pessoa.
+- **Name (obrigatório)** {% ref id="G" /%} - o nome da pessoa.
 - **Photo** - um avatar ou uma foto do pessoal.
 - **Affiliation** - a instituição da pessoa.
 - **Email** - o endereço de e-mail da pessoa.
 - **Phone** - o telefone da pessoa.
 - **ORCID** - um ORCID iD opcional, com hifens e dígito verificador válido, como
   `0000-0002-1825-0097`.
-- **Specimen care role** - `Cataloger`, `Preparator only`, `Determiner only` ou
+- **Specimen care role** {% ref id="B" /%} - `Cataloger`, `Preparator only`, `Determiner only` ou
   `None`.
 - **Notes** - informações adicionais sobre a pessoa.
 
-Use `Show more` para exibir os campos opcionais. Os e-mails são normalizados
+Use `Show more` {% ref id="H" /%} para exibir os campos opcionais. Os e-mails são normalizados
 para minúsculas e os telefones aceitam dígitos.
 
 As exportações Darwin Core usam a URL canônica `https://orcid.org/...` como
@@ -40,7 +59,7 @@ de pessoal do NAHPU.
 
 ## Números de campo para catalogadores
 
-Quando a função é `Cataloger`, o NAHPU oferece a opção
+Quando a função é `Cataloger`, {% ref id="C" /%} o NAHPU oferece a opção
 `Register personal field number`. Ative-a quando as iniciais e o número da
 pessoa devem gerar os Field IDs dos espécimes. Informe a inicial de campo e o
 número inicial; o número avança conforme os espécimes são criados.
@@ -57,8 +76,8 @@ para editá-la ou removê-la do projeto. Remover uma pessoa de um projeto não
 exclui o registro compartilhado de pessoal. Uma pessoa não pode ser removida
 enquanto registros do projeto ainda a utilizarem.
 
-Para pesquisar, editar ou excluir permanentemente o pessoal do banco de dados,
-abra `Settings` e escolha `Personnel` ou `Manage personnel`. O NAHPU impede a
+Para pesquisar, editar ou excluir permanentemente o pessoal do banco de dados {% ref id="D" /%},
+abra `Settings` e escolha `Personnel` ou `Manage personnel` {% ref id="A" /%}. O NAHPU impede a
 exclusão permanente quando a pessoa ainda está atribuída a um projeto.
 
 ## Terminologia

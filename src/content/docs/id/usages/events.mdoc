@@ -4,6 +4,23 @@ sidebar:
   order: 6
 ---
 
+{% screenshots
+   large="app-screenshots/usage/events-large.webp"
+   largeAlt="Layar Peristiwa NAHPU di tablet"
+   small="app-screenshots/usage/events-small.webp"
+   smallAlt="Layar Peristiwa NAHPU di ponsel"
+   small2="app-screenshots/usage/events-small-2.webp"
+   small2Alt="Layar Data lingkungan NAHPU di ponsel" %}
+{% pin id="A" label="Buat peristiwa" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="B" label="ID peristiwa" large=[11.8, 19.2] small=[48.8, 24.1] /%}
+{% pin id="C" label="ID lokasi" large=[16.5, 39] small=[20.2, 40.5] /%}
+{% pin id="D" label="Tanggal dan waktu" large=[19, 45.7] small=[23.8, 46.6] /%}
+{% pin id="E" label="Aktivitas utama" large=[65, 27.6] small=[32.1, 81.6] /%}
+{% pin id="F" label="Tambah upaya" large=[37.8, 87.1] small2=[69, 16.1] /%}
+{% pin id="G" label="Tambah personel" large=[84, 89.3] small2=[12.4, 57.9] /%}
+{% pin id="H" label="Data lingkungan" large=[80.5, 63.8] small2=[23.8, 64.5] /%}
+{% /screenshots %}
+
 Kegiatan pengumpulan membantu Anda melacak aktivitas, upaya, personel, data
 lingkungan, dan data astronomi untuk satu periode kerja di sebuah lokasi.
 Catatan spesimen terhubung ke kegiatan pengumpulan, bukan langsung ke lokasi,
@@ -65,7 +82,7 @@ pengemudi, perekam, atau pengamat, sesuai protokol Anda.
 {% steps %}
 1. Buka halaman kegiatan melalui bilah navigasi bawah.
 
-2. Gunakan tombol `+` di sudut kanan atas untuk membuat kegiatan baru.
+2. Gunakan tombol `+` {% ref id="A" /%} di sudut kanan atas untuk membuat kegiatan baru.
 
     Anda juga dapat memakai menu tiga titik lalu mengetuk `Create event`.
 
@@ -74,16 +91,16 @@ pengemudi, perekam, atau pengamat, sesuai protokol Anda.
     Anda dapat mengurangi pengetikan berulang dengan menduplikasi kegiatan.
     Ketuk atau klik menu tiga titik, lalu pilih `Duplicate event`. NAHPU
     menyalin lokasi, waktu, aktivitas, catatan, upaya, dan personel, memajukan
-    `Start Date` dan `End Date` satu hari, serta membuat catatan data lingkungan
+    `Start Date` {% ref id="D" /%} dan `End Date` satu hari, serta membuat catatan data lingkungan
     baru yang kosong.
 
     {% /aside %}
 
-3. Pilih `Site ID`.
+3. Pilih `Site ID` {% ref id="C" /%}.
 
 4. Masukkan `Start Date` dan `End Date`.
 
-    `Event ID` dibuat dari `{Site ID}-{Start Date}`.
+    `Event ID` {% ref id="B" /%} dibuat dari `{Site ID}-{Start Date}`.
 
 5. Sunting `Event ID` (opsional).
 
@@ -94,7 +111,7 @@ pengemudi, perekam, atau pengamat, sesuai protokol Anda.
 
 6. Masukkan `Start Time` dan `End Time`.
 
-7. Tambahkan `Primary activity`.
+7. Tambahkan `Primary activity` {% ref id="E" /%}.
 
     Nilai bawaannya adalah `Collecting`, `Recording`, dan `Observing`. `Other`
     bukan nilai bawaan; tambahkan di `Settings` > `Events` bila protokol Anda
@@ -132,7 +149,7 @@ Kartu `Activity` menyimpan tujuan umum kegiatan.
 
 {% steps %}
 
-1. Gunakan tombol `+ Add effort` untuk membuat upaya baru.
+1. Gunakan tombol `+ Add effort` {% ref id="F" /%} untuk membuat upaya baru.
 
 2. Pilih sebuah metode.
 
@@ -169,7 +186,7 @@ kegiatan.
 {% steps %}
 
 1. Buka tab personel di panel kanan bawah kegiatan.
-2. Gunakan `+ Add personnel`.
+2. Gunakan `+ Add personnel` {% ref id="G" /%}.
 3. Pilih satu entri `Personnel` dari daftar personel proyek.
 4. Pilih sebuah `Role`.
 
@@ -185,7 +202,7 @@ tangkapan spesimen nantinya dapat memilih satu entri personel kegiatan sebagai
 
 Masukkan data astronomi berdasarkan pengamatan atau sumber yang dicatat; NAHPU tidak menghitung waktu matahari terbit, terbenam, atau fase bulan. Ikuti ketentuan waktu lokal dan kosongkan nilai yang tidak diukur. Bidang diperbarui saat diedit; periksa pesan validasi sebelum meninggalkan formulir.
 
-NAHPU membuat satu catatan data lingkungan untuk setiap kegiatan pengumpulan. Di
+NAHPU membuat satu catatan data lingkungan {% ref id="H" /%} untuk setiap kegiatan pengumpulan. Di
 `Settings` > `Events`, pilih kolom bawaan mana yang muncul pada formulir.
 Menyembunyikan sebuah kolom hanya mengubah formulir: nilai yang sudah tersimpan
 tetap ada di basis data dan dalam hasil ekspor.

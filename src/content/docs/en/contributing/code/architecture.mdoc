@@ -14,56 +14,7 @@ The app is an offline-first, cross-platform application. Flutter owns the user i
 
 ## High-level architecture
 
-```text
-┌──────────────────────────────────────────────────────────────────────┐
-│                              NAHPU App                               │
-│                         Flutter + Dart UI                            │
-└──────────────────────────────────────────────────────────────────────┘
-          │
-          │ screens render and dispatch user actions
-          ▼
-┌───────────────────────────┐     ┌───────────────────────────────────┐
-│ lib/screens/              │────▶│ lib/screens/shared/               │
-│ Page-level UI             │     │ Reusable widgets and controls     │
-└───────────────────────────┘     └───────────────────────────────────┘
-          │
-          │ watches and updates application state
-          ▼
-┌──────────────────────────────────────────────────────────────────────┐
-│ lib/services/providers/                                              │
-│ Riverpod providers and AsyncNotifiers                                │
-└──────────────────────────────────────────────────────────────────────┘
-          │
-          │ calls domain services
-          ▼
-┌──────────────────────────────────────────────────────────────────────┐
-│ lib/services/                                                        │
-│ Database queries, validation, media, maps, transfers, imports,       │
-│ exports, templates, navigation, settings, and platform IO            │
-└──────────────────────────────────────────────────────────────────────┘
-          │                                      │
-          │ Drift queries                        │ Generated FRB calls
-          ▼                                      ▼
-┌───────────────────────────┐     ┌───────────────────────────────────┐
-│ lib/services/database/    │     │ lib/src/rust/                     │
-│ Drift + SQLite            │     │ Generated Dart bridge bindings    │
-└───────────────────────────┘     └───────────────────────────────────┘
-          │                                      │
-          │ canonical project data               │ FFI / platform bridge
-          ▼                                      ▼
-┌───────────────────────────┐     ┌───────────────────────────────────┐
-│ Local NAHPU storage       │     │ rust/src/api/                     │
-│ nahpu.db, media, backups  │     │ Thin bridge-facing wrappers       │
-└───────────────────────────┘     └───────────────────────────────────┘
-                                                 │
-                                                 │ delegates reusable behavior
-                                                 ▼
-                              ┌───────────────────────────────────────┐
-                              │ NAHPU API workspace                   │
-                              │ archive · configs · db · dp · dwc     │
-                              │ export · gis                          │
-                              └───────────────────────────────────────┘
-```
+{% architecture /%}
 
 ## Layers
 

@@ -5,11 +5,27 @@ sidebar:
   order: 15
 ---
 
+{% screenshots
+   large="app-screenshots/usage/expressions-large.webp"
+   largeAlt="Layar Editor Templat NAHPU di tablet"
+   large2="app-screenshots/usage/expressions-large-2.webp"
+   large2Alt="Layar Templat dokumen NAHPU di tablet"
+   small="app-screenshots/usage/expressions-small.webp"
+   smallAlt="Layar Editor Templat NAHPU di ponsel"
+   small2="app-screenshots/usage/expressions-small-2.webp"
+   small2Alt="Layar Templat dokumen NAHPU di ponsel" %}
+{% pin id="A" label="Templat bawaan" large=[22.2, 12.3] small=[13.5, 10.5] /%}
+{% pin id="B" label="Tambah teks" large=[29, 18.9] small=[14.8, 19.7] /%}
+{% pin id="C" label="Ekspresi yang dirender" large=[44.5, 54.7] small=[44, 55.9] /%}
+{% pin id="D" label="Pengaturan templat" large=[93, 18.9] small=[96.5, 16.4] /%}
+{% pin id="E" label="Daftar templat" large2=[93, 40.3] small2=[94, 48.2] /%}
+{% /screenshots %}
+
 Ekspresi ekspor adalah placeholder, fallback, dan sintaks kondisional yang
 digunakan NAHPU untuk mengubah field catatan menjadi keluaran. Ekspresi yang
 sama menggerakkan elemen teks pada templat dokumen dan prasetel ekspor tabel,
 sehingga nilai yang ditulis sebagai
-`[taxonomy::genus] [taxonomy::specificEpithet]` diuraikan dengan cara yang sama
+`[taxonomy::genus] [taxonomy::specificEpithet]` {% ref id="C" /%} diuraikan dengan cara yang sama
 pada label cetak maupun pada kolom ekspor. Untuk alur kerja yang
 menggunakannya, lihat [Ekspor Dokumen](../export-documents) dan
 [Ekspor Catatan](../export-records).
@@ -171,7 +187,7 @@ Editor field kustom menuliskan ekspresinya untuk Anda:
 | Kontrol | Fungsinya |
 |---|---|
 | `Add field` | Menambahkan placeholder field yang dipilih dari pemilih field. |
-| `Add text` | Menambahkan segmen teks atau pemisah. |
+| `Add text` {% ref id="B" /%} | Menambahkan segmen teks atau pemisah. |
 | `Add conditional text` | Menambahkan [teks kondisional](#conditional-text) yang disusun dari kondisi, teks yang ditulis, dan teks lain yang opsional. |
 | `Show label` | Pada field berkode, menambahkan `#label` agar kolom menampilkan label, bukan kode tersimpan. |
 | `Edit conditional text` | Membuka kembali segmen teks kondisional. |
@@ -535,7 +551,7 @@ Penentuan yang tidak pasti mempertahankan akhirannya pada setiap penyajian:
 
 ## Opsi editor templat {% #template-editor-options %}
 
-Opsi berikut hanya berlaku untuk editor templat dokumen. Prasetel ekspor tabel
+Opsi berikut hanya berlaku untuk editor templat dokumen {% ref id="E" /%}. Prasetel ekspor tabel
 tidak menggunakannya.
 
 Ukuran pada kanvas dinyatakan dalam milimeter (`mm`). Ketebalan garis, ukuran
@@ -558,8 +574,8 @@ pemilih warna.
 | `Enable snap` / `Disable snap` | Mengalihkan pengancingan ke grid dan ke elemen lain. |
 | Kunci kanvas | Membekukan penggeseran agar tarikan tidak memindahkan kanvas. |
 | `Select specimen for text preview` | Memilih catatan yang nilainya mengisi placeholder saat Anda merancang. |
-| `Template settings` | Nama, deskripsi, jumlah sisi, dan ukuran templat. |
-| `Preset template` | Memuat titik awal yang sudah disediakan. |
+| `Template settings` {% ref id="D" /%} | Nama, deskripsi, jumlah sisi, dan ukuran templat. |
+| `Preset template` {% ref id="A" /%} | Memuat titik awal yang sudah disediakan. |
 | `Zoom in` / `Zoom out` | Hanya mengubah skala tampilan kanvas; tidak ada yang berubah pada hasilnya. |
 | `1 sided` / `Front` / `Back` | Mengalihkan mode sisi dan sisi yang sedang diedit. |
 | Cermin | Mencerminkan satu sisi, untuk tag yang dilipat pada satu tepi. |

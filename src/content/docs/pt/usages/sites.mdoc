@@ -4,12 +4,31 @@ sidebar:
   order: 5
 ---
 
+{% screenshots
+   large="app-screenshots/usage/sites-large.webp"
+   largeAlt="Página Localidades do NAHPU em um tablet com os painéis de identidade, geografia, habitat e coordenadas"
+   large2="app-screenshots/usage/sites-large-2.webp"
+   large2Alt="Página Adicionar coordenadas do NAHPU em um tablet com a opção Importar selecionada"
+   small="app-screenshots/usage/sites-small.webp"
+   smallAlt="Página Localidades do NAHPU em um celular com os painéis de identidade e geografia"
+   small2="app-screenshots/usage/sites-small-2.webp"
+   small2Alt="Página Adicionar coordenadas do NAHPU em um celular com a opção Importar selecionada" %}
+{% pin id="A" label="Página de localidades" large=[3.9, 31.6] small=[39.3, 90.6] /%}
+{% pin id="B" label="Criar uma localidade" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="C" label="Identidade da localidade" large=[43, 13.9] small=[32.1, 17.9] /%}
+{% pin id="D" label="Geografia" large=[46, 31.4] small=[33.3, 45] /%}
+{% pin id="E" label="Adicionar coordenada" large=[88.5, 95.1] small2=[23.8, 10.5] /%}
+{% pin id="F" label="Importar coordenadas" large2=[58.5, 14.4] small2=[74.5, 17.1] /%}
+{% pin id="G" label="Selecionar arquivo de coordenadas" large2=[40.2, 56.5] small2=[91.4, 58.7] /%}
+{% pin id="H" label="Adicionar pontos selecionados" large2=[61.9, 91.8] small2=[84.3, 91] /%}
+{% /screenshots %}
+
 ## Criando uma nova Localidade
 
 {% steps %}
-1. Navegue até a página de localidades usando a barra de navegação inferior.
+1. Navegue até a página de localidades usando a barra de navegação inferior {% ref id="A" /%}.
 
-2. Use o botão `+` no canto superior direito para criar uma nova localidade.
+2. Use o botão `+` {% ref id="B" /%} no canto superior direito para criar uma nova localidade.
 
     Você também pode usar o ícone do menu de três pontos e tocar em `Criar localidade`.
 
@@ -19,7 +38,7 @@ sidebar:
 
     {% /aside %}
 
-3. Crie um ID de localidade.
+3. Crie um ID de localidade {% ref id="C" /%}.
 
     Recomendamos criar uma convenção de ID de localidade para sua equipe. Um exemplo de convenção de ID de localidade para trabalho de campo em mastozoologia:
 
@@ -36,17 +55,17 @@ sidebar:
 
     {% /aside %}
 
-4. Adicione o líder da Localidade
+4. Adicione o líder da Localidade {% ref id="C" /%}
 
     Se este for um acampamento de campo, você pode colocar o nome do líder da equipe. Se for uma linha de armadilhas, você pode designar uma pessoa responsável por essa linha como o líder da localidade.
 
-5. Adicione o tipo de localidade
+5. Adicione o tipo de localidade {% ref id="C" /%}
 
     O tipo de localidade ajuda a categorizar a localidade com base em suas
     características ou uso. Selecione um valor na lista de tipos configurada
     para o projeto.
 
-6. Preencha os detalhes geográficos
+6. Preencha os detalhes geográficos {% ref id="D" /%}
 
     Recomendamos seguir a convenção do seu museu para escrever a localidade precisa e as observações.
 
@@ -161,7 +180,7 @@ dispositivo ou importar pontos de um arquivo GIS/GPS.
 {% steps %}
 
 1. Na página da localidade, abra o painel de coordenadas e toque/clique em
-   `Add coordinate`.
+   `Add coordinate` {% ref id="E" /%}.
 
 2. Na página `Add coordinates`, use o cartão `Device GPS` e toque/clique no
    botão de localização.
@@ -235,11 +254,11 @@ dispositivo ou importar pontos de um arquivo GIS/GPS.
 
 ### Importar coordenadas de um arquivo {% #import-coordinates-from-a-file %}
 
-Use `Add coordinate` > `Import` > `Select coordinate file` para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile compactado ou GPX.
+Use `Add coordinate` > `Import` {% ref id="F" /%} > `Select coordinate file` {% ref id="G" /%} para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile compactado ou GPX.
 
 Em arquivos tabulares, `Match columns` exige `Latitude` e `Longitude` em graus decimais. Os campos opcionais são `Name / ID`, `Elevation (m)`, `GPS unit` e `Notes`. Revise o mapeamento sugerido, deixe campos indesejados como `Not included` e selecione `Review coordinates`. Use `Edit column mapping` para corrigir uma prévia inesperada.
 
-Revise os avisos e as posições no mapa. Use caixas individuais, `Select all` ou `Clear all` e depois `Add N selected` para adicionar os pontos ao local atual. Confira os pontos salvos antes de usá-los para espécimes.
+Revise os avisos e as posições no mapa. Use caixas individuais, `Select all` ou `Clear all` e depois `Add N selected` {% ref id="H" /%} para adicionar os pontos ao local atual. Confira os pontos salvos antes de usá-los para espécimes.
 
 As posições importadas usam WGS84. Confirme o datum da origem; esse fluxo não converte outro datum para WGS84. A elevação é em metros. A importação não fornece incerteza da coordenada; revise e adicione a informação da origem quando conhecida. Arquivos tabulares podem fornecer a unidade GPS; importações GIS não a fornecem.
 

@@ -4,6 +4,23 @@ sidebar:
   order: 13
 ---
 
+{% screenshots
+   large="app-screenshots/usage/statistics-large.webp"
+   largeAlt="Pantalla Estadísticas de registros de NAHPU en una tableta"
+   large2="app-screenshots/usage/statistics-large-2.webp"
+   large2Alt="Pantalla Panel del proyecto de NAHPU en una tableta"
+   small="app-screenshots/usage/statistics-small.webp"
+   smallAlt="Pantalla Estadísticas de registros de NAHPU en un teléfono"
+   small2="app-screenshots/usage/statistics-small-2.webp"
+   small2Alt="Pantalla Panel del proyecto de NAHPU en un teléfono" %}
+{% pin id="A" label="Resumen" large=[41.2, 14.8] small=[21.9, 17.5] /%}
+{% pin id="B" label="Explorar" large=[60, 14.8] small=[78.1, 17.5] /%}
+{% pin id="C" label="Resumen de registros" large=[12.5, 21.5] small=[35.7, 23.6] /%}
+{% pin id="D" label="Desglose taxonómico" large=[15, 53.1] small=[44, 76.1] /%}
+{% pin id="E" label="Panel de estadísticas" large2=[68, 46] small2=[27, 42] /%}
+{% pin id="F" label="Explorar más estadísticas" large2=[68.8, 90.3] small2=[72.6, 82.6] /%}
+{% /screenshots %}
+
 Use la exportación de estadísticas cuando necesite una tabla resumida en lugar
 de los registros completos. Las tablas contienen conteos y porcentajes por
 categoría, que es lo que piden la mayoría de los informes de financiamiento, los
@@ -14,16 +31,16 @@ Las estadísticas se calculan solo para el proyecto activo.
 
 ## Abrir la pantalla de estadísticas
 
-Abra el panel de estadísticas de registros en el dashboard del proyecto y
-seleccione `Explore more stats`. Use los botones de la parte superior de la
+Abra el panel de estadísticas de registros {% ref id="E" /%} en el dashboard del proyecto y
+seleccione `Explore more stats` {% ref id="F" /%}. Use los botones de la parte superior de la
 pantalla para alternar entre dos vistas:
 
-- **Summary** muestra los totales del proyecto, divididos en un grupo
-  `Record summary` y un grupo `Taxonomic breakdown` que cuenta las clases,
+- **Summary** {% ref id="A" /%} muestra los totales del proyecto, divididos en un grupo
+  `Record summary` {% ref id="C" /%} y un grupo `Taxonomic breakdown` {% ref id="D" /%} que cuenta las clases,
   órdenes, familias, géneros y especies distintos, seguidos de los cinco
   conteos más altos por categoría. Seleccione `View details` en un gráfico
   para abrirlo en `Explore`.
-- **Explore** ofrece dos opciones. `Counts` arma una tabla o un gráfico a
+- **Explore** {% ref id="B" /%} ofrece dos opciones. `Counts` arma una tabla o un gráfico a
   partir de la medida, la agrupación, el desglose y el filtro que elija.
   `Spatial` cuenta registros por coordenada de sitio, en un mapa o como tabla.
 

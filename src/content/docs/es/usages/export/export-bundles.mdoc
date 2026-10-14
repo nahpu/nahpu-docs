@@ -4,6 +4,22 @@ sidebar:
   order: 11
 ---
 
+{% screenshots
+   large="app-screenshots/usage/bundles-large.webp"
+   largeAlt="Pantalla Empaquetar registros de NAHPU en una tableta"
+   small="app-screenshots/usage/bundles-small.webp"
+   smallAlt="Pantalla Empaquetar registros de NAHPU en un teléfono"
+   small2="app-screenshots/usage/bundles-small-2.webp"
+   small2Alt="Pantalla Contenido del paquete de NAHPU en un teléfono" %}
+{% pin id="A" label="Taxones incluidos" large=[12, 37.9] small=[15, 46.7] /%}
+{% pin id="B" label="Formato del paquete" large=[48, 56.9] small=[29.8, 64] /%}
+{% pin id="C" label="Formato de archivo comprimido" large=[48, 65.6] small=[31, 71.9] /%}
+{% pin id="D" label="Nombre del archivo" large=[48, 74.3] small=[27.4, 78.5] /%}
+{% pin id="E" label="Contenido del paquete" large=[64.5, 17.1] small2=[26.2, 27.9] /%}
+{% pin id="F" label="Expandir un recurso" large=[97, 49.1] small2=[93.3, 57] /%}
+{% pin id="G" label="Crear paquete" large=[58.2, 93.2] small=[69.3, 92.3] /%}
+{% /screenshots %}
+
 Use `Bundle records` para empaquetar datos y archivos de NAHPU con fines de
 intercambio, publicación, archivo o reproducibilidad. La pantalla de
 empaquetado muestra exactamente los archivos y los campos de tabla antes de
@@ -28,21 +44,21 @@ NAHPU ofrece tres tipos de paquete:
 
 1. Vaya a la página `Dashboard`.
 2. Abra el menú del proyecto y seleccione `Bundle records`.
-3. Seleccione el `Bundle format`.
-4. Seleccione el `Archive format` cuando el paquete elegido admita más de un
+3. Seleccione el `Bundle format` {% ref id="B" /%}.
+4. Seleccione el `Archive format` {% ref id="C" /%} cuando el paquete elegido admita más de un
    contenedor.
    - `TAR.GZ` es el valor predeterminado para los Data Packages.
    - `ZIP` está disponible para herramientas y sistemas operativos que prefieren
      archivos ZIP estándar.
    - El Darwin Core Archive siempre usa ZIP.
-5. Para un paquete Darwin Core, elija `All taxa` o `Selected taxa`. Seleccionar
+5. Para un paquete Darwin Core, elija `All taxa` {% ref id="A" /%} o `Selected taxa`. Seleccionar
    Mammals también incluye Bats.
-6. Agregue un `File name` y seleccione el `Directory` de destino.
-7. Revise `Package contents`. Expanda un recurso CSV para ver sus campos
+6. Agregue un `File name` {% ref id="D" /%} y seleccione el `Directory` de destino.
+7. Revise `Package contents` {% ref id="E" /%}. Expanda un recurso CSV {% ref id="F" /%} para ver sus campos
    exportados.
 8. Revise las advertencias, sobre todo las de medios faltantes o la de
    compatibilidad de ZIP en DwC-DP.
-9. Haga clic en `Create bundle`.
+9. Haga clic en `Create bundle` {% ref id="G" /%}.
 
 {% /steps %}
 

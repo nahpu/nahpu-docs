@@ -2,6 +2,22 @@
 title: Settings
 ---
 
+{% screenshots
+   large="app-screenshots/usage/settings-large.webp"
+   largeAlt="NAHPU Collection event settings screen on a tablet"
+   small="app-screenshots/usage/settings-small.webp"
+   smallAlt="NAHPU Settings screen on a phone"
+   small2="app-screenshots/usage/settings-small-2.webp"
+   small2Alt="NAHPU Collection event settings screen on a phone" %}
+{% pin id="A" label="Format" large=[30, 22.1] small=[96.2, 24.2] /%}
+{% pin id="B" label="Sites" large=[30, 31.7] small=[96.2, 33] /%}
+{% pin id="C" label="Events" large=[30, 41.2] small=[96.2, 41.8] /%}
+{% pin id="D" label="Specimens" large=[30, 50.8] small=[96.2, 50.5] /%}
+{% pin id="E" label="Custom fields" large=[30, 60.4] small=[96.2, 59.3] /%}
+{% pin id="F" label="Taxa" large=[30, 77.9] small=[96.2, 75.2] /%}
+{% pin id="G" label="Primary activities" large=[55.5, 21.1] small2=[70.2, 17.1] /%}
+{% /screenshots %}
+
 NAHPU separates project records, shared database records, reproducible user
 configs, and installation-only preferences. Open a project, open the
 Dashboard menu, and select `Settings` to configure the current installation.
@@ -23,25 +39,25 @@ replacing your current configuration.
 
 ### Format
 
-`Format` selects the main taxon used for new specimen forms on this device. A
+`Format` selects {% ref id="A" /%} the main taxon used for new specimen forms on this device. A
 project can contain more than one taxon group; this setting only controls the
 currently active specimen format and its measurement fields.
 
 ### Events and sites
 
-Use `Events` to manage the controlled primary-activity list, collection
+Use `Events` {% ref id="C" /%} to manage the controlled primary-activity list {% ref id="G" /%}, collection
 methods, event-personnel roles, and environmental fields shown on event forms.
 Primary activities default to `Collecting`, `Recording`, and `Observing`;
 `Other` is not included unless you add it. Environmental forms initially show
 ambient temperature, ambient humidity, cloud cover, rainfall, and notes. Like
 Geography settings, the other built-in fields can be shown or hidden without
-deleting stored values. Use `Sites` to manage controlled vocabularies for site
+deleting stored values. Use `Sites` {% ref id="B" /%} to manage controlled vocabularies for site
 and habitat types. Keep these settings consistent across field devices by
 transferring user configs.
 
 ### Specimens
 
-`Specimens` contains capture-field visibility, field IDs, tissue IDs, specimen
+`Specimens` contains {% ref id="D" /%} capture-field visibility, field IDs, tissue IDs, specimen
 sexes, specimen types, treatments, conditions, and taxon-dependent parasite
 settings.
 
@@ -68,7 +84,7 @@ been exported or written on labels.
 
 ## Database
 
-- `Taxa` manages taxonomy records available to projects.
+- `Taxa` {% ref id="F" /%} manages taxonomy records available to projects.
 - `Personnel` manages people in the database and their specimen-care roles.
 - `Backup database` saves a full ZIP or TAR.GZ archive of every project, record,
   and managed file.
@@ -144,7 +160,7 @@ Define additional fields and verify how they appear in project records.
 
 {% steps %}
 
-1. Open the intended project and go to `Settings` > `Custom fields`, then create a field and choose its target section.
+1. Open the intended project and go to `Settings` > `Custom fields` {% ref id="E" /%}, then create a field and choose its target section.
 2. Set `Label` and `Type`. For a dropdown, enter the permitted options. Choose `Current project` or `Global` scope; global definitions apply across this installation.
 3. For specimen-related fields, check catalog applicability. Use the reference guide for optional Darwin Core mappings.
 4. Save the definition, open a record in the target section, and enter a test value using the agreed unit convention. Reopen the record to check the value.

@@ -4,6 +4,22 @@ sidebar:
   order: 10
 ---
 
+{% screenshots
+   large="app-screenshots/usage/records-large.webp"
+   largeAlt="Pantalla Exportar registros de NAHPU en una tableta"
+   small="app-screenshots/usage/records-small.webp"
+   smallAlt="Pantalla Exportar registros de NAHPU en un teléfono"
+   small2="app-screenshots/usage/records-small-2.webp"
+   small2Alt="Pantalla Vista previa de Exportar registros de NAHPU en un teléfono" %}
+{% pin id="A" label="Preajuste de exportación" large=[47.2, 33.7] small=[30.5, 41.2] /%}
+{% pin id="B" label="Gestionar preajustes" large=[34, 43.1] small=[56, 51.5] /%}
+{% pin id="C" label="Formato de archivo" large=[47.2, 59.5] small=[28.1, 65.4] /%}
+{% pin id="D" label="Vista previa de la tabla" large=[83, 83.5] small2=[69, 81.7] /%}
+{% pin id="E" label="Exportar registros" large=[57.5, 93.2] small=[69.8, 92.3] /%}
+{% pin id="F" label="Pestaña de vista previa" large=[61.5, 17.1] small=[85.7, 16.4] /%}
+{% pin id="G" label="Añadir fecha" large=[40.5, 76.2] small=[94, 79.5] /%}
+{% /screenshots %}
+
 Use `Export records` para escribir los datos del proyecto activo en CSV, TSV, Excel o JSON mediante un ajuste preestablecido de exportación guardado.
 
 ## Forma rápida de exportar registros
@@ -11,10 +27,10 @@ Use `Export records` para escribir los datos del proyecto activo en CSV, TSV, Ex
 {% steps %}
 
 1. Abra el menú del proyecto y seleccione `Export records`.
-2. Elija un `Export preset`. Si no hay ninguno, abra `Manage Presets` para crearlo; use `Manage presets` para revisar uno existente.
-3. Compruebe tipo de registro, ámbito taxonómico, encabezados y mapeos. Use `Preview Table` para inspeccionar filas reales. En un teléfono, cambie a `Preview` para acceder a estos controles.
-4. Elija formato y nombre del archivo y configure `Append date` si corresponde. Los encabezados Darwin Core no están disponibles con JSON.
-5. Seleccione el destino y elija `Export records`.
+2. Elija un `Export preset` {% ref id="A" /%}. Si no hay ninguno, abra `Manage Presets` para crearlo; use `Manage presets` {% ref id="B" /%} para revisar uno existente.
+3. Compruebe tipo de registro, ámbito taxonómico, encabezados y mapeos. Use `Preview Table` {% ref id="D" /%} para inspeccionar filas reales. En un teléfono, cambie a `Preview` {% ref id="F" /%} para acceder a estos controles.
+4. Elija formato y nombre del archivo {% ref id="C" /%} y configure `Append date` {% ref id="G" /%} si corresponde. Los encabezados Darwin Core no están disponibles con JSON.
+5. Seleccione el destino y elija `Export records` {% ref id="E" /%}.
 6. Abra el archivo y compruebe filas, encabezados, unidades y valores repetidos. Use `Share` en el resultado para transferirlo o `Export another` para otra salida.
 
 {% /steps %}

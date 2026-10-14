@@ -2,6 +2,22 @@
 title: Pengaturan
 ---
 
+{% screenshots
+   large="app-screenshots/usage/settings-large.webp"
+   largeAlt="Layar Pengaturan peristiwa koleksi NAHPU di tablet"
+   small="app-screenshots/usage/settings-small.webp"
+   smallAlt="Layar Pengaturan NAHPU di ponsel"
+   small2="app-screenshots/usage/settings-small-2.webp"
+   small2Alt="Layar Pengaturan peristiwa koleksi NAHPU di ponsel" %}
+{% pin id="A" label="Format" large=[30, 22.1] small=[96.2, 24.2] /%}
+{% pin id="B" label="Lokasi" large=[30, 31.7] small=[96.2, 33] /%}
+{% pin id="C" label="Peristiwa" large=[30, 41.2] small=[96.2, 41.8] /%}
+{% pin id="D" label="Spesimen" large=[30, 50.8] small=[96.2, 50.5] /%}
+{% pin id="E" label="Kolom khusus" large=[30, 60.4] small=[96.2, 59.3] /%}
+{% pin id="F" label="Takson" large=[30, 77.9] small=[96.2, 75.2] /%}
+{% pin id="G" label="Aktivitas utama" large=[55.5, 21.1] small2=[70.2, 17.1] /%}
+{% /screenshots %}
+
 NAHPU memisahkan catatan proyek, catatan bersama di basis data, konfigurasi
 pengguna yang dapat direproduksi, dan preferensi yang hanya berlaku pada
 instalasi. Buka sebuah proyek, buka menu `Dashboard`, lalu pilih `Settings`
@@ -24,27 +40,27 @@ yang dipindahkan sebelum menggantikan konfigurasi Anda saat ini.
 
 ### Format
 
-`Format` memilih takson utama yang dipakai pada formulir spesimen baru di
+`Format` memilih {% ref id="A" /%} takson utama yang dipakai pada formulir spesimen baru di
 perangkat ini. Sebuah proyek dapat memuat lebih dari satu grup takson;
 pengaturan ini hanya mengatur format spesimen yang sedang aktif beserta kolom
 pengukurannya.
 
 ### Events dan Sites
 
-Gunakan `Events` untuk mengelola daftar terkontrol aktivitas utama, metode
+Gunakan `Events` {% ref id="C" /%} untuk mengelola daftar terkontrol aktivitas utama {% ref id="G" /%}, metode
 pengumpulan, peran personel kegiatan, dan kolom lingkungan yang muncul pada
 formulir kegiatan. Aktivitas utama dimulai dengan `Collecting`, `Recording`, dan
 `Observing`; `Other` tidak disertakan kecuali Anda menambahkannya. Formulir
 lingkungan pada awalnya menampilkan suhu udara, kelembapan udara, tutupan awan,
 curah hujan, dan catatan. Seperti pada pengaturan Geografi, kolom bawaan lainnya
 dapat ditampilkan atau disembunyikan tanpa menghapus nilai yang tersimpan.
-Gunakan `Sites` untuk mengelola kosakata terkontrol tipe lokasi dan tipe
+Gunakan `Sites` {% ref id="B" /%} untuk mengelola kosakata terkontrol tipe lokasi dan tipe
 habitat. Jaga agar pengaturan ini seragam di semua perangkat lapangan dengan
 memindahkan konfigurasi pengguna.
 
 ### Specimens
 
-`Specimens` memuat kemunculan kolom tangkapan, Field ID, tissue ID, jenis
+`Specimens` memuat {% ref id="D" /%} kemunculan kolom tangkapan, Field ID, tissue ID, jenis
 kelamin spesimen, tipe spesimen, perlakuan, kondisi, dan pengaturan parasit yang
 bergantung pada takson.
 
@@ -74,7 +90,7 @@ tersebut sudah diekspor atau ditulis pada label.
 
 ## Database
 
-- `Taxa` mengelola catatan taksonomi yang tersedia bagi proyek.
+- `Taxa` {% ref id="F" /%} mengelola catatan taksonomi yang tersedia bagi proyek.
 - `Personnel` mengelola orang di basis data beserta peran perawatan spesimennya.
 - `Replace database` mengganti basis data SQLite yang aktif dari sebuah
   cadangan.
@@ -150,7 +166,7 @@ Tentukan bidang tambahan dan periksa tampilannya pada catatan proyek.
 
 {% steps %}
 
-1. Buka proyek yang dituju dan pilih `Settings` > `Custom fields`, lalu buat bidang dan pilih bagian tujuan.
+1. Buka proyek yang dituju dan pilih `Settings` > `Custom fields` {% ref id="E" /%}, lalu buat bidang dan pilih bagian tujuan.
 2. Tetapkan `Label` dan `Type`. Untuk daftar pilihan, masukkan opsi yang diperbolehkan. Pilih cakupan `Current project` atau `Global`; definisi global berlaku untuk seluruh instalasi.
 3. Untuk bidang terkait spesimen, periksa katalog yang berlaku. Gunakan panduan referensi untuk pemetaan Darwin Core opsional.
 4. Simpan definisi, buka catatan pada bagian tujuan, dan masukkan nilai uji sesuai ketentuan satuan. Buka kembali catatan untuk memeriksa nilainya.

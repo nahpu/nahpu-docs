@@ -4,7 +4,27 @@ sidebar:
   order: 9
 ---
 
-Use `Export project` para criar uma transferência. No destino, `Import project` na tela inicial cria um projeto local; `Merge project` combina dados com um projeto existente. Importar JSON de informações ou QR do projeto cria apenas a identidade, sem registros ou mídia.
+{% screenshots
+   large="app-screenshots/usage/export-large.webp"
+   largeAlt="Tela menu do projeto do NAHPU em um tablet"
+   large2="app-screenshots/usage/export-large-2.webp"
+   large2Alt="Tela Backup do banco de dados do NAHPU em um tablet"
+   small="app-screenshots/usage/export-small.webp"
+   smallAlt="Tela menu do projeto do NAHPU em um celular"
+   small2="app-screenshots/usage/export-small-2.webp"
+   small2Alt="Tela Backup do banco de dados do NAHPU em um celular" %}
+{% pin id="A" label="Mesclar projeto" large=[36, 28.4] small=[66, 37] /%}
+{% pin id="B" label="Exportar projeto" large=[36, 35.1] small=[66, 43.1] /%}
+{% pin id="C" label="Empacotar registros" large=[36, 43.7] small=[66, 51] /%}
+{% pin id="D" label="Exportar registros" large=[36, 50.5] small=[66, 57.1] /%}
+{% pin id="E" label="Exportar documentos" large=[36, 57.2] small=[66, 63.3] /%}
+{% pin id="F" label="Backup do banco de dados" large=[36, 65.7] small=[66, 71.2] /%}
+{% pin id="G" label="Exportar configurações" large=[36, 81.1] small=[66, 85.2] /%}
+{% pin id="H" label="Formato do arquivo" large2=[24.8, 33.1] small2=[57.1, 36] /%}
+{% pin id="I" label="Salvar backup" large2=[56.3, 93.3] small2=[69, 92.3] /%}
+{% /screenshots %}
+
+Use `Export project` {% ref id="B" /%} para criar uma transferência. No destino, `Import project` na tela inicial cria um projeto local; `Merge project` {% ref id="A" /%} combina dados com um projeto existente. Importar JSON de informações ou QR do projeto cria apenas a identidade, sem registros ou mídia.
 
 Exportações ZIP e TAR.GZ incluem a mídia disponível. JSON.GZ leve inclui apenas registros. Revise os avisos de arquivos ausentes e mantenha a origem até verificar registros e anexos no destino.
 
@@ -12,9 +32,9 @@ Um NAHPU Data Package compatível também pode ser importado ou mesclado, pois i
 
 ## Escolha uma saída
 
-- [Exportar Registros](/pt/usages/export/export-records/)
-- [Empacotar Registros](/pt/usages/export/export-bundles/)
-- [Exportar Documentos](/pt/usages/export/export-documents/)
+- [Exportar Registros](/pt/usages/export/export-records/) {% ref id="D" /%}
+- [Empacotar Registros](/pt/usages/export/export-bundles/) {% ref id="C" /%}
+- [Exportar Documentos](/pt/usages/export/export-documents/) {% ref id="E" /%}
 - [Exportar Estatísticas](/pt/usages/export/export-statistics/)
 - [Exportar Imagens](/pt/usages/export/export-images/)
 
@@ -31,18 +51,18 @@ Mantenha uma cópia verificada dos dados de cada dia de campo fora do dispositiv
 3. Salve com o nome do projeto e a data e copie para outro armazenamento ou dispositivo.
 4. Confira se a cópia pode ser acessada e revise os avisos antes de considerar o backup completo. Teste a recuperação periodicamente em outra instalação.
 5. Use `Import project` na tela inicial para recuperar na instalação de destino ou `Merge project` dentro de um projeto existente.
-6. Faça um `Backup database` completo em intervalos regulares, por exemplo semanalmente, e antes de importar, mesclar ou substituir dados. Mantenha o backup anterior verificado até conferir o novo.
+6. Faça um `Backup database` {% ref id="F" /%} completo em intervalos regulares, por exemplo semanalmente, e antes de importar, mesclar ou substituir dados. Mantenha o backup anterior verificado até conferir o novo.
 {% /steps %}
 
 ## Backup do banco de dados {% #backup-database %}
 
-`Backup database` cria ZIP ou TAR.GZ com o banco SQLite e os diretórios gerenciados de projetos, pessoal e configurações, incluindo arquivos sem vínculo com registros atuais. Um arquivo SQLite isolado contém registros, mas não fornece mídia ou outros arquivos gerenciados.
+`Backup database` cria ZIP ou TAR.GZ {% ref id="H" /%} com o banco SQLite e os diretórios gerenciados de projetos, pessoal e configurações, incluindo arquivos sem vínculo com registros atuais. Um arquivo SQLite isolado contém registros, mas não fornece mídia ou outros arquivos gerenciados.
 
-Abra o menu do projeto, selecione `Backup database`, escolha formato, nome e destino e selecione `Save backup`. Mantenha uma cópia fora do dispositivo de trabalho e verifique-a antes de substituir um backup anterior.
+Abra o menu do projeto, selecione `Backup database`, escolha formato, nome e destino e selecione `Save backup` {% ref id="I" /%}. Mantenha uma cópia fora do dispositivo de trabalho e verifique-a antes de substituir um backup anterior.
 
 ## Exportar configurações de usuário {% #export-user-configs %}
 
-`Export user configs` grava em um arquivo de configurações as configurações de
+`Export user configs` {% ref id="G" /%} grava em um arquivo de configurações as configurações de
 usuário ligadas à reprodutibilidade, incluindo as predefinições salvas de
 exportação e de documento.
 

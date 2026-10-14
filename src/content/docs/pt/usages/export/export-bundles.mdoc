@@ -4,6 +4,22 @@ sidebar:
   order: 11
 ---
 
+{% screenshots
+   large="app-screenshots/usage/bundles-large.webp"
+   largeAlt="Tela Empacotar registros do NAHPU em um tablet"
+   small="app-screenshots/usage/bundles-small.webp"
+   smallAlt="Tela Empacotar registros do NAHPU em um celular"
+   small2="app-screenshots/usage/bundles-small-2.webp"
+   small2Alt="Tela Conteúdo do pacote do NAHPU em um celular" %}
+{% pin id="A" label="Táxons incluídos" large=[12, 37.9] small=[15, 46.7] /%}
+{% pin id="B" label="Formato do pacote" large=[48, 56.9] small=[29.8, 64] /%}
+{% pin id="C" label="Formato do arquivo" large=[48, 65.6] small=[31, 71.9] /%}
+{% pin id="D" label="Nome do arquivo" large=[48, 74.3] small=[27.4, 78.5] /%}
+{% pin id="E" label="Conteúdo do pacote" large=[64.5, 17.1] small2=[26.2, 27.9] /%}
+{% pin id="F" label="Expandir um recurso" large=[97, 49.1] small2=[93.3, 57] /%}
+{% pin id="G" label="Criar pacote" large=[58.2, 93.2] small=[69.3, 92.3] /%}
+{% /screenshots %}
+
 Use `Bundle records` para empacotar dados e arquivos do NAHPU para intercâmbio,
 publicação, arquivamento ou reprodutibilidade. A tela de empacotamento
 pré-visualiza exatamente os arquivos e campos de tabela antes de gravar
@@ -28,21 +44,21 @@ O NAHPU oferece três tipos de pacote:
 
 1. Vá para a página `Dashboard`.
 2. Abra o menu do projeto e selecione `Bundle records`.
-3. Selecione o `Bundle format`.
-4. Selecione o `Archive format` quando o pacote escolhido aceitar mais de um
+3. Selecione o `Bundle format` {% ref id="B" /%}.
+4. Selecione o `Archive format` {% ref id="C" /%} quando o pacote escolhido aceitar mais de um
    contêiner.
    - `TAR.GZ` é o padrão para os Data Packages.
    - `ZIP` está disponível para ferramentas e sistemas operacionais que preferem
      arquivos ZIP padrão.
    - O Darwin Core Archive sempre usa ZIP.
-5. Para um pacote Darwin Core, escolha `All taxa` ou `Selected taxa`.
+5. Para um pacote Darwin Core, escolha `All taxa` {% ref id="A" /%} ou `Selected taxa`.
    Selecionar Mammals também inclui Bats.
-6. Adicione um `File name` e selecione o `Directory` de destino.
-7. Revise `Package contents`. Expanda um recurso CSV para ver os campos
+6. Adicione um `File name` {% ref id="D" /%} e selecione o `Directory` de destino.
+7. Revise `Package contents` {% ref id="E" /%}. Expanda um recurso CSV {% ref id="F" /%} para ver os campos
    exportados.
 8. Revise os avisos, especialmente sobre mídia ausente ou sobre a
    compatibilidade de ZIP no DwC-DP.
-9. Clique em `Create bundle`.
+9. Clique em `Create bundle` {% ref id="G" /%}.
 
 {% /steps %}
 

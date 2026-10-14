@@ -4,6 +4,22 @@ sidebar:
   order: 10
 ---
 
+{% screenshots
+   large="app-screenshots/usage/records-large.webp"
+   largeAlt="NAHPU Export records screen on a tablet"
+   small="app-screenshots/usage/records-small.webp"
+   smallAlt="NAHPU Export records screen on a phone"
+   small2="app-screenshots/usage/records-small-2.webp"
+   small2Alt="NAHPU Export records preview screen on a phone" %}
+{% pin id="A" label="Export preset" large=[47.2, 33.7] small=[30.5, 41.2] /%}
+{% pin id="B" label="Manage presets" large=[34, 43.1] small=[56, 51.5] /%}
+{% pin id="C" label="File format" large=[47.2, 59.5] small=[28.1, 65.4] /%}
+{% pin id="D" label="Preview table" large=[83, 83.5] small2=[69, 81.7] /%}
+{% pin id="E" label="Export records" large=[57.5, 93.2] small=[69.8, 92.3] /%}
+{% pin id="F" label="Preview tab" large=[61.5, 17.1] small=[85.7, 16.4] /%}
+{% pin id="G" label="Append date" large=[40.5, 76.2] small=[94, 79.5] /%}
+{% /screenshots %}
+
 Use `Export records` to write the active project's data to CSV, TSV, Excel, or JSON using a saved export preset.
 
 ## Quick way to export records
@@ -11,10 +27,10 @@ Use `Export records` to write the active project's data to CSV, TSV, Excel, or J
 {% steps %}
 
 1. Open the project menu and select `Export records`.
-2. Choose an `Export preset`. If none is available, open `Manage Presets` to create one; use `Manage presets` to review an existing preset.
-3. Check its record type, taxon scope, headers, and field mappings. Use `Preview Table` to inspect actual rows. On a phone, switch to `Preview` to find the preview controls.
-4. Choose the file format and filename, and set `Append date` if needed. Darwin Core headers are not available with JSON output.
-5. Select the destination and choose `Export records`.
+2. Choose an `Export preset` {% ref id="A" /%}. If none is available, open `Manage Presets` to create one; use `Manage presets` {% ref id="B" /%} to review an existing preset.
+3. Check its record type, taxon scope, headers, and field mappings. Use `Preview Table` {% ref id="D" /%} to inspect actual rows. On a phone, switch to `Preview` {% ref id="F" /%} to find the preview controls.
+4. Choose the file format {% ref id="C" /%} and filename, and set `Append date` {% ref id="G" /%} if needed. Darwin Core headers are not available with JSON output.
+5. Select the destination and choose `Export records` {% ref id="E" /%}.
 6. Open the completed file and verify rows, headers, units, and repeated values. Use the result's `Share` action when transferring the file, or `Export another` for another output.
 
 {% /steps %}

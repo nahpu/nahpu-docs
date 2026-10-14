@@ -4,7 +4,27 @@ sidebar:
   order: 9
 ---
 
-Gunakan `Export project` untuk membuat transfer. Pada penerima, `Import project` di layar awal membuat proyek lokal; `Merge project` menggabungkan data dengan proyek yang sudah ada. Impor JSON informasi atau QR proyek hanya membuat identitas tanpa catatan atau media.
+{% screenshots
+   large="app-screenshots/usage/export-large.webp"
+   largeAlt="Layar menu proyek NAHPU di tablet"
+   large2="app-screenshots/usage/export-large-2.webp"
+   large2Alt="Layar Cadangkan basis data NAHPU di tablet"
+   small="app-screenshots/usage/export-small.webp"
+   smallAlt="Layar menu proyek NAHPU di ponsel"
+   small2="app-screenshots/usage/export-small-2.webp"
+   small2Alt="Layar Cadangkan basis data NAHPU di ponsel" %}
+{% pin id="A" label="Gabungkan proyek" large=[36, 28.4] small=[66, 37] /%}
+{% pin id="B" label="Ekspor proyek" large=[36, 35.1] small=[66, 43.1] /%}
+{% pin id="C" label="Bundel catatan" large=[36, 43.7] small=[66, 51] /%}
+{% pin id="D" label="Ekspor catatan" large=[36, 50.5] small=[66, 57.1] /%}
+{% pin id="E" label="Ekspor dokumen" large=[36, 57.2] small=[66, 63.3] /%}
+{% pin id="F" label="Cadangkan basis data" large=[36, 65.7] small=[66, 71.2] /%}
+{% pin id="G" label="Ekspor konfigurasi" large=[36, 81.1] small=[66, 85.2] /%}
+{% pin id="H" label="Format arsip" large2=[24.8, 33.1] small2=[57.1, 36] /%}
+{% pin id="I" label="Simpan cadangan" large2=[56.3, 93.3] small2=[69, 92.3] /%}
+{% /screenshots %}
+
+Gunakan `Export project` {% ref id="B" /%} untuk membuat transfer. Pada penerima, `Import project` di layar awal membuat proyek lokal; `Merge project` {% ref id="A" /%} menggabungkan data dengan proyek yang sudah ada. Impor JSON informasi atau QR proyek hanya membuat identitas tanpa catatan atau media.
 
 Ekspor ZIP dan TAR.GZ menyertakan media yang tersedia. JSON.GZ ringan hanya berisi catatan. Tinjau peringatan berkas yang hilang dan simpan sumber hingga catatan serta lampiran pada penerima diperiksa.
 
@@ -12,9 +32,9 @@ NAHPU Data Package yang kompatibel juga dapat diimpor atau digabungkan karena be
 
 ## Pilih keluaran
 
-- [Ekspor Catatan](/id/usages/export/export-records/)
-- [Paket Catatan](/id/usages/export/export-bundles/)
-- [Ekspor Dokumen](/id/usages/export/export-documents/)
+- [Ekspor Catatan](/id/usages/export/export-records/) {% ref id="D" /%}
+- [Paket Catatan](/id/usages/export/export-bundles/) {% ref id="C" /%}
+- [Ekspor Dokumen](/id/usages/export/export-documents/) {% ref id="E" /%}
 - [Ekspor Statistik](/id/usages/export/export-statistics/)
 - [Ekspor Gambar](/id/usages/export/export-images/)
 
@@ -31,18 +51,18 @@ Simpan salinan data proyek setiap hari lapangan yang telah diperiksa di luar per
 3. Simpan dengan nama proyek dan tanggal, lalu salin ke penyimpanan atau perangkat lain.
 4. Pastikan salinan dapat diakses dan tinjau peringatan sebelum menganggap cadangan lengkap. Uji pemulihan secara berkala pada instalasi lain.
 5. Gunakan `Import project` di layar awal untuk memulihkan pada instalasi penerima, atau `Merge project` di dalam proyek yang sudah ada.
-6. Buat `Backup database` lengkap secara berkala, misalnya mingguan, serta sebelum mengimpor, menggabungkan, atau mengganti data. Simpan cadangan lama yang terverifikasi hingga cadangan baru diperiksa.
+6. Buat `Backup database` {% ref id="F" /%} lengkap secara berkala, misalnya mingguan, serta sebelum mengimpor, menggabungkan, atau mengganti data. Simpan cadangan lama yang terverifikasi hingga cadangan baru diperiksa.
 {% /steps %}
 
 ## Mencadangkan basis data {% #backup-database %}
 
-`Backup database` membuat ZIP atau TAR.GZ yang berisi basis data SQLite serta direktori proyek, personel, dan konfigurasi yang dikelola, termasuk berkas yang tidak ditautkan ke catatan proyek saat ini. Berkas SQLite saja berisi catatan basis data tanpa media atau berkas lain yang dikelola.
+`Backup database` membuat ZIP atau TAR.GZ {% ref id="H" /%} yang berisi basis data SQLite serta direktori proyek, personel, dan konfigurasi yang dikelola, termasuk berkas yang tidak ditautkan ke catatan proyek saat ini. Berkas SQLite saja berisi catatan basis data tanpa media atau berkas lain yang dikelola.
 
-Buka menu proyek, pilih `Backup database`, tentukan format, nama, serta tujuan, lalu pilih `Save backup`. Simpan salinan di luar perangkat kerja dan periksa sebelum mengganti cadangan sebelumnya.
+Buka menu proyek, pilih `Backup database`, tentukan format, nama, serta tujuan, lalu pilih `Save backup` {% ref id="I" /%}. Simpan salinan di luar perangkat kerja dan periksa sebelum mengganti cadangan sebelumnya.
 
 ## Mengekspor konfigurasi pengguna {% #export-user-configs %}
 
-`Export user configs` menuliskan konfigurasi pengguna yang berkaitan dengan
+`Export user configs` {% ref id="G" /%} menuliskan konfigurasi pengguna yang berkaitan dengan
 reproduksibilitas, termasuk prasetel ekspor dan dokumen yang tersimpan, ke dalam
 sebuah berkas konfigurasi.
 

@@ -4,6 +4,24 @@ sidebar:
   order: 7
 ---
 
+{% screenshots
+   large="app-screenshots/usage/specimens-large.webp"
+   largeAlt="NAHPU Specimen Records screen on a tablet"
+   large2="app-screenshots/usage/specimens-large-2.webp"
+   large2Alt="NAHPU Specimen Attributes and Specimen Parts screen on a tablet"
+   small="app-screenshots/usage/specimens-small.webp"
+   smallAlt="NAHPU Specimen Records screen on a phone"
+   small2="app-screenshots/usage/specimens-small-2.webp"
+   small2Alt="NAHPU Measurements screen on a phone" %}
+{% pin id="A" label="Add specimen" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="B" label="Cataloger" large=[20, 32.8] small=[23.8, 16.6] /%}
+{% pin id="C" label="Condition" large=[18, 46.2] small=[23.8, 28.8] /%}
+{% pin id="D" label="Taxon" large=[16, 70.7] small=[20.2, 63.5] /%}
+{% pin id="E" label="Measurements" large2=[21.1, 60.4] small2=[35.7, 20.6] /%}
+{% pin id="F" label="Bat fields" large2=[20.2, 88.5] small2=[41.7, 64.7] /%}
+{% pin id="G" label="Specimen parts" large2=[69, 55.3] small2=[71.4, 78.7] /%}
+{% /screenshots %}
+
 ## Setting up specimen records
 
 The NAHPU default lists for `Specimen parts` and `Treatments` are intentionally
@@ -70,7 +88,7 @@ See [Settings](../settings) for the complete configuration map.
 {% steps %}
 1. Navigate to the specimen page using the bottom navigation bar.
 
-2. Click the `+` button to add a new specimen record.
+2. Click the `+` button {% ref id="A" /%} to add a new specimen record.
 
     You can also use the three-dot menu and choose a duplicate action when you
     want to reuse part of the current specimen record.
@@ -84,7 +102,7 @@ See [Settings](../settings) for the complete configuration map.
 
     {% /aside %}
 
-3. Select `Cataloger`.
+3. Select `Cataloger` {% ref id="B" /%}.
 
     This is the person responsible for cataloging the specimen. Depending on the
     project field ID mode, NAHPU can use the cataloger's field number or a
@@ -95,7 +113,7 @@ See [Settings](../settings) for the complete configuration map.
     NAHPU defaults the preparator to the cataloger. If a different person
     prepares the voucher or part, update the preparator field.
 
-5. Select the `Taxon`.
+5. Select the `Taxon` {% ref id="D" /%}.
 
     Start typing to search the project's taxon registry, then select the
     matching record from the list. NAHPU populates the `Taxon Info` panel from
@@ -109,7 +127,7 @@ See [Settings](../settings) for the complete configuration map.
     helps curators prioritize records that need review. The values are `Low`,
     `Medium`, and `High`.
 
-7. Select the specimen `Condition`.
+7. Select the specimen `Condition` {% ref id="C" /%}.
 
     The default values are `Freshly euthanized`, `Good`, `Fair`, `Poor`,
     `Rotten`, `Released`, and `Unknown`. Conditions are a controlled
@@ -202,7 +220,7 @@ numeric age fields. It is an editable controlled vocabulary: the defaults are
 {% tabs %}
 {% tabitem label="Mammals" %}
 
-- `Total length (mm)`: the total length from the tip of the nose to the tip of
+- `Total length (mm)` {% ref id="E" /%}: the total length from the tip of the nose to the tip of
   the tail.
 - `Tail length (mm)`: the length of the tail from the base to the tip.
 - `Head and body length (mm)`: auto-calculated from `Total length (mm) - Tail length (mm)`.
@@ -218,7 +236,7 @@ numeric age fields. It is an editable controlled vocabulary: the defaults are
 - Female reproductive fields: vagina opening, pubic symphysis, reproductive
   stage, mammae condition, mammae counts, placental scar counts, embryo counts,
   and embryo crown-rump length.
-- Bat fields, when enabled: forearm length, tibia length, echolocation type,
+- Bat fields, when enabled {% ref id="F" /%}: forearm length, tibia length, echolocation type,
   maximum and minimum frequency, frequency at maximum energy, and duration.
 - `Remarks`: additional notes about measurements.
 
@@ -286,7 +304,7 @@ Invertebrate catalogs do not show parasite-detection fields or the parasite tab.
 
 ## Specimen Parts
 
-Use `Specimen Parts` for voucher preparations, tissues, swabs, parasites, and
+Use `Specimen Parts` {% ref id="G" /%} for voucher preparations, tissues, swabs, parasites, and
 other physical parts derived from the specimen. Each specimen can have multiple
 parts.
 
