@@ -497,6 +497,268 @@
   background-size: 100% 2px;
 }
 
+/* ------------------------------------------------------------ timeline ---- */
+
+/* A field-log rail: solid for released milestones, dashed gold for planned
+   work, with the first-commit-to-release span drawn long to show its length.
+   Small screens stack it newest first; large screens run it left to right. */
+.nh-timeline {
+  --nh-tl-released: var(--color-silver-tree-600);
+  --nh-tl-planned: var(--color-golden-grass-600);
+  --nh-tl-planned-text: var(--color-golden-grass-800);
+  --nh-tl-ground: var(--color-silver-tree-100);
+  --nh-tl-muted: var(--color-silver-tree-600);
+  --nh-tl-dot: 0.875rem;
+  display: flex;
+  flex-direction: column-reverse;
+  list-style: none;
+  margin-left: 0;
+  padding: 0;
+}
+
+:root[data-theme="dark"] .nh-timeline {
+  --nh-tl-released: var(--color-silver-tree-400);
+  --nh-tl-planned: var(--color-golden-grass-400);
+  --nh-tl-planned-text: var(--color-golden-grass-300);
+  --nh-tl-ground: var(--color-silver-tree-950);
+  --nh-tl-muted: var(--color-silver-tree-400);
+}
+
+.nh-tl-row {
+  display: grid;
+  grid-template-columns: 6.5rem 1.75rem minmax(0, 1fr);
+  column-gap: 0.875rem;
+  margin: 0;
+}
+
+.nh-tl-when {
+  padding-top: 0.75rem;
+  text-align: right;
+}
+
+.nh-tl-date {
+  font-family: var(--sl-font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--nh-tl-released);
+}
+
+.nh-tl-planned .nh-tl-date {
+  color: var(--nh-tl-planned-text);
+}
+
+.nh-tl-axis {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.nh-tl-axis::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto;
+  width: 2px;
+  background: var(--nh-tl-released);
+}
+
+.nh-tl-planned .nh-tl-axis::before {
+  background: repeating-linear-gradient(
+    var(--nh-tl-planned) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+/* Newest first: the latest entry is on top, the first commit at the bottom. */
+.nh-tl-row:last-child .nh-tl-axis::before {
+  top: 1.125rem;
+}
+
+.nh-tl-row:first-child .nh-tl-axis::before {
+  bottom: calc(100% - 1.125rem);
+}
+
+.nh-tl-dot {
+  position: relative;
+  margin-top: 0.75rem;
+  width: var(--nh-tl-dot);
+  height: var(--nh-tl-dot);
+  border-radius: 9999px;
+  background: var(--nh-tl-released);
+}
+
+.nh-tl-planned .nh-tl-dot {
+  background: var(--nh-tl-ground);
+  border: 2px solid var(--nh-tl-planned);
+}
+
+.nh-tl-body {
+  padding: 0.375rem 0 1.5rem;
+}
+
+/* Overrides the site's prose margins so each title lines up with its dot. */
+.nh-tl-body > * {
+  margin: 0;
+}
+
+.nh-tl-body > * + * {
+  margin-top: 0.25rem;
+}
+
+.nh-tl-span {
+  min-height: 9rem;
+}
+
+.nh-tl-span-label {
+  align-self: center;
+  margin: 0;
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--nh-tl-muted);
+}
+
+.nh-tl-today .nh-tl-when {
+  align-self: center;
+  padding-top: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nh-tl-muted);
+}
+
+.nh-tl-today .nh-tl-axis::before {
+  background: linear-gradient(
+    var(--nh-tl-planned) 50%,
+    var(--nh-tl-released) 50%
+  );
+}
+
+.nh-tl-rule {
+  align-self: center;
+  margin: 0.5rem 0;
+  border-top: 1px dashed var(--nh-tl-muted);
+  opacity: 0.6;
+}
+
+@media (max-width: 40rem) {
+  .nh-tl-row {
+    grid-template-columns: 5rem 1.25rem minmax(0, 1fr);
+    column-gap: 0.625rem;
+  }
+
+  .nh-tl-span {
+    min-height: 7rem;
+  }
+}
+
+@media (min-width: 72rem) {
+  .nh-timeline {
+    flex-direction: row;
+  }
+
+  .nh-tl-row {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .nh-tl-when {
+    height: 1.25rem;
+    padding-top: 0;
+    line-height: 1.25rem;
+    text-align: left;
+  }
+
+  .nh-tl-axis {
+    height: 1.75rem;
+    margin: 0.375rem 0 0.5rem;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .nh-tl-axis::before,
+  .nh-tl-row:first-child .nh-tl-axis::before,
+  .nh-tl-row:last-child .nh-tl-axis::before {
+    inset: calc(50% - 1px) 0 auto;
+    width: auto;
+    height: 2px;
+  }
+
+  .nh-tl-planned .nh-tl-axis::before {
+    background: repeating-linear-gradient(
+      90deg,
+      var(--nh-tl-planned) 0 6px,
+      transparent 6px 12px
+    );
+  }
+
+  /* The track starts at the first dot and stops at the last one. */
+  .nh-tl-row:first-child .nh-tl-axis::before {
+    left: calc(var(--nh-tl-dot) / 2);
+  }
+
+  .nh-tl-row:last-child .nh-tl-axis::before {
+    right: calc(100% - var(--nh-tl-dot) / 2);
+  }
+
+  .nh-tl-dot {
+    margin-top: 0;
+  }
+
+  .nh-tl-body {
+    padding: 0 0.5rem 0 0;
+  }
+
+  .nh-tl-body h3 {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .nh-tl-body p {
+    font-size: 0.8125rem;
+  }
+
+  .nh-tl-span {
+    flex: 1.5 1 0;
+    min-height: 0;
+  }
+
+  .nh-tl-span-label {
+    align-self: auto;
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+
+  .nh-tl-today {
+    flex: 0 0 3.5rem;
+  }
+
+  .nh-tl-today .nh-tl-when {
+    align-self: auto;
+    text-align: center;
+  }
+
+  .nh-tl-today .nh-tl-axis::before {
+    background: linear-gradient(
+      90deg,
+      var(--nh-tl-released) 50%,
+      var(--nh-tl-planned) 50%
+    );
+  }
+
+  .nh-tl-rule {
+    width: 0;
+    height: 3rem;
+    margin: 0;
+    border-top: 0;
+    border-left: 1px dashed var(--nh-tl-muted);
+  }
+}
+
 /* -------------------------------------------------------------- reveal ---- */
 
 .nh-reveal {

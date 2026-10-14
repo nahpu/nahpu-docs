@@ -112,7 +112,7 @@ const roadmap: Highlight[] = [
     },
     {
         glyph: "integrations",
-        title: "Third-party resources",
+        title: "Integrated resources",
         body: "Integrate external resources linked to the collected taxon, streamline taxon imports and validation, and support student learning. GenBank, Crossref, and the Mammal Diversity Database are among the resources we plan to integrate.",
         link: {
             href: "https://github.com/nahpu/kanchil",
@@ -120,6 +120,81 @@ const roadmap: Highlight[] = [
         },
     },
 ];
+
+interface Milestone {
+    date: Date;
+    title: string;
+    body: string;
+    released: boolean;
+}
+
+// Planned entries list only work that has already started.
+const timeline: Milestone[] = [
+    {
+        date: new Date(2022, 6, 18),
+        title: "First commit",
+        body: "Development of NAHPU begins on GitHub.",
+        released: true,
+    },
+    {
+        date: new Date(2026, 8, 7),
+        title: "NAHPU v1.0.0",
+        body: "First stable release, codename Tropical Mountains.",
+        released: true,
+    },
+    {
+        date: new Date(2026, 9, 1),
+        title: "Ichthyology support",
+        body: "Catalog format for fish specimens.",
+        released: false,
+    },
+    {
+        date: new Date(2026, 10, 1),
+        title: "Integrated resources",
+        body: "Links to GenBank, Crossref, and the Mammal Diversity Database.",
+        released: false,
+    },
+    {
+        date: new Date(2026, 11, 1),
+        title: "Morphometric analyses",
+        body: "On-device analysis of specimen measurements.",
+        released: false,
+    },
+    {
+        date: new Date(2027, 0, 1),
+        title: "Paleontology support",
+        body: "Catalog format for fossil specimens.",
+        released: false,
+    },
+    {
+        date: new Date(2027, 1, 1),
+        title: "Phenomic analyses",
+        body: "Trait analyses using deep learning.",
+        released: false,
+    },
+];
+
+const formatMonth = (date: Date) =>
+    date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+
+const formatIsoMonth = (date: Date) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+
+const [firstCommit, stableRelease] = timeline;
+const developmentMonths =
+    (stableRelease.date.getFullYear() - firstCommit.date.getFullYear()) * 12 +
+    stableRelease.date.getMonth() -
+    firstCommit.date.getMonth();
+const developmentYears = Math.floor(developmentMonths / 12);
+const developmentRemainder = developmentMonths % 12;
+const developmentSpan = [
+    `${developmentYears} year${developmentYears === 1 ? "" : "s"}`,
+    developmentRemainder > 0 &&
+        `${developmentRemainder} month${developmentRemainder === 1 ? "" : "s"}`,
+]
+    .filter(Boolean)
+    .join(", ");
+const firstPlannedIndex = timeline.findIndex((item) => !item.released);
 ---
 
 <Layout
@@ -344,6 +419,92 @@ const roadmap: Highlight[] = [
                     ))
                 }
             </div>
+
+            <!-- Timeline -->
+            <header class="nh-reveal mt-16 max-w-3xl">
+                <p class={kickerClasses}>Timeline</p>
+                <h2 class={titleClasses}>
+                    From first commit to what comes next
+                </h2>
+            </header>
+
+            <ol class="nh-timeline nh-reveal mt-10 max-w-3xl min-[72rem]:max-w-none">
+                {
+                    timeline.map((item, index) => (
+                        <>
+                            {index === firstPlannedIndex && index > 0 && (
+                                <li class="nh-tl-row nh-tl-today">
+                                    <span class="nh-tl-when">Today</span>
+                                    <span class="nh-tl-axis" />
+                                    <span class="nh-tl-rule" />
+                                </li>
+                            )}
+                            <li
+                                class:list={[
+                                    "nh-tl-row",
+                                    item.released
+                                        ? "nh-tl-released"
+                                        : "nh-tl-planned",
+                                ]}
+                            >
+                                <time
+                                    class="nh-tl-when nh-tl-date"
+                                    datetime={formatIsoMonth(item.date)}
+                                >
+                                    {formatMonth(item.date)}
+                                </time>
+                                <span class="nh-tl-axis">
+                                    <span class="nh-tl-dot" />
+                                </span>
+                                <div class="nh-tl-body">
+                                    <h3 class={cardTitleClasses}>
+                                        {item.title}
+                                    </h3>
+                                    <p class="mt-1 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
+                                        {item.body}
+                                    </p>
+                                </div>
+                            </li>
+                            {item === firstCommit && (
+                                <li class="nh-tl-row nh-tl-span">
+                                    <span class="nh-tl-when" />
+                                    <span class="nh-tl-axis" />
+                                    <p class="nh-tl-span-label">
+                                        {developmentSpan} of development
+                                    </p>
+                                </li>
+                            )}
+                        </>
+                    ))
+                }
+            </ol>
+
+            <p
+                class="nh-reveal mt-8 flex items-start gap-2.5 text-sm text-silver-tree-700 dark:text-silver-tree-300"
+            >
+                <svg
+                    class="mt-0.5 h-4 w-4 flex-none text-golden-grass-600 dark:text-golden-grass-400"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                >
+                    <circle
+                        cx="8"
+                        cy="8"
+                        r="7"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"></circle>
+                    <path
+                        d="M8 4.5v4.2M8 10.8v.7"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"></path>
+                </svg>
+                <span>
+                    Planned dates are targets, not guarantees, and may change.
+                    We list only features already in development.
+                </span>
+            </p>
 
             <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <figure
