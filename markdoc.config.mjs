@@ -97,6 +97,18 @@ export default defineMarkdocConfig({
       render: component("./src/components/diagram/PersistenceDiagram.astro"),
       selfClosing: true,
     },
+    // Print-layout preset, template blocks, and template on one exported page.
+    documentlayout: {
+      render: component("./src/components/diagram/DocumentLayoutDiagram.astro"),
+      selfClosing: true,
+      attributes: {
+        locale: {
+          type: String,
+          default: "en",
+          matches: ["en", "pt", "es", "id"],
+        },
+      },
+    },
     carbonbadge: {
       render: component("./src/components/WebCarbonBadge.astro"),
       selfClosing: true,

@@ -1,0 +1,644 @@
+---
+// How a print-layout preset, its template blocks, and a template fit together
+// on one exported page. Used on the "Export documents" page. Colours follow the
+// "Canopy" palette of the other diagrams: forest is the preset (the sheet),
+// moss a template block, and mist a template and its printed cells.
+import { wrapChips } from "./diagram";
+
+type Locale = "en" | "pt" | "es" | "id";
+
+interface Props {
+  locale?: Locale;
+}
+
+interface Strings {
+  block1: string;
+  block2: string;
+  preset: [string, string];
+  block: [string, string];
+  template: [string, string];
+  record: string;
+  label: string;
+  caption: string;
+}
+
+const strings: Record<Locale, Strings> = {
+  en: {
+    block1: "Block 1 · Tissue tag · 3 × 4",
+    block2: "Block 2 · Specimen label · 2 × 3",
+    preset: ["Print-layout preset", "The sheet: paper, padding, and block order"],
+    block: ["Template block", "Places one template on the sheet as a grid"],
+    template: ["Template", "One label or tag: its size, sides, and fields"],
+    record: "+ record",
+    label:
+      "A printed page: the print-layout preset is the sheet, it holds two template blocks laid out as grids, and each grid cell is one template filled with one record",
+    caption:
+      "A print-layout preset sets up the sheet; each template block repeats one template in a grid, and every cell is that template filled with one record.",
+  },
+  pt: {
+    block1: "Bloco 1 · Etiqueta de tecido · 3 × 4",
+    block2: "Bloco 2 · Etiqueta de espécime · 2 × 3",
+    preset: ["Preset de layout de impressão", "A folha: papel, espaçamento e ordem dos blocos"],
+    block: ["Bloco de modelo", "Posiciona um modelo na folha como uma grade"],
+    template: ["Modelo", "Uma etiqueta: tamanho, lados e campos"],
+    record: "+ registro",
+    label:
+      "Uma página impressa: o preset de layout de impressão é a folha, contém dois blocos de modelo dispostos em grade, e cada célula é um modelo preenchido com um registro",
+    caption:
+      "O preset de layout de impressão define a folha; cada bloco de modelo repete um modelo em grade, e cada célula é esse modelo preenchido com um registro.",
+  },
+  es: {
+    block1: "Bloque 1 · Etiqueta de tejido · 3 × 4",
+    block2: "Bloque 2 · Etiqueta de espécimen · 2 × 3",
+    preset: ["Preset de diseño de impresión", "La hoja: papel, espaciado y orden de bloques"],
+    block: ["Bloque de plantilla", "Coloca una plantilla en la hoja como cuadrícula"],
+    template: ["Plantilla", "Una etiqueta: tamaño, caras y campos"],
+    record: "+ registro",
+    label:
+      "Una página impresa: el preset de diseño de impresión es la hoja, contiene dos bloques de plantilla en cuadrícula, y cada celda es una plantilla rellenada con un registro",
+    caption:
+      "El preset de diseño de impresión define la hoja; cada bloque de plantilla repite una plantilla en cuadrícula, y cada celda es esa plantilla rellenada con un registro.",
+  },
+  id: {
+    block1: "Blok 1 · Label jaringan · 3 × 4",
+    block2: "Blok 2 · Label spesimen · 2 × 3",
+    preset: ["Preset tata letak cetak", "Lembar: kertas, jarak isi, dan urutan blok"],
+    block: ["Blok templat", "Menempatkan satu templat di lembar sebagai grid"],
+    template: ["Templat", "Satu label: ukuran, sisi, dan field"],
+    record: "+ catatan",
+    label:
+      "Satu halaman cetak: preset tata letak cetak adalah lembarnya, berisi dua blok templat yang disusun sebagai grid, dan setiap sel adalah satu templat yang diisi satu catatan",
+    caption:
+      "Preset tata letak cetak menyiapkan lembar; setiap blok templat mengulang satu templat dalam grid, dan setiap sel adalah templat itu yang diisi satu catatan.",
+  },
+};
+
+const { locale = "en" } = Astro.props;
+const s = strings[locale] ?? strings.en;
+
+// App labels stay in English on every locale, as in the rest of the docs.
+const chips = {
+  preset: ["Page size", "Orientation", "Page padding", "Multiple blocks mode"],
+  block: ["Template", "Copies", "Rows × Cols", "Auto-fill page", "Order by", "Page break after"],
+};
+const fields = ["[specimen::fieldNumber]", "[taxonomy::scientificName]", "[site::specificLocality]"];
+const values = ["JPO 7299", "Rattus rattus", "Sulawesi, Indonesia"];
+
+// The sheet, in its own 330 × 428 space. Each layout places and scales it.
+const sheet = { w: 330, h: 428 };
+interface Grid {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  rows: number;
+  cols: number;
+  gap: number;
+}
+const gridCells = (g: Grid) => {
+  const cw = (g.w - g.gap * (g.cols - 1)) / g.cols;
+  const ch = (g.h - g.gap * (g.rows - 1)) / g.rows;
+  return Array.from({ length: g.rows * g.cols }, (_, i) => ({
+    x: g.x + (i % g.cols) * (cw + g.gap),
+    y: g.y + Math.floor(i / g.cols) * (ch + g.gap),
+    w: cw,
+    h: ch,
+    row: Math.floor(i / g.cols),
+    col: i % g.cols,
+  }));
+};
+const blocks = [
+  { label: s.block1, region: { x: 26, y: 26, w: 278, h: 168 }, grid: { x: 34, y: 50, w: 262, h: 136, rows: 3, cols: 4, gap: 6 } },
+  { label: s.block2, region: { x: 26, y: 206, w: 278, h: 196 }, grid: { x: 34, y: 230, w: 262, h: 164, rows: 2, cols: 3, gap: 8 } },
+].map((b) => ({ ...b, cells: gridCells(b.grid) }));
+// The highlighted cell that the template card zooms into.
+const focus = { block: 1, row: 1, col: 2 };
+// Text-line placeholders inside a cell, as fractions of its width.
+const barWidths = [0.72, 0.5, 0.62, 0.4];
+// Number markers on the sheet, in sheet space.
+const sheetMarkers = [
+  { n: 1, tone: "preset", x: sheet.w, y: 60 },
+  { n: 2, tone: "block", x: 304, y: 110 },
+  { n: 3, tone: "template", x: 296, y: 355 },
+];
+
+interface Card {
+  key: "preset" | "block" | "template";
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+interface Layout {
+  name: "wide" | "narrow";
+  width: number;
+  height: number;
+  sheet: { x: number; y: number; scale: number };
+  cards: Card[];
+  leaders: string[];
+  stacked: boolean;
+  chipCharW: number;
+}
+
+const wide: Layout = {
+  name: "wide",
+  width: 876,
+  height: 472,
+  sheet: { x: 8, y: 12, scale: 1 },
+  cards: [
+    { key: "preset", x: 388, y: 12, w: 480, h: 120 },
+    { key: "block", x: 388, y: 152, w: 480, h: 120 },
+    { key: "template", x: 388, y: 294, w: 480, h: 146 },
+  ],
+  // From the edge of each number on the sheet to the edge of the same number
+  // on its card.
+  leaders: [
+    "348,72 364,72 364,37 404,37",
+    "322,122 364,122 364,177 404,177",
+    "314,367 364,367 364,319 404,319",
+  ],
+  stacked: false,
+  chipCharW: 6.4,
+};
+
+// Phones: the sheet on top, the cards stacked below, linked by number only.
+const nScale = 0.9;
+const nTop = 8 + sheet.h * nScale + 34;
+const narrowCards: Card[] = [];
+{
+  let y = nTop;
+  for (const key of ["preset", "block", "template"] as const) {
+    let h: number;
+    if (key === "template") {
+      h = 64 + 62 + 34 + 62 + 16;
+    } else {
+      const placed = wrapChips(chips[key], 22, y + 64, 316, 6);
+      h = placed[placed.length - 1].y + 20 + 16 - y;
+    }
+    narrowCards.push({ key, x: 4, y, w: 352, h });
+    y += h + 10;
+  }
+}
+const narrow: Layout = {
+  name: "narrow",
+  width: 360,
+  height: Math.ceil(narrowCards[2].y + narrowCards[2].h + 4),
+  sheet: { x: (360 - sheet.w * nScale) / 2, y: 8, scale: nScale },
+  cards: narrowCards,
+  leaders: [],
+  stacked: true,
+  chipCharW: 6,
+};
+
+const layouts = [wide, narrow].map((layout) => ({
+  ...layout,
+  cards: layout.cards.map((c) => ({
+    ...c,
+    n: ["preset", "block", "template"].indexOf(c.key) + 1,
+    title: s[c.key][0],
+    sub: s[c.key][1],
+    chips:
+      c.key === "template" ? [] : wrapChips(chips[c.key], c.x + 18, c.y + 64, c.w - 36, layout.chipCharW),
+  })),
+}));
+---
+
+<figure class="nahpu-diagram not-content">
+  <div class="card">
+    {
+      layouts.map((layout) => (
+        <svg
+          viewBox={`0 0 ${layout.width} ${layout.height}`}
+          class={`diagram ${layout.name}`}
+          role="img"
+          aria-label={s.label}
+        >
+          <g transform={`translate(${layout.sheet.x} ${layout.sheet.y}) scale(${layout.sheet.scale})`}>
+            <rect width={sheet.w} height={sheet.h} rx="6" class="sheet" stroke-width="1.75" />
+            <rect
+              x="18"
+              y="18"
+              width={sheet.w - 36}
+              height={sheet.h - 36}
+              class="padding"
+              fill="none"
+              stroke-width="1"
+              stroke-dasharray="3 4"
+            />
+            {blocks.map((b, bi) => (
+              <g>
+                <rect
+                  x={b.region.x}
+                  y={b.region.y}
+                  width={b.region.w}
+                  height={b.region.h}
+                  rx="6"
+                  class="region"
+                  stroke-width="1.5"
+                  stroke-dasharray="6 4"
+                />
+                <text x={b.region.x + 8} y={b.region.y + 16} font-size="11" class="region-label">
+                  {b.label}
+                </text>
+                {b.cells.map((c) => {
+                  const on = bi === focus.block && c.row === focus.row && c.col === focus.col;
+                  const lines = c.h > 60 ? 4 : 3;
+                  const step = (c.h - 8) / (lines + 1);
+                  return (
+                    <g class={on ? "cell focus" : "cell"}>
+                      <rect x={c.x} y={c.y} width={c.w} height={c.h} rx="3" class="cell-box" stroke-width={on ? 1.75 : 1} />
+                      {barWidths.slice(0, lines).map((f, k) => (
+                        <rect
+                          x={c.x + 7}
+                          y={c.y + 4 + step * (k + 1) - 1.5}
+                          width={(c.w - 14) * f}
+                          height={c.h > 60 ? 4 : 3}
+                          rx="1.5"
+                          class="cell-bar"
+                        />
+                      ))}
+                    </g>
+                  );
+                })}
+              </g>
+            ))}
+            {sheetMarkers.map((m) => (
+              <g class={`tone-${m.tone}`}>
+                <circle cx={m.x} cy={m.y} r="10" class="marker" />
+                <text x={m.x} y={m.y + 4} text-anchor="middle" font-size="11.5" class="marker-text">
+                  {m.n}
+                </text>
+              </g>
+            ))}
+          </g>
+          <text
+            x={layout.sheet.x + (sheet.w * layout.sheet.scale) / 2}
+            y={layout.sheet.y + sheet.h * layout.sheet.scale + 22}
+            text-anchor="middle"
+            font-size="11.5"
+            class="page-label"
+          >
+            Letter · Portrait
+          </text>
+
+          {layout.cards.map((c) => (
+            <g class={`tone-${c.key}`}>
+              <rect x={c.x} y={c.y} width={c.w} height={c.h} rx="14" class="box" stroke-width="1.5" />
+              <circle cx={c.x + 26} cy={c.y + 25} r="10" class="marker" />
+              <text x={c.x + 26} y={c.y + 29} text-anchor="middle" font-size="11.5" class="marker-text">
+                {c.n}
+              </text>
+              <text x={c.x + 44} y={c.y + 30} font-size={layout.name === "wide" ? 15 : 14} class="title">
+                {c.title}
+              </text>
+              <text x={c.x + 18} y={c.y + 52} font-size={layout.name === "wide" ? 12 : 11} class="sub">
+                {c.sub}
+              </text>
+              {c.chips.map((chip) => (
+                <g>
+                  <rect x={chip.x} y={chip.y} width={chip.w} height="20" rx="10" class="chip" stroke-width="1" />
+                  <text
+                    x={chip.x + chip.w / 2}
+                    y={chip.y + 14}
+                    text-anchor="middle"
+                    font-size={layout.name === "wide" ? 11 : 10}
+                    class="chip-text"
+                  >
+                    {chip.label}
+                  </text>
+                </g>
+              ))}
+              {c.key === "template" &&
+                (() => {
+                  // A template beside (wide) or above (narrow) the label it prints.
+                  const fs = layout.name === "wide" ? 10.5 : 10;
+                  const a = layout.stacked
+                    ? { x: c.x + 18, y: c.y + 64, w: c.w - 36 }
+                    : { x: c.x + 18, y: c.y + 66, w: 204 };
+                  const b = layout.stacked
+                    ? { x: c.x + 18, y: a.y + 62 + 34, w: c.w - 36 }
+                    : { x: c.x + 276, y: a.y, w: c.w - 294 };
+                  const arrow = layout.stacked
+                    ? { x1: c.x + 40, y1: a.y + 66, x2: c.x + 40, y2: b.y - 4 }
+                    : { x1: a.x + a.w + 6, y1: a.y + 31, x2: b.x - 6, y2: a.y + 31 };
+                  return (
+                    <g>
+                      {[
+                        { box: a, lines: fields, kind: "fields" },
+                        { box: b, lines: values, kind: "values" },
+                      ].map(({ box, lines, kind }) => (
+                        <g>
+                          <rect x={box.x} y={box.y} width={box.w} height="62" rx="4" class={`example ${kind}`} stroke-width="1.25" />
+                          {lines.map((line, k) => (
+                            <text
+                              x={box.x + 10}
+                              y={box.y + 17 + k * 17}
+                              font-size={fs}
+                              class={`example-text ${kind}`}
+                              font-style={kind === "values" && k === 1 ? "italic" : undefined}
+                            >
+                              {line}
+                            </text>
+                          ))}
+                        </g>
+                      ))}
+                      <line x1={arrow.x1} y1={arrow.y1} x2={arrow.x2} y2={arrow.y2} class="flow" stroke-width="1.5" />
+                      <polygon
+                        points={
+                          layout.stacked
+                            ? `${arrow.x2},${arrow.y2} ${arrow.x2 - 4},${arrow.y2 - 7} ${arrow.x2 + 4},${arrow.y2 - 7}`
+                            : `${arrow.x2},${arrow.y2} ${arrow.x2 - 7},${arrow.y2 - 4} ${arrow.x2 - 7},${arrow.y2 + 4}`
+                        }
+                        class="flow-head"
+                      />
+                      <text
+                        x={layout.stacked ? arrow.x1 + 12 : (arrow.x1 + arrow.x2) / 2}
+                        y={layout.stacked ? (arrow.y1 + arrow.y2) / 2 + 4 : arrow.y1 - 8}
+                        text-anchor={layout.stacked ? "start" : "middle"}
+                        font-size="11"
+                        class="flow-label"
+                      >
+                        {s.record}
+                      </text>
+                    </g>
+                  );
+                })()}
+            </g>
+          ))}
+
+          {layout.leaders.map((points) => (
+            <polyline points={points} class="leader" fill="none" stroke-width="1.5" />
+          ))}
+        </svg>
+      ))
+    }
+  </div>
+  <figcaption>{s.caption}</figcaption>
+</figure>
+
+<style>
+  /* "Canopy" palette, shared with the other NAHPU diagrams. */
+  .nahpu-diagram {
+    --forest-50: #f3f6f4;
+    --forest-100: #e2e9e3;
+    --forest-200: #c5d3c8;
+    --forest-300: #9db3a3;
+    --forest-400: #718e78;
+    --forest-500: #53705b;
+    --forest-600: #405847;
+    --forest-700: #33473a;
+    --forest-800: #283a2e;
+    --forest-900: #1c2b21;
+    --forest-950: #0e1a12;
+    --moss-50: #f5f9eb;
+    --moss-100: #e8f1d2;
+    --moss-200: #d3e4a9;
+    --moss-300: #b5d177;
+    --moss-400: #9bbf4f;
+    --moss-600: #688a2c;
+    --moss-700: #506a25;
+    --moss-800: #415522;
+    --moss-900: #37481f;
+    --moss-950: #1c270c;
+    --mist-50: #f4f7f8;
+    --mist-100: #e4ecee;
+    --mist-200: #cdd9dd;
+    --mist-300: #a9bcc2;
+    --mist-400: #8199a2;
+    --mist-500: #637c86;
+    --mist-600: #4f646d;
+    --mist-700: #42535a;
+    --mist-900: #323c41;
+    --mist-950: #1e2629;
+
+    margin: 1.5rem 0;
+  }
+
+  .card {
+    border: 1px solid rgb(28 43 33 / 0.1);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.7);
+    padding: 0.5rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  }
+
+  .diagram {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: var(--sl-font, sans-serif);
+  }
+  .diagram.wide {
+    display: none;
+  }
+
+  @media (min-width: 48rem) {
+    .card {
+      padding: 0.75rem;
+    }
+    .diagram.wide {
+      display: block;
+    }
+    .diagram.narrow {
+      display: none;
+    }
+  }
+
+  figcaption {
+    margin: 0.75rem auto 0;
+    max-width: 48rem;
+    text-align: center;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-2);
+  }
+
+  /* Tones: forest = preset, moss = template block, mist = template. */
+  .nahpu-diagram {
+    --preset-fill: var(--forest-50);
+    --preset-stroke: var(--forest-800);
+    --preset-title: var(--forest-900);
+    --preset-muted: var(--forest-700);
+    --preset-mark: var(--forest-700);
+    --preset-chip: var(--forest-100);
+    --preset-chip-stroke: var(--forest-300);
+    --block-fill: var(--moss-100);
+    --block-stroke: var(--moss-600);
+    --block-title: var(--moss-900);
+    --block-muted: var(--moss-800);
+    --block-mark: var(--moss-700);
+    --block-chip: var(--moss-50);
+    --block-chip-stroke: var(--moss-300);
+    --template-fill: var(--mist-100);
+    --template-stroke: var(--mist-500);
+    --template-title: var(--mist-900);
+    --template-muted: var(--mist-700);
+    --template-mark: var(--mist-600);
+    --template-chip: var(--mist-50);
+    --template-chip-stroke: var(--mist-300);
+    --paper: #fff;
+    --cell: #fff;
+    --cell-stroke: var(--mist-300);
+    --cell-bar: var(--mist-200);
+    --mark-text: #fff;
+    --leader: var(--forest-400);
+    --label: var(--forest-800);
+  }
+
+  .tone-preset {
+    --fill: var(--preset-fill);
+    --stroke: var(--preset-stroke);
+    --title: var(--preset-title);
+    --muted: var(--preset-muted);
+    --mark: var(--preset-mark);
+    --chip: var(--preset-chip);
+    --chip-stroke: var(--preset-chip-stroke);
+  }
+  .tone-block {
+    --fill: var(--block-fill);
+    --stroke: var(--block-stroke);
+    --title: var(--block-title);
+    --muted: var(--block-muted);
+    --mark: var(--block-mark);
+    --chip: var(--block-chip);
+    --chip-stroke: var(--block-chip-stroke);
+  }
+  .tone-template {
+    --fill: var(--template-fill);
+    --stroke: var(--template-stroke);
+    --title: var(--template-title);
+    --muted: var(--template-muted);
+    --mark: var(--template-mark);
+    --chip: var(--template-chip);
+    --chip-stroke: var(--template-chip-stroke);
+  }
+
+  .box {
+    fill: var(--fill);
+    stroke: var(--stroke);
+  }
+  .title {
+    fill: var(--title);
+    font-weight: 600;
+  }
+  .sub {
+    fill: var(--muted);
+  }
+  .chip {
+    fill: var(--chip);
+    stroke: var(--chip-stroke);
+  }
+  .chip-text {
+    fill: var(--title);
+    font-family: var(--__sl-font-mono, ui-monospace, monospace);
+  }
+  .marker {
+    fill: var(--mark);
+  }
+  .marker-text {
+    fill: var(--mark-text);
+    font-weight: 700;
+  }
+
+  .leader {
+    stroke: var(--leader);
+    stroke-dasharray: 4 5;
+  }
+  .sheet {
+    fill: var(--paper);
+    stroke: var(--preset-stroke);
+  }
+  .padding {
+    stroke: var(--forest-300);
+  }
+  .page-label {
+    fill: var(--label);
+    font-family: var(--__sl-font-mono, ui-monospace, monospace);
+  }
+  .region {
+    fill: var(--block-chip);
+    stroke: var(--block-stroke);
+  }
+  .region-label {
+    fill: var(--block-title);
+    font-weight: 600;
+  }
+  .cell-box {
+    fill: var(--cell);
+    stroke: var(--cell-stroke);
+  }
+  .cell-bar {
+    fill: var(--cell-bar);
+  }
+  .cell.focus .cell-box {
+    fill: var(--template-fill);
+    stroke: var(--template-stroke);
+  }
+  .cell.focus .cell-bar {
+    fill: var(--template-stroke);
+  }
+
+  .example {
+    stroke: var(--template-stroke);
+  }
+  .example.fields {
+    fill: var(--template-chip);
+    stroke-dasharray: 4 3;
+  }
+  .example.values {
+    fill: var(--paper);
+  }
+  .example-text {
+    fill: var(--template-title);
+  }
+  .example-text.fields {
+    font-family: var(--__sl-font-mono, ui-monospace, monospace);
+  }
+  .flow {
+    stroke: var(--template-stroke);
+  }
+  .flow-head {
+    fill: var(--template-stroke);
+  }
+  .flow-label {
+    fill: var(--template-muted);
+    font-style: italic;
+  }
+
+  :global([data-theme="dark"]) .card {
+    border-color: rgb(226 233 227 / 0.1);
+    background: rgb(14 26 18 / 0.4);
+  }
+  :global([data-theme="dark"]) .nahpu-diagram {
+    --preset-fill: var(--forest-900);
+    --preset-stroke: var(--forest-400);
+    --preset-title: var(--forest-50);
+    --preset-muted: var(--forest-300);
+    --preset-mark: var(--forest-400);
+    --preset-chip: var(--forest-800);
+    --preset-chip-stroke: var(--forest-600);
+    --block-fill: var(--moss-950);
+    --block-stroke: var(--moss-400);
+    --block-title: var(--moss-50);
+    --block-muted: var(--moss-200);
+    --block-mark: var(--moss-400);
+    --block-chip: var(--moss-900);
+    --block-chip-stroke: var(--moss-700);
+    --template-fill: var(--mist-950);
+    --template-stroke: var(--mist-300);
+    --template-title: var(--mist-50);
+    --template-muted: var(--mist-200);
+    --template-mark: var(--mist-400);
+    --template-chip: var(--mist-900);
+    --template-chip-stroke: var(--mist-700);
+    --paper: var(--forest-950);
+    --cell: var(--mist-950);
+    --cell-stroke: var(--mist-700);
+    --cell-bar: var(--mist-700);
+    --mark-text: var(--forest-950);
+    --leader: var(--forest-500);
+    --label: var(--forest-200);
+  }
+  :global([data-theme="dark"]) .padding {
+    stroke: var(--forest-600);
+  }
+</style>

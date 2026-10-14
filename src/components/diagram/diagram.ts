@@ -63,7 +63,7 @@ interface Chip {
 }
 
 // Lay chips out left to right, wrapping when a row runs past maxW.
-function wrapChips(labels: string[], x: number, y: number, maxW: number, charW: number): Chip[] {
+export function wrapChips(labels: string[], x: number, y: number, maxW: number, charW: number): Chip[] {
   const chips: Chip[] = [];
   let cx = x;
   let cy = y;
