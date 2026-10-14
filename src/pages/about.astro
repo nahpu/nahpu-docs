@@ -174,11 +174,18 @@ const timeline: Milestone[] = [
     },
 ];
 
-const formatMonth = (date: Date) =>
-    date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+// Released milestones show the exact day ("18 Jul 2022"); planned ones only a
+// target month ("Oct 2026").
+const formatDate = (item: Milestone) => {
+    const month = item.date.toLocaleDateString("en-US", { month: "short" });
+    const monthYear = `${month} ${item.date.getFullYear()}`;
+    return item.released ? `${item.date.getDate()} ${monthYear}` : monthYear;
+};
 
-const formatIsoMonth = (date: Date) =>
-    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+const formatIsoDate = (item: Milestone) => {
+    const month = `${item.date.getFullYear()}-${String(item.date.getMonth() + 1).padStart(2, "0")}`;
+    return item.released ? `${month}-${String(item.date.getDate()).padStart(2, "0")}` : month;
+};
 
 const [firstCommit, stableRelease] = timeline;
 const developmentMonths =
@@ -449,9 +456,9 @@ const firstPlannedIndex = timeline.findIndex((item) => !item.released);
                             >
                                 <time
                                     class="nh-tl-when nh-tl-date"
-                                    datetime={formatIsoMonth(item.date)}
+                                    datetime={formatIsoDate(item)}
                                 >
-                                    {formatMonth(item.date)}
+                                    {formatDate(item)}
                                 </time>
                                 <span class="nh-tl-axis">
                                     <span class="nh-tl-dot" />
