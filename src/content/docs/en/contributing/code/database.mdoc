@@ -59,15 +59,15 @@ Keep these version concepts separate when reviewing a persistence change.
 
 | Version | Current value | Owner | Meaning |
 |---|---:|---|---|
-| Drift schema version | 22 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
+| Drift schema version | 23 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
 | SQLite user version | Set by Drift | Drift | On-disk marker used to select upgrade steps |
 | redb internal schema version | Not implemented | `nahpu_configs` | A future marker for redb table and value migrations |
 | Configuration export schema | 4 | `USER_CONFIG_SCHEMA_VERSION` | Compatibility version for exported configuration payloads |
 | Rust crate version | 0.7.1 | `crates/nahpu_configs/Cargo.toml` | Package release version, not a data migration marker |
 | Schema mirror crate version | 0.6.0 | `crates/nahpu_db/Cargo.toml` | Release carrying the mirrored `tables.drift`; a schema change bumps it |
 | redb engine version | 4.1.0 dependency | Cargo dependency resolution | Storage engine behavior, not NAHPU application schema |
-| Record-exchange format | 6 | Record-exchange model | Version of individual record and QR payloads |
-| Project transfer format | 9 | Transfer model and archive code | Version of project import and export payloads |
+| Record-exchange format | 7 | Record-exchange model | Version of individual record and QR payloads |
+| Project transfer format | 10 | Transfer model and archive code | Version of project import and export payloads |
 
 ## redb tables
 
@@ -118,7 +118,7 @@ preservation, and corrupted input that must not partially clear stored data.
 ## Drift table schema
 
 The canonical project schema is defined in
-`lib/services/database/tables.drift` and is currently at schema version 22.
+`lib/services/database/tables.drift` and is currently at schema version 23.
 Drift manages these tables over SQLite. The summary below describes the
 current table set and the important ownership relationships.
 
@@ -152,10 +152,14 @@ current table set and the important ownership relationships.
 | `birdAttribute` | Bird measurements, colors, molt, reproductive observations, and habitat attributes. |
 | `herpAttribute` | Herpetofauna sex, life stage, weight, snout-vent length, and remark attributes. |
 | `invertebrateAttribute` | Invertebrate sex, life stage, caste, host interactions, morphometrics, and remarks. |
+| `fishAttribute` | Ichthyology attributes for one fish or a lot: specimen type, sex, life stage, standard and total length, weight, lot count, and lot min/max ranges. Added in v23. |
 | `fossilAttribute` | Fossil-specific specimen attributes. |
+| `specimenIndividual` | Individuals within a specimen lot, with an individual or tag ID, lengths, weight, sex, life stage, and remark. Generic across catalog formats. Added in v23. |
 | `parasiteDetection` | Detection records connecting specimens and parasite observations. |
 | `parasite` | Parasite taxonomy and observation details. |
+| `parasiteIndividual` | Composite link between parasites and the lot individuals they were found on. Cascades from both sides. Added in v23. |
 | `specimenPart` | Specimen parts, tissues, barcodes, treatments, loans, and preparation details. |
+| `specimenPartIndividual` | Composite link between specimen parts and the lot individuals they were taken from. Cascades from both sides. Added in v23. |
 | `customFieldDefinition` | Global and project custom-field definitions, types, placement, ordering, export mapping, and archive state. |
 | `customFieldValue` | Owner-specific custom values. A non-legacy row belongs to exactly one event, site, specimen, specimen part, or parasite. v20 added nullable `eventId` ownership. |
 
@@ -219,7 +223,7 @@ index increases migration and insert cost.
    ```bash
    bash scripts/codegen.sh
    bash scripts/dump_schema.sh
-   cp lib/services/database/tables.drift db_schemas/drift_tables/tables_v22.drift
+   cp lib/services/database/tables.drift db_schemas/drift_tables/tables_v23.drift
    ```
 
 8. Regenerate the migration-test schemas. `drift_dev schema generate` lists its
@@ -249,7 +253,7 @@ index increases migration and insert cost.
     audit below. See [API](../nahpu-api) for building the app against the
     unpublished crates.
 11. Add migration fixtures and tests in `test/database/migration_test.dart`. The
-    suite currently upgrades fixtures from v6 through v21 to v22. Point every
+    suite currently upgrades fixtures from v6 through v22 to v23. Point every
     `migrateAndValidate` call at the new version: a step that recreates a
     trigger builds the current shape, so a call left on the previous version
     fails schema comparison.
@@ -258,7 +262,20 @@ index increases migration and insert cost.
 
 {% /steps %}
 
-### Worked example: v21 to v22
+### Worked example: v22 to v23
+
+The v23 migration in `lib/services/database/migration_coordinator.dart` adds
+ichthyology support:
+
+1. Adds `environment.conductivity` (µS/cm) and
+   `environment.dissolvedOxygenPercent` (%) when they are missing.
+2. Creates `fishAttribute`, `specimenIndividual`, `specimenPartIndividual`,
+   and `parasiteIndividual` with their indexes. Every step checks for work an interrupted attempt
+   already finished, because Drift does not run `onUpgrade` in a transaction.
+3. Recreates both custom-field triggers so the `Fishes` taxon group maps to the
+   `ichthyology` catalog format, then runs a foreign-key check.
+
+### Historical example: v21 to v22
 
 The v22 migration in `lib/services/database/migration_coordinator.dart`:
 
@@ -372,7 +389,8 @@ exported or reproduced. Installation-local preferences remain in
 
 ## Darwin Core field mapping
 
-This is the audited schema-v21 mapping surface for `nahpu_dwc` 0.6.0. It uses
+This is the audited schema-v23 mapping surface for `nahpu_dwc` (the unreleased
+successor to 0.7.0). It uses
 the 2026-05-26 [Darwin Core List of Terms](https://dwc.tdwg.org/list/) and the
 [Darwin Core Data Package 1.0](https://dwc.tdwg.org/dp/) profile. Source fields
 use `table::field` notation.
@@ -504,7 +522,7 @@ The table audit is grouped by data domain:
 | Fields | Status | Darwin Core or export handling |
 |---|---|---|
 | `eventID`; `notes` | Mapped | `dwc:eventID`; `dwc:eventRemarks` |
-| `lowestDayTempC`; `highestDayTempC`; `lowestNightTempC`; `highestNightTempC`; `averageHumidity`; `dewPointTemp`; `sunriseTime`; `sunsetTime`; `moonPhase`; `cloudCover`; `rainfallInMm`; `ambientTemperature`; `ambientHumidity`; `waterTemperature`; `pH`; `dissolvedOxygen`; `flowVelocity` | Composite/measurement | Event assertions with explicit measurement types and defined units where available. |
+| `lowestDayTempC`; `highestDayTempC`; `lowestNightTempC`; `highestNightTempC`; `averageHumidity`; `dewPointTemp`; `sunriseTime`; `sunsetTime`; `moonPhase`; `cloudCover`; `rainfallInMm`; `ambientTemperature`; `ambientHumidity`; `waterTemperature`; `pH`; `dissolvedOxygen`; `dissolvedOxygenPercent`; `conductivity`; `flowVelocity` | Composite/measurement | Event assertions with explicit measurement types and defined units where available. Conductivity is in µS/cm and dissolved oxygen saturation in %. |
 
 #### `collPersonnel`
 
@@ -653,6 +671,22 @@ The table audit is grouped by data domain:
 | `specimenUuid`; `fossilType`; `sex`; `ontogeneticStage`; `specimenDescription`; `remark` | Mapped | `dwc:occurrenceID`; `dwc:materialEntityType`; `dwc:sex`; `dwc:lifeStage`; descriptions and remarks use `dwc:materialEntityRemarks`. |
 | `weight`; `weightUnit` | Composite/measurement | Weight MeasurementOrFact row with its selected unit. |
 
+#### `fishAttribute`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `specimenUuid`; `sex`; `lifeStage`; `individualCount`; `remark` | Mapped | `dwc:occurrenceID`; `dwc:sex`; `dwc:lifeStage`; `dwc:individualCount`; `dwc:occurrenceRemarks`. A single fish exports an individual count of one. |
+| `standardLength`; `totalLength`; `weight`; `minStandardLength`; `maxStandardLength`; `minTotalLength`; `maxTotalLength`; `minWeight`; `maxWeight`; `weightUnit`; `specimenType` | Composite/measurement | MeasurementOrFact rows in millimetres, with `weightUnit` supplying the weight unit. `specimenType` selects the single-fish or the lot ranges; the inactive set is not exported. |
+| `isAutoRange` | Unmapped | `nahpu:fishAttribute.isAutoRange`. Form state that keeps lot ranges in step with the measured individuals. |
+
+#### `specimenIndividual`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `individualID`; `remark` | Mapped | `dwc:otherCatalogNumbers`; `dwc:materialEntityRemarks` on a whole-organism material row. |
+| `standardLength`; `totalLength`; `weight`; `weightUnit`; `sex`; `lifeStage` | Composite/measurement | Material assertions on the individual's material row. `weightUnit` supplies the weight unit. |
+| `id`; `specimenUuid` | Relationship | The individual material identifier and its link to the lot occurrence. |
+
 ### Parasites and specimen material
 
 #### `parasiteDetection`
@@ -670,6 +704,12 @@ The table audit is grouped by data domain:
 | `specimenUuid`; `anatomicalLocation`; `category`; `associationStatus` | Relationship | Host occurrence and organism-interaction fields; structured bundles emit subject/related occurrence links, interaction type, related organism part, and description. |
 | `id`; `storage`; `storageLocation`; `datePreserved`; `timePreserved`; `museumPermanent`; `museumLoan` | Unmapped | `nahpu:parasite.id`; `nahpu:parasite.storage`; `nahpu:parasite.storageLocation`; `nahpu:parasite.datePreserved`; `nahpu:parasite.timePreserved`; `nahpu:parasite.museumPermanent`; `nahpu:parasite.museumLoan`. Internal identity and preservation, storage, and museum workflow values need a material-record model before standard mapping. |
 
+#### `parasiteIndividual`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `parasiteID`; `individualID` | Relationship | A `host individual` occurrence assertion on the parasite occurrence, listing the host individual material identifiers. |
+
 #### `specimenPart`
 
 | Fields | Status | Darwin Core or export handling |
@@ -678,6 +718,12 @@ The table audit is grouped by data domain:
 | `tissueID`; `barcodeID`; `count`; `treatment`; `additionalTreatment`; `dateTaken`; `timeTaken`; `remark` | Mapped | `dwc:materialSampleID`; `dwc:otherCatalogNumbers`; `dwc:objectQuantity`; preparation values use `dwc:preparations`; `dwc:eventDate`; `dwc:eventTime`; `dwc:materialEntityRemarks` |
 | `type` | Composite/measurement | `dwc:materialEntityType` and `dwc:objectQuantityType` |
 | `id`; `storage`; `storageLocation`; `pmi`; `museumPermanent`; `museumLoan` | Unmapped | `nahpu:specimenPart.id`; `nahpu:specimenPart.storage`; `nahpu:specimenPart.storageLocation`; `nahpu:specimenPart.pmi`; `nahpu:specimenPart.museumPermanent`; `nahpu:specimenPart.museumLoan`. Internal, storage, PMI, and museum workflow values have no exact current representation. |
+
+#### `specimenPartIndividual`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `partID`; `individualID` | Relationship | A `derived from individual` material assertion on the part, listing the source individual material identifiers. |
 
 ### Custom fields
 
