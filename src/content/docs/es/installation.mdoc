@@ -79,21 +79,21 @@ Si antes instaló NAHPU mediante TestFlight, instale la versión de la App Store
 
 {% tabitem label="Linux" %}
 
-Requisitos: una distribución x86_64 con GLIBC 2.35 o posterior. Ubuntu 22.04, Debian 12, Fedora 36 y RHEL o Rocky Linux 9 y posteriores cumplen este requisito.
+Requisitos: una distribución x86_64 o arm64 (aarch64) con GLIBC 2.35 o posterior. Ubuntu 22.04, Debian 12, Fedora 36 y RHEL o Rocky Linux 9 y posteriores cumplen este requisito.
 
-La forma más rápida de instalar es el script de instalación. Instala el paquete `.deb` en Ubuntu y Debian, el paquete `.rpm` firmado en Fedora y RHEL, y el archivo portátil en tu carpeta personal en las demás distribuciones. Pide tu contraseña cuando instala un paquete del sistema.
+La forma más rápida de instalar es el script de instalación. Instala el paquete `.deb` en Ubuntu y Debian, el paquete `.rpm` firmado en Fedora y RHEL, y el archivo portátil en tu carpeta personal en las demás distribuciones. Elige la versión adecuada para tu procesador. Pide tu contraseña cuando instala un paquete del sistema y, si no tienes acceso de administrador, instala en su lugar el archivo portátil en tu carpeta personal. Cuando la Snap Store tiene NAHPU para tu sistema, el script pregunta si prefieres el Snap; agrega `--snap` para elegirlo sin la pregunta.
 
 ```bash
 curl -fsSL https://nahpu.app/install.sh | bash
 ```
 
-Para usar el archivo portátil en cualquier distribución, ejecuta `curl -fsSL https://nahpu.app/install.sh | bash -s -- --portable`. Puedes leer el script antes de ejecutarlo en [nahpu.app/install.sh](https://nahpu.app/install.sh). Para instalar manualmente, sigue los pasos de tu distribución a continuación.
+Para usar el archivo portátil en cualquier distribución, ejecuta `curl -fsSL https://nahpu.app/install.sh | bash -s -- --portable`. Puedes leer el script antes de ejecutarlo en [nahpu.app/install.sh](https://nahpu.app/install.sh). Para instalar manualmente, sigue los pasos de tu distribución a continuación. Los comandos descargan la versión x86_64; en arm64, reemplaza `x86_64` por `arm64` en cada nombre de archivo.
 
 {% tabs %}
 
 {% tabitem label="Snap Store" %}
 
-El paquete Snap funciona en cualquier distribución x86_64 con [`snapd`](https://snapcraft.io/docs/installing-snapd) y se actualiza solo en segundo plano.
+El paquete Snap funciona en cualquier distribución x86_64 o arm64 con [`snapd`](https://snapcraft.io/docs/installing-snapd) y se actualiza solo en segundo plano.
 
 {% storebadge store="snap-store" locale="es" /%}
 
@@ -129,7 +129,7 @@ El paquete Snap funciona en cualquier distribución x86_64 con [`snapd`](https:/
 
 {% tabitem label="Fedora y RHEL" %}
 
-Estos pasos sirven para Fedora, RHEL, Rocky Linux, AlmaLinux y otras redistribuciones de RHEL.
+Estos pasos sirven para Fedora, RHEL, Rocky Linux, AlmaLinux y otras redistribuciones de RHEL. El paquete RPM firmado solo está disponible para x86_64; en arm64, usa el archivo portátil de **Otras distribuciones**.
 
 NAHPU firma sus paquetes RPM. Importe la clave de firma una vez, antes de la primera instalación:
 
