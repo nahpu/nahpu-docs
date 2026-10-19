@@ -135,6 +135,24 @@ const downloadBtnClasses = cntl`
   hover:-translate-y-0.5
 `;
 
+const statusChipClasses = cntl`
+  inline-flex items-center gap-1.5
+  rounded-full
+  border border-silver-tree-300/70 dark:border-silver-tree-700/70
+  bg-silver-tree-100 dark:bg-silver-tree-950/70
+  px-3 py-1
+  text-xs font-medium
+  text-silver-tree-800 dark:text-silver-tree-100
+`;
+
+/// Rollout of the latest release. Apple devices share one App Store listing.
+const releaseStatus = [
+  { name: "Android", available: true },
+  { name: "Apple devices", available: false },
+  { name: "Linux", available: true },
+  { name: "Windows", available: true },
+];
+
 interface PlatformLink {
   label: string;
   href: string;
@@ -335,7 +353,39 @@ const nextSteps = [
       <div
         class="nh-reveal rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/90 p-6 backdrop-blur-sm dark:border-silver-tree-700/70 dark:bg-silver-tree-900/80"
       >
-        <p class={labelClasses}>Release</p>
+        <p class={labelClasses}>Latest release</p>
+        <h2
+          class="mt-3 text-xl font-semibold text-silver-tree-900 dark:text-silver-tree-50"
+        >
+          NAHPU v1.1.0 is out
+        </h2>
+        <p class={`${bodyTextClasses} mt-3 max-w-3xl`}>
+          Version 1.1.0 adds the Ichthyology catalog format in beta: record a
+          fish as an individual or as a lot, measure the individuals in a lot,
+          and link tissues and parasites to the fish they came from. It also
+          adds tissue ID suffixes, and conductivity and dissolved oxygen
+          saturation for collecting events.
+        </p>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {
+            releaseStatus.map((item) => (
+              <li class={statusChipClasses}>
+                <span
+                  class="h-1.5 w-1.5 rounded-full"
+                  style={`background:${item.available ? "var(--color-silver-tree-500)" : "var(--color-golden-grass-500)"}`}
+                  aria-hidden="true"
+                />
+                {item.name}: {item.available ? "Available" : "In App Store review"}
+              </li>
+            ))
+          }
+        </ul>
+
+        <hr
+          class="my-8 border-silver-tree-300/70 dark:border-silver-tree-700/70"
+        />
+
+        <p class={labelClasses}>Version 1</p>
         <h2
           class="mt-3 text-xl font-semibold text-silver-tree-900 dark:text-silver-tree-50"
         >
