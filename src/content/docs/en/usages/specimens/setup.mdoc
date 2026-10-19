@@ -1,0 +1,69 @@
+---
+title: Setting up specimen records
+sidebar:
+  label: Setup
+  order: 1
+---
+
+The NAHPU default lists for `Specimen parts` and `Treatments` are intentionally
+short. Before entering a large batch of specimens, configure the project lists
+that your team will use in the field or collection room.
+
+{% steps %}
+
+1. Navigate to the dashboard.
+2. Tap/click the hamburger menu in the top left corner.
+3. Select `Settings`.
+4. Select `Specimens`.
+5. Configure the `Use project ID` toggle. It is off by default, which uses a
+   cataloger's initials and field number. At least one Cataloger must have
+   personal field-number registration enabled and a current number.
+
+    Turn on `Use project ID` to configure a prefix, the next catalog number,
+    and a suffix. NAHPU concatenates those values directly. Turn on
+    auto-increment to assign and advance the project number when a new specimen
+    uses this mode.
+
+    This choice is only the default. Open a specimen's field-ID editor to choose
+    Personnel or Project for that specimen. A project can contain both types,
+    but one specimen cannot have both identifiers.
+
+    {% aside type="caution" %}
+
+    Changing a prefix or suffix changes how existing project IDs display.
+    Those identifiers may already have been used in exports or written on
+    specimen labels. Double-check the values before confirming the change.
+
+    {% /aside %}
+
+6. Add `Tissue ID` (optional).
+
+    Some museums assign separate tissue numbers for the same voucher specimen.
+    You can set up a prefix, the next number, and a suffix here. Leading zeros
+    in the number are kept, so `M0042-T` is followed by `M0043-T`. NAHPU can
+    then generate the next tissue number when you add a specimen part.
+
+    For the Ichthyology catalog format, `Individual tag ID` sets the same kind
+    of numbering for individuals in a fish lot.
+
+7. Add `Specimen types`.
+
+    Add all preparation and tissue types you expect to use, including types you
+    may only collect occasionally.
+
+8. Add `Treatments`.
+
+    Treatments are used on specimen parts. Examples include `None`, `ETOH`,
+    `Formalin`, `LN2`, and `DMSO`.
+
+{% /steps %}
+
+{% aside type="tip" %}
+
+Specimen types and treatments are user configs. They can be exported and
+imported with project archives so another NAHPU installation can use the same
+controlled lists and export behavior.
+
+See [Settings](/en/usages/settings/) for the complete configuration map.
+
+{% /aside %}

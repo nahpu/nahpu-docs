@@ -1,0 +1,132 @@
+---
+title: Ikan
+description: Catatan individu dan lot, pengukuran, serta ID tag untuk spesimen dalam katalog Ichthyology.
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+    variant: caution
+---
+
+Spesimen dalam proyek yang memakai format katalog `Ichthyology` menampilkan
+formulir pengukuran ikan. Jenis kelamin, tahap hidup, dan satuan berat bekerja
+dengan cara yang sama di setiap kelompok takson; lihat
+[Pengukuran](/id/usages/specimens/measurements/).
+
+{% aside type="caution" %}
+
+Dukungan Ichthyology masih dalam tahap beta. Periksa hasil ekspor terhadap
+persyaratan koleksi Anda sebelum mengandalkannya.
+
+{% /aside %}
+
+## Tipe spesimen {% #specimen-type %}
+
+Setiap catatan ikan dimulai dengan `Specimen type`:
+
+- `Individual`: satu ikan dengan pengukurannya sendiri.
+- `Lot`: banyak individu yang disimpan bersama, misalnya satu stoples ikan
+  dari spesies yang sama dari satu kegiatan pengumpulan.
+
+Pilih `Individual` bila ikan dikatalogkan dan disimpan sendiri. Pilih `Lot`
+bila beberapa ikan berbagi satu nomor katalog dan wadah. Catatan menyimpan
+nilai kedua tipe, tetapi hanya kolom dari tipe yang dipilih yang ditampilkan
+dan diekspor.
+
+## Pengukuran individu {% #individual-measurements %}
+
+- `Sex`: dipilih dari kosakata terkontrol jenis kelamin spesimen.
+- `Life stage`: dipilih dari kosakata terkontrol tahap hidup.
+- `Standard length (mm)`: panjang dari ujung moncong hingga ujung tulang
+  belakang, tidak termasuk sirip ekor.
+- `Total length (mm)`: panjang dari ujung moncong hingga ujung jari-jari sirip
+  ekor terpanjang.
+- `Weight`: berat spesimen dalam satuan yang dipilih.
+- `Remarks`: informasi tambahan tentang spesimen.
+
+## Pengukuran lot {% #lot-measurements %}
+
+- `Total individuals`: jumlah ikan dalam lot, baik yang diukur maupun tidak.
+- `Life stage`: tahap hidup lot.
+- `Auto-update min and max`: bila aktif, NAHPU mengisi rentang di bawah ini
+  dari individu yang diukur dalam lot, dan kolom rentang menjadi hanya-baca.
+  Nonaktifkan untuk memasukkan rentang secara manual, misalnya bila hanya ikan
+  terkecil dan terbesar yang diukur.
+- `Min. standard length (mm)` dan `Max. standard length (mm)`.
+- `Min. total length (mm)` dan `Max. total length (mm)`.
+- `Min. weight` dan `Max. weight`: rentang berat dalam satuan yang dipilih.
+- `Remarks`: informasi tambahan tentang lot.
+
+`Lot summary` menampilkan rata-rata, simpangan baku, jumlah yang diukur (`n`),
+dan rentang individu dalam lot untuk panjang standar, panjang total, dan berat.
+Ringkasan ini juga menampilkan berapa banyak dari `Total individuals` yang
+sudah diukur.
+
+## Individu dalam lot {% #individuals-in-a-lot %}
+
+Gunakan bagian `Individuals` pada lot untuk mencatat ikan yang diukur satu per
+satu.
+
+{% steps %}
+
+1. Pilih `Add individual`.
+2. Di `Identity`, masukkan `Tag ID`, atau pertahankan tag bernomor otomatis.
+   Pilih `Sex` dan `Life stage`.
+3. Di `Measurements`, masukkan `SL (mm)`, `TL (mm)`, dan berat dalam satuan
+   berat lot. Tambahkan `Remarks` bila perlu.
+4. Pilih `Save and add another` untuk melanjutkan ke ikan berikutnya, atau
+   `Save` untuk menutup formulir.
+
+{% /steps %}
+
+Pilih individu dalam daftar untuk menyuntingnya. Menghapus individu juga
+melepaskan tautannya dari bagian spesimen dan parasit.
+
+## Penomoran ID tag {% #tag-id-numbering %}
+
+ID tag individu dapat diberi nomor secara otomatis. Atur formatnya di
+`Settings` > `Specimens` > `Individual tag ID`, yang hanya muncul untuk format
+katalog Ichthyology, atau buka menu pada kolom `Tag ID` lalu pilih `Settings`.
+
+- `Prefix`: teks sebelum nomor, misalnya `FT-`.
+- `Next number`: nomor yang diberikan ke individu berikutnya. Angka nol di
+  depan dipertahankan, sehingga `0007` diikuti oleh `0008`.
+- `Suffix`: teks setelah nomor, misalnya `-A`.
+- `Next tag`: pratinjau ID tag berikutnya.
+
+Tag bernomor otomatis ditandai `Auto-numbered. Edit to override.` Mengetik tag
+yang berbeda akan mempertahankan nilai Anda dan tidak memakai nomor berikutnya.
+Pilih `New number` di menu kolom untuk mengembalikan tag bernomor otomatis
+berikutnya.
+
+## Bagian spesimen dan parasit {% #parts-and-parasites %}
+
+Katalog ikan menampilkan kolom deteksi parasit dan tab parasit. Bila lot
+memiliki individu, bagian spesimen dan parasit menampilkan pemilih
+`Individuals`. Gunakan `Add individual` untuk menautkan bagian atau parasit ke
+ikan asalnya, misalnya potongan sirip dari satu ikan bertag. Lihat
+[Bagian Spesimen](/id/usages/specimens/parts/).
+
+## Kondisi perairan {% #water-conditions %}
+
+Catat kondisi perairan pada kegiatan pengumpulan, bukan pada spesimen.
+[Data lingkungan](/id/usages/events/) kegiatan pengumpulan mencakup suhu air,
+pH, oksigen terlarut, saturasi oksigen terlarut (%), konduktivitas (µS/cm), dan
+kecepatan aliran.
+
+## Ekspor {% #export %}
+
+Ekspor spesimen untuk katalog Ichthyology menambahkan kolom pengukuran berikut:
+`specimenType`, `individualCount`, `sex`, `lifeStage`, `standardLength`,
+`totalLength`, `weight`, `weightUnit`, `minStandardLength`,
+`maxStandardLength`, `minTotalLength`, `maxTotalLength`, `minWeight`,
+`maxWeight`, dan `remark`.
+
+Kolom `individuals` mencantumkan individu dalam lot, dipisahkan oleh `|`.
+Setiap entri berbentuk
+`ID: FT-0001;SL: 52 mm;TL: 61 mm;Weight: 3.1 g;Sex: Female;Life stage: Adult`.
+Ekspor bagian spesimen dan parasit mencantumkan ID individu yang tertaut,
+dipisahkan oleh koma.
+
+Dalam ekspor Darwin Core, `individualCount` adalah `Total individuals` lot,
+atau `1` untuk ikan individu. Lihat [Ekspor Catatan](/id/usages/export/export-records/).

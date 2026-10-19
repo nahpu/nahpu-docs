@@ -1,0 +1,129 @@
+---
+title: Fishes
+description: Individual and lot records, measurements, and tag IDs for specimens in an Ichthyology catalog.
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+    variant: caution
+---
+
+Specimens in a project that uses the `Ichthyology` catalog format show the fish
+measurement form. Sex, life stage, and weight units work the same way in every
+taxon group; see [Measurements](/en/usages/specimens/measurements/).
+
+{% aside type="caution" %}
+
+Ichthyology support is in beta. Check exports against your collection's
+requirements before relying on them.
+
+{% /aside %}
+
+## Specimen type
+
+Every fish record starts with `Specimen type`:
+
+- `Individual`: one fish with its own measurements.
+- `Lot`: many individuals stored together, such as a jar of fish of the same
+  species from one collecting event.
+
+Choose `Individual` when the fish is cataloged and stored on its own. Choose
+`Lot` when several fish share one catalog number and container. A record keeps
+the values of both types, but only the fields of the selected type are shown
+and exported.
+
+## Individual measurements
+
+- `Sex`: select from the configured specimen-sex vocabulary.
+- `Life stage`: select from the configured life-stage vocabulary.
+- `Standard length (mm)`: the length from the tip of the snout to the end of
+  the vertebral column, excluding the caudal fin.
+- `Total length (mm)`: the length from the tip of the snout to the tip of the
+  longest caudal-fin ray.
+- `Weight`: specimen weight in the selected unit.
+- `Remarks`: additional information about the specimen.
+
+## Lot measurements
+
+- `Total individuals`: the number of fish in the lot, measured or not.
+- `Life stage`: the life stage of the lot.
+- `Auto-update min and max`: when on, NAHPU fills the ranges below from the
+  individuals measured in the lot, and the range fields become read-only. Turn
+  it off to enter the ranges by hand, for example when only the smallest and
+  largest fish were measured.
+- `Min. standard length (mm)` and `Max. standard length (mm)`.
+- `Min. total length (mm)` and `Max. total length (mm)`.
+- `Min. weight` and `Max. weight`: weight range in the selected unit.
+- `Remarks`: additional information about the lot.
+
+`Lot summary` shows, for standard length, total length, and weight, the mean,
+standard deviation, number measured (`n`), and range of the individuals in the
+lot. It also shows how many of the `Total individuals` have been measured.
+
+## Individuals in a lot
+
+Use the `Individuals` section of a lot to record fish measured one by one.
+
+{% steps %}
+
+1. Select `Add individual`.
+2. Under `Identity`, enter the `Tag ID`, or keep the auto-numbered tag. Select
+   `Sex` and `Life stage`.
+3. Under `Measurements`, enter `SL (mm)`, `TL (mm)`, and weight in the lot's
+   weight unit. Add `Remarks` when needed.
+4. Select `Save and add another` to continue with the next fish, or `Save` to
+   close the form.
+
+{% /steps %}
+
+Select an individual in the list to edit it. Deleting an individual also
+unlinks it from any specimen parts and parasites.
+
+## Tag ID numbering
+
+Individual tag IDs can be numbered automatically. Configure the format in
+`Settings` > `Specimens` > `Individual tag ID`, which appears only for the
+Ichthyology catalog format, or open the menu on the `Tag ID` field and select
+`Settings`.
+
+- `Prefix`: text before the number, such as `FT-`.
+- `Next number`: the number given to the next individual. Leading zeros are
+  kept, so `0007` is followed by `0008`.
+- `Suffix`: text after the number, such as `-A`.
+- `Next tag`: a preview of the next tag ID.
+
+An auto-numbered tag is marked `Auto-numbered. Edit to override.` Typing a
+different tag keeps your value and does not use up the next number. Select
+`New number` in the field menu to restore the next auto-numbered tag.
+
+## Parts and parasites
+
+Fish catalogs show parasite-detection fields and the parasite tab. When a lot
+has individuals, specimen parts and parasites show an `Individuals` selector.
+Use `Add individual` to link the part or parasite to the fish it came from,
+such as a fin clip from one tagged fish. See
+[Specimen Parts](/en/usages/specimens/parts/).
+
+## Water conditions
+
+Record water conditions on the collecting event rather than on the specimen.
+Collecting-event [environmental data](/en/usages/events/) include water
+temperature, pH, dissolved oxygen, dissolved oxygen saturation (%),
+conductivity (µS/cm), and flow velocity.
+
+## Export
+
+Specimen exports for an Ichthyology catalog add these measurement columns:
+`specimenType`, `individualCount`, `sex`, `lifeStage`, `standardLength`,
+`totalLength`, `weight`, `weightUnit`, `minStandardLength`,
+`maxStandardLength`, `minTotalLength`, `maxTotalLength`, `minWeight`,
+`maxWeight`, and `remark`.
+
+The `individuals` column lists the individuals of a lot, separated by `|`.
+Each entry looks like
+`ID: FT-0001;SL: 52 mm;TL: 61 mm;Weight: 3.1 g;Sex: Female;Life stage: Adult`.
+Specimen part and parasite exports list the IDs of their linked individuals,
+separated by commas.
+
+In Darwin Core exports, `individualCount` is the lot's `Total individuals`, or
+`1` for an individual fish. See [Export Records](/en/usages/export/export-records/).

@@ -1,0 +1,24 @@
+---
+title: Catatan Tangkapan
+sidebar:
+  label: Catatan tangkapan
+  order: 4
+---
+
+Catatan tangkapan menghubungkan spesimen dengan kegiatan:
+
+- `Site ID` dan `Event ID`: lokasi dan kegiatan pengumpulan.
+- `Capture date` dan `Capture time`: tanggal dan waktu tangkapan; `Relative time`
+  dapat menggunakan Dawn, Morning, Afternoon, Dusk, atau Night.
+- `Method` dan `Method ID`: upaya dan ID metode dari kegiatan.
+- `Coordinate ID`: koordinat yang terkait dengan lokasi kegiatan.
+- `Coordinate extent (m)`: perluasan positif opsional untuk catatan tangkapan;
+  bidang ini berada tepat di bawah `Coordinate ID`.
+- `Collector`: pengumpul dari daftar personel kegiatan.
+
+Dalam ekspor Darwin Core, extent ditambahkan ke ketidakpastian koordinat. Jika
+ketidakpastian tidak valid atau kosong, extent digunakan sendiri. Nilai kosong,
+nol, dan negatif diabaikan.
+
+Jika kegiatan diubah, metode, pengumpul, dan koordinat akan dikosongkan,
+sedangkan tanggal dan waktu tangkapan tetap dipertahankan.

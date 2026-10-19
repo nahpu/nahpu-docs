@@ -1,0 +1,134 @@
+---
+title: Peces
+description: Registros de individuos y lotes, mediciones e ID de marca para especímenes de un catálogo Ichthyology.
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+    variant: caution
+---
+
+Los especímenes de un proyecto que usa el formato de catálogo `Ichthyology`
+muestran el formulario de medición de peces. El sexo, la etapa de vida y las
+unidades de peso funcionan igual en todos los grupos taxonómicos; consulte
+[Mediciones](/es/usages/specimens/measurements/).
+
+{% aside type="caution" %}
+
+La compatibilidad con Ichthyology está en fase beta. Compruebe que las
+exportaciones cumplen los requisitos de su colección antes de confiar en ellas.
+
+{% /aside %}
+
+## Tipo de espécimen {% #specimen-type %}
+
+Todo registro de peces comienza con `Specimen type`:
+
+- `Individual`: un solo pez con sus propias mediciones.
+- `Lot`: muchos individuos almacenados juntos, como un frasco de peces de la
+  misma especie procedentes de un mismo evento de recolecta.
+
+Elija `Individual` cuando el pez se cataloga y se almacena por separado. Elija
+`Lot` cuando varios peces comparten un número de catálogo y un recipiente. Un
+registro conserva los valores de ambos tipos, pero solo se muestran y se
+exportan los campos del tipo seleccionado.
+
+## Mediciones de individuos {% #individual-measurements %}
+
+- `Sex`: se elige del vocabulario controlado de sexo del espécimen.
+- `Life stage`: se elige del vocabulario controlado de etapas de vida.
+- `Standard length (mm)`: la longitud desde la punta del hocico hasta el final
+  de la columna vertebral, sin incluir la aleta caudal.
+- `Total length (mm)`: la longitud desde la punta del hocico hasta la punta del
+  radio más largo de la aleta caudal.
+- `Weight`: peso del espécimen en la unidad seleccionada.
+- `Remarks`: información adicional sobre el espécimen.
+
+## Mediciones de lotes {% #lot-measurements %}
+
+- `Total individuals`: el número de peces del lote, medidos o no.
+- `Life stage`: la etapa de vida del lote.
+- `Auto-update min and max`: cuando está activado, NAHPU completa los rangos
+  siguientes a partir de los individuos medidos del lote, y los campos de rango
+  pasan a ser de solo lectura. Desactívelo para introducir los rangos a mano,
+  por ejemplo cuando solo se midieron el pez más pequeño y el más grande.
+- `Min. standard length (mm)` y `Max. standard length (mm)`.
+- `Min. total length (mm)` y `Max. total length (mm)`.
+- `Min. weight` y `Max. weight`: rango de peso en la unidad seleccionada.
+- `Remarks`: información adicional sobre el lote.
+
+`Lot summary` muestra, para la longitud estándar, la longitud total y el peso,
+la media, la desviación estándar, el número de medidos (`n`) y el rango de los
+individuos del lote. También indica cuántos de los `Total individuals` se han
+medido.
+
+## Individuos de un lote {% #individuals-in-a-lot %}
+
+Use la sección `Individuals` de un lote para registrar peces medidos uno a uno.
+
+{% steps %}
+
+1. Seleccione `Add individual`.
+2. En `Identity`, introduzca el `Tag ID` o conserve la marca numerada
+   automáticamente. Seleccione `Sex` y `Life stage`.
+3. En `Measurements`, introduzca `SL (mm)`, `TL (mm)` y el peso en la unidad de
+   peso del lote. Añada `Remarks` cuando sea necesario.
+4. Seleccione `Save and add another` para continuar con el siguiente pez, o
+   `Save` para cerrar el formulario.
+
+{% /steps %}
+
+Seleccione un individuo de la lista para editarlo. Al eliminar un individuo
+también se desvincula de las partes del espécimen y de los parásitos.
+
+## Numeración de ID de marca {% #tag-id-numbering %}
+
+Los ID de marca de los individuos pueden numerarse automáticamente. Configure
+el formato en `Settings` > `Specimens` > `Individual tag ID`, que solo aparece
+en el formato de catálogo Ichthyology, o abra el menú del campo `Tag ID` y
+seleccione `Settings`.
+
+- `Prefix`: texto antes del número, como `FT-`.
+- `Next number`: el número que recibirá el siguiente individuo. Los ceros a la
+  izquierda se conservan, de modo que a `0007` le sigue `0008`.
+- `Suffix`: texto después del número, como `-A`.
+- `Next tag`: vista previa del siguiente ID de marca.
+
+Una marca numerada automáticamente se indica con
+`Auto-numbered. Edit to override.` Si escribe otra marca, se conserva su valor
+y no se consume el siguiente número. Seleccione `New number` en el menú del
+campo para restaurar la siguiente marca numerada automáticamente.
+
+## Partes y parásitos {% #parts-and-parasites %}
+
+Los catálogos de peces muestran los campos de detección de parásitos y la
+pestaña de parásitos. Cuando un lote tiene individuos, las partes del
+espécimen y los parásitos muestran un selector `Individuals`. Use
+`Add individual` para vincular la parte o el parásito con el pez del que
+procede, como un corte de aleta de un pez marcado. Consulte
+[Partes de especímenes](/es/usages/specimens/parts/).
+
+## Condiciones del agua {% #water-conditions %}
+
+Registre las condiciones del agua en el evento de recolecta y no en el
+espécimen. Los [datos ambientales](/es/usages/events/) del evento de recolecta
+incluyen la temperatura del agua, el pH, el oxígeno disuelto, la saturación de
+oxígeno disuelto (%), la conductividad (µS/cm) y la velocidad del flujo.
+
+## Exportación {% #export %}
+
+Las exportaciones de especímenes de un catálogo Ichthyology añaden estas
+columnas de medición: `specimenType`, `individualCount`, `sex`, `lifeStage`,
+`standardLength`, `totalLength`, `weight`, `weightUnit`, `minStandardLength`,
+`maxStandardLength`, `minTotalLength`, `maxTotalLength`, `minWeight`,
+`maxWeight` y `remark`.
+
+La columna `individuals` enumera los individuos de un lote, separados por `|`.
+Cada entrada tiene este aspecto:
+`ID: FT-0001;SL: 52 mm;TL: 61 mm;Weight: 3.1 g;Sex: Female;Life stage: Adult`.
+Las exportaciones de partes del espécimen y de parásitos enumeran los ID de sus
+individuos vinculados, separados por comas.
+
+En las exportaciones Darwin Core, `individualCount` es el valor de
+`Total individuals` del lote, o `1` para un pez individual. Consulte
+[Exportar Registros](/es/usages/export/export-records/).

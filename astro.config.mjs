@@ -324,15 +324,6 @@ export default defineConfig({
               },
             },
             {
-              label: "Specimens",
-              link: "usages/specimens",
-              translations: {
-                "pt-BR": "Espécimes",
-                es: "Especímenes",
-                id: "Spesimen",
-              },
-            },
-            {
               label: "Taxon",
               link: "usages/taxon",
               translations: {
@@ -340,6 +331,41 @@ export default defineConfig({
                 es: "Taxón",
                 id: "Takson",
               },
+            },
+            {
+              label: "Specimens",
+              collapsed: true,
+              translations: {
+                "pt-BR": "Espécimes",
+                es: "Especímenes",
+                id: "Spesimen",
+              },
+              items: [
+                { slug: "usages/specimens" },
+                { slug: "usages/specimens/setup" },
+                { slug: "usages/specimens/add-record" },
+                { slug: "usages/specimens/collection-and-identification" },
+                { slug: "usages/specimens/capture-records" },
+                {
+                  label: "Measurements",
+                  collapsed: true,
+                  translations: {
+                    "pt-BR": "Medições",
+                    es: "Mediciones",
+                    id: "Pengukuran",
+                  },
+                  items: [
+                    {
+                      autogenerate: {
+                        directory: "usages/specimens/measurements",
+                      },
+                    },
+                  ],
+                },
+                { slug: "usages/specimens/parts" },
+                { slug: "usages/specimens/associated-data-and-media" },
+                { slug: "usages/specimens/managing-records" },
+              ],
             },
             {
               label: "Export",

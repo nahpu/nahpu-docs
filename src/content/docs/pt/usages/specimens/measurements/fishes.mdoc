@@ -1,0 +1,132 @@
+---
+title: Peixes
+description: Registros de indivíduos e lotes, medições e IDs de etiqueta para espécimes em um catálogo de Ictiologia.
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+    variant: caution
+---
+
+Espécimes em um projeto que usa o formato de catálogo `Ichthyology` exibem o
+formulário de medições de peixes. Sexo, estágio de vida e unidades de peso
+funcionam da mesma forma em todos os grupos taxonômicos; consulte
+[Medições](/pt/usages/specimens/measurements/).
+
+{% aside type="caution" %}
+
+O suporte à Ictiologia está em beta. Confira as exportações com os requisitos
+da sua coleção antes de depender delas.
+
+{% /aside %}
+
+## Tipo de espécime {% #specimen-type %}
+
+Todo registro de peixe começa com `Specimen type`:
+
+- `Individual`: um único peixe com as suas próprias medições.
+- `Lot`: vários indivíduos armazenados juntos, como um frasco de peixes da
+  mesma espécie de um único evento de coleta.
+
+Escolha `Individual` quando o peixe é catalogado e armazenado sozinho. Escolha
+`Lot` quando vários peixes compartilham um número de catálogo e um recipiente.
+Um registro guarda os valores dos dois tipos, mas apenas os campos do tipo
+selecionado são exibidos e exportados.
+
+## Medições de indivíduos {% #individual-measurements %}
+
+- `Sex`: selecionado no vocabulário controlado de sexo do espécime.
+- `Life stage`: selecionado no vocabulário controlado de estágios de vida.
+- `Standard length (mm)`: o comprimento da ponta do focinho até o final da
+  coluna vertebral, sem incluir a nadadeira caudal.
+- `Total length (mm)`: o comprimento da ponta do focinho até a ponta do raio
+  mais longo da nadadeira caudal.
+- `Weight`: peso do espécime na unidade selecionada.
+- `Remarks`: informações adicionais sobre o espécime.
+
+## Medições de lotes {% #lot-measurements %}
+
+- `Total individuals`: o número de peixes no lote, medidos ou não.
+- `Life stage`: o estágio de vida do lote.
+- `Auto-update min and max`: quando ativado, o NAHPU preenche os intervalos
+  abaixo a partir dos indivíduos medidos no lote, e os campos de intervalo
+  ficam somente leitura. Desative-o para informar os intervalos manualmente,
+  por exemplo, quando apenas o menor e o maior peixe foram medidos.
+- `Min. standard length (mm)` e `Max. standard length (mm)`.
+- `Min. total length (mm)` e `Max. total length (mm)`.
+- `Min. weight` e `Max. weight`: intervalo de peso na unidade selecionada.
+- `Remarks`: informações adicionais sobre o lote.
+
+`Lot summary` mostra, para comprimento padrão, comprimento total e peso, a
+média, o desvio padrão, o número de medidos (`n`) e o intervalo dos indivíduos
+do lote. Também mostra quantos dos `Total individuals` já foram medidos.
+
+## Indivíduos em um lote {% #individuals-in-a-lot %}
+
+Use a seção `Individuals` de um lote para registrar peixes medidos um a um.
+
+{% steps %}
+
+1. Selecione `Add individual`.
+2. Em `Identity`, informe o `Tag ID` ou mantenha a etiqueta numerada
+   automaticamente. Selecione `Sex` e `Life stage`.
+3. Em `Measurements`, informe `SL (mm)`, `TL (mm)` e o peso na unidade de peso
+   do lote. Adicione `Remarks` quando necessário.
+4. Selecione `Save and add another` para continuar com o próximo peixe ou
+   `Save` para fechar o formulário.
+
+{% /steps %}
+
+Selecione um indivíduo na lista para editá-lo. Excluir um indivíduo também o
+desvincula de quaisquer partes do espécime e parasitas.
+
+## Numeração de IDs de etiqueta {% #tag-id-numbering %}
+
+Os IDs de etiqueta dos indivíduos podem ser numerados automaticamente.
+Configure o formato em `Settings` > `Specimens` > `Individual tag ID`, que
+aparece apenas no formato de catálogo Ichthyology, ou abra o menu do campo
+`Tag ID` e selecione `Settings`.
+
+- `Prefix`: texto antes do número, como `FT-`.
+- `Next number`: o número atribuído ao próximo indivíduo. Os zeros à esquerda
+  são mantidos, então `0007` é seguido por `0008`.
+- `Suffix`: texto depois do número, como `-A`.
+- `Next tag`: uma prévia do próximo ID de etiqueta.
+
+Uma etiqueta numerada automaticamente é marcada com
+`Auto-numbered. Edit to override.` Digitar uma etiqueta diferente mantém o seu
+valor e não consome o próximo número. Selecione `New number` no menu do campo
+para restaurar a próxima etiqueta numerada automaticamente.
+
+## Partes e parasitas {% #parts-and-parasites %}
+
+Catálogos de peixes exibem os campos de detecção de parasitas e a guia de
+parasitas. Quando um lote tem indivíduos, as partes do espécime e os parasitas
+mostram um seletor `Individuals`. Use `Add individual` para vincular a parte ou
+o parasita ao peixe de origem, como um fragmento de nadadeira de um peixe
+etiquetado. Consulte [Partes do Espécime](/pt/usages/specimens/parts/).
+
+## Condições da água {% #water-conditions %}
+
+Registre as condições da água no evento de coleta, e não no espécime. Os
+[dados ambientais](/pt/usages/events/) do evento de coleta incluem temperatura
+da água, pH, oxigênio dissolvido, saturação de oxigênio dissolvido (%),
+condutividade (µS/cm) e velocidade do fluxo.
+
+## Exportação {% #export %}
+
+As exportações de espécimes de um catálogo de Ictiologia acrescentam estas
+colunas de medição: `specimenType`, `individualCount`, `sex`, `lifeStage`,
+`standardLength`, `totalLength`, `weight`, `weightUnit`, `minStandardLength`,
+`maxStandardLength`, `minTotalLength`, `maxTotalLength`, `minWeight`,
+`maxWeight` e `remark`.
+
+A coluna `individuals` lista os indivíduos de um lote, separados por `|`. Cada
+entrada tem este formato:
+`ID: FT-0001;SL: 52 mm;TL: 61 mm;Weight: 3.1 g;Sex: Female;Life stage: Adult`.
+As exportações de partes do espécime e de parasitas listam os IDs dos
+indivíduos vinculados, separados por vírgulas.
+
+Nas exportações Darwin Core, `individualCount` é o `Total individuals` do lote,
+ou `1` para um peixe individual. Consulte
+[Exportar Registros](/pt/usages/export/export-records/).

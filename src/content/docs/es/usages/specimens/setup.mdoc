@@ -1,0 +1,64 @@
+---
+title: Configuración de especímenes
+sidebar:
+  label: Configuración
+  order: 1
+---
+
+Las listas predeterminadas de NAHPU para `Partes de especímenes` y `Tratamientos` son limitadas y no incluyen todas las opciones posibles. Si este es su primer proyecto NAHPU, recomendamos configurar las entradas primero. Puede hacer esto yendo a la configuración:
+
+{% steps %}
+
+1. Navegue al panel de control.
+2. Toque/haga clic en el menú de hamburguesa en la esquina superior izquierda.
+3. Seleccione `Configuración`.
+4. Seleccione `Especímenes`. 
+5. Configure el interruptor `Use project ID`. Está desactivado de forma
+   predeterminada y usa las iniciales y el número de campo de un catalogador.
+   Al menos un Catalogador debe tener activado el registro de número de campo
+   personal y un número actual.
+
+    Active `Use project ID` para definir un prefijo, el siguiente número de
+    catálogo y un sufijo. NAHPU concatena esos valores directamente. Active el
+    incremento automático para asignar y avanzar el número del proyecto.
+
+    Esta selección es solo el valor predeterminado. En el editor de ID de cada
+    espécimen puede elegir Personnel o Project. Un proyecto puede usar ambos
+    tipos, pero un espécimen no puede tener los dos.
+
+    {% aside type="caution" %}
+
+    Cambiar el prefijo o sufijo modifica cómo se muestran los ID de proyecto
+    existentes. Esos ID podrían haberse usado en exportaciones o escrito en
+    etiquetas de especímenes. Compruebe los valores antes de confirmar.
+
+    {% /aside %}
+
+6. Agregue `ID de tejido` (opcional).
+
+    Algunos museos tienen números de tejido separados para el mismo espécimen.
+    Puede configurar aquí un prefijo, el siguiente número y un sufijo. Los ceros
+    a la izquierda del número se conservan, de modo que a `M0042-T` le sigue
+    `M0043-T`. NAHPU puede generar el siguiente número de tejido cuando agregue
+    una parte del espécimen.
+
+    En el formato de catálogo Ichthyology, `Individual tag ID` define el mismo
+    tipo de numeración para los individuos de un lote de peces.
+
+7. Agregue `Specimen types`.
+
+    Agregue todas las posibilidades. Puede tener más de lo que recolectará.
+
+8. Agregue `Tratamientos`
+
+    Puede hacerlo de manera similar a `Specimen types`.
+
+{% /steps %}
+
+{% aside type="tip" %}
+
+Las listas de partes y tratamientos son configuraciones del usuario. Puede
+exportarlas e importarlas con los paquetes del proyecto para reutilizar la
+misma terminología y el mismo comportamiento de exportación.
+
+{% /aside %}

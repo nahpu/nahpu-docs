@@ -1,0 +1,64 @@
+---
+title: Configurando espécimes
+sidebar:
+  label: Configuração
+  order: 1
+---
+
+As listas padrão do NAHPU para `Partes do espécime` e `Tratamentos` são limitadas e não incluem todas as opções possíveis. Se este for o seu primeiro projeto NAHPU, recomendamos configurar as entradas primeiro. Você pode fazer isso acessando as configurações:
+
+{% steps %}
+
+1. Navegue até o painel (dashboard).
+2. Toque/clique no menu hambúrguer no canto superior esquerdo.
+3. Selecione `Configurações`.
+4. Selecione `Espécimes`. 
+5. Configure o interruptor `Use project ID`. Ele fica desativado por padrão e
+   usa as iniciais e o número de campo de um catalogador. Pelo menos um
+   Catalogador deve ter o registro de número de campo pessoal ativado e um
+   número atual.
+
+    Ative `Use project ID` para definir prefixo, próximo número de catálogo e
+    sufixo. O NAHPU concatena esses valores diretamente. Ative o incremento
+    automático para atribuir e avançar o número do projeto.
+
+    Essa escolha é apenas o padrão. No editor de ID de cada espécime, selecione
+    Personnel ou Project. Um projeto pode usar os dois tipos, mas um espécime
+    não pode ter ambos.
+
+    {% aside type="caution" %}
+
+    Alterar o prefixo ou o sufixo modifica a exibição dos IDs de projeto
+    existentes. Esses IDs podem já ter sido usados em exportações ou escritos
+    em etiquetas de espécimes. Confira os valores antes de confirmar.
+
+    {% /aside %}
+
+6. Adicione `ID de Tecido` (opcional).
+
+    Alguns museus têm números de tecido separados para o mesmo espécime. Você
+    pode configurar aqui o prefixo, o próximo número e o sufixo. Os zeros à
+    esquerda do número são mantidos, então `M0042-T` é seguido por `M0043-T`. O
+    NAHPU pode então gerar o próximo número de tecido quando você adicionar uma
+    parte do espécime.
+
+    No formato de catálogo Ichthyology, `Individual tag ID` define o mesmo tipo
+    de numeração para os indivíduos de um lote de peixes.
+
+7. Adicione `Specimen types`.
+
+    Adicione todas as possibilidades. Você pode ter mais do que o que irá coletar.
+
+8. Adicione `Tratamentos`
+
+    Faça isso de maneira semelhante a `Specimen types`.
+
+{% /steps %}
+
+{% aside type="tip" %}
+
+Os tipos de partes e tratamentos são configurações do usuário. Eles podem ser
+exportados e importados com pacotes do projeto para reutilizar a mesma
+terminologia e o mesmo comportamento de exportação.
+
+{% /aside %}
