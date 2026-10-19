@@ -145,10 +145,12 @@ const statusChipClasses = cntl`
   text-silver-tree-800 dark:text-silver-tree-100
 `;
 
-/// Rollout of the latest release. Apple devices share one App Store listing.
+/// Rollout of the latest release. Apple devices share one App Store listing,
+/// but Apple reviews the iOS and macOS builds separately.
 const releaseStatus = [
   { name: "Android", available: true },
-  { name: "Apple devices", available: false },
+  { name: "iOS and iPadOS", available: true },
+  { name: "macOS", available: false },
   { name: "Linux", available: true },
   { name: "Windows", available: true },
 ];
