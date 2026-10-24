@@ -4,8 +4,13 @@ import {
   Markdoc,
 } from "@astrojs/markdoc/config";
 import starlightMarkdoc from "@astrojs/starlight-markdoc";
+import figures from "./src/assets/day-one/figures.json" with { type: "json" };
 
 const SCREENSHOT_SLOTS = ["large", "large2", "small", "small2"];
+const RECORD_NODE_IDS = figures.recordMap.nodes
+  .map((n) => n.id)
+  .sort()
+  .join(",");
 
 function validatePlacement(value) {
   const valid =
@@ -107,6 +112,51 @@ export default defineMarkdocConfig({
           default: "en",
           matches: ["en", "pt", "es", "id"],
         },
+      },
+    },
+    // Day One record map: the shared artwork with one labelled button per
+    // `recordnode` child. Node ids must match `src/assets/day-one/figures.json`;
+    // the app reads the same tags from the bundled Cookbook copy.
+    recordmap: {
+      render: component("./src/components/diagram/DayOneRecordMap.astro"),
+      children: ["tag"],
+      attributes: {
+        label: { type: String, required: true },
+        hint: { type: String, required: true },
+      },
+      transform(node, config) {
+        const attributes = node.transformAttributes(config);
+        const nodes = node.children
+          .filter((child) => child.type === "tag" && child.tag === "recordnode")
+          .map((child) => child.transformAttributes(config));
+        const ids = nodes.map((n) => n.id).sort().join(",");
+        if (ids !== RECORD_NODE_IDS) {
+          throw new Error(`recordmap: expected one recordnode each for ${RECORD_NODE_IDS}`);
+        }
+        return new Markdoc.Tag(this.render, { ...attributes, nodes }, []);
+      },
+    },
+    recordnode: {
+      selfClosing: true,
+      attributes: {
+        id: { type: String, required: true },
+        title: { type: String, required: true },
+        summary: { type: String, required: true },
+        detail: { type: String, required: true },
+      },
+      transform() {
+        return null;
+      },
+    },
+    // Day One practice trail: one waypoint per step of the `steps` list that
+    // follows it. `progress` holds `{visited}` and `{total}` placeholders.
+    fieldtrail: {
+      render: component("./src/components/diagram/DayOneFieldTrail.astro"),
+      selfClosing: true,
+      attributes: {
+        label: { type: String, required: true },
+        hint: { type: String, required: true },
+        progress: { type: String, required: true },
       },
     },
     carbonbadge: {

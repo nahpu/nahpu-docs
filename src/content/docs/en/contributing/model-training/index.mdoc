@@ -1,0 +1,44 @@
+---
+title: "Model Training"
+sidebar:
+  order: 1
+  label: "Overview"
+---
+
+{% aside type="caution" title="In development" %}
+Model training for NAHPU is in early development. Commands, configuration
+files, and model packages may change between releases.
+{% /aside %}
+
+NAHPU is adding deep learning (DL) features, such as identifying specimens
+from measurements or photos. The models behind these features are trained and
+fine-tuned with [milu](https://github.com/hhandika/milu), a command line tool
+built on the `nahpu_dl` crate of the
+[NAHPU API](https://github.com/nahpu/nahpu_api). Basic machine learning
+methods, such as principal component analysis, live in the `nahpu_ml` crate.
+
+## Current status
+
+| Area                          | Status                                         |
+| ----------------------------- | ---------------------------------------------- |
+| Tabular models (measurements) | Work end to end                                |
+| Image models (specimen photos) | Work end to end                               |
+| Text models                   | Planned                                        |
+| ONNX import and export        | Planned                                        |
+| Use inside the NAHPU app      | Planned; the app does not load models yet      |
+
+## In this section
+
+- [Architecture](/en/contributing/model-training/architecture/): how milu,
+  `nahpu_dl`, and model packages fit together.
+- [Fine-tuning](/en/contributing/model-training/fine-tuning/): train a new
+  model or adapt a pretrained one to your data.
+- [Guidelines](/en/contributing/model-training/guidelines/): set up the
+  tools, prepare data, share models, and contribute code.
+
+## Etymology
+
+Like other NAHPU ecosystem tools named after deer and their close relatives,
+milu is named after
+[_Elaphurus davidianus_](https://www.mammaldiversity.org/taxon/1006318/), a
+deer native to northeastern China.

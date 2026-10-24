@@ -16,13 +16,13 @@ sidebar:
 {% pin id="C" label="ID da localidade" large=[16.5, 39] small=[20.2, 40.5] /%}
 {% pin id="D" label="Datas e horários" large=[19, 45.7] small=[23.8, 46.6] /%}
 {% pin id="E" label="Atividade principal" large=[65, 27.6] small=[32.1, 81.6] /%}
-{% pin id="F" label="Adicionar esforço" large=[37.8, 87.1] small2=[69, 16.1] /%}
+{% pin id="F" label="Adicionar método de coleta" large=[37.8, 87.1] small2=[69, 16.1] /%}
 {% pin id="G" label="Adicionar equipe" large=[84, 89.3] small2=[12.4, 57.9] /%}
 {% pin id="H" label="Dados ambientais" large=[80.5, 63.8] small2=[23.8, 64.5] /%}
 {% /screenshots %}
 
-Os eventos de coleta ajudam você a acompanhar a atividade, o esforço, o
-pessoal, os dados ambientais e os dados astronômicos de um período de trabalho
+Os eventos de coleta ajudam você a acompanhar a atividade, os métodos de
+coleta, o pessoal, os dados ambientais e os dados astronômicos de um período de trabalho
 em um local. Os registros de espécimes se vinculam a um evento de coleta, e não
 diretamente a um local, de modo que o evento é a ponte entre o espécime e o
 contexto de local, coordenada, método e coletor.
@@ -53,10 +53,10 @@ na lista configurada.
 
 Abra um evento e use o menu de três pontos para gerenciar o registro:
 
-- `Edit`: altera os campos do evento, o esforço, o pessoal ou os dados
-  ambientais.
+- `Edit`: altera os campos do evento, os métodos de coleta, o pessoal ou
+  os dados ambientais.
 - `Duplicate event`: copia o local, os horários, a atividade, as notas, os
-  esforços e o pessoal. As datas avançam um dia e o novo evento recebe um
+  métodos de coleta e o pessoal. As datas avançam um dia e o novo evento recebe um
   registro de dados ambientais vazio.
 - `Show QR`: exibe o registro do evento para que outro dispositivo móvel o
   escaneie.
@@ -64,11 +64,11 @@ Abra um evento e use o menu de três pontos para gerenciar o registro:
 - `Scan QR`: cria ou substitui um evento a partir de um código QR de evento.
 - `Import event`: cria ou substitui um evento a partir de um registro JSON
   exportado.
-- `Delete record`: exclui o evento, seus esforços, seu pessoal, os dados
+- `Delete record`: exclui o evento, seus métodos de coleta, seu pessoal, os dados
   ambientais e os valores personalizados do evento. Um registro de espécime que
   faça referência ao evento precisa ser movido ou excluído antes.
 - `Delete all records`: exclui todos os eventos de coleta e os respectivos
-  esforços, pessoal e dados ambientais no projeto atual.
+  métodos de coleta, pessoal e dados ambientais no projeto atual.
 
 Ao importar um evento, escolha se o registro recebido cria um novo evento ou
 atualiza um evento existente. Confirme o local e o pessoal referenciados depois
@@ -92,7 +92,7 @@ visual, motorista, gravador ou observador, conforme o seu protocolo.
 
     Você pode reduzir a digitação repetida duplicando um evento. Toque ou clique
     no menu de três pontos e escolha `Duplicate event`. O NAHPU copia o local,
-    os horários, a atividade, as notas, o esforço e o pessoal, avança
+    os horários, a atividade, as notas, os métodos de coleta e o pessoal, avança
     `Start Date` {% ref id="D" /%} e `End Date` em um dia e cria um novo registro de dados
     ambientais vazio.
 
@@ -118,8 +118,8 @@ visual, motorista, gravador ou observador, conforme o seu protocolo.
     Os padrões são `Collecting`, `Recording` e `Observing`. `Other` não é um
     padrão; adicione-o em `Settings` > `Events` se o seu protocolo precisar
     dele. Em muitos fluxos com espécimes isso será `Collecting`, mas crie
-    eventos separados quando atividades diferentes precisarem do próprio
-    esforço, pessoal ou contexto ambiental.
+    eventos separados quando atividades diferentes precisarem dos próprios
+    métodos de coleta, pessoal ou contexto ambiental.
 
 {% /steps %}
 
@@ -149,11 +149,12 @@ O cartão `Activity` armazena a finalidade geral do evento.
 - `Notes`: notas livres sobre a atividade, atividades secundárias, detalhes do
   protocolo ou o motivo de `Other` ter sido escolhido.
 
-## Adicionando esforço
+## Adicionando métodos de coleta
 
 {% steps %}
 
-1. Use o botão `+ Add effort` {% ref id="F" /%} para criar um novo esforço.
+1. Use o botão `+ Add collection method` {% ref id="F" /%} para criar um novo
+    método de coleta.
 
 2. Selecione um método.
 
@@ -166,12 +167,12 @@ O cartão `Activity` armazena a finalidade geral do evento.
 
 5. Adicione `Size` quando aplicável.
 
-6. Adicione `Notes` para detalhes específicos do esforço.
+6. Adicione `Notes` para detalhes específicos do método.
 
 {% /steps %}
 
-Os registros de esforço são armazenados separadamente do evento, de modo que um
-evento pode incluir vários métodos. Cada esforço contém:
+Os registros de métodos de coleta são armazenados separadamente do evento, de
+modo que um evento pode incluir vários métodos. Cada método de coleta contém:
 
 - `Method`: método de coleta definido pelo usuário.
 - `Brand and Model`: marca ou modelo do equipamento, quando relevante.
@@ -179,8 +180,8 @@ evento pode incluir vários métodos. Cada esforço contém:
 - `Size`: tamanho da ferramenta ou da montagem.
 - `Notes`: quaisquer notas específicas do método.
 
-Os registros de captura de espécimes podem depois selecionar um desses esforços
-do evento como o `Method` do espécime.
+Os registros de captura de espécimes podem depois selecionar um desses métodos de
+coleta do evento como o `Method` do espécime.
 
 ## Adicionando pessoal de coleta
 
@@ -250,7 +251,7 @@ dos eventos de coleta:
 
 - `Site ID` filtra os IDs de evento disponíveis.
 - `Event ID` vincula o espécime ao evento.
-- `Method` vem dos registros de esforço do evento.
+- `Method` vem dos métodos de coleta do evento.
 - `Collector` vem da lista de pessoal do evento.
 - `Coordinate ID` vem das coordenadas associadas ao local do evento.
 

@@ -1,0 +1,107 @@
+---
+title: "Architecture"
+sidebar:
+  order: 2
+---
+
+{% aside type="caution" title="In development" %}
+This architecture is still changing. Check the
+[milu](https://github.com/hhandika/milu) and
+[NAHPU API](https://github.com/nahpu/nahpu_api) repositories for the latest
+code.
+{% /aside %}
+
+Model training is split between a thin command line front end and a shared
+library. milu handles commands, configuration files, and reports.
+Models, data loading, and weight storage live in the `nahpu_dl` crate of the
+NAHPU API, so the NAHPU app can run the same models that milu trains.
+
+```text
+milu (command line)           nahpu_dl (NAHPU API)             Model package
+├── cli/   arguments    ──▶   ├── models/   networks     ──▶   ├── manifest.toml
+└── core/  workflow steps     ├── data/     loaders            └── model.bpk
+    ├── train                 ├── finetune  training               (or model.safetensors)
+    ├── test                  ├── evaluate  metrics
+    ├── infer                 ├── predict   inference
+    ├── embed                 ├── embed     embeddings
+    ├── models                ├── store     weights
+    └── convert               ├── manifest  package metadata
+                              └── hub       pretrained downloads
+```
+
+Each milu workflow step in `core/<step>/` has a runner (`mod.rs`), a config
+writer (`init.rs`), config types and defaults (`configs.rs`), summaries
+(`reports.rs`), and one file per backend. Any change to how a model is built,
+trained, or stored belongs in `nahpu_dl`, not in milu.
+
+## Model packages
+
+Every trained model is a directory with a manifest and one weight file:
+
+```text
+skull_genus/
+├── manifest.toml
+└── model.bpk        # or model.safetensors
+```
+
+The manifest records everything needed to load the model without extra
+configuration:
+
+| Field              | Description                                               |
+| ------------------ | --------------------------------------------------------- |
+| `name`             | Human-readable model name                                 |
+| `nahpu_dl_version` | Version of `nahpu_dl` that wrote the package               |
+| `modality`         | Kind of input the model takes (table or image)            |
+| `task`             | What the model predicts                                   |
+| `architecture`     | Network architecture and its hyperparameters              |
+| `labels`           | Class labels in output order; empty for regression        |
+| `preprocessing`    | How raw inputs are turned into tensors                    |
+| `weights`          | The package's weight file                                 |
+| `embedding_dim`    | Size of the embedding vector produced by the backbone     |
+| `metrics`          | Summary metrics from the last evaluation                  |
+| `provenance`       | Where the model came from                                 |
+
+## Models
+
+- **Tabular:** multilayer perceptron.
+- **Images:** ResNet-18, 34, 50, 101, and 152, and MobileNetV2.
+  ImageNet-pretrained weights can be imported from torchvision or timm
+  checkpoints, or downloaded from the Hugging Face Hub.
+
+## Data sources
+
+- CSV or TSV tables with a header row, such as specimen measurements.
+- Image folders with one sub-directory of images per class.
+- Extracted NAHPU data packages, where specimen photos are labeled by the
+  specimen's taxon at a chosen rank.
+
+## Backends and features
+
+`nahpu_dl` is built on [Burn](https://burn.dev). Cargo features select the
+backend and optional parts:
+
+| Feature          | Purpose                                                     |
+| ---------------- | ----------------------------------------------------------- |
+| `flex` (default) | Pure-Rust CPU backend, multithreaded                        |
+| `wgpu`           | GPU backend through Vulkan, Metal, or DX12                  |
+| `cuda`           | CUDA backend                                                |
+| `train`          | Fine-tuning; off by default so inference-only builds stay small |
+| `hub`            | Download pretrained models from the Hugging Face Hub        |
+
+## Workflow
+
+| Command                                | What it does                                          |
+| -------------------------------------- | ----------------------------------------------------- |
+| `milu train init`                      | Writes a training config (`milu_train.toml`)          |
+| `milu train run`                       | Trains or fine-tunes and writes a model package       |
+| `milu test`                            | Evaluates a model and writes JSON and CSV reports     |
+| `milu infer`                           | Writes predictions as CSV or JSON, with top-k labels  |
+| `milu embed`                           | Writes embeddings as CSV or JSON lines                |
+| `milu models list` / `pull` / `import` | Finds, downloads, or converts pretrained models       |
+| `milu models info`                     | Shows what a model package contains                   |
+| `milu convert`                         | Rewrites weights as burnpack or SafeTensors           |
+
+Model packages are written to `out_models/`, and test, inference, and
+embedding results to `milu_results/`. See
+[Fine-tuning](/en/contributing/model-training/fine-tuning/) for training
+options.

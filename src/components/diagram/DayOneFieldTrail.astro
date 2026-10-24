@@ -1,0 +1,278 @@
+---
+// Day One practice trail: one waypoint per step of the `steps` list that
+// follows the figure. Selecting a waypoint jumps to its step and checks it off
+// in this browser. The artwork and waypoint positions are shared with the
+// NAHPU app (see `src/assets/day-one/`).
+import art from "../../assets/day-one/field-trail.svg?raw";
+import figures from "../../assets/day-one/figures.json";
+
+interface Props {
+  label: string;
+  hint: string;
+  progress: string;
+}
+
+const { label, hint, progress } = Astro.props;
+const { width, height, waypoints } = figures.fieldTrail;
+const pct = (value: number, total: number) => `${(value / total) * 100}%`;
+---
+
+<figure
+  class="day-one-figure not-content"
+  data-field-trail
+  data-progress={progress}
+  aria-label={label}
+>
+  <div class="card">
+    <div class="stage" style={`aspect-ratio: ${width} / ${height}`}>
+      <Fragment set:html={art} />
+      {
+        waypoints.map((point, index) => (
+          <button
+            type="button"
+            class="waypoint"
+            style={`left: ${pct(point.x, width)}; top: ${pct(point.y, height)}`}
+            data-index={index}
+            aria-pressed="false"
+          >
+            <span class="number">{index + 1}</span>
+            <svg class="check" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3.5 8.5L6.5 11.5L12.5 4.5" />
+            </svg>
+          </button>
+        ))
+      }
+    </div>
+    <p class="detail" aria-live="polite">{hint}</p>
+  </div>
+</figure>
+
+<style>
+  .day-one-figure {
+    margin: 1.5rem 0;
+  }
+
+  .card {
+    border: 1px solid rgb(28 43 33 / 0.1);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.7);
+    padding: 0.75rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  }
+
+  @media (min-width: 48rem) {
+    .card {
+      padding: 1.25rem;
+    }
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+  }
+
+  .stage :global(svg:not(.check)) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .waypoint {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1.5px solid #405847;
+    border-radius: 50%;
+    background: #f3f6f4;
+    color: #1c2b21;
+    font: inherit;
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    transition:
+      background 150ms ease,
+      box-shadow 150ms ease;
+  }
+  .waypoint:hover,
+  .waypoint:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(104 138 44 / 0.45);
+  }
+  .waypoint[aria-pressed="true"] {
+    box-shadow: 0 0 0 3px #688a2c;
+  }
+  .waypoint.visited {
+    border-color: #506a25;
+    background: #688a2c;
+    color: #fff;
+  }
+  .waypoint[hidden] {
+    display: none;
+  }
+
+  .check {
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .waypoint.visited:not([aria-pressed="true"]) .number {
+    display: none;
+  }
+  .waypoint.visited:not([aria-pressed="true"]) .check {
+    display: block;
+  }
+
+  .detail {
+    margin: 0.75rem 0 0;
+    border-radius: 0.75rem;
+    background: rgb(243 246 244 / 0.9);
+    padding: 0.75rem 1rem;
+    color: #283a2e;
+    font-size: var(--sl-text-sm);
+    line-height: 1.6;
+  }
+  .detail :global(strong) {
+    color: #1c2b21;
+  }
+
+  :global(.sl-steps > li.day-one-target) {
+    border-radius: 0.5rem;
+    animation: day-one-target 1.6s ease-out;
+  }
+  @keyframes day-one-target {
+    from {
+      background: rgb(155 191 79 / 0.25);
+    }
+    to {
+      background: transparent;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.sl-steps > li.day-one-target) {
+      animation: none;
+    }
+  }
+
+  :global([data-theme="dark"]) .card {
+    border-color: rgb(226 233 227 / 0.1);
+    background: rgb(14 26 18 / 0.4);
+  }
+  :global([data-theme="dark"]) .detail {
+    background: rgb(28 43 33 / 0.8);
+    color: #c5d3c8;
+  }
+  :global([data-theme="dark"]) .detail :global(strong) {
+    color: #f3f6f4;
+  }
+  :global([data-theme="dark"]) .waypoint {
+    border-color: #9db3a3;
+    background: #1c2b21;
+    color: #f3f6f4;
+  }
+  :global([data-theme="dark"]) .waypoint.visited {
+    border-color: #b5d177;
+    background: #9bbf4f;
+    color: #1c270c;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-sun) {
+    fill: #506a25;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-mountain) {
+    fill: #323c41;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-hill) {
+    fill: #283a2e;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-tree) {
+    fill: #53705b;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-trail) {
+    stroke: #415522;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-trail-line) {
+    stroke: #b5d177;
+  }
+</style>
+
+<script>
+  const smooth = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
+  // Visited steps are a per-browser convenience; the page works without them.
+  function readVisited(key: string): Set<number> {
+    try {
+      const stored = JSON.parse(localStorage.getItem(key) ?? "[]");
+      return new Set(Array.isArray(stored) ? stored.filter(Number.isInteger) : []);
+    } catch {
+      return new Set();
+    }
+  }
+
+  function writeVisited(key: string, visited: Set<number>) {
+    try {
+      localStorage.setItem(key, JSON.stringify([...visited]));
+    } catch {
+      // Storage is unavailable, as in a private window.
+    }
+  }
+
+  function followingSteps(figure: HTMLElement): HTMLLIElement[] {
+    const list = [...document.querySelectorAll<HTMLElement>(".sl-steps")].find(
+      (candidate) => figure.compareDocumentPosition(candidate) & Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    return list ? [...list.querySelectorAll<HTMLLIElement>(":scope > li")] : [];
+  }
+
+  for (const figure of document.querySelectorAll<HTMLElement>("[data-field-trail]")) {
+    const steps = followingSteps(figure);
+    const titles = steps.map((step) => step.querySelector("strong")?.textContent?.trim() ?? "");
+    const detail = figure.querySelector<HTMLElement>(".detail");
+    const progress = figure.dataset.progress ?? "";
+    const key = `nahpu-day-one-trail:${document.documentElement.lang}`;
+    const visited = readVisited(key);
+    const buttons = [...figure.querySelectorAll<HTMLButtonElement>(".waypoint")];
+
+    const render = (selected: number | null) => {
+      for (const button of buttons) {
+        const index = Number(button.dataset.index);
+        button.classList.toggle("visited", visited.has(index));
+        button.setAttribute("aria-pressed", String(index === selected));
+      }
+      if (selected === null || !detail) return;
+      const title = document.createElement("strong");
+      title.textContent = `${selected + 1}. ${titles[selected]}`;
+      const count = progress
+        .replace("{visited}", String(visited.size))
+        .replace("{total}", String(steps.length));
+      detail.replaceChildren(title, ` · ${count}`);
+    };
+
+    for (const button of buttons) {
+      const index = Number(button.dataset.index);
+      const step = steps[index];
+      if (!step) {
+        button.hidden = true;
+        continue;
+      }
+      button.setAttribute("aria-label", `${index + 1}. ${titles[index]}`);
+      button.title = titles[index];
+      button.addEventListener("click", () => {
+        visited.add(index);
+        writeVisited(key, visited);
+        render(index);
+        step.classList.remove("day-one-target");
+        void step.offsetWidth;
+        step.classList.add("day-one-target");
+        step.scrollIntoView({ behavior: smooth, block: "start" });
+      });
+    }
+    render(null);
+  }
+</script>

@@ -59,7 +59,7 @@ Keep these version concepts separate when reviewing a persistence change.
 
 | Version | Current value | Owner | Meaning |
 |---|---:|---|---|
-| Drift schema version | 23 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
+| Drift schema version | 24 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
 | SQLite user version | Set by Drift | Drift | On-disk marker used to select upgrade steps |
 | redb internal schema version | Not implemented | `nahpu_configs` | A future marker for redb table and value migrations |
 | Configuration export schema | 4 | `USER_CONFIG_SCHEMA_VERSION` | Compatibility version for exported configuration payloads |
@@ -118,7 +118,7 @@ preservation, and corrupted input that must not partially clear stored data.
 ## Drift table schema
 
 The canonical project schema is defined in
-`lib/services/database/tables.drift` and is currently at schema version 23.
+`lib/services/database/tables.drift` and is currently at schema version 24.
 Drift manages these tables over SQLite. The summary below describes the
 current table set and the important ownership relationships.
 
@@ -133,7 +133,7 @@ current table set and the important ownership relationships.
 | `collEvent` | Collecting events, dates, times, methods, and site associations. |
 | `environment` | Environmental and astronomical observations for collecting events. Renamed from `weather` in v19. |
 | `collPersonnel` | Personnel and collecting roles associated with events. |
-| `collEffort` | Collecting methods, equipment, counts, and effort notes for events. |
+| `collMethod` | Collection methods, equipment, counts, and sampling-effort notes for events. Renamed from `collEffort` in v24. |
 | `narrative` | Project or site field narratives and their metadata. |
 | `media` | Project media metadata. v13 introduced nullable `uri`. |
 | `narrativeMedia` | Links narratives to media files. |
@@ -223,7 +223,7 @@ index increases migration and insert cost.
    ```bash
    bash scripts/codegen.sh
    bash scripts/dump_schema.sh
-   cp lib/services/database/tables.drift db_schemas/drift_tables/tables_v23.drift
+   cp lib/services/database/tables.drift db_schemas/drift_tables/tables_v24.drift
    ```
 
 8. Regenerate the migration-test schemas. `drift_dev schema generate` lists its
@@ -253,7 +253,7 @@ index increases migration and insert cost.
     audit below. See [API](../nahpu-api) for building the app against the
     unpublished crates.
 11. Add migration fixtures and tests in `test/database/migration_test.dart`. The
-    suite currently upgrades fixtures from v6 through v22 to v23. Point every
+    suite currently upgrades fixtures from v6 through v23 to v24. Point every
     `migrateAndValidate` call at the new version: a step that recreates a
     trigger builds the current shape, so a call left on the previous version
     fails schema comparison.
@@ -262,7 +262,27 @@ index increases migration and insert cost.
 
 {% /steps %}
 
-### Worked example: v22 to v23
+### Worked example: v23 to v24
+
+The v24 migration in `lib/services/database/migration_coordinator.dart` renames
+`collEffort` to `collMethod`:
+
+1. Counts the rows in whichever table is present, so an interrupted attempt
+   that already renamed the table can resume.
+2. Renames the table with `_renameTableIfPresent`. `legacy_alter_table` stays
+   off, so SQLite also rewrites the `specimen.collMethodID` foreign key to the
+   new name.
+3. Verifies the old table is gone, the row count survived, and
+   `PRAGMA foreign_key_check` is clean.
+
+The legacy path renames the table before it runs the v3 to v4 step, because
+that step renames `collEffort.type` through the generated `collMethod` getter.
+Saved export presets, document templates, and project-transfer files that spell
+`collEffort` resolve through `specimenAttributeTableAliases` and the transfer
+collection aliases. Record exchange keeps its `effort` JSON key so older
+versions can still read shared events.
+
+### Historical example: v22 to v23
 
 The v23 migration in `lib/services/database/migration_coordinator.dart` adds
 ichthyology support:
@@ -389,7 +409,7 @@ exported or reproduced. Installation-local preferences remain in
 
 ## Darwin Core field mapping
 
-This is the audited schema-v23 mapping surface for `nahpu_dwc` (the unreleased
+This is the audited schema-v24 mapping surface for `nahpu_dwc` (the unreleased
 successor to 0.7.0). It uses
 the 2026-05-26 [Darwin Core List of Terms](https://dwc.tdwg.org/list/) and the
 [Darwin Core Data Package 1.0](https://dwc.tdwg.org/dp/) profile. Source fields
@@ -455,7 +475,7 @@ The table audit is grouped by data domain:
 | Category | Tables |
 |---|---|
 | Projects and locations | `project`, `geography`, `site`, `siteAttribute`, `fossilSite`, `coordinate` |
-| Collecting events | `collEvent`, `environment`, `collPersonnel`, `collEffort` |
+| Collecting events | `collEvent`, `environment`, `collPersonnel`, `collMethod` |
 | Narratives and linked resources | `narrative`, `media`, media link tables, `associatedData`, associated-data link tables |
 | People and taxonomy | `personnelList`, `personnel`, `taxonomy` |
 | Specimens and attributes | `specimen`, `mammalAttribute`, `birdAttribute`, `herpAttribute`, `invertebrateAttribute`, `fossilAttribute` |
@@ -532,12 +552,12 @@ The table audit is grouped by data domain:
 | `role` | Relationship | Event agent-role value in DwC-DP. |
 | `id` | Unmapped | `nahpu:collPersonnel.id`. Internal relationship key. |
 
-#### `collEffort`
+#### `collMethod`
 
 | Fields | Status | Darwin Core or export handling |
 |---|---|---|
 | `eventID`; `method`; `notes` | Mapped | `dwc:eventID`; `dwc:samplingProtocol`; `dwc:samplingEffort` |
-| `id`; `brand`; `count`; `size` | Unmapped | `nahpu:collEffort.id`; `nahpu:collEffort.brand`; `nahpu:collEffort.count`; `nahpu:collEffort.size`. Internal identity and equipment details lack exact standalone terms. |
+| `id`; `brand`; `count`; `size` | Unmapped | `nahpu:collMethod.id`; `nahpu:collMethod.brand`; `nahpu:collMethod.count`; `nahpu:collMethod.size`. Internal identity and equipment details lack exact standalone terms. The pre-v24 `collEffort::` source keys map to the same terms. |
 
 ### Narratives and linked resources
 

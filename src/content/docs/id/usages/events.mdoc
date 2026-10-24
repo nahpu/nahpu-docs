@@ -16,12 +16,12 @@ sidebar:
 {% pin id="C" label="ID lokasi" large=[16.5, 39] small=[20.2, 40.5] /%}
 {% pin id="D" label="Tanggal dan waktu" large=[19, 45.7] small=[23.8, 46.6] /%}
 {% pin id="E" label="Aktivitas utama" large=[65, 27.6] small=[32.1, 81.6] /%}
-{% pin id="F" label="Tambah upaya" large=[37.8, 87.1] small2=[69, 16.1] /%}
+{% pin id="F" label="Tambah metode koleksi" large=[37.8, 87.1] small2=[69, 16.1] /%}
 {% pin id="G" label="Tambah personel" large=[84, 89.3] small2=[12.4, 57.9] /%}
 {% pin id="H" label="Data lingkungan" large=[80.5, 63.8] small2=[23.8, 64.5] /%}
 {% /screenshots %}
 
-Kegiatan pengumpulan membantu Anda melacak aktivitas, upaya, personel, data
+Kegiatan pengumpulan membantu Anda melacak aktivitas, metode koleksi, personel, data
 lingkungan, dan data astronomi untuk satu periode kerja di sebuah lokasi.
 Catatan spesimen terhubung ke kegiatan pengumpulan, bukan langsung ke lokasi,
 sehingga kegiatan menjadi jembatan antara spesimen dan konteks lokasi,
@@ -53,20 +53,20 @@ yang dikonfigurasi.
 
 Buka sebuah kegiatan lalu gunakan menu tiga titiknya untuk mengelola catatan:
 
-- `Edit`: mengubah kolom kegiatan, upaya, personel, atau data lingkungan.
-- `Duplicate event`: menyalin lokasi, waktu, aktivitas, catatan, upaya, dan
-  personel. Tanggalnya maju satu hari dan kegiatan baru memperoleh catatan data
+- `Edit`: mengubah kolom kegiatan, metode koleksi, personel, atau data lingkungan.
+- `Duplicate event`: menyalin lokasi, waktu, aktivitas, catatan, metode
+  koleksi, dan personel. Tanggalnya maju satu hari dan kegiatan baru memperoleh catatan data
   lingkungan yang kosong.
 - `Show QR`: menampilkan catatan kegiatan agar dipindai perangkat seluler lain.
 - `Export event`: menyimpan kegiatan dan data terkaitnya sebagai JSON.
 - `Scan QR`: membuat atau mengganti kegiatan dari kode QR kegiatan.
 - `Import event`: membuat atau mengganti kegiatan dari catatan JSON hasil
   ekspor.
-- `Delete record`: menghapus kegiatan, upayanya, personelnya, data lingkungan,
+- `Delete record`: menghapus kegiatan, metode koleksinya, personelnya, data lingkungan,
   dan nilai khusus per kegiatan. Catatan spesimen yang merujuk ke kegiatan
   tersebut harus dipindahkan atau dihapus lebih dulu.
-- `Delete all records`: menghapus semua kegiatan pengumpulan beserta upaya,
-  personel, dan data lingkungannya pada proyek aktif.
+- `Delete all records`: menghapus semua kegiatan pengumpulan beserta metode
+  koleksi, personel, dan data lingkungannya pada proyek aktif.
 
 Saat mengimpor kegiatan, pilih apakah catatan yang masuk membuat kegiatan baru
 atau memperbarui kegiatan yang sudah ada. Periksa kembali lokasi dan personel
@@ -90,7 +90,7 @@ pengemudi, perekam, atau pengamat, sesuai protokol Anda.
 
     Anda dapat mengurangi pengetikan berulang dengan menduplikasi kegiatan.
     Ketuk atau klik menu tiga titik, lalu pilih `Duplicate event`. NAHPU
-    menyalin lokasi, waktu, aktivitas, catatan, upaya, dan personel, memajukan
+    menyalin lokasi, waktu, aktivitas, catatan, metode koleksi, dan personel, memajukan
     `Start Date` {% ref id="D" /%} dan `End Date` satu hari, serta membuat catatan data lingkungan
     baru yang kosong.
 
@@ -117,7 +117,7 @@ pengemudi, perekam, atau pengamat, sesuai protokol Anda.
     bukan nilai bawaan; tambahkan di `Settings` > `Events` bila protokol Anda
     memerlukannya. Pada banyak alur kerja spesimen nilainya akan `Collecting`,
     tetapi buatlah kegiatan terpisah bila aktivitas yang berbeda memerlukan
-    upaya, personel, atau konteks lingkungan sendiri.
+    metode koleksi, personel, atau konteks lingkungan sendiri.
 
 {% /steps %}
 
@@ -145,11 +145,12 @@ Kartu `Activity` menyimpan tujuan umum kegiatan.
 - `Notes`: catatan bebas tentang aktivitas, aktivitas sekunder, detail protokol,
   atau alasan `Other` dipilih.
 
-## Menambah upaya
+## Menambah metode koleksi
 
 {% steps %}
 
-1. Gunakan tombol `+ Add effort` {% ref id="F" /%} untuk membuat upaya baru.
+1. Gunakan tombol `+ Add collection method` {% ref id="F" /%} untuk membuat
+    metode koleksi baru.
 
 2. Pilih sebuah metode.
 
@@ -162,12 +163,12 @@ Kartu `Activity` menyimpan tujuan umum kegiatan.
 
 5. Masukkan `Size` bila relevan.
 
-6. Masukkan `Notes` untuk detail khusus upaya tersebut.
+6. Masukkan `Notes` untuk detail khusus metode tersebut.
 
 {% /steps %}
 
-Catatan upaya disimpan terpisah dari kegiatan, sehingga satu kegiatan dapat
-mencakup beberapa metode. Setiap upaya memuat:
+Catatan metode koleksi disimpan terpisah dari kegiatan, sehingga satu kegiatan
+dapat mencakup beberapa metode. Setiap metode koleksi memuat:
 
 - `Method`: metode pengumpulan yang ditentukan pengguna.
 - `Brand and Model`: merek atau model peralatan bila relevan.
@@ -175,7 +176,7 @@ mencakup beberapa metode. Setiap upaya memuat:
 - `Size`: ukuran alat atau pemasangannya.
 - `Notes`: catatan khusus terkait metode.
 
-Catatan tangkapan spesimen nantinya dapat memilih salah satu upaya kegiatan ini
+Catatan tangkapan spesimen nantinya dapat memilih salah satu metode koleksi kegiatan ini
 sebagai `Method` spesimen tersebut.
 
 ## Menambah personel pengumpul
@@ -244,7 +245,7 @@ data dari kegiatan pengumpulan:
 
 - `Site ID` menyaring `Event ID` yang tersedia.
 - `Event ID` menghubungkan spesimen dengan kegiatan tersebut.
-- `Method` berasal dari catatan upaya kegiatan.
+- `Method` berasal dari metode koleksi kegiatan.
 - `Collector` berasal dari daftar personel kegiatan.
 - `Coordinate ID` berasal dari koordinat yang terkait dengan lokasi kegiatan.
 

@@ -1,0 +1,79 @@
+---
+title: "Documentation translation"
+sidebar:
+  order: 2
+---
+
+Translation contributions should target the usage documentation, so that
+people can learn to use NAHPU in their preferred language. This includes the
+usage guides, how-to recipes, best practices, and the Day One guide. Contributor
+guidance, including this Contributing section, stays in English, mainly because
+it changes often with code refactoring and new features.
+
+If you are new to translation, start by commenting in the
+[NAHPU translation spreadsheet](https://docs.google.com/spreadsheets/d/1zG3vkcIgsfPMAal2lai876juXS3U_B4DHPEAxi1-Qko/edit?usp=sharing).
+To edit pages directly, follow the
+[documentation contribution guide](../../docs) for editing, local development,
+and review.
+
+## Where translations live
+
+Each language has its own folder under `src/content/docs/`, named with the
+language code: `en`, `pt`, `es`, and `id`. A translated page keeps the same
+path as its English source, for example `en/usages/specimens.mdoc` and
+`pt/usages/specimens.mdoc`.
+
+Write or update the English page first. Then update each translation so shared
+guidance, navigation, and terminology stay aligned across languages.
+
+## Review an existing translation
+
+{% steps %}
+
+1. Open the English page and its translation side by side.
+
+2. Read the translation against the English source and correct mistranslated
+   meaning, unnatural phrasing, and terms that differ from the
+   [Translation glossary](../glossary).
+
+3. Add yourself to the page's `authors` front matter.
+
+   ```yaml
+   ---
+   title: "Página traduzida"
+   authors:
+     - Reviewer Name
+   ---
+   ```
+
+4. Submit the change for review, as described in the
+   [documentation contribution guide](../../docs).
+
+{% /steps %}
+
+Every page under a non-English locale carries an **AI-assisted translation**
+notice below its title. The notice is added automatically, so translators do
+not write it into the page. Adding `authors` switches the notice from "check
+for accuracy" to the reviewed state and names the reviewers. Add `authors` only
+after a person has read the translation against the English source and
+corrected it. Until then, the unreviewed notice is the honest label. Pages that
+fall back to English, such as this Contributing section, do not show it.
+
+## Add a new language
+
+We use AI to assist with the first draft of a new language. If you are
+interested, please reach out to one of our [team members](/teams). Our workflow
+for adding a new language involves:
+
+1. Creating a new language directory in the `src/content/docs` folder. The
+   folder name follows the language code (e.g., `en`, `es`, `fr`).
+2. Using a large language model to translate the English documentation,
+   following the [Translation glossary](../glossary).
+3. Adding the sidebar translations in the `astro.config.mjs` file.
+4. Reviewing and revising the AI translation for accuracy by a team member.
+5. Adding the reviewer to the page's `authors` front matter, which switches
+   the page's translation notice to the reviewed state.
+
+The how-to recipes and Day One guide are also bundled in the NAHPU app, so a
+new documentation language is usually added together with an
+[app translation](../app).

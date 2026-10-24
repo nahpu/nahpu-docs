@@ -1,0 +1,137 @@
+---
+title: "Fine-tuning"
+sidebar:
+  order: 3
+---
+
+{% aside type="caution" title="In development" %}
+Fine-tuning options and defaults may change between milu releases. Run
+`milu --help` for the options of your installed version.
+{% /aside %}
+
+milu can train a new model from scratch or fine-tune an existing model
+package on your own data. Fine-tuning starts from a model that has already
+learned general features, such as an ImageNet-pretrained ResNet, and adapts it
+to a smaller, specialized dataset, such as photos of specimens from one
+collection.
+
+- **Train from scratch:** leave `base_model` unset. milu builds a new network
+  from `architecture`, for example a multilayer perceptron for measurements.
+- **Fine-tune:** set `base_model` to a model package. The architecture comes
+  from that package, and `architecture` is ignored.
+
+## Strategies
+
+The `strategy` setting controls which layers are trained:
+
+| Strategy           | What is trained                                                  | Needs a base model |
+| ------------------ | ---------------------------------------------------------------- | :----------------: |
+| `full`             | Every layer                                                      |         No         |
+| `head_only`        | Only the head; the backbone is frozen                            |        Yes         |
+| `gradual_unfreeze` | Only the head for the first half of the epochs, then every layer |        Yes         |
+
+`milu train init` picks `head_only` when you pass a base model and `full`
+otherwise. Head-only training is fast and works with little data.
+Gradual unfreezing adapts the whole network while protecting the pretrained
+features early in training.
+
+## Fine-tune an image model
+
+{% steps %}
+
+1. Download a pretrained model.
+
+   ```bash
+   milu models pull resnet18
+   ```
+
+   Run `milu models list` to see the available models. To use a torchvision or
+   timm checkpoint you already have, convert it with `milu models import`.
+
+2. Write a training config.
+
+   The input can be an image folder with one sub-directory per class, or an
+   extracted NAHPU data package. For a data package, `--rank` chooses the
+   taxon rank used as the label.
+
+   ```bash
+   milu train init -i nahpu_package/ --rank genus --base-model out_models/resnet18 -n genus_id
+   ```
+
+3. Review `milu_train.toml`.
+
+   Adjust the strategy, epochs, or learning rate. See the
+   [configuration reference](#configuration-reference) below.
+
+4. Train.
+
+   ```bash
+   milu train run
+   ```
+
+   The model package is written to `out_models/genus_id`.
+
+5. Evaluate on data the model has not seen.
+
+   ```bash
+   milu test -m out_models/genus_id -i holdout_package/ --rank genus
+   ```
+
+{% /steps %}
+
+Tabular models follow the same steps, starting from a CSV or TSV file:
+
+```bash
+milu train init -i measurements.csv -t genus --id-column catalog -n skull_genus
+```
+
+## Configuration reference
+
+`milu_train.toml` has three sections. A relative dataset path is resolved
+against the config's directory, so you can move a config together with its
+data.
+
+### `[dataset]`
+
+| `type`         | Settings                                                      |
+| -------------- | ------------------------------------------------------------- |
+| `csv`          | `path`, `target_column`, optional `id_column` and `feature_columns` (all other columns when unset) |
+| `image_folder` | `path`                                                        |
+| `nahpu`        | `path`, `rank`, optional media category                       |
+
+### `[model]`
+
+| Setting          | Default       | Description                                                       |
+| ---------------- | ------------- | ----------------------------------------------------------------- |
+| `name`           | `model`       | Name written to the model manifest                                |
+| `task`           | classification | What the model predicts                                          |
+| `architecture`   | none          | Architecture for a new model; ignored with `base_model`           |
+| `base_model`     | none          | Model package to start from                                       |
+| `strategy`       | `full`        | Which layers are trained (see [Strategies](#strategies))          |
+| `epochs`         | 50            | Maximum number of passes over the training data                   |
+| `batch_size`     | 32            | Samples per optimizer step                                        |
+| `learning_rate`  | 0.001         | AdamW learning rate                                               |
+| `weight_decay`   | 0.0001        | AdamW decoupled weight decay                                      |
+| `valid_fraction` | 0.15          | Fraction held out for early stopping                              |
+| `test_fraction`  | 0.15          | Fraction held out for the final test report                       |
+| `seed`           | 42            | Seed for splitting, shuffling, and weight initialization          |
+| `patience`       | 10            | Stop after this many epochs without a lower validation loss; unset trains every epoch |
+| `augment`        | `true`        | Randomly crop, flip, and color-jitter training images             |
+| `image_size`     | 224           | Input side length for new image models; fine-tuning uses the base model's size |
+
+### `[output]`
+
+`formats` lists the weight formats to write: `burnpack`, `safetensors`, or
+both. The first one goes in the main package directory. You can also choose
+them on the command line:
+
+```bash
+milu train run -c milu_train.toml --formats burnpack,safetensors
+```
+
+## Results
+
+milu keeps the model from the epoch with the lowest validation loss (or
+training loss, without a validation split). The run reports the loss of every
+epoch, how the data was split, and metrics on the test split. Use
+`milu models info` to check what a package contains before you share it.

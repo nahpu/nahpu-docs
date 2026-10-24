@@ -1,5 +1,5 @@
 ---
-title: "Translation glossary"
+title: "Glossary"
 authors:
   - Heru Handika
 lastUpdated: 2026-08-27
@@ -7,10 +7,11 @@ sidebar:
   order: 4
 ---
 
-NAHPU documentation is translated into Brazilian Portuguese, Spanish, and
-Indonesian with AI assistance and reviewed by people. This page is the shared
-reference for how NAHPU and natural history terms are rendered in each
-language, so the same concept does not appear under three different names.
+NAHPU documentation and the NAHPU app are translated into Brazilian
+Portuguese, Spanish, and Indonesian with AI assistance and reviewed by people.
+This page is the shared reference for how NAHPU and natural history terms are
+rendered in each language, so the same concept does not appear under three
+different names.
 
 {% aside type="note" %}
 This page is available in English only. Translation is coordination work
@@ -19,25 +20,36 @@ between languages, so it stays in one place.
 
 ## Rules
 
-### On-screen names stay in English
+### On-screen names match the app
 
-The NAHPU interface is English-only. When a sentence names a control the reader
-must find on screen — a button, a field label, a menu entry, a card title —
-write it in English inside backticks and translate the prose around it:
+The NAHPU app is translated into the same languages as the documentation, and
+readers usually run it in the language they are reading. When a sentence names
+a control the reader must find on screen — a button, a field label, a menu
+entry, a card title — write it inside backticks exactly as the app shows it in
+that language, and translate the prose around it:
 
 ```text
-en  Select `Add taxon`, then choose the `Import` mode.
-pt  Selecione `Add taxon` e escolha o modo `Import`.
-es  Seleccione `Add taxon` y elija el modo `Import`.
-id  Pilih `Add taxon`, lalu pilih mode `Import`.
+en  Select `Add personnel`, then choose `Import`.
+pt  Selecione `Adicionar membro da equipe` e escolha `Importar`.
+es  Seleccione `Agregar personal` y elija `Importar`.
+id  Pilih `Tambah personel`, lalu pilih `Impor`.
 ```
 
-Do not translate the text inside the backticks. A reader who is looking for a
-translated button will not find one.
+Copy the label from the app's translation file for that language,
+`lib/l10n/app_<code>.arb` in the [NAHPU app repository](https://github.com/nahpu/nahpu),
+or from the app itself with `Settings` → `Language` set to that language. Do
+not write your own translation of a label: a reader looks for the exact text
+on screen, so a better wording that the app does not use will not be found. If
+the label reads wrong, fix it in the app as described in
+[App translation](../app), then use the corrected text in both places.
+
+Some screens are not translated yet and still show English labels. Keep those
+labels in English inside backticks until the app translates them.
 
 When the same word is used as an ordinary noun rather than as the name of a
-control, translate it: `Site ID` stays in English, but "record the site
-coordinates" becomes "registre as coordenadas do local".
+control, translate it as ordinary prose: the field is `ID do local` in
+Portuguese, and "record the site coordinates" becomes "registre as coordenadas
+do local".
 
 ### Scientific terms follow the receiving language
 
@@ -71,7 +83,8 @@ so the next translator makes the same choice.
 | locality | localidade | localidad | lokalitas |
 | location (project scope) | localização | ubicación | wilayah |
 | collecting event | evento de coleta | evento de recolecta | kegiatan pengumpulan |
-| effort | esforço | esfuerzo | upaya |
+| collection method | método de coleta | método de colecta | metode koleksi |
+| sampling effort | esforço de amostragem | esfuerzo de muestreo | upaya pengambilan sampel |
 | specimen | espécime | espécimen | spesimen |
 | specimen part | parte do espécime | parte del espécimen | bagian spesimen |
 | parasite | parasita | parásito | parasit |
@@ -103,7 +116,8 @@ so the next translator makes the same choice.
 | collecting personnel | pessoal de coleta | personal de recolecta | personel pengumpul |
 
 Role names that appear in the personnel form — `Cataloger`, `Determiner only`,
-`Preparator only`, `None` — are on-screen names. Keep them in English inside
+`Preparator only`, `None` — are stored values, not translated labels, so the
+app shows them in English in every language. Keep them in English inside
 backticks and use the translated word in prose.
 
 ## Taxonomy
@@ -154,20 +168,7 @@ being corrected as pages are revised.
 
 ## Translation workflow
 
-The steps for producing and reviewing a translation are on the
-[Documentation](../docs#adding-a-new-language-translation) page.
-
-Every page under a non-English locale shows an **AI-assisted translation**
-notice under its title. Adding `authors` to that page's front matter switches
-the notice to the reviewed state and names the reviewers:
-
-```yaml
----
-title: "Página traduzida"
-authors:
-  - Reviewer Name
----
-```
-
-Add `authors` only after a person has read the translation against the English
-source and corrected it. Until then, the unreviewed notice is the honest label.
+The steps for producing and reviewing a translation are in the
+[Documentation translation](../documentation) and [App translation](../app)
+guides. To suggest a new term or a better translation, comment in the
+[NAHPU translation spreadsheet](https://docs.google.com/spreadsheets/d/1zG3vkcIgsfPMAal2lai876juXS3U_B4DHPEAxi1-Qko/edit?usp=sharing).

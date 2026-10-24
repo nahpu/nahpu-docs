@@ -8,6 +8,14 @@ import preact from "@astrojs/preact";
 export default defineConfig({
   site: "https://nahpu.app",
   redirects: {
+    "/en/contributing/translation-glossary":
+      "/en/contributing/translation/glossary/",
+    "/pt/contributing/translation-glossary":
+      "/pt/contributing/translation/glossary/",
+    "/es/contributing/translation-glossary":
+      "/es/contributing/translation/glossary/",
+    "/id/contributing/translation-glossary":
+      "/id/contributing/translation/glossary/",
     "/usages/export": "/en/usages/export/",
     "/en/curatorial-guideline": "/en/usages/export/",
     "/en/curatorial-guideline/backup-restore": "/en/usages/export/",
@@ -392,8 +400,17 @@ export default defineConfig({
             { label: "Become a contributor", link: "contributing" },
             { label: "Documentation", link: "contributing/docs" },
             {
-              label: "Translation glossary",
-              link: "contributing/translation-glossary",
+              label: "Translation",
+              collapsed: true,
+              items: [
+                { label: "Overview", link: "contributing/translation" },
+                {
+                  label: "Documentation",
+                  link: "contributing/translation/documentation",
+                },
+                { label: "App", link: "contributing/translation/app" },
+                { label: "Glossary", link: "contributing/translation/glossary" },
+              ],
             },
             {
               label: "Code",
@@ -402,6 +419,19 @@ export default defineConfig({
                 {
                   autogenerate: {
                     directory: "contributing/code",
+                    collapsed: true,
+                  },
+                },
+              ],
+            },
+            {
+              label: "Model Training",
+              collapsed: true,
+              badge: { text: "In development", variant: "caution" },
+              items: [
+                {
+                  autogenerate: {
+                    directory: "contributing/model-training",
                     collapsed: true,
                   },
                 },
