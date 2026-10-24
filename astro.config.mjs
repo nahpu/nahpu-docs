@@ -407,6 +407,19 @@ export default defineConfig({
                 },
               ],
             },
+            {
+              label: "Model Training",
+              collapsed: true,
+              badge: { text: "In development", variant: "caution" },
+              items: [
+                {
+                  autogenerate: {
+                    directory: "contributing/model-training",
+                    collapsed: true,
+                  },
+                },
+              ],
+            },
           ],
           collapsed: true,
         },
