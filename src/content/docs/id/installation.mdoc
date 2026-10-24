@@ -79,21 +79,21 @@ Jika sebelumnya Anda memasang NAHPU melalui TestFlight, pasang versi App Store a
 
 {% tabitem label="Linux" %}
 
-Persyaratan: distribusi x86_64 dengan GLIBC 2.35 atau yang lebih baru. Ubuntu 22.04, Debian 12, Fedora 36, serta RHEL atau Rocky Linux 9 dan yang lebih baru memenuhi persyaratan ini.
+Persyaratan: distribusi x86_64 atau arm64 (aarch64) dengan GLIBC 2.35 atau yang lebih baru. Ubuntu 22.04, Debian 12, Fedora 36, serta RHEL atau Rocky Linux 9 dan yang lebih baru memenuhi persyaratan ini.
 
-Cara tercepat untuk memasang adalah skrip instalasi. Skrip ini memasang paket `.deb` di Ubuntu dan Debian, paket `.rpm` bertanda tangan di Fedora dan RHEL, dan arsip portabel di folder beranda Anda pada distribusi lain. Skrip ini meminta kata sandi Anda saat memasang paket sistem.
+Cara tercepat untuk memasang adalah skrip instalasi. Skrip ini memasang paket `.deb` di Ubuntu dan Debian, paket `.rpm` bertanda tangan di Fedora dan RHEL, dan arsip portabel di folder beranda Anda pada distribusi lain. Skrip ini memilih build yang sesuai dengan prosesor Anda. Skrip ini meminta kata sandi Anda saat memasang paket sistem, dan jika Anda tidak memiliki akses administrator, skrip ini memasang arsip portabel di folder beranda Anda sebagai gantinya. Jika Snap Store menyediakan NAHPU untuk sistem Anda, skrip ini menanyakan apakah Anda ingin memakai Snap; tambahkan `--snap` untuk memilihnya tanpa pertanyaan.
 
 ```bash
 curl -fsSL https://nahpu.app/install.sh | bash
 ```
 
-Untuk memakai arsip portabel di distribusi apa pun, jalankan `curl -fsSL https://nahpu.app/install.sh | bash -s -- --portable`. Anda dapat membaca skrip ini sebelum menjalankannya di [nahpu.app/install.sh](https://nahpu.app/install.sh). Untuk memasang secara manual, ikuti langkah untuk distribusi Anda di bawah.
+Untuk memakai arsip portabel di distribusi apa pun, jalankan `curl -fsSL https://nahpu.app/install.sh | bash -s -- --portable`. Anda dapat membaca skrip ini sebelum menjalankannya di [nahpu.app/install.sh](https://nahpu.app/install.sh). Untuk memasang secara manual, ikuti langkah untuk distribusi Anda di bawah. Perintah di bawah mengunduh build x86_64; di arm64, ganti `x86_64` dengan `arm64` pada setiap nama berkas.
 
 {% tabs %}
 
 {% tabitem label="Snap Store" %}
 
-Paket Snap dapat dipakai di distribusi x86_64 apa pun yang memiliki [`snapd`](https://snapcraft.io/docs/installing-snapd), dan memperbarui dirinya sendiri di latar belakang.
+Paket Snap dapat dipakai di distribusi x86_64 atau arm64 apa pun yang memiliki [`snapd`](https://snapcraft.io/docs/installing-snapd), dan memperbarui dirinya sendiri di latar belakang.
 
 {% storebadge store="snap-store" locale="id" /%}
 
@@ -129,7 +129,7 @@ Paket Snap dapat dipakai di distribusi x86_64 apa pun yang memiliki [`snapd`](ht
 
 {% tabitem label="Fedora dan RHEL" %}
 
-Langkah-langkah ini berlaku untuk Fedora, RHEL, Rocky Linux, AlmaLinux, dan turunan RHEL lainnya.
+Langkah-langkah ini berlaku untuk Fedora, RHEL, Rocky Linux, AlmaLinux, dan turunan RHEL lainnya. Paket RPM bertanda tangan hanya tersedia untuk x86_64; di arm64, gunakan arsip portabel pada **Distribusi lain**.
 
 NAHPU menandatangani paket RPM-nya. Impor kunci penanda tangan sekali saja, sebelum pemasangan pertama:
 
