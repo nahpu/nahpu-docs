@@ -1,0 +1,112 @@
+---
+title: "App translation"
+sidebar:
+  order: 3
+---
+
+The NAHPU app shows its labels, buttons, messages, and settings in English,
+Brazilian Portuguese, Spanish, or Indonesian. Users choose the language in
+`Settings` → `Language`. English is the source language; the other languages
+are in beta while they are reviewed.
+
+## Start simple
+
+The easiest way to improve the app translation is to use NAHPU in your
+language and note anything that reads wrong. Leave a comment in the
+[NAHPU translation spreadsheet](https://docs.google.com/spreadsheets/d/1zG3vkcIgsfPMAal2lai876juXS3U_B4DHPEAxi1-Qko/edit?usp=sharing)
+with:
+
+- the screen where you saw the text,
+- the text as it appears in the app,
+- your suggested translation, and
+- a short reason when the choice is not obvious, such as the term your
+  colleagues or institution use.
+
+A screenshot helps when it does not expose sensitive data. A NAHPU team member
+will carry the change into the app.
+
+## Translation rules
+
+Follow the [Translation glossary](../glossary) so the app and the documentation
+use the same term for the same concept. In addition:
+
+- **Keep it short.** Labels must fit on phone screens. Prefer the shortest
+  natural wording, especially for buttons, tabs, and chips.
+- **Keep placeholders unchanged.** Text in braces, such as `{date}` or
+  `{count}`, is replaced by the app. Copy it exactly; you may move it within
+  the sentence.
+- **Translate plural forms, not their structure.** In text such as
+  `{count, plural, =1{1 file} other{{count} files}}`, translate only the words
+  inside the inner braces. Keep `count`, `plural`, `=1`, and `other` as they
+  are.
+- **Keep names and standards.** Keep `NAHPU`, Darwin Core terms, file formats,
+  and Latin names exactly as written in English.
+- **Read the description.** Many English strings come with a note describing
+  where the text appears. Use it to choose between meanings of the same word.
+
+## Edit the translation files
+
+Contributors who work with code can edit the translation files directly in the
+[NAHPU app repository](https://github.com/nahpu/nahpu). Read the
+[app code setup guide](../../code/setup) first.
+
+{% filetree %}
+- lib/l10n/
+  - app_en.arb English source, with descriptions and placeholders
+  - app_pt.arb Brazilian Portuguese
+  - app_es.arb Spanish
+  - app_id.arb Indonesian
+  - app_localizations*.dart Generated, do not edit
+{% /filetree %}
+
+{% steps %}
+
+1. Find the key in `app_en.arb` and read its `@key` description, if any.
+
+2. Edit the same key in the translation file, for example `app_pt.arb`.
+
+   ```json
+   "commonRetry": "Tentar novamente",
+   ```
+
+   Do not rename, add, or remove keys in a translation file. Every translation
+   must contain all English keys with the same placeholders.
+
+3. Regenerate the localization code.
+
+   ```bash
+   flutter gen-l10n
+   ```
+
+4. Run the localization tests.
+
+   ```bash
+   flutter test test/localization
+   ```
+
+5. Run the app, switch to your language in `Settings` → `Language`, and check
+   that the text fits and reads naturally on the screens you changed.
+
+6. Submit a pull request with screenshots of the changed screens.
+
+{% /steps %}
+
+Each translation file starts with `"@@x-reviewed": false`. Leave it unchanged
+unless a fluent speaker has reviewed the whole file against the English source.
+
+## New English strings
+
+When you add text to a screen, add the English string to `app_en.arb` instead
+of writing it in the widget. Add a `@key` description when the meaning depends
+on context, then add the same key to every translation file. A first draft may
+come from a large language model, but mark it for review in your pull request
+so a fluent speaker can check it.
+
+## Add a new app language
+
+A new language needs an ARB file in `lib/l10n/`, an entry in the `AppLanguage`
+enum in `lib/services/localization/app_language.dart`, and the bundled
+documentation folders under `assets/docs/`. Because the bundled Cookbook is
+generated from this website, a new app language also needs a
+[documentation translation](../documentation). Please contact a
+[NAHPU team member](/teams) before starting.

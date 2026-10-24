@@ -16,12 +16,12 @@ sidebar:
 {% pin id="C" label="Site ID" large=[16.5, 39] small=[20.2, 40.5] /%}
 {% pin id="D" label="Dates and times" large=[19, 45.7] small=[23.8, 46.6] /%}
 {% pin id="E" label="Primary activity" large=[65, 27.6] small=[32.1, 81.6] /%}
-{% pin id="F" label="Add effort" large=[37.8, 87.1] small2=[69, 16.1] /%}
+{% pin id="F" label="Add collection method" large=[37.8, 87.1] small2=[69, 16.1] /%}
 {% pin id="G" label="Add personnel" large=[84, 89.3] small2=[12.4, 57.9] /%}
 {% pin id="H" label="Environmental data" large=[80.5, 63.8] small2=[23.8, 64.5] /%}
 {% /screenshots %}
 
-Collecting events help you keep track of activity, effort, personnel, environmental,
+Collecting events help you keep track of activity, collection methods, personnel, environmental,
 and astronomy data for a period of work at a site. Specimen records link to a
 collecting event, not directly to a site, so the event is the bridge between a
 specimen and the site, coordinate, method, and collector context.
@@ -51,19 +51,19 @@ when they are not in the configured list.
 
 Open an event and use its three-dot menu to manage the record:
 
-- `Edit`: change the event fields, effort, personnel, or environmental data.
-- `Duplicate event`: copy the site, times, activity, notes, efforts, and
-  personnel. The dates move forward one day and the new event gets an empty
+- `Edit`: change the event fields, collection methods, personnel, or environmental data.
+- `Duplicate event`: copy the site, times, activity, notes, collection methods,
+  and personnel. The dates move forward one day and the new event gets an empty
   environmental-data record.
 - `Show QR`: display the event record for another mobile device to scan.
 - `Export event`: save the event and its related data as JSON.
 - `Scan QR`: create or replace an event from an event QR code.
 - `Import event`: create or replace an event from an exported JSON record.
-- `Delete record`: delete the event, its efforts, its event personnel,
+- `Delete record`: delete the event, its collection methods, its event personnel,
   environmental data, and per-event custom values. A specimen record that
   references the event must be moved or deleted first.
-- `Delete all records`: delete all collecting events and their related effort,
-  personnel, and environmental data in the current project.
+- `Delete all records`: delete all collecting events and their related collection
+  methods, personnel, and environmental data in the current project.
 
 When importing an event, choose whether the incoming record creates a new event
 or updates an existing event. Confirm the referenced site and personnel after
@@ -87,7 +87,7 @@ observer, depending on your protocol.
 
     You can minimize repeated entry by duplicating an event. Tap/click the
     three-dot menu, then choose `Duplicate event`. NAHPU copies the site, times,
-    activity, notes, effort, and personnel, increments the `Start Date` {% ref id="D" /%} and
+    activity, notes, collection methods, and personnel, increments the `Start Date` {% ref id="D" /%} and
     `End Date` by one day, and creates a new empty environmental-data record.
 
     {% /aside %}
@@ -112,7 +112,7 @@ observer, depending on your protocol.
     The defaults are `Collecting`, `Recording`, and `Observing`. `Other` is not
     a default; add it in `Settings` > `Events` if your protocol needs it. For
     many specimen workflows this will be `Collecting`, but create separate
-    events when different activities need their own effort, personnel, or
+    events when different activities need their own collection methods, personnel, or
     environmental context.
 
 {% /steps %}
@@ -140,11 +140,12 @@ The `Activity` card stores the broad purpose of the event.
 - `Notes`: free-text notes about the activity, secondary activities, protocol
   details, or why `Other` was selected.
 
-## Adding effort
+## Adding collection methods
 
 {% steps %}
 
-1. Use the `+ Add effort` {% ref id="F" /%} button to create a new effort.
+1. Use the `+ Add collection method` {% ref id="F" /%} button to create a new
+    collection method.
 
 2. Select a method.
 
@@ -156,12 +157,12 @@ The `Activity` card stores the broad purpose of the event.
 
 5. Add `Size` when applicable.
 
-6. Add `Notes` for effort-specific details.
+6. Add `Notes` for method-specific details.
 
 {% /steps %}
 
-Effort records are stored separately from the event so one event can include
-multiple methods. Each effort contains:
+Collection method records are stored separately from the event so one event
+can include multiple methods. Each collection method contains:
 
 - `Method`: user-defined collection method.
 - `Brand and Model`: equipment brand/model when relevant.
@@ -169,7 +170,7 @@ multiple methods. Each effort contains:
 - `Size`: size of the tool or setup.
 - `Notes`: any method-specific notes.
 
-Specimen capture records can later select one of these event efforts as the
+Specimen capture records can later select one of these event collection methods as the
 specimen's `Method`.
 
 ## Adding collecting personnel
@@ -236,7 +237,7 @@ collecting events:
 
 - `Site ID` filters the available event IDs.
 - `Event ID` links the specimen to the event.
-- `Method` comes from the event's effort records.
+- `Method` comes from the event's collection methods.
 - `Collector` comes from the event personnel list.
 - `Coordinate ID` comes from coordinates associated with the event site.
 

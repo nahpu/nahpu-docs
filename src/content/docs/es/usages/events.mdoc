@@ -16,13 +16,13 @@ sidebar:
 {% pin id="C" label="ID del sitio" large=[16.5, 39] small=[20.2, 40.5] /%}
 {% pin id="D" label="Fechas y horas" large=[19, 45.7] small=[23.8, 46.6] /%}
 {% pin id="E" label="Actividad principal" large=[65, 27.6] small=[32.1, 81.6] /%}
-{% pin id="F" label="Agregar esfuerzo" large=[37.8, 87.1] small2=[69, 16.1] /%}
+{% pin id="F" label="Agregar método de colecta" large=[37.8, 87.1] small2=[69, 16.1] /%}
 {% pin id="G" label="Agregar personal" large=[84, 89.3] small2=[12.4, 57.9] /%}
 {% pin id="H" label="Datos ambientales" large=[80.5, 63.8] small2=[23.8, 64.5] /%}
 {% /screenshots %}
 
-Los eventos de recolecta le ayudan a llevar registro de la actividad, el
-esfuerzo, el personal, los datos ambientales y los datos astronómicos de un
+Los eventos de recolecta le ayudan a llevar registro de la actividad, los
+métodos de colecta, el personal, los datos ambientales y los datos astronómicos de un
 período de trabajo en un sitio. Los registros de especímenes se vinculan a un
 evento de recolecta, y no directamente a un sitio, de modo que el evento es el
 puente entre el espécimen y el contexto de sitio, coordenada, método y colector.
@@ -53,10 +53,10 @@ configurada.
 
 Abra un evento y use su menú de tres puntos para gestionar el registro:
 
-- `Edit`: cambia los campos del evento, el esfuerzo, el personal o los datos
-  ambientales.
+- `Edit`: cambia los campos del evento, los métodos de colecta, el personal o
+  los datos ambientales.
 - `Duplicate event`: copia el sitio, los horarios, la actividad, las notas, los
-  esfuerzos y el personal. Las fechas avanzan un día y el nuevo evento recibe un
+  métodos de colecta y el personal. Las fechas avanzan un día y el nuevo evento recibe un
   registro de datos ambientales vacío.
 - `Show QR`: muestra el registro del evento para que otro dispositivo móvil lo
   escanee.
@@ -64,11 +64,11 @@ Abra un evento y use su menú de tres puntos para gestionar el registro:
 - `Scan QR`: crea o reemplaza un evento a partir de un código QR de evento.
 - `Import event`: crea o reemplaza un evento a partir de un registro JSON
   exportado.
-- `Delete record`: elimina el evento, sus esfuerzos, su personal, los datos
+- `Delete record`: elimina el evento, sus métodos de colecta, su personal, los datos
   ambientales y los valores personalizados del evento. Un registro de espécimen
   que haga referencia al evento debe moverse o eliminarse antes.
-- `Delete all records`: elimina todos los eventos de recolecta y sus esfuerzos,
-  personal y datos ambientales en el proyecto actual.
+- `Delete all records`: elimina todos los eventos de recolecta y sus métodos de
+  colecta, personal y datos ambientales en el proyecto actual.
 
 Al importar un evento, elija si el registro entrante crea un evento nuevo o
 actualiza uno existente. Confirme el sitio y el personal referenciados después
@@ -92,7 +92,7 @@ encuentro visual, conductor, grabador u observador, según su protocolo.
 
     Puede reducir la escritura repetida duplicando un evento. Toque o haga clic
     en el menú de tres puntos y elija `Duplicate event`. NAHPU copia el sitio,
-    los horarios, la actividad, las notas, el esfuerzo y el personal, adelanta
+    los horarios, la actividad, las notas, los métodos de colecta y el personal, adelanta
     `Start Date` {% ref id="D" /%} y `End Date` un día, y crea un registro de datos ambientales {% ref id="H" /%}
     vacío.
 
@@ -118,8 +118,8 @@ encuentro visual, conductor, grabador u observador, según su protocolo.
     Los valores predeterminados son `Collecting`, `Recording` y `Observing`.
     `Other` no es predeterminado; agréguelo en `Settings` > `Events` si su
     protocolo lo necesita. En muchos flujos con especímenes será `Collecting`,
-    pero cree eventos separados cuando actividades distintas necesiten su propio
-    esfuerzo, personal o contexto ambiental.
+    pero cree eventos separados cuando actividades distintas necesiten sus propios
+    métodos de colecta, personal o contexto ambiental.
 
 {% /steps %}
 
@@ -149,11 +149,12 @@ La tarjeta `Activity` almacena el propósito general del evento.
 - `Notes`: notas libres sobre la actividad, las actividades secundarias, los
   detalles del protocolo o el motivo por el que se eligió `Other`.
 
-## Agregar esfuerzo
+## Agregar métodos de colecta
 
 {% steps %}
 
-1. Use el botón `+ Add effort` {% ref id="F" /%} para crear un nuevo esfuerzo.
+1. Use el botón `+ Add collection method` {% ref id="F" /%} para crear un nuevo
+    método de colecta.
 
 2. Seleccione un método.
 
@@ -166,12 +167,12 @@ La tarjeta `Activity` almacena el propósito general del evento.
 
 5. Agregue `Size` cuando corresponda.
 
-6. Agregue `Notes` para detalles específicos del esfuerzo.
+6. Agregue `Notes` para detalles específicos del método.
 
 {% /steps %}
 
-Los registros de esfuerzo se almacenan por separado del evento, de modo que un
-evento puede incluir varios métodos. Cada esfuerzo contiene:
+Los registros de métodos de colecta se almacenan por separado del evento, de
+modo que un evento puede incluir varios métodos. Cada método de colecta contiene:
 
 - `Method`: método de recolecta definido por el usuario.
 - `Brand and Model`: marca o modelo del equipo, cuando sea relevante.
@@ -180,7 +181,7 @@ evento puede incluir varios métodos. Cada esfuerzo contiene:
 - `Notes`: cualquier nota específica del método.
 
 Los registros de captura de especímenes pueden luego seleccionar uno de estos
-esfuerzos del evento como el `Method` del espécimen.
+métodos de colecta del evento como el `Method` del espécimen.
 
 ## Agregar personal de recolecta
 
@@ -250,7 +251,7 @@ eventos de recolecta:
 
 - `Site ID` filtra los ID de evento disponibles.
 - `Event ID` vincula el espécimen con el evento.
-- `Method` proviene de los registros de esfuerzo del evento.
+- `Method` proviene de los métodos de colecta del evento.
 - `Collector` proviene de la lista de personal del evento.
 - `Coordinate ID` proviene de las coordenadas asociadas al sitio del evento.
 
