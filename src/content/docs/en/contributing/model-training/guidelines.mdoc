@@ -1,0 +1,95 @@
+---
+title: "Guidelines"
+sidebar:
+  order: 4
+---
+
+{% aside type="caution" title="In development" %}
+These guidelines will grow as model training matures. How trained models are
+submitted, hosted, and licensed has not been decided yet.
+{% /aside %}
+
+## Set up the tools
+
+Until `nahpu_dl` is published, milu builds against a local copy of the NAHPU
+API checked out next to it.
+
+{% steps %}
+
+1. Install the latest stable [Rust toolchain](https://www.rust-lang.org/tools/install).
+
+2. Clone both repositories into the same parent directory.
+
+   ```bash
+   git clone https://github.com/hhandika/milu.git
+   ```
+
+   ```bash
+   git clone https://github.com/nahpu/nahpu_api.git
+   ```
+
+   milu expects the NAHPU API at `../nahpu_api`.
+
+3. Build and check milu.
+
+   ```bash
+   cargo build --release
+   ```
+
+   Run `milu --help` to list all commands and options.
+
+{% /steps %}
+
+## Prepare data
+
+- Use only data you have permission to share. Synthetic or anonymized samples
+  are welcome for examples and tests.
+- Keep a holdout set the model never sees during training, and evaluate it
+  with `milu test`.
+- For tables, set the column to predict with `-t` and an identifier column
+  with `--id-column`, so predictions can be traced back to specimens.
+- For NAHPU data packages, choose the label rank with `--rank`, for example
+  `genus`.
+
+## Share a model
+
+- Share the whole package directory: `manifest.toml` and its weight file.
+- Keep the manifest's `provenance` and `metrics` so others know where the
+  model came from and how well it performed.
+- Run `milu models info` on the package before you share it.
+
+## Contribute code
+
+milu is the command line front end. Changes to models, data loading,
+fine-tuning, or weight storage belong in `nahpu_dl` in the
+[NAHPU API](https://github.com/nahpu/nahpu_api). Read the `AGENTS.md` file of
+each repository before you start. In short:
+
+- Rust edition 2024 in a Cargo workspace. Keep `main.rs` thin: argument
+  parsing goes in `cli/`, and logic goes in `core/`.
+- Return `Result` and propagate errors with `?`. Use `anyhow` with context in
+  application code and `thiserror` in library crates. Avoid `unwrap()` outside
+  tests.
+- Log with the `log` macros instead of `println!` in library code.
+- Build paths with `Path::join` so the code works on Linux, macOS, and
+  Windows.
+- Keep dependencies minimal and aim for a single self-contained executable.
+- Document every public item, and put unit tests next to the code they test.
+
+Before opening a pull request, run:
+
+```bash
+cargo fmt --all
+```
+
+```bash
+cargo clippy --workspace --all-targets -- -D warnings
+```
+
+```bash
+cargo test --workspace
+```
+
+When behavior changes for users, add an entry under "Upcoming Release" in
+`CHANGELOG.md`. See [Become a contributor](/en/contributing/) for other ways
+to help.

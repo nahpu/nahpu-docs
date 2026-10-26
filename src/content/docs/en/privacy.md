@@ -128,7 +128,10 @@ If the rendering library cannot be loaded, NAHPU falls back to the bundled
 Natural Earth map, which is drawn entirely on your device. Working offline on
 macOS or Windows therefore produces a map with no network requests, after a
 short wait while NAHPU determines that the library is unreachable. On Linux,
-the bundled map is the only renderer and no rendering library is requested.
+NAHPU draws every map with a renderer built into the app and no rendering
+library is requested. Online basemaps on Linux still request styles and tiles
+from OpenFreeMap as described above, and fall back to the bundled Natural Earth
+map when OpenFreeMap cannot be reached.
 
 While a map is on screen on macOS or Windows, NAHPU also opens a connection on
 your device's loopback interface (`127.0.0.1`), on a port assigned by the

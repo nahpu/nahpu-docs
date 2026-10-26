@@ -139,8 +139,11 @@ Si la biblioteca de renderizado no puede cargarse, NAHPU recurre al mapa
 incorporado de Natural Earth, que se dibuja íntegramente en su dispositivo. Por
 lo tanto, trabajar sin conexión en macOS o Windows produce un mapa sin ninguna
 solicitud de red, tras una breve espera mientras NAHPU determina que la
-biblioteca es inalcanzable. En Linux, el mapa incorporado es el único
-renderizador y no se solicita ninguna biblioteca de renderizado.
+biblioteca es inalcanzable. En Linux, NAHPU dibuja todos los mapas con un
+renderizador integrado en la aplicación y no se solicita ninguna biblioteca de
+renderizado. Los mapas base en línea en Linux siguen solicitando estilos y
+teselas a OpenFreeMap, como se describe arriba, y recurren al mapa Natural Earth
+incorporado cuando no se puede acceder a OpenFreeMap.
 
 Mientras hay un mapa en pantalla en macOS o Windows, NAHPU también abre una
 conexión en la interfaz de bucle invertido de su dispositivo (`127.0.0.1`), en

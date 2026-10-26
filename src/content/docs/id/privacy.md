@@ -131,8 +131,11 @@ Jika pustaka perender tidak dapat dimuat, NAHPU beralih ke peta Natural Earth
 bawaan, yang digambar sepenuhnya pada perangkat Anda. Karena itu, bekerja
 luring di macOS atau Windows menghasilkan peta tanpa permintaan jaringan sama
 sekali, setelah jeda singkat saat NAHPU memastikan pustaka tersebut tidak dapat
-dijangkau. Di Linux, peta bawaan adalah satu-satunya perender dan tidak ada
-pustaka perender yang diminta.
+dijangkau. Di Linux, NAHPU menggambar semua peta dengan perender yang ada di
+dalam aplikasi dan tidak ada pustaka perender yang diminta. Peta dasar daring di
+Linux tetap meminta gaya dan ubin dari OpenFreeMap seperti dijelaskan di atas,
+dan beralih ke peta Natural Earth bawaan bila OpenFreeMap tidak dapat
+dijangkau.
 
 Selama peta tampil di layar pada macOS atau Windows, NAHPU juga membuka koneksi
 pada antarmuka loopback perangkat Anda (`127.0.0.1`), pada porta yang

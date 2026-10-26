@@ -1,0 +1,242 @@
+---
+// Day One record map: how a project, its sites, events, and specimens relate,
+// and which records are shared across projects. The artwork and node geometry
+// are shared with the NAHPU app (see `src/assets/day-one/`); the page supplies
+// every word, so translations stay in the Day One source.
+import art from "../../assets/day-one/record-map.svg?raw";
+import figures from "../../assets/day-one/figures.json";
+
+interface RecordNode {
+  id: string;
+  title: string;
+  summary: string;
+  detail: string;
+}
+
+interface Props {
+  label: string;
+  hint: string;
+  nodes: RecordNode[];
+}
+
+const { label, hint, nodes } = Astro.props;
+const { width, height } = figures.recordMap;
+const text = new Map(nodes.map((n) => [n.id, n]));
+const placed = figures.recordMap.nodes.flatMap((box) => {
+  const words = text.get(box.id);
+  return words ? [{ ...box, ...words }] : [];
+});
+const pct = (value: number, total: number) => `${(value / total) * 100}%`;
+const detailId = "day-one-record-detail";
+---
+
+<figure class="day-one-figure not-content" data-record-map aria-label={label}>
+  <div class="card">
+    <div class="stage" style={`aspect-ratio: ${width} / ${height}`}>
+      <Fragment set:html={art} />
+      {
+        placed.map((n) => (
+          <button
+            type="button"
+            class={`hotspot tone-${n.tone}`}
+            style={`left: ${pct(n.x, width)}; top: ${pct(n.y, height)}; width: ${pct(n.w, width)}; height: ${pct(n.h, height)}`}
+            aria-pressed="false"
+            aria-controls={detailId}
+            data-title={n.title}
+            data-detail={n.detail}
+          >
+            <span class="title">{n.title}</span>
+            <span class="sub">{n.summary}</span>
+          </button>
+        ))
+      }
+    </div>
+    <p class="detail" id={detailId} aria-live="polite">{hint}</p>
+  </div>
+</figure>
+
+<style>
+  .day-one-figure {
+    margin: 1.5rem 0;
+  }
+
+  .card {
+    display: grid;
+    gap: 1rem;
+    align-items: center;
+    border: 1px solid rgb(28 43 33 / 0.1);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.7);
+    padding: 0.75rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  }
+
+  @media (min-width: 48rem) {
+    .card {
+      grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+      padding: 1.25rem;
+    }
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    max-width: 26rem;
+    margin: 0 auto;
+  }
+
+  .stage :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hotspot {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 0 0.4rem;
+    border: 0;
+    border-radius: 0.75rem;
+    background: transparent;
+    color: var(--title);
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 150ms ease;
+  }
+  .hotspot:hover,
+  .hotspot:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--ring);
+  }
+  .hotspot[aria-pressed="true"] {
+    box-shadow: 0 0 0 3px var(--ring);
+  }
+  .hotspot .title {
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .hotspot .sub {
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: var(--sl-text-xs);
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tone-project {
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .detail {
+    margin: 0;
+    min-height: 4.5rem;
+    border-radius: 0.75rem;
+    background: rgb(243 246 244 / 0.9);
+    padding: 0.75rem 1rem;
+    color: #283a2e;
+    font-size: var(--sl-text-sm);
+    line-height: 1.6;
+  }
+  .detail :global(strong) {
+    display: block;
+    color: #1c2b21;
+  }
+
+  /* "Canopy" palette: forest is the project and its places, moss a specimen,
+     and mist the records shared across projects. */
+  .tone-project,
+  .tone-place {
+    --title: #1c2b21;
+    --muted: #33473a;
+    --ring: #405847;
+  }
+  .tone-record {
+    --title: #37481f;
+    --muted: #415522;
+    --ring: #688a2c;
+  }
+  .tone-shared {
+    --title: #323c41;
+    --muted: #42535a;
+    --ring: #637c86;
+  }
+
+  :global([data-theme="dark"]) .card {
+    border-color: rgb(226 233 227 / 0.1);
+    background: rgb(14 26 18 / 0.4);
+  }
+  :global([data-theme="dark"]) .detail {
+    background: rgb(28 43 33 / 0.8);
+    color: #c5d3c8;
+  }
+  :global([data-theme="dark"]) .detail :global(strong) {
+    color: #f3f6f4;
+  }
+  :global([data-theme="dark"]) .tone-project,
+  :global([data-theme="dark"]) .tone-place {
+    --title: #f3f6f4;
+    --muted: #9db3a3;
+    --ring: #9db3a3;
+  }
+  :global([data-theme="dark"]) .tone-record {
+    --title: #f5f9eb;
+    --muted: #d3e4a9;
+    --ring: #9bbf4f;
+  }
+  :global([data-theme="dark"]) .tone-shared {
+    --title: #f4f7f8;
+    --muted: #cdd9dd;
+    --ring: #a9bcc2;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-project) {
+    fill: #1c2b21;
+    stroke: #53705b;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-shared) {
+    fill: #1e2629;
+    stroke: #4f646d;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-leader) {
+    stroke: #637c86;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-arrow),
+  :global([data-theme="dark"]) .stage :global(.art-arrow-head) {
+    stroke: #9db3a3;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-place) {
+    fill: #283a2e;
+    stroke: #718e78;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-record) {
+    fill: #1c270c;
+    stroke: #9bbf4f;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-shared-node) {
+    fill: #323c41;
+    stroke: #8199a2;
+  }
+</style>
+
+<script>
+  for (const figure of document.querySelectorAll<HTMLElement>("[data-record-map]")) {
+    const detail = figure.querySelector<HTMLElement>(".detail");
+    const buttons = [...figure.querySelectorAll<HTMLButtonElement>(".hotspot")];
+    for (const button of buttons) {
+      button.addEventListener("click", () => {
+        for (const other of buttons) other.setAttribute("aria-pressed", String(other === button));
+        if (!detail) return;
+        const title = document.createElement("strong");
+        title.textContent = button.dataset.title ?? "";
+        detail.replaceChildren(title, button.dataset.detail ?? "");
+      });
+    }
+  }
+</script>

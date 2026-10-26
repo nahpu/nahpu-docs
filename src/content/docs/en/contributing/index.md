@@ -16,7 +16,8 @@ just as valuable as code.
 | -------------------------- | ------------------------------------------------------------------------------ | :-------------: | ------------------------------------------------------------------ |
 | Scientist or domain expert | Field testing, taxonomy review, data-model feedback, and workflow validation   |       No        | Use NAHPU with a realistic workflow and report your findings       |
 | Programmer                 | Flutter, Rust API, documentation tooling, bug fixes, and features              |     Usually     | Choose the repository and read its setup guide                     |
-| Documentation contributor  | Corrections, examples, and usage guidance                                      |       No        | Follow the [documentation contribution guide](./contributing/docs) |
+| Documentation contributor  | Corrections, examples, and usage guidance                                      |       No        | Follow the [documentation contribution guide](./docs) |
+| Translator                 | Translation review, terminology suggestions, and new languages                 |       No        | Comment in the [translation spreadsheet](https://docs.google.com/spreadsheets/d/1zG3vkcIgsfPMAal2lai876juXS3U_B4DHPEAxi1-Qko/edit?usp=sharing) |
 | Tester or reviewer         | Platform testing, regression reports, sample files, and accessibility feedback |       No        | Test a supported workflow and report reproducible results          |
 | Tool or design contributor | Utilities, integrations, and UI or accessibility improvements                  |     Varies      | Open a proposal before building a separate tool                    |
 
@@ -101,9 +102,11 @@ development, and review. This contributor guidance is intentionally English-only
 
 ### Translation
 
-Translation contributions should target usage documentation so that people can
-learn to use NAHPU in their preferred language. We only use English for contributor guidance,
-mainly because the section will often changes due to code refactoring and new feature addition.
+Help people use NAHPU in their preferred language by translating the usage
+documentation or the app. You can start simply by commenting in the
+[NAHPU translation spreadsheet](https://docs.google.com/spreadsheets/d/1zG3vkcIgsfPMAal2lai876juXS3U_B4DHPEAxi1-Qko/edit?usp=sharing).
+See the [translation guide](./translation) for the documentation and app
+workflows and the shared glossary.
 
 ### Testing and review
 
