@@ -143,6 +143,7 @@ export default defineMarkdocConfig({
         title: { type: String, required: true },
         summary: { type: String, required: true },
         detail: { type: String, required: true },
+        paper: { type: String },
       },
       transform() {
         return null;
