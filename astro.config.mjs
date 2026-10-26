@@ -384,6 +384,23 @@ export default defineConfig({
                 },
               ],
             },
+            {
+              label: "Specimen Curation",
+              collapsed: true,
+              translations: {
+                "pt-BR": "Curadoria de Espécimes",
+                es: "Curaduría de Especímenes",
+                id: "Kurasi Spesimen",
+              },
+              items: [
+                {
+                  autogenerate: {
+                    directory: "usages/curation",
+                    collapsed: true,
+                  },
+                },
+              ],
+            },
           ],
         },
         {

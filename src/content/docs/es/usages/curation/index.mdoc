@@ -1,0 +1,41 @@
+---
+title: Curaduría de Especímenes
+sidebar:
+  label: Resumen
+  order: 0
+---
+
+`Specimen curation` es una herramienta del proyecto para cotejar el material
+físico con sus registros después de la colecta. Escribe campos de curaduría
+en muchos registros de una sola vez, sin abrir el formulario de cada
+espécimen. La herramienta está en beta.
+
+## Abrir la herramienta
+
+Abra un proyecto y seleccione `Curation` en la barra de herramientas del
+panel del proyecto. La barra la muestra de forma predeterminada. Si la quitó,
+seleccione `Edit list` en la barra y vuelva a activar `Curation`.
+
+El selector de modo en la parte superior de la pantalla define qué se cura.
+Por ahora solo hay un modo:
+
+- [Curaduría de tejidos](/es/usages/curation/tissue-curation/): escanee tubos
+  de partes del espécimen, y de parásitos si lo desea, en cajas de
+  almacenamiento. Cada tubo recibe un código de museo y la siguiente celda
+  libre como ubicación de almacenamiento.
+
+## Cómo la curaduría cambia los registros
+
+La curaduría escribe en los mismos campos que editaría en el formulario del
+espécimen. La curaduría de tejidos escribe `Museum permanent` o `Museum loan`
+y `Storage location` en una parte o un parásito. Los valores aparecen en el
+registro, en la tabla de datos y en todas las exportaciones.
+
+Cada cambio se guarda en el momento. El registro de la sesión lista lo que se
+cambió en esta visita, y `Undo` revierte el cambio más reciente, incluido
+cualquier valor reemplazado. Cerrar la pantalla termina la sesión. Los
+cambios siguen guardados, pero el registro y el historial de deshacer se
+borran.
+
+Haga una copia de seguridad de la base de datos antes de curar una colección
+grande. Consulte [Backup database](/es/usages/export/#backup-database).
