@@ -59,7 +59,7 @@ Keep these version concepts separate when reviewing a persistence change.
 
 | Version | Current value | Owner | Meaning |
 |---|---:|---|---|
-| Drift schema version | 24 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
+| Drift schema version | 25 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
 | SQLite user version | Set by Drift | Drift | On-disk marker used to select upgrade steps |
 | redb internal schema version | Not implemented | `nahpu_configs` | A future marker for redb table and value migrations |
 | Configuration export schema | 4 | `USER_CONFIG_SCHEMA_VERSION` | Compatibility version for exported configuration payloads |
@@ -118,7 +118,7 @@ preservation, and corrupted input that must not partially clear stored data.
 ## Drift table schema
 
 The canonical project schema is defined in
-`lib/services/database/tables.drift` and is currently at schema version 24.
+`lib/services/database/tables.drift` and is currently at schema version 25.
 Drift manages these tables over SQLite. The summary below describes the
 current table set and the important ownership relationships.
 
@@ -156,7 +156,7 @@ current table set and the important ownership relationships.
 | `fossilAttribute` | Fossil-specific specimen attributes. |
 | `specimenIndividual` | Individuals within a specimen lot, with an individual or tag ID, lengths, weight, sex, life stage, and remark. Generic across catalog formats. Added in v23. |
 | `parasiteDetection` | Detection records connecting specimens and parasite observations. |
-| `parasite` | Parasite taxonomy and observation details. |
+| `parasite` | Parasite taxonomy, observation details, collector, and determination. v25 renamed `identifierID` to `determinerID` and added `collectorID`, `dateDetermined`, and `determinationMethod`. |
 | `parasiteIndividual` | Composite link between parasites and the lot individuals they were found on. Cascades from both sides. Added in v23. |
 | `specimenPart` | Specimen parts, tissues, barcodes, treatments, loans, and preparation details. |
 | `specimenPartIndividual` | Composite link between specimen parts and the lot individuals they were taken from. Cascades from both sides. Added in v23. |
@@ -223,7 +223,7 @@ index increases migration and insert cost.
    ```bash
    bash scripts/codegen.sh
    bash scripts/dump_schema.sh
-   cp lib/services/database/tables.drift db_schemas/drift_tables/tables_v24.drift
+   cp lib/services/database/tables.drift db_schemas/drift_tables/tables_v25.drift
    ```
 
 8. Regenerate the migration-test schemas. `drift_dev schema generate` lists its
@@ -253,7 +253,7 @@ index increases migration and insert cost.
     audit below. See [API](../nahpu-api) for building the app against the
     unpublished crates.
 11. Add migration fixtures and tests in `test/database/migration_test.dart`. The
-    suite currently upgrades fixtures from v6 through v23 to v24. Point every
+    suite currently upgrades fixtures from v6 through v24 to v25. Point every
     `migrateAndValidate` call at the new version: a step that recreates a
     trigger builds the current shape, so a call left on the previous version
     fails schema comparison.
@@ -262,7 +262,27 @@ index increases migration and insert cost.
 
 {% /steps %}
 
-### Worked example: v23 to v24
+### Worked example: v24 to v25
+
+The v25 migration in `lib/services/database/migration_coordinator.dart` splits
+the parasite's people into a collector and a determiner, matching specimens:
+
+1. Counts the parasite rows, then renames `parasite.identifierID` to
+   `determinerID` only when the old column is still present, so an interrupted
+   attempt can resume.
+2. Adds `collectorID`, `dateDetermined`, and `determinationMethod` when they are
+   missing.
+3. Verifies the old column is gone, the new columns exist, the row count
+   survived, and `PRAGMA foreign_key_check` is clean.
+
+The v15 step adds `identifierID` by raw SQL instead of the generated getter,
+and skips it when a table built from the current schema already has
+`determinerID`. Saved export presets and document templates that spell
+`parasite::identifierID` resolve through the v25 source alias in
+`specimen_attribute_names.dart`. Project-transfer and record-exchange payloads
+written before v25 read `identifierID` as the determiner.
+
+### Historical example: v23 to v24
 
 The v24 migration in `lib/services/database/migration_coordinator.dart` renames
 `collEffort` to `collMethod`:
@@ -720,7 +740,7 @@ The table audit is grouped by data domain:
 
 | Fields | Status | Darwin Core or export handling |
 |---|---|---|
-| `speciesID`; `identifierID`; `parasiteID`; `parasiteUuid`; `count`; `preparationMethod`; `treatment`; `lifeStage`; `detectionMethod`; `dateCollected`; `timeCollected`; `remark` | Mapped | `dwc:taxonID`; `dwc:identifiedByID`; `dwc:catalogNumber`; `dwc:occurrenceID`; `dwc:individualCount`; preparation values use `dwc:preparations`; `dwc:lifeStage`; `dwc:samplingProtocol`; `dwc:eventDate`; `dwc:eventTime`; `dwc:occurrenceRemarks` |
+| `speciesID`; `determinerID`; `collectorID`; `dateDetermined`; `determinationMethod`; `parasiteID`; `parasiteUuid`; `count`; `preparationMethod`; `treatment`; `lifeStage`; `detectionMethod`; `dateCollected`; `timeCollected`; `remark` | Mapped | `dwc:taxonID`; `dwc:identifiedByID`; `dwc:recordedByID`; `dwc:dateIdentified`; `dwc:identificationType`; `dwc:catalogNumber`; `dwc:occurrenceID`; `dwc:individualCount`; preparation values use `dwc:preparations`; `dwc:lifeStage`; `dwc:samplingProtocol`; `dwc:eventDate`; `dwc:eventTime`; `dwc:occurrenceRemarks` |
 | `specimenUuid`; `anatomicalLocation`; `category`; `associationStatus` | Relationship | Host occurrence and organism-interaction fields; structured bundles emit subject/related occurrence links, interaction type, related organism part, and description. |
 | `id`; `storage`; `storageLocation`; `datePreserved`; `timePreserved`; `museumPermanent`; `museumLoan` | Unmapped | `nahpu:parasite.id`; `nahpu:parasite.storage`; `nahpu:parasite.storageLocation`; `nahpu:parasite.datePreserved`; `nahpu:parasite.timePreserved`; `nahpu:parasite.museumPermanent`; `nahpu:parasite.museumLoan`. Internal identity and preservation, storage, and museum workflow values need a material-record model before standard mapping. |
 
