@@ -1,8 +1,9 @@
 ---
-// Day One record map: how a project, its sites, events, and specimens relate,
-// and which records are shared across projects. The artwork and node geometry
-// are shared with the NAHPU app (see `src/assets/day-one/`); the page supplies
-// every word, so translations stay in the Day One source.
+// Day One record map: how a paper field catalog maps to a NAHPU project, its
+// narrative, sites, events, and specimens, and which records are shared across
+// projects. The artwork and node geometry are shared with the NAHPU app
+// (see `src/assets/day-one/`); the page supplies every word, so translations
+// stay in the Day One source.
 import art from "../../assets/day-one/record-map.svg?raw";
 import figures from "../../assets/day-one/figures.json";
 
@@ -11,6 +12,7 @@ interface RecordNode {
   title: string;
   summary: string;
   detail: string;
+  paper?: string;
 }
 
 interface Props {
@@ -42,8 +44,10 @@ const detailId = "day-one-record-detail";
             style={`left: ${pct(n.x, width)}; top: ${pct(n.y, height)}; width: ${pct(n.w, width)}; height: ${pct(n.h, height)}`}
             aria-pressed="false"
             aria-controls={detailId}
+            data-id={n.id}
             data-title={n.title}
             data-detail={n.detail}
+            data-paper={n.paper ?? ""}
           >
             <span class="title">{n.title}</span>
             <span class="sub">{n.summary}</span>
@@ -51,7 +55,7 @@ const detailId = "day-one-record-detail";
         ))
       }
     </div>
-    <p class="detail" id={detailId} aria-live="polite">{hint}</p>
+    <div class="detail" id={detailId} aria-live="polite">{hint}</div>
   </div>
 </figure>
 
@@ -71,9 +75,9 @@ const detailId = "day-one-record-detail";
     box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
   }
 
-  @media (min-width: 48rem) {
+  @media (min-width: 56rem) {
     .card {
-      grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 34rem) minmax(0, 1fr);
       padding: 1.25rem;
     }
   }
@@ -81,7 +85,7 @@ const detailId = "day-one-record-detail";
   .stage {
     position: relative;
     width: 100%;
-    max-width: 26rem;
+    max-width: 34rem;
     margin: 0 auto;
   }
 
@@ -89,6 +93,15 @@ const detailId = "day-one-record-detail";
     display: block;
     width: 100%;
     height: 100%;
+  }
+
+  .stage :global(.art-paper-section) {
+    cursor: pointer;
+    transition: filter 150ms ease;
+  }
+  .stage :global(.art-paper-section.active .art-paper-page) {
+    stroke: #8c7355;
+    stroke-width: 2;
   }
 
   .hotspot {
@@ -130,14 +143,16 @@ const detailId = "day-one-record-detail";
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .tone-project {
+  .tone-project,
+  .tone-paper {
     justify-content: center;
     align-items: flex-start;
+    text-align: left;
   }
 
   .detail {
     margin: 0;
-    min-height: 4.5rem;
+    min-height: 5.5rem;
     border-radius: 0.75rem;
     background: rgb(243 246 244 / 0.9);
     padding: 0.75rem 1rem;
@@ -149,9 +164,23 @@ const detailId = "day-one-record-detail";
     display: block;
     color: #1c2b21;
   }
+  .detail :global(.paper-note) {
+    display: block;
+    margin-top: 0.5rem;
+    border-top: 1px dashed rgb(140 115 85 / 0.35);
+    padding-top: 0.45rem;
+    color: #5c4732;
+    font-size: var(--sl-text-xs);
+    line-height: 1.5;
+  }
 
-  /* "Canopy" palette: forest is the project and its places, moss a specimen,
-     and mist the records shared across projects. */
+  /* "Canopy" palette: warm parchment for the paper field catalog, forest for
+     the project and its places, moss for specimens, and mist for shared data. */
+  .tone-paper {
+    --title: #3d2e1e;
+    --muted: #5c4732;
+    --ring: #8c7355;
+  }
   .tone-project,
   .tone-place {
     --title: #1c2b21;
@@ -180,6 +209,15 @@ const detailId = "day-one-record-detail";
   :global([data-theme="dark"]) .detail :global(strong) {
     color: #f3f6f4;
   }
+  :global([data-theme="dark"]) .detail :global(.paper-note) {
+    border-top-color: rgb(196 173 141 / 0.3);
+    color: #d5c7b2;
+  }
+  :global([data-theme="dark"]) .tone-paper {
+    --title: #f5efe2;
+    --muted: #d5c7b2;
+    --ring: #c4ad8d;
+  }
   :global([data-theme="dark"]) .tone-project,
   :global([data-theme="dark"]) .tone-place {
     --title: #f3f6f4;
@@ -195,6 +233,25 @@ const detailId = "day-one-record-detail";
     --title: #f4f7f8;
     --muted: #cdd9dd;
     --ring: #a9bcc2;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-paper) {
+    fill: #262019;
+    stroke: #8c7355;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-paper-page) {
+    fill: #1d1812;
+    stroke: #5c4732;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-paper-section.active .art-paper-page) {
+    stroke: #c4ad8d;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-paper-rule) {
+    stroke: #5c4732;
+  }
+  :global([data-theme="dark"]) .stage :global(.art-paper-stroke),
+  :global([data-theme="dark"]) .stage :global(.art-paper-bridge),
+  :global([data-theme="dark"]) .stage :global(.art-paper-bridge-head) {
+    stroke: #c4ad8d;
   }
   :global([data-theme="dark"]) .stage :global(.art-project) {
     fill: #1c2b21;
@@ -229,13 +286,39 @@ const detailId = "day-one-record-detail";
   for (const figure of document.querySelectorAll<HTMLElement>("[data-record-map]")) {
     const detail = figure.querySelector<HTMLElement>(".detail");
     const buttons = [...figure.querySelectorAll<HTMLButtonElement>(".hotspot")];
+    const paperSections = [...figure.querySelectorAll<SVGGElement>("[data-paper-for]")];
+
+    const selectButton = (button: HTMLButtonElement) => {
+      const id = button.dataset.id ?? "";
+      for (const other of buttons) {
+        other.setAttribute("aria-pressed", String(other === button));
+      }
+      for (const section of paperSections) {
+        section.classList.toggle(
+          "active",
+          id === "paper" || section.dataset.paperFor === id,
+        );
+      }
+      if (!detail) return;
+      const title = document.createElement("strong");
+      title.textContent = button.dataset.title ?? "";
+      const children: (Node | string)[] = [title, button.dataset.detail ?? ""];
+      if (button.dataset.paper) {
+        const paper = document.createElement("span");
+        paper.className = "paper-note";
+        paper.textContent = button.dataset.paper;
+        children.push(paper);
+      }
+      detail.replaceChildren(...children);
+    };
+
     for (const button of buttons) {
-      button.addEventListener("click", () => {
-        for (const other of buttons) other.setAttribute("aria-pressed", String(other === button));
-        if (!detail) return;
-        const title = document.createElement("strong");
-        title.textContent = button.dataset.title ?? "";
-        detail.replaceChildren(title, button.dataset.detail ?? "");
+      button.addEventListener("click", () => selectButton(button));
+    }
+    for (const section of paperSections) {
+      section.addEventListener("click", () => {
+        const target = buttons.find((b) => b.dataset.id === section.dataset.paperFor);
+        if (target) selectButton(target);
       });
     }
   }
