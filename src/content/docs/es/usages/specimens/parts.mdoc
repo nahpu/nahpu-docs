@@ -5,18 +5,43 @@ sidebar:
   order: 6
 ---
 
-Cada espécimen puede tener varias partes, como vouchers, tejidos, hisopos o
-parásitos. Una parte puede incluir `Tissue ID`, `QR/barcode ID`, `Preparation
+Cada espécimen puede tener varias partes, como vouchers, tejidos o hisopos.
+Los organismos que viven sobre o dentro del espécimen se registran aparte como
+[simbiontes](#symbionts). Una parte puede incluir `Tissue ID`, `QR/barcode ID`, `Preparation
 type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
 `Storage type`, `Storage location`, `Date taken`, `PMI`, museos permanente y de
-préstamo, y `Remarks`. Los registros de parásitos también separan el método de
-almacenamiento de la ubicación física.
+préstamo, y `Remarks`.
 
 `Individuals` solo aparece en un lote de peces con individuos registrados y
 vincula la parte con uno o más individuos del lote.
 
-La pestaña de parásitos está disponible para mamíferos, aves, herpetofauna y
+La pestaña de simbiontes está disponible para mamíferos, aves, herpetofauna y
 peces, pero no para catálogos de invertebrados. En un lote de peces con
-individuos registrados, las partes y los parásitos pueden vincularse con los
+individuos registrados, las partes y los simbiontes pueden vincularse con los
 individuos de los que proceden; consulte
-[Peces](/es/usages/specimens/measurements/fishes/#parts-and-parasites).
+[Peces](/es/usages/specimens/measurements/fishes/#parts-and-symbionts).
+
+## Simbiontes {% #symbionts %}
+
+Un simbionte es cualquier organismo que vive sobre o dentro del espécimen
+hospedador, sea cual sea su relación con él: parasítica, mutualista,
+comensal, forética, entre otras. Dos campos describen la asociación:
+
+- `Interaction type` (Tipo de interacción): cómo se relaciona el simbionte con
+  su hospedador. El vocabulario predeterminado es `Parasitic`, `Parasitoid`,
+  `Mutualistic`, `Commensal`, `Phoretic` y `Unknown`. Los registros creados
+  antes de este cambio se migraron con el tipo de interacción `Parasitic`.
+- `Category`: dónde vive el simbionte en su hospedador. Los valores
+  predeterminados son `Ectosymbiont`, `Endosymbiont` y `Mesosymbiont`. Elegir
+  una categoría limita la lista de `Anatomical location`; los valores antiguos
+  guardados, como `Ectoparasite`, la siguen filtrando igual.
+
+En el espécimen, `Symbionts examined` y `Symbionts detected` indican si se
+examinó el hospedador y si se encontró algo, de modo que también queda
+documentado un examen sin simbiontes. Los registros de simbiontes separan el
+método de almacenamiento de la ubicación física.
+
+En las exportaciones Darwin Core, el tipo de interacción se convierte en
+`organismInteractionType`; un registro sin tipo de interacción usa su
+categoría. Cuando hay un tipo de interacción, la categoría y el estado de la
+asociación van a `organismInteractionDescription`.

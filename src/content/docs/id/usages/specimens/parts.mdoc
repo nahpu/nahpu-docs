@@ -5,17 +5,41 @@ sidebar:
   order: 6
 ---
 
-Setiap spesimen dapat memiliki banyak bagian, seperti voucher, jaringan,
-swab, atau parasit. Bagian dapat berisi `Tissue ID`, `QR/barcode ID`,
+Setiap spesimen dapat memiliki banyak bagian, seperti voucher, jaringan, atau
+swab. Organisme yang hidup di permukaan atau di dalam spesimen dicatat terpisah
+sebagai [simbion](#symbionts). Bagian dapat berisi `Tissue ID`, `QR/barcode ID`,
 `Preparation type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`,
 `Preparator`, `Storage type`, `Storage location`, `Date taken`, `PMI`, museum
-permanen, museum pinjaman, dan `Remarks`. Catatan parasit juga memisahkan metode
-penyimpanan dari lokasi fisiknya.
+permanen, museum pinjaman, dan `Remarks`.
 
-Tab parasit tersedia untuk mamalia, burung, herpetofauna, dan ikan, tetapi
+Tab simbion tersedia untuk mamalia, burung, herpetofauna, dan ikan, tetapi
 tidak untuk katalog invertebrata. Untuk lot ikan yang memiliki catatan
-individu, bagian spesimen dan parasit dapat ditautkan ke individu asalnya;
-lihat [Ikan](/id/usages/specimens/measurements/fishes/#parts-and-parasites).
+individu, bagian spesimen dan simbion dapat ditautkan ke individu asalnya;
+lihat [Ikan](/id/usages/specimens/measurements/fishes/#parts-and-symbionts).
 
 Kolom `Individuals` hanya ditampilkan untuk lot ikan yang memiliki catatan
 individu. Kolom ini menautkan bagian ke satu atau beberapa individu dalam lot.
+
+## Simbion {% #symbionts %}
+
+Simbion adalah organisme apa pun yang hidup di permukaan atau di dalam
+spesimen inang, apa pun hubungannya dengan inang: parasitik, mutualistik,
+komensal, foretik, dan sebagainya. Dua kolom menjelaskan asosiasinya:
+
+- `Interaction type` (Jenis interaksi): bagaimana simbion berhubungan dengan
+  inangnya. Kosakata bawaannya adalah `Parasitic`, `Parasitoid`,
+  `Mutualistic`, `Commensal`, `Phoretic`, dan `Unknown`. Catatan yang dibuat
+  sebelum perubahan ini dimigrasikan dengan jenis interaksi `Parasitic`.
+- `Category`: tempat simbion hidup pada inangnya. Nilai bawaannya adalah
+  `Ectosymbiont`, `Endosymbiont`, dan `Mesosymbiont`. Memilih kategori
+  mempersempit daftar `Anatomical location`; nilai lama yang tersimpan, seperti
+  `Ectoparasite`, tetap menyaring daftar dengan cara yang sama.
+
+Pada spesimen, `Symbionts examined` dan `Symbionts detected` mencatat apakah
+inang sudah diperiksa dan apakah ada yang ditemukan, sehingga pemeriksaan tanpa
+simbion tetap terdokumentasi. Catatan simbion memisahkan metode penyimpanan
+dari lokasi fisiknya.
+
+Dalam ekspor Darwin Core, jenis interaksi menjadi `organismInteractionType`;
+catatan tanpa jenis interaksi memakai kategorinya. Bila jenis interaksi diisi,
+kategori dan status asosiasi masuk ke `organismInteractionDescription`.

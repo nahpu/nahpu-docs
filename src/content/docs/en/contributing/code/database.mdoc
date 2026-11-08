@@ -59,15 +59,15 @@ Keep these version concepts separate when reviewing a persistence change.
 
 | Version | Current value | Owner | Meaning |
 |---|---:|---|---|
-| Drift schema version | 25 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
+| Drift schema version | 26 | `kSchemaVersion` in `lib/services/database/database.dart` | SQLite structure expected by the Flutter application |
 | SQLite user version | Set by Drift | Drift | On-disk marker used to select upgrade steps |
 | redb internal schema version | Not implemented | `nahpu_configs` | A future marker for redb table and value migrations |
 | Configuration export schema | 4 | `USER_CONFIG_SCHEMA_VERSION` | Compatibility version for exported configuration payloads |
 | Rust crate version | 0.7.1 | `crates/nahpu_configs/Cargo.toml` | Package release version, not a data migration marker |
-| Schema mirror crate version | 0.6.0 | `crates/nahpu_db/Cargo.toml` | Release carrying the mirrored `tables.drift`; a schema change bumps it |
+| Schema mirror crate version | 0.7.0 | `crates/nahpu_db/Cargo.toml` | Release carrying the mirrored `tables.drift`; a schema change bumps it |
 | redb engine version | 4.1.0 dependency | Cargo dependency resolution | Storage engine behavior, not NAHPU application schema |
-| Record-exchange format | 7 | Record-exchange model | Version of individual record and QR payloads |
-| Project transfer format | 10 | Transfer model and archive code | Version of project import and export payloads |
+| Record-exchange format | 8 | Record-exchange model | Version of individual record and QR payloads |
+| Project transfer format | 12 | Transfer model and archive code | Version of project import and export payloads |
 
 ## redb tables
 
@@ -118,7 +118,7 @@ preservation, and corrupted input that must not partially clear stored data.
 ## Drift table schema
 
 The canonical project schema is defined in
-`lib/services/database/tables.drift` and is currently at schema version 25.
+`lib/services/database/tables.drift` and is currently at schema version 26.
 Drift manages these tables over SQLite. The summary below describes the
 current table set and the important ownership relationships.
 
@@ -155,13 +155,13 @@ current table set and the important ownership relationships.
 | `fishAttribute` | Ichthyology attributes for one fish or a lot: specimen type, sex, life stage, standard and total length, weight, lot count, and lot min/max ranges. Added in v23. |
 | `fossilAttribute` | Fossil-specific specimen attributes. |
 | `specimenIndividual` | Individuals within a specimen lot, with an individual or tag ID, lengths, weight, sex, life stage, and remark. Generic across catalog formats. Added in v23. |
-| `parasiteDetection` | Detection records connecting specimens and parasite observations. |
-| `parasite` | Parasite taxonomy, observation details, collector, and determination. v25 renamed `identifierID` to `determinerID` and added `collectorID`, `dateDetermined`, and `determinationMethod`. |
-| `parasiteIndividual` | Composite link between parasites and the lot individuals they were found on. Cascades from both sides. Added in v23. |
+| `symbiontDetection` | Specimen-level `symbiontExamined` and `symbiontDetected` flags and detection remarks. Named `parasiteDetection` before v26. |
+| `symbiont` | Organisms living on or in a host specimen: taxonomy, `interactionType`, category, anatomical location, collector, determination, preservation, and curation. v25 renamed `identifierID` to `determinerID` and added `collectorID`, `dateDetermined`, and `determinationMethod`. v26 renamed the table from `parasite`, renamed `parasiteID` and `parasiteUuid` to `symbiontID` and `symbiontUuid`, and added `interactionType`. |
+| `symbiontIndividual` | Composite link between symbionts and the lot individuals they were found on. Cascades from both sides. Added in v23 as `parasiteIndividual`; renamed in v26. |
 | `specimenPart` | Specimen parts, tissues, barcodes, treatments, loans, and preparation details. |
 | `specimenPartIndividual` | Composite link between specimen parts and the lot individuals they were taken from. Cascades from both sides. Added in v23. |
 | `customFieldDefinition` | Global and project custom-field definitions, types, placement, ordering, export mapping, and archive state. |
-| `customFieldValue` | Owner-specific custom values. A non-legacy row belongs to exactly one event, site, specimen, specimen part, or parasite. v20 added nullable `eventId` ownership. |
+| `customFieldValue` | Owner-specific custom values. A non-legacy row belongs to exactly one event, site, specimen, specimen part, or symbiont. v20 added nullable `eventId` ownership. v26 renamed `parasiteId` to `symbiontId`. |
 
 The custom-field service validates definition scope, project ownership,
 placement, catalog applicability for specimen-related placements, and one value
@@ -223,7 +223,7 @@ index increases migration and insert cost.
    ```bash
    bash scripts/codegen.sh
    bash scripts/dump_schema.sh
-   cp lib/services/database/tables.drift db_schemas/drift_tables/tables_v25.drift
+   cp lib/services/database/tables.drift db_schemas/drift_tables/tables_v26.drift
    ```
 
 8. Regenerate the migration-test schemas. `drift_dev schema generate` lists its
@@ -253,7 +253,7 @@ index increases migration and insert cost.
     audit below. See [API](../nahpu-api) for building the app against the
     unpublished crates.
 11. Add migration fixtures and tests in `test/database/migration_test.dart`. The
-    suite currently upgrades fixtures from v6 through v24 to v25. Point every
+    suite currently upgrades fixtures from v6 through v25 to v26. Point every
     `migrateAndValidate` call at the new version: a step that recreates a
     trigger builds the current shape, so a call left on the previous version
     fails schema comparison.
@@ -262,10 +262,42 @@ index increases migration and insert cost.
 
 {% /steps %}
 
-### Worked example: v24 to v25
+### Worked example: v25 to v26
+
+The v26 migration in `lib/services/database/migration_coordinator.dart` renames
+parasite records to symbiont records, because the form now covers any organism
+living on or in the host, not only parasites:
+
+1. Counts the rows in whichever name of each table is present, so an
+   interrupted attempt that already renamed some tables can resume.
+2. Drops the two custom-field validation triggers and the old
+   `parasite_*` indexes first. The triggers read `customFieldValue.parasiteId`,
+   and SQLite rejects a rename while any trigger fails to resolve.
+3. Renames `parasite`, `parasiteDetection`, and `parasiteIndividual` to
+   `symbiont`, `symbiontDetection`, and `symbiontIndividual` with
+   `_renameTableIfPresent`. `legacy_alter_table` stays off, so SQLite also
+   rewrites the foreign keys that point at them.
+4. Renames `parasiteID`, `parasiteUuid`, `parasiteExamined`,
+   `parasiteDetected`, and `customFieldValue.parasiteId` to their `symbiont`
+   names when the old column is still present, and fails if both names exist.
+5. Adds `symbiont.interactionType` and sets it to `Parasitic` on every existing
+   row, because every record kept before v26 was a parasite. Moves custom-field
+   definitions from the `parasite` UI section to `symbiont`.
+6. Recreates the `symbiont_*` indexes and both triggers, then verifies the old
+   tables and columns are gone, the row counts survived, no `parasite` custom
+   fields remain, and `PRAGMA foreign_key_check` is clean.
+
+Saved export presets, document templates, and record JSON that spell
+`parasite::*` source keys, `customParasite` custom keys, or the `parasites`
+record type resolve to their `symbiont` names on read. Project-transfer
+payloads before format 12, record-exchange payloads before version 8, and user
+configs with `parasite*` keys import through the same aliases.
+
+### Historical example: v24 to v25
 
 The v25 migration in `lib/services/database/migration_coordinator.dart` splits
-the parasite's people into a collector and a determiner, matching specimens:
+the parasite's people into a collector and a determiner, matching specimens.
+The table was still named `parasite` at v25:
 
 1. Counts the parasite rows, then renames `parasite.identifierID` to
    `determinerID` only when the old column is still present, so an interrupted
@@ -429,7 +461,7 @@ exported or reproduced. Installation-local preferences remain in
 
 ## Darwin Core field mapping
 
-This is the audited schema-v24 mapping surface for `nahpu_dwc` (the unreleased
+This is the audited schema-v26 mapping surface for `nahpu_dwc` (the unreleased
 successor to 0.7.0). It uses
 the 2026-05-26 [Darwin Core List of Terms](https://dwc.tdwg.org/list/) and the
 [Darwin Core Data Package 1.0](https://dwc.tdwg.org/dp/) profile. Source fields
@@ -499,7 +531,7 @@ The table audit is grouped by data domain:
 | Narratives and linked resources | `narrative`, `media`, media link tables, `associatedData`, associated-data link tables |
 | People and taxonomy | `personnelList`, `personnel`, `taxonomy` |
 | Specimens and attributes | `specimen`, `mammalAttribute`, `birdAttribute`, `herpAttribute`, `invertebrateAttribute`, `fossilAttribute` |
-| Parasites and specimen material | `parasiteDetection`, `parasite`, `specimenPart` |
+| Symbionts and specimen material | `symbiontDetection`, `symbiont`, `specimenPart` |
 | Custom fields | `customFieldDefinition`, `customFieldValue` |
 
 ### Projects and locations
@@ -727,28 +759,29 @@ The table audit is grouped by data domain:
 | `standardLength`; `totalLength`; `weight`; `weightUnit`; `sex`; `lifeStage` | Composite/measurement | Material assertions on the individual's material row. `weightUnit` supplies the weight unit. |
 | `id`; `specimenUuid` | Relationship | The individual material identifier and its link to the lot occurrence. |
 
-### Parasites and specimen material
+### Symbionts and specimen material
 
-#### `parasiteDetection`
+#### `symbiontDetection`
 
 | Fields | Status | Darwin Core or export handling |
 |---|---|---|
 | `specimenUuid`; `detectionRemark` | Mapped | `dwc:occurrenceID`; `dwc:occurrenceRemarks` |
-| `parasiteExamined`; `parasiteDetected` | Composite/measurement | MeasurementOrFact rows describing examination and detection. |
+| `symbiontExamined`; `symbiontDetected` | Composite/measurement | MeasurementOrFact rows describing examination and detection. |
 
-#### `parasite`
-
-| Fields | Status | Darwin Core or export handling |
-|---|---|---|
-| `speciesID`; `determinerID`; `collectorID`; `dateDetermined`; `determinationMethod`; `parasiteID`; `parasiteUuid`; `count`; `preparationMethod`; `treatment`; `lifeStage`; `detectionMethod`; `dateCollected`; `timeCollected`; `remark` | Mapped | `dwc:taxonID`; `dwc:identifiedByID`; `dwc:recordedByID`; `dwc:dateIdentified`; `dwc:identificationType`; `dwc:catalogNumber`; `dwc:occurrenceID`; `dwc:individualCount`; preparation values use `dwc:preparations`; `dwc:lifeStage`; `dwc:samplingProtocol`; `dwc:eventDate`; `dwc:eventTime`; `dwc:occurrenceRemarks` |
-| `specimenUuid`; `anatomicalLocation`; `category`; `associationStatus` | Relationship | Host occurrence and organism-interaction fields; structured bundles emit subject/related occurrence links, interaction type, related organism part, and description. |
-| `id`; `storage`; `storageLocation`; `datePreserved`; `timePreserved`; `museumPermanent`; `museumLoan` | Unmapped | `nahpu:parasite.id`; `nahpu:parasite.storage`; `nahpu:parasite.storageLocation`; `nahpu:parasite.datePreserved`; `nahpu:parasite.timePreserved`; `nahpu:parasite.museumPermanent`; `nahpu:parasite.museumLoan`. Internal identity and preservation, storage, and museum workflow values need a material-record model before standard mapping. |
-
-#### `parasiteIndividual`
+#### `symbiont`
 
 | Fields | Status | Darwin Core or export handling |
 |---|---|---|
-| `parasiteID`; `individualID` | Relationship | A `host individual` occurrence assertion on the parasite occurrence, listing the host individual material identifiers. |
+| `speciesID`; `determinerID`; `collectorID`; `dateDetermined`; `determinationMethod`; `symbiontID`; `symbiontUuid`; `count`; `preparationMethod`; `treatment`; `lifeStage`; `detectionMethod`; `dateCollected`; `timeCollected`; `remark` | Mapped | `dwc:taxonID`; `dwc:identifiedByID`; `dwc:recordedByID`; `dwc:dateIdentified`; `dwc:identificationType`; `dwc:catalogNumber`; `dwc:occurrenceID`; `dwc:individualCount`; preparation values use `dwc:preparations`; `dwc:lifeStage`; `dwc:samplingProtocol`; `dwc:eventDate`; `dwc:eventTime`; `dwc:occurrenceRemarks` |
+| `interactionType` | Relationship | `dwc:organismInteractionType` on the OrganismInteraction row linking the symbiont occurrence to its host. A record without an interaction type falls back to its `category`. |
+| `specimenUuid`; `anatomicalLocation`; `category`; `associationStatus` | Relationship | Host occurrence and organism-interaction fields; structured bundles emit subject/related occurrence links, related organism part, and description. When `interactionType` is set, `category` and `associationStatus` go into `dwc:organismInteractionDescription`. |
+| `id`; `storage`; `storageLocation`; `datePreserved`; `timePreserved`; `museumPermanent`; `museumLoan` | Unmapped | `nahpu:symbiont.id`; `nahpu:symbiont.storage`; `nahpu:symbiont.storageLocation`; `nahpu:symbiont.datePreserved`; `nahpu:symbiont.timePreserved`; `nahpu:symbiont.museumPermanent`; `nahpu:symbiont.museumLoan`. Internal identity and preservation, storage, and museum workflow values need a material-record model before standard mapping. |
+
+#### `symbiontIndividual`
+
+| Fields | Status | Darwin Core or export handling |
+|---|---|---|
+| `symbiontID`; `individualID` | Relationship | A `host individual` occurrence assertion on the symbiont occurrence, listing the host individual material identifiers. |
 
 #### `specimenPart`
 
@@ -777,7 +810,7 @@ The table audit is grouped by data domain:
 
 | Fields | Status | Darwin Core or export handling |
 |---|---|---|
-| `id`; `fieldDefinitionId`; `projectUuid`; `value`; `unit`; `eventId`; `siteId`; `specimenUuid`; `specimenPartId`; `parasiteId`; `isLegacy` | Dynamic | The referenced definition and owner select the target resource and representation. |
+| `id`; `fieldDefinitionId`; `projectUuid`; `value`; `unit`; `eventId`; `siteId`; `specimenUuid`; `specimenPartId`; `symbiontId`; `isLegacy` | Dynamic | The referenced definition and owner select the target resource and representation. |
 
 ### Legacy source aliases
 
@@ -786,7 +819,10 @@ The mapper retains `event::` for `collEvent::`, `weather::` for
 `avianMeasurement::`, and `herpMeasurement::` namespaces. Site geography keys
 remain aliases for records created before v21, while current exports use
 `geography::`. `associatedData::url` remains an alias for the current `uri`
-column.
+column. The pre-v26 `parasite::`, `parasiteDetection::`, and
+`parasiteIndividual::` keys, with their `parasiteID`, `parasiteUuid`,
+`parasiteExamined`, and `parasiteDetected` columns, map to the same terms as
+their `symbiont` names.
 
 ## Unmapped-field follow-ups
 

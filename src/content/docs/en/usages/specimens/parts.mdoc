@@ -5,14 +5,15 @@ sidebar:
   order: 6
 ---
 
-Use `Specimen Parts` for voucher preparations, tissues, swabs, parasites, and
-other physical parts derived from the specimen. Each specimen can have multiple
-parts.
+Use `Specimen Parts` for voucher preparations, tissues, swabs, and other
+physical parts derived from the specimen. Each specimen can have multiple
+parts. Organisms found living on or in the specimen are recorded separately as
+[symbionts](#symbionts).
 
-The parasite tab is available for mammals, birds, herpetofauna, and fishes. It
+The symbiont tab is available for mammals, birds, herpetofauna, and fishes. It
 is not available for invertebrate catalogs. For a fish lot with recorded
-individuals, parts and parasites can be linked to the individuals they came
-from; see [Fishes](/en/usages/specimens/measurements/fishes/#parts-and-parasites).
+individuals, parts and symbionts can be linked to the individuals they came
+from; see [Fishes](/en/usages/specimens/measurements/fishes/#parts-and-symbionts).
 
 Part fields include:
 
@@ -39,14 +40,37 @@ Part fields include:
 The part list displays the part type, count, barcode ID, preparator, tissue ID,
 treatment, date/time, PMI, and whether a remark exists.
 
-Parasite records separate collection from identification. `Collector` is who
-recovered the parasite and starts as the host's preparator, or its cataloger when
-no preparator is set. `Determiner`, `Date determined`, and `Determination method`
-record who identified the parasite, when, and how. The method uses the same
-vocabulary as the specimen ID method. Choosing a `Category` narrows the
-`Anatomical location` list to sites that fit it. Locations you added yourself
-always stay in the list.
+## Symbionts
 
-Parasite curation records carry their own `Storage` and `Storage location`
+A symbiont is any organism living on or in the host specimen, whatever its
+relationship to the host: parasitic, mutualistic, commensal, phoretic, and so
+on. Two fields describe the association:
+
+- `Interaction type`: how the symbiont relates to its host. The default
+  vocabulary is `Parasitic`, `Parasitoid`, `Mutualistic`, `Commensal`,
+  `Phoretic`, and `Unknown`. Records created before NAHPU tracked symbionts
+  were migrated with the interaction type `Parasitic`.
+- `Category`: where the symbiont lives on its host. The defaults are
+  `Ectosymbiont`, `Endosymbiont`, and `Mesosymbiont`.
+
+On the specimen itself, `Symbionts examined` and `Symbionts detected` record
+whether the host was checked and whether anything was found, so an examination
+with no symbionts is still documented.
+
+Symbiont records separate collection from identification. `Collector` is who
+recovered the symbiont and starts as the host's preparator, or its cataloger when
+no preparator is set. `Determiner`, `Date determined`, and `Determination method`
+record who identified the symbiont, when, and how. The method uses the same
+vocabulary as the specimen ID method. Choosing a `Category` narrows the
+`Anatomical location` list to sites that fit it. Category values stored before
+the rename, such as `Ectoparasite` and `Endoparasite`, narrow the list the same
+way. Locations you added yourself always stay in the list.
+
+Symbiont curation records carry their own `Storage` and `Storage location`
 fields so the preservation method and physical location can be recorded
 separately.
+
+In Darwin Core exports, the interaction type becomes
+`organismInteractionType`. A record without an interaction type falls back to
+its category. When an interaction type is set, the category and association
+status go into `organismInteractionDescription`.

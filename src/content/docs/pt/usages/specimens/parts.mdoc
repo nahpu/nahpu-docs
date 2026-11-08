@@ -5,17 +5,42 @@ sidebar:
   order: 6
 ---
 
-Cada espécime pode ter várias partes, como vouchers, tecidos, swabs ou
-parasitas. Uma parte pode conter `Tissue ID`, `QR/barcode ID`, `Preparation type`,
+Cada espécime pode ter várias partes, como vouchers, tecidos ou swabs. Os
+organismos que vivem sobre ou dentro do espécime são registrados à parte como
+[simbiontes](#symbionts). Uma parte pode conter `Tissue ID`, `QR/barcode ID`, `Preparation type`,
 `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
 `Storage type`, `Storage location`, `Date taken`, `PMI`, museu permanente, museu de
-empréstimo e `Remarks`. Registros de parasitas também separam o método de
-armazenamento da localização física.
+empréstimo e `Remarks`.
 
 Em um lote de peixes com indivíduos registrados, o campo `Individuals` vincula
 a parte a um ou mais indivíduos do lote.
 
-A guia de parasitas está disponível para mamíferos, aves, herpetofauna e peixes,
+A guia de simbiontes está disponível para mamíferos, aves, herpetofauna e peixes,
 mas não para catálogos de invertebrados. Em um lote de peixes com indivíduos
-registrados, partes e parasitas podem ser vinculados aos indivíduos de origem;
-consulte [Peixes](/pt/usages/specimens/measurements/fishes/#parts-and-parasites).
+registrados, partes e simbiontes podem ser vinculados aos indivíduos de origem;
+consulte [Peixes](/pt/usages/specimens/measurements/fishes/#parts-and-symbionts).
+
+## Simbiontes {% #symbionts %}
+
+Um simbionte é qualquer organismo que vive sobre ou dentro do espécime
+hospedeiro, qualquer que seja sua relação com ele: parasítica, mutualística,
+comensal, forética, entre outras. Dois campos descrevem a associação:
+
+- `Interaction type` (Tipo de interação): como o simbionte se relaciona com o
+  hospedeiro. O vocabulário padrão é `Parasitic`, `Parasitoid`,
+  `Mutualistic`, `Commensal`, `Phoretic` e `Unknown`. Registros criados antes
+  dessa mudança foram migrados com o tipo de interação `Parasitic`.
+- `Category`: onde o simbionte vive no hospedeiro. Os valores padrão são
+  `Ectosymbiont`, `Endosymbiont` e `Mesosymbiont`. Escolher uma categoria
+  restringe a lista de `Anatomical location`; valores antigos salvos, como
+  `Ectoparasite`, continuam filtrando da mesma forma.
+
+No espécime, `Symbionts examined` e `Symbionts detected` indicam se o
+hospedeiro foi examinado e se algo foi encontrado, de modo que um exame sem
+simbiontes também fica documentado. Registros de simbiontes separam o método
+de armazenamento da localização física.
+
+Nas exportações Darwin Core, o tipo de interação vira
+`organismInteractionType`; um registro sem tipo de interação usa a sua
+categoria. Quando há um tipo de interação, a categoria e o status da
+associação vão para `organismInteractionDescription`.

@@ -68,6 +68,14 @@ export default defineConfig({
       "/id/usages/export/export-expressions/",
     "/pt/usages/export/template-editor-reference":
       "/pt/usages/export/export-expressions/",
+    "/en/how-to-recipes/collect/add-parts-and-parasites":
+      "/en/how-to-recipes/collect/add-parts-and-symbionts/",
+    "/es/how-to-recipes/collect/add-parts-and-parasites":
+      "/es/how-to-recipes/collect/add-parts-and-symbionts/",
+    "/id/how-to-recipes/collect/add-parts-and-parasites":
+      "/id/how-to-recipes/collect/add-parts-and-symbionts/",
+    "/pt/how-to-recipes/collect/add-parts-and-parasites":
+      "/pt/how-to-recipes/collect/add-parts-and-symbionts/",
   },
   integrations: [
     starlight({
