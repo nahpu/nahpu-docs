@@ -1,0 +1,38 @@
+---
+title: Specimen Curation
+sidebar:
+  label: Overview
+  order: 0
+---
+
+`Specimen curation` is a project tool for checking physical material against
+its records after collecting. It writes curation fields to many records in one
+pass, so you don't have to open each specimen form. The tool is in beta.
+
+## Open the tool
+
+Open a project and select `Curation` in the tool dock on the project
+dashboard. The dock shows it by default. If you removed it, select
+`Edit list` in the dock and turn `Curation` back on.
+
+The mode selector at the top of the screen picks what you curate. Only one
+mode is available for now:
+
+- [Tissue curation](/en/usages/curation/tissue-curation/): scan specimen part
+  tubes, and parasite tubes if you choose, into storage boxes. Each tube gets
+  a museum code and the next free cell as its storage location.
+
+## How curation changes records
+
+Curation writes to the same fields you would edit in the specimen form. Tissue
+curation writes `Museum permanent` or `Museum loan` and `Storage location` on
+a part or parasite. The values show on the record, in the data table, and in
+every export.
+
+Each change is saved when it is made. The session log lists what this visit
+changed, and `Undo` reverts the most recent change, including any value it
+replaced. Closing the screen ends the session. Changes stay saved, but the
+log and undo history are cleared.
+
+Back up the database before curating a large collection. See
+[Backup database](/en/usages/export/#backup-database).

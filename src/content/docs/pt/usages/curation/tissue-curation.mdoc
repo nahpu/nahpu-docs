@@ -1,0 +1,206 @@
+---
+title: Curadoria de Tecidos
+sidebar:
+  order: 1
+---
+
+A curadoria de tecidos registra tubos em caixas de armazenamento. Para cada
+tubo que você escaneia ou posiciona, o NAHPU grava um código de museu em
+`Museum permanent` ou `Museum loan` e a próxima célula livre em
+`Storage location`, como `Box 1: D1`. Os tubos são partes do espécime e, se
+você incluí-los, parasitas.
+
+Use-a quando os tubos forem para caixas de freezer do museu. Escaneie cada
+tubo ao colocá-lo na caixa, e os registros correspondem à caixa sem digitação.
+
+{% screenshots
+   large="app-screenshots/usage/curation-large.webp"
+   largeAlt="Tela Specimen curation do NAHPU com a caixa, o campo de leitura e a configuração em um tablet"
+   large2="app-screenshots/usage/curation-large-2.webp"
+   large2Alt="Tela Specimen curation do NAHPU com o inspetor de célula e o registro da sessão em um tablet"
+   small="app-screenshots/usage/curation-small.webp"
+   smallAlt="Caixa da tela Specimen curation do NAHPU com o inspetor de célula e o campo de leitura em um celular"
+   small2="app-screenshots/usage/curation-small-2.webp"
+   small2Alt="Registro da sessão da tela Specimen curation do NAHPU em um celular" %}
+{% pin id="A" label="Próxima célula" large=[35.3, 24.2] small=[54.3, 26.7] /%}
+{% pin id="B" label="Escanear" large=[55.4, 24.5] small=[26.8, 73.4] /%}
+{% pin id="C" label="Lista de trabalho" large=[83.3, 24.5] small=[72.9, 73.4] /%}
+{% pin id="D" label="Buscar por ID de campo" large=[94.8, 32.1] small=[88.9, 80.4] /%}
+{% pin id="E" label="Campo de leitura" large=[52.2, 38.9] small=[36.2, 86.7] /%}
+{% pin id="F" label="Desfazer" large=[93.3, 46] small=[84.5, 93.1] /%}
+{% pin id="G" label="Configuração" large=[54.8, 55.5] small=[50, 16.1] /%}
+{% pin id="H" label="Inspetor de célula" large2=[34.2, 71.9] small=[14.5, 58] /%}
+{% pin id="I" label="Substituir" large2=[7.2, 77.6] small=[18.1, 64.1] /%}
+{% pin id="J" label="Registro" large2=[83.9, 55.5] small2=[82.9, 16.1] /%}
+{% pin id="K" label="Exportar registro" large2=[92, 63.2] small2=[79.7, 24.6] /%}
+{% /screenshots %}
+
+## Layout da tela
+
+A tela tem quatro áreas:
+
+- **Box**: a grade da caixa sendo preenchida. As células preenchidas mostram
+  os últimos caracteres do ID do tubo. Parasitas começam com `P`. A célula
+  destacada é a próxima a ser preenchida {% ref id="A" /%}.
+- **Scan**: o campo para escanear ou digitar códigos {% ref id="E" /%}, ou a
+  lista de trabalho {% ref id="C" /%}.
+- **Setup** {% ref id="G" /%}: quais tubos encontrar, o campo a gravar e as
+  configurações da caixa.
+- **Log** {% ref id="J" /%}: os tubos registrados e pulados nesta sessão.
+
+O seletor de modo acima da caixa define o que você vai curar.
+
+No celular, `Box`, `Setup` e `Log` são abas, e o campo de leitura fica na
+parte inferior da tela. Em tablet ou computador, a caixa fica à esquerda, e o
+campo de leitura fica à direita, acima das abas `Setup` e `Log`. Em uma janela
+larga no computador, o registro ganha uma coluna própria.
+
+## Configurar a conferência
+
+Abra `Setup` antes da primeira leitura. O NAHPU guarda essas configurações no
+dispositivo, então a próxima sessão começa de onde você parou.
+
+### Find tubes
+
+Estes filtros definem quais tubos a leitura e a lista de trabalho encontram.
+
+- `Include parasites`: também encontra parasitas, pelo ID do parasita ou pelo
+  ID de campo do hospedeiro.
+- `Tissue type`: os tipos de parte a encontrar, como Liver. Deixe em `Any`
+  para aceitar qualquer tipo. Parasitas não têm tipo de parte, então este
+  filtro nunca os exclui.
+- `Preservation`: os tratamentos a encontrar, como ETOH.
+- `Parasite category`: aparece com `Include parasites` ativado. Encontra
+  categorias como Ectoparasite.
+
+### Update field
+
+- `Field`: `Museum permanent` ou `Museum loan`.
+- `Value`: o código gravado em cada tubo, geralmente o código do museu. A
+  leitura fica bloqueada até você informar um valor.
+
+### Box
+
+- `Box size`: 81 (9×9) ou 100 (10×10) células.
+- `Fill order`: `Rows, left to right`, `Columns, top to bottom` ou
+  `Serpentine rows`. Na ordem serpentina, cada linha segue na direção oposta
+  à da linha anterior.
+- `Box label` e `Box number`: nomeiam a caixa no local de armazenamento, como
+  `Box 1`. Use o rótulo para um prefixo de freezer ou rack, como `F2 Box`.
+
+Quando uma caixa enche, o próximo tubo vai para a primeira célula da caixa
+seguinte. Selecione `Next box` ou `Previous box` abaixo da grade para trocar
+de caixa manualmente. O NAHPU lê o local de armazenamento de todos os tubos
+do projeto, então células preenchidas antes, por esta ferramenta ou digitadas
+no formulário da parte, aparecem como preenchidas.
+
+### Labels and overwrite
+
+- `Customize cell labels`: muda como os locais são escritos. Escolha uma
+  `Numbering` entre `A1, A2, A3…`, `1, 2, 3…` ou `1-1, 1-2, 1-3…`, um
+  `Box separator`, um `Row–column separator` e `Pad numbers with zeros`. Um
+  exemplo abaixo dos campos mostra o resultado, como `Box 1 / A01`. Desative
+  para voltar ao padrão `Box 1: A1`. O NAHPU guarda seu formato
+  personalizado para a próxima vez.
+- `Overwrite existing values`: permite que uma leitura substitua um local
+  armazenado ou outro código de museu. Desativado, esses tubos são relatados
+  como conflitos e ficam como estão.
+
+## Escanear tubos
+
+Use `Scan` quando os tubos chegam a você sem ordem definida.
+
+{% steps %}
+
+1. Selecione `Scan` {% ref id="B" /%} acima do campo de leitura.
+2. Leia o código de barras do tubo com um leitor, ou digite o código e
+   pressione Enter. No celular ou tablet, `Scan with camera` lê códigos com a
+   câmera do dispositivo.
+3. Confira a mensagem abaixo do campo. Um tubo registrado mostra o novo local
+   e o valor, como `AC-T0128 → Box 1: D1 · Museum permanent = EXM`.
+4. Coloque o tubo na célula indicada pela mensagem e escaneie o próximo.
+
+{% /steps %}
+
+Por padrão, um código corresponde ao ID de tecido ou ao código de barras de
+uma parte, ou ao ID de um parasita quando os parasitas estão incluídos. Uma
+correspondência por código de barras tem prioridade sobre o ID de tecido.
+Sugestões aparecem enquanto você digita. Pressionar Enter sempre usa o texto
+digitado, então o código de um leitor nunca é trocado por uma sugestão.
+
+Ative `Search by field ID` {% ref id="D" /%} quando os tubos estiverem
+etiquetados com o ID de campo do espécime. Um ID de campo geralmente
+corresponde a vários tubos, como fígado e músculo. Adicione o tipo de parte
+ou o tratamento após o ID para escolher um, como `AC128 liver etoh`. Um
+número sozinho, como `128`, corresponde a todos os espécimes com esse número.
+Quando um código ainda corresponde a mais de um tubo, o NAHPU pergunta qual
+você está segurando. Fechar essa lista sem escolher registra o código como
+pulado.
+
+A mensagem abaixo do campo informa cada resultado:
+
+| Resultado | Significado |
+| --- | --- |
+| Registrado | O tubo foi gravado na célula e a caixa avançou. |
+| Não encontrado | Nenhum tubo corresponde ao código e aos filtros. Nenhuma célula foi usada. |
+| Já registrado | O tubo foi registrado antes nesta sessão. |
+| Conflito | O tubo já tem um local ou outro código de museu. Ative `Overwrite existing values` para substituí-los. |
+| Pulado | A escolha entre tubos correspondentes foi descartada. |
+
+`Undo` {% ref id="F" /%} desfaz o registro mais recente. O tubo recupera o
+valor e o local anteriores, e a célula fica livre de novo. Selecione `Undo`
+novamente para voltar mais um passo.
+
+## Seguir uma lista
+
+Use `Work list` quando preencher uma caixa na ordem dos IDs de campo, como
+todos os tubos de fígado de uma expedição.
+
+{% steps %}
+
+1. Selecione `Work list` {% ref id="C" /%} acima do campo de leitura.
+2. O NAHPU lista os tubos sem local de armazenamento que correspondem aos
+   filtros de `Find tubes`, na ordem dos IDs de campo. O tubo atual e a
+   célula para onde ele vai aparecem primeiro.
+3. Selecione `Place` para gravar o tubo na próxima célula, ou `Skip` para
+   passar adiante. Tubos pulados continuam na lista e aparecem em `Skipped`
+   no registro.
+4. Use `Search work list` para ir a um tubo por ID, código de barras, tipo ou
+   tratamento.
+
+{% /steps %}
+
+## Trabalhar com a caixa
+
+- **Mudar a próxima célula**: toque em uma célula vazia. O próximo tubo vai
+  para ela, e o preenchimento continua na ordem definida a partir dela.
+- **Ver uma célula preenchida**: toque em uma célula preenchida para ver
+  seus tubos {% ref id="H" /%}. `Details` mostra os IDs, a contagem e o local
+  de armazenamento do tubo, e `Open record` abre o formulário do espécime.
+  Uma célula compartilhada por vários tubos, geralmente por locais digitados
+  à mão, mostra quantos tubos contém.
+- **Substituir uma célula**: em uma célula preenchida, selecione `Replace`
+  {% ref id="I" /%} e confirme. O próximo tubo escaneado ou posicionado vai
+  para essa célula, e os tubos que estavam nela perdem o local e voltam para
+  a lista de trabalho. `Undo` os coloca de volta.
+
+## Registro da sessão e exportação
+
+O registro lista os tubos registrados nesta sessão, do mais recente para o
+mais antigo, em `Checked`, e os tubos pulados em `Skipped`. Um tubo pulado
+sai da lista quando é posicionado.
+
+Selecione `Export log` {% ref id="K" /%} para salvar a sessão em CSV, TSV ou
+Excel. Cada linha começa com as colunas de curadoria: `Status`, `Order`,
+`Field ID`, `Tube ID`, `Kind`, `Type`, `Treatment`, `Updated field`, `Value`,
+`Location`, `Box`, `Cell`, `Previous value`, `Previous location` e
+`Replaced`.
+
+Em `Columns`, selecione `Add columns` para adicionar campos da parte, do
+espécime e de registros vinculados depois delas, como o número de catálogo ou
+a espécie. `Added column headers` nomeia essas colunas por `Field names` ou
+por `NAHPU keys`, como `specimenPart::remark`. O NAHPU guarda as colunas
+adicionadas para a próxima exportação.
+
+Guarde o registro exportado com o inventário da caixa. Ele documenta o que
+cada leitura alterou, incluindo os valores anteriores substituídos.
