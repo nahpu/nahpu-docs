@@ -11,7 +11,7 @@ This guide introduces NAHPU and gives you a safe place to practice before collec
 
 {% recordmap label="How NAHPU organizes field data: a project holds narratives, sites, events, and specimens, while personnel and taxa are shared across projects." hint="Select a record to see what it stores." %}
 {% recordnode id="project" title="Project" summary="One body of work" detail="Groups an expedition, a monitoring program, or laboratory preparation work. Most day-to-day screens and exports operate on the active project." /%}
-{% recordnode id="narrative" title="Narrative" summary="Field journal" detail="Dated prose entries tied to a site and writer for daily observations, habitat context, and notes that do not fit structured specimen or event fields." /%}
+{% recordnode id="narrative" title="Narrative" summary="Daily field journal" detail="A day-by-day journal of the expedition. Each entry has its own date, site, and writer and records what happened that day, such as weather, logistics, permit meetings, observations that did not become specimens, or a summary of trapping results." /%}
 {% recordnode id="site" title="Site" summary="A place to revisit" detail="A place you can visit again, such as a camp or trap line. Enter its geography, habitat, and one or more coordinates once and reuse it across visits." /%}
 {% recordnode id="event" title="Event" summary="Work at a site" detail="One sampling session at a site during a defined period: activity, collection methods, participants, effort, and conditions. A site can have several events." /%}
 {% recordnode id="specimen" title="Specimen" summary="Linked to an event" detail="Links to one event, which supplies its site and sampling context. Carries the working Field ID from its physical label plus an internal UUID. Several specimens can share one event." /%}
@@ -25,7 +25,7 @@ NAHPU separates field data into linked layers so you enter each context once:
 
 - **Project** sets the boundary for how you manage and export one expedition, monitoring program, or lab batch.
 - **Site → Event → Specimen** links where you worked (`Site`), when and how you sampled (`Event`), and what you collected (`Specimen`). Use one site for a revisited trap line, separate events for each sampling date or session, and link all specimens from a session to that event. Keep collection dates distinct from laboratory preparation dates.
-- **Narrative** holds your prose field journal for a site and date without crowding specimen fields.
+- **Narrative** is the day-by-day field journal of the project. Each entry records what happened that day, with its own date, site, and writer.
 - **Personnel and Taxa** live in the database across projects. Editing a shared person or taxon affects every project that uses it; to fix one misidentified specimen, change the specimen's identification, not the shared taxon entry.
 
 ### Location, locality, and coordinates
@@ -60,7 +60,7 @@ The **project time zone** documents the local time used for recorded observation
 
 ### Saving, attachments, and backups
 
-Most form fields save as you edit, while dialogs, imports, and exports require confirmation. Use **Narratives** for prose context, **Associated Data** for links and non-media files (links do not store offline copies), and **Media** for images, audio, or video.
+Most form fields save as you edit, while dialogs, imports, and exports require confirmation. Use **Narratives** for the daily field journal, **Associated Data** for links and non-media files (links do not store offline copies), and **Media** for images, audio, or video.
 
 Each export format serves a distinct purpose:
 
@@ -101,7 +101,7 @@ Each export format serves a distinct purpose:
 
 7. **Review records and write a narrative**
 
-    Cross-check Field IDs, counts, linked events, coordinates, and attachments against your practice labels. Open Narratives to write a short field journal entry for the site and preview the rendered Markdown. Try `Export records` for a review table and `Export documents` for printable labels or catalogs. See [Narratives](/en/usages/narrative/) and [Export](/en/usages/export/).
+    Cross-check Field IDs, counts, linked events, coordinates, and attachments against your practice labels. Open Narratives to write a short journal entry for the day and preview the rendered Markdown. Try `Export records` for a review table and `Export documents` for printable labels or catalogs. See [Narratives](/en/usages/narrative/) and [Export](/en/usages/export/).
 
 8. **Practice project transfer and recovery**
 

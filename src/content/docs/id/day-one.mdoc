@@ -11,7 +11,7 @@ Panduan ini memperkenalkan NAHPU dan menyediakan ruang aman untuk berlatih sebel
 
 {% recordmap label="Cara NAHPU menata data lapangan: proyek memuat narasi, lokasi, kegiatan, dan spesimen, sedangkan personel dan takson dipakai bersama antarproyek." hint="Pilih catatan untuk melihat isinya." %}
 {% recordnode id="project" title="Proyek" summary="Satu lingkup kerja" detail="Mengelompokkan ekspedisi, program pemantauan, atau pekerjaan preparasi laboratorium. Sebagian besar layar dan ekspor harian bekerja pada proyek aktif." /%}
-{% recordnode id="narrative" title="Narasi" summary="Jurnal lapangan" detail="Catatan bertanggal yang terkait dengan lokasi dan penulis untuk pengamatan harian, konteks habitat, serta catatan yang tidak muat di bidang spesimen atau kegiatan." /%}
+{% recordnode id="narrative" title="Narasi" summary="Jurnal lapangan harian" detail="Jurnal ekspedisi dari hari ke hari. Setiap entri memiliki tanggal, lokasi, dan penulisnya sendiri serta mencatat apa yang terjadi hari itu, seperti cuaca, logistik, pertemuan perizinan, pengamatan yang tidak menjadi spesimen, atau ringkasan hasil pemasangan perangkap." /%}
 {% recordnode id="site" title="Lokasi" summary="Tempat kunjungan ulang" detail="Tempat yang dapat dikunjungi kembali, seperti kamp atau jalur perangkap. Catat geografi, habitat, dan satu atau beberapa koordinat cukup sekali untuk dipakai ulang." /%}
 {% recordnode id="event" title="Kegiatan" summary="Kerja di satu lokasi" detail="Satu sesi pengambilan sampel di suatu lokasi selama periode tertentu: aktivitas, metode koleksi, peserta, upaya, dan kondisi. Satu lokasi dapat memiliki beberapa kegiatan." /%}
 {% recordnode id="specimen" title="Spesimen" summary="Tertaut ke kegiatan" detail="Tertaut ke satu kegiatan yang menyediakan lokasi dan konteks pengambilan sampelnya. Membawa Field ID dari label fisik serta UUID internal. Beberapa spesimen dapat berbagi satu kegiatan." /%}
@@ -25,7 +25,7 @@ NAHPU memisahkan data lapangan menjadi lapisan yang saling tertaut sehingga seti
 
 - **Proyek** menetapkan batas pengelolaan dan ekspor untuk satu ekspedisi, program pemantauan, atau batch laboratorium.
 - **Lokasi → Kegiatan → Spesimen** menghubungkan tempat Anda bekerja (`Site`), waktu dan cara pengambilan sampel (`Event`), serta apa yang dikumpulkan (`Specimen`). Gunakan satu lokasi untuk jalur perangkap yang dikunjungi berulang, kegiatan terpisah untuk tiap tanggal atau sesi, lalu tautkan semua spesimen dari sesi itu ke kegiatannya. Pisahkan tanggal pengumpulan lapangan dari tanggal preparasi laboratorium.
-- **Narasi** menyimpan jurnal lapangan naratif untuk lokasi dan tanggal tertentu tanpa memenuhi bidang spesimen.
+- **Narasi** adalah jurnal lapangan proyek dari hari ke hari. Setiap entri mencatat apa yang terjadi hari itu, dengan tanggal, lokasi, dan penulisnya sendiri.
 - **Personel dan Takson** disimpan di basis data lintas proyek. Mengedit personel atau takson bersama memengaruhi semua proyek yang memakainya; untuk memperbaiki satu spesimen yang salah identifikasi, ubah identifikasi pada spesimennya, bukan entri takson bersama.
 
 ### Cakupan tempat, lokalitas, dan koordinat
@@ -60,7 +60,7 @@ Kosakata terkontrol mengisi daftar pilihan seperti metode koleksi dan jenis prep
 
 ### Penyimpanan, lampiran, dan cadangan
 
-Sebagian besar bidang tersimpan otomatis saat diedit, sedangkan dialog, impor, dan ekspor memerlukan konfirmasi. Gunakan **Narratives** untuk catatan konteks, **Associated Data** untuk tautan dan berkas nonmedia (tautan tidak menyimpan salinan luring), serta **Media** untuk gambar, audio, atau video.
+Sebagian besar bidang tersimpan otomatis saat diedit, sedangkan dialog, impor, dan ekspor memerlukan konfirmasi. Gunakan **Narratives** untuk jurnal lapangan harian, **Associated Data** untuk tautan dan berkas nonmedia (tautan tidak menyimpan salinan luring), serta **Media** untuk gambar, audio, atau video.
 
 Setiap format ekspor memiliki fungsi berbeda:
 
@@ -101,7 +101,7 @@ Setiap format ekspor memiliki fungsi berbeda:
 
 7. **Tinjau catatan dan tulis narasi**
 
-    Periksa silang Field ID, jumlah, tautan kegiatan, koordinat, dan lampiran dengan label latihan Anda. Buka Narratives untuk menulis entri jurnal lapangan singkat bagi lokasi tersebut dan tinjau pratinjau Markdown. Coba `Export records` untuk tabel tinjauan dan `Export documents` untuk label atau katalog cetak. Lihat [Narasi](/id/usages/narrative/) dan [Ekspor](/id/usages/export/).
+    Periksa silang Field ID, jumlah, tautan kegiatan, koordinat, dan lampiran dengan label latihan Anda. Buka Narratives untuk menulis entri singkat tentang hari itu dan tinjau pratinjau Markdown. Coba `Export records` untuk tabel tinjauan dan `Export documents` untuk label atau katalog cetak. Lihat [Narasi](/id/usages/narrative/) dan [Ekspor](/id/usages/export/).
 
 8. **Latih transfer dan pemulihan proyek**
 

@@ -11,7 +11,7 @@ Esta guía presenta NAHPU y ofrece un espacio seguro para practicar antes del tr
 
 {% recordmap label="Cómo organiza NAHPU los datos de campo: un proyecto contiene narrativas, sitios, eventos y especímenes, mientras que el personal y los taxones se comparten entre proyectos." hint="Seleccione un registro para ver qué almacena." %}
 {% recordnode id="project" title="Proyecto" summary="Un conjunto de trabajo" detail="Agrupa una expedición, un programa de monitoreo o el trabajo de preparación en laboratorio. La mayoría de las pantallas y exportaciones usan el proyecto activo." /%}
-{% recordnode id="narrative" title="Narrativa" summary="Diario de campo" detail="Entradas fechadas asociadas a un sitio y autor para observaciones diarias, contexto del hábitat y notas que no encajan en los campos estructurados de especímenes o eventos." /%}
+{% recordnode id="narrative" title="Narrativa" summary="Diario día a día" detail="Un diario de la expedición, día a día. Cada entrada tiene su propia fecha, sitio y autor y registra lo que ocurrió ese día, como el clima, la logística, reuniones de permisos, observaciones que no se convirtieron en especímenes o un resumen de los resultados de captura." /%}
 {% recordnode id="site" title="Sitio" summary="Un lugar para volver" detail="Un lugar que puede visitar de nuevo, como un campamento o una línea de trampas. Registre su geografía, hábitat y una o más coordenadas una sola vez y reutilícelo en visitas posteriores." /%}
 {% recordnode id="event" title="Evento" summary="Trabajo en un sitio" detail="Una sesión de muestreo en un sitio durante un periodo definido: actividad, métodos de colecta, participantes, esfuerzo y condiciones. Un sitio puede tener varios eventos." /%}
 {% recordnode id="specimen" title="Espécimen" summary="Vinculado a un evento" detail="Se vincula a un evento, que aporta su sitio y contexto de muestreo. Lleva el Field ID de su etiqueta física y un UUID interno. Varios especímenes pueden compartir un evento." /%}
@@ -25,7 +25,7 @@ NAHPU separa los datos de campo en capas vinculadas para registrar cada contexto
 
 - **Proyecto** define el límite para gestionar y exportar una expedición, programa de seguimiento o lote de laboratorio.
 - **Sitio → Evento → Espécimen** conecta dónde trabajó (`Site`), cuándo y cómo muestreó (`Event`) y qué recolectó (`Specimen`). Use un sitio para una línea de trampas visitada varias veces, eventos separados para cada fecha o sesión de muestreo y vincule todos los especímenes de la sesión a ese evento. Mantenga las fechas de recolección separadas de las fechas de preparación en laboratorio.
-- **Narrativa** conserva su diario de campo en prosa para un sitio y fecha sin saturar los campos del espécimen.
+- **Narrativa** es el diario de campo del proyecto, día a día. Cada entrada registra lo que ocurrió ese día, con su propia fecha, sitio y autor.
 - **Personal y Taxones** residen en la base de datos entre proyectos. Editar una persona o taxón compartido afecta a todos los proyectos que lo usan; para corregir un espécimen mal identificado, cambie la identificación en el espécimen, no el taxón compartido.
 
 ### Ubicación, localidad y coordenadas
@@ -60,7 +60,7 @@ La **zona horaria del proyecto** documenta la hora local empleada en los registr
 
 ### Guardado, adjuntos y copias de seguridad
 
-La mayoría de los campos se guardan al editar, mientras que los diálogos, importaciones y exportaciones requieren confirmación. Use **Narratives** para notas de contexto, **Associated Data** para enlaces y archivos no multimedia (un enlace no guarda copia sin conexión) y **Media** para imágenes, audio o video.
+La mayoría de los campos se guardan al editar, mientras que los diálogos, importaciones y exportaciones requieren confirmación. Use **Narratives** para el diario de campo, **Associated Data** para enlaces y archivos no multimedia (un enlace no guarda copia sin conexión) y **Media** para imágenes, audio o video.
 
 Cada formato de exportación cumple una función distinta:
 
@@ -101,7 +101,7 @@ Cada formato de exportación cumple una función distinta:
 
 7. **Revise los registros y escriba una narrativa**
 
-    Compare Field IDs, recuentos, eventos vinculados, coordenadas y adjuntos con sus etiquetas de práctica. Abra Narratives para escribir una entrada breve de diario de campo para el sitio y previsualice el Markdown. Pruebe `Export records` para una tabla de revisión y `Export documents` para etiquetas o catálogos imprimibles. Consulte [Narrativas](/es/usages/narrative/) e [Exportación](/es/usages/export/).
+    Compare Field IDs, recuentos, eventos vinculados, coordenadas y adjuntos con sus etiquetas de práctica. Abra Narratives para escribir una entrada breve sobre el día y previsualice el Markdown. Pruebe `Export records` para una tabla de revisión y `Export documents` para etiquetas o catálogos imprimibles. Consulte [Narrativas](/es/usages/narrative/) e [Exportación](/es/usages/export/).
 
 8. **Practique la transferencia y recuperación del proyecto**
 
