@@ -28,8 +28,10 @@ identical CSV files.
 You need:
 
 - a NAHPU project with mammal specimen records;
-- Python 3.10 or newer, or R with permission to install packages;
+- uv, Python 3.10 or newer with pip, or R with permission to install packages;
 - a copy of the repository, cloned with Git or downloaded as a ZIP from GitHub.
+
+[Set up your computer](#set-up-your-computer) covers each of these.
 
 The repository is organized like this:
 
@@ -47,6 +49,140 @@ The repository is organized like this:
   - tests/
 - results/
 {% /filetree %}
+
+## Set up your computer
+
+Do this once per computer. The commands run in a terminal: Terminal on macOS,
+PowerShell on Windows, or your distribution's terminal on Linux.
+
+### Get the repository
+
+With [Git](https://git-scm.com/downloads):
+
+```bash
+git clone https://github.com/nahpu/lsumz-mammal-specify-frictionless.git
+cd lsumz-mammal-specify-frictionless
+```
+
+Without Git, open the repository on GitHub, select `Code`, then
+`Download ZIP`, extract the archive, and open a terminal in the extracted
+folder.
+
+### Install the tools
+
+Choose uv or pip for Python, or install R. uv is the simpler route: it
+installs a suitable Python version and the script's packages for you.
+
+{% tabs %}
+{% tabitem label="uv" %}
+
+1. Install uv.
+
+   On macOS or Linux:
+
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+
+   On Windows, in PowerShell:
+
+   ```powershell
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+   ```
+
+   With a package manager, use `brew install uv` on macOS or
+   `winget install --id=astral-sh.uv -e` on Windows.
+
+2. Close and reopen the terminal, then check the installation:
+
+   ```bash
+   uv --version
+   ```
+
+3. From the repository folder, install the script's dependencies:
+
+   ```bash
+   cd python
+   uv sync
+   ```
+
+   uv downloads Python 3.10 or newer if your computer does not have it and
+   creates a virtual environment in `python/.venv`. Prefix Python commands
+   with `uv run` to use it; you do not need to activate it.
+
+{% /tabitem %}
+{% tabitem label="pip" %}
+
+1. Install Python 3.10 or newer.
+
+   - **Windows:** download the installer from
+     [python.org](https://www.python.org/downloads/) and select
+     `Add python.exe to PATH` on its first screen.
+   - **macOS:** download the installer from
+     [python.org](https://www.python.org/downloads/), or run
+     `brew install python`.
+   - **Linux:** install Python with your package manager, for example
+     `sudo apt install python3 python3-venv python3-pip` on Debian or Ubuntu.
+
+2. Check the installation. Use `python3` on macOS and Linux and `py` on
+   Windows:
+
+   ```bash
+   python3 --version
+   ```
+
+3. From the repository folder, create a virtual environment so the packages
+   stay separate from other Python projects:
+
+   ```bash
+   python3 -m venv .venv
+   ```
+
+   On Windows, run `py -m venv .venv`.
+
+4. Activate the environment.
+
+   On macOS or Linux:
+
+   ```bash
+   source .venv/bin/activate
+   ```
+
+   On Windows, in PowerShell:
+
+   ```powershell
+   .venv\Scripts\Activate.ps1
+   ```
+
+   The prompt now starts with `(.venv)`, and `python` points to the
+   environment on every platform. Activate it again each time you open a new
+   terminal.
+
+5. Install the script's dependency:
+
+   ```bash
+   python -m pip install frictionless
+   ```
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+1. Install R from [CRAN](https://cran.r-project.org/). An editor such as
+   [RStudio](https://posit.co/download/rstudio-desktop/) is optional.
+2. Check that `Rscript` runs from a terminal:
+
+   ```bash
+   Rscript --version
+   ```
+
+   On Windows, if the command is not found, add R's `bin` folder, such as
+   `C:\Program Files\R\R-<version>\bin`, to your `PATH`, or run the commands from
+   an R session instead.
+
+3. Install the packages listed in [step 2](#2-try-the-bundled-example).
+
+{% /tabitem %}
+{% /tabs %}
 
 ## 1. Export the NAHPU Data Package
 
@@ -79,18 +215,15 @@ sheet.
 {% tabs %}
 {% tabitem label="Python" %}
 
-With [uv](https://docs.astral.sh/uv/):
+With uv, from the `python/` folder:
 
 ```bash
-cd python
-uv sync
 uv run python nahpu_to_specify.py
 ```
 
-Or with pip:
+With pip, from the repository folder with `.venv` activated:
 
 ```bash
-pip install frictionless
 python python/nahpu_to_specify.py
 ```
 
@@ -125,9 +258,16 @@ under the package name.
 {% tabs %}
 {% tabitem label="Python" %}
 
+With uv, from the `python/` folder:
+
 ```bash
-cd python
 uv run python nahpu_to_specify.py ../data/ambang.nahpu-dp.tar.gz
+```
+
+With pip, from the repository folder with `.venv` activated:
+
+```bash
+python python/nahpu_to_specify.py data/ambang.nahpu-dp.tar.gz
 ```
 
 Add `-o PATH` to choose the output file, and `--all-taxa` to keep specimens

@@ -23,18 +23,63 @@ which columns you write.
 
 ## Before you start
 
-You need:
-
-- the [lsumz-mammal-specify-frictionless](https://github.com/nahpu/lsumz-mammal-specify-frictionless)
-  repository, set up as in [Tutorial 2](/en/tutorials/specify-from-data-package/#2-try-the-bundled-example);
-- for Python, pandas as well: run `uv sync --group examples` in `python/`, or
-  `pip install pandas frictionless`;
-- for R, the packages from Tutorial 2.
+You need the
+[lsumz-mammal-specify-frictionless](https://github.com/nahpu/lsumz-mammal-specify-frictionless)
+repository and uv, pip, or R, installed as in
+[Tutorial 2](/en/tutorials/specify-from-data-package/#set-up-your-computer).
 
 The finished scripts are in the repository as
 `python/examples/field_catalog.py` and `R/examples/field_catalog.R`. Both write
 the same file, `results/ambang-shrews-field-catalog.csv`, from the bundled
-example package. Create your own file next to them and follow along.
+example package. Create your own file next to them, such as
+`python/examples/my_catalog.py` or `R/examples/my_catalog.R`, and follow along.
+
+## Set up
+
+This tutorial uses one more Python package than Tutorial 2:
+[pandas](https://pandas.pydata.org/), for joining and reshaping tables.
+
+{% tabs %}
+{% tabitem label="uv" %}
+
+From the `python/` folder, add the `examples` dependency group:
+
+```bash
+cd python
+uv sync --group examples
+```
+
+Check that pandas is available:
+
+```bash
+uv run --group examples python -c "import pandas; print(pandas.__version__)"
+```
+
+{% /tabitem %}
+{% tabitem label="pip" %}
+
+From the repository folder, activate the virtual environment from Tutorial 2:
+
+```bash
+source .venv/bin/activate
+```
+
+On Windows, run `.venv\Scripts\Activate.ps1` in PowerShell. Then install
+pandas and check it:
+
+```bash
+python -m pip install pandas frictionless
+python -c "import pandas; print(pandas.__version__)"
+```
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+No new packages are needed. The script uses dplyr, frictionless, here, readr,
+and stringr, which you installed in Tutorial 2.
+
+{% /tabitem %}
+{% /tabs %}
 
 ## 1. Know the package
 
@@ -383,14 +428,53 @@ write_csv(field_catalog, output_path, na = "")
 Sort on the numeric `fieldNumber`, not the text `field_id`, so `HH1000` comes
 after `HH999`.
 
-Run the script and open `results/ambang-shrews-field-catalog.csv`. It should
-list the five example specimens shown at the top of this page.
+Run the script:
+
+{% tabs %}
+{% tabitem label="uv" %}
+
+From the `python/` folder:
+
+```bash
+uv run --group examples python examples/my_catalog.py
+```
+
+{% /tabitem %}
+{% tabitem label="pip" %}
+
+From the repository folder with `.venv` activated:
+
+```bash
+python python/examples/my_catalog.py
+```
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+From the repository folder:
+
+```bash
+Rscript R/examples/my_catalog.R
+```
+
+{% /tabitem %}
+{% /tabs %}
+
+Open `results/ambang-shrews-field-catalog.csv`. It should list the five
+example specimens shown at the top of this page.
 
 ## 8. Check your package and your output
 
 Before you trust a script with real data:
 
-- Validate the package. The Python framework installs a command-line tool:
+- Validate the package. The Python framework installs a command-line tool.
+  With uv, from the `python/` folder:
+
+  ```bash
+  uv run frictionless validate ../data/extracted/ambang-shrews/datapackage.json
+  ```
+
+  With pip, from the repository folder with `.venv` activated:
 
   ```bash
   frictionless validate data/extracted/ambang-shrews/datapackage.json

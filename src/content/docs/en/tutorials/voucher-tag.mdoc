@@ -1,0 +1,352 @@
+---
+title: "Tutorial 4: Create a mammal voucher tag"
+sidebar:
+  label: "4. Create a voucher tag"
+  order: 4
+---
+
+In this tutorial you design a two-sided voucher tag for mammal specimens and
+print it from your NAHPU records. The tag follows the LSUMZ mammal label: the
+front carries the locality, coordinates, preparation date, collector, field
+number, and standard measurements; the back carries the species name, the
+prepared parts, and a QR code that links the tag to its record.
+
+You build two things:
+
+- a **template**, which describes one tag, 100 × 34 mm;
+- a **print layout**, which places 12 tags on a US Letter sheet, front and
+  back.
+
+{% aside type="note" %}
+NAHPU ships a finished version of this tag, `Mammal voucher label`, with the
+`Mammal voucher labels` print layout. Load it from `Setup NAHPU` or
+`Load defaults`. If you have already loaded it, give your template another
+name, such as `Mammal voucher tag (mine)`, and compare the two.
+{% /aside %}
+
+## Before you start
+
+You need:
+
+- a NAHPU project with a few complete mammal specimen records. For a useful
+  preview, include a specimen with a long locality, one with several parts,
+  and one with a measurement flagged as imprecise in its accuracy note;
+- a printer that prints on both sides, and the card stock you use for tags;
+- about 45 minutes.
+
+## 1. Plan the tag
+
+Sketch the tag before you open the editor. Each line on the tag becomes one
+text element.
+
+| Side | Element | NAHPU source | How it prints |
+|---|---|---|---|
+| Front | Locality | `geography::country`, `stateProvince`, `county`, `municipality`, `locality` | `Indonesia: Sumatera Selatan; Pagar Alam, Dempo Selatan, Kance Diwe, Bandar Jaya, Gunung Patah` |
+| Front | Coordinates | `coordinate::decimalLatitude`, `decimalLongitude` | `-4.20857, 103.31445` |
+| Front | Measurements | `mammalAttribute::totalLength`, `tailLength`, `hindFootLength`, `earLength`, `weight` | `359-167-41-24≡216.7g` |
+| Front | Preparation date | `specimen::prepDate` | `August 30, 2023` |
+| Front | Cataloger and field number | `personnel::name`, `specimen::fieldNumber` | `Dewi Silvestris 2116` |
+| Back | Species | `taxonomy::genus`, `specificEpithet` | *Maxomys inflatus* |
+| Back | Parts | `specimenPart::type` | `Skin, Skull, Skeleton, Liver, Lung, Cecum, Stomach` |
+| Back | QR code | `specimen::uuid` | A scannable link to the record |
+
+A thin vertical line on each side marks the margin where the string passes
+through the tag.
+
+## 2. Create the template
+
+{% screenshots
+   large="app-screenshots/tutorials/voucher-create-large.webp"
+   largeAlt="NAHPU Create new template dialog on a tablet, naming the Mammal voucher tag"
+   small="app-screenshots/tutorials/voucher-create-small.webp"
+   smallAlt="NAHPU Create new template dialog on a phone" %}
+{% pin id="A" label="Template name" large=[49.9, 34.7] small=[50, 20.7] /%}
+{% pin id="B" label="Record type" large=[49.9, 42.3] small=[50, 27.6] /%}
+{% pin id="C" label="Sides" large=[54.3, 51.9] small=[50, 36.4] /%}
+{% pin id="D" label="Create" large=[56, 72.5] small=[67.4, 54.2] /%}
+{% /screenshots %}
+
+
+{% steps %}
+
+1. Open `Settings` > `Template Editor`, or `Templates` under the dashboard's
+   `Tools`, and select the add icon or `Create new` in the options menu.
+2. Enter `Mammal voucher tag` as the `Template name` {% ref id="A" /%}. Add a short description,
+   such as `Two-sided LSUMZ-style mammal tag`.
+3. Set the `Record type` {% ref id="B" /%} to `Specimen`.
+4. Under `Sides` {% ref id="C" /%}, choose `2 sided`. NAHPU creates separate
+   Front and Back designs. Select `Create` {% ref id="D" /%}.
+5. Set the template size to 100 mm wide and 34 mm high. This is the size of
+   one tag, not of the sheet of paper. For other tag sizes, the
+   `Template Size Preset` list includes `Vertebrate Specimen Tag (Medium)`.
+6. Select `Save template` once now, so later edits have a saved starting
+   point.
+
+{% /steps %}
+
+Before adding fields, select `Select specimen for text preview` in the toolbar
+and choose one of your specimens. Text elements then show that record's values
+as you work, instead of the raw placeholders.
+
+## 3. Design the front
+
+{% screenshots
+   large="app-screenshots/tutorials/voucher-front-large.webp"
+   largeAlt="NAHPU Template Editor on a tablet showing the front of the mammal voucher tag filled from a Gunung Patah specimen"
+   small="app-screenshots/tutorials/voucher-front-small.webp"
+   smallAlt="NAHPU Template Editor on a phone showing the front of the mammal voucher tag" %}
+{% pin id="A" label="Add text" large=[28.7, 22.1] small=[7.6, 21.8] /%}
+{% pin id="B" label="Add line" large=[37.3, 22.1] small=[33.3, 21.8] /%}
+{% pin id="C" label="Locality text" large=[57.9, 43.8] small=[54.3, 54] /%}
+{% pin id="D" label="Front and Back switch" large=[4.1, 93.5] small=[19.6, 92.5] /%}
+{% /screenshots %}
+
+
+Make sure `Front` is selected in the switch below the canvas {% ref id="D" /%}.
+Add each element with `Add text` {% ref id="A" /%}, type or insert its content, then drag it into place. Use the grid
+and snapping to keep the left edges aligned.
+
+### Locality
+
+{% steps %}
+
+1. Select `Add text` and open the new element's text input.
+2. Select `Insert Field`. Set the taxon filter to mammals, then insert the
+   geography fields and type the separators between them:
+
+   ```text
+   [geography::country]: [geography::stateProvince]; [geography::county]; [geography::municipality], [geography::locality]
+   ```
+
+   Not every locality has a county. To avoid printing `; ;` when it is empty,
+   make the county and its separator conditional with `Conditional output`:
+
+   ```text
+   [geography::country]: [geography::stateProvince]; [[if][geography::county!=""]=>"[geography::county]; "]][geography::municipality], [geography::locality]
+   ```
+
+3. Set the font size to 8 pt.
+4. Set `Max Width (mm)` to about 70 so long localities wrap instead of running
+   off the tag, and `Max Height (mm)` to about 12 to reserve three lines.
+5. Place the element at the top of the tag, about 25 mm from the left edge.
+
+{% /steps %}
+
+Use the full `table::field` keys that `Insert Field` writes. A short key such
+as `[locality]` can pick the wrong field when two tables share a name.
+
+### Coordinates
+
+Add a second text element below the locality, at 8 pt:
+
+```text
+[coordinate::decimalLatitude], [coordinate::decimalLongitude]
+```
+
+NAHPU uses the specimen's own coordinate. When the specimen has none and its
+site has exactly one coordinate, NAHPU uses the site's.
+
+### Measurements
+
+Standard mammal measurements print in a fixed order: total length, tail,
+hind foot, ear, and weight, with the three-line `≡` sign before the weight. A
+measurement noted as imprecise in the specimen's accuracy note prints in
+brackets, such as `[9.5]`.
+
+{% steps %}
+
+1. Add a text element and insert the five measurement fields with their
+   separators:
+
+   ```text
+   [mammalAttribute::totalLength]-[mammalAttribute::tailLength]-[mammalAttribute::hindFootLength]-[mammalAttribute::earLength]≡[mammalAttribute::weight]g
+   ```
+
+   Insert the `≡` sign from `Available Symbols` in the `Text Input` dialog,
+   which also lists the fields you can insert.
+
+2. Select a measurement, open `Conditional output`, and choose
+   `Conditional brackets`. Set the condition field to
+   `mammalAttribute::accuracy`. NAHPU fills in the matching measurement for
+   you.
+3. Repeat for each of the five measurements. The text now reads:
+
+   ```text
+   [[mammalAttribute::totalLength][mammalAttribute::accuracy~="totalLength"]]-[[mammalAttribute::tailLength][mammalAttribute::accuracy~="tailLength"]]-[[mammalAttribute::hindFootLength][mammalAttribute::accuracy~="hindFootLength"]]-[[mammalAttribute::earLength][mammalAttribute::accuracy~="earLength"]]≡[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]g
+   ```
+
+4. Align the element to the right with `Align right` and place it in the lower
+   right of the tag.
+
+{% /steps %}
+
+On `mammalAttribute::accuracy`, `~=` asks whether that measurement is flagged
+as imprecise. See
+[Conditional output](/en/usages/export/export-expressions/#conditional-output)
+for the full syntax.
+
+### Preparation date and cataloger
+
+{% steps %}
+
+1. Add a text element with `[specimen::prepDate]`. Under `Text type`, choose
+   `Dates`, and under `Format`, choose `Month DD, YYYY`. Set the size to
+   8.5 pt and place it in the lower left.
+2. Add a text element with `[personnel::name] [specimen::fieldNumber]`. Align
+   it right and place it in the lower right, below the measurements. On a
+   specimen template, `personnel` fields are the specimen's cataloger.
+
+{% /steps %}
+
+Dates are stored as `yyyy-mm-dd`, so choose the format here rather than
+typing the date out.
+
+### String margin
+
+Select `Add line` {% ref id="B" /%}, rotate it 90°, and place it about 20 mm from the left edge,
+across the height of the tag. The strip to its left stays clear for the string
+hole; keep the text elements to the right of the line.
+
+## 4. Design the back
+
+{% screenshots
+   large="app-screenshots/tutorials/voucher-back-large.webp"
+   largeAlt="NAHPU Template Editor on a tablet showing the back of the mammal voucher tag"
+   small="app-screenshots/tutorials/voucher-back-small.webp"
+   smallAlt="NAHPU Template Editor on a phone showing the back of the mammal voucher tag" %}
+{% pin id="A" label="Species" large=[54.8, 59.1] small=[52.8, 57.7] /%}
+{% pin id="B" label="Parts" large=[56.2, 74.7] small=[56.5, 62.4] /%}
+{% pin id="C" label="QR code" large=[90.4, 46.5] small=[87.9, 53.7] /%}
+{% pin id="D" label="Front and Back switch" large=[9.8, 93.5] small=[28, 92.4] /%}
+{% /screenshots %}
+
+
+Select `Back` in the switch below the canvas {% ref id="D" /%}.
+
+{% steps %}
+
+1. **Species** {% ref id="A" /%}. Add a text element with
+   `[taxonomy::genus] [taxonomy::specificEpithet]`. Turn on `Italic`, set the
+   size to 10 pt, and choose a serif font, such as `DejaVuSerif`. Place it in
+   the middle of the tag.
+2. **Parts** {% ref id="B" /%}. Add a text element with `[specimenPart::type]`. Under
+   `Text type`, choose `List Values`, and under `Format`, choose
+   `Comma separated (A, B, C)`. Set the size to 7 pt and `Max Width (mm)` to
+   about 70, and place it along the bottom.
+3. **QR code** {% ref id="C" /%}. Add a text element with `[specimen::uuid]` and turn on
+   `QR Code`. Set `QR Size (mm)` to fit the top right corner, about 12 mm.
+4. **String margin.** Add the same vertical line about 20 mm from the left
+   edge, so it lines up with the front.
+
+{% /steps %}
+
+The QR code stores the specimen's UUID, which stays the same when the field
+number or catalog number changes, so the tag always points to one record.
+
+{% aside type="caution" %}
+When a printer flips the sheet along its short edge, the back prints upside
+down. If your test print shows this, turn on the Back side's 180° rotation in
+the template editor and print the test sheet again.
+{% /aside %}
+
+## 5. Check the template with real records
+
+Select `Select specimen for text preview` and switch between your test
+specimens. Check that:
+
+- a long locality wraps within its box and does not overlap the coordinates;
+- a flagged measurement prints in brackets, and the others do not;
+- a specimen with several parts lists them all on the back;
+- a missing value leaves a clean gap. To print `N/A` instead, set
+  `No Content Placeholder` on that element.
+
+Select `Template border` to show a dashed cutting outline around each tag,
+then select `Save template`.
+
+## 6. Create the print layout
+
+The template describes one tag. The print layout places tags on the sheet.
+
+{% steps %}
+
+1. Open `Settings` > `Documents` and switch to `Print layouts`.
+2. Create a new layout named `Mammal voucher tags` and add a description,
+   such as `12 two-sided tags per Letter sheet`.
+3. Under `Page Setup`, choose `US Letter (8.5 x 11 in)` and `Portrait`. Set
+   the page padding to 8 mm at the top and bottom and 4 mm at the left and
+   right.
+4. Under `Template blocks`, set the block's `Template` to `Mammal voucher tag`.
+5. Set `Rows` to 6, `Cols` to 2, and `Copies` to 1. Keep `Auto-fill page` off:
+   tags need a fixed grid.
+6. Set `Template padding (mm)` to 1 on each side, so neighboring tags do not
+   touch.
+7. Set `Order by` to the specimen's field number and `Direction` to
+   `Ascending`, so the tags come out in the order you file them.
+
+{% /steps %}
+
+Two 100 mm tags with their padding need 212 mm, which fits the 216 mm width
+of a Letter sheet; six 34 mm rows fit its height with room to spare. A4 is
+210 mm wide, so on A4 paper reduce the page padding or the tag width.
+
+## 7. Export and print
+
+{% screenshots
+   large="app-screenshots/tutorials/voucher-export-large.webp"
+   largeAlt="NAHPU Export documents screen on a tablet previewing six voucher tags on a Letter sheet"
+   small="app-screenshots/tutorials/voucher-export-small.webp"
+   smallAlt="NAHPU Export documents preview on a phone showing voucher tag fronts and backs" %}
+{% pin id="A" label="Preview" large=[74.9, 48] small=[50, 34] /%}
+{% pin id="B" label="Update preview" large=[89.8, 17.7] small=[72.4, 24.5] /%}
+{% pin id="C" label="Export documents" large=[49.9, 93.3] small=[50, 92.2] /%}
+{% /screenshots %}
+
+
+{% steps %}
+
+1. Open the project menu and select `Export documents`.
+2. Set `Layout profile` to `Mammal voucher tags`.
+3. Turn on `Override template blocks`. Under the block's
+   `Specimens Selection`, select `Select`, then `Clear all`, and check the
+   specimens to print. Without a selection, every specimen in the project
+   prints.
+4. Select `Generate preview` {% ref id="B" /%}; on a phone, open the preview
+   tab first. Check the first and last pages, both sides, and
+   the tag with the longest locality.
+5. Enter a `File name`, such as `patah-voucher-tags`, and select
+   `Export documents` {% ref id="C" /%}.
+6. Print one sheet on plain paper, on both sides. Hold it up to the light and
+   check that each back lines up with its front.
+7. Print the full set on your tag stock, then cut along the outlines.
+
+{% /steps %}
+
+{% aside type="tip" %}
+Print a test sheet whenever you change the printer, the paper, or the layout.
+The [printing equipment](/en/usages/export/export-documents/#printing-equipment)
+notes describe a printer and archival paper the NAHPU team has used for tags.
+{% /aside %}
+
+## 8. Share the tag with your team
+
+In `Settings` > `Documents` > `Print layouts`, export `Mammal voucher tags`.
+The export includes the template its block uses, so colleagues receive both in
+one file. A custom font is not included: install the same font on each device
+that prints the tag, or choose a replacement when NAHPU asks during import.
+
+## What you learned
+
+- A template describes one tag; a print layout arranges tags on the sheet.
+- `Insert Field` writes full `table::field` keys that fill from each record.
+- `Text type` and `Format` turn stored values into printed dates and lists.
+- `Conditional output` brackets imprecise measurements automatically.
+- A QR code of the specimen UUID ties the physical tag to its record.
+- Previewing with long and incomplete records catches layout problems before
+  you print.
+
+## Learn more
+
+- [Export Documents](/en/usages/export/export-documents/)
+- [Export expressions](/en/usages/export/export-expressions/)
+- [Create a document template](/en/how-to-recipes/export-and-print/create-document-template/)
+- [Tutorial 1: Build the LSUMZ Mammalogy Specify export preset](/en/tutorials/specify-export-preset/)
