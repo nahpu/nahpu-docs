@@ -5,38 +5,57 @@ sidebar:
   order: 1
 ---
 
-Spesimen dalam proyek yang memakai format katalog `Mammalogy` menampilkan
+Spesimen dalam proyek yang memakai format katalog `Mamalogi` menampilkan
 formulir pengukuran mamalia. Jenis kelamin, tahap hidup, dan satuan berat
 bekerja dengan cara yang sama di setiap kelompok takson; lihat
 [Pengukuran](/id/usages/specimens/measurements/).
 
 ## Pengukuran {% #measurements %}
 
-- `Total length (mm)`: panjang total dari ujung hidung hingga ujung ekor.
-- `Tail length (mm)`: panjang ekor dari pangkal hingga ujung.
-- `Head and body length (mm)`: dihitung otomatis dari `Total length (mm) - Tail length (mm)`.
-- `Tail/HB length`: dihitung otomatis dari `Tail length (mm) / Head and body length (mm)`.
-- `Hind foot length (mm)`: panjang kaki belakang dari pangkal hingga ujung kuku.
-- `Ear length (mm)`: panjang telinga.
-- `Weight`: berat spesimen dalam satuan yang dipilih.
-- `Accuracy`: akurasi pengukuran atau alasan pengukuran mungkin tidak akurat.
-- `Sex`: dipilih dari kosakata terkontrol jenis kelamin spesimen.
-- `Life stage`: dipilih dari kosakata terkontrol tahap hidup.
-- `Remarks`: catatan tambahan tentang pengukuran.
+- `Panjang total (mm)`: panjang total dari ujung hidung hingga ujung ekor.
+- `Panjang ekor (mm)`: panjang ekor dari pangkal hingga ujung.
+- `Panjang kepala dan badan (mm)`: dihitung otomatis dari `Panjang total (mm) - Panjang ekor (mm)`.
+- `Panjang ekor/KB`: dihitung otomatis dari `Panjang ekor (mm) / Panjang kepala dan badan (mm)`.
+- `Panjang kaki belakang (mm)`: panjang kaki belakang dari pangkal hingga ujung kuku.
+- `Panjang telinga (mm)`: panjang telinga.
+- `Berat`: berat spesimen dalam satuan yang dipilih.
+- `Akurasi`: `Accurate` atau `Inaccurate`. Memilih `Inaccurate` membuka
+  `Pilih pengukuran tidak akurat`, tempat Anda mencentang setiap pengukuran
+  yang terdampak (total, ekor, kaki belakang, telinga, dan berat, ditambah
+  lengan bawah dan tibia jika kolom kelelawar ditampilkan), serta kolom
+  `Catatan akurasi` untuk alasannya. Ekspor dan label dapat memberi tanda kurung
+  pada nilai yang ditandai.
+- `Jenis kelamin`: dipilih dari kosakata jenis kelamin spesimen yang diatur.
+- `Tahap hidup`: dipilih dari kosakata tahap hidup yang diatur.
+- `Catatan`: catatan tambahan tentang pengukuran.
+
+Aktifkan `Tampilkan peringatan pencilan` untuk menandai pengukuran yang tampak
+tidak biasa untuk takson tersebut. Mengganti `Jenis kelamin` memunculkan
+`Ubah jenis kelamin?` dan mengosongkan data reproduksi yang tidak lagi berlaku.
 
 ## Data reproduksi {% #reproductive-data %}
 
-- Kolom reproduksi jantan: posisi testis, panjang dan lebar testis, serta
-  penampakan epididimis.
-- Kolom reproduksi betina: bukaan vagina, simfisis pubis, tahap reproduksi,
-  kondisi mamae, jumlah mamae, jumlah bekas plasenta, jumlah embrio, dan
-  panjang crown-rump embrio.
+| Jenis kelamin | Kolom | Opsi |
+| --- | --- | --- |
+| Male | `Posisi` testis | Scrotal, Abdominal |
+| Male | Panjang dan lebar testis (mm) | Angka |
+| Male | Penampakan epididimis | Tubular, Partial, Not Tubular |
+| Female | Bukaan vagina | Imperforate, Perforate |
+| Female | Simfisis pubis | Close, Small Open, Open |
+| Female | Tahap reproduksi | Nulliparous, Primiparous, Multiparous |
+| Female | Kondisi mamae | Small, Large, Lactating |
+| Female | Jumlah mamae | Pasangan aksila, abdomen, dan inguinal |
+| Female | Bekas plasenta, embrio | Dihitung kiri dan kanan |
+| Female | `Panjang CR (mm)` embrio | Panjang crown-rump |
 
 ## Kolom kelelawar {% #bat-fields %}
 
-Jika kolom kelelawar diaktifkan, formulir menambahkan panjang lengan bawah,
-panjang tibia, tipe ekolokasi, frekuensi maksimum dan minimum, frekuensi pada
-energi maksimum, dan durasi.
+Aktifkan `Tampilkan bidang kelelawar` pada spesimen untuk menambahkan panjang
+lengan bawah, panjang tibia, `Berekolokasi?`, tipe ekolokasi (`FM`, `CF`,
+`QCF`, atau `None`), frekuensi maksimum dan minimum, frekuensi pada energi
+maksimum, dan durasi. Untuk menampilkannya di setiap spesimen mamalia, aktifkan
+`Selalu tampilkan bidang kelelawar` di `Pengaturan` > `Katalog` > `Format`.
+Spesimen yang memiliki data kelelawar tersimpan selalu menampilkan bagian ini.
 
 ## Bagian spesimen dan simbion {% #parts-and-symbionts %}
 

@@ -5,41 +5,61 @@ sidebar:
   order: 1
 ---
 
-Espécimes em um projeto que usa o formato de catálogo `Mammalogy` exibem o
+Espécimes em um projeto que usa o formato de catálogo `Mastozoologia` exibem o
 formulário de medições de mamíferos. Sexo, estágio de vida e unidades de peso
 funcionam da mesma forma em todos os grupos taxonômicos; consulte
 [Medições](/pt/usages/specimens/measurements/).
 
 ## Medições {% #measurements %}
 
-- `Total length (mm)`: o comprimento total da ponta do nariz até a ponta da
-  cauda.
-- `Tail length (mm)`: o comprimento da cauda da base até a ponta.
-- `Head and body length (mm)`: calculado automaticamente a partir de `Total length (mm) - Tail length (mm)`.
-- `Tail/HB length`: calculado automaticamente a partir de `Tail length (mm) / Head and body length (mm)`.
-- `Hind foot length (mm)`: o comprimento do pé posterior da base até a ponta da garra.
-- `Ear length (mm)`: comprimento da orelha.
-- `Weight`: peso do espécime na unidade selecionada.
-- `Accuracy`: precisão da medição ou motivo pelo qual as medições podem ser
-  imprecisas.
-- `Sex`: selecionado no vocabulário controlado de sexo do espécime.
-- `Life stage`: selecionado no vocabulário controlado de estágios de vida.
-- `Remarks`: observações adicionais sobre as medições.
+- `Comprimento total (mm)`: o comprimento total da ponta do nariz até a ponta
+  da cauda.
+- `Comprimento da cauda (mm)`: o comprimento da cauda da base até a ponta.
+- `Comprimento da cabeça e corpo (mm)`: calculado automaticamente a partir de
+  `Comprimento total (mm) - Comprimento da cauda (mm)`.
+- `Comprimento cauda/CC`: calculado automaticamente a partir de
+  `Comprimento da cauda (mm) / Comprimento da cabeça e corpo (mm)`.
+- `Comprimento do pé posterior (mm)`: o comprimento do pé posterior da base até
+  a ponta da garra.
+- `Comprimento da orelha (mm)`: comprimento da orelha.
+- `Peso`: peso do espécime na unidade selecionada.
+- `Precisão`: `Accurate` ou `Inaccurate`. Escolher `Inaccurate` abre
+  `Selecionar medidas imprecisas`, onde você marca cada medição afetada (total,
+  cauda, pé posterior, orelha e peso, além de antebraço e tíbia quando os
+  campos de morcegos estão visíveis), e um campo `Observação de precisão` para
+  o motivo. Exportações e etiquetas podem colocar os valores sinalizados entre
+  colchetes.
+- `Sexo`: selecione no vocabulário configurado de sexo do espécime.
+- `Estágio de vida`: selecione no vocabulário configurado de estágios de vida.
+- `Observações`: observações adicionais sobre as medições.
+
+Ative `Mostrar avisos de valores atípicos` para sinalizar medições que pareçam
+incomuns para o táxon. Alterar o `Sexo` pergunta `Alterar o sexo?` e apaga os
+dados reprodutivos que deixam de se aplicar.
 
 ## Dados reprodutivos {% #reproductive-data %}
 
-- Campos reprodutivos de machos: posição dos testículos, comprimento e largura
-  dos testículos e aspecto do epidídimo.
-- Campos reprodutivos de fêmeas: abertura vaginal, sínfise púbica, estágio
-  reprodutivo, condição das mamas, contagem de mamas, contagem de cicatrizes
-  placentárias, contagem de embriões e comprimento cabeça-nádega (crown-rump)
-  dos embriões.
+| Sexo | Campo | Opções |
+| --- | --- | --- |
+| Macho | `Posição` dos testículos | Scrotal, Abdominal |
+| Macho | Comprimento e largura dos testículos (mm) | Números |
+| Macho | Aspecto do epidídimo | Tubular, Partial, Not Tubular |
+| Fêmea | Abertura vaginal | Imperforate, Perforate |
+| Fêmea | Sínfise púbica | Close, Small Open, Open |
+| Fêmea | Estágio reprodutivo | Nulliparous, Primiparous, Multiparous |
+| Fêmea | Condição das mamas | Small, Large, Lactating |
+| Fêmea | Contagem de mamas | Pares axilares, abdominais e inguinais |
+| Fêmea | Cicatrizes placentárias, embriões | Contados à esquerda e à direita |
+| Fêmea | `Comprimento CR (mm)` do embrião | Comprimento cabeça-nádega (crown-rump) |
 
 ## Campos de morcegos {% #bat-fields %}
 
-Quando os campos de morcegos estão ativados, o formulário acrescenta
-comprimento do antebraço, comprimento da tíbia, tipo de ecolocalização,
-frequência máxima e mínima, frequência de energia máxima e duração.
+Ative `Mostrar campos de morcegos` em um espécime para acrescentar comprimento
+do antebraço, comprimento da tíbia, `Ecolocaliza?`, tipo de ecolocalização
+(`FM`, `CF`, `QCF` ou `None`), frequência máxima e mínima, frequência de
+energia máxima e duração. Para exibi-los em todos os espécimes de mamíferos,
+ative `Sempre mostrar os campos de morcegos` em `Configurações` > `Catálogos` >
+`Formato`. Um espécime com dados de morcego salvos sempre exibe a seção.
 
 ## Partes e simbiontes {% #parts-and-symbionts %}
 

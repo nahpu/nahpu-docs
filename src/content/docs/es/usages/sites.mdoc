@@ -25,52 +25,76 @@ sidebar:
 
 ## Crear un nuevo sitio
 
+Un sitio es un registro de lugar reutilizable. Los eventos de recolecta
+pertenecen a un sitio, y los registros de captura de los especímenes llegan al
+sitio a través de su evento de recolecta. Cree un sitio para cada campamento,
+línea de trampas, localidad u otro lugar distinto que use su proyecto.
+
 {% steps %}
 1. Navegue a la página de sitios utilizando la barra de navegación inferior {% ref id="A" /%}.
 
-2. Utilice el botón `+` {% ref id="B" /%} en la esquina superior derecha para crear un nuevo sitio. 
-    
-    También puede utilizar el icono del menú de tres puntos y tocar en `Crear sitio`.
+2. Use el icono de agregar {% ref id="B" /%} en la esquina superior derecha para crear un nuevo sitio.
+
+    También puede usar el icono del menú de tres puntos y tocar `Crear sitio`.
 
     {% aside type="tip" %}
 
-    Puede minimizar la escritura de la misma información duplicando el sitio en lugar de crear uno nuevo. Toque/haga clic en el botón del menú de tres puntos. Luego, en `Duplicar sitio`. Esto creará un nuevo sitio utilizando la información del sitio actual, excepto que el `ID del sitio` y las coordenadas estarán vacíos. Luego, complete el `ID del sitio` y agregue las coordenadas.
+    Puede reducir la escritura repetida duplicando un sitio en lugar de crear
+    uno nuevo. Abra el menú de tres puntos y elija `Duplicar sitio`. NAHPU
+    copia la información del sitio, pero deja vacíos el `ID del sitio` y las
+    coordenadas. Ingrese un ID único y agregue las coordenadas correctas; los
+    campos del sitio se guardan mientras escribe.
 
     {% /aside %}
 
-3. Cree un ID de sitio {% ref id="C" /%}.
+3. Cree un ID de sitio {% ref id="C" /%}. Use hasta 40 letras, dígitos, `-` o
+   `_`; NAHPU convierte las letras a mayúsculas. Mantenga cada ID único en el
+   proyecto: NAHPU no lo impone, pero la coincidencia de registros importados
+   depende de ello.
 
     Recomendamos crear una convención de ID de sitio para su equipo. Un ejemplo de convención de ID de sitio para el trabajo de campo en mastozoología:
-    
-    - La ciudad, pueblo o aldea se identifica tal cual. Por ejemplo, la ciudad de Bogor será `BOGOR`. 
+
+    - La ciudad, pueblo o aldea se identifica tal cual. Por ejemplo, la ciudad de Bogor será `BOGOR`.
     - El sitio del campamento utiliza el formato `{abreviatura de 2 letras de la localidad}-CAMP{número de campamento}`. Por ejemplo, el campamento 1 en el monte Gede-Pangrango es `GP-CAMP1`.
     - La línea de trampas utiliza el formato `{abreviatura de 2 letras de la localidad}{inicial del líder de la línea}-L{número de línea}`. Por ejemplo, la línea 1 en el monte Gede-Pangrango dirigida por Heru Handika es `GPHH-L1`.
     - La línea de trampas de caída (pitfall) utiliza el formato `{abreviatura de 2 letras de la localidad}{inicial del líder de la línea}-P{número de línea}`. Por ejemplo, la línea 1 en el monte Gede-Pangrango dirigida por Heru Handika es `GPHH-P1`.
 
     {% aside type="tip" %}
 
-    Para un proyecto que involucra varios dispositivos, use el mismo `Site ID`
-    para un sitio idéntico. Esto facilita hacer coincidir los registros de sitios
-    y eventos cuando se importan en otro dispositivo.
+    Para un proyecto que involucra varios dispositivos, use el mismo
+    `ID del sitio` para un sitio idéntico. Esto facilita hacer coincidir los
+    registros de sitios y eventos intercambiados cuando se importan en otro
+    dispositivo del proyecto.
 
     {% /aside %}
 
-4. Agregue al líder del sitio {% ref id="C" /%}.
-    
-    Si se trata de un campamento de campo, puede poner el nombre del líder del equipo. Si es una línea de trampas, puede designar a una persona encargada de esa línea de trampas como líder del sitio.
+4. Agregue el `Responsable del sitio` {% ref id="C" /%}.
 
-5. Agregue el tipo de sitio {% ref id="C" /%}.
+    Si se trata de un campamento de campo, puede poner el nombre del líder del equipo. Si es una línea de trampas, puede designar a la persona encargada de esa línea de trampas como responsable del sitio.
 
-    El tipo de sitio ayuda a categorizar el sitio según sus características o
-    uso. Seleccione un valor de la lista de tipos configurada para el proyecto.
+5. Agregue el `Tipo de sitio` {% ref id="C" /%}.
+
+    El tipo de sitio categoriza el sitio según sus características o uso.
+    Elija un valor de la lista de tipos de sitio configurada para el proyecto.
 
 6. Complete los detalles geográficos {% ref id="D" /%}.
+
+    Empiece con `Buscar una localidad existente`. Compara lo que escribe con
+    todas las localidades ya guardadas en el proyecto, y al seleccionar una
+    sugerencia se completa de una vez toda la jerarquía geográfica. Cada campo
+    también sugiere los valores ya registrados en ese campo, de modo que un
+    país o un estado que haya escrito antes vuelve a aparecer como opción.
+
+    Las localidades se guardan una sola vez y se comparten entre sitios, así
+    que reutilizar una localidad guardada evita crear un registro de lugar casi
+    duplicado. Los campos geográficos que aparecen se configuran en
+    Configuración.
 
     Recomendamos seguir la convención de su museo para escribir la localidad precisa y las observaciones.
 
     {% aside type="tip" title="Escribir observaciones" %}
 
-    Si el sitio es una línea de trampas, es una buena práctica explicar cómo funciona la línea. 
+    Si el sitio es una línea de trampas, es una buena práctica explicar cómo funciona la línea.
 
     Por ejemplo:
 
@@ -82,9 +106,12 @@ sidebar:
 
 7. Complete la información del hábitat.
 
-    - Tipo: El tipo de hábitat: plantación, selva tropical de tierras bajas, bosque montano alto, etc.
-    - Condición: La condición del hábitat: perturbado, no perturbado, perturbación mínima, etc.
-    - Descripción: Una breve descripción del hábitat. Por ejemplo:
+    - Tipo: el tipo de hábitat, elegido de la lista de tipos de hábitat en
+      Configuración: plantación, selva tropical de tierras bajas, bosque
+      montano alto, etc.
+    - Condición: la condición del hábitat: perturbado, no perturbado, perturbación mínima, etc.
+    - `Cobertura del dosel`: la cobertura del dosel en el sitio.
+    - Descripción: una breve descripción del hábitat. Por ejemplo:
 
       ```text
       Dominado por robles. El suelo estaba cubierto principalmente por helechos, jengibres y plántulas de roble.
@@ -95,41 +122,62 @@ sidebar:
 
 ## Información del sitio
 
-El formulario registra el lugar y las personas responsables:
+El formulario del sitio registra el lugar y las personas responsables de él:
 
-- `Site ID`: identificador único del proyecto que usan los eventos y los
-  registros intercambiados.
-- `Site leader`: persona responsable del campamento, la línea de trampas u otro
-  sitio.
-- `Site type`: categoría configurada para el sitio.
-- Localidad y observaciones: texto de localidad precisa y notas sobre el uso
-  del sitio.
-- Tipo, condición y descripción del hábitat: entorno observado en el sitio.
+- `ID del sitio`: un identificador que usan los eventos y los registros
+  intercambiados. Hasta 40 letras, dígitos, `-` o `_`, en mayúsculas.
+  Manténgalo único; NAHPU no lo comprueba.
+- `Responsable del sitio`: la persona responsable del campamento, la línea de
+  trampas u otro sitio.
+- `Tipo de sitio`: la categoría configurada para el sitio.
+- Geografía: `País`, `Grupo de islas`, `Estado/Provincia`,
+  `Condado/Parroquia/Distrito` y `Municipio/Ciudad/Pueblo`, compartidos entre
+  los sitios que registran el mismo lugar.
+- `Localidad precisa` y `Observaciones`: el lugar específico con nombre por
+  debajo del nivel de municipio, y notas sobre cómo se usa o se opera el sitio.
+- Tipo, condición y descripción del hábitat, y `Cobertura del dosel`: el
+  entorno observado en el sitio.
+
+La segunda pestaña del panel del sitio contiene los datos asociados, y el sitio
+también puede tener medios.
 
 ## Gestionar sitios
 
 Abra el menú de tres puntos en la página del sitio para usar estas acciones:
 
-- `Edit site`: actualizar el sitio y sus coordenadas.
-- `Duplicate site`: copiar los detalles a un registro nuevo con ID y
-  coordenadas vacíos.
-- `Show QR`: mostrar el registro para escanearlo desde otro dispositivo móvil.
-- `Export site`: guardar el registro como JSON.
-- `Scan QR`: crear o reemplazar un sitio desde un código QR.
-- `Import site`: crear o reemplazar un sitio desde un registro JSON exportado.
-- `Delete record`: eliminar el sitio actual. No se puede eliminar mientras un
-  evento lo utilice.
-- `Delete all records`: eliminar todos los sitios del proyecto. Primero quite
-  los eventos que los referencian.
+- `Crear sitio`: crea un nuevo registro de sitio.
+- `Duplicar sitio`: copia los detalles del sitio a un registro nuevo con el ID
+  y las coordenadas vacíos.
+- `Copiar desde un proyecto…`: copia la información seleccionada de un sitio de
+  otro proyecto al sitio vacío actual.
+- `Ordenar registros`: elige el campo y la dirección con que se ordena la lista
+  de sitios.
+- `Mostrar QR`: muestra el registro del sitio para que otro dispositivo móvil
+  lo escanee.
+- `Exportar sitio`: guarda el registro del sitio como un archivo JSON. El
+    archivo puede importarse en otro dispositivo o compartirse con otros
+    miembros del equipo.
+    {% aside type="tip" %}
+    Use esta opción para registros de sitio grandes o para importar un sitio en otro dispositivo sin acceso a cámara. Después puede transferir el archivo a otro dispositivo e importarlo allí.
+    {% /aside %}
+- `Escanear QR`: crea o reemplaza un sitio a partir de un código QR de sitio.
+  Disponible en dispositivos con escáner de cámara (Android, iOS, macOS y web).
+- `Importar sitio`: crea o reemplaza un sitio a partir de un registro JSON
+  exportado.
+- `Eliminar registro`: elimina el sitio actual. Un sitio no puede eliminarse
+  mientras un evento todavía lo referencie.
+- `Eliminar todos los registros`: elimina todos los sitios del proyecto actual.
+  Primero deben quitarse los eventos que referencian esos sitios.
 
-Al importar un sitio, elija si crea un sitio nuevo o actualiza uno existente.
-Revise el personal vinculado y las coordenadas después de importar.
+Al importar un sitio, elija si el registro importado crea un sitio nuevo o
+actualiza uno existente. Revise el personal vinculado y las coordenadas después
+de importar.
 
 ## Copiar datos de sitio desde otro proyecto
 
-Use `Copy from project ...` cuando un sitio de otro proyecto tenga información
-que quiera reutilizar en el proyecto actual. Esta acción rellena el sitio
-actual; no crea un sitio nuevo ni modifica el proyecto de origen.
+Use `Copiar desde un proyecto…` cuando un sitio de otro proyecto tenga
+información que quiera reutilizar en el proyecto actual. Esta acción rellena el
+sitio actual; no crea un sitio nuevo ni modifica el proyecto de origen.
 
 El sitio actual debe estar vacío antes de comenzar. Un sitio con información,
 coordenadas, medios o datos vinculados no puede recibir datos copiados. Deben
@@ -140,27 +188,27 @@ existir al menos dos proyectos, porque el origen debe ser un proyecto distinto.
 1. Abra el sitio que recibirá la información copiada. Confirme que es un
    registro de sitio vacío.
 
-2. Abra el menú de tres puntos y seleccione `Copy from project ...`.
+2. Abra el menú de tres puntos y seleccione `Copiar desde un proyecto…`.
 
 3. Seleccione el proyecto de origen por su nombre y luego seleccione uno de sus
    sitios.
 
 4. Seleccione los datos que se copiarán. Las opciones disponibles incluyen:
 
-   - Site ID
-   - Site leader
-   - Site type
-   - Campos de geografía, incluidos país, grupo de islas, estado/provincia,
-     condado/parroquia/distrito, municipio/ciudad y localidad precisa
-   - Remarks
-   - Tipo, condición y descripción del hábitat
+   - ID del sitio
+   - Responsable del sitio
+   - Tipo de sitio
+   - Campos geográficos, incluidos país, grupo de islas, estado/provincia,
+     condado/parroquia/distrito, municipio/ciudad/pueblo y localidad precisa
+   - Observaciones
+   - Tipo, condición y descripción del hábitat, y cobertura del dosel
    - Coordenadas
 
    Los campos sin datos en el sitio de origen no están disponibles. Seleccionar
-   `Coordinates` copia todas las coordenadas que pertenecen al sitio de origen
+   `Coordenadas` copia todas las coordenadas que pertenecen al sitio de origen
    seleccionado.
 
-5. Seleccione `Copy` para rellenar el sitio actual.
+5. Seleccione `Copiar` para rellenar el sitio actual.
 
 {% /steps %}
 
@@ -169,28 +217,37 @@ sitio y coordenadas; no copia medios del sitio, enlaces de datos asociados,
 registros de sitio fosilífero, eventos de recolecta ni otros registros
 vinculados al sitio de origen.
 
+{% aside type="tip" title="Si no se puede copiar" %}
+
+Si NAHPU indica que se necesitan varios proyectos, cree o importe primero otro
+proyecto. Si indica que el sitio no está vacío, cree un sitio nuevo o quite la
+información, las coordenadas, los medios y los datos vinculados del sitio
+existente antes de volver a intentarlo.
+
+{% /aside %}
+
 ## Agregar coordenadas {% #adding-coordinates %}
 
-Un sitio puede tener varios registros de coordenadas para los extremos de una
-línea de trampas, puntos de recolección separados u otros puntos del mismo
-sitio. Puede agregar coordenadas manualmente, usar el GPS del dispositivo o
-importar puntos desde un archivo GIS/GPS.
+Cada sitio puede tener varios registros de coordenadas para los extremos de una
+línea de trampas, puntos de recolecta separados u otros puntos del mismo
+sitio. Agregue una coordenada manualmente, use el GPS del dispositivo o
+importe puntos desde un archivo GIS/GPS.
 
 ### Usar el GPS del dispositivo al agregar una coordenada {% #use-device-gps-while-adding-a-coordinate %}
 
 {% steps %}
 
 1. En la página del sitio, abra el panel de coordenadas y toque/haga clic en
-   `Add coordinate` {% ref id="E" /%}.
+   `Agregar coordenada` {% ref id="E" /%}.
 
-2. En la página `Add coordinates`, use la tarjeta `Device GPS` y toque/haga
-   clic en su botón de ubicación.
+2. En la página `Agregar coordenadas`, use la tarjeta `GPS del dispositivo` y
+   toque/haga clic en `Obtener ubicación`.
 
 3. NAHPU completa la latitud decimal, la longitud decimal, la elevación y la
    incertidumbre del GPS cuando el sistema operativo las proporciona. Revise
-   los valores, complete los campos restantes y guarde la coordenada.
+   los valores, complete los campos restantes y seleccione `Agregar`.
 
-    Introduzca el nombre de la unidad GPS por separado, usando el modelo exacto
+    Ingrese el nombre de la unidad GPS por separado, usando el modelo exacto
     del dispositivo, como `iPad Mini 4`.
 
 {% /steps %}
@@ -203,7 +260,7 @@ importar puntos desde un archivo GIS/GPS.
 
 2. Ingrese el nombre de la coordenada.
 
-    Mantenga el nombre corto e informativo. Puede usar el campo `Notas` para agregar información adicional sobre la coordenada. 
+    Mantenga el nombre corto e informativo. Puede usar el campo `Notas` para agregar información adicional sobre la coordenada.
 
     {% aside type="tip" %}
 
@@ -212,26 +269,30 @@ importar puntos desde un archivo GIS/GPS.
       - `{siteID}S` para una coordenada tomada al inicio de la línea de trampas, como `KMHH-L1S`.
       - `{siteID}C` para la coordenada tomada en el centro de la línea de trampas.
       - `{siteID}E` para una coordenada tomada al final de la línea de trampas, como `KMHH-L1E`.
-      - Si la línea de trampas se extiende más allá del primer punto de inicio, la coordenada en el nuevo inicio se sufija con `{número}`. Por ejemplo, `KMHH-L1S2` para la primera extensión, `KMHH-L1S3` para la siguiente, y así sucesivamente hasta que la línea se mueva por completo.
-      - Si la línea de trampas se extiende más allá del primer punto final, la coordenada en el nuevo final se sufija con `{número}`. Por ejemplo, `KMHH-L1E2` para la primera extensión, y continúe de manera similar a la extensión de la línea de inicio.
+      - Si la línea de trampas se extiende más allá del primer punto de inicio, la coordenada en el nuevo inicio se sufija con `{number}`. Por ejemplo, `KMHH-L1S2` para la primera extensión, `KMHH-L1S3` para la siguiente, y así sucesivamente hasta que la línea se mueva por completo.
+      - Si la línea de trampas se extiende más allá del primer punto final, la coordenada en el nuevo final se sufija con `{number}`. Por ejemplo, `KMHH-L1E2` para la primera extensión, y continúe de manera similar a la extensión de la línea de inicio.
 
     {% /aside %}
 
-3. Seleccione el formato e introduzca los valores de la coordenada.
+3. Seleccione un formato de coordenada e ingrese sus valores.
 
     NAHPU acepta grados decimales (DD), grados y minutos decimales (DDM),
-    grados-minutos-segundos (DMS) y un valor UTM con el formato
-    `zona hemisferio este norte`. UTM usa WGS84.
+    grados-minutos-segundos (DMS) y un único valor UTM con el formato
+    `zone hemisphere easting northing`. La entrada UTM usa WGS84. Las
+    direcciones de latitud y longitud deben corresponder a sus ejes, y los
+    valores decimales convertidos deben estar dentro de los rangos válidos de
+    latitud y longitud.
 
-    Para DDM y DMS, introduzca grados, minutos y segundos en campos numéricos
-    separados. Después seleccione N/S para la latitud y E/W para la longitud.
-    NAHPU agrega los símbolos y concatena las partes para los valores verbatim
-    de latitud y longitud de Darwin Core.
+    Para DDM y DMS, ingrese los grados, minutos y segundos en sus campos
+    numéricos separados y luego elija N/S para la latitud y E/W para la
+    longitud. NAHPU agrega los símbolos de coordenada y concatena las partes
+    para los valores verbatim de latitud y longitud de Darwin Core.
 
-    NAHPU guarda los valores decimales para los cálculos y conserva el valor
-    concatenado y el sistema de coordenadas para los campos verbatim. Si ya hay
-    valores, cambiar de formato pide confirmación antes de borrarlos. Al guardar
-    una coordenada en DD se eliminan los valores verbatim anteriores.
+    NAHPU guarda la latitud y la longitud decimales para los cálculos y también
+    conserva el valor concatenado y el sistema de coordenadas para los campos
+    verbatim de Darwin Core. Si ya hay valores de coordenada ingresados, cambiar
+    de formato pide confirmación antes de borrarlos. Seleccionar DD borra los
+    valores verbatim anteriores después de guardar la coordenada.
 
 4. Agregue la elevación en metros.
 
@@ -249,48 +310,51 @@ importar puntos desde un archivo GIS/GPS.
 
 8. Agregue notas.
 
-    Agregue información adicional si la hay.
+    Agregue información adicional, si la hay.
 
 {% /steps %}
 
 ### Importar coordenadas desde un archivo {% #import-coordinates-from-a-file %}
 
-Use `Add coordinate` > `Import` {% ref id="F" /%} > `Select coordinate file` {% ref id="G" /%} para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile comprimido o GPX.
+Use `Agregar coordenada` > `Importar` {% ref id="F" /%} > `Seleccionar archivo de coordenadas` {% ref id="G" /%} para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile comprimido o GPX.
 
-En archivos tabulares, `Match columns` requiere `Latitude` y `Longitude` en grados decimales. Los campos opcionales son `Name / ID`, `Elevation (m)`, `GPS unit` y `Notes`. Revise la asignación sugerida, deje campos no deseados como `Not included` y seleccione `Review coordinates`. Use `Edit column mapping` para corregir una vista previa inesperada.
+En archivos tabulares, `Asociar columnas` requiere `Latitud` y `Longitud` en grados decimales. Los campos opcionales son `Nombre / ID`, `Elevación (m)`, `Unidad GPS` y `Notas`. Revise la asignación sugerida, deje los campos no deseados como `No incluido` y seleccione `Revisar coordenadas`. Use `Editar asignación de columnas` para corregir una vista previa inesperada.
 
-Revise avisos y posiciones en el mapa. Use casillas individuales, `Select all` o `Clear all` y después `Add N selected` {% ref id="H" /%} para añadir los puntos al sitio actual. Compruebe los puntos guardados antes de usarlos para especímenes.
+Revise los avisos y las posiciones en el mapa. Use las casillas individuales, `Seleccionar todo` o `Borrar todo` y después `Agregar N seleccionadas` {% ref id="H" /%} para agregar los puntos elegidos al sitio actual. Compruebe los puntos guardados antes de usarlos para especímenes.
 
-Las posiciones importadas usan WGS84. Confirme el datum de origen; este flujo no convierte otro datum a WGS84. La elevación está en metros. La importación no proporciona incertidumbre de la coordenada; revise y añada la información de origen cuando se conozca. Los archivos tabulares pueden proporcionar la unidad GPS; las importaciones GIS no la proporcionan.
+Las posiciones importadas usan WGS84. Confirme el datum de origen antes de importar; este flujo no convierte otro datum a WGS84. La elevación está en metros. Esta importación no proporciona la incertidumbre de la coordenada; revísela y agréguela desde el origen cuando se conozca. Los archivos tabulares pueden proporcionar la unidad GPS, mientras que las importaciones GIS no la proporcionan.
 
-Solo se importan geometrías de punto. Las geometrías no admitidas y las filas inválidas se omiten con avisos; las rutas y trazas GPX se ignoran. Sin puntos válidos, se produce un error en vez de crear coordenadas.
+Solo se importan geometrías de punto. Las geometrías no admitidas y las filas inválidas se omiten con avisos; las rutas y trazas GPX se ignoran. Si no hay puntos válidos, se produce un error en vez de crear coordenadas.
 
 ### Gestionar y exportar coordenadas
 
-El botón `Manage` del panel de coordenadas de un sitio abre todas las
-coordenadas del proyecto. Puede filtrar por sitio, seleccionar puntos
-individuales o todos los visibles, enfocar un punto en el mapa y abrir el mapa
-en pantalla completa.
+El botón `Gestionar` del panel de coordenadas de un sitio abre todas las
+coordenadas del proyecto. Puede filtrar la lista por sitio, seleccionar puntos
+individuales o todos los puntos visibles, enfocar un punto en el mapa y abrir
+el mapa en pantalla completa.
 
 {% steps %}
 
-1. Abra el panel de coordenadas de un sitio y toque/haga clic en `Manage`.
+1. Abra el panel de coordenadas de un sitio y toque/haga clic en `Gestionar`.
 
 2. Filtre por sitio si es necesario y seleccione las coordenadas que desea
    exportar.
 
-3. Toque/haga clic en `Export coordinates (N)`.
+3. Toque/haga clic en `Exportar coordenadas (N)`.
 
-4. Elija `GeoJSON (.geojson)`, `KML (.kml)` o `Shapefile bundle (.zip)`. Escriba
-   el nombre del archivo, elija el directorio de destino y seleccione
-   `Export`.
+4. Elija `GeoJSON (.geojson)`, `KML (.kml)` o `Paquete Shapefile (.zip)`.
+   Ingrese un nombre de archivo, elija un directorio de destino y seleccione
+   `Exportar`.
 
-5. Cuando se cree el archivo, use `Share` en los dispositivos compatibles.
+5. Cuando se cree el archivo, use `Compartir` en los dispositivos que lo
+   admitan.
 
 {% /steps %}
 
-Cada coordenada exportada debe tener una latitud y longitud decimales válidas.
-Las exportaciones GIS incluyen el nombre, las notas, la latitud y longitud
-decimales WGS84 y la elevación cuando está disponible. Esta exportación es
-distinta de `Export records`, los paquetes del proyecto y las copias de
-seguridad de la base de datos.
+Cada coordenada exportada debe tener una latitud y una longitud decimales
+válidas. Las exportaciones GIS incluyen el nombre de la coordenada, las notas,
+la latitud y la longitud decimales WGS84 y la elevación cuando está disponible.
+La exportación de coordenadas es distinta de `Exportar registros`, los paquetes
+del proyecto y las copias de seguridad de la base de datos; use esas opciones
+cuando necesite registros tabulares o una copia restaurable de un proyecto
+NAHPU.

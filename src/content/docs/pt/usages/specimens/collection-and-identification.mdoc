@@ -5,18 +5,40 @@ sidebar:
   order: 3
 ---
 
-O cartão `Collection & Identification` inclui `Museum ID`, o número de campo,
-`Cataloger`, `Preparator`, `Determiner`, `Taxon`, `ID Confidence`,
-`Identification Method`, `Condition` e as datas e horários de coleta e
-preparação.
+O cartão `Coleta e identificação` armazena os metadados principais do espécime,
+nesta ordem na tela:
 
-O editor responsivo de ID permite escolher Personnel ou Project para cada
-espécime. A troca remove o identificador anterior, e números já consumidos não
-são reutilizados.
+| Campo | Observações |
+| --- | --- |
+| ID de campo | O número de campo do catalogador ou um número de projeto formatado. Use `Editar ID de campo` para mudar o tipo neste espécime; o NAHPU pede confirmação, remove o identificador anterior e não reutiliza números já usados. |
+| `ID do museu` | Número de catálogo ou de tombo do museu, opcional. Aparece após `Mostrar mais` ou quando já tem um valor. |
+| `Catalogador` | A pessoa que cataloga o espécime. Escolher um também define `Preparador` e `Determinador`. |
+| `Preparador` | A pessoa que preparou o espécime ou o testemunho. |
+| `Condição` | A condição do espécime, a partir da lista em Configurações. |
+| `Data de coleta`, `Hora de coleta` | Quando o espécime foi coletado. |
+| `Data de prep.`, `Hora de prep.` | Quando o espécime foi preparado. |
 
-## Taxonomia
+A parte de **Identificação** do cartão contém:
 
-O cartão `Taxon Info` é preenchido a partir da espécie selecionada. Ele mostra a
-classificação e permite consultar o registro taxonômico, incluindo autores,
-nome comum, categoria da Lista Vermelha, status CITES e observações quando
-existentes.
+| Campo | Observações |
+| --- | --- |
+| `Táxon` | Um registro do registro de táxons do projeto. |
+| `Determinador` | A pessoa que identificou o espécime. |
+| `Confiança da identificação` | `Low`, `Medium` ou `High`. |
+| `Método de identificação` | Evidência usada, opcional. Aparece quando `Confiança da identificação` está definida. |
+
+## Taxonomia {% #taxonomy %}
+
+O cartão `Informações do táxon` é lido a partir do táxon selecionado em
+`Coleta e identificação`. No formulário do espécime, ele mostra classe, ordem e
+família. Selecione `Ver detalhes` para revisar o registro taxonômico completo,
+incluindo:
+
+- a `Categoria` do registro;
+- reino e filo, obtidos do registro de táxons quando registrados e, caso
+  contrário, inferidos a partir da classe;
+- classe, ordem, família, gênero e, quando o registro chega a essas
+  categorias, espécie e subespécie, além de autores e nome comum;
+- categoria da Lista Vermelha, status CITES, status no país e observações,
+  quando existentes;
+- o número de registros que usam o táxon e um código QR para compartilhá-lo.

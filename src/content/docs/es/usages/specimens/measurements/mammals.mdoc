@@ -5,41 +5,62 @@ sidebar:
   order: 1
 ---
 
-Los especímenes de un proyecto que usa el formato de catálogo `Mammalogy`
+Los especímenes de un proyecto que usa el formato de catálogo `Mastozoología`
 muestran el formulario de medición de mamíferos. El sexo, la etapa de vida y
 las unidades de peso funcionan igual en todos los grupos taxonómicos; consulte
 [Mediciones](/es/usages/specimens/measurements/).
 
 ## Mediciones {% #measurements %}
 
-- `Total length (mm)`: la longitud total desde la punta de la nariz hasta la
+- `Longitud total (mm)`: la longitud total desde la punta de la nariz hasta la
   punta de la cola.
-- `Tail length (mm)`: la longitud de la cola desde la base hasta la punta.
-- `Head and body length (mm)`: calculada automáticamente como `Total length (mm) - Tail length (mm)`.
-- `Tail/HB length`: calculada automáticamente como `Tail length (mm) / Head and body length (mm)`.
-- `Hind foot length (mm)`: la longitud de la pata trasera desde la base hasta la punta de la uña.
-- `Ear length (mm)`: longitud de la oreja.
-- `Weight`: peso del espécimen en la unidad seleccionada.
-- `Accuracy`: precisión de la medición o motivo por el que las mediciones
-  pueden ser imprecisas.
-- `Sex`: se elige del vocabulario controlado de sexo del espécimen.
-- `Life stage`: se elige del vocabulario controlado de etapas de vida.
-- `Remarks`: notas adicionales sobre las mediciones.
+- `Longitud de la cola (mm)`: la longitud de la cola desde la base hasta la punta.
+- `Longitud de cabeza y cuerpo (mm)`: calculada automáticamente como
+  `Longitud total (mm)` menos `Longitud de la cola (mm)`.
+- `Longitud cola/CC`: calculada automáticamente como
+  `Longitud de la cola (mm)` dividida entre `Longitud de cabeza y cuerpo (mm)`.
+- `Longitud de la pata trasera (mm)`: la longitud de la pata trasera desde la
+  base hasta la punta de la uña.
+- `Longitud de la oreja (mm)`: longitud de la oreja.
+- `Peso`: peso del espécimen en la unidad seleccionada.
+- `Precisión`: `Accurate` o `Inaccurate`. Elegir `Inaccurate` abre
+  `Seleccionar medidas imprecisas`, donde marca cada medida afectada (total,
+  cola, pata trasera, oreja y peso, además de antebrazo y tibia cuando se
+  muestran los campos de murciélagos), y un campo `Observación de precisión`
+  para el motivo. Las exportaciones y las etiquetas pueden poner entre
+  corchetes los valores marcados.
+- `Sexo`: se elige del vocabulario controlado de sexo del espécimen.
+- `Etapa de vida`: se elige del vocabulario controlado de etapas de vida.
+- `Observaciones`: notas adicionales sobre las mediciones.
+
+Active `Mostrar advertencias de valores atípicos` para marcar las medidas que
+parecen inusuales para el taxón. Cambiar el `Sexo` pregunta
+`¿Cambiar el sexo?` y borra los datos reproductivos que ya no corresponden.
 
 ## Datos reproductivos {% #reproductive-data %}
 
-- Campos reproductivos de machos: posición de los testículos, longitud y
-  anchura de los testículos y aspecto del epidídimo.
-- Campos reproductivos de hembras: apertura vaginal, sínfisis púbica, etapa
-  reproductiva, condición de las mamas, recuento de mamas, recuento de
-  cicatrices placentarias, recuento de embriones y longitud cráneo-caudal
-  (corona-rabadilla) del embrión.
+| Sexo | Campo | Opciones |
+| --- | --- | --- |
+| Macho | `Posición` de los testículos | Scrotal, Abdominal |
+| Macho | Longitud y anchura de los testículos (mm) | Números |
+| Macho | Aspecto del epidídimo | Tubular, Partial, Not Tubular |
+| Hembra | Apertura vaginal | Imperforate, Perforate |
+| Hembra | Sínfisis púbica | Close, Small Open, Open |
+| Hembra | Etapa reproductiva | Nulliparous, Primiparous, Multiparous |
+| Hembra | Condición de las mamas | Small, Large, Lactating |
+| Hembra | Recuento de mamas | Pares axilares, abdominales e inguinales |
+| Hembra | Cicatrices placentarias, embriones | Contados a la izquierda y a la derecha |
+| Hembra | `Longitud CR (mm)` del embrión | Longitud cráneo-caudal (corona-rabadilla) |
 
 ## Campos de murciélagos {% #bat-fields %}
 
-Cuando los campos de murciélagos están activados, el formulario añade la
-longitud del antebrazo, la longitud de la tibia, el tipo de ecolocalización,
-las frecuencias máxima y mínima, la frecuencia de máxima energía y la duración.
+Active `Mostrar campos de murciélagos` en un espécimen para añadir la longitud
+del antebrazo, la longitud de la tibia, `¿Ecolocaliza?`, el tipo de
+ecolocalización (`FM`, `CF`, `QCF` o `None`), las frecuencias máxima y mínima,
+la frecuencia de máxima energía y la duración. Para mostrarlos en todos los
+especímenes de mamíferos, active `Mostrar siempre los campos de murciélagos`
+en `Configuración` > `Catálogos` > `Formato`. Un espécimen con datos de
+murciélago guardados siempre muestra la sección.
 
 ## Partes y simbiontes {% #parts-and-symbionts %}
 

@@ -18,172 +18,220 @@ title: Configuración
 {% pin id="G" label="Actividades principales" large=[55.5, 21.1] small2=[70.2, 17.1] /%}
 {% /screenshots %}
 
-NAHPU separa los registros del proyecto, los registros compartidos de la base de
-datos, las configuraciones de usuario reproducibles y las preferencias que solo
-viven en la instalación. Abra un proyecto, abra el menú `Dashboard` y seleccione
-`Settings` para configurar la instalación actual.
+La configuración controla cómo funciona NAHPU en este dispositivo: formatos de
+catálogo, listas controladas, campos personalizados, preajustes y preferencias
+de la aplicación. Abra `Configuración` desde el menú de la pantalla de inicio o
+desde el menú del panel de un proyecto. Los campos personalizados de un
+proyecto requieren que ese proyecto esté abierto.
 
 ## Qué afecta cada configuración
 
 | Tipo | Ejemplos | Comportamiento en la transferencia |
 | --- | --- | --- |
-| Información del proyecto | Nombre, número de acceso, ubicación, zona horaria, fechas, valores de Field ID del proyecto | Se incluyen en las transferencias de información y de proyecto |
-| Registros compartidos de la base | Taxones y personal | Se almacenan en la base de datos de NAHPU y se asocian a proyectos |
-| Configuraciones de usuario | Listas controladas y preajustes de exportación o de documento | Se transfieren con `Export user configs` e `Import user configs` |
-| Estado de la instalación | Tema y taxón principal actual | Permanece en la instalación actual |
+| Información del proyecto | Nombre, número de acceso, ubicación, zona horaria, fechas, valores de ID de campo del proyecto | Se incluyen en las transferencias de información del proyecto y de proyecto |
+| Registros compartidos de la base de datos | Taxones y personal | Se guardan en la base de datos de NAHPU y se asocian a proyectos |
+| Configuraciones de usuario | Vocabularios controlados y preajustes de exportación o de documento | Se transfieren con `Exportar configuraciones de usuario` e `Importar configuraciones de usuario` |
+| Estado de la instalación | Tema, idioma y taxón principal actual | Permanece en la instalación actual |
 
-Cambiar una configuración con un proyecto abierto puede, por tanto, afectar a
-otros proyectos de la misma instalación. Revise las configuraciones de usuario
+Cambiar una configuración con un proyecto abierto puede afectar a otros
+proyectos de la misma instalación. Revise las configuraciones de usuario
 transferidas antes de reemplazar su configuración actual.
 
 ## Catálogos
 
-### Format
+### Formato
 
-`Format` selecciona {% ref id="A" /%} el taxón principal que se usa en los formularios de
-espécimen nuevos de este dispositivo. Un proyecto puede contener más de un grupo
-taxonómico; esta configuración solo controla el formato de espécimen activo y
-sus campos de medición.
+`Formato` {% ref id="A" /%} selecciona el taxón principal que se usa en los
+formularios de nuevos especímenes en este dispositivo. Un proyecto puede
+contener más de un grupo taxonómico; esta configuración solo controla el
+formato de espécimen activo y sus campos de medición.
 
-### Events y Sites
+### Sitios
 
-Use `Events` {% ref id="C" /%} para gestionar la lista controlada de actividades principales {% ref id="G" /%}, los
-métodos de recolecta, los roles del personal del evento y los campos ambientales
-que se muestran en los formularios de evento. Las actividades principales
-comienzan con `Collecting`, `Recording` y `Observing`; `Other` no se incluye a
-menos que usted lo agregue. Los formularios ambientales muestran inicialmente
-temperatura ambiente, humedad ambiente, nubosidad, lluvia y notas. Al igual que
-en la configuración de Geografía, los demás campos integrados pueden mostrarse u
-ocultarse sin borrar los valores almacenados. Use `Sites` {% ref id="B" /%} para gestionar los
-vocabularios controlados de tipos de sitio y de hábitat. Mantenga estas
-configuraciones coherentes entre los dispositivos de campo transfiriendo las
-configuraciones de usuario.
+`Sitios` {% ref id="B" /%} gestiona:
 
-### Specimens
+- los tipos de sitio y de hábitat que se ofrecen en los formularios de sitio;
+- los datums de coordenadas;
+- `Campos geográficos`: qué campos geográficos muestran los formularios de
+  sitio;
+- `Capas del mapa` para el mapa de coordenadas.
 
-`Specimens` contiene {% ref id="D" /%} la visibilidad de los campos de captura, los Field IDs, los
-tissue IDs, los sexos de espécimen, los tipos de espécimen, los tratamientos,
-las condiciones y las configuraciones de simbiontes que dependen del taxón,
-incluidos sus tipos de interacción y categorías.
+Ocultar un campo nunca borra los valores ya guardados en él.
 
-El vocabulario de sexo del espécimen es restringido. `Male`, `Female` y
-`Unknown` siguen disponibles para cualquier taxón. Use los chips `+` para
-agregar `Gynandromorph`, `Hermaphrodite`, `Female?` o `Male?` a los menús
-desplegables del espécimen. Los chips opcionales solo pueden quitarse cuando
-ningún registro de espécimen de la base de datos usa ese valor.
+### Eventos
 
-En `Field ID`, deje `Use project ID` desactivado para usar las iniciales y el
-número de campo personal de un Cataloger. El Cataloger debe tener el rol
-`Cataloger`, el registro de campo habilitado, las iniciales y un número de campo
-actual.
+`Eventos` {% ref id="C" /%} gestiona la lista de actividades principales {% ref id="G" /%},
+los métodos de recolecta, los roles del personal del evento y los campos
+ambientales que se muestran en los formularios de evento. Las actividades
+principales comienzan con `Collecting`, `Recording` y `Observing`; `Other` no
+se incluye a menos que usted lo agregue. Los formularios ambientales muestran
+inicialmente temperatura ambiente, humedad ambiente, nubosidad, lluvia y
+notas; muestre u oculte los demás campos de la misma forma que los campos
+geográficos.
 
-Active `Use project ID` para configurar prefijo, número de catálogo actual,
-sufijo y el comportamiento de incremento automático. NAHPU concatena los tres
-valores directamente. Por ejemplo, `NAHPU-`, `120` y `-M` producen
-`NAHPU-120-M`.
+Mantenga estas listas iguales en todos los dispositivos de campo transfiriendo
+las configuraciones de usuario.
+
+### Especímenes
+
+`Especímenes` {% ref id="D" /%} contiene:
+
+- `Mostrar siempre el campo de colector` y la visibilidad de otros campos de
+  captura;
+- la numeración de `ID de campo` e `ID de tejido`, descrita más abajo;
+- listas controladas de sexo del espécimen, `Métodos de identificación`,
+  `Etapas de vida`, tipos de espécimen, tratamientos y condiciones;
+- la configuración de simbiontes: tipos de interacción, categorías, métodos de
+  detección y de preparación, ubicaciones anatómicas, almacenamiento y
+  tratamientos, todos con valores predeterminados editables.
+
+La lista de sexo del espécimen es restringida. `Male`, `Female` y `Unknown`
+siempre están disponibles. Use los chips `+` para agregar `Gynandromorph`,
+`Hermaphrodite`, `Female?` o `Male?`. Una opción agregada solo puede quitarse
+cuando ningún espécimen de la base de datos la usa.
+
+#### ID de campo
+
+En `ID de campo`, elija cómo se numeran los especímenes:
+
+| Opción | El ID de campo se forma con | Requiere |
+| --- | --- | --- |
+| `ID del personal` (predeterminado) | Las iniciales del Catalogador y su propio número consecutivo | Una persona con el rol `Catalogador` en el proyecto, con iniciales y un número de campo actual |
+| `ID del proyecto` | `Prefijo` + `Número de catálogo actual` + `Sufijo` | Los tres valores, y si `Incrementar automáticamente el número de catálogo` está activado |
+
+Con `ID del proyecto`, NAHPU une los tres valores directamente: `NAHPU-`, `120`
+y `-M` producen `NAHPU-120-M`. Seleccione
+`Guardar la configuración de ID de campo` para aplicarlos.
 
 {% aside type="caution" %}
 
-Cambiar el prefijo o el sufijo de un Field ID de proyecto cambia cómo se
-muestran los ID ya asignados. Confirme el cambio con cuidado si esos
-identificadores ya se exportaron o se escribieron en etiquetas.
+Cambiar el prefijo o el sufijo de un ID de proyecto cambia cómo se muestran los
+ID de proyecto ya asignados, y NAHPU le pide que lo confirme. Compruebe antes
+si esos ID ya se exportaron o se escribieron en etiquetas.
 
 {% /aside %}
 
-`Tissue ID` admite un prefijo, el siguiente número y un sufijo, y muestra una
-vista previa del siguiente ID de tejido. Los ceros a la izquierda del número se
+#### ID de tejido
+
+`ID de tejido` admite un prefijo, el siguiente número y un sufijo, y muestra
+una vista previa del siguiente ID de tejido. Los ceros a la izquierda se
 conservan, de modo que a `M0042-T` le sigue `M0043-T`. En el formato de
-catálogo Ichthyology, `Individual tag ID` numera de la misma forma los
+catálogo Ichthyology, `ID de etiqueta individual` numera de la misma forma los
 individuos de un lote de peces; consulte
 [Peces](/es/usages/specimens/measurements/fishes/#tag-id-numbering).
 
-## Database
+### Campos personalizados {% #custom-fields %}
 
-- `Taxa` {% ref id="F" /%} gestiona los registros de taxonomía disponibles para los proyectos.
-- `Personnel` gestiona a las personas de la base de datos y sus roles de cuidado
+`Campos personalizados` {% ref id="E" /%} agrega sus propios campos a los
+formularios de sitio, datos ambientales, espécimen, parte y simbionte.
+
+| Configuración | Opciones |
+| --- | --- |
+| Tipo | Texto, Número, Sí / No, Lista desplegable |
+| Ámbito | `Proyecto actual` (solo este proyecto) o `Global` (todos los proyectos de esta instalación); se elige al crearlo |
+| Catálogo | Los campos relacionados con especímenes pueden limitarse a algunos formatos de catálogo |
+| Asignación Darwin Core | Término de exportación opcional para el campo |
+
+{% steps %}
+
+1. Abra el proyecto, vaya a `Configuración` > `Campos personalizados` y
+   seleccione `Agregar campo personalizado`. Elija dónde aparece el campo.
+2. Defina `Etiqueta` y `Tipo`. Para una lista desplegable, ingrese las
+   opciones permitidas. Ponga la unidad en la etiqueta de un campo numérico,
+   como "Altura del dosel (m)".
+3. Elija el ámbito y, para los campos de espécimen, los formatos de catálogo.
+4. Opcionalmente, defina una asignación Darwin Core. Asignar un campo no
+   comprueba sus valores, así que revise una exportación de muestra antes de
+   compartir datos.
+5. Guarde, abra un registro de esa sección, ingrese un valor de prueba y vuelva
+   a abrir el registro para comprobarlo.
+6. Para compartir el campo, expórtelo desde `Campos personalizados` o con las
+   configuraciones de usuario, impórtelo en el otro dispositivo y compruebe la
+   sección, el ámbito y las opciones.
+
+{% /steps %}
+
+Para dejar de usar un campo, seleccione `Archivar`: sus datos se conservan, y
+`Restaurar` lo recupera. `Eliminar` aparece como `Eliminar (valores en uso)` y
+no está disponible mientras algún registro guarde un valor. Descartar valores
+heredados es una acción separada e irreversible.
+
+## Base de datos
+
+- `Taxones` {% ref id="F" /%} gestiona los registros taxonómicos disponibles para los proyectos.
+- `Personal` gestiona a las personas de la base de datos y sus roles de cuidado
   del espécimen.
-- `Replace database` reemplaza la base SQLite activa a partir de una copia de
-  seguridad.
+- `Respaldar la base de datos` guarda un archivo comprimido ZIP o TAR.GZ
+  completo de todos los proyectos, registros y archivos administrados.
+- `Reemplazar base de datos` reemplaza la base de datos SQLite activa a partir
+  de una copia de seguridad.
 
 {% aside type="caution" %}
 
-Haga una copia de seguridad reciente antes de usar `Replace database`.
-Reemplazar la base de datos es distinto de fusionar un proyecto o importar
+Haga una copia de seguridad reciente antes de usar `Reemplazar base de datos`.
+Reemplazar la base de datos es distinto de combinar un proyecto o importar
 configuraciones de usuario.
 
 {% /aside %}
 
-## Exports
+## Exportaciones
 
-- `Tabular Data` gestiona los preajustes reutilizables de exportación de
+- `Datos tabulares` gestiona los preajustes reutilizables de exportación de
   registros.
-- `Documents` gestiona las plantillas de documento, los preajustes de diseño de
-  impresión y las fuentes disponibles para las plantillas.
-- `Template Editor` crea y edita plantillas de documento.
+- `Documentos` gestiona las plantillas de documento, los preajustes de diseño
+  de impresión y las fuentes disponibles para las plantillas.
+- `Editor de plantillas` crea y edita plantillas de documento.
 
-`Load defaults`, en el menú de opciones o en una lista de preajustes vacía,
-permite elegir qué preajustes incluidos se añaden. Los que sirven para cualquier
-formato de catálogo aparecen marcados; los escritos para un formato de catálogo
-aparecen sin marcar y también se ofrecen en `Setup NAHPU`. Nunca se sobrescriben
-los que tienen el mismo nombre, y cualquier preajuste se puede eliminar.
+`Cargar valores predeterminados`, en el menú de opciones o en una lista de
+preajustes vacía, le permite elegir qué preajustes incluidos se agregan. Los
+preajustes que sirven para cualquier formato de catálogo aparecen marcados; los
+escritos para un solo formato de catálogo aparecen sin marcar y también se
+ofrecen en `Configurar NAHPU`. La carga nunca sobrescribe un preajuste con el
+mismo nombre, y cualquier preajuste puede eliminarse.
 
 Estos preajustes son configuraciones de usuario. Expórtelos cuando otra
 instalación deba reproducir las mismas columnas, etiquetas o diseños.
 
-## Applications
+## Aplicación
 
-### Theme
+Estas preferencias solo se aplican a esta instalación.
 
-Use `Theme` para elegir `System`, `Light` o `Dark`. La elección solo se aplica a
-la instalación actual.
+| Configuración | Qué hace |
+| --- | --- |
+| `Tema` | `Sistema`, `Claro` u `Oscuro`. |
+| `Idioma` | El idioma de la aplicación. En beta. |
+| `Formato regional` | Cómo se muestran las fechas y los números en la pantalla. Los registros guardados y las exportaciones conservan formatos estándar. En beta. |
+| `Herramientas` | Elige las herramientas que se muestran en el panel del proyecto. |
+| `Uso de datos` | Informe de almacenamiento y limpieza, descritos más abajo. |
 
 ### Uso de datos y limpieza
 
-Abra `Data usage` para examinar las carpetas administradas por NAHPU. El resumen
-muestra el almacenamiento total, las cantidades de archivos y medios, y el
-espacio que se puede recuperar al eliminar archivos desvinculados.
+Abra `Uso de datos` para examinar las carpetas administradas por NAHPU. El
+resumen informa el almacenamiento total, las cantidades de archivos y medios,
+y el espacio que puede recuperarse de los archivos sin vincular.
 
-`Remove unlinked files` elimina archivos que ya no usa ningún registro,
-incluidos los restos de medios eliminados o importaciones canceladas. No afecta
-los archivos vinculados, las bases de datos y copias de seguridad, las fuentes
-personalizadas, las capas de mapas ni los archivos fuera de las carpetas
-administradas por NAHPU. Elimine una fuente instalada desde `Documents` >
-`Fonts` en lugar de hacerlo aquí.
+`Quitar archivos sin vincular` elimina archivos que ya no usa ningún registro,
+incluidos los restos de medios eliminados o de importaciones canceladas. No
+afecta a los archivos vinculados, las bases de datos y copias de seguridad, las
+fuentes personalizadas, las capas de mapas ni los archivos fuera de las
+carpetas administradas por NAHPU. Quite una fuente instalada desde
+`Documentos` > `Fuentes` en lugar de hacerlo aquí.
 
-El árbol `Files` permite inspeccionar los archivos almacenados, guardar una
-copia o eliminar individualmente los archivos permitidos. Elija `Select` para
-trabajar con varios archivos. Use `Clear` o `Select all` y elija el botón
-flotante `Review` para comprobar la cantidad, el tamaño y las ubicaciones
-agrupadas antes de exportar un archivo comprimido o eliminar los archivos
-permanentemente.
+El árbol `Archivos` permite inspeccionar los archivos guardados, guardar una
+copia o quitar uno a uno los archivos permitidos. Elija `Seleccionar` para
+trabajar con varios archivos. Use `Borrar selección` o `Seleccionar todo` y
+luego elija el botón flotante `Revisar` para comprobar la cantidad, el tamaño y
+las ubicaciones de los archivos antes de exportar un archivo comprimido o
+quitarlos permanentemente.
 
-Elija `Rescan` después de modificar archivos fuera de NAHPU para actualizar el
-informe de almacenamiento.
+Elija `Volver a analizar` después de que cambien archivos fuera de NAHPU para
+actualizar el informe.
 
 ## Transferir configuraciones de usuario
 
-`Export user configs` e `Import user configs` están en el menú `Dashboard` del
-proyecto, junto a `Settings`; no están dentro de la página de configuración. La
-transferencia de configuraciones de usuario puede reproducir vocabularios controlados
-y preajustes sin reemplazar la base de datos del proyecto. Consulte
-[Exportar](../export) antes de reemplazar configuraciones o datos.
-
-## Campos personalizados {% #custom-fields %}
-
-Las definiciones indican dónde pertenece el valor y cómo se introduce. Los tipos son Text, Number, Yes / No y Dropdown. Use una unidad coherente en la etiqueta y el protocolo para observaciones numéricas. El ámbito se elige al crear: `Current project` se aplica a un proyecto y `Global` a la instalación. Los campos de especímenes pueden restringirse por catálogo; los ambientales pertenecen a eventos.
-
-Las asignaciones Darwin Core opcionales definen destino y campo de exportación. Revise su significado en la exportación prevista e inspeccione una salida de prueba antes de compartir. Asignar el nombre no valida los valores. Los valores existentes pueden impedir la eliminación; archive el campo para dejar de usarlo sin perder datos. Descartar valores heredados es una acción separada e irreversible.
-
-Defina campos adicionales y compruebe cómo aparecen en los registros del proyecto.
-
-## Pasos
-
-{% steps %}
-
-1. Abra el proyecto deseado y vaya a `Settings` > `Custom fields` {% ref id="E" /%}; cree un campo y elija la sección de destino.
-2. Defina `Label` y `Type`. Para una lista desplegable, introduzca las opciones permitidas. Elija el ámbito `Current project` o `Global`; las definiciones globales se aplican a toda la instalación.
-3. Para campos de especímenes, compruebe el catálogo aplicable. Consulte la guía de referencia para asignaciones Darwin Core opcionales.
-4. Guarde la definición, abra un registro en la sección de destino e introduzca un valor de prueba con la unidad acordada. Vuelva a abrir el registro para comprobarlo.
-5. Use `Archive` para retirar un campo conservando sus datos y `Restore` para volver a mostrarlo. `Delete` no está disponible mientras existan valores almacenados.
-6. Exporte la definición desde `Custom fields` o inclúyala en la transferencia de configuraciones. Impórtela en el dispositivo receptor y compruebe sección, ámbito y opciones.
-{% /steps %}
+`Exportar configuraciones de usuario` está en el menú de la pantalla de inicio
+y en el menú del panel del proyecto; `Importar configuraciones de usuario`
+está en el menú del panel. Ninguna de las dos está dentro de la página de
+Configuración. Una transferencia de configuraciones de usuario reproduce listas
+controladas y preajustes sin reemplazar la base de datos del proyecto.
+Consulte [Exportar](../export) antes de reemplazar configuraciones o datos.

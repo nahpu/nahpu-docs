@@ -5,20 +5,33 @@ sidebar:
   order: 4
 ---
 
-Los registros de captura vinculan el espécimen con su evento:
+Los registros de captura vinculan un espécimen con el evento de recolecta, el
+sitio, la coordenada, el método y el colector que lo produjeron.
 
-- `Site ID` y `Event ID`: sitio y evento de recolección.
-- `Capture date` y `Capture time`: fecha y hora de captura; `Relative time`
-  permite usar Dawn, Morning, Afternoon, Dusk o Night.
-- `Method` y `Method ID`: método de colecta y código del método del evento.
-- `Coordinate ID`: coordenada vinculada al sitio del evento.
-- `Coordinate extent (m)`: extensión positiva opcional del registro de captura;
-  aparece justo debajo de `Coordinate ID`.
-- `Collector`: persona del evento que realizó la recolección.
+{% steps %}
 
-En las exportaciones Darwin Core, la extensión se suma a la incertidumbre de
-la coordenada. Si no hay una incertidumbre válida, se usa solo la extensión.
-Los valores vacíos, cero o negativos se ignoran.
+1. Elija el `ID del sitio`. La lista `ID del evento` muestra entonces solo los
+   eventos de recolecta de ese sitio.
+2. Elija el `ID del evento`.
+3. Complete los detalles de captura que aparecen debajo.
 
-Al cambiar el evento se borran el método, el colector y la coordenada, pero se
-conservan la fecha y la hora de captura.
+{% /steps %}
+
+Cambiar el sitio o el evento pide confirmación y luego borra esta tarjeta,
+salvo la fecha y la hora de captura. Si cambia solo el evento, la coordenada se
+conserva cuando pertenece al mismo sitio.
+
+| Campo | Notas |
+| --- | --- |
+| `Fecha de captura`, `Hora de captura` | Cuándo se capturó el espécimen. |
+| `Hora relativa` | Reemplaza la hora exacta por `Dawn`, `Morning`, `Afternoon`, `Dusk` o `Night`. Se muestra tras `Mostrar más`. |
+| `Método` | Un método de recolecta del evento seleccionado. |
+| `ID del método` | Identificador opcional de la trampa, red u otro método. Se muestra tras `Mostrar más`. |
+| `ID de coordenada` | Una coordenada del sitio del evento. |
+| `Extensión de la coordenada (m)` | Distancia positiva opcional que la captura abarca más allá del punto de la coordenada. |
+| `Colector` | Opcional, del personal del evento. Se muestra cuando tiene un valor, tras `Mostrar más`, o siempre si `Mostrar siempre el campo de colector` está activado en Configuración. |
+
+En las exportaciones Darwin Core, una extensión de coordenada positiva se suma
+a la incertidumbre guardada de la coordenada. Si la coordenada no tiene una
+incertidumbre válida, se usa solo la extensión. Los valores vacíos, cero y
+negativos se ignoran.

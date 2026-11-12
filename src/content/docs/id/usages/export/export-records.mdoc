@@ -20,37 +20,181 @@ sidebar:
 {% pin id="G" label="Tambahkan tanggal" large=[40.5, 76.2] small=[94, 79.5] /%}
 {% /screenshots %}
 
-Gunakan `Export records` untuk menulis data proyek aktif ke CSV, TSV, Excel, atau JSON menggunakan preset ekspor tersimpan.
+Gunakan `Ekspor catatan` untuk menyimpan catatan proyek aktif sebagai berkas
+CSV, TSV, Excel, atau JSON. Prasetel ekspor yang tersimpan menentukan catatan
+mana yang menjadi baris, kolom apa saja yang dimilikinya, dan nama kolomnya.
 
 ## Cara cepat mengekspor catatan
 
 {% steps %}
 
-1. Buka menu proyek dan pilih `Export records`.
-2. Pilih `Export preset` {% ref id="A" /%}. Jika belum tersedia, buka `Manage Presets` untuk membuatnya; gunakan `Manage presets` {% ref id="B" /%} untuk meninjau preset yang ada.
-3. Periksa jenis catatan, cakupan takson, tajuk, dan pemetaan kolom. Gunakan `Preview Table` {% ref id="D" /%} untuk memeriksa baris nyata. Pada ponsel, beralih ke `Preview` {% ref id="F" /%} untuk menemukan kontrol ini.
-4. Pilih format serta nama berkas {% ref id="C" /%} dan atur `Append date` {% ref id="G" /%} jika perlu. Tajuk Darwin Core tidak tersedia untuk keluaran JSON.
-5. Pilih tujuan dan tekan `Export records` {% ref id="E" /%}.
-6. Buka berkas dan periksa baris, tajuk, satuan, serta nilai berulang. Gunakan `Share` pada hasil untuk mentransfer berkas atau `Export another` untuk keluaran berikutnya.
+1. Buka menu proyek dan pilih `Ekspor catatan`.
+2. Pilih `Prasetel ekspor` {% ref id="A" /%}. Untuk membuat atau mengubahnya,
+   pilih `Kelola prasetel` {% ref id="B" /%}.
+3. Periksa ringkasan prasetel: jenis catatan, format tajuk, dan kolom. Pilih
+   `Pratinjau tabel` {% ref id="D" /%} untuk melihat baris yang sebenarnya. Di
+   ponsel, pratinjau ada di tab `Pratinjau` {% ref id="F" /%}.
+4. Pilih format berkas {% ref id="C" /%} dan ketik nama berkas. Aktifkan
+   `Tambahkan tanggal saat ini` {% ref id="G" /%} untuk menambahkan tanggal ke
+   nama. JSON tidak mendukung tajuk Darwin Core.
+5. Pilih lokasi penyimpanan dan pilih `Ekspor catatan` {% ref id="E" /%}.
+6. Buka berkas dan periksa baris, tajuk, satuan, dan nilai berulang. Gunakan
+   `Bagikan` untuk mengirimnya, atau `Ekspor lagi` untuk membuat berkas lain.
 
 {% /steps %}
 
 ## Penjelasan {% #deep-dive %}
 
-Preset menetapkan jenis catatan, filter, dan kolom. Pilihan ini diedit dalam preset, bukan pada layar ekspor. Jenis catatan mencakup narasi, lokasi, kegiatan, catatan spesimen, dan bagian spesimen. Cakupan takson dapat membatasi spesimen yang disertakan.
+Prasetel ekspor tabular adalah resep tersimpan untuk satu tabel. Prasetel
+menentukan tiga hal:
 
-Dalam `Settings` > `Tabular Data`, pengaturan tersimpan saat diubah. Untuk mengganti nama, masukkan nama lalu pilih `Update`. `Description` opsional, hingga 80 karakter, disimpan dengan cara yang sama dan tampil di bawah nama prasetel dalam daftar. Gunakan `Duplicate` untuk menyalin prasetel dengan nama baru. Gunakan `Edit Fields` untuk meninjau kolom sumber, tajuk keluaran, dan penanganan nilai berulang. Pratinjau catatan dengan beberapa entri untuk menilai apakah kolom atau nilai gabungan sesuai dengan perangkat lunak penerima. Gunakan `Add custom field` untuk menulis field dan teks literal, atau teks saja, ke dalam satu kolom; lihat [Ekspresi ekspor](/id/usages/export/export-expressions/#custom-fields).
+- **Catatan mana** yang menjadi baris: `Jenis catatan`, dan untuk spesimen,
+  `Kelompok takson spesimen`.
+- **Kolom apa saja** yang dimiliki setiap baris, diatur di `Sunting Kolom`.
+- **Nama tajuk**, diatur oleh `Format tajuk yang dihasilkan` atau oleh nama yang
+  Anda berikan pada setiap kolom.
 
-`Generated header format` menyediakan `table::fieldName`, `fieldName`, `Darwin Core (dwc:/dcterms:)`, dan `NAHPU namespace (nahpu:table.field)`. Pilih konvensi yang diperlukan penerima dan periksa tajuknya. Pemetaan Darwin Core mempertahankan kolom tanpa padanan dengan tajuk NAHPU; tidak setiap pengamatan menjadi istilah standar.
+Semua ini diubah di `Pengaturan` > `Data tabular`, bukan di layar ekspor.
+Perubahan bidang dan pengaturan langsung tersimpan. Nama prasetel dan
+`Deskripsi` opsional (hingga 80 karakter, tampil di bawah nama dalam daftar)
+baru tersimpan setelah Anda memilih `Perbarui`. Gunakan `Duplikat` untuk
+membuat prasetel baru dari prasetel yang ada.
 
-Kolom pengamatan tambahan berbeda dari pemilihan kumpulan kolom ekspor kustom. Kolom lingkungan kustom memakai kunci stabil seperti `customEnvironment::<definition UUID>`. Ekspor kegiatan dan spesimen dapat menyertakan data lingkungan tersimpan meskipun kolomnya tersembunyi dalam formulir. Visibilitas bukan filter ekspor.
+### Apa itu satu baris
 
-Pemetaan Darwin Core memakai pengidentifikasi spesimen untuk atribusi identifikasi, mempertahankan koordinat asli, dan menambahkan jangkauan positif spesimen ke ketidakpastian positif koordinat. Periksa hasilnya berdasarkan [metode georeferensi](/id/best-practices/data-collection/#georeferencing) proyek. Periksa satuan tanpa menganggap nilai telah dikonversi.
+| Jenis catatan | Satu baris per |
+|---|---|
+| `Spesimen` | Spesimen. Bagian dan detail berulang lainnya dapat digabung dalam satu sel atau disebar ke kolom bernomor. |
+| `Bagian spesimen` | Bagian spesimen, seperti kulit atau tabung jaringan, dengan detail spesimennya diulang di setiap baris. Cocok untuk inventaris jaringan. |
+| `Lokasi` | Lokasi. |
+| `Peristiwa koleksi` | Peristiwa koleksi. |
+| `Narasi` | Entri narasi. |
+| `Simbion` | Catatan simbion. |
 
-CSV dan TSV mendukung pertukaran tabel; Excel mendukung peninjauan lembar kerja; JSON mendukung perangkat lunak yang menerima strukturnya. Buka keluaran pada alat tujuan dan periksa ID dengan nol awal serta tanggal untuk mendeteksi penafsiran yang tidak diinginkan.
+### Jenis kolom
+
+Setiap kolom di `Pemetaan terpilih` adalah salah satu dari empat jenis, yang
+dipilih di `Jenis pemetaan`:
+
+| Jenis pemetaan | Gunakan untuk | Contoh keluaran |
+|---|---|---|
+| `Bidang tunggal` | Satu bidang NAHPU, apa adanya atau dengan format lain. | `Rattus` |
+| `Bidang daftar` | Beberapa bidang yang digabung, melewati yang kosong. | `Indonesia, West Java, Cibodas` |
+| `Bidang kustom` | Bidang yang dicampur dengan teks Anda sendiri, atau teks saja. | `HH-156` |
+| `Catatan bersarang` | Catatan berulang, seperti bagian atau kolektor sebuah spesimen. | `Skin; Skull; Tissue` |
+
+Centang bidang di `Sisipkan bidang sumber` (`Bidang tersedia` di ponsel) untuk
+menambahkannya sebagai `Bidang tunggal`. Gunakan `Tambah bidang kustom` dan
+`Tambah bersarang` untuk jenis lainnya. Pilih ikon pensil pada kolom untuk
+mengubahnya, dan seret pegangannya untuk mengubah urutan. Bidang kustom dan
+keluaran bersyarat dijelaskan di
+[Ekspresi ekspor](/id/usages/export/export-expressions/#custom-fields).
+
+### Memformat bidang tunggal
+
+Kolom `Bidang tunggal` dapat mengubah format nilainya melalui `Format nilai`:
+
+| Format nilai | Fungsinya |
+|---|---|
+| `Teks biasa` | Menulis nilai apa adanya. |
+| `Teks terkode` | Menulis label dari kode yang tersimpan, misalnya `Jantan` untuk `0`. |
+| `Koordinat` | Menulis koordinat dalam format yang diatur di `Lanjutan`. |
+| `Tanggal` | Menulis tanggal dalam format yang diatur di `Lanjutan` > `Opsi format mentah`, misalnya `dd/mm/yyyy`. |
+| `Kurung bersyarat`, `Bidang bersyarat`, `Nilai bersyarat` | Mengurung atau mengganti nilai saat kondisi terpenuhi; lihat [Keluaran bersyarat](/id/usages/export/export-expressions/#conditional-output). |
+
+Setiap jenis kolom juga dapat memakai `Ganti teks` untuk menulis ulang nilai
+setelah diformat, misalnya untuk mengganti nama jenis bagian sesuai basis data
+penerima.
+
+### Nilai berulang
+
+Sebagian nilai berulang: satu spesimen dapat memiliki banyak bagian, kolektor,
+atau metode koleksi. Kolom `Bidang daftar` dan `Catatan bersarang` menentukan
+cara menuliskannya:
+
+| Keluaran | Hasil |
+|---|---|
+| `Satu kolom` | Semua nilai dalam satu sel, digabung dengan pemisah yang Anda pilih. |
+| `Kolom berindeks` | Satu kolom, atau satu kelompok kolom, per nilai, misalnya `prep_1_type`, `prep_2_type`, … Jumlah kolom mengikuti catatan dengan nilai terbanyak. |
+| `Baris berulang` | Khusus catatan bersarang: satu baris per nilai, dengan sisa catatan diulang. Hanya satu kolom per prasetel yang dapat melakukannya. |
+
+Dengan `Kolom berindeks` atau `Baris berulang`, setiap bidang anak pada kolom
+bersarang dapat memiliki `Nama kolom (opsional)` sendiri. Tulis `{n}` di tempat
+nomor: `PrepType{n}Count` menghasilkan `PrepType1Count`, `PrepType2Count`, dan
+seterusnya. Nama tanpa `{n}` mendapat nomor dengan gaya
+`Nama kolom berindeks`.
+
+Pratinjau catatan dengan beberapa nilai untuk memastikan bentuknya sesuai bagi
+perangkat lunak penerima.
+
+### Tajuk kolom
+
+`Format tajuk yang dihasilkan` menamai setiap kolom yang belum Anda beri nama:
+
+| Format | Tajuk untuk `specimen::uuid` |
+|---|---|
+| `table::fieldName` | `specimen::uuid` |
+| `fieldName` | `uuid` |
+| `Darwin Core (dwc:/dcterms:)` | `dwc:occurrenceID` |
+| `NAHPU namespace (nahpu:table.field)` | `nahpu:specimen.uuid` |
+
+Nama yang diketik di `Nama kolom` selalu diutamakan. Pilih format yang diminta
+penerima, lalu periksa tajuknya di pratinjau.
+
+Dengan tajuk Darwin Core, bidang yang tidak memiliki istilah Darwin Core tetap
+memakai tajuk NAHPU; format ini tidak mengubah setiap pengamatan menjadi istilah
+baku. Keluaran Darwin Core juga:
+
+- mencatat identifikasi atas nama determinator spesimen;
+- mempertahankan koordinat verbatim;
+- menambahkan luasan koordinat spesimen yang positif ke ketidakpastian
+  koordinat yang positif. Periksa nilai gabungan itu terhadap
+  [metode georeferensi](/id/best-practices/data-collection/#georeferencing)
+  proyek.
+
+Satuan ukuran tidak dikonversi; periksa di keluaran.
+
+### Kolom kosong
+
+Lembar penerima dapat memiliki kolom yang tidak dicatat NAHPU, seperti benua.
+Tambahkan bidang kustom, beri nama kolom, dan biarkan nilainya kosong. Bidang
+itu ditulis sebagai kolom kosong, sehingga berkas tetap sejajar dengan
+lembarnya.
+
+### Bidang pengamatan tambahan
+
+Bidang kustom yang Anda buat di `Pengaturan`, seperti pengamatan lingkungan,
+diekspor seperti bidang lainnya. Kunci sumbernya memakai ID bidang, misalnya
+`customEnvironment::<definition UUID>`. Ekspor peristiwa dan spesimen tetap
+menyertakan nilai tersimpan meskipun bidang itu disembunyikan di formulir;
+menyembunyikan bidang tidak mengecualikannya dari ekspor.
+
+### Format berkas
+
+| Format | Gunakan untuk |
+|---|---|
+| CSV atau TSV | Pertukaran dengan basis data dan skrip. |
+| Excel | Peninjauan di lembar kerja. |
+| JSON | Perangkat lunak yang membaca JSON. Tajuk Darwin Core tidak tersedia. |
+
+Buka berkas di alat yang akan memakainya. Lembar kerja dapat menghapus angka nol
+di depan ID dan menafsirkan ulang tanggal.
+
+[Tutorial Mamalogi LSUMZ](/id/tutorials/specify-export-preset/) membuat
+prasetel lengkap untuk basis data museum, memakai sebagian besar opsi di halaman
+ini.
 
 ## Transfer dan pemulihan
 
-Ekspor catatan ini tidak dapat diimpor kembali sebagai proyek NAHPU. Gunakan [transfer proyek](/id/usages/export/project-transfer/) atau [NAHPU Data Package](/id/usages/export/export-bundles/) asli untuk impor kembali yang didukung, dan [cadangan basis data](/id/usages/export/#backup-database) untuk pemulihan seluruh instalasi. Gunakan `Import project` pada layar awal untuk instalasi lain dan `Merge project` dalam proyek yang ada untuk menggabungkan kontribusi.
+Ekspor catatan adalah salinan satu arah: NAHPU tidak dapat mengimpornya kembali
+sebagai proyek. Untuk memindahkan atau memulihkan data di NAHPU, gunakan:
 
-Lihat [pembuatan preset](/id/how-to-recipes/export-and-print/create-export-preset/) untuk konfigurasi tim yang dapat diulang.
+- [transfer proyek](/id/usages/export/project-transfer/) atau
+  [NAHPU Data Package](/id/usages/export/export-bundles/) untuk memindahkan
+  proyek ke instalasi lain, dengan `Impor proyek` di layar beranda, atau untuk
+  menggabungkan kontribusi dengan `Gabungkan proyek` di proyek yang ada;
+- [cadangan basis data](/id/usages/export/#backup-database) untuk memulihkan
+  seluruh instalasi.
+
+Untuk membagikan prasetel kepada tim, lihat
+[Buat preset ekspor tabular](/id/how-to-recipes/export-and-print/create-export-preset/).

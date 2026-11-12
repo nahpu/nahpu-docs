@@ -5,61 +5,74 @@ sidebar:
   order: 1
 ---
 
-Daftar bawaan NAHPU untuk `Bagian spesimen` (Specimen parts) dan `Perlakuan` (Treatments) terbatas dan tidak mencakup semua pilihan yang mungkin. Jika ini adalah proyek NAHPU pertama Anda, kami menyarankan untuk menyiapkan entri terlebih dahulu. Anda dapat melakukannya dengan masuk ke pengaturan:
+Daftar bawaan NAHPU untuk `Bagian spesimen` dan `Perlakuan` sengaja dibuat
+singkat. Sebelum memasukkan spesimen dalam jumlah besar, atur daftar proyek
+yang akan digunakan tim Anda di lapangan atau di ruang koleksi.
 
 {% steps %}
 
 1. Buka dasbor.
 2. Ketuk/klik menu hamburger di sudut kiri atas.
-3. Pilih `Pengaturan` (Settings).
-4. Pilih `Spesimen` (Specimens). 
-5. Atur sakelar `Use project ID`. Secara bawaan sakelar ini nonaktif dan
-   menggunakan inisial serta nomor lapangan kataloger. Setidaknya satu
-   Kataloger harus mengaktifkan pendaftaran nomor lapangan pribadi dan memiliki
-   nomor saat ini.
+3. Pilih `Pengaturan`.
+4. Di bawah `Katalog`, pilih `Spesimen`.
+5. Di bawah `ID lapangan`, pilih cara penomoran spesimen baru:
 
-    Aktifkan `Use project ID` untuk mengatur awalan, nomor katalog berikutnya,
-    dan akhiran. NAHPU menggabungkan nilai tersebut secara langsung. Aktifkan
-    penambahan otomatis agar nomor proyek diberikan lalu dilanjutkan ke nomor
-    berikutnya.
+    - `ID personel` (bawaan): inisial pengatalog dan nomor urut miliknya
+      sendiri. Tambahkan seseorang dengan peran `Cataloger` ke proyek dan
+      berikan nomor lapangan saat ini kepadanya.
+    - `ID proyek`: `Prefiks`, `Nomor katalog saat ini`, dan `Sufiks` yang
+      digabungkan secara langsung. Aktifkan `Tambah nomor katalog secara otomatis`
+      agar nomor bertambah setiap kali sebuah spesimen menggunakannya.
 
-    Pilihan ini hanya menjadi bawaan. Pada editor ID setiap spesimen, pilih
-    Personnel atau Project. Satu proyek dapat memakai kedua jenis, tetapi satu
-    spesimen tidak dapat memiliki keduanya.
+    Pilih `Simpan pengaturan ID lapangan` untuk menerapkan pilihan tersebut.
+
+    Pilihan ini hanya menjadi bawaan. Buka `Sunting ID lapangan` pada sebuah
+    spesimen untuk memilih `Personel` atau `Proyek` bagi spesimen tersebut. Satu
+    proyek dapat memuat kedua jenis, tetapi satu spesimen tidak dapat memiliki
+    kedua ID sekaligus.
 
     {% aside type="caution" %}
 
-    Mengubah awalan atau akhiran akan mengubah tampilan ID proyek yang sudah
-    ada. ID tersebut mungkin sudah digunakan dalam ekspor atau ditulis pada
-    label spesimen. Periksa kembali nilainya sebelum mengonfirmasi.
+    Mengubah prefiks atau sufiks akan mengubah tampilan ID proyek yang sudah
+    ada, dan NAHPU akan meminta konfirmasi Anda. ID tersebut mungkin sudah
+    tercantum dalam ekspor atau pada label spesimen, jadi periksa nilainya
+    terlebih dahulu.
 
     {% /aside %}
 
-6. Tambahkan `ID Jaringan` (Tissue ID) (opsional).
+6. Tambahkan `ID jaringan` (opsional).
 
-    Beberapa museum memiliki nomor jaringan terpisah untuk spesimen yang sama.
-    Anda dapat menyiapkan awalan, nomor berikutnya, dan akhiran di sini. Angka
-    nol di depan nomor dipertahankan, sehingga `M0042-T` diikuti oleh
-    `M0043-T`. Nomor ini akan bertambah secara otomatis setiap kali Anda
-    menambahkan nomor jaringan baru.
+    Beberapa museum memberikan nomor jaringan terpisah untuk spesimen bukti
+    yang sama. Anda dapat menyiapkan prefiks, nomor berikutnya, dan sufiks di
+    sini. Angka nol di depan nomor dipertahankan, sehingga `M0042-T` diikuti
+    oleh `M0043-T`. NAHPU kemudian dapat membuat nomor jaringan berikutnya saat
+    Anda menambahkan bagian spesimen.
 
-    Untuk format katalog Ichthyology, `Individual tag ID` mengatur penomoran
-    yang sama untuk individu dalam lot ikan.
+    Untuk format katalog Ichthyology, `ID tag individu` mengatur penomoran
+    yang sama untuk individu dalam satu lot ikan.
 
-7. Tambahkan `Specimen types`.
+7. Tambahkan `Jenis spesimen`.
 
-    Tambahkan semua kemungkinan. Anda dapat memiliki lebih banyak dari apa yang akan Anda koleksi.
+    Tambahkan semua jenis preparasi dan jaringan yang Anda perkirakan akan
+    digunakan, termasuk jenis yang mungkin hanya sesekali dikoleksi.
 
-8. Tambahkan `Perlakuan` (Treatments)
+8. Tambahkan `Perlakuan`.
 
-    Anda dapat melakukannya dengan cara yang sama seperti `Tipe bagian spesimen`.
+    Perlakuan digunakan pada bagian spesimen. Contohnya `None`, `ETOH`,
+    `Formalin`, `LN2`, dan `DMSO`.
 
 {% /steps %}
 
+Layar yang sama juga memuat daftar `Kondisi`, `Metode identifikasi`, dan
+`Tahap hidup`, serta `Selalu tampilkan bidang kolektor`. Tinjau juga semuanya
+sebelum musim lapangan.
+
 {% aside type="tip" %}
 
-Daftar tipe bagian dan perlakuan adalah konfigurasi pengguna. Daftar tersebut
-dapat diekspor dan diimpor bersama bundel proyek agar istilah dan perilaku
-ekspor tetap sama di instalasi NAHPU lain.
+Jenis spesimen dan perlakuan adalah konfigurasi pengguna. Bagikan dengan
+`Ekspor konfigurasi pengguna` dan `Impor konfigurasi pengguna` agar instalasi
+NAHPU lain menggunakan daftar terkontrol yang sama.
+
+Lihat [Pengaturan](/id/usages/settings/) untuk peta konfigurasi lengkap.
 
 {% /aside %}

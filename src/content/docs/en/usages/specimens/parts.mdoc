@@ -10,35 +10,42 @@ physical parts derived from the specimen. Each specimen can have multiple
 parts. Organisms found living on or in the specimen are recorded separately as
 [symbionts](#symbionts).
 
-The symbiont tab is available for mammals, birds, herpetofauna, and fishes. It
-is not available for invertebrate catalogs. For a fish lot with recorded
+The `Specimen Parts` card has icon tabs: the first holds parts, the bug icon
+holds symbionts, and the storage icon holds
+[associated data](/en/usages/specimens/associated-data-and-media/). The
+symbiont tab is available for mammals, birds, herpetofauna, and fishes, but not
+for invertebrate catalogs. For a fish lot with recorded
 individuals, parts and symbionts can be linked to the individuals they came
 from; see [Fishes](/en/usages/specimens/measurements/fishes/#parts-and-symbionts).
 
 Part fields include:
 
-- `Tissue ID`: optional tissue identifier. NAHPU can repeat or generate the next
-  configured tissue number.
-- `Individuals`: shown only for a fish lot with recorded individuals. Links the
-  part to one or more individuals in the lot.
-- `QR/barcode ID`: optional unique ID for a tube, tag, or container. On mobile,
-  NAHPU can scan a QR/barcode; it can also generate a UUID.
-- `Preparation type`: user-defined specimen part type.
-- `Counts`: number of parts or containers.
-- `Treatment`: preservation treatment.
-- `Additional treatment`: optional second treatment.
-- `Storage type`: storage medium or method.
-- `Storage location`: freezer, cabinet, shelf, or container location.
-- `Time taken`: time the part was taken, recommended for fresh tissues.
-- `Preparator`: part-level preparator when different from the voucher preparator.
-- `Date taken`: date the part was taken.
-- `PMI`: post-mortem interval, for example `1:30`.
-- `Museum permanent`: museum that permanently holds the part.
-- `Museum loan`: museum receiving the part on loan.
-- `Remarks`: notes specific to the part.
+| Field | Notes |
+| --- | --- |
+| `Tissue ID` | Optional. While the field is empty, the repeat icon copies the last tissue ID entered for this specimen. `Tissue ID options` offers `New number`, which takes the next configured tissue number, and `Settings`. |
+| `Individuals` | Only for a fish lot with recorded individuals. Links the part to individuals in the lot. |
+| `QR/barcode ID` | Optional unique ID for a tube, tag, or container. Scan it with a camera, or generate a UUID. |
+| `Preparation type` | From your specimen-type list. |
+| `Counts` | Number of parts or containers. |
+| `Treatment`, `Additional treatment` | Preservation treatments. |
+| `Time taken` | When the part was taken; recommended for fresh tissues. |
+| `Remarks` | Notes about this part. |
 
-The part list displays the part type, count, barcode ID, preparator, tissue ID,
-treatment, date/time, PMI, and whether a remark exists.
+These fields appear after `Show more`, or once they hold a value:
+
+| Field | Notes |
+| --- | --- |
+| `Preparator` | When different from the voucher's preparator. |
+| `Date taken` | When the part was taken. |
+| `PMI` | Post-mortem interval, such as `1:30`. |
+| `Storage type`, `Storage location` | Storage medium, and the freezer, cabinet, shelf, or box position. |
+| `Museum permanent`, `Museum loan` | The museum holding the part, and one receiving it on loan. |
+
+Custom fields for parts appear in the form too.
+
+The part list shows the part type, count, barcode ID, preparator, tissue ID,
+treatments, date and time, PMI, linked fish individuals, and whether a remark
+exists.
 
 ## Symbionts
 
@@ -57,14 +64,20 @@ On the specimen itself, `Symbionts examined` and `Symbionts detected` record
 whether the host was checked and whether anything was found, so an examination
 with no symbionts is still documented.
 
-Symbiont records separate collection from identification. `Collector` is who
-recovered the symbiont and starts as the host's preparator, or its cataloger when
-no preparator is set. `Determiner`, `Date determined`, and `Determination method`
-record who identified the symbiont, when, and how. The method uses the same
-vocabulary as the specimen ID method. Choosing a `Category` narrows the
-`Anatomical location` list to sites that fit it. Category values stored before
-the rename, such as `Ectoparasite` and `Endoparasite`, narrow the list the same
-way. Locations you added yourself always stay in the list.
+Symbiont records separate collection from identification:
+
+- `Collector`: who recovered the symbiont. It starts as the host's preparator,
+  or its cataloger when no preparator is set.
+- `Determiner`, `Date determined`, and `Determination method`: who identified
+  the symbiont, when, and how. The method uses the same list as the specimen
+  identification method.
+- `Category` and `Anatomical location`: choosing a category narrows the
+  location list to sites that fit it. Older category values, such as
+  `Ectoparasite` and `Endoparasite`, narrow it the same way. Locations you added
+  yourself always stay in the list.
+
+Life stage, detection method, preparation method, and symbiont ID numbering are
+set up in `Settings` > `Specimens`.
 
 Symbiont curation records carry their own `Storage` and `Storage location`
 fields so the preservation method and physical location can be recorded

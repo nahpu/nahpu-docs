@@ -27,31 +27,29 @@ Catatan personel dipakai bersama di basis data NAHPU dan dapat ditugaskan ke
 beberapa proyek. Sebuah proyek hanya menampilkan personel yang ditugaskan
 padanya.
 
-## Menambahkan personel ke proyek
+## Menambahkan personel ke proyek {% #adding-personnel-to-a-project %}
 
 {% aside type="caution" %}
-Field ID personel memerlukan `Cataloger` dengan nomor lapangan pribadi terdaftar. Field ID proyek memakai konvensi penomoran proyek; tidak setiap nomor harus berasal dari urutan seseorang. Pilih peran dengan cermat karena tidak dapat diubah setelah dibuat.
+Field ID personel memerlukan `Cataloger` dengan nomor lapangan pribadi terdaftar. Field ID proyek memakai konvensi penomoran proyek; tidak setiap nomor harus berasal dari urutan seseorang. Pilih peran dengan cermat: setelah seseorang disimpan sebagai `Cataloger`, peran tersebut tidak dapat diubah.
 {% /aside %}
 
-Pada panel Personel di dasbor proyek, pilih `Add personnel`. Bila sudah ada
-orang di basis data, pilih `Select from database` {% ref id="E" /%} lalu pilih siapa yang akan
-ditugaskan. Bila belum, pilih `Add new personnel` {% ref id="F" /%}.
+Pada panel Personel di dasbor proyek, pilih `Tambah personel`. Bila sudah ada
+orang di basis data, pilih `Pilih dari basis data` {% ref id="E" /%} lalu pilih siapa yang akan
+ditugaskan. Bila belum, pilih `Tambah personel baru` {% ref id="F" /%}. Pada layar
+sempit, keduanya tertulis `Pilih yang ada` dan `Tambah baru`.
 
 Formulirnya memuat:
 
-- **Name (wajib)** {% ref id="G" /%} - nama orang tersebut.
-- **Photo** - avatar atau foto personel.
-- **Affiliation** - institusi orang tersebut.
-- **Email** - alamat surel orang tersebut.
-- **Phone** - nomor telepon orang tersebut.
-- **ORCID** - ORCID iD opsional bertanda hubung dengan digit pemeriksa yang
-  sahih, misalnya `0000-0002-1825-0097`.
-- **Specimen care role** {% ref id="B" /%} - `Cataloger`, `Preparator only`, `Determiner only`,
-  atau `None`.
-- **Notes** - informasi tambahan tentang orang tersebut.
-
-Gunakan `Show more` {% ref id="H" /%} untuk menampilkan kolom opsional. Alamat surel dibakukan
-menjadi huruf kecil dan nomor telepon hanya menerima angka.
+| Kolom | Ditampilkan | Catatan |
+| --- | --- | --- |
+| `Nama*` {% ref id="G" /%} | Selalu | Wajib. |
+| Foto | Selalu | Avatar atau foto personel. |
+| Afiliasi | Selalu | Institusi orang tersebut. |
+| `ORCID iD` | Selalu | Opsional, bertanda hubung, dengan digit pemeriksa yang sahih, misalnya `0000-0002-1825-0097`. |
+| Peran penanganan spesimen {% ref id="B" /%} | Selalu | `Cataloger`, `Preparator only`, `Determiner only`, atau `None`. |
+| Email | Setelah `Tampilkan lebih banyak` {% ref id="H" /%} | Disimpan dalam huruf kecil. |
+| Telepon | Setelah `Tampilkan lebih banyak` | Hanya angka. |
+| Catatan | Setelah `Tampilkan lebih banyak` | Informasi tambahan tentang orang tersebut. |
 
 Ekspor Darwin Core memakai URL kanonis `https://orcid.org/...` sebagai pengenal
 agen orang tersebut bila ORCID tersedia. Bila tidak, dipakai UUID personel
@@ -60,14 +58,15 @@ NAHPU.
 ## Nomor lapangan untuk pengatalog
 
 Bila perannya `Cataloger`, {% ref id="C" /%} NAHPU menyediakan opsi
-`Register personal field number`. Aktifkan bila inisial dan nomor orang tersebut
-harus menghasilkan Field ID spesimen. Masukkan inisial lapangan dan nomor awal;
-nomornya bertambah seiring pembuatan spesimen.
+`Daftarkan nomor lapangan pribadi`. Aktifkan bila inisial dan nomor pengatalog
+harus menghasilkan Field ID spesimen. Masukkan `Inisial` (hingga lima huruf,
+disimpan dalam huruf kapital) dan `Nomor katalogis*` awal; nomornya bertambah
+seiring pembuatan spesimen.
 
-Jika koleksi memakai penomoran proyek, atur konvensi Field ID proyek dalam Settings, bukan mendaftarkan personel fiktif dengan kode proyek.
+Jika koleksi memakai penomoran proyek, atur konvensi Field ID proyek di `Pengaturan`, bukan mendaftarkan personel fiktif dengan kode proyek.
 
-Pendaftaran nomor lapangan bersifat opsional. Peran pengatalog tidak dapat
-diubah setelah orang tersebut dibuat.
+Pendaftaran nomor lapangan bersifat opsional. Setelah seseorang disimpan sebagai
+`Cataloger`, peran tersebut tidak dapat diubah.
 
 ## Menyunting dan mengeluarkan personel
 
@@ -77,7 +76,7 @@ tidak menghapus catatan personel bersama. Seseorang tidak dapat dikeluarkan
 selama catatan proyek masih memakainya.
 
 Untuk mencari, menyunting, atau menghapus personel basis data secara permanen {% ref id="D" /%},
-buka `Settings` lalu pilih `Personnel` atau `Manage personnel` {% ref id="A" /%}. NAHPU mencegah
+buka `Pengaturan` lalu pilih `Personel` atau `Kelola personel` {% ref id="A" /%}. NAHPU mencegah
 penghapusan permanen bila orang tersebut masih ditugaskan pada suatu proyek.
 
 ## Peristilahan
@@ -85,8 +84,9 @@ penghapusan permanen bila orang tersebut masih ditugaskan pada suatu proyek.
 ### Cataloger
 
 Orang yang membuat dan menyunting catatan katalog spesimen. Pengatalog dapat
-muncul pada kolom pengatalog, preparator, dan personel pengumpul. Perannya tidak
-dapat diubah setelah dibuat.
+muncul pada kolom pengatalog, preparator, dan personel pengumpul. Peran
+`Cataloger` tidak dapat diubah setelah orang tersebut disimpan; peran lain dapat
+disunting.
 
 ### Preparator only
 
@@ -96,7 +96,7 @@ catatan katalog.
 ### Determiner only
 
 Orang yang mengidentifikasi spesimen, tetapi tidak mengatalog atau
-mempreparasinya. Pilih orang ini pada kolom `Determiner` di formulir spesimen.
+mempreparasinya. Pilih orang ini pada kolom `Pengidentifikasi` di formulir spesimen.
 
 ### None
 

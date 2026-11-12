@@ -1,0 +1,432 @@
+---
+title: "Tutorial 3: Write your own script to reshape a NAHPU Data Package"
+sidebar:
+  label: "3. Write your own conversion script"
+  order: 3
+---
+
+[Tutorial 2](/en/tutorials/specify-from-data-package/) converts a
+[NAHPU Data Package](/en/usages/export/export-bundles/#nahpu-data-package) with
+a ready-made script. When a museum, a lab, or an analysis needs a different
+layout, write your own. This tutorial builds one from scratch, step by step, in
+Python or R.
+
+The example output is a simple field catalog, one row per specimen:
+
+| field_id | species | sex | country | locality | collection_date | parts |
+|---|---|---|---|---|---|---|
+| HH618 | Crocidura sp. | Male | Indonesia | Desa Insil; Mt. Ambang; Danau Aliyah | 2016-02-17 | Skin; Skull; Skeleton; Tissue; Intestine; Embryo |
+| HH650 | Maxomys musschenbroekii | Male | Indonesia | Desa Insil; Mt. Ambang; Danau Aliyah | 2016-02-19 | Tissue |
+
+The same steps produce any other layout: change which tables you join and
+which columns you write.
+
+## Before you start
+
+You need:
+
+- the [lsumz-mammal-specify-frictionless](https://github.com/nahpu/lsumz-mammal-specify-frictionless)
+  repository, set up as in [Tutorial 2](/en/tutorials/specify-from-data-package/#2-try-the-bundled-example);
+- for Python, pandas as well: run `uv sync --group examples` in `python/`, or
+  `pip install pandas frictionless`;
+- for R, the packages from Tutorial 2.
+
+The finished scripts are in the repository as
+`python/examples/field_catalog.py` and `R/examples/field_catalog.R`. Both write
+the same file, `results/ambang-shrews-field-catalog.csv`, from the bundled
+example package. Create your own file next to them and follow along.
+
+## 1. Know the package
+
+A NAHPU Data Package stores each NAHPU database table as a CSV file under
+`tables/`, described in `datapackage.json`. The tables keep NAHPU's own column
+names, and they link to each other through ID columns. These are the links a
+specimen-based script usually follows:
+
+| From | Column | To |
+|---|---|---|
+| `specimen` | `speciesID` | `taxonomy.id` |
+| `specimen` | `uuid` | `mammalAttribute.specimenUuid` (one row per specimen) |
+| `specimen` | `uuid` | `specimenPart.specimenUuid` (one row per part) |
+| `specimen` | `catalogerID` | `personnel.uuid` |
+| `specimen` | `collEventID` | `collEvent.id` |
+| `specimen` | `coordinateID` | `coordinate.id` |
+| `collEvent` | `siteID` | `site.id` |
+| `site` | `geographyId` | `geography.id` |
+
+In `datapackage.json`, resource names are lowercase: the `mammalAttribute`
+table is the `mammalattribute` resource, and `collEvent` is `collevent`. Bird,
+herpetofauna, and other attribute tables follow the same pattern.
+
+Coded values, such as sex, are stored as numbers. The package explains them in
+the `sqlite-enum-mappings` resource (`mappings/sqlite_enums.csv`).
+
+## 2. Open the package and look around
+
+Extract the archive, open `datapackage.json`, and list its resources.
+
+{% tabs %}
+{% tabitem label="Python" %}
+
+```python
+from pathlib import Path
+import zipfile
+
+import pandas as pd
+from frictionless import Package
+
+ROOT = Path(__file__).resolve().parents[2]
+ARCHIVE = ROOT / "data" / "example" / "ambang-shrews.nahpu-dp.zip"
+EXTRACTED = ROOT / "data" / "extracted" / "ambang-shrews"
+
+with zipfile.ZipFile(ARCHIVE) as archive:
+    archive.extractall(EXTRACTED)
+package = Package(EXTRACTED / "datapackage.json")
+print(package.resource_names)
+```
+
+For a `.tar.gz` package, use `tarfile.open(ARCHIVE).extractall(EXTRACTED)`.
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+```r
+library(dplyr)
+library(frictionless)
+library(here)
+library(readr)
+library(stringr)
+
+here::i_am("R/examples/field_catalog.R")
+
+archive <- here("data", "example", "ambang-shrews.nahpu-dp.zip")
+extracted <- here("data", "extracted", "ambang-shrews")
+
+utils::unzip(archive, exdir = extracted)
+package <- read_package(file.path(extracted, "datapackage.json"))
+print(resource_names(package))
+```
+
+For a `.tar.gz` package, use `utils::untar(archive, exdir = extracted)`.
+Change the path in `here::i_am()` to your script's own location.
+
+{% /tabitem %}
+{% /tabs %}
+
+To see a table's columns, primary key, and links, read its schema:
+
+{% tabs %}
+{% tabitem label="Python" %}
+
+```python
+schema = package.get_resource("specimen").schema
+print(schema.field_names)
+print(schema.foreign_keys)
+```
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+```r
+specimen_schema <- schema(package, "specimen")
+str(specimen_schema$foreignKeys)
+```
+
+{% /tabitem %}
+{% /tabs %}
+
+## 3. Read the tables
+
+NAHPU leaves empty tables out of the package. A project with no specimen parts
+has no `specimenpart` resource at all, so read tables through a small helper
+that returns an empty table instead of failing.
+
+{% tabs %}
+{% tabitem label="Python" %}
+
+```python
+def read_table(name: str) -> pd.DataFrame:
+    if not package.has_resource(name):
+        return pd.DataFrame()
+    rows = package.get_resource(name).read_rows()
+    return pd.DataFrame([row.to_dict() for row in rows])
+
+
+specimens = read_table("specimen")
+taxonomy = read_table("taxonomy")
+attributes = read_table("mammalattribute")
+personnel = read_table("personnel")
+events = read_table("collevent")
+sites = read_table("site")
+geography = read_table("geography")
+parts = read_table("specimenpart")
+enums = read_table("sqlite-enum-mappings")
+```
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+```r
+read_table <- function(name) {
+  if (!name %in% resource_names(package)) {
+    return(tibble())
+  }
+  read_resource(package, name)
+}
+
+specimens <- read_table("specimen")
+taxonomy <- read_table("taxonomy")
+attributes <- read_table("mammalattribute")
+personnel <- read_table("personnel")
+events <- read_table("collevent")
+sites <- read_table("site")
+geography <- read_table("geography")
+parts <- read_table("specimenpart")
+enums <- read_table("sqlite-enum-mappings")
+```
+
+{% /tabitem %}
+{% /tabs %}
+
+Frictionless reads each column with the type from the schema: field numbers
+arrive as integers, measurements as numbers, and empty cells as missing values.
+
+{% aside type="tip" %}
+If a script that read only a few tables works on one project but fails on
+another, check for a table the second project left empty. Your script must
+also handle the joins that find nothing; the steps below use left joins for
+that reason.
+{% /aside %}
+
+## 4. Keep the specimens you need and join their details
+
+Filter on `taxonGroup` first, then follow the links from step 1. Left joins
+keep every specimen even when a related record is missing.
+
+{% tabs %}
+{% tabitem label="Python" %}
+
+```python
+specimens = specimens[specimens["taxonGroup"].isin(["Mammals", "General Mammals", "Bats"])]
+catalog = (
+    specimens.merge(taxonomy, left_on="speciesID", right_on="id", how="left")
+    .merge(attributes, left_on="uuid", right_on="specimenUuid", how="left")
+    .merge(
+        personnel[["uuid", "initial"]].rename(columns={"uuid": "catalogerID"}),
+        on="catalogerID",
+        how="left",
+    )
+    .merge(
+        events[["id", "siteID"]].rename(columns={"id": "collEventID"}),
+        on="collEventID",
+        how="left",
+    )
+    .merge(
+        sites[["id", "geographyId"]].rename(columns={"id": "siteID"}),
+        on="siteID",
+        how="left",
+    )
+    .merge(
+        geography.rename(columns={"id": "geographyId"}),
+        on="geographyId",
+        how="left",
+    )
+)
+```
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+```r
+catalog <- specimens |>
+  filter(taxonGroup %in% c("Mammals", "General Mammals", "Bats")) |>
+  left_join(taxonomy, by = c("speciesID" = "id")) |>
+  left_join(attributes, by = c("uuid" = "specimenUuid")) |>
+  left_join(select(personnel, uuid, initial), by = c("catalogerID" = "uuid")) |>
+  left_join(select(events, id, siteID), by = c("collEventID" = "id")) |>
+  left_join(select(sites, id, geographyId), by = c("siteID" = "id")) |>
+  left_join(geography, by = c("geographyId" = "id"))
+```
+
+{% /tabitem %}
+{% /tabs %}
+
+Select only the columns you need from tables that share column names, such as
+`id` or `remark`, so the joined table stays readable.
+
+## 5. Decode stored codes
+
+Look up the code's label in `sqlite-enum-mappings` by table and column. The
+same number can mean different things in different tables, so always filter on
+both.
+
+{% tabs %}
+{% tabitem label="Python" %}
+
+```python
+sex = enums[(enums["table"] == "mammalAttribute") & (enums["column"] == "sex")]
+sex_labels = dict(zip(sex["sqlite_index"], sex["display_name"]))
+catalog["sex_label"] = catalog["sex"].map(sex_labels)
+```
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+```r
+sex_labels <- enums |>
+  filter(table == "mammalAttribute", column == "sex") |>
+  transmute(sex = as.integer(sqlite_index), sex_label = display_name)
+catalog <- left_join(catalog, sex_labels, by = "sex")
+```
+
+{% /tabitem %}
+{% /tabs %}
+
+Reproductive and age fields work the same way. User-defined lists, such as
+part types and treatments, are stored as text and need no decoding; the
+`vocabularies/` resources list the values the project allowed.
+
+## 6. Reshape repeated records
+
+A specimen has many parts. Choose one of three shapes:
+
+- **One cell**, used here: join the part types with `; `.
+- **Numbered columns**, such as `PrepType1`, `PrepType2`: number the parts per
+  specimen and pivot them wide. Tutorial 2's converter does this; see
+  `R/nahpu_to_specify.R`, which uses `pivot_wider()`.
+- **One row per part**: join specimens onto `specimenpart` instead of the other
+  way round.
+
+{% tabs %}
+{% tabitem label="Python" %}
+
+```python
+part_list = (
+    parts.sort_values("id")
+    .groupby("specimenUuid")["type"]
+    .agg("; ".join)
+    .rename("parts")
+)
+catalog = catalog.merge(part_list, left_on="uuid", right_index=True, how="left")
+```
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+```r
+part_list <- parts |>
+  arrange(id) |>
+  group_by(specimenUuid) |>
+  summarise(parts = str_c(type, collapse = "; "))
+catalog <- left_join(catalog, part_list, by = c("uuid" = "specimenUuid"))
+```
+
+{% /tabitem %}
+{% /tabs %}
+
+Sorting by `id` keeps the parts in the order they were entered in NAHPU.
+
+## 7. Shape the columns and write the file
+
+Build the output columns, sort the rows, and write a CSV.
+
+{% tabs %}
+{% tabitem label="Python" %}
+
+```python
+OUTPUT = ROOT / "results" / "ambang-shrews-field-catalog.csv"
+
+catalog = catalog.sort_values(["initial", "fieldNumber"])
+species = catalog["genus"] + " " + catalog["specificEpithet"].fillna("sp.")
+output = pd.DataFrame(
+    {
+        "field_id": catalog["initial"] + catalog["fieldNumber"].astype("Int64").astype("string"),
+        "species": species,
+        "sex": catalog["sex_label"],
+        "country": catalog["country"],
+        "locality": catalog["locality"],
+        "collection_date": catalog["collectionDate"],
+        "parts": catalog["parts"],
+    }
+)
+OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+output.to_csv(OUTPUT, index=False)
+```
+
+`astype("Int64")` keeps field numbers whole even when some are missing, so
+`618` does not become `618.0`.
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+```r
+output_path <- here("results", "ambang-shrews-field-catalog.csv")
+
+field_catalog <- catalog |>
+  arrange(initial, fieldNumber) |>
+  transmute(
+    field_id = str_c(initial, fieldNumber),
+    species = str_c(genus, " ", coalesce(specificEpithet, "sp.")),
+    sex = sex_label,
+    country,
+    locality,
+    collection_date = collectionDate,
+    parts
+  )
+dir.create(dirname(output_path), showWarnings = FALSE, recursive = TRUE)
+write_csv(field_catalog, output_path, na = "")
+```
+
+{% /tabitem %}
+{% /tabs %}
+
+Sort on the numeric `fieldNumber`, not the text `field_id`, so `HH1000` comes
+after `HH999`.
+
+Run the script and open `results/ambang-shrews-field-catalog.csv`. It should
+list the five example specimens shown at the top of this page.
+
+## 8. Check your package and your output
+
+Before you trust a script with real data:
+
+- Validate the package. The Python framework installs a command-line tool:
+
+  ```bash
+  frictionless validate data/extracted/ambang-shrews/datapackage.json
+  ```
+
+- Compare row counts. The output should have as many rows as the specimens you
+  meant to keep.
+- Open a few rows next to the same records in NAHPU, including a specimen with
+  several parts and one with missing values.
+- Keep a small expected file, as the repository does in
+  `data/example/expected-specify.csv`, and compare against it whenever you
+  change the script.
+
+{% aside type="caution" %}
+A NAHPU Data Package holds the whole project, including personnel contact
+details. Add extracted packages to `.gitignore`, as the repository does for
+`data/extracted/`, and share only the output your recipient needs.
+{% /aside %}
+
+## Going further
+
+- **Other taxa:** swap `mammalattribute` for `birdattribute`,
+  `herpattribute`, or another attribute table, and change the `taxonGroup`
+  filter.
+- **Coordinates:** join `coordinate` through `specimen.coordinateID`. When it is
+  empty, NAHPU uses the event site's coordinate if the site has exactly one; see
+  how `python/nahpu_to_specify.py` does this.
+- **Dates:** NAHPU stores dates as `yyyy-mm-dd`. Reformat them with
+  `pd.to_datetime(...).dt.strftime(...)` in Python or `lubridate::ymd()` and
+  `format()` in R.
+- **Everything else:** `nahpu-project.json` holds the full project, including
+  values with no table column, for cases the CSV tables do not cover.
+
+## Learn more
+
+- [Bundle Records](/en/usages/export/export-bundles/)
+- [Tutorial 2: Convert a NAHPU Data Package to the LSUMZ Specify sheet](/en/tutorials/specify-from-data-package/)
+- [Frictionless Framework for Python](https://framework.frictionlessdata.io/)
+- [frictionless for R](https://docs.ropensci.org/frictionless/)

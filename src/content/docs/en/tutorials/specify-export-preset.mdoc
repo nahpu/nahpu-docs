@@ -1,0 +1,406 @@
+---
+title: "Tutorial 1: Build the LSUMZ Mammalogy Specify export preset"
+sidebar:
+  label: "1. Build the LSUMZ Mammalogy preset"
+  order: 1
+---
+
+In this tutorial you build a tabular export preset that turns NAHPU mammal
+specimen records into a CSV file for the
+[Specify](https://www.specifysoftware.org/) WorkBench of the LSU Museum of
+Natural Science (LSUMZ) Mammalogy collection. The target is the collection's
+incoming-data sheet: one row per specimen, with each part written as a
+numbered preparation (`PrepType1`, `PrepType1Count`, `PrepType1Location`,
+`PrepType2`, …).
+
+You start from an empty preset and add one kind of column at a time: plain
+fields, combined and blank columns, formatted values, and the specimen's parts.
+By the end you will have a preset named `LSUMZ-mammalogy`, a test export you
+have checked against your records, and a file the LSUMZ collection manager can
+map in the WorkBench.
+
+{% aside type="note" %}
+Every Specify database is configured differently. The column names here follow
+the LSUMZ Mammalogy WorkBench sheet. For another collection, ask its collection
+manager for their sheet and use their names wherever they differ. NAHPU also
+ships the finished `LSUMZ-mammalogy` preset for mammalogy projects, under
+`Setup NAHPU` or `Load defaults`. If you have already loaded it, give yours
+another name, such as `LSUMZ-mammalogy-mine`, and compare the two.
+{% /aside %}
+
+## Before you start
+
+You need:
+
+- A NAHPU project with a few complete mammal specimen records. Include at least
+  one specimen with several parts, such as a skin, a skull, and a tissue with a
+  freezer box position, so you can see how repeated values export.
+- The LSUMZ Mammalogy incoming-data sheet, or another collection's column list.
+- About 30 minutes.
+
+## 1. Plan the columns
+
+Write down the columns before you open the editor. The WorkBench maps columns
+by name, so match the sheet's spelling exactly, including spaces and case.
+
+| Column | NAHPU source | How it is built |
+|---|---|---|
+| `Catalog Number` | `specimen::museumID` | Single field |
+| `Class`, `Order`, `Family`, `Genus`, `Species` | `taxonomy::taxonClass`, `taxonOrder`, `taxonFamily`, `genus`, `specificEpithet` | Single fields |
+| `Sex` | `mammalAttribute::sex` | Label instead of code |
+| `Continent` | — | Blank column |
+| `Country`, `State`, `County` | `geography::country`, `stateProvince`, `county` | Single fields |
+| `Locality Name` | `geography::municipality` + `geography::locality` | List joined with `; ` |
+| `Elevation` | `coordinate::elevationInMeter` | Single field |
+| `Elevation Unit` | — | `m` when an elevation is recorded |
+| `Collector1LastName` | `personnel::name` | Rewritten as `Last, First` |
+| `Field Number` | `specimen::fieldNumber` | Single field |
+| `Start Date` | `specimen::collectionDate` | Date as `dd/mm/yyyy` |
+| `PrepType1`, `PrepType1Count`, `PrepType1Location`, … | `specimenPart::type`, `count`, `storageLocation` | Numbered part columns |
+| `Remarks` | `mammalAttribute::remark` | Single field |
+| `Latitude`, `Longitude` | `coordinate::decimalLatitude`, `decimalLongitude` | Single fields |
+| `MaxErrorDistance` | `coordinate::uncertaintyInMeters` | Single field |
+| `OtherCollection OtherCollNumber` | — | Blank column |
+| `Total Length`, `TailLength`, `HFLength`, `Ear`, `Weight` | `mammalAttribute::totalLength`, `tailLength`, `hindFootLength`, `earLength`, `weight` | Single fields |
+
+NAHPU has no continent or other-collection number, so those two columns are
+written blank for the collection to fill in. Keeping them means the file still
+matches the WorkBench sheet column for column.
+
+## 2. Create the preset
+
+{% screenshots
+   large="app-screenshots/tutorials/specify-preset-large.webp"
+   largeAlt="NAHPU Tabular Export Presets screen on a tablet, editing the LSUMZ-mammalogy preset"
+   small="app-screenshots/tutorials/specify-preset-small.webp"
+   smallAlt="NAHPU Tabular Export Presets list on a phone"
+   small2="app-screenshots/tutorials/specify-preset-small-2.webp"
+   small2Alt="NAHPU Edit Preset tab on a phone, editing the LSUMZ-mammalogy preset" %}
+{% pin id="A" label="New preset" large=[94, 3.3] small=[82.7, 3.1] /%}
+{% pin id="B" label="Update name and description" large=[92.3, 46.6] small2=[82, 47] /%}
+{% pin id="C" label="Record type" large=[94.9, 56.3] small2=[87.4, 55.8] /%}
+{% pin id="D" label="Specimen taxon group" large=[94.9, 63.9] small2=[87.4, 62.8] /%}
+{% pin id="E" label="Generated header format" large=[94.9, 71.6] small2=[87.4, 69.8] /%}
+{% pin id="F" label="Edit Fields" large=[73.3, 82.1] small2=[45, 79.5] /%}
+{% pin id="G" label="Preview export table" large=[94.9, 82.1] small2=[87.4, 79.5] /%}
+{% /screenshots %}
+
+{% steps %}
+
+1. Open `Settings` > `Tabular Data`.
+2. Select the add button {% ref id="A" /%}, enter `LSUMZ-mammalogy`, and
+   create it. Names may use letters, numbers, underscores, and dashes. On a
+   phone, the new preset opens in the `Edit Preset` tab.
+3. Set `Record type` {% ref id="C" /%} to `Specimen`. Each specimen becomes one
+   row.
+4. Set `Specimen taxon group` {% ref id="D" /%} to `Mammals`.
+5. Set `Generated header format` {% ref id="E" /%} to `fieldName`. You will
+   name every column yourself, so this only matters for a column you forget to
+   name.
+6. Type a description, for example `LSUMZ Specify WorkBench sheet: one row
+   per mammal specimen.`, and select `Update` {% ref id="B" /%}.
+
+{% /steps %}
+
+Settings save as you change them; only the name and description wait for
+`Update`. The columns themselves are set under `Edit Fields`
+{% ref id="F" /%}, and the eye button {% ref id="G" /%} previews the export.
+Both are used in the steps below.
+
+{% aside type="tip" %}
+Choose `Specimen` rather than `Specimen parts` here. `Specimen parts` writes one
+row per part, which suits a tissue inventory. Specify expects one row per
+collection object, with its preparations beside it.
+{% /aside %}
+
+## 3. Add the single fields
+
+Most columns copy one NAHPU field unchanged.
+
+{% screenshots
+   large="app-screenshots/tutorials/specify-fields-large.webp"
+   largeAlt="NAHPU Edit Preset Mappings screen on a tablet with the Geography group expanded"
+   small="app-screenshots/tutorials/specify-fields-small.webp"
+   smallAlt="NAHPU Available Fields tab on a phone with the Geography group expanded"
+   small2="app-screenshots/tutorials/specify-fields-small-2.webp"
+   small2Alt="NAHPU Selected Mappings tab on a phone" %}
+{% pin id="A" label="Field group" large=[10, 23.5] small=[30, 27.6] /%}
+{% pin id="B" label="Field checkbox" large=[45.5, 33.5] small=[85.5, 36.8] /%}
+{% pin id="C" label="Selected mappings" large=[58, 10.9] small=[74.8, 8.6] /%}
+{% pin id="D" label="Add custom field" large=[81.8, 10.9] small2=[74.8, 16.2] /%}
+{% pin id="E" label="Add nested" large=[93.7, 10.9] small2=[86.7, 16.2] /%}
+{% pin id="F" label="Customize" large=[88.7, 20.3] small2=[65.5, 24.7] /%}
+{% pin id="G" label="Drag to reorder" large=[95.7, 20.3] small2=[85.8, 24.7] /%}
+{% pin id="H" label="Preview" large=[93, 94.2] small2=[78.2, 93.7] /%}
+{% /screenshots %}
+
+{% steps %}
+
+1. Select `Edit Fields`. The `Edit Preset Mappings` screen lists source fields
+   under `Insert Source Field` and your columns under `Selected Mappings`
+   {% ref id="C" /%}. On a phone, these are the `Available Fields` and
+   `Selected Mappings` tabs.
+2. Expand a group {% ref id="A" /%} and check {% ref id="B" /%} each field your
+   plan marks as a single field: `museumID` under `Specimen`, the taxonomy
+   fields under `Taxonomy`, the geography fields under `Geography`, the
+   elevation, coordinates, and uncertainty under `Coordinate`, `fieldNumber`
+   under `Specimen`, and `remark` and the measurements under
+   `Mammal Attribute`.
+3. Select the pencil {% ref id="F" /%} on each mapping and type the sheet's
+   header into `Column name (optional)`, such as `Catalog Number` for
+   `museumID` or `HFLength` for `hindFootLength`. Select `Done` to keep it.
+4. Drag each mapping by its handle {% ref id="G" /%} into the order of your
+   plan. You can do this at the end, once every column exists.
+
+{% /steps %}
+
+The other controls in `Selected Mappings` come next: `Add custom field`
+{% ref id="D" /%} in steps 4 and 5, `Add nested` {% ref id="E" /%} in step 6,
+and `Preview` {% ref id="H" /%} in step 7.
+
+Pick each field from the group that owns it. For example, `startDate` exists
+under both `Project` and `Coll Event`, and neither is the specimen's own
+collection date, which is `collectionDate` under `Specimen`.
+
+## 4. Build the composed and blank columns
+
+Some columns are not a single field. Build them with custom fields, which use
+the mapping dialog shown here: `Add field` {% ref id="B" /%}, `Add text`
+{% ref id="C" /%}, and `Add conditional text` {% ref id="D" /%} build the value
+one segment at a time. The same dialog handles the parts in
+[step 6](#6-add-the-parts-as-numbered-preparations).
+
+{% screenshots
+   large="app-screenshots/tutorials/specify-mapping-large.webp"
+   largeAlt="NAHPU Customize Field Mapping dialog on a tablet, naming the blank Continent column"
+   large2="app-screenshots/tutorials/specify-mapping-large-2.webp"
+   large2Alt="NAHPU Customize Nested Mapping dialog on a tablet, naming the numbered PrepType columns"
+   small="app-screenshots/tutorials/specify-mapping-small.webp"
+   smallAlt="NAHPU Customize Field Mapping sheet on a phone, naming the blank Continent column"
+   small2="app-screenshots/tutorials/specify-mapping-small-2.webp"
+   small2Alt="NAHPU Customize Nested Mapping sheet on a phone, naming the numbered PrepType columns" %}
+{% pin id="A" label="Mapping type" large=[69.6, 17] small=[93.3, 19.7] /%}
+{% pin id="B" label="Add field" large=[35, 36.6] small=[18.2, 42] /%}
+{% pin id="C" label="Add text" large=[45, 36.6] small=[47, 42] /%}
+{% pin id="D" label="Add conditional text" large=[59.3, 36.6] small=[27.3, 47.3] /%}
+{% pin id="E" label="Expression" large=[32, 41.4] small=[12.1, 51.7] /%}
+{% pin id="F" label="Column name" large=[32.4, 48] small=[12.1, 57.7] /%}
+{% pin id="G" label="Replace text" large=[69.6, 59.2] small=[93.3, 68.1] /%}
+{% pin id="H" label="Related records" large2=[69.6, 23.5] small2=[93, 19.7] /%}
+{% pin id="I" label="Child field column name" large2=[36, 42.7] small2=[30.3, 37.1] /%}
+{% pin id="J" label="Choose child fields" large2=[69.6, 81.1] small2=[93, 72.4] /%}
+{% /screenshots %}
+
+### Locality Name
+
+Join the municipality and the specific locality with a semicolon, skipping
+whichever is empty.
+
+{% steps %}
+
+1. In `Selected Mappings`, select `Add custom field`. On a phone, it is the
+   first icon beside the `Selected Mappings` heading.
+2. Set `Mapping type` {% ref id="A" /%} to `List field`.
+3. Open `Advanced` and paste this into `Raw source expression`:
+
+   ```text
+   [geography::municipality]|[geography::locality]
+   ```
+
+4. Set `List output` to `One column` and `Separator` to `Semicolon (A; B)`.
+5. Enter `Locality Name` as the column name, then select `Done`.
+
+{% /steps %}
+
+A record exports as `Passi Timur; Mt. Ambang`, or `Passi Timur` alone when no
+specific locality was recorded. See
+[Export expressions](/en/usages/export/export-expressions/#full-locality) for
+more ways to join geography fields.
+
+### Elevation Unit
+
+Write `m` only when the specimen has an elevation, so an empty elevation does
+not carry a stray unit.
+
+{% steps %}
+
+1. Add a custom field and select `Add conditional text` {% ref id="D" /%}.
+2. Set the condition to `coordinate::elevationInMeter` `Is not empty`.
+3. Enter `m` as `Text when matched` and leave `Text otherwise (optional)`
+   empty.
+4. Check that `Expression:` {% ref id="E" /%} reads
+   `[[if][coordinate::elevationInMeter!=""]=>"m"]]`.
+5. Enter `Elevation Unit` as the `Column name` {% ref id="F" /%}, then select
+   `Done`.
+
+{% /steps %}
+
+### Blank columns
+
+{% steps %}
+
+1. Add a custom field and leave its value empty.
+2. Enter `Continent` as the `Column name` {% ref id="F" /%} and select `Done`.
+   A named custom field with no segments is written as an empty column.
+3. Repeat for `OtherCollection OtherCollNumber`.
+
+{% /steps %}
+
+## 5. Format values for Specify
+
+Three columns hold a NAHPU value in a different shape.
+
+### Sex
+
+NAHPU stores sex as a code, such as `0` for male. Specify needs the word.
+
+{% steps %}
+
+1. Add a custom field, select `Add field` {% ref id="B" /%}, and choose
+   `mammalAttribute::sex`.
+2. Select `Show label` on that segment. The expression
+   becomes `[mammalAttribute::sex#label]`.
+3. Enter `Sex` as the column name and select `Done`.
+
+{% /steps %}
+
+Use `Show label` the same way for any other coded field your collection
+imports, such as `reproductiveStage`. See
+[Encoded field labels](/en/usages/export/export-expressions/#encoded-labels).
+
+### Start Date
+
+{% steps %}
+
+1. Check `collectionDate` under `Specimen` and select its pencil.
+2. Set `Value format` to `Date`.
+3. Open `Advanced` and enter `dd/mm/yyyy` as the `Raw format option`.
+4. Enter `Start Date` as the column name and select `Done`.
+
+{% /steps %}
+
+A collection date of 17 February 2016 exports as `17/02/2016`. Other options
+include `yyyy-mm-dd`, `mm/dd/yyyy`, and `dd-month-yyyy`.
+
+### Collector1LastName
+
+NAHPU stores a person's full name, such as `Heru Handika`. The sheet wants the
+last name first: `Handika, Heru`.
+
+{% steps %}
+
+1. Check `name` under `Personnel` and select its pencil.
+2. Open `Replace text` {% ref id="G" /%} and select `Add replacement`.
+3. Set `Match` to `Regex`, `Find` to `^([^,]*[^\s,])\s+([^\s,]+)$`, and
+   `Replace with` to `$2, $1`.
+4. Enter `Collector1LastName` as the column name and select `Done`.
+
+{% /steps %}
+
+The rule moves the last word to the front. A name that already contains a
+comma is left as it is. Specify still matches the result against its agent
+list, so check unusual names, such as two-word family names, in the preview.
+
+## 6. Add the parts as numbered preparations
+
+A specimen can have any number of parts. Write each part into its own group of
+columns, numbered from 1, so the WorkBench can map them to Preparation #1, #2,
+and so on.
+
+{% steps %}
+
+1. In `Selected Mappings`, select `Add nested`. On a phone, it is the second
+   icon beside the `Selected Mappings` heading.
+2. Set `Related records` {% ref id="H" /%} to `specimenPart`.
+3. Open `Choose child fields` {% ref id="J" /%} and check `type`, `count`, and
+   `storageLocation`, in that order. Checked fields appear under
+   `Selected child fields` in column order.
+4. Set `Nested output` to `Indexed columns`.
+5. Under each child field, type its column name {% ref id="I" /%} with `{n}`
+   where the part number goes:
+   - `type`: `PrepType{n}`
+   - `count`: `PrepType{n}Count`
+   - `storageLocation`: `PrepType{n}Location`
+6. Check that the `Output example` shows `PrepType1`, `PrepType1Count`,
+   `PrepType1Location`, `PrepType2`, …, then select `Done`.
+
+{% /steps %}
+
+A specimen with a skin, skull, and tissue now fills `PrepType1` to
+`PrepType3Location`, with the tissue's freezer position, such as `(127,B2)`,
+in its location column. The number of groups follows the specimen with the most
+parts in the export, and specimens with fewer parts leave the extra columns
+blank.
+
+{% aside type="caution" %}
+Specify matches `Prep Type` values against its own list. If NAHPU part types
+such as `Liver` or `Oral swab` are not in that list, the WorkBench reports them
+during validation. Agree on the vocabulary with your collection manager, or use
+`Replace text` {% ref id="G" /%} in the mapping to rename values on export.
+{% /aside %}
+
+The parts form one block, so a column cannot sit between two preparation
+groups. Place `Remarks` before or after the block; the WorkBench maps by name,
+not position.
+
+## 7. Preview the output
+
+{% steps %}
+
+1. Select `Preview` at the bottom of `Selected Mappings`, or the eye button
+   beside `Edit Fields` on the preset.
+2. Select a few specimens, including the one with several parts.
+3. Check, column by column:
+   - the headers match the sheet exactly;
+   - `Sex` shows `Male` or `Female`, not a code;
+   - `Start Date` reads `dd/mm/yyyy` and `Collector1LastName` reads
+     `Last, First`;
+   - the `PrepType` groups line up with the parts on the specimen record;
+   - `Continent` and `OtherCollection OtherCollNumber` are empty.
+
+{% /steps %}
+
+Fix anything that looks wrong in `Edit Fields`, then preview again.
+
+## 8. Export and import into Specify
+
+{% steps %}
+
+1. Open the project menu and select `Export records`.
+2. Choose the `LSUMZ-mammalogy` preset and `CSV` as the format.
+3. Select `Export records` and open the file to confirm the row count.
+4. In Specify, open the WorkBench and import the CSV as a new data set.
+5. Create an upload plan with **Collection Object** as the base table, and map
+   each column to its Specify field.
+6. Validate the data set, fix any reported cells, and upload.
+
+{% /steps %}
+
+Save the upload plan in Specify. Because the preset always writes the same
+headers in the same order, the next season's export maps with the same plan.
+
+## 9. Share the preset with your team
+
+Back in `Settings` > `Tabular Data`, open the preset's row menu and choose
+`Export this preset`. Teammates import the file through `Import`, so every
+device in the field produces the same columns.
+
+## What you learned
+
+- **Record type** decides what one row is. Use `Specimen` for one row per
+  collection object.
+- **Single fields** copy a value; `Column name (optional)` renames its header.
+- **List fields** join several fields and skip the empty ones.
+- **Conditional text** writes a value, such as a unit, only when a field is
+  filled.
+- **A named custom field with no value** writes a blank column.
+- **`Show label`, `Date`, and `Replace text`** reshape values into what the
+  receiving database expects.
+- **Nested records with indexed columns** spread repeated parts across numbered
+  column groups, and `{n}` in a child field's column name sets each name.
+
+## Learn more
+
+- [Export Records](/en/usages/export/export-records/)
+- [Export Expressions](/en/usages/export/export-expressions/)
+- [Create a tabular export preset](/en/how-to-recipes/export-and-print/create-export-preset/)

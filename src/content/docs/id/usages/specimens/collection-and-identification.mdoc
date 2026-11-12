@@ -5,17 +5,39 @@ sidebar:
   order: 3
 ---
 
-Kartu `Collection & Identification` memuat `Museum ID`, nomor lapangan,
-`Cataloger`, `Preparator`, `Determiner`, `Taxon`, `ID Confidence`,
-`Identification Method`, `Condition`, serta tanggal dan waktu pengumpulan dan
-preparasi.
+Kartu `Koleksi & identifikasi` menyimpan metadata inti spesimen, dengan urutan
+seperti di layar:
 
-Editor ID responsif memungkinkan pemilihan Personnel atau Project untuk setiap
-spesimen. Mengganti jenis akan menghapus ID sebelumnya, dan nomor yang sudah
-dipakai tidak digunakan kembali.
+| Kolom | Catatan |
+| --- | --- |
+| ID lapangan | Nomor lapangan pengatalog atau nomor proyek berformat. Gunakan `Sunting ID lapangan` untuk mengganti jenisnya bagi spesimen ini; NAHPU meminta konfirmasi, menghapus pengenal lama, dan tidak memakai ulang nomor yang sudah terpakai. |
+| `ID museum` | Nomor katalog atau nomor akses museum, opsional. Ditampilkan setelah `Tampilkan lebih banyak`, atau setelah kolom ini berisi nilai. |
+| `Katalogator` | Orang yang mengatalogkan spesimen. Memilih pengatalog juga mengisi `Preparator` dan `Pengidentifikasi`. |
+| `Preparator` | Orang yang mempreparasi spesimen atau spesimen bukti. |
+| `Kondisi` | Kondisi spesimen, dari daftar di Pengaturan. |
+| `Tanggal koleksi`, `Waktu koleksi` | Kapan spesimen dikumpulkan. |
+| `Tanggal prep.`, `Waktu prep.` | Kapan spesimen dipreparasi. |
 
-## Taksonomi
+Bagian **Identifikasi** pada kartu ini memuat:
 
-Panel `Taxon Info` diisi dari spesies yang dipilih. Panel ini menampilkan
-klasifikasi dan rincian taksonomi, termasuk penulis, nama umum, kategori Daftar
-Merah, status CITES, dan catatan jika tersedia.
+| Kolom | Catatan |
+| --- | --- |
+| `Takson` | Catatan dari daftar takson proyek. |
+| `Pengidentifikasi` | Orang yang mengidentifikasi spesimen. |
+| `Keyakinan identifikasi` | `Low`, `Medium`, atau `High`. |
+| `Metode identifikasi` | Bukti yang digunakan, opsional. Muncul setelah `Keyakinan identifikasi` diisi. |
+
+## Taksonomi {% #taxonomy %}
+
+Kartu `Info takson` dibaca dari takson yang dipilih di `Koleksi & identifikasi`.
+Dalam formulir spesimen, kartu ini menampilkan kelas, ordo, dan famili. Pilih
+`Lihat detail` untuk meninjau catatan taksonomi lengkap, termasuk:
+
+- `Peringkat` catatan tersebut;
+- kerajaan dan filum, diambil dari daftar takson jika dicatat dan disimpulkan
+  dari kelas jika tidak;
+- kelas, ordo, famili, genus, dan — jika catatan mencapai tingkat tersebut —
+  spesies dan subspesies, beserta penulis dan nama umum;
+- kategori Daftar Merah, status CITES, status negara, dan catatan jika ada;
+- jumlah catatan yang menggunakan takson tersebut, serta kode QR untuk
+  membagikannya.

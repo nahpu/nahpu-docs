@@ -6,9 +6,9 @@ sidebar:
 
 La curaduría de tejidos registra tubos en cajas de almacenamiento. Para cada
 tubo que escanea o coloca, NAHPU escribe un código de museo en
-`Museum permanent` o `Museum loan` y la siguiente celda libre en
-`Storage location`, como `Box 1: D1`. Los tubos son partes del espécimen y,
-si los incluye, parásitos.
+`Colección permanente del museo` o `Préstamo del museo` y la siguiente celda
+libre en `Ubicación de almacenamiento`, como `Box 1: D1`. Los tubos son
+partes del espécimen y, si los incluye, simbiontes.
 
 Úsela cuando los tubos van a cajas de congelador del museo. Escanee cada tubo
 al colocarlo en la caja, y los registros coinciden con la caja sin teclear.
@@ -39,103 +39,113 @@ al colocarlo en la caja, y los registros coinciden con la caja sin teclear.
 
 La pantalla tiene cuatro áreas:
 
-- **Box**: la cuadrícula de la caja que se está llenando. Las celdas llenas
-  muestran los últimos caracteres del ID del tubo. Los parásitos empiezan con
-  `P`. La celda resaltada es la siguiente por llenar {% ref id="A" /%}.
-- **Scan**: el campo para escanear o escribir códigos {% ref id="E" /%}, o la
+- **Caja**: la cuadrícula de la caja que se está llenando. Las celdas llenas
+  muestran los últimos caracteres del ID del tubo. Los tubos de simbiontes
+  empiezan con `P`. La celda resaltada es la siguiente por llenar {% ref id="A" /%}.
+- **Escaneo**: el campo para escanear o escribir códigos {% ref id="E" /%}, o la
   lista de trabajo {% ref id="C" /%}.
-- **Setup** {% ref id="G" /%}: qué tubos buscar, el campo que se escribe y la
-  configuración de la caja.
-- **Log** {% ref id="J" /%}: los tubos registrados y omitidos en esta sesión.
+- **Configuración** {% ref id="G" /%}: qué tubos buscar, el campo que se
+  escribe y la configuración de la caja.
+- **Registro** {% ref id="J" /%}: los tubos revisados y omitidos en esta sesión.
 
-El selector de modo sobre la caja define qué se cura.
+El selector `Tissue` sobre la caja define qué se cura; por ahora los tubos de
+tejido son el único modo.
 
-En el teléfono, `Box`, `Setup` y `Log` son pestañas, y el campo de escaneo
-queda en la parte inferior de la pantalla. En una tableta o computadora, la
-caja está a la izquierda y el campo de escaneo a la derecha, sobre las
-pestañas `Setup` y `Log`. En una ventana ancha de computadora, el registro
-tiene su propia columna.
+En el teléfono, `Caja`, `Configuración` y `Registro` son pestañas, y el campo
+de escaneo queda en la parte inferior de la pantalla. En una tableta o
+computadora, la caja está a la izquierda y el campo de escaneo a la derecha,
+sobre las pestañas `Configuración` y `Registro`. En una ventana ancha de
+computadora, el registro tiene su propia columna.
 
 ## Configurar la revisión
 
-Abra `Setup` antes del primer escaneo. NAHPU guarda esta configuración en el
-dispositivo, así que la siguiente sesión empieza donde lo dejó.
+Abra `Configuración` antes del primer escaneo. NAHPU guarda esta
+configuración en el dispositivo, así que la siguiente sesión empieza donde lo
+dejó.
 
-### Find tubes
+### Buscar tubos
 
 Estos filtros deciden qué tubos encuentran el escaneo y la lista de trabajo.
 
-- `Include parasites`: también encuentra parásitos, por ID de parásito o por
-  el ID de campo de su hospedador.
-- `Tissue type`: los tipos de parte que se buscan, como Liver. Déjelo en
-  `Any` para aceptar cualquier tipo. Los parásitos no tienen tipo de parte,
-  así que este filtro nunca los excluye.
-- `Preservation`: los tratamientos que se buscan, como ETOH.
-- `Parasite category`: aparece con `Include parasites` activado. Busca
+- `Incluir simbiontes`: también encuentra tubos de simbiontes, por ID de
+  simbionte o por el ID de campo de su hospedador.
+- `Tipo de tejido`: los tipos de parte que se buscan, como Liver. Déjelo en
+  `Cualquiera` para aceptar cualquier tipo. Los simbiontes no tienen tipo de
+  parte, así que este filtro nunca los excluye.
+- `Preservación`: los tratamientos que se buscan, como ETOH.
+- `Categoría de simbionte`: aparece con `Incluir simbiontes` activado. Busca
   categorías como Ectoparasite.
 
-### Update field
+### Campo a actualizar
 
-- `Field`: `Museum permanent` o `Museum loan`.
-- `Value`: el código que se escribe en cada tubo, normalmente el código del
+- `Campo`: `Colección permanente del museo` o `Préstamo del museo`.
+- `Valor`: el código que se escribe en cada tubo, normalmente el código del
   museo. El escaneo queda bloqueado hasta que ingrese un valor.
 
-### Box
+### Caja
 
-- `Box size`: 81 (9×9) o 100 (10×10) celdas.
-- `Fill order`: `Rows, left to right`, `Columns, top to bottom` o
-  `Serpentine rows`. En orden serpentino, cada fila va en dirección opuesta a
-  la anterior.
-- `Box label` y `Box number`: nombran la caja en la ubicación de
+- `Tamaño de la caja`: 81 (9×9) o 100 (10×10) celdas.
+- `Orden de llenado`: `Filas, de izquierda a derecha`,
+  `Columnas, de arriba abajo` o `Filas en serpentina`. En orden serpentino,
+  cada fila va en dirección opuesta a la anterior.
+- `Etiqueta de la caja` y `Número de caja`: nombran la caja en la ubicación de
   almacenamiento, como `Box 1`. Use la etiqueta para un prefijo de congelador
   o rack, como `F2 Box`.
 
 Cuando una caja se llena, el siguiente tubo va a la primera celda de la caja
-siguiente. Seleccione `Next box` o `Previous box` bajo la cuadrícula para
-cambiar de caja usted mismo. NAHPU lee la ubicación de almacenamiento de
+siguiente. Seleccione `Siguiente caja` o `Caja anterior` bajo la cuadrícula
+para cambiar de caja usted mismo. NAHPU lee la ubicación de almacenamiento de
 todos los tubos del proyecto, así que las celdas llenadas antes, con esta
 herramienta o escritas en el formulario de la parte, aparecen llenas.
 
-### Labels and overwrite
+### Etiquetas y sobrescritura
 
-- `Customize cell labels`: cambia cómo se escriben las ubicaciones. Elija una
-  `Numbering` entre `A1, A2, A3…`, `1, 2, 3…` o `1-1, 1-2, 1-3…`, un
-  `Box separator`, un `Row–column separator` y `Pad numbers with zeros`. Un
-  ejemplo bajo los campos muestra el resultado, como `Box 1 / A01`.
+- `Personalizar etiquetas de celda`: cambia cómo se escriben las ubicaciones:
+  - `Numeración`: `A1, A2, A3…`, `1, 2, 3…` o `1-1, 1-2, 1-3…`.
+  - `Separador de caja`: el texto entre la caja y la celda.
+  - `Separador fila–columna`: el texto entre la fila y la columna.
+  - `Rellenar números con ceros`: escribe `A01` en lugar de `A1`.
+
+  Un ejemplo bajo los campos muestra el resultado, como `Box 1 / A01`.
   Desactívelo para volver al formato estándar `Box 1: A1`. NAHPU guarda su
   formato personalizado para la próxima vez.
-- `Overwrite existing values`: permite que un escaneo reemplace una ubicación
-  guardada u otro código de museo. Desactivado, esos tubos se reportan como
-  conflictos y quedan como están.
+- `Sobrescribir valores existentes`: permite que un escaneo reemplace una
+  ubicación guardada u otro código de museo. Desactivado, esos tubos se
+  reportan como conflictos y quedan como están.
 
 ## Escanear tubos
 
-Use `Scan` cuando los tubos le llegan sin un orden fijo.
+Use `Escaneo` cuando los tubos le llegan sin un orden fijo.
 
 {% steps %}
 
-1. Seleccione `Scan` {% ref id="B" /%} sobre el campo de escaneo.
+1. Seleccione `Escaneo` {% ref id="B" /%} sobre el campo de escaneo.
 2. Escanee el código de barras del tubo con un lector, o escriba el código y
-   presione Enter. En un teléfono o tableta, `Scan with camera` lee códigos
-   con la cámara del dispositivo.
-3. Revise el mensaje bajo el campo. Un tubo registrado muestra su nueva
+   presione Enter. En un teléfono o tableta, `Escanear con la cámara` lee
+   códigos con la cámara del dispositivo.
+3. Revise el mensaje bajo el campo. Un tubo revisado muestra su nueva
    ubicación y valor, como `AC-T0128 → Box 1: D1 · Museum permanent = EXM`.
 4. Coloque el tubo en la celda que indica el mensaje y escanee el siguiente.
 
 {% /steps %}
 
 De forma predeterminada, un código coincide con el ID de tejido o el código
-de barras de una parte, o con el ID de un parásito cuando se incluyen
-parásitos. Una coincidencia por código de barras tiene prioridad sobre el ID
-de tejido. Las sugerencias aparecen mientras escribe. Presionar Enter siempre
-usa el texto escrito, así que el código de un lector nunca se cambia por una
-sugerencia.
+de barras de una parte, o con el ID de un simbionte cuando se incluyen
+simbiontes. Una coincidencia por código de barras tiene prioridad sobre una
+por ID de tejido. Las sugerencias aparecen mientras escribe. Presionar Enter
+siempre usa el texto escrito, así que el código de un lector nunca se cambia
+por una sugerencia.
 
-Active `Search by field ID` {% ref id="D" /%} cuando los tubos estén
-etiquetados con el ID de campo del espécimen. Un ID de campo suele coincidir
-con varios tubos, como hígado y músculo. Agregue el tipo de parte o el
-tratamiento después del ID para elegir uno, como `AC128 liver etoh`. Un
-número solo, como `128`, coincide con todos los especímenes con ese número.
+Active `Buscar por ID de campo` {% ref id="D" /%} cuando los tubos estén
+etiquetados con el ID de campo del espécimen:
+
+| Lo que escribe | Coincide con |
+| --- | --- |
+| `AC128` | Todos los tubos del espécimen AC128, como su hígado y su músculo |
+| `AC128 liver etoh` | Solo los tubos de AC128 con ese tipo de parte y tratamiento |
+| `128` | Todos los especímenes con el número 128, sea cual sea su prefijo |
+| Un ID de simbionte | Ese simbionte, cuando `Incluir simbiontes` está activado |
+
 Si un código aún coincide con más de un tubo, NAHPU pregunta cuál tiene en la
 mano. Cerrar esa lista sin elegir registra el código como omitido.
 
@@ -143,32 +153,32 @@ El mensaje bajo el campo informa cada resultado:
 
 | Resultado | Significado |
 | --- | --- |
-| Registrado | El tubo se escribió en la celda y la caja avanzó. |
+| Revisado | El tubo se escribió en la celda y la caja avanzó. |
 | No encontrado | Ningún tubo coincide con el código y los filtros. No se usó ninguna celda. |
-| Ya registrado | El tubo se registró antes en esta sesión. |
-| Conflicto | El tubo ya tiene una ubicación u otro código de museo. Active `Overwrite existing values` para reemplazarlos. |
+| Ya revisado | El tubo se revisó antes en esta sesión. |
+| Conflicto | El tubo ya tiene una ubicación u otro código de museo. Active `Sobrescribir valores existentes` para reemplazarlos. |
 | Omitido | Se descartó la elección entre tubos coincidentes. |
 
-`Undo` {% ref id="F" /%} revierte el registro más reciente. El tubo recupera
-su valor y ubicación anteriores, y su celda queda libre de nuevo. Seleccione
-`Undo` otra vez para retroceder un paso más.
+`Deshacer` {% ref id="F" /%} revierte la revisión más reciente. El tubo
+recupera su valor y ubicación anteriores, y su celda queda libre de nuevo.
+Seleccione `Deshacer` otra vez para retroceder un paso más.
 
 ## Seguir una lista
 
-Use `Work list` cuando llena una caja en orden de ID de campo, como todos los
-tubos de hígado de una expedición.
+Use `Lista de trabajo` cuando llena una caja en orden de ID de campo, como
+todos los tubos de hígado de una expedición.
 
 {% steps %}
 
-1. Seleccione `Work list` {% ref id="C" /%} sobre el campo de escaneo.
+1. Seleccione `Lista de trabajo` {% ref id="C" /%} sobre el campo de escaneo.
 2. NAHPU lista los tubos sin ubicación de almacenamiento que coinciden con
-   los filtros de `Find tubes`, en orden de ID de campo. El tubo actual y la
+   los filtros de `Buscar tubos`, en orden de ID de campo. El tubo actual y la
    celda a la que irá aparecen primero.
-3. Seleccione `Place` para escribir el tubo en la siguiente celda, o `Skip`
-   para pasarlo. Los tubos omitidos siguen en la lista y aparecen en
-   `Skipped` en el registro.
-4. Use `Search work list` para ir a un tubo por ID, código de barras, tipo o
-   tratamiento.
+3. Seleccione `Ubicar` para escribir el tubo en la siguiente celda, u
+   `Omitir` para pasarlo. Los tubos omitidos siguen en la lista y aparecen en
+   `Omitidos` en el registro.
+4. Use `Buscar en la lista de trabajo` para ir a un tubo por ID, código de
+   barras, tipo o tratamiento.
 
 {% /steps %}
 
@@ -176,33 +186,33 @@ tubos de hígado de una expedición.
 
 - **Cambiar la siguiente celda**: toque una celda vacía. El siguiente tubo va
   ahí, y el llenado continúa en el orden definido desde esa celda.
-- **Ver una celda llena**: toque una celda llena para ver sus tubos
-  {% ref id="H" /%}. `Details` muestra los ID, el conteo y la ubicación de
-  almacenamiento del tubo, y `Open record` abre el formulario del espécimen.
-  Una celda compartida por varios tubos, normalmente por ubicaciones escritas
-  a mano, muestra cuántos tubos contiene.
-- **Reemplazar una celda**: en una celda llena, seleccione `Replace`
-  {% ref id="I" /%} y confirme. El siguiente tubo que escanee o coloque va a
+- **Ver una celda llena**: toque una celda llena para ver sus tubos {% ref id="H" /%}.
+  `Detalles` muestra los ID, el conteo y la ubicación de almacenamiento del tubo, y `Abrir registro` abre el formulario del
+  espécimen. Una celda compartida por varios tubos, normalmente por
+  ubicaciones escritas a mano, muestra cuántos tubos contiene.
+- **Reemplazar una celda**: en una celda llena, seleccione `Reemplazar` {% ref id="I" /%}
+  y confirme. El siguiente tubo que escanee o coloque va a
   esa celda, y los tubos que estaban ahí pierden su ubicación y vuelven a la
-  lista de trabajo. `Undo` los devuelve.
+  lista de trabajo. Deshacer los devuelve.
 
 ## Registro de la sesión y exportación
 
-El registro lista los tubos registrados en esta sesión, del más reciente al
-más antiguo, en `Checked`, y los tubos omitidos en `Skipped`. Un tubo omitido
-sale de la lista cuando se coloca.
+El registro lista los tubos revisados en esta sesión, del más reciente al
+más antiguo, en `Revisado`, y los tubos omitidos en `Omitidos`. Un tubo
+omitido sale de la lista cuando se coloca.
 
-Seleccione `Export log` {% ref id="K" /%} para guardar la sesión en CSV, TSV o
-Excel. Cada fila empieza con las columnas de curaduría: `Status`, `Order`,
-`Field ID`, `Tube ID`, `Kind`, `Type`, `Treatment`, `Updated field`, `Value`,
-`Location`, `Box`, `Cell`, `Previous value`, `Previous location` y
-`Replaced`.
+Seleccione `Exportar registro` {% ref id="K" /%} para guardar la sesión en
+CSV, TSV o Excel. Cada fila empieza con las columnas de curaduría: `Estado`,
+`Orden`, `ID de campo`, `ID del tubo`, `Clase`, `Tipo`, `Tratamiento`,
+`Campo actualizado`, `Valor`, `Ubicación`, `Caja`, `Celda`, `Valor anterior`,
+`Ubicación anterior` y `Reemplazados`.
 
-En `Columns`, seleccione `Add columns` para agregar después de ellas campos
-de la parte, del espécimen y de registros vinculados, como el número de
-catálogo o la especie. `Added column headers` nombra esas columnas por
-`Field names` o por `NAHPU keys`, como `specimenPart::remark`. NAHPU guarda
-las columnas agregadas para la próxima exportación.
+En `Columnas`, seleccione `Agregar columnas` para agregar después de ellas
+campos de la parte, del espécimen y de registros vinculados, como el número
+de catálogo o la especie. `Encabezados de columnas agregadas` nombra esas
+columnas por `Nombres de campo` o por `Claves NAHPU`, como
+`specimenPart::remark`. NAHPU guarda las columnas agregadas para la próxima
+exportación.
 
 Guarde el registro exportado con el inventario de la caja. Documenta lo que
 cambió cada escaneo, incluidos los valores anteriores que se reemplazaron.

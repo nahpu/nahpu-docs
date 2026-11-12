@@ -8,20 +8,28 @@ sidebar:
 Capture records connect a specimen to the collecting event, site, coordinate,
 method, and collector that produced it.
 
-- `Site ID`: the site associated with a collecting event.
-- `Event ID`: the collecting event for the specimen. Changing the event clears
-  event-dependent fields in this card except capture date and capture time.
-- `Capture date`: the date the specimen was captured.
-- `Capture time`: exact time, or a relative time when `Relative time` is enabled.
-- `Relative time`: switches capture time to one of `Dawn`, `Morning`,
-  `Afternoon`, `Dusk`, or `Night`.
-- `Method`: the collection method from the selected event.
-- `Method ID`: an optional trap, net, or other method-specific identifier.
-- `Coordinate ID`: the coordinate record associated with the selected event.
-- `Coordinate extent (m)`: optional positive distance describing how far the
-  capture record extends beyond the coordinate point. It appears immediately
-  below `Coordinate ID`.
-- `Collector`: optional collector from the selected event personnel list.
+{% steps %}
+
+1. Choose the `Site ID`. The `Event ID` list then shows only that site's
+   collecting events.
+2. Choose the `Event ID`.
+3. Fill in the capture details below.
+
+{% /steps %}
+
+Changing the site or the event asks for confirmation, then clears this card
+except the capture date and time. When you change only the event, the
+coordinate is kept if it belongs to the same site.
+
+| Field | Notes |
+| --- | --- |
+| `Capture date`, `Capture time` | When the specimen was captured. |
+| `Relative time` | Replaces the exact time with `Dawn`, `Morning`, `Afternoon`, `Dusk`, or `Night`. Shown after `Show more`. |
+| `Method` | A collection method from the selected event. |
+| `Method ID` | Optional trap, net, or other method identifier. Shown after `Show more`. |
+| `Coordinate ID` | A coordinate of the event's site. |
+| `Coordinate extent (m)` | Optional positive distance the capture extends beyond the coordinate point. |
+| `Collector` | Optional, from the event's personnel. Shown when it has a value, after `Show more`, or always if `Always show collector field` is on in Settings. |
 
 In Darwin Core exports, a positive coordinate extent is added to the saved
 coordinate uncertainty. If the coordinate has no valid uncertainty, the extent

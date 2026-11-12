@@ -18,164 +18,208 @@ title: Pengaturan
 {% pin id="G" label="Aktivitas utama" large=[55.5, 21.1] small2=[70.2, 17.1] /%}
 {% /screenshots %}
 
-NAHPU memisahkan catatan proyek, catatan bersama di basis data, konfigurasi
-pengguna yang dapat direproduksi, dan preferensi yang hanya berlaku pada
-instalasi. Buka sebuah proyek, buka menu `Dashboard`, lalu pilih `Settings`
-untuk mengatur instalasi saat ini.
+Pengaturan mengatur cara NAHPU bekerja di perangkat ini: format katalog, daftar
+terkontrol, kolom kustom, prasetel, dan preferensi aplikasi. Buka `Pengaturan`
+dari menu layar beranda atau dari menu Dasbor sebuah proyek. Kolom kustom untuk
+satu proyek memerlukan proyek tersebut dalam keadaan terbuka.
 
 ## Cakupan setiap pengaturan
 
 | Jenis | Contoh | Perilaku saat dipindahkan |
 | --- | --- | --- |
-| Informasi proyek | Nama, nomor akses, lokasi, zona waktu, tanggal, nilai Field ID proyek | Ikut serta dalam transfer informasi dan transfer proyek |
+| Informasi proyek | Nama, nomor akses, lokasi, zona waktu, tanggal, nilai ID lapangan proyek | Ikut serta dalam transfer informasi proyek dan transfer proyek |
 | Catatan bersama basis data | Takson dan personel | Tersimpan di basis data NAHPU dan dikaitkan dengan proyek |
-| Konfigurasi pengguna | Daftar terkontrol serta prasetel ekspor atau dokumen | Dipindahkan dengan `Export user configs` dan `Import user configs` |
-| Status instalasi | Tema dan takson utama saat ini | Tetap pada instalasi saat ini |
+| Konfigurasi pengguna | Kosakata terkontrol serta prasetel ekspor atau dokumen | Dipindahkan dengan `Ekspor konfigurasi pengguna` dan `Impor konfigurasi pengguna` |
+| Status instalasi | Tema, bahasa, dan takson utama saat ini | Tetap pada instalasi saat ini |
 
-Karena itu, mengubah sebuah pengaturan saat satu proyek terbuka dapat
-memengaruhi proyek lain pada instalasi yang sama. Tinjau konfigurasi pengguna
-yang dipindahkan sebelum menggantikan konfigurasi Anda saat ini.
+Mengubah sebuah pengaturan saat satu proyek terbuka dapat memengaruhi proyek lain
+pada instalasi yang sama. Tinjau konfigurasi pengguna yang dipindahkan sebelum
+menggantikan konfigurasi Anda saat ini.
 
 ## Katalog
 
 ### Format
 
-`Format` memilih {% ref id="A" /%} takson utama yang dipakai pada formulir spesimen baru di
-perangkat ini. Sebuah proyek dapat memuat lebih dari satu grup takson;
-pengaturan ini hanya mengatur format spesimen yang sedang aktif beserta kolom
-pengukurannya.
+`Format` {% ref id="A" /%} memilih takson utama yang dipakai pada formulir spesimen
+baru di perangkat ini. Sebuah proyek dapat memuat lebih dari satu kelompok
+takson; pengaturan ini hanya mengatur format spesimen yang sedang aktif beserta
+kolom pengukurannya.
 
-### Events dan Sites
+### Lokasi
 
-Gunakan `Events` {% ref id="C" /%} untuk mengelola daftar terkontrol aktivitas utama {% ref id="G" /%}, metode
-pengumpulan, peran personel kegiatan, dan kolom lingkungan yang muncul pada
-formulir kegiatan. Aktivitas utama dimulai dengan `Collecting`, `Recording`, dan
+`Lokasi` {% ref id="B" /%} mengelola:
+
+- tipe lokasi dan tipe habitat yang ditawarkan pada formulir lokasi;
+- datum koordinat;
+- `Bidang geografi`: kolom geografi yang ditampilkan pada formulir lokasi;
+- `Lapisan peta` untuk peta koordinat.
+
+Menyembunyikan kolom tidak pernah menghapus nilai yang sudah tersimpan di
+dalamnya.
+
+### Kegiatan
+
+`Kegiatan` {% ref id="C" /%} mengelola daftar aktivitas utama {% ref id="G" /%},
+metode koleksi, peran personel kegiatan, dan kolom lingkungan yang muncul pada
+formulir kegiatan. Aktivitas utama bawaan adalah `Collecting`, `Recording`, dan
 `Observing`; `Other` tidak disertakan kecuali Anda menambahkannya. Formulir
-lingkungan pada awalnya menampilkan suhu udara, kelembapan udara, tutupan awan,
-curah hujan, dan catatan. Seperti pada pengaturan Geografi, kolom bawaan lainnya
-dapat ditampilkan atau disembunyikan tanpa menghapus nilai yang tersimpan.
-Gunakan `Sites` {% ref id="B" /%} untuk mengelola kosakata terkontrol tipe lokasi dan tipe
-habitat. Jaga agar pengaturan ini seragam di semua perangkat lapangan dengan
-memindahkan konfigurasi pengguna.
+lingkungan dimulai dengan suhu udara, kelembapan udara, tutupan awan, curah
+hujan, dan catatan; tampilkan atau sembunyikan kolom lain dengan cara yang sama
+seperti kolom geografi.
 
-### Specimens
+Jaga agar daftar ini sama di setiap perangkat lapangan dengan memindahkan
+konfigurasi pengguna.
 
-`Specimens` memuat {% ref id="D" /%} kemunculan kolom tangkapan, Field ID, tissue ID, jenis
-kelamin spesimen, tipe spesimen, perlakuan, kondisi, dan pengaturan simbion yang
-bergantung pada takson, termasuk jenis interaksi dan kategorinya.
+### Spesimen
 
-Kosakata jenis kelamin spesimen bersifat terbatas. `Male`, `Female`, dan
-`Unknown` tetap tersedia untuk semua takson. Gunakan cip `+` untuk menambahkan
-`Gynandromorph`, `Hermaphrodite`, `Female?`, atau `Male?` ke menu pilihan
-spesimen. Cip opsional hanya dapat dihapus bila tidak ada catatan spesimen di
-basis data yang memakai nilai tersebut.
+`Spesimen` {% ref id="D" /%} memuat:
 
-Pada `Field ID`, biarkan `Use project ID` nonaktif untuk memakai inisial dan
-nomor lapangan pribadi seorang Cataloger. Cataloger tersebut harus memiliki
-peran `Cataloger`, pendaftaran nomor lapangan yang aktif, inisial, dan nomor
-lapangan saat ini.
+- `Selalu tampilkan bidang kolektor` dan pengaturan kemunculan kolom tangkapan
+  lainnya;
+- penomoran `ID lapangan` dan `ID jaringan`, yang dijelaskan di bawah;
+- daftar terkontrol untuk jenis kelamin spesimen, `Metode identifikasi`,
+  `Tahap hidup`, tipe spesimen, perlakuan, dan kondisi;
+- pengaturan simbion: jenis interaksi, kategori, metode deteksi dan preparasi,
+  lokasi anatomis, penyimpanan, dan perlakuan, yang semuanya dimulai dengan
+  nilai bawaan yang dapat disunting.
 
-Aktifkan `Use project ID` untuk mengatur awalan, nomor katalog saat ini,
-akhiran, dan perilaku penambahan otomatis. NAHPU menyambung ketiga nilai itu
-secara langsung. Misalnya, `NAHPU-`, `120`, dan `-M` menghasilkan
-`NAHPU-120-M`.
+Daftar jenis kelamin spesimen bersifat terbatas. `Male`, `Female`, dan
+`Unknown` selalu tersedia. Gunakan cip `+` untuk menambahkan `Gynandromorph`,
+`Hermaphrodite`, `Female?`, atau `Male?`. Opsi yang ditambahkan hanya dapat
+dihapus bila tidak ada spesimen di basis data yang memakainya.
+
+#### ID lapangan {% #field-id %}
+
+Pada `ID lapangan`, pilih cara spesimen diberi nomor:
+
+| Pilihan | ID lapangan dibentuk dari | Memerlukan |
+| --- | --- | --- |
+| `ID personel` (bawaan) | Inisial pengatalog dan nomor urutnya sendiri | Seseorang dengan peran `Cataloger` di proyek, dengan inisial dan nomor lapangan saat ini |
+| `ID proyek` | `Prefiks` + `Nomor katalog saat ini` + `Sufiks` | Ketiga nilai tersebut, serta apakah `Tambah nomor katalog secara otomatis` aktif |
+
+Dengan `ID proyek`, NAHPU menyambung ketiga nilai itu secara langsung: `NAHPU-`,
+`120`, dan `-M` menghasilkan `NAHPU-120-M`. Pilih `Simpan pengaturan ID lapangan`
+untuk menerapkannya.
 
 {% aside type="caution" %}
 
-Mengubah awalan atau akhiran Field ID proyek akan mengubah cara ID yang sudah
-diberikan ditampilkan. Pastikan perubahan itu memang dikehendaki bila pengenal
-tersebut sudah diekspor atau ditulis pada label.
+Mengubah prefiks atau sufiks ID proyek akan mengubah cara ID proyek yang sudah
+diberikan ditampilkan, dan NAHPU meminta Anda mengonfirmasinya. Periksa terlebih
+dahulu apakah ID tersebut sudah diekspor atau ditulis pada label.
 
 {% /aside %}
 
-`Tissue ID` menerima awalan, nomor berikutnya, dan akhiran, serta menampilkan
-pratinjau ID jaringan berikutnya. Angka nol di depan nomor dipertahankan,
-sehingga `M0042-T` diikuti oleh `M0043-T`. Untuk format katalog Ichthyology,
-`Individual tag ID` memberi nomor individu dalam lot ikan dengan cara yang sama;
+#### ID jaringan {% #tissue-id %}
+
+`ID jaringan` menerima prefiks, nomor berikutnya, dan sufiks, serta menampilkan
+pratinjau ID jaringan berikutnya. Angka nol di depan dipertahankan, sehingga
+`M0042-T` diikuti oleh `M0043-T`. Untuk format katalog Ichthyology,
+`ID tag individu` memberi nomor individu dalam lot ikan dengan cara yang sama;
 lihat [Ikan](/id/usages/specimens/measurements/fishes/#tag-id-numbering).
 
-## Database
+### Kolom kustom {% #custom-fields %}
 
-- `Taxa` {% ref id="F" /%} mengelola catatan taksonomi yang tersedia bagi proyek.
-- `Personnel` mengelola orang di basis data beserta peran perawatan spesimennya.
-- `Replace database` mengganti basis data SQLite yang aktif dari sebuah
+`Kolom khusus` {% ref id="E" /%} menambahkan kolom Anda sendiri ke formulir lokasi,
+lingkungan, spesimen, bagian, dan simbion.
+
+| Pengaturan | Opsi |
+| --- | --- |
+| Jenis | Teks, Angka, Ya / Tidak, Daftar pilihan |
+| Cakupan | `Proyek saat ini` (hanya proyek ini) atau `Global` (setiap proyek pada instalasi ini); dipilih saat pembuatan |
+| Katalog | Kolom terkait spesimen dapat dibatasi pada format katalog tertentu |
+| Pemetaan Darwin Core | Istilah ekspor opsional untuk kolom tersebut |
+
+{% steps %}
+
+1. Buka proyek, masuk ke `Pengaturan` > `Kolom khusus`, lalu pilih
+   `Tambah bidang khusus`. Pilih tempat kolom tersebut muncul.
+2. Tetapkan `Label` dan `Jenis`. Untuk daftar pilihan, masukkan opsi yang
+   diperbolehkan. Cantumkan satuan pada label kolom angka, misalnya "Tinggi
+   kanopi (m)".
+3. Pilih cakupannya, dan untuk kolom spesimen, format katalognya.
+4. Secara opsional, tetapkan pemetaan Darwin Core. Memetakan kolom tidak
+   memeriksa nilainya, jadi periksa contoh ekspor sebelum membagikan data.
+5. Simpan, buka catatan di bagian tersebut, masukkan nilai uji, lalu buka kembali
+   catatan untuk memeriksanya.
+6. Untuk membagikan kolom, ekspor dari `Kolom khusus` atau bersama konfigurasi
+   pengguna, impor di perangkat lain, lalu periksa bagian, cakupan, dan opsinya.
+
+{% /steps %}
+
+Untuk berhenti memakai kolom, pilih `Arsipkan`: datanya tetap ada, dan `Pulihkan`
+mengembalikannya. `Hapus` tampil sebagai `Hapus (nilai sedang digunakan)` dan
+tidak tersedia selama ada catatan yang menyimpan nilai. Membuang nilai lama
+merupakan tindakan terpisah yang tidak dapat dibatalkan.
+
+## Basis data
+
+- `Takson` {% ref id="F" /%} mengelola catatan taksonomi yang tersedia bagi proyek.
+- `Personel` mengelola orang di basis data beserta peran penanganan spesimennya.
+- `Cadangkan basis data` menyimpan arsip ZIP atau TAR.GZ lengkap berisi setiap
+  proyek, catatan, dan berkas yang dikelola.
+- `Ganti basis data` mengganti basis data SQLite yang aktif dari sebuah
   cadangan.
 
 {% aside type="caution" %}
 
-Buat cadangan terbaru sebelum memakai `Replace database`. Mengganti basis data
+Buat cadangan terbaru sebelum memakai `Ganti basis data`. Mengganti basis data
 berbeda dari menggabungkan proyek atau mengimpor konfigurasi pengguna.
 
 {% /aside %}
 
-## Exports
+## Ekspor
 
-- `Tabular Data` mengelola prasetel ekspor catatan yang dapat digunakan ulang.
-- `Documents` mengelola templat dokumen, prasetel tata letak cetak, dan fon
+- `Data tabular` mengelola prasetel ekspor catatan yang dapat digunakan ulang.
+- `Dokumen` mengelola templat dokumen, prasetel tata letak cetak, dan fon
   yang tersedia untuk templat.
-- `Template Editor` membuat dan menyunting templat dokumen.
+- `Penyunting templat` membuat dan menyunting templat dokumen.
 
-`Load defaults` di menu opsi, atau di daftar prasetel yang kosong, memungkinkan
+`Muat bawaan` di menu opsi, atau di daftar prasetel yang kosong, memungkinkan
 Anda memilih prasetel bawaan yang akan ditambahkan. Prasetel yang cocok untuk
 semua format katalog sudah dicentang; prasetel yang ditulis untuk satu format
-katalog belum dicentang dan juga ditawarkan di `Setup NAHPU`. Prasetel bernama
-sama tidak pernah ditimpa, dan setiap prasetel dapat dihapus.
+katalog belum dicentang dan juga ditawarkan di `Siapkan NAHPU`. Pemuatan tidak
+pernah menimpa prasetel bernama sama, dan setiap prasetel dapat dihapus.
 
 Prasetel ini termasuk konfigurasi pengguna. Ekspor prasetel bila instalasi lain
 harus menghasilkan kolom, label, atau tata letak yang sama.
 
-## Applications
+## Aplikasi
 
-### Theme
+Preferensi ini hanya berlaku pada instalasi ini.
 
-Gunakan `Theme` untuk memilih `System`, `Light`, atau `Dark`. Pilihan tersebut
-hanya berlaku pada instalasi saat ini.
+| Pengaturan | Fungsi |
+| --- | --- |
+| `Tema` | `Sistem`, `Terang`, atau `Gelap`. |
+| `Bahasa` | Bahasa aplikasi. Masih beta. |
+| `Format regional` | Cara tanggal dan angka ditampilkan di layar. Catatan tersimpan dan ekspor tetap memakai format standar. Masih beta. |
+| `Alat` | Memilih alat yang ditampilkan di dasbor proyek. |
+| `Penggunaan data` | Laporan penyimpanan dan pembersihan, dijelaskan di bawah. |
 
 ### Penggunaan dan pembersihan data
 
-Buka `Data usage` untuk memindai folder yang dikelola NAHPU. Ringkasannya
+Buka `Penggunaan data` untuk memindai folder yang dikelola NAHPU. Ringkasannya
 menampilkan total penyimpanan, jumlah berkas dan media, serta ruang yang dapat
-dipulihkan dengan menghapus berkas yang tidak tertaut.
+dipulihkan dari berkas yang tidak tertaut.
 
-`Remove unlinked files` menghapus berkas yang tidak lagi digunakan oleh catatan
-apa pun, termasuk sisa media yang telah dihapus atau impor yang dibatalkan.
-Berkas tertaut, basis data dan cadangannya, font khusus, lapisan peta, serta
-berkas di luar folder yang dikelola NAHPU tidak terpengaruh. Hapus fon yang
-terpasang melalui `Documents` > `Fonts`, bukan dari sini.
+`Hapus berkas tidak tertaut` menghapus berkas yang tidak lagi digunakan oleh
+catatan apa pun, termasuk sisa media yang telah dihapus atau impor yang
+dibatalkan. Berkas tertaut, basis data dan cadangannya, fon kustom, lapisan peta,
+serta berkas di luar folder yang dikelola NAHPU tidak terpengaruh. Hapus fon yang
+terpasang melalui `Dokumen` > `Fon`, bukan dari sini.
 
-Pohon `Files` dapat digunakan untuk memeriksa berkas tersimpan, menyimpan
-salinan, atau menghapus satu per satu berkas yang diizinkan. Pilih `Select`
-untuk menangani beberapa berkas. Gunakan `Clear` atau `Select all`, lalu pilih
-tombol mengambang `Review` untuk memeriksa jumlah, ukuran, dan lokasi yang
-dikelompokkan sebelum mengekspor arsip atau menghapus berkas secara permanen.
+Pohon `Berkas` dapat digunakan untuk memeriksa berkas tersimpan, menyimpan
+salinan, atau menghapus berkas yang diizinkan satu per satu. Pilih `Pilih` untuk
+menangani beberapa berkas. Gunakan `Hapus pilihan` atau `Pilih semua`, lalu pilih
+tombol mengambang `Tinjau` untuk memeriksa jumlah, ukuran, dan lokasi berkas
+sebelum mengekspor arsip atau menghapus berkas secara permanen.
 
-Pilih `Rescan` setelah berkas diubah di luar NAHPU untuk memperbarui laporan
-penyimpanan.
+Pilih `Pindai ulang` setelah berkas diubah di luar NAHPU untuk memperbarui
+laporan.
 
 ## Memindahkan konfigurasi pengguna
 
-`Export user configs` dan `Import user configs` berada di menu `Dashboard`
-proyek, bersebelahan dengan `Settings`; keduanya tidak berada di dalam halaman
-pengaturan. Pemindahan konfigurasi pengguna dapat menghasilkan daftar terkontrol
-dan prasetel yang sama tanpa mengganti basis data proyek. Lihat
+`Ekspor konfigurasi pengguna` ada di menu layar beranda dan menu Dasbor proyek;
+`Impor konfigurasi pengguna` ada di menu Dasbor. Keduanya tidak berada di dalam
+halaman Pengaturan. Pemindahan konfigurasi pengguna menghasilkan daftar
+terkontrol dan prasetel yang sama tanpa mengganti basis data proyek. Lihat
 [Ekspor](../export) sebelum mengganti konfigurasi atau data.
-
-## Bidang khusus {% #custom-fields %}
-
-Definisi menentukan tempat nilai disimpan dan cara pengisiannya. Jenis yang tersedia adalah Text, Number, Yes / No, dan Dropdown. Gunakan satuan yang konsisten pada label dan protokol untuk pengamatan numerik. Cakupan dipilih saat pembuatan: `Current project` berlaku untuk satu proyek dan `Global` untuk instalasi. Bidang spesimen dapat dibatasi menurut katalog; bidang lingkungan terkait dengan kegiatan.
-
-Pemetaan Darwin Core opsional menentukan tujuan dan bidang ekspor. Tinjau maknanya pada ekspor yang dituju dan periksa hasil uji sebelum berbagi. Memetakan nama tidak memvalidasi nilainya. Nilai tersimpan dapat mencegah penghapusan; arsipkan bidang untuk menghentikan penggunaannya tanpa kehilangan data. Membuang nilai lama merupakan tindakan terpisah yang tidak dapat dibatalkan.
-
-Tentukan bidang tambahan dan periksa tampilannya pada catatan proyek.
-
-## Langkah
-
-{% steps %}
-
-1. Buka proyek yang dituju dan pilih `Settings` > `Custom fields` {% ref id="E" /%}, lalu buat bidang dan pilih bagian tujuan.
-2. Tetapkan `Label` dan `Type`. Untuk daftar pilihan, masukkan opsi yang diperbolehkan. Pilih cakupan `Current project` atau `Global`; definisi global berlaku untuk seluruh instalasi.
-3. Untuk bidang terkait spesimen, periksa katalog yang berlaku. Gunakan panduan referensi untuk pemetaan Darwin Core opsional.
-4. Simpan definisi, buka catatan pada bagian tujuan, dan masukkan nilai uji sesuai ketentuan satuan. Buka kembali catatan untuk memeriksa nilainya.
-5. Gunakan `Archive` untuk menonaktifkan bidang sambil mempertahankan datanya, dan `Restore` untuk mengaktifkannya kembali. `Delete` tidak tersedia selama masih ada nilai tersimpan.
-6. Ekspor definisi dari `Custom fields` atau sertakan dalam transfer konfigurasi pengguna. Impor pada perangkat penerima dan periksa bagian tujuan, cakupan, serta opsinya.
-{% /steps %}

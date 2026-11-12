@@ -49,37 +49,36 @@ when they are not in the configured list.
 
 ## Managing collecting events
 
-Open an event and use its three-dot menu to manage the record:
+Open an event and use its three-dot menu to manage the record.
 
-- `Edit`: change the event fields, collection methods, personnel, or environmental data.
-- `Duplicate event`: copy the site, times, activity, notes, collection methods,
-  and personnel. The dates move forward one day and the new event gets an empty
-  environmental-data record.
-- `Show QR`: display the event record for another mobile device to scan.
-- `Export event`: save the event and its related data as JSON.
-- `Scan QR`: create or replace an event from an event QR code.
-- `Import event`: create or replace an event from an exported JSON record.
-- `Delete record`: delete the event, its collection methods, its event personnel,
-  environmental data, and per-event custom values. A specimen record that
-  references the event must be moved or deleted first.
-- `Delete all records`: delete all collecting events and their related collection
-  methods, personnel, and environmental data in the current project.
+| Action | What it does |
+| --- | --- |
+| `Create event` | Adds a new event. |
+| `Duplicate event` | Copies the site, times, activity, notes, ID suffix, collection methods, and personnel. The dates move forward one day, and the new event gets an empty environmental-data record. |
+| `Sort records` | Chooses the field and direction for the event list. |
+| `Show QR` | Displays the event for another device to scan. |
+| `Export event` | Saves the event and its related data as JSON, or as a ZIP or TAR.GZ archive when it has media. |
+| `Scan QR` | Creates or replaces an event from an event QR code. Available on devices with a camera scanner (Android, iOS, macOS, and web). |
+| `Import event` | Creates or replaces an event from an exported JSON file or archive. |
+| `Delete record` | Deletes the event with its collection methods, event personnel, environmental data, and media, and detaches its associated data. A specimen that uses the event must be moved or deleted first. |
+| `Delete all records` | Does the same for every event in the project. |
 
-When importing an event, choose whether the incoming record creates a new event
-or updates an existing event. Confirm the referenced site and personnel after
-the import.
+When importing an event, choose whether it creates a new event or updates an
+existing one, then confirm the referenced site and personnel.
 
-Default collection methods include `Hand`, `Net`, and `Pitfall`. Default
-personnel roles include `Leader` and `Helper`. You can add more specific values,
-such as mist net, harp trap, visual encounter survey, driver, recorder, or
-observer, depending on your protocol.
+The default collection methods are `Hands`, `Mist net`, `Sweep net`,
+`Snap trap`, `Cage trap`, `Pitfall`, `Malaise trap`, `Light trap`,
+`Beating sheet`, `Aspirator`, `Local snare`, `Pellet gun`, and `Other`. The
+default personnel roles are `Leader` and `Helper`. Add values that fit your
+protocol, such as harp trap, visual encounter survey, driver, recorder, or
+observer.
 
 ## Creating a new event
 
 {% steps %}
 1. Navigate to the event page using the bottom navigation bar.
 
-2. Use the `+` button {% ref id="A" /%} at the top right corner to create a new event.
+2. Use the add icon {% ref id="A" /%} at the top right corner to create a new event.
 
     You can also use the three dot menu icon and tap on `Create event`.
 
@@ -94,7 +93,7 @@ observer, depending on your protocol.
 
 3. Select the `Site ID` {% ref id="C" /%}.
 
-4. Add the `Start Date` and `End Date`.
+4. Add the `Start Date` and `End Date`. Future dates cannot be chosen.
 
     The `Event ID` {% ref id="B" /%} is generated from `{Site ID}-{Start Date}`.
 
@@ -119,7 +118,7 @@ observer, depending on your protocol.
 
 ## Event details
 
-The `Event Details` card stores the core event identity and timing:
+The `Event Identity` card stores the core event identity and timing:
 
 - `Event ID`: generated from site ID, start date, and optional suffix.
 - `Site ID`: site where the event occurred.
@@ -144,7 +143,7 @@ The `Activity` card stores the broad purpose of the event.
 
 {% steps %}
 
-1. Use the `+ Add collection method` {% ref id="F" /%} button to create a new
+1. Select `Add collection method` {% ref id="F" /%} to create a new
     collection method.
 
 2. Select a method.
@@ -175,12 +174,14 @@ specimen's `Method`.
 
 ## Adding collecting personnel
 
-Use the `Event Personnel` tab to record everyone involved in the event.
+The event panel has three icon tabs: people for personnel, a cloud for
+environmental data, and storage for associated data. Use the personnel tab to
+record everyone involved in the event.
 
 {% steps %}
 
-1. Open the personnel tab in the lower right event panel.
-2. Use `+ Add personnel` {% ref id="G" /%}.
+1. Open the personnel tab (people icon) in the event panel.
+2. Select `Add personnel` {% ref id="G" /%}.
 3. Select a `Personnel` entry from the project personnel list.
 4. Select a `Role`.
 
@@ -193,12 +194,15 @@ later select an event personnel entry as the specimen's `Collector`.
 
 ## Environmental data and astronomy {% #environmental-data-and-astronomy %}
 
-Enter astronomy values from observations or a documented source; NAHPU does not calculate sunrise, sunset, or moon phase. Use the project’s local-time convention and leave unmeasured values empty. Fields update as you edit; check validation messages before leaving the form.
-
 NAHPU creates one environmental-data record {% ref id="H" /%} for each collecting event. In
 `Settings` > `Events`, select which built-in fields appear in the form. Hiding
 a field changes only the form: previously stored values remain in the database
 and in exports.
+
+Enter astronomy values from observations or a documented source; NAHPU does
+not calculate sunrise, sunset, or moon phase. Use the project's local-time
+convention and leave unmeasured values empty. Fields save as you edit; check
+any validation message before leaving the form.
 
 Available built-in fields include:
 
@@ -207,7 +211,7 @@ Available built-in fields include:
   Celsius.
 - `Average`: average humidity percentage.
 - `Dew Point`: dew point temperature.
-- `Cloud cover`: a code from `0` (clear) through `8` (fully overcast), or `9`
+- `Cloud cover (oktas)`: a code from `0` (clear) through `8` (fully overcast), or `9`
   when the sky is obscured. One okta represents one eighth of the visible sky.
 - `Rainfall`, `Ambient temperature`, and `Ambient humidity`: conditions at the
   event.
@@ -216,7 +220,7 @@ Available built-in fields include:
   measurements. Settings show each field's unit, such as `mg/L` for dissolved
   oxygen, `%` for saturation, and `µS/cm` for conductivity.
 - `Sunrise` and `Sunset`: local sunrise and sunset times.
-- `Moon Phase`: one of `New Moon`, `Waxing Crescent`, `First Quarter`,
+- `Moon phase`: one of `New Moon`, `Waxing Crescent`, `First Quarter`,
   `Waxing Gibbous`, `Full Moon`, `Waning Gibbous`, `Last Quarter`, or
   `Waning Crescent`.
 - `Notes`: additional weather, habitat, or astronomy notes.

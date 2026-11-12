@@ -6,54 +6,52 @@ sidebar:
 ---
 
 {% steps %}
-1. Navigate to the specimen page using the bottom navigation bar.
+1. Open `Specimens` from the bottom navigation bar, or from the side rail on a
+   wide screen.
 
-2. Click the `+` button to add a new specimen record.
-
-    You can also use the three-dot menu and choose a duplicate action when you
-    want to reuse part of the current specimen record.
+2. Select the add icon in the app bar to create a specimen. On an empty list,
+   select `Create specimen`.
 
     {% aside type="tip" %}
 
-    If you collect the same `Specimen part` for each new specimen, use
-    `Duplicate part` to minimize repetitive entry. Review the copied part before
-    saving because part-level IDs, timing, and treatments should still match the
-    new specimen.
+    If every specimen gets the same parts, open a specimen that has them and
+    choose `Duplicate part` from the three-dot menu. NAHPU immediately creates
+    a new specimen with a copy of each part's type, count, treatments, storage,
+    and museum fields. Tissue IDs, barcodes, preparators, dates, and remarks are
+    not copied; fill them in on the new specimen. Nothing is created if the
+    specimen has no parts.
 
     {% /aside %}
 
 3. Select `Cataloger`.
 
-    This is the person responsible for cataloging the specimen. Depending on the
-    project field ID mode, NAHPU can use the cataloger's field number or a
-    project-level field number.
+    This is the person responsible for cataloging the specimen. NAHPU also sets
+    `Preparator` and `Determiner` to this person. Depending on the project's
+    field ID mode, the field number comes from the cataloger or from the
+    project.
 
-4. Select `Preparator`.
+4. Change `Preparator` if someone else prepared the voucher or part.
 
-    NAHPU defaults the preparator to the cataloger. If a different person
-    prepares the voucher or part, update the preparator field.
-
-5. Select the `Taxon`.
-
-    Start typing to search the project's taxon registry, then select the
-    matching record from the list. NAHPU populates the `Taxon Info` panel from
-    that taxon record. Because the registry holds records at any rank, material
-    that is not yet identified to species can be linked to its family or genus
-    and refined later.
-
-6. Select `ID Confidence`.
-
-    This tells later reviewers how confident you are in the identification and
-    helps curators prioritize records that need review. The values are `Low`,
-    `Medium`, and `High`.
-
-7. Select the specimen `Condition`.
+5. Select the specimen `Condition`.
 
     The default values are `Freshly euthanized`, `Good`, `Fair`, `Poor`,
-    `Rotten`, `Released`, and `Unknown`. Conditions are a controlled
-    vocabulary: edit the list in `Settings` > `Specimens` > `Conditions`.
+    `Rotten`, `Released`, and `Unknown`. Edit the list in `Settings` >
+    `Specimens` > `Conditions`.
 
-8. Add the `Collection date`, `Collection time`, `Prep. date`, and `Prep. time`
+6. Add the `Collection date`, `Collection time`, `Prep. date`, and `Prep. time`
    when available.
+
+7. Under the identification fields, select the `Taxon`.
+
+    Start typing to search the project's taxon registry, then select the
+    matching record. NAHPU fills the `Taxon Info` panel from it. Because the
+    registry holds records at any rank, material not yet identified to species
+    can be linked to its family or genus and refined later.
+
+8. Change `Determiner` if someone other than the cataloger identified it.
+
+9. Select `ID Confidence`: `Low`, `Medium`, or `High`. It tells reviewers how
+   sure the identification is and helps curators decide what to check. Once it
+   is set, `Identification Method` appears.
 
 {% /steps %}

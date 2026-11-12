@@ -37,16 +37,17 @@ to create a new identity or reuse project information from another device.
 {% steps %}
 
 1. On `Welcome`, select `Create new project` {% ref id="E" /%}. To reuse an existing project
-   identity instead, select `Import project-info JSON` {% ref id="F" /%} or, on mobile, `Scan
-   project QR`.
+   identity instead, select `Import project-info JSON` {% ref id="F" /%} or, on
+   a device with a camera scanner (Android, iOS, macOS, or web),
+   `Scan project QR`.
 2. Under `Project information`, enter a unique project name between 3 and 25
    characters. Optionally add a description, principal investigator,
    institutional accession, location, IANA time zone, and start and end dates.
 3. Under `Main taxon`, choose the taxon that should control new specimen forms
    on this device. A project can contain multiple taxon groups. This step can
-   be skipped and changed later in `Settings` > `Format`.
+   be skipped and changed later in `Settings` > `Catalogs` > `Format`.
 4. Under `Field ID`, choose `Personnel` or `Project`. This step can also be
-   skipped and completed later in `Settings` > `Specimens`.
+   skipped and completed later in `Settings` > `Catalogs` > `Specimens`.
    - `Personnel` uses an eligible Cataloger's initials and personal field
      number. Select an existing Cataloger or create one when the conditional
      `Cataloger` step appears.
@@ -69,50 +70,30 @@ those data must also move between devices.
 
 ## Project time zone
 
-The `Time zone` field records the IANA time-zone location where the project is
-being conducted, such as `Asia/Jakarta` or `America/New_York`. Select the
-location that best represents the fieldwork rather than the time zone of a
-device used to enter data.
+The `Time zone` field records where the fieldwork happens, as an IANA time-zone
+name such as `Asia/Jakarta` or `America/New_York`. Choose the fieldwork's time
+zone, not the time zone of the device used to enter data.
 
-NAHPU stores the selected time zone as project metadata. It is shown in the
-Project Overview, included when project information or a full project transfer
-is exchanged, and available as the `project::timeZone` value in document
-templates and exports. It provides context for interpreting dates and times
-when data is reviewed on another device or shared with collaborators.
+**NAHPU never converts times.** Every date and time in a record is stored
+exactly as entered, as the local clock time in the field. Opening the project
+on a device in another time zone does not shift them. That device may only
+format them differently, such as a different date order or a 12-hour clock.
 
-The time zone does not change the device clock or automatically convert
-existing narrative, event, or specimen times. Those times remain the local
-clock values entered in their records, so record the fieldwork time using the
-project's selected time zone and keep that setting consistent across devices.
+For example, with the project time zone `Asia/Jakarta`, an event entered as
+**12 May, 08:30** shows as 08:30 on every device. The project time zone tells
+readers which clock that `08:30` refers to.
 
-### Viewing dates and times on another device
+The time zone is shown in the Project overview, travels with project
+information and project transfers, and is available as `project::timeZone` in
+document templates and exports. A database that stores times in UTC can use it
+to convert them correctly.
 
-NAHPU stores record dates and times as plain values rather than as
-timezone-aware instants. When the same project is opened on another device,
-NAHPU does not shift a recorded time based on that device's time zone. The
-device may format the same value differently according to its locale—for
-example, changing the date order, month name, or 12-/24-hour clock—but the
-entered wall-clock value remains unchanged.
+Changing the time zone does not change the device clock or rewrite times
+already entered. Keep it the same on every device in the project.
 
-For example, if the project time zone is `Asia/Jakarta` and a field event is
-entered as **12 May, 08:30**, another device may display the date and time in a
-different local format, but it will not convert the value to a
-different clock time. This is important because time zone conversion
-is irrelevant for specimen collection, and would mean something
-different for organism activities. `Asia/Jakarta` identifies the
-context in which `08:30` should be understood.
-
-### Why the project time zone matters
-
-Keeping the project time zone accurate helps collaborators compare field events
-entered on different devices, preserves temporal context when project data is
-shared or transferred, and supports reproducible interpretation of exported
-records. A third-party database that stores temporal context in UTC
-can use the time zone to interpret the data correctly.
-If a team works across time zones or enters historical data from
-another location, explain the exception in a project description or other
-appropriate record context, such as in a narrative. When appropriate, we
-recommend creating a separate project for a location in a different time zone.
+If a team works across time zones, or enters historical data from elsewhere,
+note the exception in the project description or a narrative. A separate
+project for each time zone is usually clearer.
 
 ## Managing projects from the home screen
 
@@ -128,16 +109,17 @@ Each project has an action menu with these options:
 
 The dashboard contains four panels:
 
-- **Project Overview** {% ref id="A" /%} - Shows the project name, UUID, description, principal
+- **Project overview** {% ref id="A" /%} - Shows the project name, UUID, description, principal
   investigator, accession, location, time zone, dates, creation date, and last
   access. Information is grouped as Identity, Description, Project details,
   Schedule, and Record metadata.
   Use `Edit` {% ref id="B" /%} to change the project and `Export info` to share {% ref id="C" /%} its information.
 - **Personnel** {% ref id="D" /%} - Lists personnel assigned to the project. Use `Add personnel`
-  to select an existing database entry or create a new one.
-- **Taxon Registry** - Lists registered taxa and provides controls to add or
+  to select an existing database entry or create a new one, and `Manage` to
+  edit the project's personnel.
+- **Taxon registry** - Lists registered taxa and provides controls to add or
   import taxa.
-- **Record Statistics** - Summarizes records in the project and provides
+- **Record statistics** - Summarizes records in the project and provides
   access to more detailed statistics.
 
 The project menu also contains project transfer, export, backup, settings, and
@@ -145,7 +127,7 @@ project deletion actions.
 
 ## Updating project information
 
-From the dashboard, select `Edit` in the Project Overview panel. From the
+From the dashboard, select `Edit` in the Project overview panel. From the
 home screen, open a project's action menu and select `Edit info`. The edit form
 groups fields under Project details, Place and time, and Project dates. Change
 the main taxon or field-ID defaults in [Settings](../settings).
@@ -158,7 +140,8 @@ records:
 1. On the source device, choose `Export info` or `Show QR` from the project's
    home-screen action menu.
 2. On the receiving device, choose `Create project`, then use `Import project-info
-   JSON` or `Scan project QR` {% ref id="G" /%} on mobile.
+   JSON` or `Scan project QR` {% ref id="G" /%} on a device with a camera
+   scanner.
 
 These methods retain the source project's UUID and create a project with the
 same project information. To transfer records, media, and related data, use
@@ -166,11 +149,19 @@ the [Transfer a Project](../export/project-transfer) workflow instead.
 
 ## Transferring project data
 
-Use `Export project` to create a transfer. On the receiving installation, home-screen `Import project` creates a local project; `Merge project` combines data with a project that already exists. Importing project-info JSON or a project QR code creates only the project identity, without records or media.
+To move records and media, use `Export project` from the project menu, then on
+the receiving device:
 
-ZIP and TAR.GZ project exports include available media. Light JSON.GZ includes records only. Review missing-file warnings and keep the source until records and attachments on the receiving device are verified.
+| On the receiving device | Use | Result |
+| --- | --- | --- |
+| The project does not exist yet | `Import project` on the home screen | A new local project |
+| The project already exists | `Merge project` in that project's Dashboard menu | The imported records combined with the existing ones |
 
-A compatible NAHPU Data Package can also be imported or merged because it includes the project payload. Darwin Core packages and tabular exports cannot restore a NAHPU project. Database replacement is a separate installation-level recovery operation.
+ZIP and TAR.GZ exports include media; `Light export` (JSON.GZ) includes records
+only. A NAHPU Data Package can also be imported or merged. Darwin Core packages
+and tabular exports cannot restore a project. Keep the source file until you
+have checked the records and attachments on the receiving device. See
+[Project transfer](../export/project-transfer) for every step.
 
 ## Deleting a project
 

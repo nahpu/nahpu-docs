@@ -18,9 +18,10 @@ title: Settings
 {% pin id="G" label="Primary activities" large=[55.5, 21.1] small2=[70.2, 17.1] /%}
 {% /screenshots %}
 
-NAHPU separates project records, shared database records, reproducible user
-configs, and installation-only preferences. Open a project, open the
-Dashboard menu, and select `Settings` to configure the current installation.
+Settings control how NAHPU works on this device: catalog formats, controlled
+lists, custom fields, presets, and app preferences. Open `Settings` from the
+home screen menu or from a project's Dashboard menu. Custom fields for one
+project need that project open.
 
 ## What each setting affects
 
@@ -29,65 +30,119 @@ Dashboard menu, and select `Settings` to configure the current installation.
 | Project information | Name, accession, location, time zone, dates, project field-ID values | Included in project-info and project transfers |
 | Shared database records | Taxa and personnel | Stored in the NAHPU database and associated with projects |
 | User configs | Controlled vocabularies and export or document presets | Transfer with `Export user configs` and `Import user configs` |
-| Installation state | Theme and current main taxon | Remains on the current installation |
+| Installation state | Theme, language, and current main taxon | Remains on the current installation |
 
-Changing a setting while one project is open can therefore affect other
-projects on the same installation. Review transferred user configs before
-replacing your current configuration.
+Changing a setting while one project is open can affect other projects on the
+same installation. Review transferred user configs before replacing your
+current configuration.
 
 ## Catalogs
 
 ### Format
 
-`Format` selects {% ref id="A" /%} the main taxon used for new specimen forms on this device. A
-project can contain more than one taxon group; this setting only controls the
-currently active specimen format and its measurement fields.
+`Format` {% ref id="A" /%} selects the main taxon used for new specimen forms
+on this device. A project can contain more than one taxon group; this setting
+only controls the currently active specimen format and its measurement fields.
 
-### Events and sites
+### Sites
 
-Use `Events` {% ref id="C" /%} to manage the controlled primary-activity list {% ref id="G" /%}, collection
-methods, event-personnel roles, and environmental fields shown on event forms.
-Primary activities default to `Collecting`, `Recording`, and `Observing`;
-`Other` is not included unless you add it. Environmental forms initially show
-ambient temperature, ambient humidity, cloud cover, rainfall, and notes. Like
-Geography settings, the other built-in fields can be shown or hidden without
-deleting stored values. Use `Sites` {% ref id="B" /%} to manage controlled vocabularies for site
-and habitat types. Keep these settings consistent across field devices by
-transferring user configs.
+`Sites` {% ref id="B" /%} manages:
+
+- the site types and habitat types offered on site forms;
+- coordinate datums;
+- `Geography fields`: which geography fields site forms show;
+- `Map layers` for the coordinate map.
+
+Hiding a field never deletes values already stored in it.
+
+### Events
+
+`Events` {% ref id="C" /%} manages the primary-activity list {% ref id="G" /%},
+collection methods, event-personnel roles, and the environmental fields shown
+on event forms. Primary activities default to `Collecting`, `Recording`, and
+`Observing`; `Other` is not included unless you add it. Environmental forms
+start with ambient temperature, ambient humidity, cloud cover, rainfall, and
+notes; show or hide other fields the same way as geography fields.
+
+Keep these lists the same on every field device by transferring user configs.
 
 ### Specimens
 
-`Specimens` contains {% ref id="D" /%} capture-field visibility, field IDs, tissue IDs, specimen
-sexes, specimen types, treatments, conditions, and taxon-dependent symbiont
-settings. Symbiont interaction types, categories, detection methods, preparation methods, anatomical locations,
-storage, and treatments start with editable default values.
+`Specimens` {% ref id="D" /%} contains:
 
-The specimen-sex vocabulary is restricted. `Male`, `Female`, and `Unknown`
-remain available for every taxon. Use the `+` chips to add `Gynandromorph`,
-`Hermaphrodite`, `Female?`, or `Male?` to specimen dropdowns. Optional chips can
-be removed only when no specimen record in the database uses that value.
+- `Always show collector field` and other capture-field visibility;
+- `Field ID` and `Tissue ID` numbering, described below;
+- controlled lists for specimen sex, `Identification Methods`, `Life Stages`,
+  specimen types, treatments, and conditions;
+- symbiont settings: interaction types, categories, detection and preparation
+  methods, anatomical locations, storage, and treatments, all starting with
+  editable defaults.
 
-Under `Field ID`, leave `Use project ID` off to use a Cataloger's initials and
-personal field number. The Cataloger must have the `Cataloger` role, field
-registration enabled, initials, and a current field number.
+The specimen-sex list is restricted. `Male`, `Female`, and `Unknown` are always
+available. Use the `+` chips to add `Gynandromorph`, `Hermaphrodite`,
+`Female?`, or `Male?`. An added option can be removed only when no specimen in
+the database uses it.
 
-Turn on `Use project ID` to configure a prefix, current catalog number, suffix,
-and auto-increment behavior. NAHPU concatenates the three values directly. For
-example, `NAHPU-`, `120`, and `-M` produce `NAHPU-120-M`.
+#### Field ID
+
+Under `Field ID`, choose how specimens are numbered:
+
+| Choice | Field ID is built from | Needs |
+| --- | --- | --- |
+| `Personnel ID` (default) | The Cataloger's initials and their own running number | A person with the `Cataloger` role in the project, with initials and a current field number |
+| `Project ID` | `Prefix` + `Current catalog number` + `Suffix` | The three values, and whether `Auto-increment catalog number` is on |
+
+With `Project ID`, NAHPU joins the three values directly: `NAHPU-`, `120`, and
+`-M` give `NAHPU-120-M`. Select `Save field ID settings` to apply them.
 
 {% aside type="caution" %}
 
 Changing a project-ID prefix or suffix changes how assigned project IDs are
-displayed. Confirm the change carefully if those identifiers have already
-been exported or written on labels.
+displayed, and NAHPU asks you to confirm. Check first whether those IDs are
+already exported or written on labels.
 
 {% /aside %}
 
-`Tissue ID` takes a prefix, a next number, and a suffix, and shows a preview of
-the next tissue ID. Leading zeros in the number are kept, so `M0042-T` is
-followed by `M0043-T`. For the Ichthyology catalog format, `Individual tag ID`
-numbers the individuals in a fish lot the same way; see
+#### Tissue ID
+
+`Tissue ID` takes a prefix, a next number, and a suffix, and previews the next
+tissue ID. Leading zeros are kept, so `M0042-T` is followed by `M0043-T`. For
+the Ichthyology catalog format, `Individual tag ID` numbers the individuals in a
+fish lot the same way; see
 [Fishes](/en/usages/specimens/measurements/fishes/#tag-id-numbering).
+
+### Custom fields {% #custom-fields %}
+
+`Custom fields` {% ref id="E" /%} adds your own fields to site, environmental,
+specimen, part, and symbiont forms.
+
+| Setting | Options |
+| --- | --- |
+| Type | Text, Number, Yes / No, Dropdown |
+| Scope | `Current project` (this project only) or `Global` (every project on this installation); chosen at creation |
+| Catalog | Specimen-related fields can be limited to some catalog formats |
+| Darwin Core mapping | Optional export term for the field |
+
+{% steps %}
+
+1. Open the project, go to `Settings` > `Custom fields`, and select
+   `Add custom field`. Choose where the field appears.
+2. Set `Label` and `Type`. For a dropdown, enter the allowed options. Put the
+   unit in the label of a number field, such as "Canopy height (m)".
+3. Choose the scope, and for specimen fields, the catalog formats.
+4. Optionally set a Darwin Core mapping. Mapping a field does not check its
+   values, so inspect a sample export before sharing data.
+5. Save, open a record in that section, enter a test value, and reopen the
+   record to check it.
+6. To share the field, export it from `Custom fields` or with the user configs,
+   import it on the other device, and check the section, scope, and options.
+
+{% /steps %}
+
+To stop using a field, select `Archive`: its data stays, and `Restore` brings it
+back. `Delete` shows as `Delete (values in use)` and is unavailable while any
+record stores a value. Discarding legacy values is a separate, irreversible
+action.
 
 ## Database
 
@@ -122,10 +177,15 @@ reproduce the same columns, labels, or layouts.
 
 ## Applications
 
-### Theme
+These preferences apply only to this installation.
 
-Use `Theme` to select `System`, `Light`, or `Dark`. The choice applies only to
-the current installation.
+| Setting | What it does |
+| --- | --- |
+| `Theme` | `System`, `Light`, or `Dark`. |
+| `Language` | The app's language. In beta. |
+| `Regional format` | How dates and numbers are shown on screen. Saved records and exports keep standard formats. In beta. |
+| `Tools` | Chooses the tools shown on the project dashboard. |
+| `Data usage` | Storage report and cleanup, described below. |
 
 ### Data usage and cleanup
 
@@ -140,37 +200,17 @@ NAHPU-managed folders are not affected. Remove an installed font from
 `Documents` > `Fonts` rather than from here.
 
 The `Files` tree lets you inspect stored files, save a copy, or remove eligible
-files individually. Choose `Select` to work with several files. Use `Clear` or
+files one by one. Choose `Select` to work with several files. Use `Clear` or
 `Select all`, then choose the floating `Review` button to check the file count,
-size, and grouped locations before exporting an archive or permanently
-removing the files.
+size, and locations before exporting an archive or permanently removing the
+files.
 
-Choose `Rescan` after files have changed outside NAHPU to refresh the storage
-report.
+Choose `Rescan` after files have changed outside NAHPU to refresh the report.
 
 ## Transferring user configs
 
-`Export user configs` and `Import user configs` are in the project Dashboard
-menu, next to `Settings`; they are not inside the Settings page. User-config
-transfer can reproduce controlled vocabularies and presets without replacing the
-project database. See [Export](../export) before replacing configs or data.
-
-## Custom fields {% #custom-fields %}
-
-Field definitions specify where a value belongs and how it is entered. Types are Text, Number, Yes / No, and Dropdown. Use a consistent unit in the label and project protocol for numeric observations. Scope is selected at creation: `Current project` applies to one project and `Global` to the installation. Specimen-related fields can be restricted by catalog; environmental fields belong to events.
-
-Optional Darwin Core mappings specify an export target and field. Review their meaning in the intended export and inspect a sample output before sharing data. Mapping a field name does not validate its values. Existing values can prevent deletion; archive a field to stop using it while retaining the data. Discarding legacy values is a separate irreversible action.
-
-Define additional fields and verify how they appear in project records.
-
-## Steps
-
-{% steps %}
-
-1. Open the intended project and go to `Settings` > `Custom fields` {% ref id="E" /%}, then create a field and choose its target section.
-2. Set `Label` and `Type`. For a dropdown, enter the permitted options. Choose `Current project` or `Global` scope; global definitions apply across this installation.
-3. For specimen-related fields, check catalog applicability. Use the reference guide for optional Darwin Core mappings.
-4. Save the definition, open a record in the target section, and enter a test value using the agreed unit convention. Reopen the record to check the value.
-5. Use `Archive` to retire a field while retaining its data, and `Restore` to make it available again. `Delete` is unavailable while stored values remain.
-6. Export the definition from `Custom fields` or include it in user-config transfer. Import it on the receiving device and verify the target section, scope, and options.
-{% /steps %}
+`Export user configs` is in the home screen menu and the project Dashboard
+menu; `Import user configs` is in the Dashboard menu. Neither is inside the
+Settings page. A user-config transfer reproduces controlled lists and presets
+without replacing the project database. See [Export](../export) before
+replacing configs or data.

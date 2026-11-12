@@ -5,20 +5,48 @@ sidebar:
   order: 6
 ---
 
-Setiap spesimen dapat memiliki banyak bagian, seperti voucher, jaringan, atau
-swab. Organisme yang hidup di permukaan atau di dalam spesimen dicatat terpisah
-sebagai [simbion](#symbionts). Bagian dapat berisi `Tissue ID`, `QR/barcode ID`,
-`Preparation type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`,
-`Preparator`, `Storage type`, `Storage location`, `Date taken`, `PMI`, museum
-permanen, museum pinjaman, dan `Remarks`.
+Gunakan `Bagian spesimen` untuk preparasi spesimen bukti, jaringan, swab, dan
+bagian fisik lain yang berasal dari spesimen. Setiap spesimen dapat memiliki
+banyak bagian. Organisme yang ditemukan hidup di permukaan atau di dalam
+spesimen dicatat terpisah sebagai [simbion](#symbionts).
 
-Tab simbion tersedia untuk mamalia, burung, herpetofauna, dan ikan, tetapi
-tidak untuk katalog invertebrata. Untuk lot ikan yang memiliki catatan
-individu, bagian spesimen dan simbion dapat ditautkan ke individu asalnya;
-lihat [Ikan](/id/usages/specimens/measurements/fishes/#parts-and-symbionts).
+Kartu `Bagian spesimen` memiliki tab ikon: tab pertama memuat bagian, ikon
+serangga memuat simbion, dan ikon penyimpanan memuat
+[data terkait](/id/usages/specimens/associated-data-and-media/). Tab simbion
+tersedia untuk mamalia, burung, herpetofauna, dan ikan, tetapi tidak untuk
+katalog invertebrata. Untuk lot ikan yang memiliki catatan individu, bagian dan
+simbion dapat ditautkan ke individu asalnya; lihat
+[Ikan](/id/usages/specimens/measurements/fishes/#parts-and-symbionts).
 
-Kolom `Individuals` hanya ditampilkan untuk lot ikan yang memiliki catatan
-individu. Kolom ini menautkan bagian ke satu atau beberapa individu dalam lot.
+Kolom bagian meliputi:
+
+| Kolom | Catatan |
+| --- | --- |
+| `ID jaringan` | Opsional. Selama kolom kosong, ikon ulangi menyalin ID jaringan terakhir yang dimasukkan untuk spesimen ini. `Opsi ID jaringan` menawarkan `Nomor baru`, yang mengambil nomor jaringan berikutnya sesuai pengaturan, dan `Pengaturan`. |
+| `Individu` | Hanya untuk lot ikan yang memiliki catatan individu. Menautkan bagian ke individu dalam lot. |
+| `ID QR/kode batang` | ID unik opsional untuk tabung, label, atau wadah. Pindai dengan kamera, atau buat UUID. |
+| `Jenis preparasi` | Dari daftar jenis spesimen Anda. |
+| `Jumlah` | Jumlah bagian atau wadah. |
+| `Perlakuan`, `Perlakuan tambahan` | Perlakuan pengawetan. |
+| `Waktu pengambilan` | Kapan bagian diambil; dianjurkan untuk jaringan segar. |
+| `Catatan` | Catatan tentang bagian ini. |
+
+Kolom berikut muncul setelah `Tampilkan lebih banyak`, atau setelah berisi
+nilai:
+
+| Kolom | Catatan |
+| --- | --- |
+| `Preparator` | Jika berbeda dari preparator spesimen bukti. |
+| `Tanggal pengambilan` | Kapan bagian diambil. |
+| `PMI` | Interval pascakematian (*post-mortem interval*), misalnya `1:30`. |
+| `Jenis penyimpanan`, `Lokasi penyimpanan` | Media penyimpanan, serta posisi lemari beku, lemari, rak, atau kotak. |
+| `Koleksi tetap museum`, `Pinjaman museum` | Museum yang menyimpan bagian, dan museum yang menerimanya sebagai pinjaman. |
+
+Kolom kustom untuk bagian juga muncul di formulir.
+
+Daftar bagian menampilkan jenis bagian, jumlah, ID kode batang, preparator, ID
+jaringan, perlakuan, tanggal dan waktu, PMI, individu ikan yang ditautkan, dan
+apakah ada catatan.
 
 ## Simbion {% #symbionts %}
 
@@ -26,20 +54,35 @@ Simbion adalah organisme apa pun yang hidup di permukaan atau di dalam
 spesimen inang, apa pun hubungannya dengan inang: parasitik, mutualistik,
 komensal, foretik, dan sebagainya. Dua kolom menjelaskan asosiasinya:
 
-- `Interaction type` (Jenis interaksi): bagaimana simbion berhubungan dengan
-  inangnya. Kosakata bawaannya adalah `Parasitic`, `Parasitoid`,
-  `Mutualistic`, `Commensal`, `Phoretic`, dan `Unknown`. Catatan yang dibuat
-  sebelum perubahan ini dimigrasikan dengan jenis interaksi `Parasitic`.
-- `Category`: tempat simbion hidup pada inangnya. Nilai bawaannya adalah
-  `Ectosymbiont`, `Endosymbiont`, dan `Mesosymbiont`. Memilih kategori
-  mempersempit daftar `Anatomical location`; nilai lama yang tersimpan, seperti
-  `Ectoparasite`, tetap menyaring daftar dengan cara yang sama.
+- `Jenis interaksi`: bagaimana simbion berhubungan dengan inangnya. Kosakata
+  bawaannya adalah `Parasitic`, `Parasitoid`, `Mutualistic`, `Commensal`,
+  `Phoretic`, dan `Unknown`. Catatan yang dibuat sebelum NAHPU mencatat simbion
+  dimigrasikan dengan jenis interaksi `Parasitic`.
+- `Kategori`: tempat simbion hidup pada inangnya. Nilai bawaannya adalah
+  `Ectosymbiont`, `Endosymbiont`, dan `Mesosymbiont`.
 
-Pada spesimen, `Symbionts examined` dan `Symbionts detected` mencatat apakah
-inang sudah diperiksa dan apakah ada yang ditemukan, sehingga pemeriksaan tanpa
-simbion tetap terdokumentasi. Catatan simbion memisahkan metode penyimpanan
-dari lokasi fisiknya.
+Pada spesimen itu sendiri, `Simbion diperiksa` dan `Simbion terdeteksi` mencatat
+apakah inang sudah diperiksa dan apakah ada yang ditemukan, sehingga
+pemeriksaan tanpa simbion tetap terdokumentasi.
 
-Dalam ekspor Darwin Core, jenis interaksi menjadi `organismInteractionType`;
-catatan tanpa jenis interaksi memakai kategorinya. Bila jenis interaksi diisi,
+Catatan simbion memisahkan pengumpulan dari identifikasi:
+
+- `Kolektor`: siapa yang mengambil simbion. Nilai awalnya adalah preparator
+  inang, atau pengatalognya jika preparator belum diisi.
+- `Pengidentifikasi`, `Tanggal identifikasi`, dan `Metode identifikasi`: siapa
+  yang mengidentifikasi simbion, kapan, dan bagaimana. Metode ini memakai daftar
+  yang sama dengan metode identifikasi spesimen.
+- `Kategori` dan `Lokasi anatomi`: memilih kategori mempersempit daftar lokasi
+  ke tempat yang sesuai. Nilai kategori lama, seperti `Ectoparasite` dan
+  `Endoparasite`, mempersempitnya dengan cara yang sama. Lokasi yang Anda
+  tambahkan sendiri selalu tetap ada di daftar.
+
+Tahap hidup, metode deteksi, metode preparasi, dan penomoran ID simbion diatur
+di `Pengaturan` > `Spesimen`.
+
+Catatan kurasi simbion memiliki kolom `Penyimpanan` dan `Lokasi penyimpanan`
+sendiri sehingga metode pengawetan dan lokasi fisiknya dapat dicatat terpisah.
+
+Dalam ekspor Darwin Core, jenis interaksi menjadi `organismInteractionType`.
+Catatan tanpa jenis interaksi memakai kategorinya. Bila jenis interaksi diisi,
 kategori dan status asosiasi masuk ke `organismInteractionDescription`.

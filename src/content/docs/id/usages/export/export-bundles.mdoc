@@ -20,22 +20,23 @@ sidebar:
 {% pin id="G" label="Buat bundel" large=[58.2, 93.2] small=[69.3, 92.3] /%}
 {% /screenshots %}
 
-Gunakan `Bundle records` untuk mengemas data dan berkas NAHPU yang saling
-terkait untuk pertukaran, publikasi, pengarsipan, atau reproduksibilitas. Layar
-pengemasan menampilkan pratinjau berkas dan kolom tabel yang tepat sebelum
-apa pun ditulis.
+Gunakan `Bundel catatan` untuk mengemas data proyek beserta berkasnya, untuk
+diterbitkan, diarsipkan, atau dianalisis secara terulang. Layar bundel
+menampilkan berkas dan bidang yang akan ditulis sebelum apa pun dibuat.
 
-NAHPU menyediakan tiga jenis paket:
+## Memilih format bundel {% #choose-a-bundle-format %}
 
-- **Darwin Core Archive (DCA)** untuk sistem publikasi keanekaragaman hayati
-  mapan yang mengharapkan kumpulan data linear, didukung oleh sebagian besar
-  sistem manajemen koleksi utama dan agregator data keanekaragaman hayati.
-- **Darwin Core Data Package (DwC-DP)** adalah versi lanjutan dari Darwin Core
-  Archive, dikemas sebagai data Darwin Core relasional.
-- **NAHPU Data Package** untuk salinan proyek aktif yang dapat direproduksi;
-  mencakup JSON proyek lengkap, konfigurasi pengguna, dan seluruh berkas
-  terkait. Paket ini cocok untuk analisis di Python, R, dan
-  [perkakas lain yang kompatibel dengan Frictionless](https://frictionlessdata.io).
+| Format | Pilih bila | Isinya | Dapat diimpor NAHPU |
+|---|---|---|---|
+| **Darwin Core Archive** (`.dwca.zip`) | Basis data museum atau portal keanekaragaman hayati, seperti GBIF, meminta DwC-A | Spesimen dalam satu tabel datar, dengan bagian, ukuran, dan media di tabel ekstensi | Tidak |
+| **Darwin Core Data Package** (`.dwc-dp.tar.gz`) | Penerima mendukung format Darwin Core relasional yang lebih baru | Spesimen, peristiwa, identifikasi, bagian, dan orang dalam tabel Darwin Core yang saling terhubung | Tidak |
+| **NAHPU Data Package** (`.nahpu-dp.tar.gz`) | Anda memerlukan semuanya, untuk analisis di R atau Python, arsip jangka panjang, atau salinan lengkap | Seluruh proyek, setiap tabel NAHPU, pengaturan, dan berkas | Ya, dengan `Impor proyek` atau `Gabungkan proyek` |
+
+Format Darwin Core hanya berisi nilai yang memiliki istilah Darwin Core, Dublin
+Core, atau Audubon Core yang terdaftar. Pilih NAHPU Data Package bila tidak ada
+yang boleh hilang, termasuk bidang kustom. Paket ini dapat dibaca dengan alat
+[Frictionless](https://frictionlessdata.io) apa pun;
+[Tutorial 3](/id/tutorials/custom-data-package-script/) menunjukkan caranya.
 
 ## Membuat paket
 
@@ -94,6 +95,10 @@ Darwin Core Archive selalu memakai ZIP karena ZIP merupakan bagian dari alur
 pertukarannya yang normal.
 
 ## Penjelasan mendalam
+
+Bagian di bawah ini menjelaskan berkas setiap paket dan cara NAHPU mengisinya.
+Anda tidak memerlukannya untuk membuat bundel; gunakan bila penerima bertanya
+isi sebuah berkas, atau bila Anda memproses paket sendiri.
 
 ### Darwin Core Archive
 
@@ -452,19 +457,18 @@ Isi paket di dalamnya sama pada kedua wadah tersebut.
 
 ## Paket dibandingkan cadangan
 
-Paket Darwin Core adalah format pertukaran dan bukan cadangan NAHPU yang dapat
-dipulihkan.
+| | Bundel Darwin Core | NAHPU Data Package | Cadangan basis data |
+|---|---|---|---|
+| Memulihkan proyek NAHPU | Tidak | Ya, melalui `Impor proyek` atau `Gabungkan proyek` | Ya, seluruh instalasi |
+| Tujuan utama | Pertukaran dengan sistem lain | Salinan satu proyek yang terdokumentasi dan dapat dipakai ulang | Pemulihan perangkat ini |
 
-Kontributor yang menambah kolom paket atau grup takson sebaiknya membaca
-[Alur ekspor (bahasa Inggris)](/en/contributing/code/data-export-workflows/) dan
-[Menambahkan grup takson (bahasa Inggris)](/en/contributing/code/adding-a-taxon-group/).
+Tetap buat [cadangan basis data](../#backup-database) bila Anda memerlukan
+salinan semua isi perangkat. NAHPU Data Package hanya mencakup satu proyek,
+sehingga tidak menggantikan cadangan tersebut.
 
-NAHPU Data Package memuat seluruh muatan transfer proyek beserta jalur media
-yang kompatibel, sehingga `Merge project` dapat membukanya secara langsung.
-Tujuan utamanya tetap sebagai paket yang terdokumentasi dan dapat dioperasikan
-bersama sistem lain. Tetap gunakan
-[Mencadangkan basis data](../#backup-database) bila Anda memerlukan salinan
-basis data NAHPU yang lengkap dan dapat dipulihkan.
+Kontributor yang memperluas bidang bundel atau kelompok takson sebaiknya membaca
+[Alur kerja ekspor](../../../contributing/code/data-export-workflows) dan
+[Menambahkan kelompok takson](../../../contributing/code/adding-a-taxon-group).
 
 ## Validasi paket dan peringatan
 

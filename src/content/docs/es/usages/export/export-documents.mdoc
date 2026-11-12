@@ -16,10 +16,10 @@ sidebar:
 {% pin id="E" label="Gestionar preajustes" large=[32.3, 46.9] small=[52.5, 51.3] /%}
 {% /screenshots %}
 
-Use `Export documents` para crear PDF imprimibles a partir de registros de
-NAHPU. Este flujo sirve para etiquetas, rótulos, hojas, informes y otros
-documentos con formato. Para datos tabulares, use [Export records](../export-records);
-los presets de exportación de registros no controlan los documentos PDF.
+Use `Exportar documentos` para imprimir registros de NAHPU en PDF: etiquetas de
+especímenes, rótulos de tejido, hojas de catálogo, libretas de campo y otros
+documentos con formato. Para una tabla de datos, use
+[Exportar registros](../export-records).
 
 ## Cómo se combinan las partes
 
@@ -31,23 +31,30 @@ Páginas + vista previa/exportación = PDF
 
 {% documentlayout locale="es" /%}
 
-- Una **plantilla** define el contenido y el aspecto de un bloque.
-- Un **diseño de impresión** define el papel, los márgenes, la cuadrícula, el
-  orden y la paginación.
-- Los registros proporcionan los valores de los campos.
+| Parte | Decide | Ejemplo |
+|---|---|---|
+| **Plantilla** | Qué muestra una etiqueta o bloque y cómo se ve | Una etiqueta de cráneo de 50 × 20 mm |
+| **Diseño de impresión** | El papel, los márgenes, la cuadrícula, el orden y los saltos de página | 40 etiquetas de cráneo por hoja A4 |
+| **Registros** | Los valores que rellenan la plantilla | Los especímenes que usted selecciona |
+
+Las plantillas y los diseños de impresión son configuraciones guardadas que se
+reutilizan. Mantenga un diseño para cada trabajo de impresión que repita, como
+etiquetas de museo, rótulos de tejido u hojas de campo.
 
 ## Exportación rápida
 
 {% steps %}
 
-1. Navegue a `Dashboard`.
-2. Abra el menú del proyecto y seleccione `Export documents`.
-3. Seleccione un `Layout profile` {% ref id="A" /%}.
-4. Revise la configuración de página, los bloques y la selección de registros.
-5. Seleccione `Preview` {% ref id="C" /%} y genere una vista previa.
-6. Introduzca `File name` y elija el directorio de guardado cuando se solicite.
-7. Seleccione `Export documents` {% ref id="D" /%}.
-8. En el móvil, use `Share` después de exportar para enviar el PDF.
+1. Abra la página `Panel`.
+2. Abra el menú del proyecto y seleccione `Exportar documentos`.
+3. Seleccione un `Perfil de diseño` {% ref id="A" /%}.
+4. Revise la configuración de la página, los bloques de plantilla y qué
+   registros están seleccionados.
+5. Seleccione `Vista previa` {% ref id="C" /%} y genere una vista previa. Mire
+   la primera y la última página.
+6. Escriba el `Nombre del archivo` y elija dónde guardarlo cuando se le pida.
+7. Seleccione `Exportar documentos` {% ref id="D" /%}.
+8. En un teléfono, use `Compartir` después de exportar para enviar el PDF.
 
 {% /steps %}
 
@@ -76,121 +83,49 @@ El tipo de registro controla los campos y registros disponibles. En plantillas
 de especímenes, elija el filtro de taxón antes de seleccionar campos propios de
 un taxón.
 
-## Añadir campos de registros
+## Rellenar una plantilla con datos de registros
 
-Inserte campos desde el selector del editor de texto. En plantillas reutilizables
-prefiera el formato completo `Table::Field`:
-
-```text
-Número de campo: [specimen::fieldNumber]
-Nombre científico: [taxonomy::scientificName]
-Localidad: [site::specificLocality]
-```
-
-Las formas cortas como `[fieldNumber]` funcionan, pero el nombre completo es
-más seguro cuando varias tablas contienen un campo con el mismo nombre. Puede
-combinar campos con texto normal:
+Un elemento de texto muestra datos del registro mediante placeholders, como
+`[specimen::fieldNumber]`, mezclados con texto normal. Insértelos con
+`Insertar campo` en lugar de escribirlos:
 
 ```text
 [taxonomy::genus] [taxonomy::specificEpithet] - [specimen::fieldNumber]
 ```
 
-Elija el tipo de texto adecuado: `Normal Text`, `Dates`, `Date and Time`,
-`Coordinates`, `Number`, `Sex`, `List Values`, `Nested List`, `Markdown` o
-`Encoded Text`.
+Use la clave completa `table::field` en plantillas que reutilice; la forma
+corta, como `[fieldNumber]`, puede tomar el campo equivocado cuando dos tablas
+tienen un campo con el mismo nombre. El tipo de registro de la plantilla decide
+qué campos se ofrecen. En plantillas de espécimen, elija el filtro de taxón antes
+de elegir campos propios del taxón.
 
-El formato de sexo admite texto, letras y símbolos para todos los términos.
-Los valores inciertos conservan el sufijo (`Female?`, `F?`, `♀?`; `Male?`,
-`M?`, `♂?`). Las condiciones existentes con los códigos heredados `0`, `1` y
-`2` siguen siendo válidas.
+Tres ajustes de un elemento de texto definen lo que se imprime:
 
-Todos los tipos de texto y sus opciones de formato están listados en
-[Expresiones de exportación](../export-expressions#text-types-and-their-formats).
+| Ajuste | Úselo para | Ejemplo |
+|---|---|---|
+| `Tipo` y `Formato` | Dar formato al valor como fecha, coordenada, número, símbolo de sexo, lista, tabla anidada o etiqueta de código | `17 Feb 2016`, `♀`, `Scrotal` |
+| `Marcador sin contenido` | Elegir qué imprime un campo vacío: nada, `N/A`, `None`, la clave del campo o su propio texto | `[specimen::preparator??N/A]` |
+| `Salida condicional` | Poner entre corchetes, reemplazar o añadir texto según otros campos | `[82.5]` para un peso estimado |
 
-## Manejar campos vacíos
+`Lista anidada` imprime registros relacionados, como partes del espécimen o
+personal, como tabla o lista de tarjetas. `Texto codificado` convierte códigos
+guardados en etiquetas. Un sexo dudoso conserva su signo de interrogación en
+todos los formatos: `Female?`, `F?`, `♀?`.
 
-Configure `No Content Placeholder` en un elemento de texto para decidir qué
-imprime un campo vacío. El control escribe un valor de reserva `??` dentro del
-placeholder:
+Elija el texto para valores vacíos antes de diseñar la etiqueta, porque un vacío
+y `N/A` ocupan espacios distintos. Cree condicionales con el diálogo
+`Salida condicional`, que escribe la sintaxis por usted, y previsualice un
+registro donde la condición se cumple y otro donde no.
 
-```text
-[specimen::preparator??N/A]
-```
+Todo esto funciona igual en las exportaciones tabulares. Para todas las
+opciones, ejemplos y la sintaxis condicional completa, vea
+[Expresiones de exportación](../export-expressions), en especial
+[Salida condicional](../export-expressions#conditional-output) y
+[Tipos de texto y sus formatos](../export-expressions#text-types-and-their-formats).
 
-Las cinco opciones son `Blank`, la propia clave del campo, `N/A`, `None` y una
-cadena personalizada. Elija el valor de reserva antes de diseñar alrededor del
-valor, porque un resultado vacío y un resultado `N/A` ocupan espacios distintos.
-
-## Salida condicional
-
-Una expresión condicional decide, en el momento de imprimir, si marcar un valor
-o reemplazarlo. Constrúyala con `Conditional output` en la barra de herramientas
-de texto en lugar de escribirla a mano; el diálogo escribe la sintaxis y se
-vuelve a abrir sobre una expresión existente para editarla.
-
-Hay dos formas. Encierre el valor entre corchetes cuando las condiciones
-coincidan, aquí para marcar un peso que el indicador de exactitud de mamíferos
-señala como estimado:
-
-```text
-[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
-```
-
-O reemplace el valor con texto literal cuando coincidan, aquí para marcar una
-identificación de especie que no tiene confianza alta:
-
-```text
-[taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
-```
-
-Una tercera forma, el texto condicional, no tiene campo objetivo. Escribe un
-texto cuando las condiciones coinciden y, opcionalmente, otro texto después de
-`|` cuando no coinciden. Aquí la unidad aparece solo cuando se registró el
-ancho:
-
-```text
-[mammalAttribute::testisWidth][[if][mammalAttribute::testisWidth!=""]=>" mm"]]
-```
-
-La primera imprime `[82.5]` para un peso estimado y `82.5` en los demás casos.
-La segunda imprime `Rattus rattus` para una identificación de confianza alta y
-`Rattus ?` para cualquier valor menor. La tercera imprime `6.5 mm`, o nada
-cuando falta el ancho.
-
-Los símbolos son:
-
-| Símbolo | Significado |
-|---|---|
-| `[[` … `]]` | Abre y cierra la expresión |
-| `][` | Termina el campo objetivo e inicia las condiciones |
-| `if` | Ocupa el lugar del objetivo en el texto condicional |
-| `==` `!=` `~=` | Igual, distinto, contiene |
-| `&&` `\|\|` | Todas las condiciones, cualquier condición |
-| `"` … `"` | Encierran cada valor de comparación y cada texto |
-| `]=>` | Termina las condiciones e inicia el texto de reemplazo o condicional |
-| `\|` | Separa el texto que se escribe cuando las condiciones no coinciden |
-
-El texto condicional puede incluir campos, y
-`[mammalAttribute::testisPosition#label]` imprime la etiqueta de un campo
-codificado; consulte
-[Expresiones de exportación](../export-expressions#conditional-text).
-
-Las comparaciones eliminan espacios en los extremos y distinguen mayúsculas. Leen valores almacenados: compare `"2"`, no `"High"`, para confianza de identificación. Use `Is empty` (`==""`) o `Is not empty` (`!=""`) para comprobar si el campo de origen tiene valor. Otras comparaciones no coinciden con un origen vacío. No mezcle `&&` y `||` en una expresión.
-
-Un reemplazo sustituye todo el valor en lugar de añadirse a él, y por eso el
-ejemplo anterior imprime `Rattus ?` y no `Rattus rattus?`.
-
-Pruebe en la vista previa tanto el caso que coincide como el que no. Una
-expresión mal formada se omite sin avisar, así que se imprime literalmente.
-
-El conjunto completo de símbolos, los tres tipos de condicional del diálogo y
-todas las reglas de evaluación están en
-[Expresiones de exportación](../export-expressions#conditional-output).
-
-Las reglas de reemplazo son la otra manera de reescribir un valor. Se aplican
-después del formato, coinciden por valor exacto o por subcadena y pueden
-distinguir mayúsculas y minúsculas o no. Úselas para una sustitución repetida en
-muchos valores, y una condicional para una decisión que dependa de otro campo.
+`Reemplazar texto` es otra forma de reescribir valores. Actúa después del
+formato y sirve para un reemplazo que se repite en muchos valores, como una
+abreviatura; use una condicional cuando el cambio depende de otro campo.
 
 ## Diseñar para datos reales
 
@@ -325,29 +260,20 @@ juntos. Para una copia completa con datos y archivos, use `Backup database`.
 
 ## Impresión de etiquetas de especímenes {% #printing-specimen-tags %}
 
-Las etiquetas impresas son el motivo más común para usar la exportación de
-documentos. Generarlas a partir de los datos de NAHPU, en lugar de escribirlas a
-mano, tiene varias ventajas.
+Las etiquetas impresas son el motivo más común para exportar documentos.
+Imprimirlas desde los datos de NAHPU, en lugar de escribirlas a mano:
 
-- **Ahorra tiempo en el campo.** En lugar de escribir etiquetas completas, lo
-  que puede tomar fácilmente 10 minutos o más por etiqueta, una alternativa más
-  rápida es usar etiquetas pequeñas con identificadores como el número de tejido
-  (por ejemplo, "B-729113") y el número de campo (por ejemplo, "JPO 7299").
-  Después, ya en el museo, puede imprimir las etiquetas finales y completas de
-  los especímenes.
-- **Etiquetas más limpias y estandarizadas.** Algunas personas tienen el don de
-  la letra clara; otras, no tanto. Imprimir las etiquetas garantiza que todos
-  los datos sean fáciles de leer.
-- **Evita errores en tareas repetitivas y tediosas.** Escribir el nombre
-  detallado de una localidad con coordenadas y datos de elevación decenas de
-  veces en el campo es tedioso, y el error humano es común. Con NAHPU, esa
-  información solo debe ingresarse una vez y luego puede asociarse a cada
-  espécimen mediante un menú desplegable de sitios. Si es necesario, los
-  detalles de la localidad también pueden actualizarse fácilmente dentro de la
-  aplicación.
-- **Permite una fase de limpieza de datos.** Antes de imprimir, es fácil usar
-  una hoja de cálculo final para corregir coordenadas extrañas, elevaciones,
-  errores de terminología, ortografía, etcétera.
+- **Ahorra tiempo en el campo.** Una etiqueta completa escrita a mano puede
+  llevar 10 minutos o más. En su lugar, escriba una etiqueta provisional pequeña
+  con identificadores, como un número de tejido (`B-729113`) y un número de
+  campo (`JPO 7299`), e imprima las etiquetas completas después, en el museo.
+- **Da etiquetas limpias y uniformes** que cualquiera puede leer, sea cual sea
+  la letra de quien las hace.
+- **Evita errores de copia.** Una localidad con coordenadas y elevación se
+  escribe una vez, se enlaza a cada espécimen mediante su sitio y se corrige en
+  un solo lugar si hace falta.
+- **Deja tiempo para limpiar los datos.** Antes de imprimir, puede corregir
+  coordenadas o elevaciones extrañas, terminología y ortografía.
 
 ### Flujo de impresión de etiquetas
 
@@ -400,7 +326,7 @@ exportación del proyecto o la exportación estructurada de registros. Consulte
 
 | Síntoma | Qué comprobar |
 |---|---|
-| El placeholder aparece literalmente | Tipo de registro y clave completa `Table::Field`. |
+| El placeholder aparece literalmente | Tipo de registro y clave completa `table::field`. |
 | Una condicional aparece literalmente | La expresión está mal formada. Busque un `]]` que falte, un valor sin comillas o `&&` y `\|\|` mezclados. |
 | Una condición nunca coincide | Las comparaciones distinguen mayúsculas y minúsculas, leen el valor almacenado en lugar de la etiqueta mostrada, y un valor vacío del registro nunca coincide. |
 | La vista previa está vacía | Tipo del bloque y registros seleccionados. |

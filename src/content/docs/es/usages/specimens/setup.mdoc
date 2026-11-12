@@ -5,60 +5,80 @@ sidebar:
   order: 1
 ---
 
-Las listas predeterminadas de NAHPU para `Partes de especímenes` y `Tratamientos` son limitadas y no incluyen todas las opciones posibles. Si este es su primer proyecto NAHPU, recomendamos configurar las entradas primero. Puede hacer esto yendo a la configuración:
+Las listas predeterminadas de NAHPU para `Partes del espécimen` y `Tratamientos`
+son intencionalmente cortas. Antes de ingresar un lote grande de especímenes,
+configure las listas del proyecto que su equipo usará en el campo o en la sala
+de colecciones.
 
 {% steps %}
 
 1. Navegue al panel de control.
 2. Toque/haga clic en el menú de hamburguesa en la esquina superior izquierda.
 3. Seleccione `Configuración`.
-4. Seleccione `Especímenes`. 
-5. Configure el interruptor `Use project ID`. Está desactivado de forma
-   predeterminada y usa las iniciales y el número de campo de un catalogador.
-   Al menos un Catalogador debe tener activado el registro de número de campo
-   personal y un número actual.
+4. En `Catálogos`, seleccione `Especímenes`.
+5. En `ID de campo`, elija cómo se numeran los nuevos especímenes:
 
-    Active `Use project ID` para definir un prefijo, el siguiente número de
-    catálogo y un sufijo. NAHPU concatena esos valores directamente. Active el
-    incremento automático para asignar y avanzar el número del proyecto.
+    - `ID del personal` (predeterminado): las iniciales del catalogador y su
+      propio número consecutivo. Agregue al proyecto una persona con el rol
+      `Catalogador` y asígnele un número de campo actual.
+    - `ID del proyecto`: un `Prefijo`, un `Número de catálogo actual` y un
+      `Sufijo`, unidos directamente. Active
+      `Incrementar automáticamente el número de catálogo` para avanzar el
+      número cada vez que un espécimen lo use.
 
-    Esta selección es solo el valor predeterminado. En el editor de ID de cada
-    espécimen puede elegir Personnel o Project. Un proyecto puede usar ambos
-    tipos, pero un espécimen no puede tener los dos.
+    Seleccione `Guardar la configuración de ID de campo` para aplicar la
+    elección.
+
+    Esta selección es solo el valor predeterminado. Abra `Editar ID de campo`
+    en un espécimen para elegir Personnel o Project para ese espécimen. Un
+    proyecto puede contener ambos tipos, pero un espécimen no puede tener los
+    dos identificadores.
 
     {% aside type="caution" %}
 
-    Cambiar el prefijo o sufijo modifica cómo se muestran los ID de proyecto
-    existentes. Esos ID podrían haberse usado en exportaciones o escrito en
-    etiquetas de especímenes. Compruebe los valores antes de confirmar.
+    Cambiar un prefijo o sufijo modifica cómo se muestran los ID de proyecto
+    existentes, y NAHPU le pide que lo confirme. Esos ID podrían ya estar en
+    exportaciones o en etiquetas de especímenes, así que compruebe los valores
+    primero.
 
     {% /aside %}
 
 6. Agregue `ID de tejido` (opcional).
 
-    Algunos museos tienen números de tejido separados para el mismo espécimen.
-    Puede configurar aquí un prefijo, el siguiente número y un sufijo. Los ceros
-    a la izquierda del número se conservan, de modo que a `M0042-T` le sigue
-    `M0043-T`. NAHPU puede generar el siguiente número de tejido cuando agregue
-    una parte del espécimen.
+    Algunos museos asignan números de tejido separados para el mismo ejemplar
+    de referencia. Puede configurar aquí un prefijo, el siguiente número y un
+    sufijo. Los ceros a la izquierda del número se conservan, de modo que a
+    `M0042-T` le sigue `M0043-T`. NAHPU puede entonces generar el siguiente
+    número de tejido cuando agregue una parte del espécimen.
 
-    En el formato de catálogo Ichthyology, `Individual tag ID` define el mismo
-    tipo de numeración para los individuos de un lote de peces.
+    En el formato de catálogo Ichthyology, `ID de etiqueta individual` define
+    el mismo tipo de numeración para los individuos de un lote de peces.
 
-7. Agregue `Specimen types`.
+7. Agregue `Tipos de espécimen`.
 
-    Agregue todas las posibilidades. Puede tener más de lo que recolectará.
+    Agregue todos los tipos de preparación y de tejido que espera usar,
+    incluidos los que quizá solo recolecte ocasionalmente.
 
-8. Agregue `Tratamientos`
+8. Agregue `Tratamientos`.
 
-    Puede hacerlo de manera similar a `Specimen types`.
+    Los tratamientos se usan en las partes del espécimen. Algunos ejemplos son
+    `None`, `ETOH`, `Formalin`, `LN2` y `DMSO`.
 
 {% /steps %}
 
+La misma pantalla también contiene las listas de `Condiciones`,
+`Métodos de identificación` y `Etapas de vida`, además de
+`Mostrar siempre el campo de colector`. Revíselas también antes de la
+temporada de campo.
+
 {% aside type="tip" %}
 
-Las listas de partes y tratamientos son configuraciones del usuario. Puede
-exportarlas e importarlas con los paquetes del proyecto para reutilizar la
-misma terminología y el mismo comportamiento de exportación.
+Los tipos de espécimen y los tratamientos son configuraciones de usuario.
+Compártalos con `Exportar configuraciones de usuario` e
+`Importar configuraciones de usuario` para que otra instalación de NAHPU use
+las mismas listas controladas.
+
+Consulte [Configuración](/es/usages/settings/) para ver el mapa completo de
+configuración.
 
 {% /aside %}

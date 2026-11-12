@@ -16,10 +16,9 @@ sidebar:
 {% pin id="E" label="Manage presets" large=[32.3, 46.9] small=[52.5, 51.3] /%}
 {% /screenshots %}
 
-Use `Export documents` to create printable PDFs from NAHPU records. This is
-the workflow for labels, tags, sheets, reports, and other formatted documents.
-For tabular data, use [Export records](../export-records); record-export
-presets do not control PDF documents.
+Use `Export documents` to print NAHPU records as a PDF: specimen labels,
+tissue tags, catalog sheets, field books, and other formatted documents. For a
+data table instead, use [Export records](../export-records).
 
 ## How the pieces fit together
 
@@ -31,13 +30,15 @@ Pages + preview/export action = PDF
 
 {% documentlayout /%}
 
-- A **template** defines the content and appearance of one block.
-- A **print layout** defines the paper, margins, grid, order, and pagination.
-- Records provide the values inserted into template fields.
+| Piece | Decides | Example |
+|---|---|---|
+| **Template** | What one label or block shows, and how it looks | A 50 × 20 mm skull tag |
+| **Print layout** | The paper, margins, grid, order, and page breaks | 40 skull tags per A4 sheet |
+| **Records** | The values that fill the template | The specimens you select |
 
-Templates and print layouts are reusable app settings. Save a separate layout
-for each repeatable printing workflow, such as museum labels, tissue tags, or
-field sheets.
+Templates and print layouts are saved settings you reuse. Keep one layout for
+each printing job you repeat, such as museum labels, tissue tags, or field
+sheets.
 
 ## Quick export
 
@@ -46,8 +47,9 @@ field sheets.
 1. Navigate to the `Dashboard` page.
 2. Open the project menu and select `Export documents`.
 3. Select a `Layout profile` {% ref id="A" /%}.
-4. Review the page setup, template blocks, and record selection.
-5. Select `Preview` {% ref id="C" /%} and generate a preview.
+4. Check the page setup, the template blocks, and which records are selected.
+5. Select `Preview` {% ref id="C" /%} and generate a preview. Look at the first
+   and last pages.
 6. Enter a `File name` and choose the save directory when prompted.
 7. Select `Export documents` {% ref id="D" /%}.
 8. On mobile, use `Share` after the export completes if you need to send the PDF.
@@ -79,124 +81,47 @@ The template's record type controls which fields and records are available.
 For specimen templates, choose the appropriate taxon filter before selecting
 taxon-specific fields.
 
-## Add record fields
+## Fill a template with record data
 
-Insert fields from the field picker in the text editor. Prefer the full
-`Table::Field` form in reusable templates, for example:
-
-```text
-Field number: [specimen::fieldNumber]
-Scientific name: [taxonomy::scientificName]
-Locality: [site::specificLocality]
-```
-
-Short forms such as `[fieldNumber]` are supported, but full names are safer
-when more than one table contains a field with the same name. You can combine
-fields with ordinary text:
+A text element shows record data through placeholders, such as
+`[specimen::fieldNumber]`, mixed with ordinary text. Insert them with
+`Insert Field` rather than typing them:
 
 ```text
 [taxonomy::genus] [taxonomy::specificEpithet] - [specimen::fieldNumber]
 ```
 
-Choose the text type that matches the data:
+Use the full `table::field` key in templates you reuse; the short form, such as
+`[fieldNumber]`, can pick the wrong field when two tables share a name. The
+template's record type decides which fields are offered. For specimen
+templates, choose the taxon filter before picking taxon-specific fields.
 
-- `Normal Text` for ordinary values and labels.
-- `Dates`, `Date and Time`, `Coordinates`, `Number`, and `Sex` for formatted
-  values.
-- `List Values` for pipe-delimited repeated values.
-- `Nested List` for related records such as specimen parts, personnel, or
-  collection methods. Choose a table or card-list presentation.
-- `Markdown` for narrative or rich text.
-- `Encoded Text` when stored numeric codes should be shown as labels.
+Three settings on a text element shape what prints:
 
-Sex formatting supports text, letters, and symbols for every configured term.
-Uncertain values keep their suffix (`Female?`, `F?`, `♀?`; `Male?`, `M?`,
-`♂?`). Existing template conditions that compare legacy codes `0`, `1`, and
-`2` remain valid.
+| Setting | Use it to | Example |
+|---|---|---|
+| `Text type` and `Format` | Format the value as a date, coordinate, number, sex symbol, list, nested table, or decoded code label | `17 Feb 2016`, `♀`, `Scrotal` |
+| `No Content Placeholder` | Choose what an empty field prints: nothing, `N/A`, `None`, the field key, or your own text | `[specimen::preparator??N/A]` |
+| `Conditional output` | Bracket, replace, or add text depending on other fields | `[82.5]` for an estimated weight |
 
-Every text type and format option is listed in 
-[Export expressions](../export-expressions#text-types-and-their-formats).
+`Nested List` prints related records, such as specimen parts or personnel, as a
+table or card list. `Encoded Text` turns stored codes into labels. Uncertain sex
+keeps its question mark in every format: `Female?`, `F?`, `♀?`.
 
-## Handle empty fields
+Choose the empty-value text before you lay out the label, because a blank and
+`N/A` take different space. Build conditionals with the `Conditional output`
+dialog, which writes the syntax for you, and preview a record where the
+condition matches and one where it does not.
 
-Set `No Content Placeholder` on a text element to decide what an empty field
-prints. The control writes a `??` fallback into the placeholder:
+These all work the same way in tabular exports. For every option, worked
+examples, and the full conditional syntax, see
+[Export expressions](../export-expressions), especially
+[Conditional output](../export-expressions#conditional-output) and
+[Text types and their formats](../export-expressions#text-types-and-their-formats).
 
-```text
-[specimen::preparator??N/A]
-```
-
-The five options are `Blank`, the field key itself, `N/A`, `None`, and a custom
-string. Choose the fallback before designing around the value, because a blank
-result and an `N/A` result take different amounts of space.
-
-## Conditional output
-
-A conditional expression decides at print time whether to mark a value or
-replace it. Build one with `Conditional output` in the text toolbar rather than
-typing it by hand; the dialog writes the syntax and reopens on an existing
-expression to edit it.
-
-There are two shapes. Bracket the value when the conditions match, here to mark
-a weight the mammal accuracy flag says was estimated:
-
-```text
-[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
-```
-
-Or replace the value with literal text when they match, here to mark a species
-identification that is not high confidence:
-
-```text
-[taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
-```
-
-A third shape, conditional text, has no target field. It writes text when the
-conditions match, and optionally other text after `|` when they do not. Here a
-unit appears only when a width was recorded:
-
-```text
-[mammalAttribute::testisWidth][[if][mammalAttribute::testisWidth!=""]=>" mm"]]
-```
-
-The first prints `[82.5]` for an estimated weight and `82.5` otherwise. The
-second prints `Rattus rattus` for a high-confidence identification and
-`Rattus ?` for anything less. The third prints `6.5 mm`, or nothing when the
-width is missing.
-
-The symbols are:
-
-| Symbol | Meaning |
-|---|---|
-| `[[` … `]]` | Open and close the expression |
-| `][` | Ends the target field, starts the conditions |
-| `if` | Takes the target's place for conditional text |
-| `==` `!=` `~=` | Equals, not equals, contains |
-| `&&` `\|\|` | All conditions, any condition |
-| `"` … `"` | Wrap every comparison value and text |
-| `]=>` | Ends the conditions, starts the replacement or conditional text |
-| `\|` | Separates the text written when the conditions do not match |
-
-Conditional text can include fields, and
-`[mammalAttribute::testisPosition#label]` prints an encoded field's label; see
-[Export expressions](../export-expressions#conditional-text).
-
-Comparisons trim surrounding whitespace and are case-sensitive. They read stored values: compare `"2"`, not `"High"`, for identification confidence. Use `Is empty` (`==""`) or `Is not empty` (`!=""`) to test whether a source field has a value. Other comparisons do not match a blank source. Do not mix `&&` and `||` in one expression.
-
-A replacement substitutes the whole value rather than adding to it, which is
-why the example above prints `Rattus ?` rather than `Rattus rattus?`.
-
-Test both the matching and the non-matching case in the preview. A malformed
-expression is skipped rather than reported, so it prints literally.
-
-The complete symbol set, the three conditional types in the dialog, and the
-full evaluation rules are in 
-[Export expressions](../export-expressions#conditional-output).
-
-Replacement rules are the other way to rewrite a value. They run after
-formatting, match by exact value or substring, and can be case-sensitive or
-not. Use them for a repeated substitution across many values, and a conditional
-for a decision that depends on another field.
+`Replace text` is a second way to rewrite values. It runs after formatting and
+suits a substitution repeated across many values, such as an abbreviation; use
+a conditional when the change depends on another field.
 
 ## Design for real records
 
@@ -343,26 +268,20 @@ instead of a settings-only transfer.
 
 ## Printing specimen tags
 
-Printed tags are the most common reason to use document export. Generating them
-from NAHPU data rather than writing them by hand has several advantages.
+Printed tags are the most common reason to export documents. Printing them
+from NAHPU data instead of writing them by hand:
 
-- **Saves time in the field.** Rather than writing out full specimen tags, which
-  can easily take 10 or more minutes per tag, a faster alternative is to use
-  small tags with identifiers such as a tissue number (e.g., "B-729113") and
-  field number (e.g., "JPO 7299"). Then, back in a museum, you can print the
-  final, complete tags for the specimens.
-- **Neater and more standardized tags.** Some people have the gift of neat
-  handwriting, whereas others are less gifted. Printing tags ensures that all
-  the tag data is easy to read.
-- **Avoids errors from a repetitive, tedious task.** Writing a detailed locality
-  name with coordinates and elevational data can be tedious to write out dozens
-  of times in the field, and human error is common. Using NAHPU, this
-  information need only be entered once and can then be associated with each
-  specimen via a dropdown site menu. If necessary, the locality details can also
-  be easily updated within the app.
-- **Allows for a data cleanup phase.** Before printing, it is easy to use a
-  final spreadsheet to correct whacky coordinates, elevations, terminology
-  errors, spelling, and so on.
+- **Saves time in the field.** A full handwritten tag can take 10 minutes or
+  more. Instead, write a small temporary tag with identifiers, such as a tissue
+  number (`B-729113`) and field number (`JPO 7299`), and print the complete
+  tags later at the museum.
+- **Gives neat, consistent tags** that anyone can read, whatever their
+  handwriting.
+- **Prevents copying errors.** A locality with coordinates and elevation is
+  entered once, linked to each specimen through its site, and corrected in one
+  place if needed.
+- **Leaves time to clean the data.** Before printing, you can fix odd
+  coordinates or elevations, terminology, and spelling.
 
 ### Tag-printing workflow
 
@@ -414,7 +333,7 @@ export, or a structured record export. See
 
 | Symptom | What to check |
 |---|---|
-| A placeholder prints literally | Check the template record type and use the full `Table::Field` key. |
+| A placeholder prints literally | Check the template record type and use the full `table::field` key. |
 | A conditional prints literally | The expression is malformed. Check for a missing `]]`, an unquoted value, or mixed `&&` and `\|\|`. |
 | A condition never matches | Comparisons are case-sensitive, read the stored value rather than the displayed label, and an empty record value never matches. |
 | Preview is empty | Check the block record type and select matching records. |

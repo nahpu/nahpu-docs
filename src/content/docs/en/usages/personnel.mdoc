@@ -29,28 +29,26 @@ multiple projects. A project only displays the personnel assigned to it.
 ## Adding personnel to a project
 
 {% aside type="caution" %}
-Personnel Field IDs require a `Cataloger` with a registered personal field number. Project Field IDs use the project numbering convention instead; they do not require every number to come from a person's sequence. Choose the role carefully because it cannot be changed after creation.
+Personnel Field IDs require a `Cataloger` with a registered personal field number. Project Field IDs use the project numbering convention instead; they do not require every number to come from a person's sequence. Choose the role carefully: once a person is saved as a `Cataloger`, that role cannot be changed.
 {% /aside %}
 
 From the Personnel panel on the project dashboard, select `Add personnel`.
 If personnel already exist in the database, choose `Select from database` {% ref id="E" /%} and
-select the people to assign. Otherwise, choose `Add new personnel` {% ref id="F" /%}.
+select the people to assign. Otherwise, choose `Add new personnel` {% ref id="F" /%}. On a
+narrow screen, these read `Select existing` and `Add new`.
 
 The form includes:
 
-- **Name (required)** {% ref id="G" /%} - The person's name.
-- **Photo** - An avatar or personnel photo.
-- **Affiliation** - The person's institution.
-- **Email** - The person's email address.
-- **Phone** - The person's phone number.
-- **ORCID** - An optional hyphenated ORCID iD with a valid checksum, such as
-  `0000-0002-1825-0097`.
-- **Specimen care role** {% ref id="B" /%} - `Cataloger`, `Preparator only`, `Determiner only`,
-  or `None`.
-- **Notes** - Additional information about the person.
-
-Use `Show more` {% ref id="H" /%} to reveal optional fields. Email addresses are normalized to
-lowercase and phone numbers accept digits.
+| Field | Shown | Notes |
+| --- | --- | --- |
+| `Name*` {% ref id="G" /%} | Always | Required. |
+| Photo | Always | An avatar or personnel photo. |
+| Affiliation | Always | The person's institution. |
+| `ORCID iD` | Always | Optional, hyphenated, with a valid checksum, such as `0000-0002-1825-0097`. |
+| Specimen care role {% ref id="B" /%} | Always | `Cataloger`, `Preparator only`, `Determiner only`, or `None`. |
+| Email | After `Show more` {% ref id="H" /%} | Saved in lowercase. |
+| Phone | After `Show more` | Digits only. |
+| Notes | After `Show more` | Additional information about the person. |
 
 Darwin Core exports use the canonical `https://orcid.org/...` URL as the
 person's agent identifier when ORCID is present. Otherwise, they use the NAHPU
@@ -60,13 +58,14 @@ personnel UUID.
 
 When the role is `Cataloger`, {% ref id="C" /%} NAHPU provides the `Register personal field
 number` option. Turn it on when the cataloger's initials and number should
-generate specimen field IDs. Enter the field initial and starting number; the
-number advances as specimens are created.
+generate specimen field IDs. Enter `Initials` (up to five letters, saved in
+capitals) and the starting `Cataloger number*`; the number advances as specimens
+are created.
 
 If the collection uses project-based numbering, configure the project Field ID convention in Settings instead of registering a fictitious person with the project code.
 
-Field-number registration is optional. A cataloger role cannot be changed
-after the person is created.
+Field-number registration is optional. Once a person is saved as a
+`Cataloger`, that role cannot be changed.
 
 ## Editing and removing personnel
 
@@ -84,8 +83,8 @@ when a person is still assigned to a project.
 ### Cataloger
 
 A person who creates and edits specimen catalog records. Catalogers can appear
-in cataloger, preparator, and collecting-personnel fields. Their role cannot be
-changed after creation.
+in cataloger, preparator, and collecting-personnel fields. The `Cataloger`
+role cannot be changed after the person is saved; other roles can be edited.
 
 ### Preparator only
 

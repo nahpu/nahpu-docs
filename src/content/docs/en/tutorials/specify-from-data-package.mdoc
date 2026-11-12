@@ -1,0 +1,214 @@
+---
+title: "Tutorial 2: Convert a NAHPU Data Package to the LSUMZ Specify sheet"
+sidebar:
+  label: "2. Convert a Data Package with R or Python"
+  order: 2
+---
+
+[Tutorial 1](/en/tutorials/specify-export-preset/) builds the LSUMZ Mammalogy
+WorkBench sheet inside NAHPU with an export preset. This tutorial produces the
+same sheet outside the app: you export a
+[NAHPU Data Package](/en/usages/export/export-bundles/#nahpu-data-package) and
+convert it with a ready-made script in Python or R.
+
+Use this route when:
+
+- the data needs checking or cleaning in a script before it goes to Specify;
+- someone without NAHPU on their device prepares the upload;
+- you want a reproducible, versioned record of how the sheet was made.
+
+Both scripts live in the
+[lsumz-mammal-specify-frictionless](https://github.com/nahpu/lsumz-mammal-specify-frictionless)
+repository. They read the package with the
+[Frictionless](https://frictionlessdata.io) library for each language and write
+identical CSV files.
+
+## Before you start
+
+You need:
+
+- a NAHPU project with mammal specimen records;
+- Python 3.10 or newer, or R with permission to install packages;
+- a copy of the repository, cloned with Git or downloaded as a ZIP from GitHub.
+
+The repository is organized like this:
+
+{% filetree %}
+- data/
+  - country-continent.csv
+  - example/
+    - ambang-shrews.nahpu-dp.zip
+    - expected-specify.csv
+- python/
+  - nahpu_to_specify.py
+  - tests/
+- R/
+  - nahpu_to_specify.R
+  - tests/
+- results/
+{% /filetree %}
+
+## 1. Export the NAHPU Data Package
+
+{% steps %}
+
+1. Open the project menu and select `Bundle records`.
+2. Set `Bundle format` to `NAHPU Data Package`.
+3. Keep `TAR.GZ` or choose `ZIP` as the `Archive format`. The scripts read
+   both.
+4. Name the file, choose a folder, and select `Create bundle`.
+5. Copy the file, such as `ambang.nahpu-dp.tar.gz`, into the repository's
+   `data/` folder.
+
+{% /steps %}
+
+{% aside type="caution" %}
+A NAHPU Data Package holds the whole project, including personnel contact
+details and user settings. Keep it out of public repositories; commit only the
+converted sheet if the data may be shared.
+{% /aside %}
+
+## 2. Try the bundled example
+
+Run a converter once without arguments. It converts
+`data/example/ambang-shrews.nahpu-dp.zip` and writes
+`results/ambang-shrews-specify.csv`, which should match
+`data/example/expected-specify.csv`, five rows of the real LSUMZ incoming
+sheet.
+
+{% tabs %}
+{% tabitem label="Python" %}
+
+With [uv](https://docs.astral.sh/uv/):
+
+```bash
+cd python
+uv sync
+uv run python nahpu_to_specify.py
+```
+
+Or with pip:
+
+```bash
+pip install frictionless
+python python/nahpu_to_specify.py
+```
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+Install the packages once from an R session:
+
+```r
+install.packages(c(
+  "frictionless", "here", "dplyr", "tidyr", "readr", "purrr", "stringr",
+  "lubridate", "testthat"
+))
+```
+
+Then run from the repository root:
+
+```bash
+Rscript R/nahpu_to_specify.R
+```
+
+{% /tabitem %}
+{% /tabs %}
+
+If the result matches the expected file, your setup works.
+
+## 3. Convert your package
+
+Pass your package as the first argument. The sheet is written to `results/`
+under the package name.
+
+{% tabs %}
+{% tabitem label="Python" %}
+
+```bash
+cd python
+uv run python nahpu_to_specify.py ../data/ambang.nahpu-dp.tar.gz
+```
+
+Add `-o PATH` to choose the output file, and `--all-taxa` to keep specimens
+outside the mammal taxon groups.
+
+{% /tabitem %}
+{% tabitem label="R" %}
+
+```bash
+Rscript R/nahpu_to_specify.R data/ambang.nahpu-dp.tar.gz
+```
+
+A second argument sets the output file, and `--all-taxa` keeps specimens
+outside the mammal taxon groups. In an R session, source the script and call the
+function instead:
+
+```r
+source(here::here("R", "nahpu_to_specify.R"))
+sheet <- nahpu_to_specify(
+  here::here("data", "ambang.nahpu-dp.tar.gz"),
+  here::here("results", "ambang-specify.csv")
+)
+```
+
+`sheet` is a tibble, so you can check it with dplyr before uploading.
+
+{% /tabitem %}
+{% /tabs %}
+
+The scripts also accept an extracted package folder or its `datapackage.json`.
+
+## 4. Check the sheet
+
+Open the CSV and compare a few specimens with their NAHPU records:
+
+- `Sex` reads `Male` or `Female`. The scripts decode the stored code with the
+  package's `mappings/sqlite_enums.csv`.
+- `Continent` is filled from `Country`. A country missing from
+  `data/country-continent.csv` leaves it blank and prints a warning; add the
+  country to that file and run again.
+- `Collector1LastName` reads `Last, First`. The last word of the cataloger's
+  name is moved to the front, so check two-word family names.
+- `Start Date` is the specimen's collection date as `dd/mm/yyyy`.
+- Each part fills one `PrepType` group, with its storage location, such as a
+  freezer box position, in `PrepType`*n*`Location`. `Remarks` follows the
+  second group, as on the LSUMZ sheet.
+- A measurement in brackets, such as `[150]`, means its accuracy note marks it
+  as unreliable, the same rule NAHPU's `LSUMZ-mammalogy` preset uses.
+
+## 5. Upload to Specify
+
+Import the CSV as a new WorkBench data set, apply the LSUMZ Mammalogy upload
+plan, validate, and upload, as in
+[Tutorial 1](/en/tutorials/specify-export-preset/#8-export-and-import-into-specify).
+The columns are the same, so the same upload plan works for sheets from either
+route.
+
+## How the conversion works
+
+Each script follows the package's relational tables:
+
+1. It keeps specimens whose `taxonGroup` is Mammals, General Mammals, or Bats.
+2. It joins `taxonomy` through `speciesID`, `mammalAttribute` through the
+   specimen UUID, and the cataloger in `personnel`.
+3. It finds the locality through the collecting event's site and its
+   `geography` row.
+4. It uses the specimen's own coordinate, or the site's coordinate when the site
+   has exactly one, as NAHPU does.
+5. It spreads `specimenPart` rows into numbered `PrepType` columns in part
+   order.
+
+Empty NAHPU tables are left out of a Data Package, so the scripts treat a
+missing table as empty rather than failing. To adapt the scripts to another
+collection's sheet, change the column lists at the top of either file. For a
+different layout altogether, write your own script as in
+[Tutorial 3](/en/tutorials/custom-data-package-script/).
+
+## Learn more
+
+- [Bundle Records](/en/usages/export/export-bundles/)
+- [Tutorial 1: Build the LSUMZ Mammalogy Specify export preset](/en/tutorials/specify-export-preset/)
+- [Tutorial 3: Write your own script to reshape a NAHPU Data Package](/en/tutorials/custom-data-package-script/)
+- [Frictionless Framework for Python](https://framework.frictionlessdata.io/)
+- [frictionless for R](https://docs.ropensci.org/frictionless/)

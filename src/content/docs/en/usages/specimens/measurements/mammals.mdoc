@@ -19,24 +19,41 @@ taxon group; see [Measurements](/en/usages/specimens/measurements/).
 - `Hind foot length (mm)`: the length of the hind foot from the base to the tip of the claw.
 - `Ear length (mm)`: ear length.
 - `Weight`: specimen weight in the selected unit.
-- `Accuracy`: measurement accuracy or reason measurements may be inaccurate.
+- `Accuracy`: `Accurate` or `Inaccurate`. Choosing `Inaccurate` opens
+  `Select inaccurate measurements`, where you tick each affected measurement
+  (total, tail, hind foot, ear, and weight, plus forearm and tibia when bat
+  fields are shown), and an `Accuracy remark` field for the reason. Exports and
+  labels can bracket the flagged values.
 - `Sex`: select from the configured specimen-sex vocabulary.
 - `Life stage`: select from the configured life-stage vocabulary.
 - `Remarks`: additional notes about measurements.
 
+Turn on `Show outlier warnings` to flag measurements that look unusual for the
+taxon. Changing `Sex` asks `Change sex?` and clears reproductive data that no
+longer applies.
+
 ## Reproductive data
 
-- Male reproductive fields: testis position, testis length and width, and
-  epididymis appearance.
-- Female reproductive fields: vagina opening, pubic symphysis, reproductive
-  stage, mammae condition, mammae counts, placental scar counts, embryo counts,
-  and embryo crown-rump length.
+| Sex | Field | Options |
+| --- | --- | --- |
+| Male | Testis `Position` | Scrotal, Abdominal |
+| Male | Testis length and width (mm) | Numbers |
+| Male | Epididymis appearance | Tubular, Partial, Not Tubular |
+| Female | Vagina opening | Imperforate, Perforate |
+| Female | Pubic symphysis | Close, Small Open, Open |
+| Female | Reproductive stage | Nulliparous, Primiparous, Multiparous |
+| Female | Mammae condition | Small, Large, Lactating |
+| Female | Mammae counts | Axillary, abdominal, and inguinal pairs |
+| Female | Placental scars, embryos | Counted left and right |
+| Female | Embryo `CR length (mm)` | Crown-rump length |
 
 ## Bat fields
 
-When bat fields are enabled, the form adds forearm length, tibia length,
-echolocation type, maximum and minimum frequency, frequency at maximum energy,
-and duration.
+Turn on `Show bat fields` on a specimen to add forearm length, tibia length,
+`Echolocate?`, echolocation type (`FM`, `CF`, `QCF`, or `None`), maximum and
+minimum frequency, frequency at maximum energy, and duration. To show them on
+every mammal specimen, turn on `Always show bat fields` in `Settings` >
+`Catalogs` > `Format`. A specimen with saved bat data always shows the section.
 
 ## Parts and symbionts
 

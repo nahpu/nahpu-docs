@@ -7,7 +7,7 @@ sidebar:
 Tissue curation checks tubes into storage boxes. For each tube you scan or
 place, NAHPU writes a museum code to `Museum permanent` or `Museum loan` and
 the next free cell to `Storage location`, such as `Box 1: D1`. Tubes are
-specimen parts and, if you include them, parasites.
+specimen parts and, if you include them, symbionts.
 
 Use it when tubes go into museum freezer boxes. Scan each tube as it goes into
 the box, and the records match the box with no typing.
@@ -39,7 +39,7 @@ the box, and the records match the box with no typing.
 The screen has four areas:
 
 - **Box**: the grid of the box being filled. Filled cells show the last
-  characters of the tube's ID. Parasites start with `P`. The highlighted cell
+  characters of the tube's ID. Symbiont tubes start with `P`. The highlighted cell
   is the next one to fill {% ref id="A" /%}.
 - **Scan**: the field for scanning or typing codes {% ref id="E" /%}, or the
   work list {% ref id="C" /%}.
@@ -47,7 +47,8 @@ The screen has four areas:
   the box settings.
 - **Log** {% ref id="J" /%}: the tubes checked and skipped in this session.
 
-The mode selector above the box picks what you curate.
+The `Tissue` selector above the box sets what you curate; tissue tubes are
+the only mode for now.
 
 On a phone, `Box`, `Setup`, and `Log` are tabs, and the scan field stays at
 the bottom of the screen. On a tablet or desktop, the box sits on the left,
@@ -63,13 +64,13 @@ so the next session starts where you left off.
 
 These filters decide which tubes a scan and the work list match.
 
-- `Include parasites`: also finds parasites, by parasite ID or by the field
-  ID of their host.
+- `Include symbionts`: also finds symbiont tubes, by symbiont ID or by the
+  field ID of their host.
 - `Tissue type`: the part types to match, such as Liver. Leave it at `Any` to
-  match every type. Parasites have no part type, so this filter never
+  match every type. Symbionts have no part type, so this filter never
   excludes them.
 - `Preservation`: the treatments to match, such as ETOH.
-- `Parasite category`: shown with `Include parasites` on. Matches categories
+- `Symbiont category`: shown with `Include symbionts` on. Matches categories
   such as Ectoparasite.
 
 ### Update field
@@ -94,10 +95,13 @@ filled earlier, by this tool or typed in the part form, show as filled.
 
 ### Labels and overwrite
 
-- `Customize cell labels`: changes how locations are written. Choose a
-  `Numbering` of `A1, A2, A3…`, `1, 2, 3…`, or `1-1, 1-2, 1-3…`, a
-  `Box separator`, a `Row–column separator`, and `Pad numbers with zeros`. An
-  example under the fields shows the result, such as `Box 1 / A01`. Turn it
+- `Customize cell labels`: changes how locations are written:
+  - `Numbering`: `A1, A2, A3…`, `1, 2, 3…`, or `1-1, 1-2, 1-3…`.
+  - `Box separator`: the text between the box and the cell.
+  - `Row–column separator`: the text between row and column.
+  - `Pad numbers with zeros`: writes `A01` instead of `A1`.
+
+  An example under the fields shows the result, such as `Box 1 / A01`. Turn it
   off to go back to the standard `Box 1: A1`. NAHPU keeps your custom format
   for next time.
 - `Overwrite existing values`: lets a scan replace a stored location or a
@@ -120,18 +124,23 @@ Use `Scan` when tubes come to you in no set order.
 
 {% /steps %}
 
-By default, a code matches a part's tissue ID or barcode, or a parasite ID
-when parasites are included. A barcode match wins over a tissue ID match.
+By default, a code matches a part's tissue ID or barcode, or a symbiont ID
+when symbionts are included. A barcode match wins over a tissue ID match.
 Suggestions appear while you type. Pressing Enter always uses the typed text,
 so a scanner's code is never swapped for a suggestion.
 
 Turn on `Search by field ID` {% ref id="D" /%} when tubes are labeled with
-the specimen's field ID instead. A field ID usually matches several tubes,
-such as a liver and a muscle. Add the part type or treatment after the ID to
-choose one, such as `AC128 liver etoh`. A number alone, such as `128`,
-matches every specimen with that number. When a code still matches more than
-one tube, NAHPU asks which one you are holding. Closing that list without a
-choice logs the code as skipped.
+the specimen's field ID instead:
+
+| You type | Matches |
+| --- | --- |
+| `AC128` | Every tube of specimen AC128, such as its liver and its muscle |
+| `AC128 liver etoh` | Only AC128's tubes with that part type and treatment |
+| `128` | Every specimen numbered 128, whatever its prefix |
+| A symbiont ID | That symbiont, when `Include symbionts` is on |
+
+When a code still matches more than one tube, NAHPU asks which one you are
+holding. Closing that list without a choice logs the code as skipped.
 
 The message under the field reports each result:
 

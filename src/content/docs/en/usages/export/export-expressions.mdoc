@@ -21,18 +21,42 @@ sidebar:
 {% pin id="E" label="Template list" large2=[93, 40.3] small2=[94, 48.2] /%}
 {% /screenshots %}
 
-Export expressions are the placeholders, fallbacks, and conditional syntax
-that NAHPU uses to turn record fields into output. The same expressions drive
-document template text elements and tabular export presets, so a value written
-as `[taxonomy::genus] [taxonomy::specificEpithet]` {% ref id="C" /%} resolves the same way on a
-printed label and in an exported column. For the workflows that use them, see
-[Export documents](../export-documents) and [Export records](../export-records).
+An **export expression** tells NAHPU what to write: which record fields to use,
+what text to put around them, and what to do when a value is missing. You write
+expressions in two places:
+
+- the text elements of a [document template](../export-documents), such as a
+  specimen label;
+- the `Custom field` columns of a [tabular export preset](../export-records).
+
+The same expression gives the same result in both. For example,
+`[taxonomy::genus] [taxonomy::specificEpithet]` {% ref id="C" /%} prints
+`Rattus rattus` on a label and writes `Rattus rattus` in a spreadsheet column.
+
+## The basics in one minute
+
+A field goes in square brackets, written as `[table::field]`. Everything outside
+brackets is written as it is:
+
+```text
+Field no. [specimen::fieldNumber]
+```
+
+prints `Field no. 156`. Three small additions cover most needs:
+
+| Add | To | Example | Prints |
+|---|---|---|---|
+| `??text` | Write `text` when the field is empty | `[taxonomy::specificEpithet??sp.]` | `sp.` when no epithet is recorded |
+| `#label` | Write a coded field's label instead of its code | `[mammalAttribute::testisPosition#label]` | `Scrotal` instead of `0` |
+| `[[if]…]]` | Write text only when a condition holds | `[[if][coordinate::elevationInMeter!=""]=>"m"]]` | `m` only when an elevation is recorded |
+
+You rarely type keys by hand. `Insert Field` in the template editor and
+`Add field` in a custom field insert them for you.
 
 ## Common expressions {% #common-expressions %}
 
-Copy these into a text element of a document template, or into `Advanced` >
-`Raw source expression` of a tabular export mapping. The keys are for specimen
-records; the sections below explain how each part works.
+Copy these into a text element of a document template, or into a tabular
+column as described with each one. They use specimen fields.
 
 ### Species name {% #species-name %}
 
@@ -40,49 +64,47 @@ records; the sections below explain how each part works.
 [taxonomy::genus] [taxonomy::specificEpithet]
 ```
 
-This prints `Rattus rattus`. When some specimens are identified only to genus,
-give the epithet a fallback so the name reads `Rattus sp.`:
+Prints `Rattus rattus`. For specimens identified only to genus, add a fallback
+so the name reads `Rattus sp.`:
 
 ```text
 [taxonomy::genus] [taxonomy::specificEpithet??sp.]
 ```
 
-For the full name, including a subspecific epithet, use
-`[specimen::scientificName]`. In a tabular preset, use a `Custom field` mapping.
+For the full name, including a subspecies, use `[specimen::scientificName]`.
+In a tabular preset, put either expression in a `Custom field` column.
 
 ### Full locality {% #full-locality %}
 
-This joins the geography fields into one value and skips any that are empty, so
-a missing county does not leave a doubled comma.
+Joins the geography fields into one value and skips the empty ones, so a
+missing county does not leave a doubled comma:
 
 ```text
 [geography::country]|[geography::islandGroup]|[geography::stateProvince]|[geography::county]|[geography::municipality]|[geography::locality]
 ```
 
-The `|` marks where each part ends; the output separator comes from the list
-settings:
+Each `|` separates two parts. The separator that is actually written, such as a
+comma, comes from the list settings:
 
 - **Document template:** set `Text type` to `List Values` and choose the comma
   format.
 - **Tabular export preset:** set `Mapping type` to `List field`, `List output`
   to `One column`, and `Separator` to `Comma (A, B)`. Paste the expression into
-  `Raw source expression` and fill in `Column name (optional)`; the Darwin Core
-  and NAHPU namespace header formats require it.
+  `Advanced` > `Raw source expression` and fill in `Column name (optional)`;
+  the Darwin Core and NAHPU namespace header formats require a name.
 
 A record prints `Indonesia, West Java, Bogor, Cibodas`; one without a county
-prints `Indonesia, West Java, Cibodas`. Remove, reorder, or add parts as needed.
+prints `Indonesia, West Java, Cibodas`. Remove, reorder, or add parts as
+needed.
 
 ### Testis size {% #testis-size %}
 
-This prints `length x width` only when the testis is scrotal and both
-measurements are recorded. Every other record prints nothing.
+Prints `length x width` only when the testis is scrotal and both measurements
+are recorded. Every other record prints nothing:
 
 ```text
 [[if][mammalAttribute::testisPosition=="0"&&mammalAttribute::testisLength!=""&&mammalAttribute::testisWidth!=""]=>"[mammalAttribute::testisLength] x [mammalAttribute::testisWidth]"]]
 ```
-
-Use it in a text element of a document template, or in a `Custom field` mapping
-of a tabular preset.
 
 | Record | Output |
 |---|---|
@@ -91,12 +113,10 @@ of a tabular preset.
 | Abdominal | Nothing |
 | Female | Nothing |
 
-The conditions require the stored position `0`, which is Scrotal, and both
-measurements; only then is the text written, with its fields filled in. See
-[Conditional text](#conditional-text).
-
-Add ` mm` inside the quotes for a unit, or `|"not scrotal"` before the closing
-`]]` to write something for every other record.
+`"0"` is the stored code for Scrotal. Add ` mm` inside the quotes for a unit, or
+`|"not scrotal"` before the closing `]]` to write something for every other
+record. See [Conditional text](#conditional-text) for how this works. In a
+tabular preset, use a `Custom field` column.
 
 ### Encoded field labels {% #encoded-labels %}
 
@@ -104,28 +124,27 @@ Add ` mm` inside the quotes for a unit, or `|"not scrotal"` before the closing
 [mammalAttribute::testisPosition#label]
 ```
 
-This prints `Scrotal` instead of the stored code `0`, in any text type,
-including a `Custom field` mapping. See
+Prints `Scrotal` instead of the stored code `0`. It works in any text type,
+including a `Custom field` column. See
 [Decode an encoded field](#decode-an-encoded-field).
 
-## Placeholder symbols
+## Placeholders in detail
 
-Everything a template can write comes from one of these forms. All of them are
-typed into a text element, and all of them can be mixed with ordinary text.
+### Symbols
 
 | Symbol | Meaning | Example |
 |---|---|---|
 | `[ ]` | A field placeholder. | `[fieldNumber]` |
 | `::` | Separates table from field in a full key. | `[specimen::fieldNumber]` |
 | `??` | Fallback written when the field is empty. | `[specimen::preparator??N/A]` |
-| `#label` | Prints an encoded field's label instead of its stored code. | `[mammalAttribute::testisPosition#label]` |
-| `-img` | Renders a `.sex` field as an icon instead of text. | `[mammal.sex]-img` |
+| `#label` | Writes a coded field's label instead of its code. | `[mammalAttribute::testisPosition#label]` |
+| `-img` | Draws a `.sex` field as an icon instead of text. | `[mammal.sex]-img` |
 | `[[ ]]` | A conditional expression. | `[[specimen::condition][…]]` |
-| `[[if]` … `]]` | Conditional text, written according to the conditions. | `[[if][…]=>" mm"]]` |
+| `[[if]` … `]]` | Conditional text, written only when the conditions match. | `[[if][…]=>" mm"]]` |
 
 ### Field keys
 
-A placeholder holds either a full `Table::Field` key or a short field name:
+A placeholder holds a full `table::field` key or just the field name:
 
 ```text
 Field number: [specimen::fieldNumber]
@@ -133,61 +152,60 @@ Scientific name: [taxonomy::scientificName]
 Locality: [site::specificLocality]
 ```
 
-Short forms such as `[fieldNumber]` resolve too, but the full key is safer
-whenever more than one table has a field of that name. Insert keys from the
-field picker rather than typing them; the picker only offers fields that the
-template's record type can actually supply.
+A short form such as `[fieldNumber]` also works, but use the full key when two
+tables have a field with the same name. The field picker only offers fields the
+template's or preset's record type can supply.
 
-### Null fallback
+### Missing values
 
-`??` gives a placeholder something to print when the record has no value. The
-`No Content Placeholder` control writes it for you, and offers five options:
+`??` sets what to write when a field is empty. The `No Content Placeholder`
+control writes it for you:
 
 | Option | Written as | Output when the field is empty |
 |---|---|---|
 | `Blank` | `[specimen::preparator]` | Nothing |
-| `table::field` | `[specimen::preparator??specimen::preparator]` | The field key itself, as a visible reminder |
+| `table::field` | `[specimen::preparator??specimen::preparator]` | The field key, as a visible reminder |
 | `N/A` | `[specimen::preparator??N/A]` | `N/A` |
 | `None` | `[specimen::preparator??None]` | `None` |
 | Custom | `[specimen::preparator??not recorded]` | Whatever you typed |
 
-The text after `??` is literal. A placeholder that ends in `-img` never takes a
-fallback.
+The text after `??` is written as it is. A placeholder ending in `-img` cannot
+take a fallback.
 
-### Sex icon and picture placeholders
+### Sex icons and pictures
 
-Two placeholders behave differently from the rest because they render an image
-rather than a string. Both must be the only thing in their text element:
+Two placeholders draw an image instead of text. Each must be alone in its text
+element:
 
-- `[mammal.sex]-img` draws the sex as a resizable icon. The key must end in
-  `.sex`; set the icon box with the width and height fields.
-- `[media::media]`, with the text type set to `Picture`, draws the record's
-  attached images in a grid sized to the number of images.
+- `[mammal.sex]-img` draws the sex as an icon. The key must end in `.sex`. Set
+  the icon size with the width and height fields.
+- `[media::media]`, with `Text type` set to `Picture`, draws the record's
+  attached images in a grid.
 
 ## Custom fields
 
-A custom field is an expression that mixes fields with literal text, or holds
-literal text alone. In a document template, every text element is already a
-custom field: insert fields with `Insert Field` and type text around them. In a
-tabular export preset, build one with `Add custom field` in `Edit Fields`, or
-choose `Custom field` as the `Mapping type` of an existing mapping.
+A custom field mixes fields with your own text, or holds text alone. In a
+document template, every text element is already a custom field: insert fields
+with `Insert Field` and type around them. In a tabular export preset, select
+`Add custom field` in `Edit Fields`, or set an existing column's
+`Mapping type` to `Custom field`.
 
-The custom field editor writes the expression for you:
+The custom field editor builds the expression one piece, or segment, at a
+time:
 
 | Control | What it does |
 |---|---|
-| `Add field` | Appends a field placeholder chosen from the field picker. |
-| `Add text` {% ref id="B" /%} | Appends a text or separator segment. |
-| `Add conditional text` | Appends [conditional text](#conditional-text) built from conditions, the text to write, and an optional text otherwise. |
-| `Show label` | On an encoded field, adds `#label` so the column shows the label rather than the stored code. |
+| `Add field` | Adds a field chosen from the field picker. |
+| `Add text` {% ref id="B" /%} | Adds text or a separator. |
+| `Add conditional text` | Adds [conditional text](#conditional-text): text written only when its conditions match. |
+| `Show label` | On a coded field, adds `#label` so the column shows the label instead of the code. |
 | `Edit conditional text` | Reopens a conditional text segment. |
-| `Move segment up` / `Move segment down` | Reorders segments. Output is written left to right. |
+| `Move segment up` / `Move segment down` | Reorders segments. They are written left to right. |
 | `Remove segment` | Deletes a segment. |
 | `Expression:` | Shows the expression that will be saved. |
 | `Column name` | Names the output column. |
 
-A custom field does not have to include a field. Each of these lines is a
-complete, valid expression:
+Each of these is a complete custom field:
 
 ```text
 [personnel::initial]-[specimen::fieldNumber]
@@ -195,209 +213,192 @@ complete, valid expression:
 NAHPU
 ```
 
-The last example writes `NAHPU` in every row, which suits a constant column
-such as an institution code that the receiving database expects.
+The last one writes `NAHPU` in every row, which suits a fixed column such as an
+institution code. A custom field with a `Column name` and no segments at all
+writes an empty column, for a receiving sheet's column NAHPU does not record.
 
-Set `Column name` for every custom field. It is required when
-`Generated header format` is Darwin Core or the NAHPU namespace. With
-`table::fieldName` or `fieldName`, an unnamed custom field takes its header
-from the first field in the expression, or from the text itself when there is
-no field.
+Give every custom field a `Column name`. It is required with the Darwin Core and
+NAHPU namespace header formats. With `table::fieldName` or `fieldName`, an
+unnamed custom field is headed by its first field, or by its text when it has no
+field.
 
-Custom fields in a tabular preset use the `Normal Text` type. Conditional
-output, formatted text types, and indexed list columns need a mapping with
-exactly one field, so use `Single field` or `List field` for those.
+A custom field column writes its expression as plain text. For a value format
+such as `Encoded text` or `Date`, for conditional brackets, or for indexed list
+columns, use a `Single field` or `List field` column instead.
 
 ## Conditional output
 
-A conditional expression decides at print time whether to mark a value or
-replace it. Build one with `Conditional output` in the text toolbar, which
-writes the syntax below into the text; the same dialog reopens and edits an
-expression that is already there.
+A conditional expression checks one or more fields and then changes what is
+written. Build one with `Conditional output` in the template editor's text
+toolbar, which writes the syntax for you and reopens it for editing. In a
+tabular preset, choose a conditional `Value format` on a `Single field` column;
+its own field is the target.
 
-Tabular export presets offer the same conditional types on `Single field`
-mappings; the target is the mapping's own field.
+### Choose a type
 
-### The complete symbol set
-
-| Symbol | Name | What it does |
+| You want to… | Type | Example result |
 |---|---|---|
-| `[[` … `]]` | Expression delimiters | Open and close a conditional expression. |
-| `][` | Target separator | Ends the target field and starts the condition list. |
-| `==` | Equals | Matches when the value is exactly the comparison value. |
-| `!=` | Not equals | Matches when the value differs from the comparison value. |
-| `~=` | Contains | Matches when the comparison value occurs anywhere in the value. |
-| `!=""` | Is not empty | Matches when the field holds any value at all. |
-| `==""` | Is empty | Matches when the field is blank or absent. |
-| `&&` | All | Every condition must match. |
-| `\|\|` | Any | At least one condition must match. |
-| `"` … `"` | Value quotes | Wrap every comparison value. Required, and empty for the two emptiness operators. |
-| `\"` `\\` | Escapes | A quote or a backslash inside a comparison value. |
-| `]=>` | Replacement marker | Ends the conditions and starts the replacement or conditional text. |
-| `if` | Conditional text keyword | Takes the target's place, so the expression writes text instead of changing a field. |
-| `\|` | Else separator | After the text, starts the text written when the conditions do not match. |
+| Put a value in brackets when another field says so | `Conditional brackets` | `[82.5]` when the weight was estimated |
+| Replace a value with your own text when another field says so | `Conditional field` | `?` instead of the epithet when the ID is uncertain |
+| Replace a value based on the value itself | `Conditional value` | `Not recorded` when the value is `0` |
+| Write text that has no field of its own, such as a unit | `Conditional text` | ` mm` only after a recorded width |
 
-### The three shapes
+In the dialog:
 
-Bracket the target value when the conditions match:
+{% steps %}
 
-```text
-[[target][conditions]]
-```
+1. Choose the `Conditional type`.
+2. Choose the `Target field`, the value that is bracketed or replaced.
+   `Conditional text` has no target; it is added to the end of the element's
+   text.
+3. Add conditions. Each one has a `Controlling field`, a comparison, and a
+   value. `Conditional value` uses the target itself, so its field picker is
+   hidden.
+4. With more than one condition, set `Match logic` to
+   `Any condition (OR)` or `All conditions (AND)`.
+5. Fill in `Replacement text`, or `Text when matched` and
+   `Text otherwise (optional)` for conditional text. Leave `Replacement text`
+   empty to hide the value when the conditions match.
 
-Replace the target value with literal text when the conditions match:
-
-```text
-[[target][conditions]=>"replacement"]]
-```
-
-Write text chosen by the conditions, with no target field:
-
-```text
-[[if][conditions]=>"text"]]
-[[if][conditions]=>"text"|"otherwise"]]
-```
-
-Note the closing: the replacement and text forms still end in `]]`, and the
-`]=>` marker sits inside the expression.
+{% /steps %}
 
 ### Conditional text (if and else) {% #conditional-text %}
 
-Conditional text writes one of two texts depending on the conditions, instead
-of changing a field's value. Use it for text that belongs with a field but
-should only appear with it, such as a unit:
+Conditional text writes text depending on the conditions, instead of changing
+a field. Use it for text that belongs with a value but should appear only with
+it, such as a unit:
 
 ```text
 [mammalAttribute::testisWidth][[if][mammalAttribute::testisWidth!=""]=>" mm"]]
 ```
 
 A width of `6.5` prints `6.5 mm`; a missing width prints nothing, not a stray
-`mm`. Add a second text after `|` to write something when the conditions do not
+`mm`.
+
+Add a second text after `|` to write something when the conditions do not
 match:
 
 ```text
 [[if][mammalAttribute::testisPosition=="0"]=>"scrotal"|"not scrotal"]]
 ```
 
-A text can hold field placeholders, with fallbacks and `#label`, and they are
-filled in when that text is written:
+The text can contain fields, with fallbacks and `#label`. They are filled in
+when the text is written:
 
 ```text
 [[if][mammalAttribute::testisLength!=""&&mammalAttribute::testisWidth!=""]=>"[mammalAttribute::testisPosition#label], [mammalAttribute::testisLength] x [mammalAttribute::testisWidth] mm"]]
 ```
 
-- Conditions use the same operators as other conditionals and compare stored
-  codes.
-- Quote each text, and write a quote inside it as `\"`. A `|` inside the quotes
-  is ordinary text.
+- Put each text in quotes. Write a quote inside it as `\"`. A `|` inside the
+  quotes is ordinary text.
 - Without a second text, nothing is written when the conditions do not match.
-- Another conditional expression inside a text is not evaluated.
-- `if` is lowercase. The dialog's `Conditional text` type writes this form for
-  you.
+- A conditional expression inside the text is not evaluated.
+- `if` must be lowercase.
 
-### Two worked examples
+### Hide a value unless another field is recorded
 
-**Bracket a weight that was estimated.** Mammal measurements carry an accuracy
-flag naming the fields that were not measured precisely. Bracket the weight
-whenever it is one of them:
+Use `Is empty` with an empty replacement. This prints the testis length only
+when a testis position was recorded:
+
+```text
+[[mammalAttribute::testisLength][mammalAttribute::testisPosition==""]=>""]]
+```
+
+A conditional hides only its own field. Text beside it, such as a unit or the
+` x ` between two measurements, still prints. Give that text its own condition
+with conditional text:
+
+```text
+[[mammalAttribute::testisLength][mammalAttribute::testisPosition==""]=>""]][[if][mammalAttribute::testisPosition!=""&&mammalAttribute::testisLength!=""]=>" mm"]]
+```
+
+[Testis size](#testis-size) shows the complete pattern.
+
+### Worked examples
+
+**Bracket an estimated weight.** A mammal's accuracy note names the
+measurements that were not measured precisely. Bracket the weight when it is
+one of them:
 
 ```text
 [[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
 ```
 
-A specimen whose weight is flagged prints `[82.5]`; one measured precisely
-prints `82.5`. This is the `~=` special case: on `mammalAttribute::accuracy`
-the comparison asks whether the named measurement is flagged, not whether the
-text contains the word.
+A flagged weight prints `[82.5]`; a precise one prints `82.5`. On
+`mammalAttribute::accuracy`, `~=` asks whether the named measurement is
+flagged, not whether the text contains the word.
 
-**Mark a name whose identification is uncertain.** ID confidence is stored as
-`0` for Low, `1` for Medium, and `2` for High, so "not High" is `!="2"`. Put
-the genus and the epithet in one text element and make the epithet
-conditional:
+**Mark an uncertain identification.** ID confidence is stored as `0` (Low),
+`1` (Medium), or `2` (High), so "not High" is `!="2"`. Put the genus and the
+epithet in one text element and make the epithet conditional:
 
 ```text
 [taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
 ```
 
 A high-confidence identification prints `Rattus rattus`; anything less prints
-`Rattus ?`.
+`Rattus ?`. The replacement takes the place of the epithet; it is not added
+after it. To keep a value and add something after it, write the value and
+follow it with [conditional text](#conditional-text).
 
-Two things about this example are worth understanding before you rely on it.
-
-Conditions compare the **stored** value, not the displayed one. `Encoded Text`
-turns `2` into `High` on the way to the page, but a condition sees `2`, so
-`specimen::iDConfidence!="High"` would match every record. Read the code from
-the value the record actually holds.
-
-A replacement **substitutes** the value; it does not append to it. That is why
-the example prints `Rattus ?` and not `Rattus rattus?`. To keep a value and add
-a suffix conditionally, write the value and follow it with
-[conditional text](#conditional-text).
-
-A nonempty comparison such as `!="2"` does not match unrecorded confidence. To include that case explicitly, use `Is empty` as an additional OR condition:
+`!="2"` does not match a record with no confidence recorded. To include those
+too, add `Is empty` as an extra OR condition:
 
 ```text
 [[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"||specimen::iDConfidence==""]=>"?"]]
 ```
 
-### Conditional types in the dialog
+### Rules for conditions
 
-`Conditional type` chooses which of the four arrangements the dialog writes:
+- **Conditions compare stored values, not labels.** A coded field is compared
+  by its code: write `specimen::iDConfidence!="2"`, not `!="High"`, and
+  `mammalAttribute::testisPosition=="0"`, not `=="Scrotal"`.
+- **Comparisons are case-sensitive** and ignore spaces at either end.
+- **A blank field never matches** an ordinary comparison, even `!=`. Use
+  `Is empty` (`==""`) or `Is not empty` (`!=""`) to test for a value.
+- **Use one joiner per expression:** all `&&` or all `||`, not both.
+- **An empty target** uses its `No Content Placeholder`, not the replacement.
+- **A replacement replaces the whole value.** An empty replacement hides it.
+- **A mistyped expression prints as plain text.** Preview a record that matches
+  and one that does not.
 
-| Type | Output | Conditions test |
+### Syntax reference
+
+The dialog writes these for you; use this table to read or edit an expression
+by hand.
+
+| Symbol | Name | What it does |
 |---|---|---|
-| `Conditional brackets` | Wraps the target value in `[ ]` | Any other field |
-| `Conditional field` | Writes `Replacement text` | Any other field |
-| `Conditional value` | Writes `Replacement text` | The target field's own value |
-| `Conditional text` | Writes `Text when matched`, or `Text otherwise (optional)` | Any field; there is no target |
+| `[[` … `]]` | Expression delimiters | Open and close a conditional expression. |
+| `][` | Target separator | Ends the target field and starts the conditions. |
+| `==` | Equals | Matches when the value is exactly the comparison value. |
+| `!=` | Not equals | Matches when the value differs from the comparison value. |
+| `~=` | Contains | Matches when the comparison value occurs anywhere in the value. |
+| `!=""` | Is not empty | Matches when the field holds any value. |
+| `==""` | Is empty | Matches when the field is blank or absent. |
+| `&&` | All | Every condition must match. |
+| `\|\|` | Any | At least one condition must match. |
+| `"` … `"` | Value quotes | Wrap every comparison value; empty for the two emptiness tests. |
+| `\"` `\\` | Escapes | A quote or a backslash inside a value. |
+| `]=>` | Replacement marker | Ends the conditions and starts the replacement or text. |
+| `if` | Conditional text keyword | Takes the target's place, so the expression writes text. |
+| `\|` | Else separator | After the text, starts the text written when the conditions do not match. |
 
-`Conditional text` has no `Target field`. The dialog adds the expression to the
-end of the element's text.
-
-Leave `Replacement text` empty to hide the value when the conditions match.
-
-`Conditional value` is the one to use for "when this field says X, print Y". It
-sets every condition's source field to the target for you, which is why the
-source-field picker disappears when you select it.
-
-`Match logic` sets the joiner: `Any condition (OR)` writes
-`||` and `All conditions (AND)` writes `&&`.
-
-### Suppress a value that depends on another field
-
-`Is not empty` and `Is empty` are the operators for "only print this when that
-was recorded". They take no comparison value, and the dialog hides the value
-box when you choose one.
-
-Pair them with an empty `Replacement text` to hide a value. This prints the
-testis length only when a testis position was recorded:
+The three shapes are:
 
 ```text
-[[mammalAttribute::testisLength][mammalAttribute::testisPosition==""]=>""]]
+[[target][conditions]]
+[[target][conditions]=>"replacement"]]
+[[if][conditions]=>"text"|"otherwise"]]
 ```
 
-A conditional hides only its target. Literal text beside it, such as a unit or
-the ` x ` between two measurements, still prints. Give that text a condition of
-its own with [conditional text](#conditional-text):
-
-```text
-[[mammalAttribute::testisLength][mammalAttribute::testisPosition==""]=>""]][[if][mammalAttribute::testisPosition!=""&&mammalAttribute::testisLength!=""]=>" mm"]]
-```
-
-[Testis size](#testis-size) shows a complete pattern.
-
-### How conditions are evaluated
-
-Comparisons trim surrounding whitespace and are case-sensitive. They read stored values: compare `"2"`, not `"High"`, for identification confidence. Use `Is empty` (`==""`) or `Is not empty` (`!=""`) to test whether a source field has a value. Other comparisons do not match a blank source. Do not mix `&&` and `||` in one expression.
-
-An empty target uses its `No Content Placeholder` rather than a conditional replacement. `~=""` is invalid. A malformed expression can print literally, so preview both matching and nonmatching records. A replacement substitutes the whole target value; an empty replacement hides a nonempty target when its conditions match.
-
-For `mammalAttribute::accuracy`, `~=` tests whether the named measurement was flagged inaccurate, for example `mammalAttribute::accuracy~="totalLength"`. It is not an ordinary substring test for that field.
+The first brackets the target, the second replaces it, and the third writes
+text. Each ends in `]]`; `|"otherwise"` is optional. `~=""` is not valid.
 
 ## Text types and their formats
 
-Tabular export presets use the same text types for the format of a
-`Single field` mapping.
+In a document template, `Text type` and `Format` decide how a value looks. A
+tabular `Single field` column uses the same formats through `Value format`.
 
 | Text type | Format options |
 |---|---|
@@ -414,14 +415,14 @@ Tabular export presets use the same text types for the format of a
 | `Number` | `Original`, or 0, 1, 2, or 3 decimal places |
 | `Encoded Text` | `Default mapping` or `Custom mapping...` |
 
-`Nested List` is for related records — specimen parts, personnel, collection
-methods — and is the text type that most often needs dynamic sizing.
+`Nested List` is for related records, such as specimen parts, personnel, or
+collecting methods, and is the text type that most often needs dynamic sizing.
 
 ### Encoded Text: what decodes
 
-`Encoded Text` turns a stored numeric code into its label. `Default mapping`
-uses the table below, matched on the end of the field key, so both
-`mammalAttribute::testisPosition` and the short `testisPosition` decode.
+Some fields store a number that stands for a word. `Encoded Text` writes the
+word. `Default mapping` uses this table, matched on the end of the field key, so
+both `mammalAttribute::testisPosition` and `testisPosition` decode.
 
 | Field key ends with | Code 0 | 1 | 2 | 3 | 4 | 5 | 6 |
 |---|---|---|---|---|---|---|---|
@@ -441,75 +442,66 @@ uses the table below, matched on the end of the field key, so both
 | `::fat` | None | Trace | Light | Moderate | Heavy | Extremely Heavy | |
 | `::bodyMolt` | None | Trace | Light | Moderate | Heavy | | |
 
-These fields decode as `Yes` for `1` and `No` for `0`:
+These fields decode as `Yes` for `1` and `No` for `0`: `::broodPatch`,
+`::hasBursa`, `::wingIsMolt`, `::tailIsMolt`, `::showBatFields`, and
+`::showEchoFields`.
 
-`::broodPatch`, `::hasBursa`, `::wingIsMolt`, `::tailIsMolt`,
-`::showBatFields`, `::showEchoFields`.
+Anything else is written unchanged: a field not in the table, a value that is
+not a whole number, or a code outside its list. A bare number on a label
+usually means one of these. Use `Custom mapping...` to label a field the table
+does not cover.
 
-Anything else is left as it is. A field with no entry above, a value that is
-not a whole number, and a code outside its list all print unchanged — which is
-what a bare number in a printed label usually means. `Custom mapping...` is
-the way to label a field the default mapping does not cover.
-
-Two of these have friendlier alternatives. The `Sex` text type formats sex as
-a symbol or letter and handles uncertainty, and `[…sex]-img` draws it as an
-icon; use `Encoded Text` on a sex field only when you want the plain word.
+For sex, the `Sex` text type can also write a symbol or letter, and
+`[…sex]-img` draws an icon. Use `Encoded Text` on sex only for the plain word.
 
 ### Decode an encoded field
 
-An encoded field stores a number, such as `0` or `1`, and the expression does
-not change: write the field placeholder as usual. The text type, not the
-placeholder, turns the code into its label.
+The placeholder stays the same; the text type or `#label` turns the code into
+its label.
 
-**In a document template.** Put the placeholder in a text element and set
+**In a document template,** put the placeholder in a text element and set
 `Text type` to `Encoded Text`:
 
 ```text
 Testes: [mammalAttribute::testisPosition]
 ```
 
-With `Default mapping`, a specimen that stores `0` prints `Testes: Scrotal`.
-Each placeholder in the element is decoded against its own field, so one
-element can hold several encoded fields:
+A specimen that stores `0` prints `Testes: Scrotal`. Each placeholder in the
+element decodes against its own field, so one element can hold several:
 
 ```text
 [mammalAttribute::age], [mammalAttribute::testisPosition]
 ```
 
-**In a tabular export preset.** Use a `Single field` mapping for the encoded
-field and set `Value format` to `Encoded text`. A `Custom field` mapping always
-uses `Normal Text`, so add `#label` to an encoded field inside it, or select
-`Show label` on its segment:
+**In a tabular export preset,** use a `Single field` column and set
+`Value format` to `Encoded text`. In a `Custom field` column, add `#label` to
+the field, or select `Show label` on its segment:
 
 ```text
 [mammalAttribute::testisPosition#label], [mammalAttribute::mammaeCondition#label]
 ```
 
-**The `#label` marker.** `#label` decodes one placeholder with the default
-mapping in any text type, so one element or column can mix codes and labels.
-Write it after the key and before any fallback, as in
-`[mammalAttribute::sex#label??Unknown]`. A value with no default label prints
-unchanged.
+**With `#label`,** one placeholder decodes with the default mapping in any text
+type, so an element or column can mix codes and labels. Write it after the key
+and before any fallback: `[mammalAttribute::sex#label??Unknown]`. A value with
+no default label is written unchanged.
 
-**Custom labels.** In the template editor, choose `Custom mapping...` as the
-format, then `Map encoded values` to type a label for each code. The dialog
-starts from the default labels. In a tabular preset, write the same mapping in
-`Advanced` > `Raw format option`:
+**For your own labels,** choose `Custom mapping...` as the format in the
+template editor, then `Map encoded values` to type a label for each code. The
+dialog starts from the default labels. In a tabular preset, write the mapping
+in `Advanced` > `Raw format option`:
 
 ```text
 custom_map:0=Scrotal,1=Abdominal
 ```
 
 Write each pair as `code=label`, separated by commas. Labels cannot contain a
-comma or an equals sign, and a code without a pair prints unchanged. Any other
-`Raw format option`, such as `enum`, uses the default mapping. A custom mapping
-applies to every placeholder in the element, so give a custom-mapped field a
-text element of its own.
+comma or an equals sign, and a code without a pair is written unchanged. A
+custom mapping applies to every placeholder in the element, so give a
+custom-mapped field its own text element.
 
-**Conditions still read codes.** Decoding changes only what is printed. A
-condition on an encoded field compares the stored code, so write
-`mammalAttribute::testisPosition=="0"`, not `=="Scrotal"`. An empty field is not
-decoded; it uses its `No Content Placeholder` fallback.
+Decoding changes only what is written. Conditions still compare the stored
+code, and an empty field uses its `No Content Placeholder`.
 
 ### Sex formatting
 
@@ -518,20 +510,21 @@ decoded; it uses its `No Content Placeholder` fallback.
 | `Format` | `Symbol (♂/♀)`, `Letter (M/F)`, `Text (Male/Female)` |
 | `Missing` | `Unknown`, `N/A`, `None` |
 
-An uncertain determination keeps its suffix in every presentation: `Female?`,
+An uncertain determination keeps its question mark in every format: `Female?`,
 `F?`, `♀?`, and `Male?`, `M?`, `♂?`.
 
-## Troubleshooting the syntax
+## Troubleshooting
 
 | Symptom | What to check |
 |---|---|
-| A conditional prints literally | A malformed expression is skipped. Check for a missing `]]`, an unquoted value, or mixed `&&` and `\|\|`. |
-| A fallback prints `[table::field]` | The `table::field` fallback option is selected; switch it to `Blank`, `N/A`, `None`, or a custom string. |
-| A sex icon renders as text | The element must contain only `[…sex]-img`, and the key must end in `.sex`. |
+| A conditional prints as plain text | The expression is mistyped. Look for a missing `]]`, an unquoted value, or `&&` and `\|\|` mixed together. |
+| A fallback prints `[table::field]` | `No Content Placeholder` is set to `table::field`. Switch it to `Blank`, `N/A`, `None`, or your own text. |
+| A sex icon prints as text | The element must contain only `[…sex]-img`, and the key must end in `.sex`. |
 | Record images do not appear | The element must contain only `[media::media]` and use the `Picture` text type. |
-| A custom field column has an unexpected header | Set `Column name`. Without it, the header comes from the first field or from the literal text. |
-| An encoded field prints a number | Set the text type to `Encoded Text`, or `Encoded text` on a `Single field` mapping, or add `#label` to the placeholder. Check that the code is in the default mapping. |
-| Conditional text prints nothing | Without a second text after `\|`, nothing is written when the conditions do not match. Conditions compare stored codes, and `if` must be lowercase. |
+| A custom field column has an unexpected header | Set `Column name`. Without it, the header comes from the first field or the text. |
+| A coded field prints a number | Use `Encoded Text`, or `Encoded text` on a `Single field` column, or add `#label`. Check that the code is in the default mapping. |
+| A condition never matches | Conditions compare stored codes, not labels, and are case-sensitive. A blank field only matches `Is empty`. |
+| Conditional text prints nothing | Without a second text after `\|`, nothing is written when the conditions do not match. Check that `if` is lowercase. |
 
 ## Template editor options
 

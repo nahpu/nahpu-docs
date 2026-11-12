@@ -72,6 +72,11 @@ const screenLabels: Record<string, Record<Screen | "key" | "switch", string>> = 
     switch: "Ukuran layar",
   },
 };
+// Pages can hold several figures, so pin targets are scoped by a key taken from the large
+// capture's file name.
+const figureKey = (props.large.split("/").pop() ?? "shots")
+  .replace(/\.[^.]+$/, "")
+  .replace(/[^A-Za-z0-9-]+/g, "-");
 const locale = Astro.url.pathname.split("/").filter(Boolean)[0] ?? "en";
 const labels = screenLabels[locale] ?? screenLabels.en;
 
@@ -97,7 +102,7 @@ const panels = (["large", "small"] as const).map((screen) => ({
 }));
 ---
 
-<div class="nh-shots not-content" id="usage-screenshots">
+<div class="nh-shots not-content" id={`shots-${figureKey}`} data-figure={figureKey}>
   <div class="nh-shots__switch" role="group" aria-label={labels.switch} hidden>
     {
       panels.map(({ screen }) => (
@@ -130,8 +135,8 @@ const panels = (["large", "small"] as const).map((screen) => ({
                 {shotPins.map((pin) => (
                   <a
                     class="nh-shots__pin"
-                    href={`#shot-ref-${pin.id}`}
-                    data-shot-ref={pin.id}
+                    href={`#shot-ref-${figureKey}-${pin.id}`}
+                    data-shot-ref={`${figureKey}-${pin.id}`}
                     style={`left:${pin.x}%;top:${pin.y}%`}
                     aria-label={`${pin.id}: ${pin.label}`}
                   >
@@ -150,7 +155,10 @@ const panels = (["large", "small"] as const).map((screen) => ({
       <ul class="nh-shots__key" aria-label={labels.key}>
         {pins.map((pin) => (
           <li>
-            <a href={`#shot-ref-${pin.id}`} data-shot-ref={pin.id}>
+            <a
+              href={`#shot-ref-${figureKey}-${pin.id}`}
+              data-shot-ref={`${figureKey}-${pin.id}`}
+            >
               <span class="nh-shots__chip">{pin.id}</span>
               <span class="nh-shots__label">{pin.label}</span>
             </a>
@@ -358,17 +366,34 @@ const panels = (["large", "small"] as const).map((screen) => ({
 </style>
 
 <script>
-  const figure = document.getElementById("usage-screenshots");
+  const figures = [...document.querySelectorAll<HTMLElement>(".nh-shots[data-figure]")];
   const refs = [...document.querySelectorAll<HTMLElement>(".nh-shot-ref[data-shot-ref]")];
   const smooth = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
   const storageKey = "nahpu-docs:screenshot-size";
 
-  // Show one screen size at a time. The choice follows the reader across pages; the first
-  // visit starts from the size that matches their viewport.
-  if (figure) {
-    const switcher = figure.querySelector<HTMLElement>(".nh-shots__switch");
-    const buttons = [...figure.querySelectorAll<HTMLButtonElement>(".nh-shots__switch button")];
-    const panels = [...figure.querySelectorAll<HTMLElement>(".nh-shots__panel")];
+  // A letter in the text belongs to the nearest figure above it, or to the first figure when it
+  // comes before them all.
+  const refFigures = new Map<HTMLElement, HTMLElement>();
+  for (const ref of refs) {
+    let owner = figures[0];
+    for (const figure of figures) {
+      if (figure.compareDocumentPosition(ref) & Node.DOCUMENT_POSITION_FOLLOWING) owner = figure;
+    }
+    if (!owner) continue;
+    refFigures.set(ref, owner);
+    ref.dataset.shotRef = `${owner.dataset.figure}-${ref.dataset.shotRef}`;
+    ref.setAttribute("href", `#${owner.id}`);
+  }
+
+  // Show one screen size at a time in every figure. The choice follows the reader across pages;
+  // the first visit starts from the size that matches their viewport.
+  if (figures.length > 0) {
+    const buttons = figures.flatMap((figure) => [
+      ...figure.querySelectorAll<HTMLButtonElement>(".nh-shots__switch button"),
+    ]);
+    const panels = figures.flatMap((figure) => [
+      ...figure.querySelectorAll<HTMLElement>(".nh-shots__panel"),
+    ]);
 
     const readSaved = () => {
       try {
@@ -401,8 +426,10 @@ const panels = (["large", "small"] as const).map((screen) => ({
           ? "small"
           : "large";
     show(initial, false);
-    figure.classList.add("is-switchable");
-    switcher?.removeAttribute("hidden");
+    for (const figure of figures) {
+      figure.classList.add("is-switchable");
+      figure.querySelector<HTMLElement>(".nh-shots__switch")?.removeAttribute("hidden");
+    }
     for (const button of buttons) {
       button.addEventListener("click", () => show(button.dataset.screen ?? "large", true));
     }
@@ -438,7 +465,9 @@ const panels = (["large", "small"] as const).map((screen) => ({
     el.addEventListener("click", (event) => {
       event.preventDefault();
       const toFigure = el.classList.contains("nh-shot-ref");
-      const destination = toFigure ? figure : document.getElementById(`shot-ref-${id}`);
+      const destination = toFigure
+        ? refFigures.get(el)
+        : document.getElementById(`shot-ref-${id}`);
       destination?.scrollIntoView({ behavior: smooth, block: toFigure ? "start" : "center" });
       flash(id);
     });

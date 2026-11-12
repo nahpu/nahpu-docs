@@ -20,37 +20,182 @@ sidebar:
 {% pin id="G" label="Acrescentar data" large=[40.5, 76.2] small=[94, 79.5] /%}
 {% /screenshots %}
 
-Use `Export records` para gravar dados do projeto ativo em CSV, TSV, Excel ou JSON usando uma predefinição de exportação salva.
+Use `Exportar registros` para salvar os registros do projeto ativo em um arquivo
+CSV, TSV, Excel ou JSON. Uma predefinição de exportação salva decide quais
+registros viram linhas, quais colunas eles têm e como as colunas se chamam.
 
 ## Forma rápida de exportar registros
 
 {% steps %}
 
-1. Abra o menu do projeto e selecione `Export records`.
-2. Escolha uma `Export preset` {% ref id="A" /%}. Se não houver nenhuma, abra `Manage Presets` para criar uma; use `Manage presets` {% ref id="B" /%} para revisar uma existente.
-3. Confira tipo de registro, escopo taxonômico, cabeçalhos e mapeamentos. Use `Preview Table` {% ref id="D" /%} para inspecionar linhas reais. No celular, mude para `Preview` {% ref id="F" /%} para acessar esses controles.
-4. Escolha formato e nome do arquivo {% ref id="C" /%} e configure `Append date` {% ref id="G" /%} se necessário. Cabeçalhos Darwin Core não estão disponíveis para JSON.
-5. Selecione o destino e escolha `Export records` {% ref id="E" /%}.
-6. Abra o arquivo e confira linhas, cabeçalhos, unidades e valores repetidos. Use `Share` no resultado para transferir o arquivo ou `Export another` para outra exportação.
+1. Abra o menu do projeto e selecione `Exportar registros`.
+2. Escolha uma `Predefinição de exportação` {% ref id="A" /%}. Para criar ou
+   alterar uma, selecione `Gerenciar predefinições` {% ref id="B" /%}.
+3. Confira o resumo da predefinição: tipo de registro, formato do cabeçalho e
+   colunas. Selecione `Prévia da tabela` {% ref id="D" /%} para ver linhas
+   reais. No celular, a prévia fica na aba `Visualizar` {% ref id="F" /%}.
+4. Escolha o formato do arquivo {% ref id="C" /%} e digite um nome. Ative
+   `Acrescentar a data atual` {% ref id="G" /%} para adicionar a data ao nome.
+   JSON não aceita cabeçalhos Darwin Core.
+5. Escolha onde salvar o arquivo e selecione `Exportar registros` {% ref id="E" /%}.
+6. Abra o arquivo e confira as linhas, os cabeçalhos, as unidades e os valores
+   repetidos. Use `Compartilhar` para enviá-lo ou `Exportar outro` para gerar
+   outro arquivo.
 
 {% /steps %}
 
 ## Detalhes {% #deep-dive %}
 
-A predefinição determina tipo de registro, filtros e colunas. Essas opções são editadas na predefinição, não na tela de exportação. Os tipos incluem narrativas, locais, eventos, registros de espécimes e partes. O escopo taxonômico pode restringir os espécimes incluídos.
+Uma predefinição de exportação tabular é uma receita salva para uma tabela. Ela
+decide três coisas:
 
-Em `Settings` > `Tabular Data`, as opções persistem conforme são alteradas. Para renomear, digite o nome e selecione `Update`. A `Description` opcional, com até 80 caracteres, é salva da mesma forma e aparece abaixo do nome da predefinição na lista. Use `Duplicate` para copiar a predefinição com um novo nome. Use `Edit Fields` para revisar campos de origem, cabeçalhos e tratamento de valores repetidos. Visualize um registro com várias entradas para avaliar se as colunas ou valores concatenados atendem ao programa de destino. Use `Add custom field` para escrever campos e texto literal, ou apenas texto, em uma coluna; consulte [Expressões de exportação](/pt/usages/export/export-expressions/#custom-fields).
+- **Quais registros** viram linhas: o `Tipo de registro` e, para espécimes, o
+  `Grupo taxonômico do espécime`.
+- **Quais colunas** cada linha tem, definidas em `Editar campos`.
+- **Como os cabeçalhos se chamam**, definidos pelo
+  `Formato do cabeçalho gerado` ou pelo nome que você dá a cada coluna.
 
-`Generated header format` oferece `table::fieldName`, `fieldName`, `Darwin Core (dwc:/dcterms:)` e `NAHPU namespace (nahpu:table.field)`. Escolha a convenção exigida pelo destinatário e confira o resultado. O mapeamento Darwin Core mantém campos sem equivalência com cabeçalhos NAHPU; não transforma toda observação em um termo padrão.
+Você altera isso em `Configurações` > `Dados tabulares`, não na tela de
+exportação. As alterações de campos e opções são salvas na hora. O nome da
+predefinição e a `Descrição` opcional (até 80 caracteres, exibida abaixo do
+nome na lista) só são salvos ao selecionar `Atualizar`. Use `Duplicar` para
+criar uma predefinição a partir de outra.
 
-Campos adicionais de observação são distintos da seleção de um conjunto personalizado de colunas. Campos ambientais personalizados usam chaves estáveis como `customEnvironment::<definition UUID>`. Exportações de eventos e espécimes podem incluir dados ambientais armazenados mesmo quando seus campos estão ocultos no formulário. Visibilidade não é filtro de exportação.
+### O que é uma linha
 
-Os mapeamentos Darwin Core usam o determinador do espécime para atribuição da identificação, preservam coordenadas originais e somam extensão positiva do espécime à incerteza positiva da coordenada. Confira esse valor com o [método de georreferenciamento](/pt/best-practices/data-collection/#georeferencing) do projeto. Verifique as unidades sem presumir conversão dos valores.
+| Tipo de registro | Uma linha por |
+|---|---|
+| `Espécime` | Espécime. As partes e outros detalhes repetidos podem ficar juntos em uma célula ou distribuídos em colunas numeradas. |
+| `Partes do espécime` | Parte do espécime, como uma pele ou um tubo de tecido, com os dados do espécime repetidos em cada linha. Útil para inventários de tecidos. |
+| `Local` | Local. |
+| `Evento de coleta` | Evento de coleta. |
+| `Narrativa` | Registro de narrativa. |
+| `Simbiontes` | Registro de simbionte. |
 
-CSV e TSV atendem ao intercâmbio tabular; Excel, à revisão em planilha; JSON, a programas que aceitem sua estrutura. Abra o resultado na ferramenta de destino e confira IDs com zeros iniciais e datas para detectar interpretações indesejadas.
+### Tipos de coluna
+
+Cada coluna em `Mapeamentos selecionados` é de um de quatro tipos, escolhido em
+`Tipo de mapeamento`:
+
+| Tipo de mapeamento | Use para | Exemplo de saída |
+|---|---|---|
+| `Campo único` | Um campo do NAHPU, como está salvo ou reformatado. | `Rattus` |
+| `Campo de lista` | Vários campos unidos, ignorando os vazios. | `Indonesia, West Java, Cibodas` |
+| `Campo personalizado` | Campos combinados com o seu próprio texto, ou apenas texto. | `HH-156` |
+| `Registros aninhados` | Registros repetidos, como as partes ou os coletores de um espécime. | `Skin; Skull; Tissue` |
+
+Marque um campo em `Inserir campo de origem` (`Campos disponíveis` no celular)
+para adicioná-lo como `Campo único`. Use `Adicionar campo personalizado` e
+`Adicionar aninhado` para os outros tipos. Selecione o lápis de uma coluna para
+alterá-la e arraste a alça para reordená-la. Campos personalizados e saída
+condicional são explicados em
+[Expressões de exportação](/pt/usages/export/export-expressions/#custom-fields).
+
+### Formatar um campo único
+
+Uma coluna `Campo único` pode reformatar o valor em `Formato do valor`:
+
+| Formato do valor | O que faz |
+|---|---|
+| `Texto normal` | Escreve o valor como está salvo. |
+| `Texto codificado` | Escreve o rótulo de um código salvo, como `Macho` para `0`. |
+| `Coordenadas` | Escreve uma coordenada no formato definido em `Avançado`. |
+| `Data` | Escreve uma data no formato definido em `Avançado` > `Opção de formato bruta`, como `dd/mm/yyyy`. |
+| `Colchetes condicionais`, `Campo condicional`, `Valor condicional` | Colocam o valor entre colchetes ou o substituem quando as condições correspondem; veja [Saída condicional](/pt/usages/export/export-expressions/#conditional-output). |
+
+Qualquer tipo de coluna também pode usar `Substituir texto` para reescrever os
+valores depois da formatação, por exemplo para renomear um tipo de parte para o
+banco de dados de destino.
+
+### Valores repetidos
+
+Alguns valores se repetem: um espécime pode ter muitas partes, coletores ou
+métodos de coleta. Colunas `Campo de lista` e `Registros aninhados` escolhem
+como escrevê-los:
+
+| Saída | Resultado |
+|---|---|
+| `Uma coluna` | Todos os valores em uma célula, unidos pelo separador escolhido. |
+| `Colunas indexadas` | Uma coluna, ou um grupo de colunas, por valor, como `prep_1_type`, `prep_2_type`, … O número de colunas segue o registro com mais valores. |
+| `Linhas repetidas` | Só para registros aninhados: uma linha por valor, com o restante do registro repetido. Apenas uma coluna por predefinição pode fazer isso. |
+
+Com `Colunas indexadas` ou `Linhas repetidas`, cada campo filho de uma coluna
+aninhada pode ter seu próprio `Nome da coluna (opcional)`. Escreva `{n}` onde
+entra o número: `PrepType{n}Count` gera `PrepType1Count`, `PrepType2Count` e
+assim por diante. Um nome sem `{n}` recebe o número no estilo de
+`Nomes das colunas indexadas`.
+
+Visualize um registro com vários valores para conferir se o formato serve ao
+programa de destino.
+
+### Cabeçalhos das colunas
+
+O `Formato do cabeçalho gerado` dá nome a toda coluna que você não nomeou:
+
+| Formato | Cabeçalho para `specimen::uuid` |
+|---|---|
+| `table::fieldName` | `specimen::uuid` |
+| `fieldName` | `uuid` |
+| `Darwin Core (dwc:/dcterms:)` | `dwc:occurrenceID` |
+| `NAHPU namespace (nahpu:table.field)` | `nahpu:specimen.uuid` |
+
+Um nome digitado em `Nome da coluna` sempre prevalece. Escolha o formato pedido
+pelo destinatário e confira os cabeçalhos na prévia.
+
+Com cabeçalhos Darwin Core, um campo sem termo Darwin Core mantém um cabeçalho
+do NAHPU; o formato não transforma toda observação em um termo padrão. A saída
+Darwin Core também:
+
+- atribui a identificação ao determinador do espécime;
+- mantém as coordenadas verbatim;
+- soma uma extensão de coordenada positiva do espécime a uma incerteza de
+  coordenada positiva. Confira esse valor combinado com o
+  [método de georreferenciamento](/pt/best-practices/data-collection/#georeferencing)
+  do projeto.
+
+As unidades de medida não são convertidas; confira-as na saída.
+
+### Colunas em branco
+
+Uma planilha de destino pode ter colunas que o NAHPU não registra, como o
+continente. Adicione um campo personalizado, dê um nome à coluna e deixe o
+valor vazio. Ele é escrito como uma coluna vazia, e o arquivo continua alinhado
+com a planilha.
+
+### Campos de observação adicionais
+
+Os campos personalizados que você definiu em `Configurações`, como observações
+ambientais, são exportados como qualquer outro campo. Suas chaves de origem
+usam o ID do campo, como `customEnvironment::<definition UUID>`. Exportações de
+eventos e espécimes incluem os valores salvos mesmo quando esses campos estão
+ocultos no formulário; ocultar um campo não o remove das exportações.
+
+### Formatos de arquivo
+
+| Formato | Use para |
+|---|---|
+| CSV ou TSV | Troca com bancos de dados e scripts. |
+| Excel | Revisão em planilha. |
+| JSON | Programas que leem JSON. Cabeçalhos Darwin Core não estão disponíveis. |
+
+Abra o arquivo na ferramenta que vai usá-lo. Planilhas podem remover os zeros à
+esquerda de IDs e reinterpretar datas.
+
+O [tutorial de Mastozoologia do LSUMZ](/pt/tutorials/specify-export-preset/)
+monta uma predefinição completa para o banco de dados de um museu, usando a
+maioria das opções desta página.
 
 ## Transferência e recuperação
 
-Estas exportações não podem ser reimportadas como projetos NAHPU. Use [transferências de projeto](/pt/usages/export/project-transfer/) ou um [NAHPU Data Package](/pt/usages/export/export-bundles/) nativo para reimportação compatível e [backup do banco](/pt/usages/export/#backup-database) para recuperar toda a instalação. Use `Import project` na tela inicial para outra instalação e `Merge project` em um projeto existente para combinar contribuições.
+Uma exportação de registros é uma cópia de mão única: o NAHPU não consegue
+importá-la de volta como projeto. Para mover ou restaurar dados no NAHPU, use:
 
-Consulte [criação de predefinições](/pt/how-to-recipes/export-and-print/create-export-preset/) para uma configuração repetível da equipe.
+- uma [transferência de projeto](/pt/usages/export/project-transfer/) ou um
+  [NAHPU Data Package](/pt/usages/export/export-bundles/) para mover um projeto
+  para outra instalação, com `Importar projeto` na tela inicial, ou para
+  combinar contribuições com `Mesclar projeto` em um projeto existente;
+- um [backup do banco de dados](/pt/usages/export/#backup-database) para
+  restaurar uma instalação inteira.
+
+Para compartilhar uma predefinição com a equipe, veja
+[Crie um preset de exportação tabular](/pt/how-to-recipes/export-and-print/create-export-preset/).

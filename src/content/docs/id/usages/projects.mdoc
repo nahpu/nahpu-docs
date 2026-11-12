@@ -28,136 +28,146 @@ kegiatan pengumpulan, catatan spesimen, narasi, dan media terkait.
 ## Membuat proyek
 
 {% aside type="caution" %}
-Sebuah proyek memerlukan setidaknya satu orang dengan peran `Cataloger`. Ketika Anda memilih ID lapangan `Personnel`, wizard menambahkan langkah kondisional `Cataloger` dan tidak mengizinkan Anda menyelesaikannya sebelum ada orang yang memenuhi syarat. Lihat [Personel](/id/usages/personnel/#menambahkan-personel-ke-proyek).
+Sebuah proyek memerlukan setidaknya satu orang dengan peran `Cataloger`. Ketika Anda memilih ID lapangan `Personel`, wizard menambahkan langkah kondisional `Cataloger` dan tidak mengizinkan Anda menyelesaikannya sebelum ada orang yang memenuhi syarat. Lihat [Personel](/id/usages/personnel/#adding-personnel-to-a-project).
 {% /aside %}
 
-Di layar beranda, pilih `Create project`, lalu tentukan apakah Anda
-akan membuat identitas baru atau memakai informasi dari perangkat lain.
+Di layar beranda, pilih `Buat proyek`, lalu tentukan apakah Anda akan membuat
+identitas baru atau memakai ulang informasi proyek dari perangkat lain.
 
 {% steps %}
 
-1. Pada `Welcome`, pilih `Create new project` {% ref id="E" /%}. Untuk memakai identitas yang
-   sama, gunakan `Import project-info JSON` {% ref id="F" /%} atau `Scan project QR` {% ref id="G" /%} di perangkat
-   seluler.
-2. Pada `Project information`, masukkan nama unik sepanjang 3–25 karakter.
-   Deskripsi, peneliti utama, nomor akses institusi, lokasi, zona waktu IANA,
-   dan tanggal bersifat opsional.
-3. Pada `Main taxon`, pilih takson untuk formulir spesimen baru di perangkat
-   ini. Langkah ini dapat dilewati dan diubah melalui `Settings` > `Format`.
-4. Pada `Field ID`, pilih `Personnel` atau `Project`. Mode personel memerlukan
-   Cataloger yang memenuhi syarat. Mode proyek menggabungkan awalan, nomor
-   katalog saat ini, dan akhiran tanpa menambah pemisah. Pengaturan ini juga
-   tersedia di `Settings` > `Specimens`.
-5. Pada `Review`, periksa identitas proyek, pengaturan perangkat, dan kesiapan
-   taksonomi, lalu pilih `Create project`.
+1. Pada `Selamat datang`, pilih `Buat proyek baru` {% ref id="E" /%}. Untuk memakai ulang
+   identitas proyek yang sudah ada, pilih `Impor JSON info proyek` {% ref id="F" /%} atau,
+   pada perangkat dengan pemindai kamera (Android, iOS, macOS, atau web),
+   `Pindai QR proyek`.
+2. Pada `Informasi proyek`, masukkan nama proyek unik sepanjang 3 hingga 25
+   karakter. Secara opsional, tambahkan deskripsi, peneliti utama, nomor akses
+   institusi, lokasi, zona waktu IANA, serta tanggal mulai dan selesai.
+3. Pada `Takson utama`, pilih takson yang mengatur formulir spesimen baru di
+   perangkat ini. Satu proyek dapat berisi beberapa kelompok takson. Langkah ini
+   dapat dilewati dan diubah kemudian di `Pengaturan` > `Katalog` > `Format`.
+4. Pada `ID lapangan`, pilih `Personel` atau `Proyek`. Langkah ini juga dapat
+   dilewati dan diselesaikan kemudian di `Pengaturan` > `Katalog` > `Spesimen`.
+   - `Personel` memakai inisial dan nomor lapangan pribadi milik pengatalog yang
+     memenuhi syarat. Pilih pengatalog yang sudah ada atau buat yang baru ketika
+     langkah kondisional `Cataloger` muncul.
+   - `Proyek` menggabungkan awalan, nomor katalog saat ini, dan akhiran. NAHPU
+     tidak menyisipkan pemisah. Aktifkan penambahan otomatis agar nomor proyek
+     bertambah setiap kali dipakai.
+5. Pada `Tinjauan`, periksa identitas proyek, pengaturan perangkat, dan kesiapan
+   taksonomi. Pilih `Buat proyek` untuk membuka dasbor.
 
 {% /steps %}
 
-NAHPU membuat UUID untuk proyek baru. Impor info atau pemindaian QR
-mempertahankan UUID sumber, tetapi hanya menyalin metadata—bukan catatan,
-personel, takson, media, atau pengaturan perangkat.
+NAHPU membuat UUID untuk proyek baru. Pada layar lebar, wizard menampilkan
+langkah-langkahnya di panel kiri; pada layar yang lebih sempit, langkah yang sama
+tampil sebagai cip horizontal. Alur kerja dan validasinya sama pada kedua tata
+letak.
+
+Mengimpor JSON info proyek atau memindai QR-nya mempertahankan UUID sumber dan
+langsung menuju tinjauan. Cara ini hanya menyalin metadata proyek—bukan catatan,
+personel, takson, media, atau pengaturan perangkat. Gunakan transfer proyek
+penuh bila data tersebut juga harus dipindahkan antarperangkat.
 
 ## Zona waktu proyek
 
-Bidang `Time zone` menyimpan lokasi zona waktu IANA tempat proyek dilakukan,
-seperti `Asia/Jakarta` atau `America/New_York`. Pilih lokasi kegiatan lapangan,
-bukan zona waktu perangkat yang digunakan untuk memasukkan data.
+Kolom `Zona waktu` mencatat tempat kerja lapangan berlangsung, sebagai nama zona
+waktu IANA seperti `Asia/Jakarta` atau `America/New_York`. Pilih zona waktu
+kerja lapangan, bukan zona waktu perangkat yang dipakai untuk memasukkan data.
 
-NAHPU menyimpan zona waktu sebagai metadata proyek. Nilainya ditampilkan pada
-Project Overview, disertakan saat informasi proyek atau transfer penuh ditukar,
-dan tersedia sebagai `project::timeZone` dalam templat dokumen dan ekspor. Ini
-memberikan konteks saat tanggal dan waktu ditinjau pada perangkat lain.
+**NAHPU tidak pernah mengonversi waktu.** Setiap tanggal dan waktu dalam catatan
+disimpan persis seperti yang dimasukkan, sebagai waktu jam setempat di lapangan.
+Membuka proyek di perangkat dengan zona waktu lain tidak menggesernya. Perangkat
+tersebut hanya dapat memformatnya secara berbeda, misalnya urutan tanggal yang
+lain atau format 12 jam.
 
-Zona waktu tidak mengubah jam perangkat dan tidak mengonversi waktu narasi,
-kegiatan, atau spesimen yang sudah ada secara otomatis. Waktu tersebut tetap
-merupakan nilai jam lokal yang dimasukkan pada catatan. Gunakan zona waktu
-proyek saat mencatat kegiatan lapangan dan pertahankan pengaturan yang sama di
-semua perangkat.
+Contohnya, dengan zona waktu proyek `Asia/Jakarta`, kegiatan yang dimasukkan
+sebagai **12 Mei, 08.30** tampil sebagai 08.30 di setiap perangkat. Zona waktu
+proyek memberi tahu pembaca jam mana yang dimaksud oleh `08.30` tersebut.
 
-### Melihat tanggal dan waktu di perangkat lain
+Zona waktu ditampilkan pada Ringkasan proyek, ikut terbawa bersama informasi
+proyek dan transfer proyek, serta tersedia sebagai `project::timeZone` dalam
+templat dokumen dan ekspor. Basis data yang menyimpan waktu dalam UTC dapat
+memakainya untuk mengonversi waktu dengan benar.
 
-NAHPU menyimpan tanggal dan waktu sebagai nilai biasa, bukan sebagai waktu
-absolut yang terkait dengan zona waktu. Saat proyek yang sama dibuka di
-perangkat lain, NAHPU tidak menggeser waktu yang tersimpan berdasarkan zona
-waktu perangkat tersebut. Perangkat dapat menampilkan nilai yang sama dengan
-format lokal yang berbeda—misalnya urutan tanggal, nama bulan, atau format
-12/24 jam—tetapi nilai jam yang dimasukkan tetap sama.
+Mengubah zona waktu tidak mengubah jam perangkat atau menulis ulang waktu yang
+sudah dimasukkan. Gunakan zona waktu yang sama di setiap perangkat dalam proyek.
 
-Contohnya, jika zona waktu proyek adalah `Asia/Jakarta` dan kegiatan lapangan
-dicatat sebagai **12 Mei, 08.30**, perangkat lain mungkin menampilkan tanggal
-dan waktu dengan format berbeda, tetapi tidak akan mengonversinya menjadi waktu
-lain. Hal ini penting karena konversi zona waktu tidak relevan untuk
-pengumpulan spesimen, dan akan bermakna lain bagi aktivitas organisme.
-`Asia/Jakarta` menjelaskan konteks untuk memahami `08.30`.
-
-### Mengapa zona waktu penting
-
-Zona waktu proyek yang benar membantu membandingkan kegiatan yang dimasukkan
-dari perangkat berbeda, mempertahankan konteks waktu saat data dibagikan atau
-ditransfer, dan mendukung interpretasi ekspor yang dapat diulang. Basis data
-pihak ketiga yang menyimpan konteks waktu dalam UTC dapat memakai zona waktu
-ini untuk menafsirkan datanya dengan benar. Jika tim bekerja lintas zona waktu
-atau memasukkan data historis dari lokasi lain, jelaskan pengecualian tersebut
-dalam deskripsi proyek atau konteks catatan lain yang sesuai, misalnya dalam
-narasi. Bila memungkinkan, kami menyarankan membuat proyek terpisah untuk
-lokasi yang berada di zona waktu berbeda.
+Jika tim bekerja lintas zona waktu, atau memasukkan data historis dari tempat
+lain, catat pengecualian tersebut dalam deskripsi proyek atau narasi. Proyek
+terpisah untuk setiap zona waktu biasanya lebih jelas.
 
 ## Mengelola proyek dari layar beranda
 
-Setiap proyek memiliki menu tindakan:
+Setiap proyek memiliki menu tindakan dengan opsi berikut:
 
-- **Edit info** - Memperbarui formulir proyek.
-- **Show QR** - Menampilkan informasi proyek untuk dipindai perangkat seluler.
-- **Export info** - Mengekspor informasi proyek sebagai JSON. Catatan dan media
-  proyek tidak termasuk di dalamnya.
-- **Details** - Menampilkan informasi proyek tanpa mengeditnya.
+- **Sunting info** - Memperbarui formulir proyek.
+- **Tampilkan QR** - Menampilkan informasi proyek untuk dipindai perangkat
+  seluler.
+- **Ekspor info** - Mengekspor informasi proyek sebagai JSON. Isinya adalah
+  detail proyek, bukan catatan dan media proyek.
+- **Detail** - Menampilkan informasi proyek tanpa menyuntingnya.
 
 ## Dasbor proyek
 
 Dasbor memiliki empat panel:
 
-- **Project Overview** {% ref id="A" /%} - Menampilkan nama, UUID, deskripsi, peneliti utama,
-  nomor akses, lokasi, zona waktu, tanggal, tanggal pembuatan, dan akses
-  terakhir.
-- **Personnel** {% ref id="D" /%} - Menampilkan personel yang ditugaskan dan menyediakan
-  `Add personnel` untuk memilih data yang sudah ada atau membuat data baru.
-- **Taxon Registry** - Menampilkan takson terdaftar serta kontrol untuk
-  menambah atau mengimpor takson.
-- **Record Statistics** - Merangkum catatan proyek dan statistik terperinci.
+- **Ringkasan proyek** {% ref id="A" /%} - Menampilkan nama proyek, UUID, deskripsi, peneliti
+  utama, nomor akses, lokasi, zona waktu, tanggal, tanggal pembuatan, dan akses
+  terakhir. Informasi dikelompokkan sebagai Identitas, Deskripsi, Detail proyek,
+  Jadwal, dan Metadata catatan.
+  Gunakan `Sunting` {% ref id="B" /%} untuk mengubah proyek dan `Ekspor info` untuk membagikan {% ref id="C" /%} informasinya.
+- **Personel** {% ref id="D" /%} - Menampilkan personel yang ditugaskan ke proyek. Gunakan
+  `Tambah personel` untuk memilih entri basis data yang sudah ada atau membuat
+  yang baru, dan `Kelola` untuk menyunting personel proyek.
+- **Registri takson** - Menampilkan takson terdaftar serta kontrol untuk menambah
+  atau mengimpor takson.
+- **Statistik catatan** - Merangkum catatan dalam proyek dan menyediakan akses
+  ke statistik yang lebih terperinci.
 
-Menu proyek juga berisi tindakan transfer, ekspor, pencadangan, pengaturan,
-dan penghapusan proyek.
+Menu proyek juga berisi tindakan transfer, ekspor, pencadangan, pengaturan, dan
+penghapusan proyek.
 
 ## Memperbarui informasi proyek
 
-Dari dasbor, pilih `Edit` {% ref id="B" /%} pada Project Overview. Dari layar beranda, buka menu
-tindakan proyek dan pilih `Edit info`. Formulir mengelompokkan detail, tempat
-dan waktu, serta tanggal proyek. Ubah takson utama atau ID lapangan melalui
-[Pengaturan](../settings).
+Dari dasbor, pilih `Sunting` pada panel Ringkasan proyek. Dari layar beranda,
+buka menu tindakan proyek dan pilih `Sunting info`. Formulir penyuntingan
+mengelompokkan kolom dalam Detail proyek, Tempat dan waktu, serta Tanggal
+proyek. Ubah takson utama atau bawaan ID lapangan di [Pengaturan](../settings).
 
 ## Berbagi informasi proyek {% #sharing-project-information %}
 
-Untuk menyalin informasi tanpa mentransfer catatan:
+Informasi proyek dapat disalin ke perangkat lain tanpa mentransfer catatan:
 
-1. Pada perangkat sumber, pilih `Export info` {% ref id="C" /%} atau `Show QR`.
-2. Pada perangkat penerima, pilih `Create project`, lalu gunakan `Import
-   project-info JSON` atau `Scan project QR` di perangkat seluler.
+1. Pada perangkat sumber, pilih `Ekspor info` atau `Tampilkan QR` dari menu
+   tindakan proyek di layar beranda.
+2. Pada perangkat penerima, pilih `Buat proyek`, lalu gunakan `Impor JSON info
+   proyek` atau `Pindai QR proyek` {% ref id="G" /%} pada perangkat dengan
+   pemindai kamera.
 
-Metode ini mempertahankan UUID dan membuat proyek dengan informasi yang sama.
-Untuk mentransfer catatan, media, dan data lain, gunakan [Transfer
-proyek](../export/project-transfer).
+Metode ini mempertahankan UUID proyek sumber dan membuat proyek dengan informasi
+proyek yang sama. Untuk mentransfer catatan, media, dan data terkait, gunakan
+alur kerja [Transfer proyek](../export/project-transfer).
 
 ## Mentransfer data proyek
 
-Gunakan `Export project` untuk membuat transfer. Pada penerima, `Import project` di layar awal membuat proyek lokal; `Merge project` menggabungkan data dengan proyek yang sudah ada. Impor JSON informasi atau QR proyek hanya membuat identitas tanpa catatan atau media.
+Untuk memindahkan catatan dan media, gunakan `Ekspor proyek` dari menu proyek,
+lalu pada perangkat penerima:
 
-Ekspor ZIP dan TAR.GZ menyertakan media yang tersedia. JSON.GZ ringan hanya berisi catatan. Tinjau peringatan berkas yang hilang dan simpan sumber hingga catatan serta lampiran pada penerima diperiksa.
+| Pada perangkat penerima | Gunakan | Hasil |
+| --- | --- | --- |
+| Proyek belum ada | `Impor proyek` di layar beranda | Proyek lokal baru |
+| Proyek sudah ada | `Gabungkan proyek` di menu Dasbor proyek tersebut | Catatan impor digabungkan dengan catatan yang sudah ada |
 
-NAHPU Data Package yang kompatibel juga dapat diimpor atau digabungkan karena berisi data proyek. Paket Darwin Core dan ekspor tabel tidak dapat memulihkan proyek NAHPU. Penggantian basis data merupakan operasi pemulihan terpisah pada tingkat instalasi.
+Ekspor ZIP dan TAR.GZ menyertakan media; `Ekspor ringan` (JSON.GZ) hanya berisi
+catatan. NAHPU Data Package juga dapat diimpor atau digabungkan. Paket Darwin
+Core dan ekspor tabel tidak dapat memulihkan proyek. Simpan berkas sumber hingga
+Anda memeriksa catatan dan lampiran di perangkat penerima. Lihat
+[Transfer proyek](../export/project-transfer) untuk setiap langkahnya.
 
 ## Menghapus proyek
 
-Buka menu proyek dan pilih `Delete project`. NAHPU meminta lima karakter
+Buka menu proyek dan pilih `Hapus proyek`. NAHPU meminta lima karakter
 pertama UUID karena penghapusan tidak dapat dibatalkan.
 
 Penghapusan menghapus catatan spesimen dan pengukuran, kegiatan dan metode

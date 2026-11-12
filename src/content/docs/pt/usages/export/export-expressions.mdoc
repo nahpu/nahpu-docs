@@ -21,21 +21,45 @@ sidebar:
 {% pin id="E" label="Lista de modelos" large2=[93, 40.3] small2=[94, 48.2] /%}
 {% /screenshots %}
 
-As expressões de exportação são os placeholders, os fallbacks e a sintaxe
-condicional que o NAHPU usa para transformar campos de registro em saída. As
-mesmas expressões controlam os elementos de texto dos modelos de documento e as
-predefinições de exportação tabular, de modo que um valor escrito como
-`[taxonomy::genus] [taxonomy::specificEpithet]` {% ref id="C" /%} é resolvido da mesma forma em
-uma etiqueta impressa e em uma coluna exportada. Para os fluxos de trabalho que
-as usam, consulte [Exportar documentos](../export-documents) e
-[Exportar registros](../export-records).
+Uma **expressão de exportação** diz ao NAHPU o que escrever: quais campos do
+registro usar, que texto colocar ao redor deles e o que fazer quando falta um
+valor. Você escreve expressões em dois lugares:
+
+- nos elementos de texto de um [modelo de documento](../export-documents), como
+  uma etiqueta de espécime;
+- nas colunas `Campo personalizado` de uma
+  [predefinição de exportação tabular](../export-records).
+
+A mesma expressão dá o mesmo resultado nos dois. Por exemplo,
+`[taxonomy::genus] [taxonomy::specificEpithet]` {% ref id="C" /%} imprime
+`Rattus rattus` em uma etiqueta e escreve `Rattus rattus` em uma coluna de
+planilha.
+
+## O básico em um minuto
+
+Um campo vai entre colchetes, escrito como `[table::field]`. Tudo o que está
+fora dos colchetes é escrito como está:
+
+```text
+Field no. [specimen::fieldNumber]
+```
+
+imprime `Field no. 156`. Três pequenos acréscimos cobrem a maioria das
+necessidades:
+
+| Acrescente | Para | Exemplo | Imprime |
+|---|---|---|---|
+| `??texto` | Escrever `texto` quando o campo está vazio | `[taxonomy::specificEpithet??sp.]` | `sp.` quando não há epíteto |
+| `#label` | Escrever o rótulo de um campo codificado em vez do código | `[mammalAttribute::testisPosition#label]` | `Scrotal` em vez de `0` |
+| `[[if]…]]` | Escrever texto só quando uma condição é atendida | `[[if][coordinate::elevationInMeter!=""]=>"m"]]` | `m` só quando há elevação registrada |
+
+Raramente é preciso digitar as chaves. `Inserir campo` no editor de modelos e
+`Adicionar campo` em um campo personalizado as inserem para você.
 
 ## Expressões comuns {% #common-expressions %}
 
-Copie estas expressões para um elemento de texto de um modelo de documento ou
-para `Advanced` > `Raw source expression` de um mapeamento de exportação
-tabular. As chaves são de registros de espécimes; as seções abaixo explicam
-como cada parte funciona.
+Copie estas expressões em um elemento de texto de um modelo de documento, ou em
+uma coluna tabular como descrito em cada uma. Elas usam campos de espécime.
 
 ### Nome da espécie {% #species-name %}
 
@@ -43,37 +67,36 @@ como cada parte funciona.
 [taxonomy::genus] [taxonomy::specificEpithet]
 ```
 
-Isto imprime `Rattus rattus`. Quando alguns espécimes foram identificados
-apenas até gênero, dê um fallback ao epíteto para que o nome fique
-`Rattus sp.`:
+Imprime `Rattus rattus`. Para espécimes identificados só até gênero, acrescente
+um fallback para que o nome fique `Rattus sp.`:
 
 ```text
 [taxonomy::genus] [taxonomy::specificEpithet??sp.]
 ```
 
-Para o nome completo, incluindo o epíteto subespecífico, use
-`[specimen::scientificName]`. Em uma predefinição tabular, use um mapeamento
-`Custom field`.
+Para o nome completo, incluindo subespécie, use `[specimen::scientificName]`.
+Em uma predefinição tabular, coloque qualquer uma das expressões em uma coluna
+`Campo personalizado`.
 
 ### Localidade completa {% #full-locality %}
 
-Isto junta os campos de geografia em um único valor e ignora os que estão
-vazios, de modo que a falta de um condado não deixa vírgulas duplicadas.
+Une os campos de geografia em um só valor e ignora os vazios, para que um
+condado ausente não deixe uma vírgula dupla:
 
 ```text
 [geography::country]|[geography::islandGroup]|[geography::stateProvince]|[geography::county]|[geography::municipality]|[geography::locality]
 ```
 
-O `|` marca onde cada parte termina; o separador de saída vem das
-configurações de lista:
+Cada `|` separa duas partes. O separador realmente escrito, como uma vírgula,
+vem das opções de lista:
 
-- **Modelo de documento:** defina `Text type` como `List Values` e escolha o
+- **Modelo de documento:** defina `Tipo` como `Valores de lista` e escolha o
   formato com vírgula.
-- **Predefinição de exportação tabular:** defina `Mapping type` como
-  `List field`, `List output` como `One column` e `Separator` como
-  `Comma (A, B)`. Cole a expressão em `Raw source expression` e preencha
-  `Column name (optional)`; os formatos de cabeçalho Darwin Core e namespace do
-  NAHPU exigem esse nome.
+- **Predefinição de exportação tabular:** defina `Tipo de mapeamento` como
+  `Campo de lista`, `Saída da lista` como `Uma coluna` e `Separador` como
+  `Vírgula (A, B)`. Cole a expressão em `Avançado` >
+  `Expressão de origem bruta` e preencha `Nome da coluna (opcional)`; os
+  formatos de cabeçalho Darwin Core e namespace do NAHPU exigem um nome.
 
 Um registro imprime `Indonesia, West Java, Bogor, Cibodas`; um sem condado
 imprime `Indonesia, West Java, Cibodas`. Remova, reordene ou acrescente partes
@@ -81,16 +104,12 @@ conforme necessário.
 
 ### Tamanho dos testículos {% #testis-size %}
 
-Isto imprime `comprimento x largura` apenas quando os testículos estão
-escrotais e as duas medidas foram registradas. Os demais registros não imprimem
-nada.
+Imprime `comprimento x largura` só quando o testículo é escrotal e as duas
+medidas estão registradas. Os demais registros não imprimem nada:
 
 ```text
 [[if][mammalAttribute::testisPosition=="0"&&mammalAttribute::testisLength!=""&&mammalAttribute::testisWidth!=""]=>"[mammalAttribute::testisLength] x [mammalAttribute::testisWidth]"]]
 ```
-
-Use-a em um elemento de texto de um modelo de documento ou em um mapeamento
-`Custom field` de uma predefinição tabular.
 
 | Registro | Saída |
 |---|---|
@@ -99,12 +118,10 @@ Use-a em um elemento de texto de um modelo de documento ou em um mapeamento
 | Abdominal | Nada |
 | Fêmea | Nada |
 
-As condições exigem a posição armazenada `0`, que corresponde a Scrotal, e as
-duas medidas; só então o texto é escrito, com os campos preenchidos. Consulte
-[Texto condicional](#conditional-text).
-
-Acrescente ` mm` dentro das aspas para indicar a unidade, ou `|"não escrotal"`
-antes do `]]` final para escrever algo nos demais registros.
+`"0"` é o código salvo para escrotal. Acrescente ` mm` dentro das aspas para uma
+unidade, ou `|"not scrotal"` antes do `]]` final para escrever algo em todos os
+outros registros. Veja [Texto condicional](#conditional-text) para entender como
+funciona. Em uma predefinição tabular, use uma coluna `Campo personalizado`.
 
 ### Rótulos de campos codificados {% #encoded-labels %}
 
@@ -112,94 +129,90 @@ antes do `]]` final para escrever algo nos demais registros.
 [mammalAttribute::testisPosition#label]
 ```
 
-Isto imprime `Scrotal` em vez do código armazenado `0`, em qualquer tipo de
-texto, inclusive em mapeamentos `Custom field`. Consulte
+Imprime `Scrotal` em vez do código salvo `0`. Funciona em qualquer tipo de
+texto, inclusive em uma coluna `Campo personalizado`. Veja
 [Decodificar um campo codificado](#decode-an-encoded-field).
 
-## Símbolos de placeholder
+## Placeholders em detalhe
 
-Tudo o que um modelo pode escrever vem de uma destas formas. Todas são digitadas
-dentro de um elemento de texto e todas podem ser combinadas com texto comum.
+### Símbolos
 
 | Símbolo | Significado | Exemplo |
 |---|---|---|
 | `[ ]` | Um placeholder de campo. | `[fieldNumber]` |
 | `::` | Separa a tabela do campo em uma chave completa. | `[specimen::fieldNumber]` |
 | `??` | Fallback escrito quando o campo está vazio. | `[specimen::preparator??N/A]` |
-| `#label` | Imprime o rótulo de um campo codificado em vez do código armazenado. | `[mammalAttribute::testisPosition#label]` |
-| `-img` | Exibe um campo `.sex` como ícone em vez de texto. | `[mammal.sex]-img` |
+| `#label` | Escreve o rótulo de um campo codificado em vez do código. | `[mammalAttribute::testisPosition#label]` |
+| `-img` | Desenha um campo `.sex` como ícone em vez de texto. | `[mammal.sex]-img` |
 | `[[ ]]` | Uma expressão condicional. | `[[specimen::condition][…]]` |
-| `[[if]` … `]]` | Texto condicional, escrito conforme as condições. | `[[if][…]=>" mm"]]` |
+| `[[if]` … `]]` | Texto condicional, escrito só quando as condições correspondem. | `[[if][…]=>" mm"]]` |
 
 ### Chaves de campo
 
-Um placeholder contém uma chave completa `Table::Field` ou um nome de campo
-curto:
+Um placeholder contém uma chave completa `table::field` ou só o nome do campo:
 
 ```text
-Número de campo: [specimen::fieldNumber]
-Nome científico: [taxonomy::scientificName]
-Localidade: [site::specificLocality]
+Field number: [specimen::fieldNumber]
+Scientific name: [taxonomy::scientificName]
+Locality: [site::specificLocality]
 ```
 
-Formas curtas como `[fieldNumber]` também funcionam, mas a chave completa é mais
-segura sempre que mais de uma tabela tem um campo com esse nome. Insira as
-chaves pelo seletor de campos em vez de digitá-las; o seletor oferece apenas
-campos que o tipo de registro do modelo pode realmente fornecer.
+A forma curta, como `[fieldNumber]`, também funciona, mas use a chave completa
+quando duas tabelas têm um campo com o mesmo nome. O seletor de campos só
+oferece campos que o tipo de registro do modelo ou da predefinição pode
+fornecer.
 
-### Fallback para valor nulo
+### Valores ausentes
 
-`??` dá ao placeholder algo para imprimir quando o registro não tem valor. O
-controle `No Content Placeholder` o escreve para você e oferece cinco opções:
+`??` define o que escrever quando um campo está vazio. O controle
+`Marcador sem conteúdo` escreve isso para você:
 
 | Opção | Escrito como | Saída quando o campo está vazio |
 |---|---|---|
-| `Blank` | `[specimen::preparator]` | Nada |
-| `table::field` | `[specimen::preparator??specimen::preparator]` | A própria chave do campo, como lembrete visível |
-| `N/A` | `[specimen::preparator??N/A]` | `N/A` |
-| `None` | `[specimen::preparator??None]` | `None` |
-| Personalizado | `[specimen::preparator??não registrado]` | O que você digitar |
+| `Em branco` | `[specimen::preparator]` | Nada |
+| `table::field` | `[specimen::preparator??specimen::preparator]` | A chave do campo, como lembrete visível |
+| `N/D` | `[specimen::preparator??N/A]` | `N/A` |
+| `Nenhum` | `[specimen::preparator??None]` | `None` |
+| Personalizado | `[specimen::preparator??not recorded]` | O que você digitou |
 
-O texto após `??` é literal. Um placeholder terminado em `-img` nunca aceita
-fallback.
+O texto depois de `??` é escrito como está. Um placeholder que termina em `-img`
+não aceita fallback.
 
-### Placeholders de ícone de sexo e de imagem
+### Ícones de sexo e imagens
 
-Dois placeholders se comportam de forma diferente dos demais porque exibem uma
-imagem em vez de um texto. Ambos devem ser a única coisa no seu elemento de
-texto:
+Dois placeholders desenham uma imagem em vez de texto. Cada um precisa estar
+sozinho no seu elemento de texto:
 
-- `[mammal.sex]-img` desenha o sexo como um ícone redimensionável. A chave deve
-  terminar em `.sex`; defina a caixa do ícone com os campos de largura e altura.
-- `[media::media]`, com o tipo de texto definido como `Picture`, desenha as
-  imagens anexadas ao registro em uma grade dimensionada conforme o número de
-  imagens.
+- `[mammal.sex]-img` desenha o sexo como ícone. A chave precisa terminar em
+  `.sex`. Defina o tamanho do ícone nos campos de largura e altura.
+- `[media::media]`, com `Tipo` definido como `Imagem`, desenha as imagens
+  anexadas ao registro em uma grade.
 
 ## Campos personalizados {% #custom-fields %}
 
-Um campo personalizado é uma expressão que mistura campos com texto literal, ou
-que contém apenas texto literal. Em um modelo de documento, cada elemento de
-texto já é um campo personalizado: insira campos com `Insert Field` e digite
-texto ao redor deles. Em uma predefinição de exportação tabular, crie um com
-`Add custom field` em `Edit Fields`, ou escolha `Custom field` como
-`Mapping type` de um mapeamento existente.
+Um campo personalizado combina campos com o seu próprio texto, ou contém apenas
+texto. Em um modelo de documento, todo elemento de texto já é um campo
+personalizado: insira campos com `Inserir campo` e digite ao redor deles. Em uma
+predefinição de exportação tabular, selecione `Adicionar campo personalizado`
+em `Editar campos`, ou mude o `Tipo de mapeamento` de uma coluna existente para
+`Campo personalizado`.
 
-O editor de campos personalizados escreve a expressão para você:
+O editor de campo personalizado monta a expressão uma parte, ou segmento, por
+vez:
 
 | Controle | O que faz |
 |---|---|
-| `Add field` | Acrescenta um placeholder de campo escolhido no seletor de campos. |
-| `Add text` {% ref id="B" /%} | Acrescenta um segmento de texto ou separador. |
-| `Add conditional text` | Acrescenta um [texto condicional](#conditional-text) montado com condições, o texto a escrever e, opcionalmente, um texto para os demais casos. |
-| `Show label` | Em um campo codificado, acrescenta `#label` para que a coluna mostre o rótulo em vez do código armazenado. |
-| `Edit conditional text` | Reabre um segmento de texto condicional. |
-| `Move segment up` / `Move segment down` | Reordena os segmentos. A saída é escrita da esquerda para a direita. |
-| `Remove segment` | Exclui um segmento. |
-| `Expression:` | Mostra a expressão que será salva. |
-| `Column name` | Dá nome à coluna de saída. |
+| `Adicionar campo` | Adiciona um campo escolhido no seletor de campos. |
+| `Adicionar texto` {% ref id="B" /%} | Adiciona texto ou um separador. |
+| `Adicionar texto condicional` | Adiciona [texto condicional](#conditional-text): texto escrito só quando as condições correspondem. |
+| `Mostrar rótulo` | Em um campo codificado, acrescenta `#label` para que a coluna mostre o rótulo em vez do código. |
+| `Editar texto condicional` | Reabre um segmento de texto condicional. |
+| `Mover segmento para cima` / `Mover segmento para baixo` | Reordena os segmentos. Eles são escritos da esquerda para a direita. |
+| `Remover segmento` | Exclui um segmento. |
+| `Expressão:` | Mostra a expressão que será salva. |
+| `Nome da coluna` | Dá nome à coluna de saída. |
 
-Um campo personalizado não precisa incluir nenhum campo. Cada uma destas linhas
-é uma expressão completa e válida:
+Cada um destes é um campo personalizado completo:
 
 ```text
 [personnel::initial]-[specimen::fieldNumber]
@@ -207,241 +220,227 @@ Um campo personalizado não precisa incluir nenhum campo. Cada uma destas linhas
 NAHPU
 ```
 
-O último exemplo escreve `NAHPU` em todas as linhas, o que serve para uma
-coluna constante, como um código de instituição esperado pelo banco de dados de
-destino.
+O último escreve `NAHPU` em todas as linhas, o que serve para uma coluna fixa,
+como um código de instituição. Um campo personalizado com `Nome da coluna` e
+nenhum segmento escreve uma coluna vazia, para uma coluna da planilha de
+destino que o NAHPU não registra.
 
-Defina `Column name` para cada campo personalizado. Ele é obrigatório quando o
-`Generated header format` é Darwin Core ou o namespace do NAHPU. Com
-`table::fieldName` ou `fieldName`, um campo personalizado sem nome recebe o
-cabeçalho do primeiro campo da expressão, ou do próprio texto quando não há
-campo.
+Dê um `Nome da coluna` a todo campo personalizado. Ele é obrigatório com os
+formatos de cabeçalho Darwin Core e namespace do NAHPU. Com `table::fieldName`
+ou `fieldName`, um campo personalizado sem nome recebe o cabeçalho do primeiro
+campo, ou do texto quando não há campo.
 
-Campos personalizados de uma predefinição tabular usam o tipo `Normal Text`. A
-saída condicional, os tipos de texto formatados e as colunas indexadas de listas
-exigem um mapeamento com exatamente um campo; use `Single field` ou
-`List field` para esses casos.
+Uma coluna de campo personalizado escreve a expressão como texto simples. Para
+um formato de valor como `Texto codificado` ou `Data`, para colchetes
+condicionais ou para colunas de lista indexadas, use uma coluna `Campo único`
+ou `Campo de lista`.
 
 ## Saída condicional {% #conditional-output %}
 
-Uma expressão condicional decide, no momento da impressão, se um valor deve ser
-marcado ou substituído. Construa a expressão com `Conditional output` na barra
-de ferramentas de texto, que escreve a sintaxe abaixo no texto; a mesma caixa de
-diálogo reabre e edita uma expressão que já esteja lá.
+Uma expressão condicional verifica um ou mais campos e então muda o que é
+escrito. Crie uma com `Saída condicional` na barra de ferramentas de texto do
+editor de modelos, que escreve a sintaxe para você e a reabre para edição. Em
+uma predefinição tabular, escolha um `Formato do valor` condicional em uma
+coluna `Campo único`; o próprio campo da coluna é o alvo.
 
-As predefinições de exportação tabular oferecem os mesmos tipos de condicional
-em mapeamentos `Single field`; o alvo é o próprio campo do mapeamento.
+### Escolha um tipo
 
-### O conjunto completo de símbolos
-
-| Símbolo | Nome | O que faz |
+| Você quer… | Tipo | Exemplo de resultado |
 |---|---|---|
-| `[[` … `]]` | Delimitadores da expressão | Abrem e fecham uma expressão condicional. |
-| `][` | Separador do alvo | Encerra o campo alvo e inicia a lista de condições. |
-| `==` | Igual | Coincide quando o valor é exatamente o valor de comparação. |
-| `!=` | Diferente | Coincide quando o valor difere do valor de comparação. |
-| `~=` | Contém | Coincide quando o valor de comparação aparece em qualquer parte do valor. |
-| `!=""` | Não está vazio | Coincide quando o campo contém qualquer valor. |
-| `==""` | Está vazio | Coincide quando o campo está em branco ou ausente. |
-| `&&` | Todas | Todas as condições precisam coincidir. |
-| `\|\|` | Qualquer | Pelo menos uma condição precisa coincidir. |
-| `"` … `"` | Aspas de valor | Delimitam cada valor de comparação. Obrigatórias, e vazias para os dois operadores de vacuidade. |
-| `\"` `\\` | Escapes | Uma aspa ou uma barra invertida dentro de um valor de comparação. |
-| `]=>` | Marcador de substituição | Encerra as condições e inicia o texto de substituição ou o texto condicional. |
-| `if` | Palavra-chave do texto condicional | Ocupa o lugar do alvo, de modo que a expressão escreve um texto em vez de alterar um campo. |
-| `\|` | Separador do senão | Depois do texto, inicia o texto escrito quando as condições não coincidem. |
+| Colocar um valor entre colchetes quando outro campo indica | `Colchetes condicionais` | `[82.5]` quando o peso foi estimado |
+| Substituir um valor pelo seu texto quando outro campo indica | `Campo condicional` | `?` no lugar do epíteto quando a identificação é incerta |
+| Substituir um valor com base no próprio valor | `Valor condicional` | `Not recorded` quando o valor é `0` |
+| Escrever um texto que não tem campo próprio, como uma unidade | `Texto condicional` | ` mm` só depois de uma largura registrada |
 
-### As três formas
+Na caixa de diálogo:
 
-Coloque o valor alvo entre colchetes quando as condições coincidirem:
+{% steps %}
 
-```text
-[[alvo][condições]]
-```
+1. Escolha o `Tipo condicional`.
+2. Escolha o `Campo de destino`, o valor que é colocado entre colchetes ou
+   substituído. `Texto condicional` não tem destino; ele é acrescentado ao fim
+   do texto do elemento.
+3. Adicione condições. Cada uma tem um `Campo de controle`, uma comparação e um
+   valor. `Valor condicional` usa o próprio destino, então o seletor de campo
+   fica oculto.
+4. Com mais de uma condição, defina `Lógica de correspondência` como
+   `Qualquer condição (OU)` ou `Todas as condições (E)`.
+5. Preencha `Texto de substituição`, ou `Texto quando corresponder` e
+   `Texto caso contrário (opcional)` para texto condicional. Deixe
+   `Texto de substituição` vazio para ocultar o valor quando as condições
+   correspondem.
 
-Substitua o valor alvo por texto literal quando as condições coincidirem:
-
-```text
-[[alvo][condições]=>"substituição"]]
-```
-
-Escreva um texto escolhido pelas condições, sem campo alvo:
-
-```text
-[[if][condições]=>"texto"]]
-[[if][condições]=>"texto"|"senão"]]
-```
-
-Observe o fechamento: as formas com substituição e com texto também terminam em
-`]]`, e o marcador `]=>` fica dentro da expressão.
+{% /steps %}
 
 ### Texto condicional (if e else) {% #conditional-text %}
 
-O texto condicional escreve um de dois textos conforme as condições, em vez de
-alterar o valor de um campo. Use-o para um texto que acompanha um campo, mas só
-deve aparecer com ele, como uma unidade:
+O texto condicional escreve texto conforme as condições, em vez de alterar um
+campo. Use-o para um texto que acompanha um valor mas só deve aparecer com ele,
+como uma unidade:
 
 ```text
 [mammalAttribute::testisWidth][[if][mammalAttribute::testisWidth!=""]=>" mm"]]
 ```
 
-Uma largura de `6.5` imprime `6.5 mm`; uma largura ausente não imprime nada, em
-vez de um `mm` solto. Acrescente um segundo texto após `|` para escrever algo
-quando as condições não coincidirem:
+Uma largura de `6.5` imprime `6.5 mm`; uma largura ausente não imprime nada, e
+não um `mm` solto.
+
+Acrescente um segundo texto depois de `|` para escrever algo quando as
+condições não correspondem:
 
 ```text
-[[if][mammalAttribute::testisPosition=="0"]=>"escrotal"|"não escrotal"]]
+[[if][mammalAttribute::testisPosition=="0"]=>"scrotal"|"not scrotal"]]
 ```
 
-Um texto pode conter placeholders de campo, com fallbacks e `#label`, que são
-preenchidos quando esse texto é escrito:
+O texto pode conter campos, com fallbacks e `#label`. Eles são preenchidos
+quando o texto é escrito:
 
 ```text
 [[if][mammalAttribute::testisLength!=""&&mammalAttribute::testisWidth!=""]=>"[mammalAttribute::testisPosition#label], [mammalAttribute::testisLength] x [mammalAttribute::testisWidth] mm"]]
 ```
 
-- As condições usam os mesmos operadores das demais condicionais e comparam
-  códigos armazenados.
-- Coloque cada texto entre aspas e escreva uma aspa dentro dele como `\"`. Um
+- Coloque cada texto entre aspas. Escreva uma aspa dentro dele como `\"`. Um
   `|` dentro das aspas é texto comum.
-- Sem um segundo texto, nada é escrito quando as condições não coincidem.
-- Outra expressão condicional dentro de um texto não é avaliada.
-- `if` é escrito em minúsculas. O tipo `Conditional text` da caixa de diálogo
-  escreve essa forma para você.
+- Sem um segundo texto, nada é escrito quando as condições não correspondem.
+- Uma expressão condicional dentro do texto não é avaliada.
+- `if` deve estar em minúsculas.
 
-### Dois exemplos detalhados
+### Ocultar um valor a menos que outro campo esteja registrado
 
-**Colocar entre colchetes um peso estimado.** As medidas de mamíferos trazem um
-indicador de exatidão que nomeia os campos que não foram medidos com precisão.
-Coloque o peso entre colchetes quando ele for um deles:
-
-```text
-[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
-```
-
-Um espécime com o peso sinalizado imprime `[82.5]`; um medido com precisão
-imprime `82.5`. Este é o caso especial de `~=`: em
-`mammalAttribute::accuracy`, a comparação pergunta se a medida nomeada está
-sinalizada, não se o texto contém a palavra.
-
-**Marcar um nome cuja identificação é incerta.** A confiança da identificação é
-armazenada como `0` para Low, `1` para Medium e `2` para High, então "não High"
-é `!="2"`. Coloque o gênero e o epíteto em um mesmo elemento de texto e torne o
-epíteto condicional:
-
-```text
-[taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
-```
-
-Uma identificação de confiança alta imprime `Rattus rattus`; qualquer nível
-inferior imprime `Rattus ?`.
-
-Duas coisas neste exemplo merecem ser entendidas antes de você contar com ele.
-
-As condições comparam o valor **armazenado**, não o exibido. O `Encoded Text`
-transforma `2` em `High` no caminho até a página, mas uma condição vê `2`, então
-`specimen::iDConfidence!="High"` coincidiria com todos os registros. Leia o
-código a partir do valor que o registro realmente contém.
-
-Uma substituição **troca** o valor; ela não o complementa. É por isso que o
-exemplo imprime `Rattus ?` e não `Rattus rattus?`. Para manter um valor e
-acrescentar um sufixo condicionalmente, escreva o valor e depois um
-[texto condicional](#conditional-text).
-
-Uma comparação não vazia como `!="2"` não coincide com confiança não registrada. Para incluir esse caso, use `Is empty` como condição OR adicional:
-
-```text
-[[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"||specimen::iDConfidence==""]=>"?"]]
-```
-
-### Tipos de condicional na caixa de diálogo
-
-`Conditional type` escolhe qual dos quatro arranjos a caixa de diálogo escreve:
-
-| Tipo | Saída | As condições testam |
-|---|---|---|
-| `Conditional brackets` | Envolve o valor alvo em `[ ]` | Qualquer outro campo |
-| `Conditional field` | Escreve o `Replacement text` | Qualquer outro campo |
-| `Conditional value` | Escreve o `Replacement text` | O valor do próprio campo alvo |
-| `Conditional text` | Escreve `Text when matched` ou `Text otherwise (optional)` | Qualquer campo; não há alvo |
-
-`Conditional text` não tem `Target field`. A caixa de diálogo acrescenta a
-expressão ao final do texto do elemento.
-
-Deixe o `Replacement text` vazio para ocultar o valor quando as condições
-coincidirem.
-
-`Conditional value` é o tipo indicado para "quando este campo disser X, imprima
-Y". Ele define para você o campo de origem de todas as condições como o alvo, e
-é por isso que o seletor de campo de origem desaparece quando você o seleciona.
-
-`Match logic` define o conector: `Any condition (OR)` escreve `||` e
-`All conditions (AND)` escreve `&&`.
-
-### Suprimir um valor que depende de outro campo
-
-`Is not empty` e `Is empty` são os operadores para "imprima isto apenas quando
-aquilo tiver sido registrado". Eles não aceitam valor de comparação, e a caixa
-de diálogo oculta o campo de valor quando você escolhe um deles.
-
-Combine-os com um `Replacement text` vazio para ocultar um valor. Esta
-expressão imprime o comprimento dos testículos apenas quando a posição
-testicular foi registrada:
+Use `Está vazio` com uma substituição vazia. Isto imprime o comprimento do
+testículo só quando a posição do testículo foi registrada:
 
 ```text
 [[mammalAttribute::testisLength][mammalAttribute::testisPosition==""]=>""]]
 ```
 
-Uma condicional oculta apenas o seu alvo. O texto literal ao lado, como uma
+Uma condicional oculta apenas o próprio campo. O texto ao lado, como uma
 unidade ou o ` x ` entre duas medidas, continua sendo impresso. Dê a esse texto
-uma condição própria com um [texto condicional](#conditional-text):
+uma condição própria com texto condicional:
 
 ```text
 [[mammalAttribute::testisLength][mammalAttribute::testisPosition==""]=>""]][[if][mammalAttribute::testisPosition!=""&&mammalAttribute::testisLength!=""]=>" mm"]]
 ```
 
-[Tamanho dos testículos](#testis-size) mostra um padrão completo.
+[Tamanho dos testículos](#testis-size) mostra o padrão completo.
 
-### Como as condições são avaliadas
+### Exemplos
 
-As comparações removem espaços nas extremidades e diferenciam maiúsculas de minúsculas. Leem valores armazenados: compare `"2"`, não `"High"`, para confiança da identificação. Use `Is empty` (`==""`) ou `Is not empty` (`!=""`) para testar se o campo de origem tem valor. Outras comparações não coincidem com uma origem vazia. Não misture `&&` e `||` na mesma expressão.
+**Colocar entre colchetes um peso estimado.** A nota de precisão de um mamífero
+indica as medidas que não foram tomadas com precisão. Coloque o peso entre
+colchetes quando ele estiver entre elas:
 
-Um alvo vazio usa `No Content Placeholder`, em vez de substituição condicional. `~=""` é inválido. Uma expressão malformada pode ser impressa literalmente; visualize registros que atendam e que não atendam às condições. A substituição troca todo o valor; uma substituição vazia oculta um alvo preenchido quando suas condições coincidem.
+```text
+[[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
+```
 
-Para `mammalAttribute::accuracy`, `~=` testa se a medida indicada foi marcada como inexata, por exemplo `mammalAttribute::accuracy~="totalLength"`. Nesse campo, não é uma busca comum por trecho de texto.
+Um peso sinalizado imprime `[82.5]`; um preciso imprime `82.5`. Em
+`mammalAttribute::accuracy`, `~=` pergunta se a medida indicada está
+sinalizada, não se o texto contém a palavra.
+
+**Marcar uma identificação incerta.** A confiança da identificação é salva como
+`0` (baixa), `1` (média) ou `2` (alta), então "não alta" é `!="2"`. Coloque o
+gênero e o epíteto em um elemento de texto e torne o epíteto condicional:
+
+```text
+[taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
+```
+
+Uma identificação de alta confiança imprime `Rattus rattus`; qualquer outra
+imprime `Rattus ?`. A substituição ocupa o lugar do epíteto; ela não é
+acrescentada depois dele. Para manter um valor e acrescentar algo depois, escreva
+o valor e siga-o com [texto condicional](#conditional-text).
+
+`!="2"` não corresponde a um registro sem confiança registrada. Para incluí-los
+também, acrescente `Está vazio` como mais uma condição OU:
+
+```text
+[[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"||specimen::iDConfidence==""]=>"?"]]
+```
+
+### Regras das condições
+
+- **As condições comparam valores salvos, não rótulos.** Um campo codificado é
+  comparado pelo código: escreva `specimen::iDConfidence!="2"`, não
+  `!="High"`, e `mammalAttribute::testisPosition=="0"`, não `=="Scrotal"`.
+- **As comparações diferenciam maiúsculas de minúsculas** e ignoram espaços nas
+  pontas.
+- **Um campo vazio nunca corresponde** a uma comparação comum, nem mesmo `!=`.
+  Use `Está vazio` (`==""`) ou `Não está vazio` (`!=""`) para testar se há
+  valor.
+- **Use um só conector por expressão:** tudo `&&` ou tudo `||`, nunca os dois.
+- **Um destino vazio** usa o seu `Marcador sem conteúdo`, não a substituição.
+- **Uma substituição troca o valor inteiro.** Uma substituição vazia o oculta.
+- **Uma expressão com erro é impressa como texto.** Visualize um registro que
+  corresponde e outro que não corresponde.
+
+### Referência da sintaxe
+
+A caixa de diálogo escreve isto para você; use esta tabela para ler ou editar
+uma expressão à mão.
+
+| Símbolo | Nome | O que faz |
+|---|---|---|
+| `[[` … `]]` | Delimitadores | Abrem e fecham uma expressão condicional. |
+| `][` | Separador do destino | Termina o campo de destino e inicia as condições. |
+| `==` | Igual | Corresponde quando o valor é exatamente o valor de comparação. |
+| `!=` | Diferente | Corresponde quando o valor difere do valor de comparação. |
+| `~=` | Contém | Corresponde quando o valor de comparação aparece em qualquer parte do valor. |
+| `!=""` | Não está vazio | Corresponde quando o campo tem algum valor. |
+| `==""` | Está vazio | Corresponde quando o campo está em branco ou ausente. |
+| `&&` | Todas | Todas as condições precisam corresponder. |
+| `\|\|` | Qualquer | Pelo menos uma condição precisa corresponder. |
+| `"` … `"` | Aspas do valor | Envolvem todo valor de comparação; vazias nos dois testes de vazio. |
+| `\"` `\\` | Escapes | Uma aspa ou uma barra invertida dentro de um valor. |
+| `]=>` | Marcador de substituição | Termina as condições e inicia a substituição ou o texto. |
+| `if` | Palavra-chave de texto condicional | Ocupa o lugar do destino, para que a expressão escreva texto. |
+| `\|` | Separador do else | Depois do texto, inicia o texto escrito quando as condições não correspondem. |
+
+As três formas são:
+
+```text
+[[target][conditions]]
+[[target][conditions]=>"replacement"]]
+[[if][conditions]=>"text"|"otherwise"]]
+```
+
+A primeira coloca o destino entre colchetes, a segunda o substitui e a terceira
+escreve texto. Todas terminam em `]]`; `|"otherwise"` é opcional. `~=""` não é
+válido.
 
 ## Tipos de texto e seus formatos {% #text-types-and-their-formats %}
 
-As predefinições de exportação tabular usam os mesmos tipos de texto para o
-formato de um mapeamento `Single field`.
+Em um modelo de documento, `Tipo` e `Formato` decidem a aparência de um valor.
+Uma coluna tabular `Campo único` usa os mesmos formatos por meio de
+`Formato do valor`.
 
 | Tipo de texto | Opções de formato |
 |---|---|
-| `Normal Text` | `Normal`, `Uppercase`, `Lowercase`, `Capitalize` |
-| `Picture` | Dimensionado por largura e altura, não por um formato |
-| `Markdown` | `Normal`; renderiza texto rico, como uma narrativa |
-| `Coordinates` | `Decimal`, `Cardinal Dec`, `DMS`, `DDM` |
-| `List Values` | Barra vertical, vírgula, ponto e vírgula, barra, nova linha, marcadores, separador personalizado |
-| `Nested List` | `Table` ou `Card list`; uma tabela adiciona um controle `Header Case` |
-| `Dates` | `YYYY-MM-DD`, `DD-MM-YYYY`, `MM-DD-YYYY`, `DD/MM/YYYY`, `MM/DD/YYYY`, `Month DD, YYYY`, `DD Month YYYY`, `DD Mon YYYY` |
-| `Date and Time` | Dezessete combinações dos formatos de data acima com saída em 24 horas, 12 horas, ISO e apenas hora |
-| `Time` | `24h`, `24h seconds`, `12h`, `12h padded` |
-| `Sex` | `Presentation` e `Missing`, descritos abaixo |
-| `Number` | `Original`, ou 0, 1, 2 ou 3 casas decimais |
-| `Encoded Text` | `Default mapping` ou `Custom mapping...` |
+| `Texto normal` | `Normal`, `Maiúsculas`, `Minúsculas`, `Capitalizar` |
+| `Imagem` | Dimensionado por largura e altura em vez de um formato |
+| `Markdown` | `Normal`; exibe texto formatado, como uma narrativa |
+| `Coordenadas` | Decimal, decimal cardinal, DMS, DDM |
+| `Valores de lista` | Barra vertical, vírgula, ponto e vírgula, barra, nova linha, com marcadores, separador personalizado |
+| `Lista aninhada` | `Tabela` ou `Lista de cartões`; uma tabela acrescenta o controle `Maiúsculas do cabeçalho` |
+| `Datas` | `AAAA-MM-DD`, `DD-MM-AAAA`, `MM-DD-AAAA`, `DD/MM/AAAA`, `MM/DD/AAAA`, `Mês DD, AAAA`, `DD Mês AAAA`, `DD Mês AAAA` abreviado |
+| `Data e hora` | Dezessete combinações dos formatos de data acima com saída de 24 horas, 12 horas, ISO e só hora |
+| `Hora` | 24 h, 24 h com segundos, 12 h, 12 h com zero à esquerda |
+| `Sexo` | `Formato` e `Ausente`, descritos abaixo |
+| `Número` | `Original`, ou 0, 1, 2 ou 3 casas decimais |
+| `Texto codificado` | `Mapeamento padrão` ou `Mapeamento personalizado…` |
 
-`Nested List` serve para registros relacionados — partes de espécimes, pessoal,
-métodos de coleta — e é o tipo de texto que mais frequentemente precisa de
+`Lista aninhada` serve para registros relacionados, como partes do espécime,
+pessoal ou métodos de coleta, e é o tipo de texto que mais precisa de
 dimensionamento dinâmico.
 
-### `Encoded Text`: o que é decodificado
+### `Texto codificado`: o que é decodificado
 
-O `Encoded Text` transforma um código numérico armazenado no seu rótulo. O
-`Default mapping` usa a tabela abaixo, comparada com o final da chave do campo,
-de modo que tanto `mammalAttribute::testisPosition` quanto o curto
-`testisPosition` são decodificados.
+Alguns campos salvam um número que representa uma palavra. `Texto codificado`
+escreve a palavra. `Mapeamento padrão` usa esta tabela, comparando o fim da
+chave do campo, então tanto `mammalAttribute::testisPosition` quanto
+`testisPosition` são decodificados. Os rótulos padrão estão em inglês.
 
-| A chave do campo termina em | Código 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+| A chave do campo termina com | Código 0 | 1 | 2 | 3 | 4 | 5 | 6 |
 |---|---|---|---|---|---|---|---|
 | `::sex` | Male | Female | Unknown | Gynandromorph | Hermaphrodite | Female? | Male? |
 | `::iDConfidence` | Low | Medium | High | | | | |
@@ -460,100 +459,93 @@ de modo que tanto `mammalAttribute::testisPosition` quanto o curto
 | `::bodyMolt` | None | Trace | Light | Moderate | Heavy | | |
 
 Estes campos são decodificados como `Yes` para `1` e `No` para `0`:
-
 `::broodPatch`, `::hasBursa`, `::wingIsMolt`, `::tailIsMolt`,
-`::showBatFields`, `::showEchoFields`.
+`::showBatFields` e `::showEchoFields`.
 
-Qualquer outro caso é mantido como está. Um campo sem entrada na tabela acima,
-um valor que não seja um número inteiro e um código fora da sua lista são todos
-impressos sem alteração — o que é normalmente o que um número solto em uma
-etiqueta impressa significa. O `Custom mapping...` é a maneira de rotular um
-campo que o mapeamento padrão não cobre.
+Todo o resto é escrito sem alteração: um campo fora da tabela, um valor que não
+é número inteiro ou um código fora da lista. Um número solto em uma etiqueta
+costuma significar um desses casos. Use `Mapeamento personalizado…` para
+rotular um campo que a tabela não cobre.
 
-Dois desses casos têm alternativas mais convenientes. O tipo de texto `Sex`
-formata o sexo como símbolo ou letra e lida com a incerteza, e `[…sex]-img` o
-desenha como ícone; use o `Encoded Text` em um campo de sexo apenas quando
-quiser a palavra simples.
+Para sexo, o tipo de texto `Sexo` também pode escrever um símbolo ou uma letra,
+e `[…sex]-img` desenha um ícone. Use `Texto codificado` em sexo só para a
+palavra simples.
 
 ### Decodificar um campo codificado {% #decode-an-encoded-field %}
 
-Um campo codificado armazena um número, como `0` ou `1`, e a expressão não
-muda: escreva o placeholder do campo normalmente. O que transforma o código no
-seu rótulo é o tipo de texto, não o placeholder.
+O placeholder não muda; o tipo de texto ou `#label` transforma o código no seu
+rótulo.
 
-**Em um modelo de documento.** Coloque o placeholder em um elemento de texto e
-defina `Text type` como `Encoded Text`:
+**Em um modelo de documento,** coloque o placeholder em um elemento de texto e
+defina `Tipo` como `Texto codificado`:
 
 ```text
-Testículos: [mammalAttribute::testisPosition]
+Testes: [mammalAttribute::testisPosition]
 ```
 
-Com o `Default mapping`, um espécime que armazena `0` imprime
-`Testículos: Scrotal`. Cada placeholder do elemento é decodificado de acordo com
-o seu próprio campo, então um elemento pode conter vários campos codificados:
+Um espécime que salva `0` imprime `Testes: Scrotal`. Cada placeholder do
+elemento é decodificado com o próprio campo, então um elemento pode ter vários:
 
 ```text
 [mammalAttribute::age], [mammalAttribute::testisPosition]
 ```
 
-**Em uma predefinição de exportação tabular.** Use um mapeamento `Single field`
-para o campo codificado e defina `Value format` como `Encoded text`. Um
-mapeamento `Custom field` sempre usa `Normal Text`; por isso, acrescente
-`#label` a um campo codificado dentro dele ou selecione `Show label` no seu
-segmento:
+**Em uma predefinição de exportação tabular,** use uma coluna `Campo único` e
+defina `Formato do valor` como `Texto codificado`. Em uma coluna
+`Campo personalizado`, acrescente `#label` ao campo ou selecione
+`Mostrar rótulo` no segmento:
 
 ```text
 [mammalAttribute::testisPosition#label], [mammalAttribute::mammaeCondition#label]
 ```
 
-**O marcador `#label`.** `#label` decodifica um único placeholder com o
-mapeamento padrão em qualquer tipo de texto, de modo que um elemento ou uma
-coluna pode misturar códigos e rótulos. Escreva-o depois da chave e antes de
-qualquer fallback, como em `[mammalAttribute::sex#label??Unknown]`. Um valor
-sem rótulo padrão é impresso sem alteração.
+**Com `#label`,** um placeholder é decodificado com o mapeamento padrão em
+qualquer tipo de texto, então um elemento ou coluna pode misturar códigos e
+rótulos. Escreva-o depois da chave e antes de qualquer fallback:
+`[mammalAttribute::sex#label??Unknown]`. Um valor sem rótulo padrão é escrito
+sem alteração.
 
-**Rótulos personalizados.** No editor de modelos, escolha `Custom mapping...`
-como formato e depois `Map encoded values` para digitar um rótulo para cada
-código. A caixa de diálogo começa com os rótulos padrão. Em uma predefinição
-tabular, escreva o mesmo mapeamento em `Advanced` > `Raw format option`:
+**Para os seus próprios rótulos,** escolha `Mapeamento personalizado…` como
+formato no editor de modelos e depois `Mapear valores codificados` para digitar
+um rótulo para cada código. A caixa de diálogo começa com os rótulos padrão. Em
+uma predefinição tabular, escreva o mapeamento em `Avançado` >
+`Opção de formato bruta`:
 
 ```text
 custom_map:0=Scrotal,1=Abdominal
 ```
 
 Escreva cada par como `código=rótulo`, separados por vírgulas. Os rótulos não
-podem conter vírgula nem sinal de igual, e um código sem par é impresso sem
-alteração. Qualquer outro valor de `Raw format option`, como `enum`, usa o
-mapeamento padrão. Um mapeamento personalizado se aplica a todos os
-placeholders do elemento, então dê a um campo com mapeamento personalizado um
-elemento de texto próprio.
+podem conter vírgula nem sinal de igual, e um código sem par é escrito sem
+alteração. Um mapeamento personalizado vale para todos os placeholders do
+elemento, então dê a um campo com mapeamento personalizado um elemento de texto
+próprio.
 
-**As condições continuam lendo códigos.** Decodificar muda apenas o que é
-impresso. Uma condição sobre um campo codificado compara o código armazenado,
-então escreva `mammalAttribute::testisPosition=="0"`, não `=="Scrotal"`. Um
-campo vazio não é decodificado; ele usa o fallback do `No Content Placeholder`.
+A decodificação muda só o que é escrito. As condições continuam comparando o
+código salvo, e um campo vazio usa o seu `Marcador sem conteúdo`.
 
 ### Formatação de sexo
 
 | Controle | Opções |
 |---|---|
-| `Format` | `Symbol (♂/♀)`, `Letter (M/F)`, `Text (Male/Female)` |
-| `Missing` | `Unknown`, `N/A`, `None` |
+| `Formato` | `Símbolo (♂/♀)`, `Letra (M/F)`, `Texto (Macho/Fêmea)` |
+| `Ausente` | `Desconhecido`, `N/D`, `Nenhum` |
 
-Uma determinação incerta mantém o seu sufixo em todas as apresentações:
-`Female?`, `F?`, `♀?`, e `Male?`, `M?`, `♂?`.
+Uma determinação incerta mantém o ponto de interrogação em todos os formatos:
+`Female?`, `F?`, `♀?` e `Male?`, `M?`, `♂?`. O texto impresso fica em inglês.
 
-## Solução de problemas de sintaxe
+## Solução de problemas
 
-| Sintoma | Verifique |
+| Sintoma | O que verificar |
 |---|---|
-| Uma condicional aparece literalmente | Uma expressão malformada é ignorada. Verifique se falta um `]]`, se há um valor sem aspas ou `&&` e `\|\|` misturados. |
-| Um fallback imprime `[table::field]` | A opção de fallback `table::field` está selecionada; troque-a por `Blank`, `N/A`, `None` ou um texto personalizado. |
-| Um ícone de sexo aparece como texto | O elemento deve conter apenas `[…sex]-img`, e a chave deve terminar em `.sex`. |
-| As imagens do registro não aparecem | O elemento deve conter apenas `[media::media]` e usar o tipo de texto `Picture`. |
-| Uma coluna de campo personalizado tem um cabeçalho inesperado | Defina `Column name`. Sem ele, o cabeçalho vem do primeiro campo ou do texto literal. |
-| Um campo codificado imprime um número | Use o tipo de texto `Encoded Text`, `Encoded text` em um mapeamento `Single field` ou acrescente `#label` ao placeholder. Verifique se o código está no mapeamento padrão. |
-| O texto condicional não imprime nada | Sem um segundo texto após `\|`, nada é escrito quando as condições não coincidem. As condições comparam códigos armazenados, e `if` deve estar em minúsculas. |
+| Uma condicional é impressa como texto | A expressão tem um erro. Procure um `]]` faltando, um valor sem aspas ou `&&` e `\|\|` misturados. |
+| Um fallback imprime `[table::field]` | `Marcador sem conteúdo` está como `table::field`. Mude para `Em branco`, `N/D`, `Nenhum` ou o seu próprio texto. |
+| Um ícone de sexo aparece como texto | O elemento deve conter só `[…sex]-img`, e a chave deve terminar em `.sex`. |
+| As imagens do registro não aparecem | O elemento deve conter só `[media::media]` e usar o tipo de texto `Imagem`. |
+| Uma coluna de campo personalizado tem um cabeçalho inesperado | Defina `Nome da coluna`. Sem ele, o cabeçalho vem do primeiro campo ou do texto. |
+| Um campo codificado imprime um número | Use `Texto codificado`, ou `Texto codificado` em uma coluna `Campo único`, ou acrescente `#label`. Confira se o código está no mapeamento padrão. |
+| Uma condição nunca corresponde | As condições comparam códigos salvos, não rótulos, e diferenciam maiúsculas de minúsculas. Um campo vazio só corresponde a `Está vazio`. |
+| O texto condicional não imprime nada | Sem um segundo texto depois de `\|`, nada é escrito quando as condições não correspondem. Confira se `if` está em minúsculas. |
 
 ## Opções do editor de modelos {% #template-editor-options %}
 

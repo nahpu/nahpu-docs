@@ -5,17 +5,40 @@ sidebar:
   order: 3
 ---
 
-La tarjeta `Collection & Identification` incluye `Museum ID`, el número de
-campo, `Cataloger`, `Preparator`, `Determiner`, `Taxon`, `ID Confidence`,
-`Identification Method`, `Condition`, y las fechas y horas de recolecta y
-preparación.
+La tarjeta `Colecta e identificación` guarda los metadatos principales del
+espécimen, en este orden en la pantalla:
 
-El editor adaptable de ID permite elegir Personnel o Project para cada
-espécimen. Al cambiar de tipo se elimina el identificador anterior y no se
-reutilizan los números ya consumidos.
+| Campo | Notas |
+| --- | --- |
+| ID de campo | El número de campo del catalogador o un número de proyecto con formato. Use `Editar ID de campo` para cambiar el tipo en este espécimen; NAHPU le pide confirmación, elimina el identificador anterior y no reutiliza números ya asignados. |
+| `ID del museo` | Número de catálogo o de acceso del museo, opcional. Se muestra tras `Mostrar más`, o cuando ya tiene un valor. |
+| `Catalogador` | La persona que cataloga el espécimen. Al elegirla también se asignan `Preparador` y `Determinador`. |
+| `Preparador` | La persona que preparó el espécimen o el ejemplar de referencia. |
+| `Condición` | La condición del espécimen, de la lista en Configuración. |
+| `Fecha de colecta`, `Hora de colecta` | Cuándo se colectó el espécimen. |
+| `Fecha de prep.`, `Hora de prep.` | Cuándo se preparó el espécimen. |
+
+La parte de **identificación** de la tarjeta contiene:
+
+| Campo | Notas |
+| --- | --- |
+| `Taxón` | Un registro del registro de taxones del proyecto. |
+| `Determinador` | La persona que identificó el espécimen. |
+| `Confianza de la identificación` | `Low`, `Medium` o `High`. |
+| `Método de identificación` | Evidencia usada, opcional. Aparece una vez definida la `Confianza de la identificación`. |
 
 ## Taxonomía
 
-La tarjeta `Taxon Info` se completa desde la especie seleccionada. Muestra la
-clasificación y permite consultar el registro taxonómico, incluidos autores,
-nombre común, categoría de Lista Roja, estado CITES y notas si están presentes.
+La tarjeta `Información del taxón` se lee del taxón seleccionado en
+`Colecta e identificación`. Muestra la clase, el orden y la familia en el
+formulario del espécimen. Seleccione `Ver detalles` para revisar el registro
+taxonómico completo, que incluye:
+
+- el `Rango` del registro;
+- el reino y el filo, tomados del registro de taxones cuando están anotados e
+  inferidos a partir de la clase en caso contrario;
+- la clase, el orden, la familia, el género y, cuando el registro llega a esos
+  rangos, la especie y la subespecie, además de los autores y el nombre común;
+- la categoría de la Lista Roja, el estado CITES, el estado por país y las
+  notas cuando existen;
+- el número de registros que usan el taxón y un código QR para compartirlo.

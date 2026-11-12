@@ -5,20 +5,33 @@ sidebar:
   order: 4
 ---
 
-Catatan tangkapan menghubungkan spesimen dengan kegiatan:
+Catatan tangkapan menghubungkan spesimen dengan kegiatan pengumpulan, lokasi,
+koordinat, metode, dan pengumpul yang menghasilkannya.
 
-- `Site ID` dan `Event ID`: lokasi dan kegiatan pengumpulan.
-- `Capture date` dan `Capture time`: tanggal dan waktu tangkapan; `Relative time`
-  dapat menggunakan Dawn, Morning, Afternoon, Dusk, atau Night.
-- `Method` dan `Method ID`: metode koleksi dan ID metode dari kegiatan.
-- `Coordinate ID`: koordinat yang terkait dengan lokasi kegiatan.
-- `Coordinate extent (m)`: perluasan positif opsional untuk catatan tangkapan;
-  bidang ini berada tepat di bawah `Coordinate ID`.
-- `Collector`: pengumpul dari daftar personel kegiatan.
+{% steps %}
 
-Dalam ekspor Darwin Core, extent ditambahkan ke ketidakpastian koordinat. Jika
-ketidakpastian tidak valid atau kosong, extent digunakan sendiri. Nilai kosong,
-nol, dan negatif diabaikan.
+1. Pilih `ID lokasi`. Daftar `ID kegiatan` kemudian hanya menampilkan kegiatan
+   pengumpulan di lokasi tersebut.
+2. Pilih `ID kegiatan`.
+3. Isi rincian tangkapan di bawah ini.
 
-Jika kegiatan diubah, metode, pengumpul, dan koordinat akan dikosongkan,
-sedangkan tanggal dan waktu tangkapan tetap dipertahankan.
+{% /steps %}
+
+Mengganti lokasi atau kegiatan akan meminta konfirmasi, lalu mengosongkan kartu
+ini kecuali tanggal dan waktu penangkapan. Jika Anda hanya mengganti kegiatan,
+koordinat tetap dipertahankan bila masih berada di lokasi yang sama.
+
+| Kolom | Catatan |
+| --- | --- |
+| `Tanggal penangkapan`, `Waktu penangkapan` | Kapan spesimen ditangkap. |
+| `Waktu relatif` | Menggantikan waktu pasti dengan `Dawn`, `Morning`, `Afternoon`, `Dusk`, atau `Night`. Ditampilkan setelah `Tampilkan lebih banyak`. |
+| `Metode` | Metode koleksi dari kegiatan yang dipilih. |
+| `ID metode` | Pengenal perangkap, jaring, atau metode lain, opsional. Ditampilkan setelah `Tampilkan lebih banyak`. |
+| `ID koordinat` | Koordinat dari lokasi kegiatan. |
+| `Cakupan koordinat (m)` | Jarak positif opsional sejauh mana tangkapan meluas dari titik koordinat. |
+| `Kolektor` | Opsional, dari personel kegiatan. Ditampilkan jika berisi nilai, setelah `Tampilkan lebih banyak`, atau selalu jika `Selalu tampilkan bidang kolektor` diaktifkan di Pengaturan. |
+
+Dalam ekspor Darwin Core, cakupan koordinat yang positif ditambahkan ke
+ketidakpastian koordinat yang tersimpan. Jika koordinat tidak memiliki
+ketidakpastian yang valid, cakupan digunakan sendiri. Nilai kosong, nol, dan
+negatif diabaikan.

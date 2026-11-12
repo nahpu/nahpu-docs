@@ -27,31 +27,29 @@ Os registros de pessoal são compartilhados no banco de dados do NAHPU e podem
 ser atribuídos a vários projetos. Um projeto exibe apenas o pessoal atribuído a
 ele.
 
-## Adicionar pessoal a um projeto
+## Adicionar pessoal a um projeto {% #adding-personnel-to-a-project %}
 
 {% aside type="caution" %}
-Field IDs por pessoa exigem um `Cataloger` com número de campo pessoal registrado. Field IDs por projeto usam a convenção do projeto; não exigem que cada número venha da sequência de uma pessoa. Escolha o papel com cuidado, pois ele não pode ser alterado após a criação.
+Field IDs por pessoa exigem um `Catalogador` com número de campo pessoal registrado. Field IDs por projeto usam a convenção de numeração do projeto; não exigem que cada número venha da sequência de uma pessoa. Escolha a função com cuidado: depois que uma pessoa é salva como `Catalogador`, essa função não pode ser alterada.
 {% /aside %}
 
-No painel Pessoal do painel do projeto, selecione `Add personnel`. Se já
-houver pessoas no banco de dados, escolha `Select from database` {% ref id="E" /%} e selecione
-quem deseja atribuir. Caso contrário, escolha `Add new personnel` {% ref id="F" /%}.
+No painel Pessoal do painel do projeto, selecione `Adicionar membro da equipe`.
+Se já houver pessoas no banco de dados, escolha `Selecionar do banco de dados` {% ref id="E" /%} e
+selecione quem deseja atribuir. Caso contrário, escolha `Adicionar nova pessoa` {% ref id="F" /%}. Em
+uma tela estreita, essas opções aparecem como `Selecionar existente` e `Adicionar nova`.
 
 O formulário inclui:
 
-- **Name (obrigatório)** {% ref id="G" /%} - o nome da pessoa.
-- **Photo** - um avatar ou uma foto do pessoal.
-- **Affiliation** - a instituição da pessoa.
-- **Email** - o endereço de e-mail da pessoa.
-- **Phone** - o telefone da pessoa.
-- **ORCID** - um ORCID iD opcional, com hifens e dígito verificador válido, como
-  `0000-0002-1825-0097`.
-- **Specimen care role** {% ref id="B" /%} - `Cataloger`, `Preparator only`, `Determiner only` ou
-  `None`.
-- **Notes** - informações adicionais sobre a pessoa.
-
-Use `Show more` {% ref id="H" /%} para exibir os campos opcionais. Os e-mails são normalizados
-para minúsculas e os telefones aceitam dígitos.
+| Campo | Exibição | Observações |
+| --- | --- | --- |
+| `Nome*` {% ref id="G" /%} | Sempre | Obrigatório. |
+| Foto | Sempre | Um avatar ou uma foto da pessoa. |
+| Afiliação | Sempre | A instituição da pessoa. |
+| `ORCID iD` | Sempre | Opcional, com hifens e dígito verificador válido, como `0000-0002-1825-0097`. |
+| Função no cuidado de espécimes {% ref id="B" /%} | Sempre | `Catalogador`, `Somente preparador`, `Somente identificador` ou `Nenhuma`. |
+| E-mail | Após `Mostrar mais` {% ref id="H" /%} | Salvo em minúsculas. |
+| Telefone | Após `Mostrar mais` | Somente dígitos. |
+| Notas | Após `Mostrar mais` | Informações adicionais sobre a pessoa. |
 
 As exportações Darwin Core usam a URL canônica `https://orcid.org/...` como
 identificador de agente da pessoa quando há ORCID. Caso contrário, usam o UUID
@@ -59,15 +57,16 @@ de pessoal do NAHPU.
 
 ## Números de campo para catalogadores
 
-Quando a função é `Cataloger`, {% ref id="C" /%} o NAHPU oferece a opção
-`Register personal field number`. Ative-a quando as iniciais e o número da
-pessoa devem gerar os Field IDs dos espécimes. Informe a inicial de campo e o
-número inicial; o número avança conforme os espécimes são criados.
+Quando a função é `Catalogador`, {% ref id="C" /%} o NAHPU oferece a opção
+`Registrar número de campo pessoal`. Ative-a quando as iniciais e o número do
+catalogador devem gerar os Field IDs dos espécimes. Informe `Iniciais` (até cinco
+letras, salvas em maiúsculas) e o `Número do catalogador*` inicial; o número
+avança conforme os espécimes são criados.
 
-Se a coleção usa numeração por projeto, configure a convenção de Field ID do projeto em Settings em vez de registrar uma pessoa fictícia com o código do projeto.
+Se a coleção usa numeração por projeto, configure a convenção de Field ID do projeto em `Configurações` em vez de registrar uma pessoa fictícia com o código do projeto.
 
-O registro do número de campo é opcional. A função de catalogador não pode ser
-alterada depois que a pessoa é criada.
+O registro do número de campo é opcional. Depois que uma pessoa é salva como
+`Catalogador`, essa função não pode ser alterada.
 
 ## Editar e remover pessoal
 
@@ -77,29 +76,30 @@ exclui o registro compartilhado de pessoal. Uma pessoa não pode ser removida
 enquanto registros do projeto ainda a utilizarem.
 
 Para pesquisar, editar ou excluir permanentemente o pessoal do banco de dados {% ref id="D" /%},
-abra `Settings` e escolha `Personnel` ou `Manage personnel` {% ref id="A" /%}. O NAHPU impede a
+abra `Configurações` e escolha `Equipe` ou `Gerenciar pessoal` {% ref id="A" /%}. O NAHPU impede a
 exclusão permanente quando a pessoa ainda está atribuída a um projeto.
 
 ## Terminologia
 
-### Cataloger
+### Catalogador {% #cataloger %}
 
 Pessoa que cria e edita os registros de catálogo dos espécimes. Catalogadores
-podem aparecer nos campos de catalogador, preparador e pessoal de coleta. A sua
-função não pode ser alterada depois da criação.
+podem aparecer nos campos de catalogador, preparador e pessoal de coleta. A
+função `Catalogador` não pode ser alterada depois que a pessoa é salva; as
+outras funções podem ser editadas.
 
-### Preparator only
+### Somente preparador {% #preparator-only %}
 
 Pessoa que ajuda a preparar espécimes, mas não cria nem edita registros de
 catálogo.
 
-### Determiner only
+### Somente identificador {% #determiner-only %}
 
 Pessoa que identifica espécimes, mas não os cataloga nem os prepara. Selecione
 essa pessoa no campo `Determiner` do formulário do espécime.
 
-### None
+### Nenhuma {% #none %}
 
-Pessoa que apoia o trabalho de campo sem uma função de cuidado com o espécime,
+Pessoa que apoia o trabalho de campo sem uma função no cuidado de espécimes,
 como guia, motorista ou cozinheiro. O nome dela ainda pode ser registrado como
 pessoal de coleta.

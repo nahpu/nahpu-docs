@@ -5,22 +5,27 @@ sidebar:
   order: 3
 ---
 
-The `Collection & Identification` card stores the core specimen metadata:
+The `Collection & Identification` card stores the core specimen metadata, in
+this order on screen:
 
-- `Museum ID`: optional museum catalog or accession identifier.
-- Field ID: either the cataloger's field number or a formatted project number.
-  Use the responsive field-ID editor to select the type for this specimen.
-  Switching types removes the previous identifier; consumed numbers are not
-  reused.
-- `Cataloger`: the person who catalogs the specimen.
-- `Preparator`: the person who prepares the specimen or voucher.
-- `Determiner`: the person who identified the specimen.
-- `Taxon`: the selected record from the project taxon registry.
-- `ID Confidence`: confidence in the identification.
-- `Identification Method`: optional method or evidence used for identification.
-- `Condition`: condition of the specimen.
-- `Collection date` and `Collection time`: when the specimen was collected.
-- `Prep. date` and `Prep. time`: when the specimen was prepared.
+| Field | Notes |
+| --- | --- |
+| Field ID | The cataloger's field number or a formatted project number. Use `Edit field ID` to switch the type for this specimen; NAHPU asks you to confirm, removes the old identifier, and does not reuse numbers already taken. |
+| `Museum ID` | Optional museum catalog or accession number. Shown after `Show more`, or once it has a value. |
+| `Cataloger` | The person who catalogs the specimen. Choosing one also sets `Preparator` and `Determiner`. |
+| `Preparator` | The person who prepared the specimen or voucher. |
+| `Condition` | The specimen's condition, from the list in Settings. |
+| `Collection date`, `Collection time` | When the specimen was collected. |
+| `Prep. date`, `Prep. time` | When the specimen was prepared. |
+
+The **Identification** part of the card holds:
+
+| Field | Notes |
+| --- | --- |
+| `Taxon` | A record from the project's taxon registry. |
+| `Determiner` | The person who identified the specimen. |
+| `ID Confidence` | `Low`, `Medium`, or `High`. |
+| `Identification Method` | Optional evidence used. Appears once `ID Confidence` is set. |
 
 ## Taxonomy
 
@@ -33,4 +38,5 @@ review the full taxonomy record, including:
   class otherwise;
 - class, order, family, genus, and — when the record reaches those ranks —
   species and subspecies, plus authors and common name;
-- Red List category, CITES status, country status, and notes when present.
+- Red List category, CITES status, country status, and notes when present;
+- the number of records that use the taxon, and a QR code to share it.

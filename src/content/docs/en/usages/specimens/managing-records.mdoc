@@ -7,21 +7,17 @@ sidebar:
 
 Open the three-dot menu on the specimen page to manage records:
 
-- `Create specimen`: add a new specimen record.
-- `Duplicate part`: create a new specimen using the current specimen's part
-  information. Review IDs, dates, times, and treatments before saving.
-- `Sort records`: choose the field and direction used to order the specimen
-  list. Each record viewer keeps its own sort.
-- `Export specimen`: save a JSON record or an archive that includes specimen
-  media.
-- `Import specimen`: choose a new or existing target specimen, then map the
-  imported event, site, and taxon references to records in the current project.
-- `Delete record`: delete the specimen, its measurements, parts, associated
-  data, and media links. The field number is not reused automatically.
-- `Delete all records`: delete all specimens, measurements, parts, associated
-  data, and specimen media in the current project.
+| Action | What it does |
+| --- | --- |
+| `Create specimen` | Adds a new specimen record. |
+| `Duplicate part` | Immediately creates a new specimen with a copy of the current specimen's parts: type, count, treatments, storage, and museum fields. Tissue IDs, barcodes, preparators, dates, and remarks are not copied. |
+| `Sort records` | Chooses the field and direction for the specimen list. Each record viewer keeps its own sort. |
+| `Export specimen` | Saves a JSON record, or an archive that includes the specimen's media. |
+| `Import specimen` | Chooses a new or existing target specimen, then maps the imported event, site, and taxon to records in this project. It can also create a new event or site. |
+| `Delete record` | Deletes the specimen with its measurements, parts, symbionts, fish individuals, and media links. Associated data is detached and removed only if nothing else uses it. The field number is not reused. |
+| `Delete all records` | Does the same for every specimen in the project. |
 
-Changing the event in `Capture Records` clears the event-dependent method,
-collector, and coordinate values. Capture date and time are preserved. When a
-record is imported, review these relationships and all generated identifiers
-before continuing your cataloging workflow.
+`Duplicate part`, `Export specimen`, and `Delete record` need a specimen open.
+After an import, check the linked event, site, taxon, and any new identifiers.
+For what changing an event clears, see
+[Capture records](/en/usages/specimens/capture-records/).

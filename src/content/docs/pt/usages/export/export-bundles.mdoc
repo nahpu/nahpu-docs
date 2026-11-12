@@ -20,23 +20,24 @@ sidebar:
 {% pin id="G" label="Criar pacote" large=[58.2, 93.2] small=[69.3, 92.3] /%}
 {% /screenshots %}
 
-Use `Bundle records` para empacotar dados e arquivos do NAHPU para intercâmbio,
-publicação, arquivamento ou reprodutibilidade. A tela de empacotamento
-pré-visualiza exatamente os arquivos e campos de tabela antes de gravar
+Use `Empacotar registros` para empacotar os dados do projeto junto com seus
+arquivos, para publicação, arquivamento ou análise reprodutível. A tela de
+pacotes mostra exatamente quais arquivos e campos serão gravados antes de criar
 qualquer coisa.
 
-O NAHPU oferece três tipos de pacote:
+## Escolher um formato de pacote {% #choose-a-bundle-format %}
 
-- **Darwin Core Archive (DCA)** para sistemas consolidados de publicação de
-  biodiversidade que esperam conjuntos de dados lineares, compatíveis com a
-  maioria dos principais sistemas de gestão de coleções e agregadores de dados
-  de biodiversidade.
-- **Darwin Core Data Package (DwC-DP)** é a versão aprimorada do Darwin Core
-  Archive, empacotada como dados Darwin Core relacionais.
-- **NAHPU Data Package** para uma cópia reprodutível do projeto ativo; inclui o
-  JSON completo do projeto, a configuração do usuário e todos os arquivos
-  relacionados. É adequado para análise em Python, R e outras
-  [ferramentas compatíveis com Frictionless](https://frictionlessdata.io).
+| Formato | Escolha quando | Contém | O NAHPU importa |
+|---|---|---|---|
+| **Darwin Core Archive** (`.dwca.zip`) | Um banco de dados de museu ou portal de biodiversidade, como o GBIF, pede um DwC-A | Os espécimes em uma tabela plana, com partes, medidas e mídia em tabelas de extensão | Não |
+| **Darwin Core Data Package** (`.dwc-dp.tar.gz`) | O destinatário aceita o formato Darwin Core relacional mais novo | Espécimes, eventos, identificações, partes e pessoas em tabelas Darwin Core ligadas | Não |
+| **NAHPU Data Package** (`.nahpu-dp.tar.gz`) | Você precisa de tudo, para análise em R ou Python, arquivamento de longo prazo ou uma cópia completa | O projeto inteiro, todas as tabelas do NAHPU, configurações e arquivos | Sim, com `Importar projeto` ou `Mesclar projeto` |
+
+Os formatos Darwin Core contêm só os valores que têm um termo registrado de
+Darwin Core, Dublin Core ou Audubon Core. Escolha um NAHPU Data Package quando
+nada pode se perder, incluindo campos personalizados. Ele pode ser lido por
+qualquer ferramenta [Frictionless](https://frictionlessdata.io); o
+[Tutorial 3](/pt/tutorials/custom-data-package-script/) mostra como.
 
 ## Criar um pacote
 
@@ -96,6 +97,11 @@ O Darwin Core Archive sempre usa ZIP, porque o ZIP faz parte do seu fluxo normal
 de intercâmbio.
 
 ## Aprofundamento
+
+As seções abaixo descrevem os arquivos de cada pacote e como o NAHPU os
+preenche. Você não precisa delas para criar um pacote; use-as quando um
+destinatário perguntar o que um arquivo contém ou quando você mesmo processar um
+pacote.
 
 ### Darwin Core Archive
 
@@ -462,18 +468,18 @@ O conteúdo interno do pacote é o mesmo nos dois contêineres.
 
 ## Pacote versus backup
 
-Os pacotes Darwin Core são formatos de intercâmbio e não são backups
-restauráveis do NAHPU.
+| | Pacote Darwin Core | NAHPU Data Package | Backup do banco de dados |
+|---|---|---|---|
+| Restaura um projeto do NAHPU | Não | Sim, por `Importar projeto` ou `Mesclar projeto` | Sim, a instalação inteira |
+| Finalidade principal | Troca com outros sistemas | Cópia documentada e reutilizável de um projeto | Recuperação deste dispositivo |
 
-Quem contribui estendendo campos de pacote ou grupos taxonômicos deve ler
-[Fluxos de exportação (em inglês)](/en/contributing/code/data-export-workflows/) e
-[Adicionar um grupo taxonômico (em inglês)](/en/contributing/code/adding-a-taxon-group/).
+Continue fazendo um [backup do banco de dados](../#backup-database) quando
+precisar de uma cópia de tudo o que está no dispositivo. Um NAHPU Data Package
+cobre um projeto, então não substitui esse backup.
 
-Um NAHPU Data Package contém todo o conteúdo de transferência do projeto e
-caminhos de mídia compatíveis, então o `Merge project` pode abri-lo diretamente.
-Sua primeira finalidade continua sendo um pacote documentado e interoperável.
-Continue usando [Backup do banco de dados](../#backup-database) quando precisar
-de uma cópia restaurável do banco de dados completo do NAHPU.
+Quem for estender campos de pacote ou grupos taxonômicos deve ler [Fluxos de
+exportação](../../../contributing/code/data-export-workflows) e [Adicionar um
+grupo taxonômico](../../../contributing/code/adding-a-taxon-group).
 
 ## Validação do pacote e avisos
 

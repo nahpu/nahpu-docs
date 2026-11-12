@@ -5,43 +5,89 @@ sidebar:
   order: 6
 ---
 
-Cada espécimen puede tener varias partes, como vouchers, tejidos o hisopos.
-Los organismos que viven sobre o dentro del espécimen se registran aparte como
-[simbiontes](#symbionts). Una parte puede incluir `Tissue ID`, `QR/barcode ID`, `Preparation
-type`, `Counts`, `Treatment`, `Additional treatment`, `Time taken`, `Preparator`,
-`Storage type`, `Storage location`, `Date taken`, `PMI`, museos permanente y de
-préstamo, y `Remarks`.
+Use `Partes del espécimen` para las preparaciones del ejemplar de referencia,
+tejidos, hisopos y otras partes físicas derivadas del espécimen. Cada
+espécimen puede tener varias partes. Los organismos que viven sobre o dentro
+del espécimen se registran aparte como [simbiontes](#symbionts).
 
-`Individuals` solo aparece en un lote de peces con individuos registrados y
-vincula la parte con uno o más individuos del lote.
-
-La pestaña de simbiontes está disponible para mamíferos, aves, herpetofauna y
-peces, pero no para catálogos de invertebrados. En un lote de peces con
-individuos registrados, las partes y los simbiontes pueden vincularse con los
-individuos de los que proceden; consulte
+La tarjeta `Partes del espécimen` tiene pestañas con iconos: la primera
+contiene las partes, el icono de insecto contiene los simbiontes y el icono de
+almacenamiento contiene los
+[datos asociados](/es/usages/specimens/associated-data-and-media/). La pestaña
+de simbiontes está disponible para mamíferos, aves, herpetofauna y peces, pero
+no para catálogos de invertebrados. En un lote de peces con individuos
+registrados, las partes y los simbiontes pueden vincularse con los individuos
+de los que proceden; consulte
 [Peces](/es/usages/specimens/measurements/fishes/#parts-and-symbionts).
+
+Los campos de una parte incluyen:
+
+| Campo | Notas |
+| --- | --- |
+| `ID de tejido` | Opcional. Mientras el campo está vacío, el icono de repetir copia el último ID de tejido ingresado para este espécimen. `Opciones del ID del tejido` ofrece `Número nuevo`, que toma el siguiente número de tejido configurado, y `Configuración`. |
+| `Individuos` | Solo para un lote de peces con individuos registrados. Vincula la parte con individuos del lote. |
+| `ID de QR/código de barras` | ID único opcional para un tubo, etiqueta o recipiente. Escanéelo con una cámara o genere un UUID. |
+| `Tipo de preparación` | De su lista de tipos de espécimen. |
+| `Cantidades` | Número de partes o recipientes. |
+| `Tratamiento`, `Tratamiento adicional` | Tratamientos de preservación. |
+| `Hora de toma` | Cuándo se tomó la parte; recomendado para tejidos frescos. |
+| `Observaciones` | Notas sobre esta parte. |
+
+Estos campos aparecen tras `Mostrar más`, o cuando ya tienen un valor:
+
+| Campo | Notas |
+| --- | --- |
+| `Preparador` | Cuando es distinto del preparador del ejemplar de referencia. |
+| `Fecha de toma` | Cuándo se tomó la parte. |
+| `PMI` | Intervalo post mortem, como `1:30`. |
+| `Tipo de almacenamiento`, `Ubicación de almacenamiento` | Medio de almacenamiento y la posición en el congelador, gabinete, estante o caja. |
+| `Colección permanente del museo`, `Préstamo del museo` | El museo que conserva la parte y el que la recibe en préstamo. |
+
+Los campos personalizados de las partes también aparecen en el formulario.
+
+La lista de partes muestra el tipo de parte, la cantidad, el ID de código de
+barras, el preparador, el ID de tejido, los tratamientos, la fecha y la hora,
+el PMI, los individuos de peces vinculados y si existe una observación.
 
 ## Simbiontes {% #symbionts %}
 
 Un simbionte es cualquier organismo que vive sobre o dentro del espécimen
 hospedador, sea cual sea su relación con él: parasítica, mutualista,
-comensal, forética, entre otras. Dos campos describen la asociación:
+comensal, forética, etc. Dos campos describen la asociación:
 
-- `Interaction type` (Tipo de interacción): cómo se relaciona el simbionte con
-  su hospedador. El vocabulario predeterminado es `Parasitic`, `Parasitoid`,
-  `Mutualistic`, `Commensal`, `Phoretic` y `Unknown`. Los registros creados
-  antes de este cambio se migraron con el tipo de interacción `Parasitic`.
-- `Category`: dónde vive el simbionte en su hospedador. Los valores
-  predeterminados son `Ectosymbiont`, `Endosymbiont` y `Mesosymbiont`. Elegir
-  una categoría limita la lista de `Anatomical location`; los valores antiguos
-  guardados, como `Ectoparasite`, la siguen filtrando igual.
+- `Tipo de interacción`: cómo se relaciona el simbionte con su hospedador. El
+  vocabulario predeterminado es `Parasitic`, `Parasitoid`, `Mutualistic`,
+  `Commensal`, `Phoretic` y `Unknown`. Los registros creados antes de que
+  NAHPU registrara simbiontes se migraron con el tipo de interacción
+  `Parasitic`.
+- `Categoría`: dónde vive el simbionte en su hospedador. Los valores
+  predeterminados son `Ectosymbiont`, `Endosymbiont` y `Mesosymbiont`.
 
-En el espécimen, `Symbionts examined` y `Symbionts detected` indican si se
-examinó el hospedador y si se encontró algo, de modo que también queda
-documentado un examen sin simbiontes. Los registros de simbiontes separan el
-método de almacenamiento de la ubicación física.
+En el propio espécimen, `Simbiontes examinados` y `Simbiontes detectados`
+indican si se examinó el hospedador y si se encontró algo, de modo que también
+queda documentado un examen sin simbiontes.
+
+Los registros de simbiontes separan la recolecta de la identificación:
+
+- `Colector`: quién recuperó el simbionte. Empieza con el preparador del
+  hospedador, o con su catalogador si no hay preparador.
+- `Determinador`, `Fecha de determinación` y `Método de determinación`: quién
+  identificó el simbionte, cuándo y cómo. El método usa la misma lista que el
+  método de identificación del espécimen.
+- `Categoría` y `Ubicación anatómica`: elegir una categoría limita la lista de
+  ubicaciones a las que corresponden a ella. Los valores de categoría
+  antiguos, como `Ectoparasite` y `Endoparasite`, la limitan de la misma forma.
+  Las ubicaciones que usted agregó siempre permanecen en la lista.
+
+La etapa de vida, el método de detección, el método de preparación y la
+numeración de ID de simbiontes se configuran en `Configuración` >
+`Especímenes`.
+
+Los registros de curaduría de simbiontes tienen sus propios campos
+`Almacenamiento` y `Ubicación de almacenamiento`, para registrar por separado
+el método de preservación y la ubicación física.
 
 En las exportaciones Darwin Core, el tipo de interacción se convierte en
-`organismInteractionType`; un registro sin tipo de interacción usa su
+`organismInteractionType`. Un registro sin tipo de interacción usa su
 categoría. Cuando hay un tipo de interacción, la categoría y el estado de la
 asociación van a `organismInteractionDescription`.

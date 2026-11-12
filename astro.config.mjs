@@ -420,6 +420,22 @@ export default defineConfig({
           ],
         },
         {
+          label: "Tutorials",
+          translations: {
+            "pt-BR": "Tutoriais",
+            es: "Tutoriales",
+            id: "Tutorial",
+          },
+          items: [
+            {
+              autogenerate: {
+                directory: "tutorials",
+                collapsed: true,
+              },
+            },
+          ],
+        },
+        {
           label: "Contributing",
           items: [
             { label: "Become a contributor", link: "contributing" },

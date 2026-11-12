@@ -20,20 +20,22 @@ sidebar:
 {% pin id="G" label="Create bundle" large=[58.2, 93.2] small=[69.3, 92.3] /%}
 {% /screenshots %}
 
-Use `Bundle records` to package related NAHPU data and files for exchange,
-publication, archiving, or reproducibility. The bundle screen previews the
-exact files and table fields before writing anything.
+Use `Bundle records` to package project data together with its files, for
+publishing, archiving, or reproducible analysis. The bundle screen shows exactly
+which files and fields will be written before you create anything.
 
-NAHPU provides three bundle types:
+## Choose a bundle format
 
-- **Darwin Core Archive (DCA)** for established biodiversity publishing systems that
-  expect linear datasets, supported by most major collection management systems
-   and biodiversity data aggregators.
-- **Darwin Core Data Package (DwC-DP)** is the enhanced version of the Darwin Core Archive,
-  packaged as relational Darwin Core data.
-- **NAHPU Data Package** for a reproducible copy of the active project, includes the full project JSON, user
-  configuration, and all related files. It is suitable for analysis in Python, R,
-  and other [Frictionless-compatible tools](https://frictionlessdata.io).
+| Format | Choose it when | It holds | NAHPU can import it |
+|---|---|---|---|
+| **Darwin Core Archive** (`.dwca.zip`) | A museum database or biodiversity portal, such as GBIF, asks for a DwC-A | Specimens as one flat table, with parts, measurements, and media in extension tables | No |
+| **Darwin Core Data Package** (`.dwc-dp.tar.gz`) | The recipient supports the newer, relational Darwin Core format | Specimens, events, identifications, parts, and people in linked Darwin Core tables | No |
+| **NAHPU Data Package** (`.nahpu-dp.tar.gz`) | You need everything, for analysis in R or Python, long-term archiving, or a complete copy | The full project, every NAHPU table, settings, and files | Yes, with `Import project` or `Merge project` |
+
+The Darwin Core formats contain only values that have a registered Darwin
+Core, Dublin Core, or Audubon Core term. Choose a NAHPU Data Package when nothing may be lost, including custom
+fields. It can be read with any [Frictionless](https://frictionlessdata.io)
+tool; [Tutorial 3](/en/tutorials/custom-data-package-script/) shows how.
 
 ## Create a bundle
 
@@ -92,6 +94,10 @@ Darwin Core Archive always uses ZIP because ZIP is part of its normal exchange
 workflow.
 
 ## Deep dive
+
+The sections below describe each package's files and how NAHPU fills them.
+You do not need them to create a bundle; use them when a recipient asks what a
+file contains, or when you process a package yourself.
 
 ### Darwin Core Archive
 
@@ -455,18 +461,18 @@ The internal package contents are the same in both containers.
 
 ## Bundle versus backup
 
-Darwin Core bundles are exchange formats and are not restorable NAHPU
-backups.
+| | Darwin Core bundle | NAHPU Data Package | Database backup |
+|---|---|---|---|
+| Restores a NAHPU project | No | Yes, through `Import project` or `Merge project` | Yes, the whole installation |
+| Main purpose | Exchange with other systems | Documented, reusable copy of one project | Recovery of this device |
+
+Keep making a [database backup](../#backup-database) when you need a copy of
+everything on the device. A NAHPU Data Package covers one project, so it does
+not replace that backup.
 
 Contributors extending bundle fields or taxon groups should read [Export
 workflows](../../../contributing/code/data-export-workflows) and [Adding a taxon
 group](../../../contributing/code/adding-a-taxon-group).
-
-A NAHPU Data Package contains the full project-transfer payload and compatible
-media paths, so `Merge project` can open it directly. Its first purpose remains
-a documented, interoperable package. Continue using [Backup
-database](../#backup-database) when a restorable copy of the complete NAHPU
-database is required.
 
 ## Package validation and warnings
 

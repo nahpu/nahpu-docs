@@ -25,66 +25,92 @@ sidebar:
 
 ## Membuat Lokasi Baru
 
-{% steps %}
-1. Navigasi ke halaman lokasi menggunakan bilah navigasi bawah {% ref id="A" /%}.
+Lokasi adalah catatan tempat yang dapat dipakai ulang. Kegiatan pengumpulan
+termasuk dalam sebuah lokasi, dan catatan penangkapan spesimen terhubung ke
+lokasi melalui kegiatan pengumpulannya. Buat satu lokasi untuk setiap kamp,
+jalur perangkap, lokalitas, atau tempat lain yang dipakai proyek Anda.
 
-2. Gunakan tombol `+` {% ref id="B" /%} di pojok kanan atas untuk membuat lokasi baru. 
-    
-    Anda juga dapat menggunakan ikon menu tiga titik dan ketuk pada `Buat lokasi`.
+{% steps %}
+1. Buka halaman lokasi menggunakan bilah navigasi bawah {% ref id="A" /%}.
+
+2. Gunakan ikon tambah {% ref id="B" /%} di pojok kanan atas untuk membuat lokasi baru.
+
+    Anda juga dapat menggunakan ikon menu tiga titik lalu mengetuk `Buat situs`.
 
     {% aside type="tip" %}
 
-    Anda dapat meminimalkan pengetikan informasi yang sama dengan menduplikasi lokasi alih-alih membuat yang baru. Ketuk/klik pada tombol menu tiga titik. Kemudian, `Duplikat lokasi`. Ini akan membuat lokasi baru menggunakan informasi dari lokasi saat ini, kecuali `ID Lokasi` dan koordinat yang kosong. Kemudian, isi `ID Lokasi` dan tambahkan koordinat.
+    Anda dapat mengurangi pengetikan berulang dengan menduplikasi lokasi alih-alih
+    membuat yang baru. Buka menu tiga titik lalu pilih `Duplikat situs`. NAHPU
+    menyalin informasi lokasi, tetapi membiarkan `ID lokasi` dan koordinat
+    kosong. Masukkan ID yang unik dan tambahkan koordinat yang benar; kolom
+    lokasi tersimpan saat Anda mengetik.
 
     {% /aside %}
 
-3. Buat ID lokasi {% ref id="C" /%}.
+3. Buat ID lokasi {% ref id="C" /%}. Gunakan hingga 40 huruf, angka, `-`, atau
+   `_`; NAHPU mengubah huruf menjadi kapital. Pastikan setiap ID unik dalam
+   proyek: NAHPU tidak memaksakannya, tetapi pencocokan catatan yang diimpor
+   bergantung padanya.
 
     Kami merekomendasikan pembuatan konvensi ID lokasi untuk tim Anda. Contoh konvensi ID lokasi untuk kerja lapangan mamalogi:
-    
-    - Kota, kota kecil, atau desa diidentifikasi apa adanya. Misalnya, kota Bogor akan menjadi `BOGOR`. 
+
+    - Kota, kota kecil, atau desa diberi ID apa adanya. Misalnya, kota Bogor akan menjadi `BOGOR`.
     - Lokasi perkemahan menggunakan format `{singkatan lokalitas 2 huruf}-CAMP{nomor perkemahan}`. Misalnya, perkemahan 1 di Gn. Gede-Pangrango adalah `GP-CAMP1`.
-    - Jalur jebakan (trap line) menggunakan format `{singkatan lokalitas 2 huruf}{inisial pemimpin jalur}-L{nomor jalur}`. Misalnya, jalur 1 di Gn. Gede-Pangrango yang dipimpin oleh Heru Handika adalah `GPHH-L1`.
-    - Jalur jebakan jatuh (pitfall line) menggunakan format `{singkatan lokalitas 2 huruf}{inisial pemimpin jalur jebakan jatuh}-P{nomor jalur}`. Misalnya, jalur 1 di Gn. Gede-Pangrango yang dipimpin oleh Heru Handika adalah `GPHH-P1`.
+    - Jalur perangkap menggunakan format `{singkatan lokalitas 2 huruf}{inisial pemimpin jalur}-L{nomor jalur}`. Misalnya, jalur 1 di Gn. Gede-Pangrango yang dipimpin oleh Heru Handika adalah `GPHH-L1`.
+    - Jalur perangkap sumuran menggunakan format `{singkatan lokalitas 2 huruf}{inisial pemimpin jalur perangkap sumuran}-P{nomor jalur}`. Misalnya, jalur 1 di Gn. Gede-Pangrango yang dipimpin oleh Heru Handika adalah `GPHH-P1`.
 
     {% aside type="tip" %}
 
-    Untuk proyek yang menggunakan banyak perangkat, gunakan `Site ID` yang sama
-    untuk lokasi yang identik. Ini memudahkan pencocokan catatan lokasi dan
-    kegiatan ketika diimpor ke perangkat lain.
+    Untuk proyek yang menggunakan banyak perangkat, gunakan `ID lokasi` yang
+    sama untuk lokasi yang identik. Ini memudahkan pencocokan catatan lokasi dan
+    kegiatan yang dipertukarkan ketika diimpor ke perangkat proyek lain.
 
     {% /aside %}
 
-4. Tambahkan Pemimpin Lokasi {% ref id="C" /%}
-    
-    Jika ini adalah kamp lapangan, Anda dapat memasukkan nama pemimpin tim. Jika ini adalah jalur jebakan, Anda dapat menunjuk seseorang yang bertanggung jawab atas jalur jebakan tersebut sebagai pemimpin lokasi.
+4. Tambahkan `Pemimpin situs` {% ref id="C" /%}
 
-5. Tambahkan tipe lokasi {% ref id="C" /%}
+    Jika ini adalah kamp lapangan, Anda dapat memasukkan nama pemimpin tim. Jika ini adalah jalur perangkap, Anda dapat menunjuk orang yang bertanggung jawab atas jalur perangkap tersebut sebagai pemimpin lokasi.
 
-    Tipe lokasi membantu mengategorikan lokasi berdasarkan karakteristik atau
-    kegunaannya. Pilih nilai dari daftar tipe yang dikonfigurasi untuk proyek.
+5. Tambahkan `Jenis situs` {% ref id="C" /%}
+
+    Jenis lokasi mengategorikan lokasi berdasarkan karakteristik atau
+    kegunaannya. Pilih nilai dari daftar jenis lokasi yang dikonfigurasi untuk
+    proyek.
 
 6. Isi detail geografi {% ref id="D" /%}
 
-    Kami merekomendasikan untuk mengikuti konvensi museum Anda untuk menulis lokalitas dan keterangan yang tepat.
+    Mulailah dengan `Cari lokalitas yang ada`. Fitur ini mencocokkan ketikan
+    Anda dengan setiap lokalitas yang sudah tersimpan di proyek, dan memilih
+    salah satu saran akan mengisi seluruh hierarki geografi sekaligus. Setiap
+    kolom juga menyarankan nilai yang pernah dicatat untuk kolom tersebut,
+    sehingga negara atau provinsi yang pernah Anda ketik muncul kembali sebagai
+    pilihan.
+
+    Lokalitas disimpan satu kali dan dipakai bersama antarlokasi, sehingga
+    memakai ulang lokalitas tersimpan mencegah terbentuknya catatan tempat yang
+    nyaris ganda. Kolom geografi yang ditampilkan dapat diatur di Pengaturan.
+
+    Kami merekomendasikan untuk mengikuti konvensi museum Anda dalam menulis lokalitas tepat dan keterangan.
 
     {% aside type="tip" title="Menulis keterangan" %}
 
-    Jika lokasi tersebut adalah jalur jebakan, praktik yang baik adalah menjelaskan bagaimana jalur jebakan tersebut dijalankan. 
+    Jika lokasi tersebut adalah jalur perangkap, praktik yang baik adalah menjelaskan bagaimana jalur perangkap tersebut dijalankan.
 
     Contoh:
 
     ```text
-    Jalur jebakan membentang dari Shelter I ke Shelter IV di sepanjang jalan setapak di antara dua lokasi perkemahan.
+    Jalur perangkap membentang dari Shelter I ke Shelter IV di sepanjang jalan setapak di antara dua lokasi perkemahan.
     ```
 
     {% /aside %}
 
 7. Isi informasi habitat
 
-    - Tipe: Jenis habitat: perkebunan, hutan hujan dataran rendah, hutan pegunungan atas, dll.
-    - Kondisi: Kondisi habitat: terganggu, tidak terganggu, gangguan minimal, dll.
-    - Deskripsi: Deskripsi singkat tentang habitat. Contoh:
+    - Jenis: jenis habitat, dipilih dari daftar jenis habitat di Pengaturan:
+      perkebunan, hutan hujan dataran rendah, hutan pegunungan atas, dll.
+    - Kondisi: kondisi habitat: terganggu, tidak terganggu, gangguan minimal, dll.
+    - `Tutupan kanopi`: tutupan kanopi di lokasi.
+    - Deskripsi: deskripsi singkat tentang habitat. Contoh:
 
       ```text
       Didominasi oleh pohon ek. Tanah sebagian besar tertutup oleh pakis, jahe-jahean, dan bibit pohon ek.
@@ -95,42 +121,60 @@ sidebar:
 
 ## Informasi lokasi
 
-Formulir lokasi mencatat tempat dan orang yang bertanggung jawab:
+Formulir lokasi mencatat tempat dan orang yang bertanggung jawab atasnya:
 
-- `Site ID`: pengenal unik dalam proyek yang digunakan oleh kegiatan dan catatan
-  yang dipertukarkan.
-- `Site leader`: orang yang bertanggung jawab atas kamp, jalur jebakan, atau
-  lokasi lainnya.
-- `Site type`: kategori lokasi yang telah dikonfigurasi.
-- Lokalitas dan catatan: teks lokalitas yang tepat serta keterangan penggunaan
-  lokasi.
-- Tipe, kondisi, dan deskripsi habitat: lingkungan yang diamati di lokasi.
+- `ID lokasi`: pengenal yang digunakan oleh kegiatan dan catatan yang
+  dipertukarkan. Hingga 40 huruf, angka, `-`, atau `_`, dalam huruf kapital.
+  Pastikan unik; NAHPU tidak memeriksanya.
+- `Pemimpin situs`: orang yang bertanggung jawab atas kamp, jalur perangkap,
+  atau lokasi lainnya.
+- `Jenis situs`: kategori lokasi yang telah dikonfigurasi.
+- Geografi: `Negara`, `Gugus pulau`, `Provinsi/Negara bagian`,
+  `Kabupaten/Distrik`, dan `Kotamadya/Kota/Desa`, dipakai bersama oleh
+  lokasi-lokasi yang mencatat tempat yang sama.
+- `Lokalitas tepat` dan `Catatan`: nama tempat spesifik di bawah tingkat
+  kotamadya, serta keterangan tentang cara lokasi digunakan atau dijalankan.
+- Jenis, kondisi, deskripsi habitat, dan `Tutupan kanopi`: lingkungan yang
+  diamati di lokasi.
+
+Tab kedua pada panel lokasi memuat data terkait, dan lokasi juga dapat memiliki
+media.
 
 ## Mengelola lokasi
 
-Buka menu tiga titik pada halaman lokasi untuk menggunakan tindakan berikut:
+Buka menu tiga titik pada halaman lokasi untuk tindakan berikut:
 
-- `Edit site`: memperbarui lokasi dan koordinatnya.
-- `Duplicate site`: menyalin rincian ke catatan baru dengan ID dan koordinat
-  kosong.
-- `Show QR`: menampilkan catatan untuk dipindai perangkat seluler lain.
-- `Export site`: menyimpan catatan sebagai JSON.
-- `Scan QR`: membuat atau mengganti lokasi dari kode QR.
-- `Import site`: membuat atau mengganti lokasi dari catatan JSON yang diekspor.
-- `Delete record`: menghapus lokasi saat ini. Lokasi tidak dapat dihapus selama
-  masih digunakan oleh kegiatan.
-- `Delete all records`: menghapus semua lokasi dalam proyek. Hapus kegiatan
-  yang merujuk lokasi terlebih dahulu.
+- `Buat situs`: membuat catatan lokasi baru.
+- `Duplikat situs`: menyalin rincian lokasi ke catatan baru dengan ID dan
+  koordinat kosong.
+- `Salin dari proyek…`: menyalin informasi terpilih dari sebuah lokasi di proyek
+  lain ke lokasi kosong saat ini.
+- `Urutkan catatan`: memilih kolom dan arah yang dipakai untuk mengurutkan
+  daftar lokasi.
+- `Tampilkan QR`: menampilkan catatan lokasi agar dipindai perangkat seluler lain.
+- `Ekspor situs`: menyimpan catatan lokasi sebagai berkas JSON. Berkas ini dapat
+    diimpor di perangkat lain atau dibagikan kepada anggota tim lain.
+    {% aside type="tip" %}
+    Gunakan opsi ini untuk catatan lokasi yang besar atau untuk mengimpor lokasi ke perangkat lain tanpa akses kamera. Anda kemudian dapat memindahkan berkas ke perangkat lain dan mengimpornya di sana.
+    {% /aside %}
+- `Pindai QR`: membuat atau mengganti lokasi dari kode QR lokasi. Tersedia pada
+  perangkat dengan pemindai kamera (Android, iOS, macOS, dan web).
+- `Impor situs`: membuat atau mengganti lokasi dari catatan JSON hasil ekspor.
+- `Hapus catatan`: menghapus lokasi saat ini. Lokasi tidak dapat dihapus selama
+  masih dirujuk oleh kegiatan.
+- `Hapus semua catatan`: menghapus semua lokasi dalam proyek aktif. Kegiatan
+  yang merujuk lokasi tersebut harus dihapus terlebih dahulu.
 
-Saat mengimpor lokasi, pilih apakah catatan membuat lokasi baru atau memperbarui
-lokasi yang ada. Periksa kembali personel dan koordinat yang terkait.
+Saat mengimpor lokasi, pilih apakah catatan yang diimpor membuat lokasi baru
+atau memperbarui lokasi yang ada. Periksa kembali personel dan koordinat yang
+tertaut setelah impor.
 
 ## Menyalin data lokasi dari proyek lain
 
-Gunakan `Copy from project ...` bila sebuah lokasi pada proyek lain memuat
+Gunakan `Salin dari proyek…` bila sebuah lokasi pada proyek lain memuat
 informasi yang ingin Anda pakai ulang di proyek saat ini. Tindakan ini mengisi
-lokasi yang sedang dibuka; tindakan ini tidak membuat lokasi baru dan tidak
-mengubah proyek sumbernya.
+lokasi saat ini; tindakan ini tidak membuat lokasi baru dan tidak mengubah
+proyek sumbernya.
 
 Lokasi saat ini harus kosong sebelum Anda mulai. Lokasi yang sudah berisi
 informasi, koordinat, media, atau data tertaut tidak dapat menerima data
@@ -142,7 +186,7 @@ yang berbeda.
 1. Buka lokasi yang akan menerima informasi salinan. Pastikan catatan lokasi itu
    masih kosong.
 
-2. Buka menu tiga titik lalu pilih `Copy from project ...`.
+2. Buka menu tiga titik lalu pilih `Salin dari proyek…`.
 
 3. Pilih proyek sumber berdasarkan namanya, lalu pilih salah satu lokasinya.
 
@@ -151,16 +195,16 @@ yang berbeda.
    - Site ID
    - Site leader
    - Site type
-   - Kolom geografi, meliputi negara, gugus pulau, negara bagian/provinsi,
-     kabupaten/paroki/distrik, kotamadya/kota, dan lokalitas rinci
+   - Kolom geografi, meliputi negara, gugus pulau, provinsi/negara bagian,
+     kabupaten/distrik, kotamadya/kota/desa, dan lokalitas tepat
    - Remarks
-   - Tipe, kondisi, dan deskripsi habitat
+   - Jenis, kondisi, deskripsi habitat, dan tutupan kanopi
    - Koordinat
 
    Kolom yang tidak berisi data pada lokasi sumber tidak dapat dipilih. Memilih
    `Coordinates` akan menyalin seluruh koordinat milik lokasi sumber terpilih.
 
-5. Pilih `Copy` untuk mengisi lokasi saat ini.
+5. Pilih `Salin` untuk mengisi lokasi saat ini.
 
 {% /steps %}
 
@@ -169,25 +213,34 @@ koordinat; tindakan ini tidak menyalin media lokasi, tautan data terkait,
 catatan situs fosil, kegiatan pengumpulan, atau catatan lain yang tertaut pada
 lokasi sumber.
 
+{% aside type="tip" title="Jika penyalinan tidak tersedia" %}
+
+Jika NAHPU melaporkan bahwa diperlukan beberapa proyek, buat atau impor proyek
+lain terlebih dahulu. Jika NAHPU melaporkan bahwa lokasi tidak kosong, buat
+lokasi baru atau hapus informasi, koordinat, media, dan data tertaut pada lokasi
+yang ada sebelum mencoba lagi.
+
+{% /aside %}
+
 ## Menambahkan koordinat {% #adding-coordinates %}
 
 Satu lokasi dapat memiliki beberapa catatan koordinat untuk ujung jalur
-jebakan, titik pengumpulan yang berbeda, atau titik lain yang termasuk dalam
-lokasi yang sama. Anda dapat menambahkan koordinat secara manual, menggunakan
-GPS perangkat, atau mengimpor titik dari file GIS/GPS.
+perangkap, titik pengumpulan yang berbeda, atau titik lain yang termasuk dalam
+lokasi yang sama. Tambahkan koordinat secara manual, gunakan GPS perangkat, atau
+impor titik dari berkas GIS/GPS.
 
 ### Menggunakan GPS perangkat saat menambahkan koordinat {% #use-device-gps-while-adding-a-coordinate %}
 
 {% steps %}
 
-1. Pada halaman lokasi, buka panel koordinat lalu ketuk/klik `Add coordinate` {% ref id="E" /%}.
+1. Pada halaman lokasi, buka panel koordinat lalu ketuk/klik `Tambah koordinat` {% ref id="E" /%}.
 
-2. Pada halaman `Add coordinates`, gunakan kartu `Device GPS` lalu ketuk/klik
-   tombol lokasinya.
+2. Pada halaman `Tambah koordinat`, gunakan kartu `GPS perangkat` lalu ketuk/klik
+   `Dapatkan lokasi`.
 
 3. NAHPU mengisi lintang desimal, bujur desimal, ketinggian, dan ketidakpastian
-   GPS jika disediakan oleh sistem operasi. Periksa nilainya, isi bidang lain,
-   lalu simpan koordinat.
+   GPS jika disediakan oleh sistem operasi. Periksa nilainya, lengkapi kolom
+   lainnya, lalu pilih `Tambah`.
 
     Masukkan nama unit GPS secara terpisah menggunakan model perangkat yang
     tepat, misalnya `iPad Mini 4`.
@@ -198,49 +251,52 @@ GPS perangkat, atau mengimpor titik dari file GIS/GPS.
 
 {% steps %}
 
-1. Pada halaman lokasi di panel koordinat, ketuk/klik pada tombol `Tambah koordinat`.
+1. Pada halaman lokasi di panel koordinat, ketuk/klik tombol `Tambah koordinat`.
 
 2. Masukkan nama koordinat.
 
-    Buat nama yang singkat dan informatif. Anda dapat menggunakan bidang `Catatan` untuk menambahkan informasi tambahan tentang koordinat tersebut. 
+    Buat nama yang singkat dan informatif. Anda dapat menggunakan kolom `Catatan` untuk menambahkan informasi tambahan tentang koordinat tersebut.
 
     {% aside type="tip" %}
 
     Kami merekomendasikan pembuatan konvensi nama koordinat untuk tim Anda. Contoh konvensi koordinat untuk mamalogi:
 
-      - `{siteID}S` untuk koordinat yang diambil di awal jalur jebakan, seperti `KMHH-L1S`.
-      - `{siteID}C` untuk koordinat yang diambil di tengah jalur jebakan.
-      - `{siteID}E` untuk koordinat yang diambil di akhir jalur jebakan, seperti `KMHH-L1E`.
-      - Jika jalur jebakan melampaui titik awal pertama, koordinat pada awal baru diberi akhiran `{nomor}`. Contoh, `KMHH-L1S2` untuk ekstensi pertama, `KMHH-L1S3` untuk ekstensi berikutnya, dan seterusnya hingga jalur jebakan sepenuhnya dipindahkan.
-      - Jika jalur jebakan melampaui titik akhir pertama, koordinat pada akhir baru diberi akhiran `{nomor}`. Contoh, `KMHH-L1E2` untuk ekstensi pertama, dan dilanjutkan dengan cara yang sama seperti ekstensi garis awal.
+      - `{siteID}S` untuk koordinat yang diambil di awal jalur perangkap, seperti `KMHH-L1S`.
+      - `{siteID}C` untuk koordinat yang diambil di tengah jalur perangkap.
+      - `{siteID}E` untuk koordinat yang diambil di akhir jalur perangkap, seperti `KMHH-L1E`.
+      - Jika jalur perangkap diperpanjang melampaui titik awal pertama, koordinat pada awal baru diberi akhiran `{nomor}`. Contoh, `KMHH-L1S2` untuk perpanjangan pertama, `KMHH-L1S3` untuk perpanjangan berikutnya, dan seterusnya hingga jalur perangkap sepenuhnya dipindahkan.
+      - Jika jalur perangkap diperpanjang melampaui titik akhir pertama, koordinat pada akhir baru diberi akhiran `{nomor}`. Contoh, `KMHH-L1E2` untuk perpanjangan pertama, lalu lanjutkan dengan cara yang sama seperti perpanjangan titik awal.
 
     {% /aside %}
 
-3. Pilih format dan masukkan nilai koordinat.
+3. Pilih format koordinat dan masukkan nilainya.
 
     NAHPU menerima derajat desimal (DD), derajat dan menit desimal (DDM),
     derajat-menit-detik (DMS), serta satu nilai UTM dalam format
-    `zona hemisfer timur utara`. UTM menggunakan WGS84.
+    `zone hemisphere easting northing`. Masukan UTM menggunakan WGS84. Arah
+    lintang dan bujur harus sesuai dengan sumbunya, dan nilai desimal hasil
+    konversi harus berada dalam rentang lintang dan bujur yang valid.
 
-    Untuk DDM dan DMS, masukkan derajat, menit, dan detik pada field angka yang
-    terpisah. Kemudian pilih N/S untuk lintang dan E/W untuk bujur. NAHPU
-    menambahkan simbol koordinat dan menggabungkan bagian tersebut sebagai
-    nilai lintang dan bujur verbatim Darwin Core.
+    Untuk DDM dan DMS, masukkan derajat, menit, dan detik pada kolom angka yang
+    terpisah, lalu pilih N/S untuk lintang dan E/W untuk bujur. NAHPU
+    menambahkan simbol koordinat dan menggabungkan bagian-bagiannya untuk nilai
+    lintang dan bujur verbatim Darwin Core.
 
-    NAHPU menyimpan nilai desimal untuk perhitungan serta nilai gabungan dan
-    sistem koordinat untuk field verbatim. Jika nilai koordinat sudah diisi,
-    perubahan format meminta konfirmasi sebelum menghapusnya. Menyimpan
-    koordinat DD menghapus nilai verbatim lama.
+    NAHPU menyimpan lintang dan bujur desimal untuk perhitungan dan juga
+    menyimpan nilai gabungan serta sistem koordinat untuk kolom verbatim Darwin
+    Core. Jika nilai koordinat sudah diisi, mengganti format akan meminta
+    konfirmasi sebelum mengosongkannya. Memilih DD akan menghapus nilai
+    koordinat verbatim lama setelah koordinat disimpan.
 
-4. Tambahkan ketinggian (elevation) dalam meter.
+4. Tambahkan ketinggian dalam meter.
 
 5. Pilih datum.
 
-    Datum default adalah WGS84. Periksa pengaturan GPS Anda untuk datum yang tepat dari koordinat Anda.
+    Datum bawaan adalah WGS84. Periksa pengaturan GPS Anda untuk datum yang tepat dari koordinat Anda.
 
-6. Masukkan nilai ketidakpastian (uncertainty) dalam meter.
+6. Masukkan nilai ketidakpastian dalam meter.
 
-    Perhatikan ketidakpastian GPS Anda. Beberapa GPS lama mungkin tidak mencatat nomor tersebut. Praktik yang baik adalah mencatat ketidakpastian jika Anda tidak membawa perangkat NAHPU ke lokasi koordinat.
+    Perhatikan ketidakpastian GPS Anda. Beberapa GPS lama mungkin tidak mencatat angka tersebut. Praktik yang baik adalah mencatat ketidakpastian jika Anda tidak membawa perangkat NAHPU ke lokasi koordinat.
 
 7. Masukkan nama GPS yang Anda gunakan.
 
@@ -252,41 +308,44 @@ GPS perangkat, atau mengimpor titik dari file GIS/GPS.
 
 {% /steps %}
 
-### Mengimpor koordinat dari file {% #import-coordinates-from-a-file %}
+### Mengimpor koordinat dari berkas {% #import-coordinates-from-a-file %}
 
-Gunakan `Add coordinate` > `Import` {% ref id="F" /%} > `Select coordinate file` {% ref id="G" /%} untuk CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile terkompresi, atau GPX.
+Gunakan `Tambah koordinat` > `Impor` {% ref id="F" /%} > `Pilih berkas koordinat` {% ref id="G" /%} untuk CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile terkompresi, atau GPX.
 
-Untuk berkas tabel, `Match columns` memerlukan `Latitude` dan `Longitude` dalam derajat desimal. Bidang opsional meliputi `Name / ID`, `Elevation (m)`, `GPS unit`, dan `Notes`. Tinjau pemetaan yang disarankan, biarkan bidang yang tidak diperlukan sebagai `Not included`, lalu pilih `Review coordinates`. Gunakan `Edit column mapping` untuk memperbaiki pratinjau yang tidak sesuai.
+Untuk berkas tabel, `Match columns` memerlukan `Latitude` dan `Longitude` dalam derajat desimal. Kolom opsional meliputi `Name / ID`, `Elevation (m)`, `GPS unit`, dan `Notes`. Tinjau pemetaan yang disimpulkan, biarkan kolom yang tidak diperlukan sebagai `Tidak disertakan`, lalu pilih `Tinjau koordinat`. Gunakan `Sunting pemetaan kolom` untuk memperbaiki pratinjau yang tidak sesuai.
 
-Tinjau peringatan dan posisi peta. Gunakan kotak centang, `Select all`, atau `Clear all`, lalu `Add N selected` {% ref id="H" /%} untuk menambahkan titik ke lokasi aktif. Periksa titik tersimpan sebelum menggunakannya untuk spesimen.
+Tinjau peringatan dan posisi yang dipetakan. Gunakan kotak centang satu per satu, `Pilih semua`, atau `Hapus semua`, lalu `Tambah N yang dipilih` {% ref id="H" /%} untuk menambahkan titik terpilih ke lokasi saat ini. Periksa titik yang tersimpan sebelum menggunakannya untuk spesimen.
 
-Posisi impor menggunakan WGS84. Pastikan datum sumber; alur ini tidak mengonversi datum lain ke WGS84. Elevasi menggunakan meter. Impor tidak menyediakan ketidakpastian koordinat; tinjau dan tambahkan dari sumber jika diketahui. Berkas tabel dapat menyediakan unit GPS, sedangkan impor GIS tidak.
+Posisi yang diimpor menggunakan WGS84. Pastikan datum sumber sebelum mengimpor; alur ini tidak mengonversi datum lain ke WGS84. Ketinggian dalam meter. Impor ini tidak menyediakan ketidakpastian koordinat; tinjau dan tambahkan dari sumbernya jika diketahui. Berkas tabel dapat menyediakan unit GPS, sedangkan impor GIS tidak.
 
-Hanya geometri titik yang diimpor. Geometri yang tidak didukung dan baris tidak valid dilewati dengan peringatan; rute dan trek GPX diabaikan. Jika tidak ada titik valid, aplikasi menampilkan kesalahan tanpa membuat koordinat.
+Hanya geometri titik yang diimpor. Geometri yang tidak didukung dan baris yang tidak valid dilewati dengan peringatan; rute dan trek GPX diabaikan. Jika tidak ada titik yang valid, aplikasi menampilkan kesalahan alih-alih membuat koordinat baru.
 
 ### Mengelola dan mengekspor koordinat
 
-Tombol `Manage` pada panel koordinat lokasi membuka semua koordinat proyek.
-Anda dapat memfilter berdasarkan lokasi, memilih titik tertentu atau semua titik
-yang terlihat, memusatkan peta pada titik, dan membuka peta dalam layar penuh.
+Tombol `Kelola` pada panel koordinat lokasi membuka semua koordinat proyek.
+Anda dapat menyaring daftar berdasarkan lokasi, memilih titik tertentu atau
+semua titik yang terlihat, memusatkan peta pada suatu titik, dan membuka peta
+dalam layar penuh.
 
 {% steps %}
 
-1. Buka panel koordinat suatu lokasi dan ketuk/klik `Manage`.
+1. Buka panel koordinat suatu lokasi dan ketuk/klik `Kelola`.
 
-2. Filter berdasarkan lokasi jika diperlukan, lalu pilih koordinat yang akan
+2. Saring berdasarkan lokasi jika diperlukan, lalu pilih koordinat yang akan
    diekspor.
 
-3. Ketuk/klik `Export coordinates (N)`.
+3. Ketuk/klik `Ekspor koordinat (N)`.
 
-4. Pilih `GeoJSON (.geojson)`, `KML (.kml)`, atau `Shapefile bundle (.zip)`.
-   Masukkan nama file, pilih direktori tujuan, lalu pilih `Export`.
+4. Pilih `GeoJSON (.geojson)`, `KML (.kml)`, atau `Bundel Shapefile (.zip)`.
+   Masukkan nama berkas, pilih direktori tujuan, lalu pilih `Ekspor`.
 
-5. Setelah file dibuat, gunakan `Share` pada perangkat yang mendukung berbagi.
+5. Setelah berkas dibuat, gunakan `Bagikan` pada perangkat yang mendukung berbagi.
 
 {% /steps %}
 
 Setiap koordinat yang diekspor harus memiliki lintang dan bujur desimal yang
-valid. Ekspor GIS mencakup nama, catatan, lintang dan bujur desimal WGS84, serta
-ketinggian jika tersedia. Ekspor ini berbeda dari `Export records`, paket
-proyek, dan cadangan database.
+valid. Ekspor GIS mencakup nama koordinat, catatan, lintang dan bujur desimal
+WGS84, serta ketinggian jika tersedia. Ekspor koordinat terpisah dari
+`Ekspor catatan`, paket proyek, dan cadangan basis data; gunakan opsi tersebut
+bila Anda memerlukan catatan berbentuk tabel atau salinan proyek NAHPU yang
+dapat dipulihkan.
