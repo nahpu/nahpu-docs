@@ -9,20 +9,19 @@ Panduan ini memperkenalkan NAHPU dan menyediakan ruang aman untuk berlatih sebel
 
 ## Konsep utama
 
-{% recordmap label="Bagaimana katalog lapangan kertas dipetakan ke NAHPU: proyek memuat narasi, lokasi, kegiatan, dan spesimen, sedangkan personel dan takson dipakai bersama antarproyek." hint="Pilih catatan atau katalog kertas untuk membandingkan cara keduanya menyimpan data lapangan." %}
-{% recordnode id="paper" title="Katalog kertas" summary="Buku catatan & buku besar" detail="Menggabungkan halaman jurnal tulisan tangan dengan buku spesimen bernomor yang menulis ulang lokalitas, tanggal, dan kolektor di setiap baris. NAHPU mencatat setiap lokasi dan sesi pengambilan sampel cukup sekali lalu menautkan spesimen ke sana." paper="Katalog kertas: satu buku jilid tempat menyalin lokasi dan tanggal yang sama di tiap baris memakan waktu serta rawan salah salin." /%}
-{% recordnode id="project" title="Proyek" summary="Satu lingkup kerja" detail="Mengelompokkan ekspedisi, program pemantauan, atau pekerjaan preparasi laboratorium. Sebagian besar layar dan ekspor harian bekerja pada proyek aktif." paper="Katalog kertas: satu jilid buku katalog lapangan atau map ekspedisi." /%}
-{% recordnode id="narrative" title="Narasi" summary="Jurnal lapangan" detail="Catatan bertanggal yang terkait dengan lokasi dan penulis untuk pengamatan harian, konteks habitat, serta catatan yang tidak muat di bidang spesimen atau kegiatan." paper="Katalog kertas: bagian jurnal naratif tulisan tangan yang ditulis berdampingan dengan buku spesimen." /%}
-{% recordnode id="site" title="Lokasi" summary="Tempat kunjungan ulang" detail="Tempat yang dapat dikunjungi kembali, seperti kamp atau jalur perangkap. Catat geografi, habitat, dan satu atau beberapa koordinat cukup sekali untuk dipakai ulang." paper="Katalog kertas: tajuk lokalitas yang ditulis ulang di bagian atas halaman atau diulang dengan tanda kutip di tiap baris." /%}
-{% recordnode id="event" title="Kegiatan" summary="Kerja di satu lokasi" detail="Satu sesi pengambilan sampel di suatu lokasi selama periode tertentu: aktivitas, metode koleksi, peserta, upaya, dan kondisi. Satu lokasi dapat memiliki beberapa kegiatan." paper="Katalog kertas: tanggal, kolektor, upaya perangkap, dan cuaca yang diulang di kolom buku atau tersebar di jurnal." /%}
-{% recordnode id="specimen" title="Spesimen" summary="Tertaut ke kegiatan" detail="Tertaut ke satu kegiatan yang menyediakan lokasi dan konteks pengambilan sampelnya. Membawa Field ID dari label fisik serta UUID internal. Beberapa spesimen dapat berbagi satu kegiatan." paper="Katalog kertas: satu baris bernomor pada buku spesimen yang dipasangkan dengan label fisik tulisan tangan." /%}
-{% recordnode id="personnel" title="Personel" summary="Dipakai bersama" detail="Data orang disimpan di basis data instalasi dan dipakai bersama antarproyek. Mengedit seseorang memperbarui semua proyek yang merujuknya." paper="Katalog kertas: nama kolektor, inisial, dan seri nomor pribadi yang ditulis ulang di setiap buku catatan." /%}
-{% recordnode id="taxa" title="Takson" summary="Dipakai bersama" detail="Registri takson dipakai bersama antarproyek. Untuk memperbaiki satu identifikasi, ubah catatan spesimennya, bukan takson bersama." paper="Katalog kertas: nama ilmiah yang ditulis di tiap baris lalu dicoret tinta saat diidentifikasi ulang." /%}
+{% recordmap label="Cara NAHPU menata data lapangan: proyek memuat narasi, lokasi, kegiatan, dan spesimen, sedangkan personel dan takson dipakai bersama antarproyek." hint="Pilih catatan untuk melihat isinya." %}
+{% recordnode id="project" title="Proyek" summary="Satu lingkup kerja" detail="Mengelompokkan ekspedisi, program pemantauan, atau pekerjaan preparasi laboratorium. Sebagian besar layar dan ekspor harian bekerja pada proyek aktif." /%}
+{% recordnode id="narrative" title="Narasi" summary="Jurnal lapangan" detail="Catatan bertanggal yang terkait dengan lokasi dan penulis untuk pengamatan harian, konteks habitat, serta catatan yang tidak muat di bidang spesimen atau kegiatan." /%}
+{% recordnode id="site" title="Lokasi" summary="Tempat kunjungan ulang" detail="Tempat yang dapat dikunjungi kembali, seperti kamp atau jalur perangkap. Catat geografi, habitat, dan satu atau beberapa koordinat cukup sekali untuk dipakai ulang." /%}
+{% recordnode id="event" title="Kegiatan" summary="Kerja di satu lokasi" detail="Satu sesi pengambilan sampel di suatu lokasi selama periode tertentu: aktivitas, metode koleksi, peserta, upaya, dan kondisi. Satu lokasi dapat memiliki beberapa kegiatan." /%}
+{% recordnode id="specimen" title="Spesimen" summary="Tertaut ke kegiatan" detail="Tertaut ke satu kegiatan yang menyediakan lokasi dan konteks pengambilan sampelnya. Membawa Field ID dari label fisik serta UUID internal. Beberapa spesimen dapat berbagi satu kegiatan." /%}
+{% recordnode id="personnel" title="Personel" summary="Dipakai bersama" detail="Data orang disimpan di basis data instalasi dan dipakai bersama antarproyek. Mengedit seseorang memperbarui semua proyek yang merujuknya." /%}
+{% recordnode id="taxa" title="Takson" summary="Dipakai bersama" detail="Registri takson dipakai bersama antarproyek. Untuk memperbaiki satu identifikasi, ubah catatan spesimennya, bukan takson bersama." /%}
 {% /recordmap %}
 
-### Dari katalog kertas ke catatan tertaut
+### Catatan tertaut
 
-Pada katalog lapangan kertas, Anda menulis ulang lokalitas, tanggal, dan kolektor yang sama di setiap baris buku. NAHPU memisahkan lapisan tersebut sehingga setiap konteks cukup dicatat sekali:
+NAHPU memisahkan data lapangan menjadi lapisan yang saling tertaut sehingga setiap konteks cukup dicatat sekali:
 
 - **Proyek** menetapkan batas pengelolaan dan ekspor untuk satu ekspedisi, program pemantauan, atau batch laboratorium.
 - **Lokasi → Kegiatan → Spesimen** menghubungkan tempat Anda bekerja (`Site`), waktu dan cara pengambilan sampel (`Event`), serta apa yang dikumpulkan (`Specimen`). Gunakan satu lokasi untuk jalur perangkap yang dikunjungi berulang, kegiatan terpisah untuk tiap tanggal atau sesi, lalu tautkan semua spesimen dari sesi itu ke kegiatannya. Pisahkan tanggal pengumpulan lapangan dari tanggal preparasi laboratorium.
@@ -112,7 +111,7 @@ Setiap format ekspor memiliki fungsi berbeda:
 
 ## Periksa pemahaman Anda
 
-Sebelum memulai pekerjaan lapangan atau laboratorium, pastikan Anda dapat menjelaskan bagaimana NAHPU menggantikan kolom berulang pada katalog kertas dengan tautan lokasi–kegiatan–spesimen, menyebutkan mode Field ID proyek Anda, memperbaiki identifikasi satu spesimen tanpa mengubah takson bersama, serta memilih antara berbagi identitas proyek, mentransfer paket proyek, dan mencadangkan basis data.
+Sebelum memulai pekerjaan lapangan atau laboratorium, pastikan Anda dapat menjelaskan bagaimana tautan lokasi–kegiatan–spesimen mencatat setiap konteks cukup sekali, menyebutkan mode Field ID proyek Anda, memperbaiki identifikasi satu spesimen tanpa mengubah takson bersama, serta memilih antara berbagi identitas proyek, mentransfer paket proyek, dan mencadangkan basis data.
 
 - [Atur bidang khusus](/id/how-to-recipes/prepare/configure-custom-fields/)
 - [Jelajahi panduan praktis](/id/how-to-recipes/)
