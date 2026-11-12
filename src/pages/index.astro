@@ -110,42 +110,42 @@ const capabilities = [
     {
         color: "#2f9e7d",
         title: "Digital asset management",
-        desc: "Attach photos, audio, and videos of specimens, habitats, and field notes directly to your collection records.",
+        desc: "Attach photos, audio, and video of specimens, habitats, and field notes to collection records.",
     },
     {
         color: "#3f9fd6",
         title: "Multi-taxon support",
-        desc: "Mix taxa in a single project or separate in multiple projects. Each specimen gets a catalog format tailored to its taxon.",
+        desc: "Keep several taxa in one project or in separate projects. Each specimen uses a catalog format suited to its taxon.",
     },
     {
         color: "#7c72d8",
-        title: "Write a site once, use it everywhere",
-        desc: "Create rich site profiles with unlimited coordinates and reuse them across specimens and events.",
+        title: "Reusable site records",
+        desc: "Create site records with any number of coordinates and reuse them across specimens and events.",
     },
     {
         color: "#e0913a",
         title: "Collecting events",
-        desc: "Document collection date, method, effort, and personnel, then link them to multiple specimens.",
+        desc: "Record collection date, method, effort, and personnel, and link each event to multiple specimens.",
     },
     {
         color: "#3c8fa8",
         title: "Tissue sample management",
-        desc: "Track large sample sets with barcode and QR scanning via the device camera.",
+        desc: "Track large sample sets with barcode and QR code scanning through the device camera.",
     },
     {
         color: "#b07a56",
         title: "Real-time statistics",
-        desc: "Monitor activity to make decision on collecting strategy, avoid collector bias, and prevent over-collection at a glance.",
+        desc: "Summaries of collecting activity help guide collecting strategy, reduce collector bias, and avoid over-collection.",
     },
     {
         color: "#e2685f",
-        title: "Advanced sharing",
-        desc: "Share data with collaborators or bulk import it into a museum database.",
+        title: "Data sharing",
+        desc: "Share records with collaborators or prepare them for bulk import into a museum database.",
     },
     {
         color: "var(--color-golden-grass-500)",
         title: "Open source and open standards",
-        desc: "Built on open-source stacks and data records and exports follow Darwin Core, FAIR principles, and Frictionless Data.",
+        desc: "Built with open-source software. Records and exports follow Darwin Core, the FAIR principles, and Frictionless Data.",
     },
 ];
 
@@ -182,7 +182,7 @@ const funders: Funder[] = [
     {
         kind: "Endowed fund",
         name: "Alfred L. Gardner and Mark S. Hafner Mammalogy Fund",
-        detail: "Additional funding for this project managed at LSU Museum of Natural Science.",
+        detail: "Provided additional funding, managed by the LSU Museum of Natural Science.",
         links: [
             {
                 label: "Visit LSUMNS Mammalogy Fund page",
@@ -206,22 +206,41 @@ const funders: Funder[] = [
 const spreadsheetSteps = [
     {
         title: "Start where the spreadsheet was",
-        desc: "Enter records in NAHPU instead of a sheet and export a tabular file whenever you need one. Everything downstream of the export carries on unchanged.",
+        desc: "Enter records in NAHPU instead of a spreadsheet and export a tabular file when needed. Workflows that use the exported file do not need to change.",
     },
     {
         title: "Associations come with the record",
-        desc: "A specimen already points at its site, collecting event, personnel, parts, and photographs. No lookup formulas, no locality text copied between sheets, no coordinate flips, and no row that quietly refers to the wrong site.",
+        desc: "Each specimen links to its site, collecting event, personnel, parts, and photographs. Lookup formulas and locality text copied between sheets are not needed.",
     },
     {
         title: "One project instead of many sheets",
-        desc: "Sites, specimens, tissue samples, and digital asset records stop living in separate files that drift apart between field seasons. They stay associated in the same catalog.",
+        desc: "Sites, specimens, tissue samples, and digital assets are kept in one catalog rather than in separate files that can diverge between field seasons.",
     },
 ];
+
+const manuscript = {
+    title: "NAHPU: An integrated approach to natural history data acquisition and management in the extended specimen era",
+    authors: "Handika, H., Moncrieff, A., Henderson, C., Dadaian, A., Gordon, C., Canton, R., Chipps, A., Inayah, N., Chornelia, A., Rego, M., Pérez-Amaya, N., Gan, L., Jaiswal, A., Lee, D., Yu, J., Aravind, A., Evangelista, D., Rutledge, S., Elías, D., Troyer, E., Silva de Miranda, G., Vonnahme, L., Shi, B., Nations, J., Del-Rio, G., Thom, G., Porto, A., & Esselstyn, J.",
+    year: 2026,
+    venue: "EcoEvoRxiv",
+    doi: "10.32942/X21M6D",
+};
+
+const manuscriptUrl = `https://doi.org/${manuscript.doi}`;
+
+const bibtex = `@misc{Handika_2026,
+  title = {${manuscript.title}},
+  author = {Handika, Heru and Moncrieff, Andre and Henderson, Cody and Dadaian, Alain and Gordon, Caleb and Canton, Roberta and Chipps, Austin and Inayah, Nurul and Chornelia, Ada and Rego, Marco and P{\\'e}rez-Amaya, Natalia and Gan, Lawrence and Jaiswal, Aakanksha and Lee, Daeun and Yu, Jia and Aravind, Ashmitha and Evangelista, Dante and Rutledge, Samantha and El{\\'i}as, Diego and Troyer, Emily and Silva de Miranda, Gustavo and Vonnahme, Lauren and Shi, Breanna and Nations, Jonathan and Del-Rio, Glaucia and Thom, Gregory and Porto, Arthur and Esselstyn, Jacob},
+  year = {${manuscript.year}},
+  publisher = {${manuscript.venue}},
+  doi = {${manuscript.doi}},
+  url = {${manuscriptUrl}}
+}`;
 ---
 
 <Layout
     title="NAHPU — A digital field catalog for natural history collections"
-    description="Leveraging emerging digital technologies to accelerate biodiversity inventories."
+    description="A cross-platform digital catalog for natural history collections."
     overlayNav
 >
     <!-- Hero ---------------------------------------------------------------->
@@ -245,18 +264,14 @@ const spreadsheetSteps = [
         </p>
 
         <p class={taglineClasses}>
-            Rethinking biodiversity inventories in the digital age
+            Digital catalog for the extended specimen era
         </p>
 
         <p class={heroBodyClasses}>
-            NAHPU is a cross-platform digital field catalog for natural history
-            collections, aimed to accelerate the discovery and documentation of
-            biodiversity. It keeps specimen records and digital assets linked
-            and consistent, minimizing data-entry errors before records move
-            into permanent museum databases. Flexible exports let the exact same
-            records be shared with collaborators and prepared for bulk import
-            into museum databases or for downstream analyses, without
-            re-entering the data.
+            NAHPU is a cross-platform digital catalog for natural history
+            collections. It simplifies recording detailed information in the
+            field while preserving the integrity of the data and its
+            associations.
         </p>
 
         <div class="mt-10 flex flex-wrap justify-center gap-4">
@@ -314,13 +329,14 @@ const spreadsheetSteps = [
             <header class="nh-reveal max-w-3xl">
                 <p class={kickerClasses}>Why it exists</p>
                 <h2 class={sectionTitleClasses}>
-                    Inventories are limited by what gets written down
+                    Biodiversity inventories are limited by what gets written
+                    down
                 </h2>
                 <p class={sectionLeadClasses}>
-                    Field notebooks, camera cards, and spreadsheets rarely
-                    reconcile cleanly once an expedition ends. NAHPU keeps the
-                    record complete and internally consistent from the moment
-                    the specimen is in hand.
+                    Field notebooks, camera cards, and spreadsheets are often
+                    difficult to reconcile after an expedition. NAHPU keeps
+                    records complete and consistent from the time the specimen
+                    is collected.
                 </p>
             </header>
 
@@ -338,15 +354,14 @@ const spreadsheetSteps = [
         <div class={sectionInnerClasses}>
             <header class="nh-reveal max-w-3xl">
                 <p class={kickerClasses}>Inside the catalog</p>
-                <h2 class={sectionTitleClasses}>Example views</h2>
+                <h2 class={sectionTitleClasses}>
+                    Rich features for comprehensive data management
+                </h2>
                 <p class={sectionLeadClasses}>
-                    One project seen from the specimen, site, map, media
-                    library, statistics, narrative, and export interfaces. NAHPU
-                    features a single, unified system to collect as much
-                    information possible. The forest you survey today, may be
-                    gone tomorrow. Not trying to be overly dramatic. It's is a
-                    reality, and one reason natural history works are so
-                    important.
+                    NAHPU provides a single system for recording as much
+                    information as possible during fieldwork. Habitats surveyed
+                    today may change or disappear, and records made at the time
+                    of collection may be the only documentation that remains.
                 </p>
             </header>
 
@@ -370,13 +385,12 @@ const spreadsheetSteps = [
             <header class="nh-reveal max-w-3xl">
                 <p class={kickerClasses}>Catalog formats</p>
                 <h2 class={sectionTitleClasses}>
-                    Fields that match the discipline
+                    A growing list of supported disciplines and specimen types
                 </h2>
                 <p class={sectionLeadClasses}>
-                    Each format is fine-tuned for its discipline, and a single
-                    project can hold more than one format. You can add custom
-                    fields to any format, and the app will remember them for the
-                    next specimen of that taxon.
+                    Each format includes fields specific to its discipline, and
+                    a single project can use more than one format. Custom
+                    fields can be added to any format.
                 </p>
             </header>
 
@@ -396,11 +410,10 @@ const spreadsheetSteps = [
                 <p class={kickerClasses}>From the field</p>
                 <h2 class={sectionTitleClasses}>Where every record begins</h2>
                 <p class={sectionLeadClasses}>
-                    Behind each catalog number is an animal, a locality, and a
-                    night of fieldwork. NAHPU keeps the photographs with the
-                    specimen data they belong to. You can also record audio and
-                    videos directly in the app, and attach them to the record
-                    they document.
+                    Each catalog number represents an organism, a locality, and
+                    a collecting event. NAHPU stores photographs with the
+                    specimen records they document. Audio and video can also be
+                    recorded in the app and attached to the relevant record.
                 </p>
             </header>
 
@@ -457,10 +470,9 @@ const spreadsheetSteps = [
                     Or start as a spreadsheet replacement
                 </h2>
                 <p class={sectionLeadClasses}>
-                    Moving your collection workflows to a digital catalog does
-                    not have to be all or nothing. If you are not ready to
-                    convert everything, use NAHPU where the spreadsheet used to
-                    sit and keep the associations it gives you for free.
+                    Moving collection workflows to a digital catalog can happen
+                    in stages. NAHPU can replace the spreadsheet alone while
+                    still keeping the associations between records.
                 </p>
             </header>
 
@@ -491,17 +503,15 @@ const spreadsheetSteps = [
             <header class="nh-reveal max-w-3xl">
                 <p class={kickerClasses}>Collaboration</p>
                 <h2 class={sectionTitleClasses}>
-                    We are the users of our own software
+                    Developed by field researchers
                 </h2>
                 <p class={sectionLeadClasses}>
-                    NAHPU is built by the people who carry it into the field.
-                    From the humidity, unpredictable weather, and lack of
-                    electricity in the mountains of Southeast Asia to the tall
-                    Andes and the riverine habitat deep in the Amazon in South
-                    America, and the dry climate of the North American desert,
-                    we poured this experience into building NAHPU. It is
-                    designed for fieldwork of any complexity across humid and
-                    cold, to hot and dry climates, and everything in between.
+                    NAHPU is developed by researchers who use it in their own
+                    fieldwork, including montane forests in Southeast Asia, the
+                    Andes, the Amazon basin, and deserts in North America. It is
+                    designed for a range of field conditions, from humid and
+                    cold to hot and dry, with unpredictable weather and limited
+                    access to electricity.
                 </p>
             </header>
 
@@ -510,21 +520,21 @@ const spreadsheetSteps = [
                     <div>
                         <p class={kickerClasses}>Interdisciplinary by design</p>
                         <h3 class="mt-3 text-xl font-semibold text-silver-tree-900 sm:text-2xl dark:text-silver-tree-50">
-                            Field experience meets software industry practice
+                            Field research and software engineering
                         </h3>
                         <p class="mt-3 max-w-2xl text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
-                            Through collaboration with the{" "}
+                            NAHPU is developed in collaboration with the{" "}
                             <a
                                 class={linkClasses}
                                 href="https://sites.gatech.edu/human-augmented-analytics-group/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Human Augmented Analytics Group
+                                Human-Augmented Analytics Group
                             </a>
-                            , we brought software industry experience to NAHPU,
-                            and develop it into interdisciplinary research and
-                            training project with real-world application.
+                            , which contributes software engineering practice
+                            and makes the project an interdisciplinary research
+                            and training effort.
                         </p>
                     </div>
 
@@ -536,6 +546,63 @@ const spreadsheetSteps = [
         </div>
     </section>
 
+    <!-- Manuscript ---------------------------------------------------------->
+    <section
+        id="cite"
+        class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
+    >
+        <div class={sectionInnerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Publication</p>
+                <h2 class={sectionTitleClasses}>Read and cite the manuscript</h2>
+                <p class={sectionLeadClasses}>
+                    The manuscript describes the design and features of NAHPU
+                    and its testing in the field, including 115 days on Sumatra
+                    without on-site electricity. If you use NAHPU in your
+                    research, please cite the manuscript. Citations document
+                    how NAHPU is used and support its continued development.
+                </p>
+            </header>
+
+            <figure class="nh-reveal mt-10 m-0 rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/70 p-6 sm:p-8 dark:border-silver-tree-700/70 dark:bg-silver-tree-950/50">
+                <blockquote class="m-0 text-sm leading-relaxed text-silver-tree-800 dark:text-silver-tree-200">
+                    {manuscript.authors} ({manuscript.year}).{" "}
+                    <span class="font-semibold text-silver-tree-900 dark:text-silver-tree-50">
+                        {manuscript.title}
+                    </span>
+                    . <em>{manuscript.venue}</em>.{" "}
+                    <a
+                        class={linkClasses}
+                        href={manuscriptUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {manuscriptUrl}
+                    </a>
+                </blockquote>
+
+                <div class="mt-6 flex flex-wrap gap-4">
+                    <a
+                        href={manuscriptUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class={mainBtnClasses}
+                    >
+                        Read the manuscript
+                    </a>
+                    <button
+                        type="button"
+                        id="nh-copy-bibtex"
+                        data-bibtex={bibtex}
+                        class={`${secondaryBtnClasses} cursor-pointer bg-transparent`}
+                    >
+                        Copy BibTeX
+                    </button>
+                </div>
+            </figure>
+        </div>
+    </section>
+
     <!-- Call to action ------------------------------------------------------>
     <section class="relative overflow-hidden px-6 py-24 bg-silver-tree-100 dark:bg-silver-tree-950">
         <div
@@ -543,11 +610,11 @@ const spreadsheetSteps = [
             aria-hidden="true"
         ></div>
         <div class="relative mx-auto max-w-3xl text-center">
-            <h2 class={sectionTitleClasses}>Take it to the field</h2>
+            <h2 class={sectionTitleClasses}>Get started</h2>
             <p class={`${sectionLeadClasses} mx-auto`}>
-                NAHPU is free to install and free to use. Start on the Get
-                Started page, or follow the walkthrough that builds a project
-                from the first site to the first exported record set.
+                NAHPU is free to install and use. See the Get Started page, or
+                follow the walkthrough that builds a project from the first site
+                to the first exported record set.
             </p>
             <div class="mt-10 flex flex-wrap justify-center gap-4">
                 <a href="/get-started" class={mainBtnClasses}>
@@ -577,9 +644,9 @@ const spreadsheetSteps = [
                 <p class={kickerClasses}>Funding and support</p>
                 <h2 class={sectionTitleClasses}>Who makes this possible</h2>
                 <p class={sectionLeadClasses}>
-                    NAHPU is free and open source, developed in part with the
-                    support of public research funding, a dedicated mammalogy
-                    fund, and institutional collaboration.
+                    NAHPU is free and open source. Its development has been
+                    supported by public research funding, a mammalogy fund, and
+                    institutional collaboration.
                 </p>
             </header>
 
@@ -618,8 +685,8 @@ const spreadsheetSteps = [
 
             <div class="nh-reveal mt-8 max-w-3xl">
                 <p class="text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
-                    Various other funding sources may have supported this
-                    project through the work of the contributors.
+                    Other funding sources may have supported this project
+                    through the work of individual contributors.
                 </p>
                 <p class="mt-4 border-l-2 border-silver-tree-400/60 pl-4 text-xs leading-relaxed text-silver-tree-600 dark:border-silver-tree-600/60 dark:text-silver-tree-400">
                     Any opinions, findings, and conclusions or recommendations
@@ -652,4 +719,16 @@ const spreadsheetSteps = [
         );
         revealed.forEach((element) => observer.observe(element));
     }
+
+    const copyButton = document.getElementById("nh-copy-bibtex");
+    copyButton?.addEventListener("click", async () => {
+        const label = copyButton.textContent;
+        try {
+            await navigator.clipboard.writeText(copyButton.dataset.bibtex ?? "");
+            copyButton.textContent = "Copied";
+        } catch {
+            copyButton.textContent = "Copy failed";
+        }
+        setTimeout(() => (copyButton.textContent = label), 2000);
+    });
 </script>
