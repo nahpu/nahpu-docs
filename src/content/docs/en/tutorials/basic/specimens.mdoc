@@ -57,6 +57,13 @@ The two records agree.
 
 1. Open Specimens and select `+`. Check that the Field ID reads `HH436`. If it
    does not, use `Edit field ID` to correct the number.
+
+    NAHPU fills the Field ID from Heru's cataloger number and increases that
+    number by one for each new specimen. In the field this keeps numbers in
+    sequence without anyone writing them by hand. Here you enter only selected
+    records, so the proposed number will often be wrong: after HH 437, NAHPU
+    proposes `HH438`, but the next record you enter is HH 442. Override the
+    number with `Edit field ID` each time it differs from the paper.
 2. In `Collection & Identification`:
 
     | Field | Value |
@@ -67,7 +74,9 @@ The two records agree.
     | `Taxon` | *Lariscus insignis* |
     | `ID Confidence` | `High` |
 
-    Leave `Prep. date` empty. The paper records only the capture.
+    Set `Prep. date` to the collection date, 12 September 2014. Heru prepared
+    specimens on the day they were caught, but the paper does not record when,
+    so leave `Prep. time` empty.
 
 3. In the capture record, choose `Site ID` `TJHH-L1`, then its event. Enter:
 
@@ -92,7 +101,7 @@ The two records agree.
 Open the record again. Without typing a locality, it shows Indonesia, Jambi,
 Kerinci, Pondok Merah, the coordinate, and the habitat, all from the site.
 
-![NAHPU Specimen Records page on an iPad for HH436, Lariscus insignis, with museum ID Z26230, collection on 12 September 2014 at 4:00 PM, site TJHH-L1, method Snap trap, and coordinate TJHH-PM](../../../../../assets/images/app-screenshots/tutorials/basic/specimen-hh436.webp)
+![NAHPU Specimen Records page on an iPad for HH436, Lariscus insignis, with museum ID Z26230, collection on 12 September 2014 at 4:00 PM, preparation date 12 September 2014 with no preparation time, site TJHH-L1, method Snap trap, and coordinate TJHH-PM](../../../../../assets/images/app-screenshots/tutorials/basic/specimen-hh436.webp)
 
 Further down the same record are the measurements and parts. NAHPU calculates
 head-and-body length (154 mm) and the tail ratio from the values you typed:
@@ -110,11 +119,23 @@ choices.
 | `HH442` | `Z26236` | *Maxomys hylomyoides* | `TJHH-L1` | 13 Sep 2014, empty | `Snap trap` | Heru Handika | 238–119–30–18, 46 g | `Female` | Empty | Whole body, Formalin |
 | `HH453` | `Z26247` | *Crocidura beccarii* | `TJHH-P1` | 13 Sep 2014, empty | `Pitfall` | Heru Handika | 150–75–17–8, 7 g | `Male` | `Adult` | Whole body, Formalin; liver, ETOH |
 | `HH456` | `Z26250` | *Maxomys hylomyoides* | `TJBS-L2` | 13 Sep 2014, `07:00` | `Snap trap` | Heru Handika | 221–113–28–16, 48 g | `Male`, testes abdominal | `Subadult` | Whole body, Formalin; liver, ETOH |
-| `HH523` | `Z26317` | *Maxomys* (genus) | `TJHH-L3` | 17 Sep 2014, relative time `Morning` | `Snap trap` | Bima Sampel | 268–124–29–18, 66 g | `Male`, testes 17 × 4 mm | `Adult` | Skin; skull; skeleton; liver, ETOH |
-| `HH529` | Empty | *Crocidura neglecta* | `TJHH-P4` | 17 Sep 2014, relative time `Morning` | `Pitfall` | Bima Sampel | 112–45–11–7, 4.4 g | `Male` | `Adult` | Whole body, Formalin; liver, ETOH |
+| `HH523` | `Z26317` | *Maxomys* (genus) | `TJHH-L3` | 17 Sep 2014, `09:00` | `Snap trap` | Bima Sampel | 268–124–29–18, 66 g | `Male`, testes 17 × 4 mm | `Adult` | Skin; skull; skeleton; liver, ETOH |
+| `HH529` | Empty | *Crocidura neglecta* | `TJHH-P4` | 17 Sep 2014, `07:00` | `Pitfall` | Bima Sampel | 112–45–11–7, 4.4 g | `Male` | `Adult` | Whole body, Formalin; liver, ETOH |
 
-Copy the dates to `Collection date` as well. For the Pasir Putih specimens,
-leave `Coordinate ID` empty: those sites have no coordinate.
+Copy each date to `Collection date` and `Prep. date` as well, and leave
+`Prep. time` empty. For the Pasir Putih specimens, leave `Coordinate ID` empty:
+those sites have no coordinate. Override the proposed Field ID for each record,
+as described in step 1.
+
+{% aside type="note" title="Why collection and preparation times matter" %}
+In genomic tissue collections, the time between death and preservation affects
+DNA and RNA quality. Having both the collection time and the preparation time
+lets a curator or a lab judge a tissue before using it. Paper catalogs often
+leave this out; this one has a capture time but no preparation time. Genomic
+work was not as accessible in 2014, so young Heru did not record that context.
+NAHPU keeps both times on every specimen, and each part can also record when
+it was taken and its post-mortem interval (`PMI`).
+{% /aside %}
 
 ### HH 437: overwritten number and sex
 
@@ -171,34 +192,29 @@ Heru wrote `Maxomys cf. hylomyoides`: it looks like *M. hylomyoides*, but he was
 not sure. Choose the genus *Maxomys* from the registry and set `ID Confidence`
 to `High`, because the genus is certain.
 
-The form's time, `09:00`, does not fit the journal. On 17 September the team
-left camp at 08:00, and the boat ride to Pasir Putih took about 1.5 hours.
-Heru was in camp that morning, so the collector was someone from the boat team.
-Choose `Bima Sampel`, who led that team, and use `Relative time` `Morning`
-instead of an exact time no one recorded.
+The form's time is `09:00`, not the team's standard 07:00 for overnight
+captures. Enter it as written and note the difference. The journal also
+matters for the collector: on 17 September Heru stayed in camp while the boat
+team checked Pasir Putih, so choose `Bima Sampel`, who led that team.
 
 Add to `Remarks`:
-`cf. hylomyoides. Underparts darker than M. hylomyoides: more orange at the base and grey on the belly. Paper time 09:00 conflicts with the trap check; recorded as morning.`
+`cf. hylomyoides. Underparts darker than M. hylomyoides: more orange at the base and grey on the belly. Paper time 09:00 differs from the team's standard 07:00.`
 
-### HH 529: an impossible time and a misused box
+### HH 529: the wrong collector and a misused box
 
-The form says `07.00`, an hour before the team left camp. Many forms in this
-catalog read `07.00`, which looks like a habit rather than a measurement. Use
-`Relative time` `Morning` and `Bima Sampel` as collector, as for HH 523.
+The form says `07.00`, the team's standard time for overnight captures. Enter
+`07:00`; the event notes from Tutorial 4 explain what it means. As for HH 523,
+Heru was in camp that morning, so choose `Bima Sampel` as collector.
 
 The `Museum` box says `Blank Tube`, which is not a museum number. Leave
 `Museum ID` empty and add the note to the liver part's `Remarks`:
 `Tube label left blank in 2014.` Museum and tissue numbers have separate fields
 in NAHPU, so this kind of note no longer needs a box of its own.
 
-Add to the specimen's `Remarks`:
-`Paper time 07:00 conflicts with the trap check (team left camp at 08:00); recorded as morning.`
+In the finished record, the site and event say Pasir Putih, and
+`Coordinate ID` is empty because that site has no coordinate:
 
-In the finished record, `Relative time` is on and the capture time reads
-`Morning`. The site and event say Pasir Putih, and `Coordinate ID` is empty
-because that site has no coordinate:
-
-![NAHPU Specimen Records page on an iPad for HH529, Crocidura neglecta, captured on 17 September 2014 in the morning at TJHH-P4 by pitfall, with no coordinate](../../../../../assets/images/app-screenshots/tutorials/basic/specimen-hh529.webp)
+![NAHPU Specimen Records page on an iPad for HH529, Crocidura neglecta, captured on 17 September 2014 at 7:00 AM at TJHH-P4 by pitfall, with no coordinate](../../../../../assets/images/app-screenshots/tutorials/basic/specimen-hh529.webp)
 
 {% aside type="tip" title="Faster entry for similar specimens" %}
 Many specimens share the same parts. Open a finished record and choose
