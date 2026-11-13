@@ -1,0 +1,148 @@
+---
+title: "Basic tutorial 4: Record trap lines as collecting events"
+authors:
+  - Heru Handika
+lastUpdated: 2026-11-13
+sidebar:
+  label: "4. Record collecting events"
+  order: 4
+---
+
+A site says *where*. A **collecting event** says *when, how, and by whom*: the
+dates a line ran, the traps on it, the people who worked it, and the weather.
+Specimens link to an event, not straight to a site, so the event is the bridge
+that gives each specimen its place, method, and collector.
+
+On paper, this information is scattered. Trap counts are in the journal, the
+method is rewritten on every specimen form, and the people who checked the
+traps are not recorded at all.
+
+## 1. Plan the events
+
+Each line ran once, so each site gets one event. The dates and trap counts come
+from the journal; nothing here is on the specimen forms.
+
+| Site | Start | End | Method | Count | Event notes |
+| --- | --- | --- | --- | --- | --- |
+| `TJHH-L1` | 12 Sep 2014 | 16 Sep 2014 | `Snap trap` | 31 | One broken trap removed on 14 Sep. Rebaiting stopped on 15 Sep; some traps left baited. |
+| `TJHH-P1` | 12 Sep 2014 | 16 Sep 2014 | `Pitfall` | 10 | About 50 m from camp, next to the Line 1 snap traps. |
+| `TJBS-L2` | 12 Sep 2014 | 18 Sep 2014 | `Snap trap` | 25 | Most traps 1–2 m above the ground. |
+| `TJHH-L3` | 16 Sep 2014 | 18 Sep 2014 | `Snap trap` | 20 | Checked by boat. |
+| `TJHH-P4` | 16 Sep 2014 | 18 Sep 2014 | `Pitfall` | Leave empty | Number of pitfalls not recorded. Checked by boat. |
+| `TJHH-L5` | 16 Sep 2014 | 18 Sep 2014 | `Snap trap` | 20 | Many traps set on lianas. Checked by boat. |
+
+{% aside type="note" title="Best-supported end dates" %}
+The journal never says when Lines 1 and 2 were pulled. Line 1 still caught
+animals on 16 September, and Line 2 on 18 September, the last day at this camp.
+Those are the latest dates the paper supports, so use them as the end dates and
+say so in the notes.
+{% /aside %}
+
+## 2. Create the first event
+
+{% steps %}
+
+1. Open Events and select `+`.
+2. Choose the `Site ID` `TJHH-L1`.
+3. Set `Start Date` to 12 September 2014 and `End Date` to 16 September 2014.
+   NAHPU builds the `Event ID` from the Site ID and start date.
+4. Leave `Start Time` and `End Time` empty. The journal does not say when the
+   line was set or pulled, and an empty field is better than a guess.
+5. Set `Primary activity` to `Collecting`.
+6. In `Notes`, enter the event notes from the table.
+
+{% /steps %}
+
+## 3. Add the collection method
+
+{% steps %}
+
+1. Select `Add collection method`.
+2. Choose `Snap trap` and set `Count` to `31`.
+3. Leave `Brand and Model` and `Size` empty; the paper does not give them.
+
+{% /steps %}
+
+This is where the paper's `Line 1` problem goes away. `TJHH-L1` has only snap
+traps and `TJHH-P1` has only pitfalls. A specimen linked to `TJHH-P1` can only
+have come from a pitfall, whatever its form says.
+
+## 4. Add the people
+
+On paper, `Collector` reads `Heru Handika` on every form. But on 17 September,
+Heru stayed in camp to prepare specimens while Bima, Citra, Dian, Eko, and Fajar
+took the boat to check the Pasir Putih lines. The event records who was there.
+
+{% steps %}
+
+1. In `Settings` > `Events`, add the personnel roles `Local guide` and
+   `Boat operator`. `Leader` and `Helper` are already in the list.
+2. Back in the event, open the personnel tab (people icon) and select
+   `Add personnel`.
+3. Add the people for this event:
+
+    | Event | People and roles |
+    | --- | --- |
+    | `TJHH-L1`, `TJHH-P1` | Heru Handika, `Leader`; Bima Sampel and Citra Contoh, `Helper`; Eko Pemandu, `Local guide` |
+    | `TJBS-L2` | Bima Sampel, `Leader`; Citra Contoh and Heru Handika, `Helper` |
+    | `TJHH-L3`, `TJHH-P4`, `TJHH-L5` | Heru Handika, `Leader`; Bima Sampel, Citra Contoh, and Dian Teladan, `Helper`; Eko Pemandu, `Local guide`; Fajar Nelayan, `Boat operator` |
+
+{% /steps %}
+
+In [Basic tutorial 5](/en/tutorials/basic/specimens/), each specimen's capture
+`Collector` is chosen from its event's people, so it can only name someone who
+was there.
+
+The finished event for Line 1. NAHPU built the Event ID `TJHH-L1-2014-09-12`
+from the Site ID and start date, and the times stay empty:
+
+![NAHPU Events page on an iPad for TJHH-L1-2014-09-12, with dates 12 to 16 September 2014, the activity notes, 31 snap traps, and the event personnel](../../../../../assets/images/app-screenshots/tutorials/basic/event-tjhh-l1.webp)
+
+## 5. Add environmental data
+
+The journal for 13 September gives the only weather for the trip: night
+temperatures from about 16 °C down to 14 °C, no rain, and a sky that was
+sometimes cloudy and sometimes very clear.
+
+{% steps %}
+
+1. In the `TJHH-L1` event, open the environmental data tab (cloud icon).
+2. Enter what the journal supports: the temperature range, no rain, and
+   variable cloud cover. Put the date in the notes: `Night of 12–13 September.`
+3. Leave the other fields empty.
+
+{% /steps %}
+
+## 6. Create the other events
+
+{% steps %}
+
+1. With `TJHH-L1` open, choose `Duplicate event` from the three-dot menu.
+   NAHPU copies the site, activity, notes, methods, and people, moves the dates
+   forward one day, and gives the copy an empty environmental-data record.
+2. Change the `Site ID` to `TJHH-P1` and set the dates back to 12–16 September.
+3. Replace the collection method with `Pitfall`, count `10`, and update the
+   notes.
+4. Create the remaining four events the same way, using the table in step 1
+   and the people in step 4.
+
+{% /steps %}
+
+{% aside type="caution" %}
+After duplicating, check every copied value. The dates always move forward one
+day, and a copied method or note that does not fit the new line is easy to miss.
+{% /aside %}
+
+## What you gained over paper
+
+- Trap counts, dates, and setup details that were only in the journal are now
+  attached to the line they describe.
+- Each event has exactly one method, so pitfall and snap-trap captures cannot
+  be confused.
+- The guide, the boatman, and the teammates who checked traps are credited.
+- Gaps, such as the unrecorded number of pitfalls on Line 4, are visible as
+  empty fields.
+
+## Next
+
+[Basic tutorial 5: Enter specimen records](/en/tutorials/basic/specimens/)

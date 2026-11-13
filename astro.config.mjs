@@ -68,6 +68,38 @@ export default defineConfig({
       "/id/usages/export/export-expressions/",
     "/pt/usages/export/template-editor-reference":
       "/pt/usages/export/export-expressions/",
+    "/en/tutorials/specify-export-preset":
+      "/en/tutorials/export/specify-export-preset/",
+    "/en/tutorials/specify-from-data-package":
+      "/en/tutorials/export/specify-from-data-package/",
+    "/en/tutorials/custom-data-package-script":
+      "/en/tutorials/export/custom-data-package-script/",
+    "/en/tutorials/voucher-tag":
+      "/en/tutorials/export/voucher-tag/",
+    "/pt/tutorials/specify-export-preset":
+      "/pt/tutorials/export/specify-export-preset/",
+    "/pt/tutorials/specify-from-data-package":
+      "/pt/tutorials/export/specify-from-data-package/",
+    "/pt/tutorials/custom-data-package-script":
+      "/pt/tutorials/export/custom-data-package-script/",
+    "/pt/tutorials/voucher-tag":
+      "/pt/tutorials/export/voucher-tag/",
+    "/es/tutorials/specify-export-preset":
+      "/es/tutorials/export/specify-export-preset/",
+    "/es/tutorials/specify-from-data-package":
+      "/es/tutorials/export/specify-from-data-package/",
+    "/es/tutorials/custom-data-package-script":
+      "/es/tutorials/export/custom-data-package-script/",
+    "/es/tutorials/voucher-tag":
+      "/es/tutorials/export/voucher-tag/",
+    "/id/tutorials/specify-export-preset":
+      "/id/tutorials/export/specify-export-preset/",
+    "/id/tutorials/specify-from-data-package":
+      "/id/tutorials/export/specify-from-data-package/",
+    "/id/tutorials/custom-data-package-script":
+      "/id/tutorials/export/custom-data-package-script/",
+    "/id/tutorials/voucher-tag":
+      "/id/tutorials/export/voucher-tag/",
     "/en/how-to-recipes/collect/add-parts-and-parasites":
       "/en/how-to-recipes/collect/add-parts-and-symbionts/",
     "/es/how-to-recipes/collect/add-parts-and-parasites":
@@ -428,10 +460,36 @@ export default defineConfig({
           },
           items: [
             {
-              autogenerate: {
-                directory: "tutorials",
-                collapsed: true,
+              label: "Basic",
+              collapsed: true,
+              translations: {
+                "pt-BR": "Básico",
+                es: "Básico",
+                id: "Dasar",
               },
+              items: [
+                {
+                  autogenerate: {
+                    directory: "tutorials/basic",
+                  },
+                },
+              ],
+            },
+            {
+              label: "Export",
+              collapsed: true,
+              translations: {
+                "pt-BR": "Exportar",
+                es: "Exportar",
+                id: "Ekspor",
+              },
+              items: [
+                {
+                  autogenerate: {
+                    directory: "tutorials/export",
+                  },
+                },
+              ],
             },
           ],
         },

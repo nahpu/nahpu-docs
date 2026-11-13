@@ -1,0 +1,158 @@
+---
+title: "Basic tutorial 2: Create the project, personnel, and taxa"
+authors:
+  - Heru Handika
+lastUpdated: 2026-11-13
+sidebar:
+  label: "2. Create the project"
+  order: 2
+---
+
+On paper, the survey name, the collector, and the species list live in the
+collector's head, or are written again on every form. In NAHPU you enter them
+once, before the first specimen, and every later record points to them.
+
+You build:
+
+- a project for the Mt. Tujuh survey;
+- personnel for Heru and the team, with Heru as `Cataloger`;
+- a taxon registry with one correct spelling for each name.
+
+## 1. Create the project
+
+{% steps %}
+
+1. On the home screen, select `Create project` > `Create new project`.
+2. Enter the project information:
+
+    | Field | Value |
+    | --- | --- |
+    | Project name | `Mt. Tujuh small mammals 2014` |
+    | Description | `Small-mammal survey of Mt. Tujuh, Kerinci, Jambi, 9–18 September 2014. Entered from the paper catalog of Heru Handika.` |
+    | Time zone | `Asia/Jakarta` |
+
+    Jambi uses Western Indonesia Time (WIB), which is `Asia/Jakarta`. The time
+    zone documents the clock behind the recorded times, such as the trap-check
+    times on the specimen forms. It does not change those times.
+
+3. Choose `Mammalogy` as the main taxon format. It gives specimen forms the
+   same measurements and reproductive fields as the paper form.
+4. Choose a personnel Field ID. Heru's forms number specimens with his initials
+   and his own running number, so this mode reproduces `HH 436`, `HH 437`, and
+   so on.
+5. Complete the Cataloger details when asked (next section), review the
+   summary, and select `Create project`.
+
+{% /steps %}
+
+{% aside type="tip" %}
+Name a practice project clearly, for example `Mt. Tujuh tutorial`, if you work
+in an installation that also holds research data.
+{% /aside %}
+
+## 2. Add personnel
+
+Heru is the `Cataloger`: he numbered, prepared, and identified the specimens.
+His teammates helped set and check traps. The guide and the boatman do not
+appear anywhere on the paper catalog, although the 16–18 September work at
+Pasir Putih depended on them.
+
+{% steps %}
+
+1. On the project dashboard, select `Add personnel` > `Add new`.
+2. Add Heru:
+
+    | Field | Value |
+    | --- | --- |
+    | `Name*` | `Heru Handika` |
+    | Role | `Cataloger` |
+    | `Initials` | `HH` |
+    | `Cataloger number*` | `436` |
+
+    The cataloger number is the next number NAHPU proposes. Setting it to `436`
+    makes the first new specimen `HH436`, the first number in this catalog.
+
+3. Add the other people. They do not catalog specimens, so give them the role
+   `None`:
+
+    | Name | Their part in the survey |
+    | --- | --- |
+    | `Bima Sampel` | Set and checked lines with Heru |
+    | `Citra Contoh` | Set and checked lines |
+    | `Dian Teladan` | Checked the Pasir Putih lines |
+    | `Eko Pemandu` | Local guide |
+    | `Fajar Nelayan` | Fisherman who ran the boat to Pasir Putih |
+
+4. Check that all six people appear on the dashboard.
+
+{% /steps %}
+
+The dashboard now shows the project and its people. Heru's cataloger number
+reads `530` here because the screenshot was taken after all seven specimens
+were entered.
+
+![NAHPU Project dashboard on an iPad for Mt. Tujuh small mammals 2014, with Heru Handika as Cataloger and the teammates in Personnel](../../../../../assets/images/app-screenshots/tutorials/basic/project-dashboard.webp)
+
+{% aside type="caution" %}
+The `Cataloger` role cannot be changed after the person is created. Personnel
+records are shared by every project in the installation, so editing Heru's
+record later changes it everywhere.
+{% /aside %}
+
+Roles such as leader, helper, guide, and boatman describe a person's part in one
+collecting event. You assign them in
+[Basic tutorial 4](/en/tutorials/basic/events/).
+
+## 3. Register the taxa
+
+The paper catalog spells *Maxomys hylomyoides* at least five ways. A
+spreadsheet made from those forms would hold five "species". In NAHPU, a
+specimen's name is chosen from the taxon registry, so it can only be spelled
+the way the registry spells it.
+
+Use the correct names, not the paper spellings:
+
+| Paper spelling | Rank | Name to register | Order | Family |
+| --- | --- | --- | --- | --- |
+| `Lariscur insignis`, `Larscur insignis` | Species | *Lariscus insignis* | Rodentia | Sciuridae |
+| `Mur crociduroider` | Species | *Mus crociduroides* | Rodentia | Muridae |
+| `Maxorys`, `Maxomy`, `Maxotys hylomyoider` | Species | *Maxomys hylomyoides* | Rodentia | Muridae |
+| `Maxomys cf. hylomyoider` | Genus | *Maxomys* | Rodentia | Muridae |
+| `Crocidura beccari`, `beccarii` | Species | *Crocidura beccarii* | Eulipotyphla | Soricidae |
+| `Crocidura neglecta` | Species | *Crocidura neglecta* | Eulipotyphla | Soricidae |
+
+All are in the class Mammalia.
+
+{% steps %}
+
+1. On the dashboard, find `Taxon registry` and select `Add taxon`.
+2. Stay on `Manual` and choose the `Taxon rank`.
+3. Fill in the name fields, from `Class` down to `Specific epithet`.
+4. Add a common name if you like, such as `Three-striped ground squirrel` for
+   *Lariscus insignis*.
+5. Repeat for each row, then check that the registry shows six entries.
+
+{% /steps %}
+
+The genus *Maxomys* is for HH 523, which Heru marked `cf. hylomyoides`: it
+resembles *M. hylomyoides* but he was not sure it is that species. Recording the
+genus keeps the identification at the level the evidence supports. Tutorial 5
+puts the `cf.` note in the specimen's remarks.
+
+{% aside type="tip" %}
+For a longer list, prepare a CSV or Excel file and use `Add taxon` > `Import`.
+See [Import a taxon list](/en/how-to-recipes/prepare/import-taxa/).
+{% /aside %}
+
+## What you gained over paper
+
+- The survey has a name, a description, and a declared time zone, so later
+  readers know what the times mean.
+- Everyone who worked on the survey is on record, including the local guide
+  and the boatman.
+- Each name has one spelling. Correcting a misspelled entry in the registry
+  corrects it for every specimen that uses it.
+
+## Next
+
+[Basic tutorial 3: Turn the locality header into sites](/en/tutorials/basic/sites/)

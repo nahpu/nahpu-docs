@@ -1,0 +1,190 @@
+---
+title: "Basic tutorial 3: Turn the locality header into sites"
+authors:
+  - Heru Handika
+lastUpdated: 2026-11-13
+sidebar:
+  label: "3. Create sites"
+  order: 3
+---
+
+The paper catalog writes the locality once at the top of a sheet and leaves it
+blank on the sheets that follow. Anyone who reads a later sheet has to assume it
+belongs to the last locality written. For the specimens from Pasir Putih, that
+assumption is wrong.
+
+{% aside type="note" title="Standard museum best practice" %}
+Writing the full locality on every page of a paper catalog, even when it
+repeats the page before, is standard museum best practice. Each page then stands on its own if it is copied, scanned out
+of order, or separated from the notebook, and a change of place is impossible
+to miss. Young Heru clearly did not follow that practice: only the first sheet
+carries a locality, and the Pasir Putih pages are blank.
+{% /aside %}
+
+This is the top of the sheet that holds HH 520–523. HH 520 was caught on
+Line 3 at Pasir Putih, across the lake from Pondok Merah, yet the `Locality`
+lines are empty:
+
+![Paper specimen sheet with an empty Locality header above the record for HH 520, Hylomys suillus, from trap line 3](../../../../../assets/images/tutorials/basic/paper-blank-locality.jpg)
+
+In NAHPU, a **site** is a place you enter once and reuse: a camp, a trap line, a
+pitfall line. Specimens never carry the locality themselves. They link to an
+event, and the event links to its site, so every specimen gets the right place
+without anyone writing it again.
+
+## 1. Plan the sites
+
+The journal describes five lines. Line 1 mixed pitfalls and snap traps, so it
+becomes two sites, one per method. That gives six sites. The Site IDs follow
+the [NAHPU convention](/en/usages/sites/): a two-letter locality code (`TJ` for
+Tujuh), the line leader's initials, then `L` for a trap line or `P` for a
+pitfall line, and the line number from the paper.
+
+| Site ID | Paper name | Area | What was set | Leader |
+| --- | --- | --- | --- | --- |
+| `TJHH-L1` | Line 1 | Pondok Merah | 31 snap traps | Heru Handika |
+| `TJHH-P1` | Line 1 | Pondok Merah | 10 pitfalls, about 50 m from camp | Heru Handika |
+| `TJBS-L2` | Line 2 | Pondok Merah | 25 snap traps, most 1–2 m above ground | Bima Sampel |
+| `TJHH-L3` | Line 3 | Pasir Putih | 20 snap traps | Heru Handika |
+| `TJHH-P4` | Line 4 | Pasir Putih | Pitfalls, number not recorded | Heru Handika |
+| `TJHH-L5` | Line 5 | Pasir Putih | 20 snap traps, many on lianas | Heru Handika |
+
+Keeping the paper's line numbers in the Site IDs lets anyone check a NAHPU
+record against the paper form.
+
+## 2. Create the first site
+
+{% steps %}
+
+1. Open Sites and select `+`.
+2. Enter the Site ID `TJHH-L1`, choose `Heru Handika` as `Site Leader`, and
+   choose a `Site Type` for a trap line.
+3. Enter the geography from the paper header:
+
+    | Field | Value |
+    | --- | --- |
+    | `Country` | `Indonesia` |
+    | `State/Province` | `Jambi` |
+    | `County/Parish/District` | `Kerinci` |
+    | `Precise Locality` | `Gunung Tujuh, Sungai Jernih, Pondok Merah, beside Lake Gunung Tujuh` |
+
+    The paper writes `Mt. Tujuh`. Write the full local name, *Gunung Tujuh*, so
+    the locality reads the same as the gazetteer. Leave fields you cannot
+    verify, such as `Municipality/City/Town`, empty.
+
+4. Enter the habitat. The only habitat on the paper is on HH 436:
+   `Mature secondary forest`. The journal for 12 September adds that the forest
+   is similar along all Pondok Merah lines and slightly disturbed by hikers.
+
+    | Field | Value |
+    | --- | --- |
+    | Type | `Montane forest` |
+    | Condition | `Slightly disturbed` |
+    | Description | `Mature secondary forest, similar along all Pondok Merah lines. Slightly disturbed by hikers.` |
+
+    Type and condition come from lists in `Settings`; add a value there if it
+    is missing.
+
+    Habitat describes a place, not an animal. Entered here, it applies to every
+    specimen from the line, not just the one specimen whose form happened to
+    have it filled in.
+
+{% /steps %}
+
+## 3. Add the coordinate
+
+The paper header gives one point for all of Pondok Merah:
+
+```text
+01.70274° S   101.39032° E   Elev. 2004 m
+```
+
+Before you enter it, make three corrections:
+
+- **Sign.** Decimal degrees show the hemisphere with a sign, not a letter.
+  South is negative, so the latitude is `-1.70274`. Dropping the `S` would
+  move the point to the northern hemisphere, about 380 km away.
+- **Unit.** On the first sheet the unit is crossed out (`feet` changed to
+  `m`); the second sheet says `m asl`. NAHPU stores elevation in meters, so
+  enter `2004` with no unit to argue about.
+- **What is missing.** The paper has no datum and no GPS uncertainty. Do not
+  invent them. Keep the default datum only if you know the GPS used WGS84, and
+  leave the uncertainty empty.
+
+{% steps %}
+
+1. On the site page, open the coordinate panel and select `Add coordinate`.
+2. Choose decimal degrees (`DD`) as the format and enter the values:
+
+    | Field | Value |
+    | --- | --- |
+    | Name | `TJHH-PM` |
+    | Decimal latitude | `-1.70274` |
+    | Decimal longitude | `101.39032` |
+    | Elevation | `2004` |
+    | Notes | `One point recorded for all Pondok Merah lines in the 2014 paper catalog. Datum and uncertainty not recorded.` |
+
+3. Select `Add`, then check the point on the map. It should sit beside Lake
+   Gunung Tujuh.
+
+{% /steps %}
+
+The finished site, with the paper coordinate. The datum and uncertainty show
+`?` because the paper did not record them:
+
+![NAHPU Sites page on an iPad for TJHH-L1, with Indonesia, Jambi, Kerinci, the Pondok Merah locality, montane forest habitat, and coordinate TJHH-PM at -1.70274, 101.39032, 2004 m](../../../../../assets/images/app-screenshots/tutorials/basic/site-tjhh-l1.webp)
+
+## 4. Create the other Pondok Merah sites
+
+{% steps %}
+
+1. With `TJHH-L1` open, choose `Duplicate site` from the three-dot menu.
+2. Enter the new Site ID `TJHH-P1` and change `Site Type` to a pitfall line.
+3. Add the same coordinate again: duplicating leaves the coordinates empty.
+4. Repeat for `TJBS-L2`, with `Bima Sampel` as `Site Leader`. Add
+   `Most snap traps set 1–2 m above the ground.` to `Remarks`.
+
+{% /steps %}
+
+## 5. Create the Pasir Putih sites
+
+Pasir Putih is across the lake, and the journal describes each of its three
+lines differently. Create them from `+`, not by duplicating, so no Pondok Merah
+value is carried over by mistake.
+
+Use the same country, province, and county. Then enter:
+
+| Site ID | `Precise Locality` | Condition | Description |
+| --- | --- | --- | --- |
+| `TJHH-L3` | `Gunung Tujuh, Pasir Putih, across Lake Gunung Tujuh from Pondok Merah` | `Undisturbed` | `Many moss-covered trees 1–2 m in diameter. Open ground with few small plants. One rarely used trail.` |
+| `TJHH-P4` | Same as `TJHH-L3` | `Undisturbed` | `Open canopy, apparently from natural processes. Dense ground cover; fewer large trees than Line 3.` |
+| `TJHH-L5` | Same as `TJHH-L3` | `Undisturbed` | `Open in places and closed in others. Many lianas. Moss cover similar to Line 3.` |
+
+Use `Montane forest` as the type for all three.
+
+The paper has **no coordinates** for Pasir Putih. Leave the coordinate panel
+empty and add this to each site's `Remarks`:
+`No coordinates recorded in the 2014 paper catalog. About 1.5 hours by boat across the lake from Pondok Merah.`
+
+{% aside type="caution" title="Do not reuse the camp coordinate" %}
+It is tempting to copy the Pondok Merah point so the Pasir Putih records "have
+coordinates". That would place them on the wrong side of the lake. An empty
+coordinate is honest and easy to find later; a wrong one looks like good data.
+If you can georeference Pasir Putih from a map, add that point with a note on
+how you derived it and a realistic uncertainty.
+{% /aside %}
+
+## What you gained over paper
+
+- Every specimen will get its locality from its site, including the ones on
+  sheets with a blank header.
+- Pondok Merah and Pasir Putih are separate places, so their specimens cannot
+  be mixed up.
+- Elevation has one unit, latitude has its sign, and missing datum and
+  uncertainty are visible as empty fields, not hidden.
+- Habitat is described once per place, from the journal and the one specimen
+  that recorded it.
+
+## Next
+
+[Basic tutorial 4: Record trap lines as collecting events](/en/tutorials/basic/events/)
