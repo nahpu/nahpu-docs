@@ -218,7 +218,7 @@ const spreadsheetSteps = [
     },
 ];
 
-const manuscript = {
+const preprint = {
     title: "NAHPU: An integrated approach to natural history data acquisition and management in the extended specimen era",
     authors: "Handika, H., Moncrieff, A., Henderson, C., Dadaian, A., Gordon, C., Canton, R., Chipps, A., Inayah, N., Chornelia, A., Rego, M., Pérez-Amaya, N., Gan, L., Jaiswal, A., Lee, D., Yu, J., Aravind, A., Evangelista, D., Rutledge, S., Elías, D., Troyer, E., Silva de Miranda, G., Vonnahme, L., Shi, B., Nations, J., Del-Rio, G., Thom, G., Porto, A., & Esselstyn, J.",
     year: 2026,
@@ -226,15 +226,15 @@ const manuscript = {
     doi: "10.32942/X21M6D",
 };
 
-const manuscriptUrl = `https://doi.org/${manuscript.doi}`;
+const preprintUrl = `https://doi.org/${preprint.doi}`;
 
 const bibtex = `@misc{Handika_2026,
-  title = {${manuscript.title}},
+  title = {${preprint.title}},
   author = {Handika, Heru and Moncrieff, Andre and Henderson, Cody and Dadaian, Alain and Gordon, Caleb and Canton, Roberta and Chipps, Austin and Inayah, Nurul and Chornelia, Ada and Rego, Marco and P{\\'e}rez-Amaya, Natalia and Gan, Lawrence and Jaiswal, Aakanksha and Lee, Daeun and Yu, Jia and Aravind, Ashmitha and Evangelista, Dante and Rutledge, Samantha and El{\\'i}as, Diego and Troyer, Emily and Silva de Miranda, Gustavo and Vonnahme, Lauren and Shi, Breanna and Nations, Jonathan and Del-Rio, Glaucia and Thom, Gregory and Porto, Arthur and Esselstyn, Jacob},
-  year = {${manuscript.year}},
-  publisher = {${manuscript.venue}},
-  doi = {${manuscript.doi}},
-  url = {${manuscriptUrl}}
+  year = {${preprint.year}},
+  publisher = {${preprint.venue}},
+  doi = {${preprint.doi}},
+  url = {${preprintUrl}}
 }`;
 ---
 
@@ -247,7 +247,7 @@ const bibtex = `@misc{Handika_2026,
     <section class={heroClasses}>
         <HeroBackdrop />
 
-        <span class={eyebrowClasses}>Free · Open source · Field ready</span>
+        <span class={eyebrowClasses}>Free · Open source · Field-ready</span>
 
         <h1 class={wordmarkClasses}>
             {"NAHPU".split("").map((letter, index) => (
@@ -264,7 +264,7 @@ const bibtex = `@misc{Handika_2026,
         </p>
 
         <p class={taglineClasses}>
-            Digital catalog for the extended specimen era
+            A digital catalog for the extended specimen era
         </p>
 
         <p class={heroBodyClasses}>
@@ -545,7 +545,7 @@ const bibtex = `@misc{Handika_2026,
         </div>
     </section>
 
-    <!-- Manuscript ---------------------------------------------------------->
+    <!-- Preprint ------------------------------------------------------------>
     <section
         id="cite"
         class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
@@ -553,41 +553,41 @@ const bibtex = `@misc{Handika_2026,
         <div class={sectionInnerClasses}>
             <header class="nh-reveal max-w-3xl">
                 <p class={kickerClasses}>Publication</p>
-                <h2 class={sectionTitleClasses}>Read and cite the manuscript</h2>
+                <h2 class={sectionTitleClasses}>Read and cite the preprint</h2>
                 <p class={sectionLeadClasses}>
-                    The manuscript describes the design and features of NAHPU
+                    The preprint describes the design and features of NAHPU
                     and its testing in the field, including 115 days on Sumatra
                     without on-site electricity. If you use NAHPU in your
-                    research, please cite the manuscript. Citations document
+                    research, please cite the preprint. Citations document
                     how NAHPU is used and support its continued development.
                 </p>
             </header>
 
             <figure class="nh-reveal mt-10 m-0 rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/70 p-6 sm:p-8 dark:border-silver-tree-700/70 dark:bg-silver-tree-950/50">
                 <blockquote class="m-0 text-sm leading-relaxed text-silver-tree-800 dark:text-silver-tree-200">
-                    {manuscript.authors} ({manuscript.year}).{" "}
+                    {preprint.authors} ({preprint.year}).{" "}
                     <span class="font-semibold text-silver-tree-900 dark:text-silver-tree-50">
-                        {manuscript.title}
+                        {preprint.title}
                     </span>
-                    . <em>{manuscript.venue}</em>.{" "}
+                    . <em>{preprint.venue}</em>.{" "}
                     <a
                         class={linkClasses}
-                        href={manuscriptUrl}
+                        href={preprintUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {manuscriptUrl}
+                        {preprintUrl}
                     </a>
                 </blockquote>
 
                 <div class="mt-6 flex flex-wrap gap-4">
                     <a
-                        href={manuscriptUrl}
+                        href={preprintUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         class={mainBtnClasses}
                     >
-                        Read the manuscript
+                        Read the preprint
                     </a>
                     <button
                         type="button"
