@@ -1,0 +1,292 @@
+---
+title: Simbiontes
+sidebar:
+  label: Simbiontes
+  order: 7
+---
+
+Un simbionte es cualquier organismo que vive sobre o dentro de un espécimen
+hospedador, ya sea parasítico, parasitoide, mutualista, comensal, forético o
+desconocido.
+
+Cada simbionte tiene su propio UUID y está vinculado a su hospedador. El vínculo registra cómo interactúan, dónde se encontró el
+simbionte en el hospedador y si la asociación está confirmada. Los simbiontes
+están disponibles en todos los formatos de catálogo.
+
+## Dónde se registran los simbiontes en el formulario del espécimen {% #where-symbionts-live-in-the-specimen-form %}
+
+Los simbiontes ocupan dos lugares en un registro de espécimen:
+
+- **Campos de examen**, al final del formulario de mediciones, que indican si
+  se examinó el hospedador en busca de simbiontes y si se encontró alguno.
+  Consulte [Registrar un examen](#record-an-examination).
+- **La pestaña de simbiontes**, el icono de insecto en la tarjeta
+  `Partes del espécimen`, que contiene un registro por cada lote o individuo
+  de simbionte. Consulte [Agregar un registro de simbionte](#add-a-symbiont-record).
+
+Mantenga ambos actualizados. Un hospedador sin registros de simbiontes es
+ambiguo: puede que no se haya examinado, o que se haya examinado y no tuviera
+nada. Los campos de examen eliminan esa ambigüedad.
+
+## Antes de empezar {% #before-you-start %}
+
+Abra `Configuración` > `Especímenes` y desplácese hasta `Simbiontes`. Estas
+listas empiezan con valores predeterminados editables y las comparten todos
+los proyectos del dispositivo:
+
+| Configuración | Valores predeterminados |
+| --- | --- |
+| `Identificación` | `Prefijo del ID de simbionte` y `Número del ID de simbionte`, que usa `Número nuevo`. |
+| `Tipos de interacción` | `Parasitic`, `Parasitoid`, `Mutualistic`, `Commensal`, `Phoretic`, `Unknown` |
+| `Categorías` | `Ectosymbiont`, `Endosymbiont`, `Mesosymbiont` |
+| `Métodos de detección` | `Visual inspection`, `Combing`, `Brushing`, `Ethanol wash`, `Dissection`, `Blood smear`, `Fecal flotation`, `Molecular screening` |
+| `Métodos de preparación` | `Whole specimen`, `Fluid preserved`, `Slide mounted`, `Pinned`, `Dried`, `Frozen` |
+| `Ubicaciones anatómicas` | 24 sitios, de `Head` a `Body cavity`; consulte [Ubicaciones anatómicas](#anatomical-locations). |
+| `Almacenamiento` | `Vial`, `Cryovial`, `Slide`, `Envelope`, `Jar` |
+| `Tratamientos` | Los tratamientos predeterminados del espécimen, más `RNAlater` y `Glycerol` |
+
+Acuerde estas listas antes del trabajo de campo y compártalas con la
+[transferencia de configuraciones de usuario](/es/how-to-recipes/protect-and-collaborate/transfer-user-configs/)
+para que todos los dispositivos registren los mismos valores. El asistente de
+configuración también tiene un paso de vocabulario `Simbiontes`.
+
+Registre también los taxones de simbiontes que espera encontrar en el
+[registro de taxones](/es/usages/taxon/). El taxón de un simbionte se elige del
+mismo registro que los taxones de los hospedadores y puede ser de un rango
+superior, como un orden o una familia, cuando el simbionte aún no se ha
+identificado hasta especie.
+
+## Registrar un examen {% #record-an-examination %}
+
+Al final del formulario de mediciones, la sección `Simbiontes` tiene tres
+campos:
+
+| Campo | Notas |
+| --- | --- |
+| `Simbiontes examinados` | `Sí` cuando se examinó el hospedador. Déjelo vacío cuando nadie lo revisó. |
+| `Simbiontes detectados` | `Sí` cuando se encontró algo, `No` cuando el hospedador se examinó y no tenía nada. |
+| `Observaciones de detección` | Cómo y con qué minuciosidad se examinó el hospedador, o por qué no se examinó. |
+
+Para un hospedador sin simbiontes, registre `Simbiontes examinados: Sí` y
+`Simbiontes detectados: No`. No cree un registro de simbionte vacío para
+indicar que no se encontró nada.
+
+## Agregar un registro de simbionte {% #add-a-symbiont-record %}
+
+{% steps %}
+
+1. Abra el espécimen hospedador y seleccione el icono de insecto en la
+   tarjeta `Partes del espécimen`.
+2. Seleccione `Agregar simbionte`.
+3. Elija el `Taxón del simbionte` o déjelo como `No identificado`. Use el
+   botón de agregar junto al campo para registrar un taxón que aún no está en
+   la lista.
+4. Elija el `Tipo de interacción`. Debajo aparece una definición de una línea.
+5. Complete lo que sepa del resto del formulario y guarde.
+{% /steps %}
+
+Un registro nuevo empieza con el preparador del hospedador como `Colector`, o
+con su catalogador si no hay preparador, y con la fecha de recolecta del
+hospedador como `Fecha de colecta`, o con su fecha de preparación si no hay
+fecha de recolecta. Cámbielos cuando otra persona barrió, peinó o necropsió
+al hospedador, o cuando el simbionte se tomó otro día.
+
+## Formulario del simbionte {% #symbiont-form %}
+
+El formulario se agrupa en secciones. `Preparación y preservación` y
+`Curaduría` aparecen tras `Mostrar más`, al igual que los campos
+personalizados que no se muestran de forma predeterminada.
+
+### ID {% #ids %}
+
+| Campo | Notas |
+| --- | --- |
+| `UUID` | Lo asigna NAHPU y nunca cambia. Se convierte en el `occurrenceID` del simbionte. |
+| `ID del simbionte` | ID opcional para el vial, el portaobjetos o el sobre. El menú de opciones ofrece `Escanear QR/código de barras` en dispositivos con cámara, `Número nuevo` y `Configuración`. |
+| `Individuos` | Solo para un lote de peces con individuos registrados. Vincula el simbionte con el pez del que procede. Consulte [Peces](/es/usages/specimens/measurements/fishes/#parts-and-symbionts). |
+
+`Número nuevo` une el prefijo del ID de simbionte y el siguiente número, como
+`P` y `101` para `P101`, y luego aumenta el número. Solo está disponible
+mientras el campo está vacío. `Configuración`, en el mismo menú, edita el
+prefijo y el siguiente número sin salir del formulario.
+
+### Detalles del simbionte {% #symbiont-details %}
+
+| Campo | Notas |
+| --- | --- |
+| `Taxón del simbionte` | Un taxón registrado de cualquier rango, o `No identificado`. |
+| `Tipo de interacción` | Cómo se relaciona el simbionte con su hospedador. Consulte [Tipos de interacción y categorías](#interaction-types-and-categories). |
+| `Categoría` | Dónde vive un parásito o parasitoide en su hospedador. Solo aparece para esos tipos de interacción. |
+| `Ubicación anatómica` | Dónde, sobre o dentro del hospedador, se encontró el simbionte. La categoría limita la lista. |
+| `Cantidad` | Número de individuos de simbionte en este registro. |
+| `Etapa de vida` | `Egg`, `Larva`, `Nymph`, `Pupa`, `Juvenile`, `Adult`, `Cyst`, `Oocyst`, `Trophozoite`, `Sporozoite`, `Merozoite` o `Gametocyte`. Esta lista es fija. |
+| `Estado de la asociación` | `Confirmed` cuando se sabe que el simbionte pertenece a este hospedador, `Suspected` cuando puede ser un contaminante, como un ácaro de una bolsa o trampa compartida. |
+
+### Colecta e identificación {% #collection--identification %}
+
+| Campo | Notas |
+| --- | --- |
+| `Colector` | Quién recuperó el simbionte del hospedador. |
+| `Método de detección` | Cómo se encontró, como `Combing` o `Blood smear`. |
+| `Fecha de colecta`, `Hora de colecta` | Cuándo se recuperó del hospedador. |
+| `Determinador` | Quién identificó el simbionte; a menudo un especialista que trabaja después. |
+| `Fecha de determinación` | Cuándo se identificó. |
+| `Método de determinación` | Cómo se identificó. Usa la misma lista que los `Métodos de identificación` del espécimen. |
+
+El colector y el determinador se eligen del personal del proyecto, como en los
+especímenes. Mantenerlos separados permite que un equipo de campo registre lo
+que recolectó mientras un especialista agrega la identificación después.
+
+### Preparación y preservación {% #preparation--preservation %}
+
+| Campo | Notas |
+| --- | --- |
+| `Método de preparación` | Cómo se preparó el simbionte, como `Slide mounted`. |
+| `Tratamiento` | Conservante o fijador, como `RNAlater`. |
+| `Fecha de preservación`, `Hora de preservación` | Cuándo se preservó. |
+
+### Curaduría {% #curation-fields %}
+
+| Campo | Notas |
+| --- | --- |
+| `Almacenamiento` | Tipo de recipiente, como `Cryovial`. |
+| `Ubicación de almacenamiento` | Posición en el congelador, gabinete, estante o caja. |
+| `Colección permanente del museo`, `Préstamo del museo` | El museo que conserva el simbionte y el que lo recibe en préstamo. |
+| `Observaciones` | Cualquier otra información sobre este simbionte. |
+
+Los campos personalizados ubicados en la sección de simbiontes de los
+[campos personalizados](/es/how-to-recipes/prepare/configure-custom-fields/)
+aparecen al final del formulario.
+
+## Tipos de interacción y categorías {% #interaction-types-and-categories %}
+
+`Tipo de interacción` describe la relación ecológica. Los valores
+predeterminados son:
+
+| Tipo de interacción | Significado |
+| --- | --- |
+| `Parasitic` | Vive sobre o dentro del hospedador y lo perjudica. |
+| `Parasitoid` | Se desarrolla en el hospedador y acaba matándolo. |
+| `Mutualistic` | El simbionte y el hospedador se benefician. |
+| `Commensal` | El simbionte se beneficia; el hospedador no se ve afectado. |
+| `Phoretic` | Usa al hospedador solo para transportarse. |
+| `Unknown` | Se desconoce la relación con el hospedador. |
+
+Las formas sustantivas, como `Parasitism`, `Mutualism`, `Commensalism` y
+`Phoresy`, se reconocen como los mismos tipos, de modo que los valores
+importados de otras fuentes reciben el icono y el comportamiento correctos.
+Puede agregar sus propios tipos de interacción en la configuración; se
+guardan y exportan tal como se ingresan.
+
+`Categoría` describe dónde vive el simbionte respecto al hospedador:
+
+- `Ectosymbiont`: en el exterior, como pulgas, piojos y garrapatas.
+- `Endosymbiont`: en el interior, como helmintos del intestino o parásitos
+  sanguíneos.
+- `Mesosymbiont`: en aberturas y cavidades conectadas con el exterior, como
+  el oído, la cavidad nasal o las branquias.
+
+La categoría solo aparece cuando el tipo de interacción es `Parasitic` o
+`Parasitoid`. Si cambia el tipo de interacción a cualquier otro, la categoría
+se borra al guardar. Un registro sin tipo de interacción conserva su
+categoría, ya que los registros importados o creados antes de que existieran
+los tipos de interacción pueden tener solo una categoría.
+
+Si iba a dejar `Tipo de interacción` vacío, elija `Unknown` cuando la relación
+realmente se desconoce. Un valor vacío significa que no se registró.
+
+## Ubicaciones anatómicas {% #anatomical-locations %}
+
+Elegir una categoría limita `Ubicación anatómica` a los sitios que le
+corresponden:
+
+| Categoría | Ubicaciones ofrecidas |
+| --- | --- |
+| `Ectosymbiont` | Head, Ear, Body, Dorsum, Venter, Limb, Tail, Skin, Fur, Feathers, Gill |
+| `Endosymbiont` | Nasal cavity, Oral cavity, Blood, Stomach, Small intestine, Large intestine, Cecum, Liver, Lung, Heart, Kidney, Muscle, Body cavity |
+| `Mesosymbiont` | Ear, Nasal cavity, Oral cavity, Gill, Skin |
+
+Sin categoría, o con una categoría que usted agregó, se ofrecen todas las
+ubicaciones. Las ubicaciones que agrega en la configuración nunca se filtran.
+Los valores de categoría antiguos, como `Ectoparasite`, `Endoparasite` y
+`Mesoparasite`, filtran la lista de la misma forma que sus nombres de
+simbionte.
+
+## Lista de simbiontes {% #symbiont-list %}
+
+La pestaña de simbiontes muestra una fila por registro. El icono indica el
+tipo de interacción, con un icono de ácaro para los registros sin tipo o con
+un tipo personalizado. El título es el taxón del simbionte, o
+`Simbionte no identificado`, seguido de la cantidad. El subtítulo muestra los
+individuos de peces vinculados, el tipo de interacción, la categoría, la
+ubicación anatómica, la etapa de vida y el método de preparación.
+
+Seleccione el botón de edición de una fila para cambiarla. Para eliminar
+registros, active la selección, marque los registros y confirme la
+eliminación. Al eliminar el espécimen hospedador también se eliminan sus
+simbiontes.
+
+## Curaduría {% #curation %}
+
+La [curaduría de tejidos](/es/usages/curation/tissue-curation/) puede registrar
+tubos de simbiontes en cajas de almacenamiento junto con los tejidos. Active
+`Incluir simbiontes` en su configuración para buscar simbiontes por ID de
+simbionte o por el ID de campo de su hospedador, y use
+`Categoría de simbionte` para limitar la búsqueda. Las celdas de la caja
+marcan los simbiontes con una `P` inicial para distinguirlos de las partes.
+
+## Exportación y análisis {% #export-and-analysis %}
+
+| Dónde | Qué obtiene |
+| --- | --- |
+| [Exportar registros](/es/usages/export/export-records/) | Tipo de registro `Simbiontes`: una fila por simbionte, seguida del registro de recolecta de su hospedador. Las exportaciones de especímenes de catálogos con simbiontes también agregan los campos de examen y columnas de simbiontes. |
+| Tabla de datos | La tabla `Simbiontes` muestra el ID del simbionte, el taxón, el tipo de interacción, la categoría, la cantidad y la ubicación anatómica, y permite editar en lote. |
+| [Plantillas de documentos](/es/usages/export/export-documents/) | Tipo de registro `Simbionte`, para etiquetas de viales y de portaobjetos. |
+| [Estadísticas](/es/usages/export/export-statistics/) | Medida `Simbiontes`, agrupada por taxón del simbionte, categoría, ubicación anatómica o especie hospedera. Se ofrece cuando el proyecto tiene un registro de simbionte. |
+| [Paquetes de datos](/es/usages/export/export-bundles/) | Las tablas `symbiont`, `symbiontDetection` y `symbiontIndividual`, más `vocabularies/symbionts.csv` con su configuración de simbiontes. |
+
+Las [fusiones de proyectos](/es/how-to-recipes/protect-and-collaborate/merge-project/)
+y las importaciones emparejan los simbiontes por UUID. Un UUID de simbionte que
+ya está en la base de datos se marca para revisión en lugar de importarse dos
+veces.
+
+### Darwin Core {% #darwin-core %}
+
+En un [archivo Darwin Core](/es/how-to-recipes/export-and-print/create-darwin-core-archive/),
+cada simbionte se convierte en su propia ocurrencia, vinculada a su
+hospedador mediante una fila OrganismInteraction:
+
+| Campo de NAHPU | Darwin Core |
+| --- | --- |
+| `UUID` | `occurrenceID` y `organismInteractionID` |
+| `ID del simbionte` | `catalogNumber` |
+| `Taxón del simbionte` | `taxonID`, `scientificName` y los rangos superiores |
+| `Colector` | `recordedBy`, `recordedByID` |
+| `Determinador`, `Fecha de determinación`, `Método de determinación` | `identifiedBy`, `identifiedByID`, `dateIdentified`, `identificationType` |
+| `Cantidad`, `Etapa de vida` | `individualCount`, `lifeStage` |
+| `Método de preparación`, `Tratamiento` | `preparations` |
+| `Fecha de colecta`, `Hora de colecta` | `eventDate`, `eventTime` |
+| `Método de detección` | `samplingProtocol` |
+| `Observaciones` | `occurrenceRemarks` |
+| `Tipo de interacción` | `organismInteractionType`; un registro sin tipo usa su categoría |
+| `Categoría`, `Estado de la asociación` | `organismInteractionDescription`, cuando hay un tipo de interacción |
+| `Ubicación anatómica` | `relatedOrganismPart` |
+| `Individuos` | Una aserción de ocurrencia `host individual` |
+
+La ocurrencia del simbionte comparte el `eventID` del hospedador, usa
+`basisOfRecord` `PreservedSpecimen` y nombra a su hospedador en
+`associatedOccurrences`. Los campos de almacenamiento, museo y fecha de
+preservación no tienen un término Darwin Core y permanecen en el paquete de
+datos de NAHPU. Consulte la
+[auditoría Darwin Core](/en/contributing/code/database/#symbionts-and-specimen-material)
+(en inglés) para ver todas las columnas.
+
+## Registros de versiones anteriores {% #records-from-older-versions %}
+
+Antes de registrar simbiontes, NAHPU solo registraba parásitos. Al actualizar,
+esos registros pasan automáticamente a simbiontes: cada registro existente
+recibe el tipo de interacción `Parasitic`, y sus personas pasan a ser un
+colector y un determinador. Los valores de categoría antiguos, como
+`Ectoparasite`, siguen funcionando. Las exportaciones, plantillas,
+preajustes y configuraciones que todavía usan nombres `parasite` se leen con
+sus nombres de simbionte.
