@@ -21,229 +21,184 @@ sidebar:
 {% pin id="H" label="Environmental data" large=[80.5, 63.8] small2=[23.8, 64.5] /%}
 {% /screenshots %}
 
-Collecting events help you keep track of activity, collection methods, personnel, environmental,
-and astronomy data for a period of work at a site. Specimen records link to a
-collecting event, not directly to a site, so the event is the bridge between a
-specimen and the site, coordinate, method, and collector context.
+Collecting events record the activity, collection methods, personnel,
+environmental conditions, astronomy, and media for a period of work at a site.
+Specimens link to a collecting event rather than directly to a site, so the
+event connects each specimen to its site, coordinate, method, and collector.
 
 ## Setting up events
 
-The NAHPU default list for `Primary activities` is `Collecting`, `Recording`,
-and `Observing`. `Other` is deliberately not included, but you can add it or
-any protocol-specific activity. Existing activity values remain available even
-when they are not in the configured list.
+Configure event controlled vocabularies and visible environmental fields before
+fieldwork in `Settings` > `Events`:
 
 {% steps %}
 
-1. Navigate to the dashboard.
-2. Tap/click the hamburger menu in the top left corner.
-3. Select `Settings`.
-4. Select `Events`.
-5. Edit primary activities, collection methods, and personnel roles to match
-   your field scenario.
-6. Under `Environmental data fields`, select the built-in fields that should
-   appear in the event form. The defaults are ambient temperature, ambient
-   humidity, cloud cover, rainfall, and notes.
+1. Open `Settings` from the home screen menu, the project `Dashboard` menu, or
+   the `Tools` dock.
+2. Select `Events`.
+3. Customize the controlled vocabularies for `Primary Activities`,
+   `Collection Methods`, and `Personnel Roles`.
+4. Under `Environmental data fields`, toggle which built-in fields appear on
+   event forms (defaults: `Ambient temperature`, `Ambient humidity`,
+   `Cloud cover`, `Rainfall`, and `Notes`).
 
 {% /steps %}
 
+**Default controlled vocabularies:**
+
+- **`Primary Activities`**: `Collecting`, `Recording`, and `Observing`. `Other`
+  is omitted by default, but you can add it or any protocol-specific activity.
+  Previously stored values stay selectable even if removed from the vocabulary.
+- **`Collection Methods`**: `Hands`, `Mist net`, `Sweep net`, `Snap trap`,
+  `Cage trap`, `Pitfall`, `Malaise trap`, `Light trap`, `Beating sheet`,
+  `Aspirator`, `Local snare`, `Pellet gun`, and `Other`.
+- **`Personnel Roles`**: `Leader` and `Helper` (add roles such as driver,
+  recorder, or observer as needed).
+
 ## Managing collecting events
 
-Open an event and use its three-dot menu to manage the record.
+Open an event and use its three-dot menu to manage records:
 
 | Action | What it does |
 | --- | --- |
 | `Create event` | Adds a new event. |
-| `Duplicate event` | Copies the site, times, activity, notes, ID suffix, collection methods, and personnel. The dates move forward one day, and the new event gets an empty environmental-data record. |
-| `Sort records` | Chooses the field and direction for the event list. |
-| `Show QR` | Displays the event for another device to scan. |
-| `Export event` | Saves the event and its related data as JSON, or as a ZIP or TAR.GZ archive when it has media. |
-| `Scan QR` | Creates or replaces an event from an event QR code. Available on devices with a camera scanner (Android, iOS, macOS, and web). |
+| `Duplicate event` | Copies site, times, activity, notes, ID suffix, collection methods, and personnel; advances `Start Date` and `End Date` by one day and creates a blank environmental-data record. |
+| `Sort records` | Chooses the sort field and direction for the event list. |
+| `Show QR` | Displays the event as a QR code for another device to scan. |
+| `Export event` | Saves the event as JSON, or as a ZIP or TAR.GZ archive when it includes media. |
+| `Scan QR` | Creates or replaces an event from an event QR code (Android, iOS, macOS, and web). |
 | `Import event` | Creates or replaces an event from an exported JSON file or archive. |
-| `Delete record` | Deletes the event with its collection methods, event personnel, environmental data, and media, and detaches its associated data. A specimen that uses the event must be moved or deleted first. |
-| `Delete all records` | Does the same for every event in the project. |
+| `Delete record` | Deletes the event with its collection methods, event personnel, environmental data, and media, and detaches associated data. Blocked while any specimen references the event. |
+| `Delete all records` | Deletes every event in the project after referencing specimens have been moved or deleted. |
 
-When importing an event, choose whether it creates a new event or updates an
-existing one, then confirm the referenced site and personnel.
-
-The default collection methods are `Hands`, `Mist net`, `Sweep net`,
-`Snap trap`, `Cage trap`, `Pitfall`, `Malaise trap`, `Light trap`,
-`Beating sheet`, `Aspirator`, `Local snare`, `Pellet gun`, and `Other`. The
-default personnel roles are `Leader` and `Helper`. Add values that fit your
-protocol, such as harp trap, visual encounter survey, driver, recorder, or
-observer.
+When importing an event, choose whether to create a new event or update an
+existing one, then confirm the linked site and personnel.
 
 ## Creating a new event
 
 {% steps %}
-1. Navigate to the event page using the bottom navigation bar.
 
-2. Use the add icon {% ref id="A" /%} at the top right corner to create a new event.
-
-    You can also use the three dot menu icon and tap on `Create event`.
+1. Open the `Events` page from the navigation bar.
+2. Select the add icon {% ref id="A" /%} at the top right (or open the
+   three-dot menu and choose `Create event`).
 
     {% aside type="tip" %}
 
-    You can minimize repeated entry by duplicating an event. Tap/click the
-    three-dot menu, then choose `Duplicate event`. NAHPU copies the site, times,
-    activity, notes, collection methods, and personnel, increments the `Start Date` {% ref id="D" /%} and
-    `End Date` by one day, and creates a new empty environmental-data record.
+    For consecutive days at the same site, open the three-dot menu and choose
+    `Duplicate event`. NAHPU copies the site, times, activity, notes, methods,
+    and personnel, shifts the dates forward by one day, and starts a fresh
+    environmental-data record.
 
     {% /aside %}
 
-3. Select the `Site ID` {% ref id="C" /%}.
-
-4. Add the `Start Date` and `End Date`. Future dates cannot be chosen.
-
-    The `Event ID` {% ref id="B" /%} is generated from `{Site ID}-{Start Date}`.
-
-5. Edit the `Event ID` (optional).
-
-    If you have multiple events with the same `Site ID` and `Start Date`, add an
-    ID suffix. This is useful when you separate day and night work, run multiple
-    activities at the same site, or need to distinguish repeated events on the
-    same date.
-
-6. Add `Start Time` and `End Time`.
-
-7. Add `Primary activity` {% ref id="E" /%}.
-
-    The defaults are `Collecting`, `Recording`, and `Observing`. `Other` is not
-    a default; add it in `Settings` > `Events` if your protocol needs it. For
-    many specimen workflows this will be `Collecting`, but create separate
-    events when different activities need their own collection methods, personnel, or
-    environmental context.
+3. Select `Site ID` {% ref id="C" /%}.
+4. Enter `Start Date` and `End Date` {% ref id="D" /%} (future dates cannot be
+   chosen). NAHPU generates `Event ID` {% ref id="B" /%} as
+   `{Site ID}-{Start Date}`.
+5. Optionally tap the edit icon beside `Event ID` to add an `ID suffix` when
+   multiple events share the same site and start date (for example, day vs.
+   night sessions).
+6. Enter `Start Time` and `End Time`.
+7. Choose `Primary activity` {% ref id="E" /%} and add any activity `Notes`.
 
 {% /steps %}
 
 ## Event details
 
-The `Event Identity` card stores the core event identity and timing:
+`Event Identity` stores `Event ID`, `Site ID`, `Start Date`, `End Date`,
+`Start Time`, and `End Time`.
 
-- `Event ID`: generated from site ID, start date, and optional suffix.
-- `Site ID`: site where the event occurred.
-- `Start Date` and `End Date`: event date range.
-- `Start Time` and `End Time`: event time range.
-
-For mammal projects, the default start date is set to the previous day and the
-default time picker starts at `07:00`, which supports overnight trap checks. For
-other catalog formats, date and time pickers default to the current date/time.
+When the active catalog format is `Mammalogy`, the `Start Date` picker defaults
+to the previous day and time pickers start at `07:00` to match overnight trap
+checks. For other catalog formats, date and time pickers default to the current
+date and time.
 
 ## Activity
 
-The `Activity` card stores the broad purpose of the event.
+The `Activity` card records the broad purpose of the event:
 
-- `Primary activity`: selected from the editable controlled vocabulary in
-  event settings. Stored legacy values are also offered so existing data is
-  not lost.
-- `Notes`: free-text notes about the activity, secondary activities, protocol
-  details, or why `Other` was selected.
+- **`Primary activity`** {% ref id="E" /%}: chosen from the controlled
+  vocabulary in `Settings` > `Events` (existing stored values remain selectable
+  even if no longer in the vocabulary).
+- **`Notes`**: free-text details about protocols, secondary activities, or why
+  `Other` was used.
+
+Create separate events whenever different activities need their own collection
+methods, personnel, or environmental context.
 
 ## Adding collection methods
 
+An event can hold multiple collection-method records so specimens can reference
+the exact gear used.
+
 {% steps %}
 
-1. Select `Add collection method` {% ref id="F" /%} to create a new
-    collection method.
-
-2. Select a method.
-
-3. Add `Brand and Model` when the method uses specific equipment.
-
-4. Add `Count`.
-
-    This is the number of tools, traps, nets, recorders, or other units used.
-
-5. Add `Size` when applicable.
-
-6. Add `Notes` for method-specific details.
+1. Select `Add collection method` {% ref id="F" /%}.
+2. Choose `Method` (from the controlled vocabulary in `Settings` > `Events`)
+   and enter `Count` (number of traps, nets, recorders, or other units).
+3. Under `Method details`, optionally add `Brand and Model`, `Size`, and
+   `Notes`.
+4. Save the method.
 
 {% /steps %}
 
-Collection method records are stored separately from the event so one event
-can include multiple methods. Each collection method contains:
-
-- `Method`: user-defined collection method.
-- `Brand and Model`: equipment brand/model when relevant.
-- `Count`: number of tools or units.
-- `Size`: size of the tool or setup.
-- `Notes`: any method-specific notes.
-
-Specimen capture records can later select one of these event collection methods as the
-specimen's `Method`.
+Use the edit icon on any row to update it, or use `Select` to delete methods.
+Specimen capture records can pick any of the event's methods as `Method`.
 
 ## Adding collecting personnel
 
-The event panel has three icon tabs: people for personnel, a cloud for
-environmental data, and storage for associated data. Use the personnel tab to
-record everyone involved in the event.
+The event tab panel has three icon tabs: **people** (`Event Personnel`),
+**cloud** (`Environmental Data`), and **storage** (`Associated Data`). Events
+also include a media section for photos, video, audio, and files.
 
 {% steps %}
 
-1. Open the personnel tab (people icon) in the event panel.
-2. Select `Add personnel` {% ref id="G" /%}.
-3. Select a `Personnel` entry from the project personnel list.
-4. Select a `Role`.
+1. Open the people tab in the event panel and select `Add personnel` {% ref id="G" /%}.
+2. Choose a person from `Personnel` (project personnel list).
+3. Choose a `Role` (from the controlled vocabulary in `Settings` > `Events`).
 
 {% /steps %}
 
-Personnel roles are user-defined in event settings. Add anyone who contributed
-to the event, including collectors, leaders, helpers, drivers, observers,
-recorders, or people who assisted with logistics. Specimen capture records can
-later select an event personnel entry as the specimen's `Collector`.
+Use `Select` to remove personnel rows from the event. Include everyone who
+contributed (collectors, leaders, helpers, drivers, observers, or recorders).
+Specimen capture records select their `Collector` from this event personnel
+list.
 
 ## Environmental data and astronomy {% #environmental-data-and-astronomy %}
 
-NAHPU creates one environmental-data record {% ref id="H" /%} for each collecting event. In
-`Settings` > `Events`, select which built-in fields appear in the form. Hiding
-a field changes only the form: previously stored values remain in the database
-and in exports.
+NAHPU creates one environmental-data record {% ref id="H" /%} per collecting
+event. Toggle visible built-in fields in `Settings` > `Events`; hiding a field
+only changes the form and never deletes stored values or removes them from
+exports.
 
-Enter astronomy values from observations or a documented source; NAHPU does
-not calculate sunrise, sunset, or moon phase. Use the project's local-time
-convention and leave unmeasured values empty. Fields save as you edit; check
-any validation message before leaving the form.
+Enter astronomy values from field observations or a documented source—NAHPU
+does not calculate sunrise, sunset, or moon phase. Record times in the project's
+local time zone and leave unmeasured fields blank. Values save as you edit;
+check any validation message before leaving the form.
 
-Available built-in fields include:
+| Group | Built-in fields | Notes & units |
+| --- | --- | --- |
+| Temperature | `Day Lowest`, `Day Highest`, `Night Lowest`, `Night Highest`, `Ambient temperature` | Measured in `°C`. |
+| Humidity | `Average`, `Dew Point`, `Ambient humidity` | Humidity in `%` (0–100); dew point in `°C`. |
+| Weather | `Cloud cover (oktas)`, `Rainfall` | Cloud cover `0` (clear) to `8` (overcast), or `9` (obscured); rainfall in `mm`. |
+| Aquatic Data | `Water temperature`, `pH`, `Dissolved oxygen`, `Dissolved oxygen saturation`, `Conductivity`, `Flow velocity` | `°C`, `pH` (0–14), `mg/L`, `%` (0–500), `µS/cm`, and `m/s`. |
+| Astronomy | `Sunrise`, `Sunset`, `Moon phase` | Local times; 8 standard moon phases from `New Moon` through `Waning Crescent`. |
+| Notes & Custom fields | `Notes`, custom fields | Add installation-wide or project-scoped fields with `Add custom field` or `Manage custom fields`. |
 
-- `Day Lowest` and `Day Highest`: daytime temperature range in degrees Celsius.
-- `Night Lowest` and `Night Highest`: nighttime temperature range in degrees
-  Celsius.
-- `Average`: average humidity percentage.
-- `Dew Point`: dew point temperature.
-- `Cloud cover (oktas)`: a code from `0` (clear) through `8` (fully overcast), or `9`
-  when the sky is obscured. One okta represents one eighth of the visible sky.
-- `Rainfall`, `Ambient temperature`, and `Ambient humidity`: conditions at the
-  event.
-- `Water temperature`, `pH`, `Dissolved oxygen`,
-  `Dissolved oxygen saturation`, `Conductivity`, and `Flow velocity`: aquatic
-  measurements. Settings show each field's unit, such as `mg/L` for dissolved
-  oxygen, `%` for saturation, and `µS/cm` for conductivity.
-- `Sunrise` and `Sunset`: local sunrise and sunset times.
-- `Moon phase`: one of `New Moon`, `Waxing Crescent`, `First Quarter`,
-  `Waxing Gibbous`, `Full Moon`, `Waning Gibbous`, `Last Quarter`, or
-  `Waning Crescent`.
-- `Notes`: additional weather, habitat, or astronomy notes.
-
-Use `Add custom field` or `Manage custom fields` in this section for
-installation-wide or project-specific environmental fields. Their values
-belong to the individual event, are not filtered by specimen catalog format,
-and are included in event, specimen, document, Darwin Core, record-exchange,
-and project-transfer exports.
-
-Environmental data is not copied when duplicating an event. The duplicated
-event gets a blank record so you can enter the correct conditions for that date.
+Environmental custom fields belong to each event, are not filtered by catalog
+format, and are included in event, specimen, document, Darwin Core,
+record-exchange, and project-transfer exports. Environmental data is never
+copied when duplicating an event.
 
 ## How specimen records use events
 
-When you create or edit a specimen, the `Capture Records` card pulls data from
-collecting events:
+A specimen's `Capture records` card pulls its context from the collecting event:
 
-- `Site ID` filters the available event IDs.
+- `Site ID` filters available events.
 - `Event ID` links the specimen to the event.
 - `Method` comes from the event's collection methods.
-- `Collector` comes from the event personnel list.
-- `Coordinate ID` comes from coordinates associated with the event site.
+- `Collector` comes from the event's personnel list.
+- `Coordinate ID` comes from coordinates on the event's site.
 
-Changing a specimen's event clears event-dependent fields such as method,
-collector, and coordinate, while preserving the specimen's capture date and time.
+Changing a specimen's event clears event-dependent fields (`Method`,
+`Collector`, and `Coordinate ID`) while keeping the capture date and time.

@@ -13,12 +13,12 @@ sidebar:
 {% pin id="B" label="Tamaño de página" large=[23.8, 64.2] small=[67.4, 67.1] /%}
 {% pin id="C" label="Vista previa" large=[82.2, 17.7] small=[81, 16.1] /%}
 {% pin id="D" label="Exportar documentos" large=[59, 93.2] small=[72.6, 92.3] /%}
-{% pin id="E" label="Gestionar preajustes" large=[32.3, 46.9] small=[52.5, 51.3] /%}
+{% pin id="E" label="Administrar ajustes predefinidos" large=[32.3, 46.9] small=[52.5, 51.3] /%}
 {% /screenshots %}
 
-Use `Exportar documentos` para imprimir registros de NAHPU en PDF: etiquetas de
-especímenes, rótulos de tejido, hojas de catálogo, libretas de campo y otros
-documentos con formato. Para una tabla de datos, use
+Use `Exportar documentos` para generar PDF a partir de registros de NAHPU:
+etiquetas de especímenes, rótulos de tejidos, hojas de catálogo, libretas de
+campo y otros documentos formateados. Para una tabla de datos, use
 [Exportar registros](../export-records).
 
 ## Cómo se combinan las partes
@@ -29,317 +29,314 @@ Bloques rellenados + diseño de impresión = páginas
 Páginas + vista previa/exportación = PDF
 ```
 
-{% documentlayout locale="es" /%}
+{% documentlayout /%}
 
-| Parte | Decide | Ejemplo |
-|---|---|---|
-| **Plantilla** | Qué muestra una etiqueta o bloque y cómo se ve | Una etiqueta de cráneo de 50 × 20 mm |
-| **Diseño de impresión** | El papel, los márgenes, la cuadrícula, el orden y los saltos de página | 40 etiquetas de cráneo por hoja A4 |
-| **Registros** | Los valores que rellenan la plantilla | Los especímenes que usted selecciona |
+| Elemento | Define | Ejemplo |
+| --- | --- | --- |
+| **Plantilla de documento** | Qué muestra una etiqueta o bloque y cómo se ve | Una etiqueta de cráneo de 50 × 20 mm |
+| **Ajuste de diseño de impresión** | Papel, márgenes, cuadrícula, orden y saltos de página | 40 etiquetas de cráneo por hoja A4 |
+| **Registros** | Los valores que rellenan la plantilla | Los especímenes seleccionados |
 
-Las plantillas y los diseños de impresión son configuraciones guardadas que se
-reutilizan. Mantenga un diseño para cada trabajo de impresión que repita, como
-etiquetas de museo, rótulos de tejido u hojas de campo.
+Las plantillas de documentos y los diseños de impresión son ajustes guardados y
+reutilizables. Mantenga un diseño por cada tipo de impresión recurrente
+(etiquetas de museo, rótulos de tejidos o fichas de campo).
 
 ## Exportación rápida
 
 {% steps %}
 
-1. Abra la página `Panel`.
-2. Abra el menú del proyecto y seleccione `Exportar documentos`.
-3. Seleccione un `Perfil de diseño` {% ref id="A" /%}.
-4. Revise la configuración de la página, los bloques de plantilla y qué
-   registros están seleccionados.
-5. Seleccione `Vista previa` {% ref id="C" /%} y genere una vista previa. Mire
-   la primera y la última página.
-6. Escriba el `Nombre del archivo` y elija dónde guardarlo cuando se le pida.
-7. Seleccione `Exportar documentos` {% ref id="D" /%}.
-8. En un teléfono, use `Compartir` después de exportar para enviar el PDF.
+1. Abra el menú del proyecto y seleccione `Exportar documentos`.
+2. Seleccione un `Perfil de diseño` {% ref id="A" /%}. Si aún no tiene diseños
+   de impresión, cargue los predeterminados o seleccione
+   `Administrar ajustes predefinidos` {% ref id="E" /%} para crear uno.
+3. Revise la configuración de página, los bloques de plantilla y los registros
+   seleccionados.
+4. Seleccione `Vista previa` {% ref id="C" /%} y genere la vista previa,
+   revisando la primera y la última página.
+5. Escriba un nombre de archivo (opcionalmente active `Añadir fecha`) y elija
+   la carpeta de destino en escritorio.
+6. Seleccione `Exportar documentos` {% ref id="D" /%}. Al finalizar, puede
+   compartir el PDF, abrir la carpeta, guardar una copia o elegir
+   `Exportar otro`.
 
 {% /steps %}
 
 ## Crear una plantilla {% #create-a-template %}
 
-Abra `Settings` > `Documents` {% ref id="E" /%}, cambie a `Templates` y seleccione `Create
-new template`.
+Para ver un ejemplo guiado desde una plantilla en blanco hasta la hoja impresa,
+consulte el [Tutorial 4: Create a mammal voucher tag](/es/tutorials/export/voucher-tag/)
+(en inglés).
 
-1. Introduzca un `Template name` único y, si lo desea, una `Description` breve de hasta 80 caracteres.
-2. Elija el `Record type` correcto: `Specimen`, `Specimen Part`, `Site`,
-   `Collecting Event`, `Narrative` o `None`.
-3. Elija `1 sided` o `2 sided`. Una plantilla a dos caras tiene diseños
-   separados para Front y Back; el reverso se conserva en modo de una cara,
-   pero no se imprime hasta activar el modo de dos caras.
-4. Defina el ancho y alto de una etiqueta, rótulo o bloque, no de toda la hoja.
-5. Añada textos, imágenes, líneas y formas. Seleccione un elemento para ajustar
-   posición, tamaño, estilo, visibilidad, bloqueo y orden de superposición.
-6. Guarde con `Save template`; use `Save as...` para crear una variante.
+Abra `Configuración` > `Documentos` {% ref id="E" /%}, vaya a la pestaña de
+plantillas y cree una nueva:
 
-Abra el botón de ajustes del editor de plantillas para cambiar el nombre, la
-descripción o el número de caras de una plantilla guardada. Renombrar reapunta
-todos los diseños de impresión que usaban el nombre anterior, así que siguen
-funcionando.
+{% steps %}
 
-El tipo de registro controla los campos y registros disponibles. En plantillas
-de especímenes, elija el filtro de taxón antes de seleccionar campos propios de
-un taxón.
+1. Escriba un nombre único y una descripción opcional (hasta 80 caracteres).
+2. Elija el tipo de registro: `Espécimen`, `Partes del espécimen`,
+   `Simbiontes`, `Sitio`, `Evento de recolección`, `Narrativa` o
+   `Sin registros`.
+3. Elija `1 cara` o `2 caras`. Una plantilla de dos caras mantiene diseños
+   separados para el anverso y el reverso; al pasar a una cara, el reverso se
+   conserva guardado pero no se imprime.
+4. Defina el ancho y alto de una etiqueta, rótulo o bloque, no el de la hoja de
+   papel.
+5. Añada texto, imágenes, líneas y formas en el lienzo. Seleccione cualquier
+   elemento para ajustar posición, tamaño, estilo, visibilidad, bloqueo y orden
+   de apilamiento.
+6. Seleccione `Guardar plantilla` (o `Guardar como…` para crear una variación).
+
+{% /steps %}
+
+Use el botón `Configuración de la plantilla` del editor para cambiar nombre,
+descripción o cantidad de caras de una plantilla guardada. Renombrarla
+actualiza automáticamente todos los diseños de impresión que la usan.
+
+El tipo de registro determina los campos disponibles. En plantillas de
+especímenes, elija el filtro de taxón antes de insertar campos específicos del
+grupo.
 
 ## Rellenar una plantilla con datos de registros
 
-Un elemento de texto muestra datos del registro mediante placeholders, como
-`[specimen::fieldNumber]`, mezclados con texto normal. Insértelos con
-`Insertar campo` en lugar de escribirlos:
+Los elementos de texto muestran valores mediante marcadores como
+`[specimen::fieldNumber]` combinados con texto fijo. Insértelos con
+`Insertar campo` en lugar de escribirlos manualmente:
 
 ```text
 [taxonomy::genus] [taxonomy::specificEpithet] - [specimen::fieldNumber]
 ```
 
-Use la clave completa `table::field` en plantillas que reutilice; la forma
-corta, como `[fieldNumber]`, puede tomar el campo equivocado cuando dos tablas
-tienen un campo con el mismo nombre. El tipo de registro de la plantilla decide
-qué campos se ofrecen. En plantillas de espécimen, elija el filtro de taxón antes
-de elegir campos propios del taxón.
+Use claves completas `tabla::campo` en plantillas reutilizables; las formas
+cortas como `[fieldNumber]` pueden elegir la tabla equivocada si dos tablas
+comparten nombre de columna.
 
-Tres ajustes de un elemento de texto definen lo que se imprime:
+Tres controles definen la salida de un elemento de texto:
 
 | Ajuste | Úselo para | Ejemplo |
-|---|---|---|
-| `Tipo` y `Formato` | Dar formato al valor como fecha, coordenada, número, símbolo de sexo, lista, tabla anidada o etiqueta de código | `17 Feb 2016`, `♀`, `Scrotal` |
-| `Marcador sin contenido` | Elegir qué imprime un campo vacío: nada, `N/A`, `None`, la clave del campo o su propio texto | `[specimen::preparator??N/A]` |
-| `Salida condicional` | Poner entre corchetes, reemplazar o añadir texto según otros campos | `[82.5]` para un peso estimado |
+| --- | --- | --- |
+| Tipo de texto y `Formato` | Dar formato a fechas, coordenadas, números, símbolos de sexo, listas, tablas anidadas o códigos | `17 Feb 2016`, `♀`, `Scrotal` |
+| `Marcador sin contenido` | Definir qué imprimir cuando el campo está vacío: nada, `N/A`, `None`, la clave del campo o texto propio | `[specimen::preparator??N/A]` |
+| `Salida condicional` | Encerrar entre corchetes, reemplazar o añadir texto según condiciones | `[82.5]` para un peso estimado |
 
-`Lista anidada` imprime registros relacionados, como partes del espécimen o
-personal, como tabla o lista de tarjetas. `Texto codificado` convierte códigos
-guardados en etiquetas. Un sexo dudoso conserva su signo de interrogación en
-todos los formatos: `Female?`, `F?`, `♀?`.
+- La lista anidada imprime registros relacionados (partes o personal) como
+  tabla o tarjetas.
+- El texto codificado traduce códigos numéricos a etiquetas. El sexo incierto
+  conserva su signo de interrogación en cualquier formato: `Female?`, `F?`,
+  `♀?`.
+- Elija `Marcador sin contenido` antes de ajustar el diseño, ya que un espacio
+  en blanco y `N/A` ocupan anchos distintos.
+- Cree condiciones con el diálogo `Salida condicional` y previsualice un
+  registro que cumpla la condición y otro que no.
+- El reemplazo de texto reescribe valores tras el formato (ideal para
+  abreviaturas fijas); use condicionales cuando el cambio dependa de otro
+  campo.
 
-Elija el texto para valores vacíos antes de diseñar la etiqueta, porque un vacío
-y `N/A` ocupan espacios distintos. Cree condicionales con el diálogo
-`Salida condicional`, que escribe la sintaxis por usted, y previsualice un
-registro donde la condición se cumple y otro donde no.
+Consulte [Expresiones de exportación](../export-expressions) para ver todas las
+opciones, en especial [Salida condicional](../export-expressions#conditional-output)
+y [Tipos de texto y sus formatos](../export-expressions#text-types-and-their-formats).
 
-Todo esto funciona igual en las exportaciones tabulares. Para todas las
-opciones, ejemplos y la sintaxis condicional completa, vea
-[Expresiones de exportación](../export-expressions), en especial
-[Salida condicional](../export-expressions#conditional-output) y
-[Tipos de texto y sus formatos](../export-expressions#text-types-and-their-formats).
+## Diseñar con registros reales
 
-`Reemplazar texto` es otra forma de reescribir valores. Actúa después del
-formato y sirve para un reemplazo que se repite en muchos valores, como una
-abreviatura; use una condicional cuando el cambio depende de otro campo.
+Previsualice con registros que tengan los textos más largos, listas extensas,
+campos opcionales vacíos e identificadores largos; las muestras cortas ocultan
+desbordamientos.
 
-## Diseñar para datos reales
+Para narrativas o listas anidadas:
 
-Genere la vista previa con el texto más largo esperado, listas repetidas grandes,
-valores ausentes, identificadores largos y ambas caras de las plantillas. Para
-narrativas y listas anidadas, active el texto dinámico y `Auto-fill page`, deje
-espacio para los saltos de línea y vuelva a generar la vista previa después de
-editar.
+- active el tamaño dinámico de texto para que el cuadro crezca con el
+  contenido;
+- active `Rellenar página automáticamente` en el bloque de diseño cuando la
+  altura varíe;
+- deje ancho suficiente para ajuste de línea y margen de impresión;
+- regenere la vista previa tras cada cambio.
 
-Las imágenes usan una ruta local administrada por el dispositivo. El JSON de
-una plantilla describe la definición, no una copia de cada imagen externa;
-compruebe las imágenes después de importar en otro dispositivo.
+Para imágenes estáticas, use una ruta administrada existente en el dispositivo
+y compruébela al importar la plantilla en otro equipo; el archivo JSON de
+plantilla guarda la referencia, no una copia de cada imagen externa.
 
 ## Crear un preset de diseño de impresión {% #create-a-print-layout-preset %}
 
-En `Settings` > `Documents`, cambie a `Print layouts`. Cree un diseño o
-use `Save as...` antes de experimentar con uno ya aprobado.
-Bajo el nombre, añada una descripción opcional de hasta 80 caracteres; `Update`
-guarda el nombre y la descripción a la vez, y la descripción aparece en la
-lista de presets.
+En `Configuración` > `Documentos`, vaya a los diseños de impresión. Cree un
+diseño nuevo o use `Guardar como…` antes de modificar uno probado. Añada una
+descripción opcional (hasta 80 caracteres) y seleccione actualizar para guardar
+nombre y descripción juntos.
 
-### Configuración de la página
+### Configuración de página
 
-Elija `Page size` {% ref id="B" /%}, `Orientation`, dimensiones personalizadas cuando haga falta y
-el espaciado de página. La configuración de página describe la hoja; la
-plantilla describe un bloque.
+Configure `Tamaño de página` {% ref id="B" /%}, orientación, dimensiones
+personalizadas si hace falta y márgenes de página. Estos ajustes describen la
+hoja física; la plantilla describe un solo bloque.
 
 ### Bloques de plantilla
 
-Agregue uno o más `Template blocks`. Para cada bloque, elija:
+Añada uno o más `Bloques de plantilla`. Para cada bloque configure:
 
-- `Template` — la definición reutilizable del bloque;
-- `Copies` — cuántas copias hacer por registro;
-- `Rows` y `Cols` — la cuadrícula fija de una hoja;
-- `Auto-fill page` — medir la altura renderizada de cada bloque en lugar de
-  imponer una altura de fila fija;
-- espaciado de la plantilla — el espacio alrededor de cada bloque;
-- `Order by` y `Direction` — ordenamiento determinista de los registros;
-- `Page break after` — forzar un salto después del bloque.
+- plantilla reutilizable;
+- copias por registro;
+- filas y columnas para cuadrícula fija;
+- `Rellenar página automáticamente` para medir la altura real de cada bloque en
+  lugar de usar una altura de fila fija;
+- relleno de plantilla alrededor de cada bloque;
+- ordenación y dirección para un orden determinista;
+- salto de página posterior al bloque.
 
-Si un bloque del diseño muestra `This template no longer exists`, seleccione una
-plantilla de reemplazo disponible antes de generar la vista previa o exportar.
-NAHPU no sustituye plantillas en silencio.
+Si un bloque indica que la plantilla ya no existe, seleccione un reemplazo
+antes de previsualizar o exportar; NAHPU nunca sustituye plantillas en
+silencio.
 
 ### Varios bloques
 
-Cuando un diseño tiene varios bloques, `Multiple blocks mode` controla su orden:
+Con varios bloques, el modo de múltiples bloques define la secuencia:
 
-- `Continuous (Block-by-block)` imprime todos los registros del bloque 1 y
-  después todos los del bloque 2.
-- `Alternate (Record-by-record)` imprime el bloque 1 y el bloque 2 del registro
-  1 y, a continuación, el bloque 1 y el bloque 2 del registro 2.
+- continuo (bloque por bloque): imprime todos los registros del bloque 1 y
+  luego los del bloque 2 (útil para paquetes por secciones);
+- alternado (registro por registro): imprime bloque 1 y bloque 2 del registro
+  1, luego del registro 2 (útil para salidas emparejadas).
 
-Use el primer modo para secciones separadas de un paquete y el segundo para
-salidas emparejadas que deben permanecer juntas.
+## Recetas prácticas de diseño
 
-## Recetas prácticas
+| Objetivo | Ajustes recomendados |
+| --- | --- |
+| Documento de página completa | Un bloque, 1 fila, 1 columna, altura fija |
+| Cuadrícula fija de etiquetas | Filas y columnas exactas, `Rellenar página automáticamente` desactivado |
+| Hoja de narrativa variable | Texto dinámico y `Rellenar página automáticamente` activados; previsualizar registros largos |
+| Varias copias por etiqueta | Aumentar las copias del bloque |
+| Etiqueta de dos caras | Plantilla de `2 caras`; comprobar el espejado anverso/reverso |
+| Paquete mixto | Varios bloques en modo continuo (bloque por bloque) |
+| Salida emparejada | Varios bloques en modo alternado (registro por registro) |
 
-| Objetivo | Configuración recomendada |
-|---|---|
-| Documento de página completa | Un bloque, una fila y una columna |
-| Cuadrícula fija de etiquetas | Filas y columnas exactas, `Auto-fill page` desactivado |
-| Hoja narrativa variable | Texto dinámico y `Auto-fill page` activados |
-| Varias copias | Aumente `Copies` |
-| Etiqueta a dos caras | Plantilla `2 sided` y prueba del espejado |
-| Paquete mixto | Varios bloques y `Continuous (Block-by-block)` |
-| Registros emparejados | Varios bloques y `Alternate (Record-by-record)` |
+## Previsualizar y exportar con seguridad
 
-## Vista previa, exportación y uso compartido
+La vista previa usa exactamente el mismo motor de plantillas, medición y
+paginación que el PDF final. Antes de exportar:
 
-La vista previa utiliza el mismo flujo de selección, sustitución, medición y
-paginación que el PDF. Compruebe registros largos, listas repetidas, primera y
-última página, alineación de la cuadrícula y ambas caras. Genere otra vista
-previa cuando aparezca como desactualizada.
+- seleccione registros representativos para cada bloque;
+- revise primera y última página;
+- compruebe textos largos, listas repetidas, alineación, márgenes y ambas caras
+  en impresión dúplex;
+- regenere la vista previa si aparece desactualizada.
 
-Los cambios realizados en el diseño seleccionado desde la pantalla de
-exportación se guardan en ese diseño. Use `Save as...` antes de probar una nueva
-disposición. Introduzca `File name`, seleccione el directorio y use `Export documents`.
-El PDF es un resultado de presentación, no una exportación estructurada ni una
-copia de seguridad restaurable.
+Los cambios hechos al diseño seleccionado en la pantalla de exportación se
+guardan sobre ese diseño; use `Guardar como…` primero para pruebas. El PDF
+resultante no es una exportación de datos estructurada ni un respaldo
+restaurable.
 
 ## Fuentes
 
-Abra `Settings` > `Documents` y cambie a `Fonts` para ver todas las fuentes
-disponibles para las plantillas. La lista tiene dos partes: las fuentes
-incluidas con NAHPU, siempre disponibles, y las que usted instaló. El panel
-derecho previsualiza la fuente seleccionada en el tamaño que elija, en normal,
-negrita y cursiva.
+Abra `Configuración` > `Documentos` > `Fuentes` para ver las fuentes
+incorporadas con NAHPU y las instaladas por usted. El panel de vista previa
+muestra normal, negrita y cursiva al tamaño elegido.
 
-Seleccione `Install font` para añadir un archivo `.ttf`, `.otf` o `.ttc` de
-este dispositivo. `Find fonts` abre una biblioteca de fuentes en su navegador;
-descargue el archivo allí primero y luego instálelo aquí. Usted es responsable
-de la licencia de cualquier fuente que instale.
-
-Una fuente instalada existe solo en esa instalación. No forma parte de una
-transferencia de configuraciones de usuario, así que la instalación que reciba
-una plantilla que la use no recibirá la fuente. Instale la misma fuente en cada
-dispositivo que imprima la plantilla, o acepte el reemplazo que NAHPU ofrece al
-importar. Una fuente usada por una plantilla guardada no se puede eliminar
-hasta que ninguna plantilla la referencie.
+- Seleccione `Instalar fuente` para agregar un archivo `.ttf`, `.otf` o `.ttc`
+  desde el dispositivo.
+- Seleccione `Buscar fuentes en línea` para explorar fuentes en su navegador y
+  luego instalar el archivo descargado. Usted es responsable de la licencia de
+  cada fuente que instale.
+- Las fuentes instaladas residen solo en esta instalación y no viajan en una
+  transferencia de configuraciones de usuario. Instale la misma fuente en cada
+  equipo o elija un reemplazo al importar la plantilla.
+- Una fuente en uso por una plantilla guardada no puede eliminarse hasta dejar
+  de referenciarse.
 
 ## Importar y compartir plantillas y diseños
 
-Las plantillas se exportan desde `Settings` > `Documents` > `Templates`, y los
-diseños desde `Print layouts`. Ambos ofrecen dos alcances: `Export this ...`
-en una fila o en el menú de opciones escribe un solo elemento, y
-`Export all ...` escribe todos. Ambos escriben el mismo formato de archivo, así
-que cualquiera se importa con la misma acción `Import`. El diálogo de
-exportación define el nombre y la carpeta del archivo, y `Share` lo envía una vez
-escrito. Exportar un diseño incluye las plantillas que usan sus bloques; desactive
-`Include linked templates` para exportar solo los diseños. Al importar ese archivo
-también se añaden las plantillas, y solo se renombra una cuando ya existe otra
-distinta con el mismo nombre.
+Exporte plantillas y diseños desde `Configuración` > `Documentos`, ya sea un
+elemento individual o todos a la vez; ambos usan el mismo formato de archivo y
+se cargan con la misma acción de importación. Al exportar diseños se incluyen
+sus plantillas vinculadas de manera predeterminada (puede desactivar esa opción
+si desea exportar solo los diseños).
 
-La importación de plantillas pregunta si se debe reemplazar o usar otro nombre,
-y añade un sufijo numerado cuando llegan varias a la vez; la importación de
-diseños crea un nombre disponible.
+Cómo se resuelven conflictos y recursos faltantes al importar:
 
-Cuando una plantilla importada usa una fuente que esta instalación no tiene,
-NAHPU enumera las fuentes faltantes y pide un reemplazo, con una vista previa
-de cada opción antes de aplicarla. No se guarda nada hasta elegir los
-reemplazos, así que una plantilla transferida nunca conserva una fuente que no
-se pueda representar.
+- **Nombres duplicados de plantillas:** pregunta si reemplazar o asignar un
+  nombre nuevo (añadiendo sufijos numéricos al importar varias).
+- **Nombres duplicados de diseños:** crea automáticamente un nombre sin
+  conflicto.
+- **Importación de configuraciones de usuario:** reemplaza atómicamente las
+  secciones seleccionadas.
+- **Fuentes faltantes:** muestra las fuentes ausentes y permite previsualizar y
+  elegir reemplazos antes de guardar.
+- **Imágenes estáticas:** se referencian solo por nombre; las plantillas con
+  logotipos avisan al exportar y requieren volver a añadir la imagen en el
+  equipo receptor.
 
-Las imágenes usadas por una plantilla se referencian por nombre y no se
-almacenan en el archivo exportado. Una plantilla que use un logotipo se lo
-advierte al exportar, y la imagen debe añadirse de nuevo en la instalación
-receptora.
-
-Los diseños referencian plantillas por nombre, por lo que deben transferirse
-juntos. Para una copia completa con datos y archivos, use `Backup database`.
+Como los diseños referencian plantillas por nombre, transfiera ambos juntos.
+Para una copia completa del dispositivo con datos y archivos administrados, use
+`Respaldar la base de datos`.
 
 ## Impresión de etiquetas de especímenes {% #printing-specimen-tags %}
 
-Las etiquetas impresas son el motivo más común para exportar documentos.
-Imprimirlas desde los datos de NAHPU, en lugar de escribirlas a mano:
+Imprimir etiquetas desde NAHPU en lugar de escribirlas a mano:
 
-- **Ahorra tiempo en el campo.** Una etiqueta completa escrita a mano puede
-  llevar 10 minutos o más. En su lugar, escriba una etiqueta provisional pequeña
-  con identificadores, como un número de tejido (`B-729113`) y un número de
-  campo (`JPO 7299`), e imprima las etiquetas completas después, en el museo.
-- **Da etiquetas limpias y uniformes** que cualquiera puede leer, sea cual sea
-  la letra de quien las hace.
-- **Evita errores de copia.** Una localidad con coordenadas y elevación se
-  escribe una vez, se enlaza a cada espécimen mediante su sitio y se corrige en
-  un solo lugar si hace falta.
-- **Deja tiempo para limpiar los datos.** Antes de imprimir, puede corregir
-  coordenadas o elevaciones extrañas, terminología y ortografía.
+- **Ahorra tiempo en campo:** coloque una etiqueta temporal pequeña con los
+  identificadores clave —como número de tejido (`B-729113`) y número de campo
+  (`JPO 7299`)— e imprima las etiquetas completas después en el museo.
+- **Mejora la legibilidad:** genera etiquetas limpias y uniformes.
+- **Evita errores de transcripción:** localidades, coordenadas y elevaciones se
+  registran una sola vez por sitio y se corrigen en un solo lugar.
+- **Permite curación previa:** revise coordenadas, elevaciones, terminología y
+  ortografía antes de imprimir.
 
 ### Flujo de impresión de etiquetas
 
-NAHPU puede imprimir etiquetas directamente desde una plantilla y un preajuste
-de diseño. Cuando necesite una composición que los diseños integrados no
-cubren, una herramienta externa de etiquetas sigue siendo una opción:
+NAHPU imprime etiquetas directamente desde plantillas y diseños de impresión.
+Si necesita maquetación externa específica, también puede combinar NAHPU con
+una herramienta dedicada:
 
 {% steps %}
 
-1. Exporte los datos de especímenes de NAHPU como un archivo `.csv`.
-2. Haga la limpieza final de los datos: revisión ortográfica, corrección de
-   errores varios y organización, combinación o división de columnas según sea
-   necesario.
-3. Cargue la hoja de cálculo en Entomolabels. Con el
-   [software Entomolabels](https://labels.entomo.pl/) (lamentablemente solo
-   disponible para computadoras con Windows) y plantillas de etiqueta
-   personalizadas, puede dar formato a los datos en la etiqueta del espécimen.
-4. Exporte los PDF finales para el frente y el reverso de las etiquetas y
-   combínelos, alternando las páginas.
-5. Use una impresora con dúplex automático para imprimir las etiquetas finales.
+1. Exporte los registros de especímenes desde NAHPU como `.csv`.
+2. Haga la limpieza final: ortografía, corrección de errores y combinación o
+   división de columnas.
+3. Cargue la hoja en [Entomolabels](https://labels.entomo.pl/) (solo Windows)
+   con su plantilla de etiquetas personalizada.
+4. Exporte los PDF del anverso y del reverso e intercale las páginas.
+5. Imprima en una impresora con dúplex automático.
 
 {% /steps %}
 
-### Equipo de impresión
+### Equipo de impresión {% #printing-equipment %}
 
-- **Impresora.** Para imprimir etiquetas, el equipo de NAHPU ha usado la
+- **Impresora:** El equipo de NAHPU ha utilizado la
   [Epson WorkForce Pro WF-3820](https://epson.com/For-Work/Printers/Inkjet/WorkForce-Pro-WF-3820-Wireless-All-in-One-Printer/p/C11CJ07201)
-  con [tinta pigmentada de secado instantáneo DURABrite® Ultra](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1).
-  Con esta impresora, esta tinta y el papel que se indica abajo, imprimimos
-  recientemente (primavera de 2024) más de 1000 etiquetas de especímenes de aves
+  con tinta pigmentada de secado instantáneo
+  [DURABrite® Ultra](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1),
+  imprimiendo más de 1000 etiquetas de especímenes de aves (primavera de 2024)
   para el Louisiana State University Museum of Natural Science.
-- **Papel.** Hemos usado [papel 100% algodón, libre de ácido](https://www.redrivercatalog.com/browse/aurora-art-white-250.html)
-  con un gramaje de 250 g/m². Como es un papel relativamente grueso y rígido,
-  nos resultó muy útil flexionarlo un poco antes de imprimir. De lo contrario,
-  la impresora puede tener problemas para voltear la página internamente.
+- **Papel:**
+  [Papel 100 % algodón libre de ácido de 250 gsm](https://www.redrivercatalog.com/browse/aurora-art-white-250.html).
+  Como es grueso y resistente, conviene flexionar suavemente las hojas antes de
+  cargarlas para facilitar el volteo automático en la impresora.
 
-### Archive el material impreso
+### Archivar la salida impresa
 
-Guarde el PDF digital junto con el archivo del proyecto y conserve los
-preajustes de diseño y de plantilla cuando el documento deba volver a
-generarse. Revise la impresión antes de producir un lote completo e imprima en
-papel adecuado y duradero. Conserve la copia impresa junto con los registros de
-colección correspondientes.
-
-No considere los documentos impresos como un reemplazo de la base de datos, la
-exportación del proyecto o la exportación estructurada de registros. Consulte
+Guarde el PDF generado junto con las plantillas y diseños necesarios para
+reproducirlo en el archivo del proyecto. Revise una prueba impresa antes del
+lote completo, use papel duradero y conserve las copias físicas con los
+registros de la colección. Los documentos impresos nunca sustituyen un respaldo
+de base de datos ni una exportación estructurada; consulte
 [Archivar un proyecto](../#archiving-a-project).
 
 ## Solución de problemas
 
-| Síntoma | Qué comprobar |
-|---|---|
-| El placeholder aparece literalmente | Tipo de registro y clave completa `table::field`. |
-| Una condicional aparece literalmente | La expresión está mal formada. Busque un `]]` que falte, un valor sin comillas o `&&` y `\|\|` mezclados. |
-| Una condición nunca coincide | Las comparaciones distinguen mayúsculas y minúsculas, leen el valor almacenado en lugar de la etiqueta mostrada, y un valor vacío del registro nunca coincide. |
-| La vista previa está vacía | Tipo del bloque y registros seleccionados. |
-| Falta una plantilla | Reasigne el bloque o restaure/import la plantilla. |
-| El texto se superpone o se corta | Texto dinámico, `Auto-fill page`, ancho y alto del bloque. |
-| Hay espacio vacío inesperado | Filas fijas, tamaño de plantilla y espaciados. |
-| El orden es incorrecto | `Order by` y `Direction` del bloque. |
-| Hay repeticiones inesperadas | `Copies` y la selección de registros. |
-| Los bloques están en orden incorrecto | `Multiple blocks mode`. |
-| Falta o gira el reverso | `2 sided`, contenido de Back y espejado. |
-| La vista previa está desactualizada | Genere una vista previa nueva. |
-| La importación cambia muchos presets | La transferencia de una sección reemplaza toda esa sección. |
+| Síntoma | Qué revisar |
+| --- | --- |
+| Un marcador se imprime literalmente | Compruebe el tipo de registro de la plantilla y use la clave completa `tabla::campo`. |
+| Un condicional se imprime literalmente | Error de sintaxis: revise `]]` faltantes, valores sin comillas o mezcla de `&&` y `\|\|`. |
+| Una condición nunca coincide | Las comparaciones distinguen mayúsculas, evalúan valores guardados (no etiquetas) y un campo vacío no coincide con operadores comunes. |
+| La vista previa está vacía | Compruebe el tipo de registro del bloque y seleccione registros. |
+| Falta una plantilla | Reasigne el bloque o importe/restaure la plantilla nombrada. |
+| Texto superpuesto o recortado | Active texto dinámico y `Rellenar página automáticamente`, o amplíe el bloque. |
+| Espacios en blanco inesperados | Revise filas fijas, tamaño de plantilla, márgenes de página y relleno de bloque. |
+| Registros desordenados | Configure el criterio y la dirección de ordenación en ese bloque. |
+| Etiquetas repetidas sin querer | Revise el número de copias y la lista de registros seleccionados. |
+| Bloques en secuencia incorrecta | Cambie el modo de múltiples bloques. |
+| Falta el reverso o sale girado | Compruebe `2 caras`, el contenido del reverso y el espejado. |
+| Vista previa desactualizada | Regenere la vista previa tras la última edición. |
+| La importación cambió muchos ajustes | Importar secciones de configuraciones de usuario reemplaza cada sección seleccionada (salvo `Campos personalizados`, que se combinan). |
 
-Todas las opciones del editor de plantillas están listadas en
-[Expresiones de exportación](../export-expressions#template-editor-options). Para
-detalles de almacenamiento y renderizado, consulte [Templates and presets (en inglés)](/en/contributing/code/templates-and-presets/) y [Export workflows (en inglés)](/en/contributing/code/data-export-workflows/).
+Todos los controles del editor se detallan en
+[Expresiones de exportación](../export-expressions#template-editor-options).
+Para detalles de arquitectura e implementación, consulte
+[Templates and presets](/en/contributing/code/templates-and-presets/) y
+[Export workflows](/en/contributing/code/data-export-workflows/) (en inglés).

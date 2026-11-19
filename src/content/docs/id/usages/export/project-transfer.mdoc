@@ -22,139 +22,144 @@ sidebar:
 {% pin id="G" label="Pengingat cadangan" large2=[30.4, 55.6] small2=[5.7, 66.8] /%}
 {% /screenshots %}
 
-Transfer proyek memindahkan proyek NAHPU, beserta catatan dan medianya, dari satu
-instalasi ke instalasi lain. `Ekspor proyek` membuat berkasnya; perangkat
+Transfer proyek memindahkan satu proyek NAHPU—beserta catatan dan medianya—dari
+satu instalasi ke instalasi lain. `Ekspor proyek` menulis arsipnya; perangkat
 penerima membacanya dengan salah satu dari dua cara:
 
 | Di perangkat penerima | Gunakan | Hasil |
-|---|---|---|
+| --- | --- | --- |
 | Proyek belum ada | `Impor proyek` di layar beranda | Proyek lokal baru |
-| Proyek sudah ada | `Gabungkan proyek` di proyek itu | Catatan yang diimpor digabung dengan yang sudah ada |
+| Proyek sudah ada | `Gabungkan proyek` di dalam proyek tersebut | Catatan impor digabungkan dengan catatan yang sudah ada |
 
-Berkasnya dapat berupa ekspor proyek atau NAHPU Data Package, yang membawa data
-proyek yang sama. Tabel catatan, paket Darwin Core, dan dokumen tidak dapat
-memulihkan proyek. Mengimpor JSON info proyek atau kode QR proyek hanya membuat
-nama dan detail proyek, tanpa catatan atau media. Untuk mengganti seluruh
-instalasi, lihat [Memulihkan basis data](/id/usages/export/#restoring-a-database).
+Keduanya menerima berkas ekspor proyek maupun NAHPU Data Package, yang membawa
+muatan transfer proyek yang sama. Tabel catatan, bundel Darwin Core, dan
+dokumen tidak dapat memulihkan proyek. Mengimpor JSON atau kode QR informasi
+proyek hanya membuat nama dan metadata proyek tanpa catatan atau media. Untuk
+mengganti seluruh instalasi, lihat
+[Memulihkan basis data](/id/usages/export/#restoring-a-database).
 
 ## Mengekspor proyek {% #export-a-project %}
 
 {% steps %}
 
 1. Buka proyek di perangkat asal.
-2. Buka menu dasbor dan pilih `Ekspor proyek`.
-3. Periksa jumlah personel {% ref id="C" /%}, taksonomi, lokasi, peristiwa,
-   spesimen, narasi, dan media, dan baca peringatan media yang hilang.
-4. Pilih apa yang disertakan:
-   - Untuk transfer atau cadangan lengkap, biarkan `Ekspor ringan` nonaktif dan
-     pilih `ZIP` atau `TAR.GZ` {% ref id="A" /%}. Media ikut disertakan.
+2. Buka menu dasbor lalu pilih `Ekspor proyek`.
+3. Periksa `Isi arsip` {% ref id="C" /%}: jumlah personel, taksonomi, lokasi,
+   peristiwa, spesimen, narasi, dan media, beserta total `Ukuran media` (saat
+   media disertakan) dan peringatan media yang hilang.
+4. Pilih yang akan disertakan:
+   - Untuk transfer penuh atau cadangan, biarkan `Ekspor ringan` nonaktif dan
+     pilih `TAR.GZ` (bawaan) atau `ZIP` {% ref id="A" /%}. Media disertakan.
    - Pada koneksi lambat, aktifkan `Ekspor ringan` {% ref id="B" /%}. NAHPU
      menulis berkas `JSON.GZ` yang lebih kecil tanpa media.
-5. Pilih `Ekspor proyek` {% ref id="D" /%}, lalu simpan atau bagikan berkas
-   dengan aman.
+5. Periksa nama berkas (opsional aktifkan `Tambahkan tanggal`) dan pilih folder
+   tujuan di desktop.
+6. Pilih `Ekspor proyek` {% ref id="D" /%}. Anda dapat membatalkan saat arsip
+   sedang dibuat. Setelah selesai, bagikan, buka folder, atau simpan salinan.
 
 {% /steps %}
 
 ### Isi ekspor proyek
 
-- Semua catatan proyek, termasuk atribut khusus takson setiap spesimen. Untuk
-  invertebrata, ini mencakup interaksi ekologis, parameter lingkungan,
-  morfometri opsional, jenis kelamin, dan keterangan.
-- Hanya takson yang dipakai spesimen proyek.
-- Foto personel, media proyek, dan media takson yang berkasnya ada di perangkat.
-  Berkas yang hilang dicatat sebagai peringatan dan tautannya tidak disertakan.
+- Semua catatan proyek, termasuk bagian spesimen, simbion, bidang kustom, dan
+  atribut khusus kelompok takson tiap spesimen (untuk invertebrata: interaksi
+  ekologis, parameter lingkungan, morfometrik opsional, jenis kelamin, dan
+  catatan).
+- Hanya takson yang digunakan oleh spesimen di proyek tersebut.
+- Foto personel, media proyek, dan media takson yang ada di perangkat. Berkas
+  yang hilang dicatat sebagai peringatan dan tautannya tidak disertakan.
 
 ## Impor ke instalasi lain {% #import-a-project %}
 
-Gunakan ini untuk membuat proyek di perangkat baru, atau memulihkannya di
-perangkat pengganti.
+Gunakan `Impor proyek` untuk menyiapkan proyek di perangkat baru atau
+memulihkannya di perangkat pengganti.
 
 {% steps %}
 
-1. Simpan berkas sumber, dan cadangkan data yang sudah ada di perangkat
-   penerima.
-2. Di layar beranda, pilih `Impor proyek`, lalu `Pilih arsip`. Pilih berkas
-   proyek `JSON.GZ`, ZIP, atau TAR.GZ, atau NAHPU Data Package.
-3. Periksa detail proyek dan `Nama proyek tujuan`. Bila proyek sudah ada di
-   perangkat ini, pilih `Buka Gabungkan proyek`. Proyek lain dengan nama yang
-   sama memerlukan nama tujuan yang berbeda.
-4. Konfirmasi pengingat cadangan. Tinjau personel, taksonomi, dan spesimen, dan
-   selesaikan setiap item bertanda `Perlu perhatian`.
-5. Periksa jumlah catatan dan peringatan berkas yang hilang, lalu pilih
+1. Simpan arsip sumber dan cadangkan data yang sudah ada di perangkat penerima.
+2. Dari menu layar beranda, pilih `Impor proyek`, lalu `Pilih arsip`. Pilih
+   berkas `JSON.GZ`, `ZIP`, atau `TAR.GZ` proyek, atau NAHPU Data Package.
+3. Periksa detail proyek dan `Nama proyek tujuan`. Jika proyek sudah ada di
+   perangkat ini, pilih `Buka Gabungkan proyek`. Proyek berbeda dengan nama
+   yang sama memerlukan nama tujuan yang unik.
+4. Konfirmasi pengingat cadangan. Tinjau personel, taksonomi, dan spesimen,
+   lalu selesaikan setiap item bertanda `Perlu perhatian`.
+5. Periksa ringkasan akhir dan peringatan berkas hilang, lalu pilih
    `Impor proyek`.
-6. Buka proyek yang diimpor dan periksa lokasi, peristiwa, ID spesimen, narasi,
-   dan beberapa lampiran.
+6. Buka proyek hasil impor dan periksa beberapa lokasi, peristiwa, ID spesimen,
+   narasi, dan lampiran.
 
 {% /steps %}
 
-Berkas `JSON.GZ` tidak berisi media. Simpan berkas sumber sampai Anda selesai
+Berkas `JSON.GZ` tidak memuat media. Simpan arsip sumber sampai Anda selesai
 memeriksa proyek yang diimpor.
 
 ## Menggabungkan ke proyek yang cocok {% #merge-into-the-matching-project %}
 
-Gunakan ini untuk menggabungkan salinan proyek milik rekan dengan milik Anda.
+Gunakan `Gabungkan proyek` untuk menggabungkan salinan proyek rekan tim dengan
+salinan Anda.
 
 {% aside type="caution" %}
 
-Cadangkan basis data sebelum menggabungkan. Wizard menyediakan
-`Cadangkan sekarang` {% ref id="F" /%} dan meminta Anda mengonfirmasi
-pengingatnya.
+Cadangkan basis data sebelum menggabungkan. Wizard menyediakan tombol
+`Cadangkan sekarang` {% ref id="F" /%} dan mewajibkan konfirmasi pengingat
+cadangan {% ref id="G" /%}.
 
 {% /aside %}
 
 {% steps %}
 
 1. Buka salinan proyek Anda.
-2. Buka menu dasbor dan pilih `Gabungkan proyek`.
-3. Pilih ekspor proyek `JSON.GZ` {% ref id="E" /%}, ZIP, atau TAR.GZ, atau NAHPU
-   Data Package.
+2. Buka menu dasbor lalu pilih `Gabungkan proyek`.
+3. Pilih `Pilih arsip` {% ref id="E" /%} lalu pilih ekspor proyek (`JSON.GZ`,
+   `ZIP`, atau `TAR.GZ`) atau NAHPU Data Package.
 4. Konfirmasi pengingat cadangan {% ref id="G" /%}.
-5. Tinjau setiap bagian: info proyek, personel, taksonomi, lokasi, peristiwa,
-   spesimen, dan narasi.
+5. Tinjau setiap bagian secara berurutan: info proyek, personel, taksonomi,
+   lokasi, peristiwa, spesimen, dan narasi.
 6. Tentukan tindakan untuk setiap kecocokan atau konflik.
-7. Periksa ringkasan akhir dan pilih `Gabungkan proyek`.
+7. Periksa ringkasan akhir lalu pilih `Gabungkan proyek`.
 
 {% /steps %}
 
-Tidak ada yang ditulis selama Anda menelusuri wizard. NAHPU menyimpan semua
-perubahan sekaligus pada langkah terakhir. Bila penggabungan gagal, basis data
-tetap seperti semula dan berkas media yang baru disalin dihapus.
+Tidak ada data yang ditulis selama Anda menelusuri langkah wizard. NAHPU
+menyimpan semua perubahan sekaligus di langkah terakhir; bila penggabungan
+gagal, basis data tetap utuh dan berkas media yang baru disalin dibersihkan.
 
 ## Menyelesaikan konflik {% #resolve-conflicts %}
 
-Saat catatan yang diimpor cocok dengan catatan yang sudah Anda miliki, NAHPU
-mempertahankan milik Anda kecuali Anda memilih lain:
+Ketika catatan impor cocok dengan catatan yang sudah ada, NAHPU mempertahankan
+catatan Anda kecuali Anda memilih sebaliknya:
 
 | Pilihan | Yang terjadi |
-|---|---|
-| **Pertahankan yang ada** | Catatan Anda tetap. Catatan impor yang bergantung padanya ditautkan ke catatan Anda. |
-| **Gunakan yang diimpor** | Catatan impor menggantikan catatan Anda, beserta data yang dimilikinya. |
-| **Impor sebagai baru** | Catatan impor ditambahkan sebagai catatan terpisah. Catatan itu mendapat UUID baru bila perlu, dan ID lokasi yang duplikat mendapat akhiran unik. |
-| **Lewati** | Catatan tidak diimpor. Catatan yang bergantung padanya dan tidak dapat ditautkan ulang juga dilewati. |
+| --- | --- |
+| **Pertahankan saat ini** | Catatan Anda tetap. Catatan impor yang bergantung padanya ditautkan ke catatan Anda. |
+| **Gunakan hasil impor** | Catatan impor mengganti catatan Anda beserta data turunannya. |
+| **Impor sebagai baru** | Catatan impor ditambahkan terpisah, dengan UUID baru bila perlu dan akhiran unik untuk ID lokasi ganda. |
+| **Lewati** | Catatan tidak diimpor. Catatan turunan yang tidak dapat ditautkan ulang juga dilewati. |
 
 ### Cara catatan dicocokkan
 
 | Catatan | Dicocokkan berdasarkan |
-|---|---|
-| Info proyek | Dibandingkan per bidang |
+| --- | --- |
+| Info proyek | Dibandingkan bidang demi bidang |
 | Personel, spesimen | UUID |
-| Taksonomi | Genus dan epitet spesifik |
-| Lokasi | ID lokasi, bila tidak kosong |
+| Taksonomi | Genus dan epitet spesies |
+| Lokasi | ID lokasi (bila tidak kosong) |
 | Peristiwa | Lokasi, tanggal mulai, dan akhiran ID (waktu mulai diabaikan) |
 | Narasi | Lokasi, tanggal, waktu, dan penulis |
 
-Personel dan takson dipakai bersama oleh semua proyek di perangkat, sehingga
-wizard memperingatkan bila mengganti salah satunya dapat mengubah proyek lain.
-UUID spesimen milik proyek lain tidak dapat diganti; impor sebagai baru atau
+Personel dan takson dipakai bersama oleh seluruh proyek di perangkat, sehingga
+wizard memberi peringatan jika penggantian dapat memengaruhi proyek lain. UUID
+spesimen milik proyek berbeda tidak dapat ditimpa; impor sebagai baru atau
 lewati.
 
 ## Memaksa penggabungan UUID proyek yang berbeda {% #force-merge-a-different-project-uuid %}
 
-Penggabungan biasanya mensyaratkan UUID proyek di berkas sama dengan proyek yang
-sedang terbuka. Perbedaan akan diblokir, karena biasanya berarti proyek yang
-salah sedang dibuka.
+Penggabungan normal mensyaratkan UUID proyek di arsip cocok dengan proyek yang
+terbuka; ketidakcocokan diblokir agar tidak keliru menggabungkan proyek.
 
-Bila keduanya memang proyek lapangan yang sama, aktifkan
-`Paksa gabung ke proyek aktif` dan ketik nama proyek yang terbuka untuk
-konfirmasi. NAHPU lalu memberi catatan yang diimpor UUID proyek yang terbuka.
-Konflik tidak ditimpa secara otomatis; semua pilihan di atas tetap berlaku.
+Jika kedua arsip benar-benar berasal dari proyek lapangan yang sama, aktifkan
+`Paksa gabung ke proyek aktif` lalu ketik nama proyek terbuka untuk konfirmasi.
+NAHPU menetapkan UUID proyek aktif pada catatan yang diimpor. Konflik tidak
+pernah ditimpa otomatis; semua pilihan penyelesaian konflik di atas tetap
+berlaku.

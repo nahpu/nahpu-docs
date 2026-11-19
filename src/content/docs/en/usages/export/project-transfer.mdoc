@@ -22,134 +22,143 @@ sidebar:
 {% pin id="G" label="Backup reminder" large2=[30.4, 55.6] small2=[5.7, 66.8] /%}
 {% /screenshots %}
 
-A project transfer moves a NAHPU project, with its records and media, from one
-installation to another. `Export project` writes the file; the receiving device
-reads it in one of two ways:
+A project transfer moves a NAHPU project—with its records and media—from one
+installation to another. `Export project` writes the archive; the receiving
+device reads it in one of two ways:
 
 | On the receiving device | Use | Result |
-|---|---|---|
+| --- | --- | --- |
 | The project does not exist yet | `Import project` on the home screen | A new local project |
-| The project already exists | `Merge project` in that project | The imported records combined with the existing ones |
+| The project already exists | `Merge project` in that project | Imported records combined with existing ones |
 
-The file can be a project export or a NAHPU Data Package, which carries the same
-project data. Record tables, Darwin Core packages, and documents cannot restore
-a project. Importing a project-info JSON or a project QR code creates only the
-project's name and details, without records or media. To replace the whole
-installation instead, see [Restoring a database](/en/usages/export/#restoring-a-database).
+Both flows accept a project export or a NAHPU Data Package, which carries the
+same project transfer payload. Record tables, Darwin Core bundles, and
+documents cannot restore a project. Importing a project-info JSON or QR code
+creates only the project's name and metadata, without records or media. To
+replace the entire installation instead, see
+[Restoring a database](/en/usages/export/#restoring-a-database).
 
-## Export a project
+## Export a project {% #export-a-project %}
 
 {% steps %}
 
 1. Open the project on the source device.
-2. Open the dashboard menu and select `Export project`.
-3. Check the counts for personnel {% ref id="C" /%}, taxonomy, sites, events,
-   specimens, narratives, and media, and read any missing-media warnings.
+2. Open the `Dashboard` menu and select `Export project`.
+3. Review `Archive contents` {% ref id="C" /%}: counts for personnel, taxonomy,
+   sites, events, specimens, narratives, and media, plus total `Media size`
+   (when media are included) and any missing-media warnings.
 4. Choose what to include:
-   - For a full transfer or backup, leave `Light export` off and choose `ZIP`
-     or `TAR.GZ` {% ref id="A" /%}. Media are included.
+   - For a full transfer or backup, leave `Light export` off and choose
+     `TAR.GZ` (default) or `ZIP` {% ref id="A" /%}. Media are included.
    - Over a slow connection, turn on `Light export` {% ref id="B" /%}. NAHPU
      writes a smaller `JSON.GZ` file without media.
-5. Select `Export project` {% ref id="D" /%}, then store or share the file
-   securely.
+5. Check the `File name` (optionally turn on `Append date`) and choose a
+   destination folder on desktop.
+6. Select `Export project` {% ref id="D" /%}. You can cancel while the archive
+   is being built. Once finished, share, open the folder, or save a copy.
 
 {% /steps %}
 
 ### What a project export contains
 
-- Every record of the project, including each specimen's taxon-specific
-  attributes. For invertebrates, these are ecological interactions,
-  environmental parameters, optional morphometrics, sex, and remarks.
-- Only the taxa that the project's specimens use.
-- Personnel photos, project media, and taxon media whose files are on the
-  device. A missing file is listed as a warning and its link is left out.
+- Every record belonging to the project, including specimen parts, symbionts,
+  custom fields, and each specimen's taxon-specific attributes (for
+  invertebrates: ecological interactions, environmental parameters, optional
+  morphometrics, sex, and remarks).
+- Only the taxa referenced by the project's specimens.
+- Personnel photos, project media, and taxon media present on disk. Any missing
+  file is listed as a warning and its file link is left out.
 
 ## Import onto another installation {% #import-a-project %}
 
-Use this to create the project on a new device, or to recover it on a
+Use `Import project` to set up a project on a new device or recover it on a
 replacement device.
 
 {% steps %}
 
-1. Keep the source file, and back up any existing data on the receiving device.
-2. On the home screen, select `Import project`, then `Choose archive`. Choose a
-   project `JSON.GZ`, ZIP, or TAR.GZ file, or a NAHPU Data Package.
-3. Check the project details and the `Destination project name`. If the project
+1. Keep the source archive and back up any existing data on the receiving
+   device.
+2. On the home screen menu, select `Import project`, then `Choose archive`.
+   Pick a project `JSON.GZ`, `ZIP`, or `TAR.GZ` file, or a NAHPU Data Package.
+3. Check the project details and `Destination project name`. If the project
    already exists on this device, select `Open Merge project` instead. A
-   different project with the same name needs a different destination name.
+   different project sharing the same name needs a unique destination name.
 4. Acknowledge the backup reminder. Review personnel, taxonomy, and specimens,
    and resolve every item marked `Needs attention`.
-5. Check the counts and missing-file warnings, then select `Import project`.
-6. Open the imported project and check sites, events, specimen IDs, narratives,
-   and a few attachments.
+5. Review the final summary and any missing-file warnings, then select
+   `Import project`.
+6. Open the imported project and spot-check sites, events, specimen IDs,
+   narratives, and attachments.
 
 {% /steps %}
 
-A `JSON.GZ` file has no media. Keep the source file until you have checked the
-imported project.
+A `JSON.GZ` file contains no media. Keep the source archive until you have
+verified the imported project.
 
-## Merge into the matching project
+## Merge into the matching project {% #merge-into-the-matching-project %}
 
-Use this to combine a teammate's copy of the project with yours.
+Use `Merge project` to combine a teammate's copy of the project with yours.
 
 {% aside type="caution" %}
 
-Back up the database before merging. The wizard offers `Back up now`
-{% ref id="F" /%} and asks you to acknowledge the reminder.
+Back up the database before merging. The wizard offers `Back up now` {% ref id="F" /%}
+and requires you to acknowledge the backup reminder {% ref id="G" /%}.
 
 {% /aside %}
 
 {% steps %}
 
 1. Open your copy of the project.
-2. Open the dashboard menu and select `Merge project`.
-3. Choose a `JSON.GZ` {% ref id="E" /%}, ZIP, or TAR.GZ project export, or a
-   NAHPU Data Package.
-4. Confirm the backup reminder {% ref id="G" /%}.
+2. Open the `Dashboard` menu and select `Merge project`.
+3. Select `Choose archive` {% ref id="E" /%} and pick a `JSON.GZ`, `ZIP`, or
+   `TAR.GZ` project export, or a NAHPU Data Package.
+4. Acknowledge the backup reminder {% ref id="G" /%}.
 5. Review each section in turn: project info, personnel, taxonomy, sites,
    events, specimens, and narratives.
-6. Choose what to do with each match or conflict.
+6. Choose how to handle each match or conflict.
 7. Check the final summary and select `Merge project`.
 
 {% /steps %}
 
-Nothing is written while you move through the wizard. NAHPU saves all changes
-together at the last step. If the merge fails, the database is left as it was
-and newly copied media files are removed.
+Nothing is written while you step through the wizard. NAHPU commits all changes
+together at the final step; if the merge fails, the database stays unchanged
+and newly copied media files are cleaned up.
 
-## Resolve conflicts
+## Resolve conflicts {% #resolve-conflicts %}
 
-When an imported record matches one you already have, NAHPU keeps yours unless
-you choose otherwise:
+When an imported record matches one already on this device, NAHPU keeps yours
+unless you choose otherwise:
 
 | Choice | What happens |
-|---|---|
-| **Keep current** | Your record stays. Imported records that depend on it are linked to yours. |
+| --- | --- |
+| **Keep current** | Your record stays. Imported records that depend on it link to yours. |
 | **Use imported** | The imported record replaces yours, along with the data it owns. |
-| **Import as new** | The imported record is added as a separate record. It gets a new UUID if needed, and a duplicate site ID gets a unique suffix. |
-| **Skip** | The record is not imported. Records that depend on it and cannot be relinked are skipped too. |
+| **Import as new** | The imported record is added separately, with a new UUID if needed and a unique suffix on duplicate site IDs. |
+| **Skip** | The record is not imported. Dependent records that cannot be relinked are skipped too. |
 
 ### How records are matched
 
 | Record | Matched by |
-|---|---|
+| --- | --- |
 | Project info | Compared field by field |
 | Personnel, specimens | UUID |
 | Taxonomy | Genus and specific epithet |
-| Sites | Site ID, when it is not empty |
+| Sites | Site ID (when not empty) |
 | Events | Site, start date, and ID suffix (start time is ignored) |
 | Narratives | Site, date, time, and writer |
 
-Personnel and taxa are shared by every project on the device, so the wizard warns
-when replacing one could change another project. A specimen UUID that belongs to
-a different project cannot be replaced; import it as new or skip it.
+Personnel and taxa are shared across every project on the device, so the wizard
+warns whenever replacing one could affect another project. A specimen UUID
+belonging to a different project cannot be replaced; import it as new or skip
+it.
 
-## Force merge a different project UUID
+## Force merge a different project UUID {% #force-merge-a-different-project-uuid %}
 
-Merging normally requires the file's project UUID to match the open project. A
-mismatch is blocked, because it usually means the wrong project is open.
+Merging normally requires the archive's project UUID to match the open project.
+A mismatch is blocked because it usually means the wrong project is open.
 
-If both really are the same field project, turn on `Force merge` and type the
-open project's name to confirm. NAHPU then gives the imported records the open
-project's UUID. Conflicts are not overwritten automatically; every choice above
+If both archives genuinely belong to the same field project, turn on
+`Force merge into the active project` and type the open project's name to
+confirm. NAHPU reassigns the imported records to the open project's UUID.
+Conflicts are never overwritten automatically; every conflict choice above
 still applies.

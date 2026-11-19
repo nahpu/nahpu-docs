@@ -1,0 +1,285 @@
+---
+title: Simbion
+sidebar:
+  label: Simbion
+  order: 7
+---
+
+Simbion adalah organisme apa pun yang hidup di permukaan atau di dalam
+spesimen inang, baik parasitik, parasitoid, mutualistik, komensal, foretik,
+maupun tidak diketahui.
+
+Setiap simbion memiliki UUID sendiri dan ditautkan ke inangnya. Tautan ini
+mencatat cara keduanya berinteraksi, lokasi simbion pada inang, dan apakah
+asosiasinya sudah dikonfirmasi. Simbion tersedia pada format katalog
+`Mamalogi`, `Ornitologi`, `Herpetologi`, dan `Iktiologi` (pada
+`Zoologi invertebrata`, hubungan inang dicatat di bagian `Interaksi ekologis`
+pada formulir pengukuran).
+
+## Letak simbion dalam formulir spesimen {% #where-symbionts-live-in-the-specimen-form %}
+
+Simbion memakai dua tempat pada catatan spesimen:
+
+- **Kolom pemeriksaan**, di akhir formulir pengukuran, mencatat apakah inang
+  sudah diperiksa untuk simbion dan apakah ada yang ditemukan. Lihat
+  [Mencatat pemeriksaan](#record-an-examination).
+- **Tab simbion**, ikon serangga pada kartu `Bagian spesimen`, memuat satu
+  catatan per lot atau individu simbion. Lihat
+  [Menambahkan catatan simbion](#add-a-symbiont-record).
+
+Perbarui keduanya. Inang tanpa catatan simbion bersifat ambigu: mungkin belum
+diperiksa, atau sudah diperiksa dan ternyata bersih. Kolom pemeriksaan
+menghilangkan ambiguitas itu.
+
+## Sebelum memulai {% #before-you-start %}
+
+Buka `Pengaturan` > `Spesimen` lalu gulir ke `Simbion`. Kosakata terkontrol
+berikut dimulai dengan nilai bawaan yang dapat disunting dan dipakai bersama
+oleh semua proyek di perangkat ini:
+
+| Pengaturan | Nilai bawaan |
+| --- | --- |
+| `Identifikasi` | `Prefiks ID simbion` dan `Nomor ID simbion`, dipakai oleh `Nomor baru`. |
+| `Jenis interaksi` | `Parasitic`, `Parasitoid`, `Mutualistic`, `Commensal`, `Phoretic`, `Unknown` |
+| `Kategori` | `Ectosymbiont`, `Endosymbiont`, `Mesosymbiont` |
+| `Metode deteksi` | `Visual inspection`, `Combing`, `Brushing`, `Ethanol wash`, `Dissection`, `Blood smear`, `Fecal flotation`, `Molecular screening` |
+| `Metode preparasi` | `Whole specimen`, `Fluid preserved`, `Slide mounted`, `Pinned`, `Dried`, `Frozen` |
+| `Lokasi anatomi` | 24 tempat dari `Head` hingga `Body cavity`; lihat [Lokasi anatomi](#anatomical-locations). |
+| `Penyimpanan` | `Vial`, `Cryovial`, `Slide`, `Envelope`, `Jar` |
+| `Perlakuan` | Nilai bawaan `Perlakuan` spesimen, ditambah `RNAlater` dan `Glycerol` |
+
+Sepakati kosakata terkontrol ini sebelum kerja lapangan, lalu bagikan melalui
+[transfer konfigurasi pengguna](/id/how-to-recipes/protect-and-collaborate/transfer-user-configs/)
+agar setiap perangkat memakai nilai yang sama. `Siapkan NAHPU` juga menyertakan
+langkah `Simbion` untuk format katalog yang mendukungnya.
+
+Daftarkan juga takson simbion yang Anda perkirakan di
+[registri takson](/id/usages/taxon/). Takson simbion dipilih dari registri yang
+sama dengan takson inang, dan dapat berupa peringkat yang lebih tinggi—seperti
+ordo atau famili—bila simbion belum diidentifikasi hingga spesies.
+
+## Mencatat pemeriksaan {% #record-an-examination %}
+
+Di akhir formulir pengukuran, bagian `Simbion` memiliki tiga kolom:
+
+| Kolom | Catatan |
+| --- | --- |
+| `Simbion diperiksa` | `Ya` bila inang sudah diperiksa. Biarkan kosong bila tidak ada yang memeriksa. |
+| `Simbion terdeteksi` | `Ya` bila ada yang ditemukan, `Tidak` bila inang sudah diperiksa dan ternyata bersih. |
+| `Catatan deteksi` | Bagaimana dan seberapa teliti inang diperiksa, atau mengapa tidak diperiksa. |
+
+Catat `Simbion diperiksa: Ya` dan `Simbion terdeteksi: Tidak` untuk inang yang
+bersih. Jangan membuat catatan simbion kosong untuk menyatakan bahwa tidak ada
+yang ditemukan.
+
+## Menambahkan catatan simbion {% #add-a-symbiont-record %}
+
+{% steps %}
+
+1. Buka spesimen inang lalu pilih ikon serangga pada kartu `Bagian spesimen`.
+2. Pilih `Tambah simbion`.
+3. Pilih `Takson simbion`, atau biarkan `Belum diidentifikasi`. Gunakan tombol
+   tambah di samping kolom untuk mendaftarkan takson yang belum ada di daftar.
+4. Pilih `Jenis interaksi`. Definisi satu baris muncul di bawahnya.
+5. Isi bagian formulir lainnya sejauh yang Anda ketahui, lalu simpan.
+{% /steps %}
+
+Catatan baru dimulai dengan preparator inang sebagai `Kolektor`, atau
+pengatalognya bila preparator belum diisi, dan dengan tanggal koleksi inang
+sebagai `Tanggal koleksi`, atau tanggal preparasinya bila tanggal koleksi belum
+diisi. Ubah keduanya bila orang lain yang menyapu, menyisir, atau menekropsi
+inang, atau bila simbion diambil pada hari lain.
+
+## Formulir simbion {% #symbiont-form %}
+
+Formulir dikelompokkan menjadi beberapa bagian. `Preparasi & pengawetan` dan
+`Kurasi` muncul setelah `Tampilkan lebih banyak`, begitu juga kolom kustom yang
+tidak ditampilkan secara bawaan.
+
+### ID {% #ids %}
+
+| Kolom | Catatan |
+| --- | --- |
+| `UUID` | Diberikan oleh NAHPU dan tidak pernah berubah. Menjadi `occurrenceID` simbion. |
+| `ID simbion` | ID opsional untuk vial, slide, atau amplop. Menu opsinya menawarkan `Pindai QR/kode batang` pada perangkat berkamera, `Nomor baru`, dan `Pengaturan`. |
+| `Individu` | Hanya untuk lot ikan yang memiliki catatan individu. Menautkan simbion ke ikan asalnya. Lihat [Ikan](/id/usages/specimens/measurements/fishes/#parts-and-symbionts). |
+
+`Nomor baru` menggabungkan prefiks ID simbion dan nomor berikutnya, misalnya
+`P` dan `101` menjadi `P101`, lalu menaikkan nomornya. Opsi ini hanya tersedia
+selama kolom masih kosong. `Pengaturan` pada menu yang sama menyunting prefiks
+dan nomor berikutnya tanpa meninggalkan formulir.
+
+### Detail simbion {% #symbiont-details %}
+
+| Kolom | Catatan |
+| --- | --- |
+| `Takson simbion` | Takson terdaftar pada tingkat apa pun, atau `Belum diidentifikasi`. |
+| `Jenis interaksi` | Bagaimana simbion berhubungan dengan inangnya. Lihat [Jenis interaksi dan kategori](#interaction-types-and-categories). |
+| `Kategori` | Tempat parasit atau parasitoid hidup pada inangnya. Hanya ditampilkan untuk jenis interaksi tersebut. |
+| `Lokasi anatomi` | Tempat simbion ditemukan di permukaan atau di dalam inang. Dipersempit oleh kategori. |
+| `Jumlah` | Jumlah individu simbion dalam catatan ini. |
+| `Tahap hidup` | `Egg`, `Larva`, `Nymph`, `Pupa`, `Juvenile`, `Adult`, `Cyst`, `Oocyst`, `Trophozoite`, `Sporozoite`, `Merozoite`, atau `Gametocyte`. Daftar ini tetap. |
+| `Status asosiasi` | `Confirmed` bila simbion diketahui berasal dari inang ini, `Suspected` bila mungkin merupakan kontaminan, seperti tungau dari kantong atau perangkap yang dipakai bersama. |
+
+### Koleksi & identifikasi {% #collection--identification %}
+
+| Kolom | Catatan |
+| --- | --- |
+| `Kolektor` | Siapa yang mengambil simbion dari inang. |
+| `Metode deteksi` | Bagaimana simbion ditemukan, misalnya `Combing` atau `Blood smear`. |
+| `Tanggal koleksi`, `Waktu koleksi` | Kapan simbion diambil dari inang. |
+| `Pengidentifikasi` | Siapa yang mengidentifikasi simbion, sering kali spesialis yang bekerja kemudian. |
+| `Tanggal identifikasi` | Kapan simbion diidentifikasi. |
+| `Metode identifikasi` | Bagaimana simbion diidentifikasi. Memakai kosakata terkontrol `Metode identifikasi` spesimen. |
+
+Kolektor dan pengidentifikasi dipilih dari personel proyek, seperti pada
+spesimen. Memisahkan keduanya memungkinkan tim lapangan mencatat apa yang
+mereka kumpulkan, sementara spesialis menambahkan identifikasinya kemudian.
+
+### Preparasi & pengawetan {% #preparation--preservation %}
+
+| Kolom | Catatan |
+| --- | --- |
+| `Metode preparasi` | Bagaimana simbion dipreparasi, misalnya `Slide mounted`. |
+| `Perlakuan` | Bahan pengawet atau fiksatif, misalnya `RNAlater`. |
+| `Tanggal pengawetan`, `Waktu pengawetan` | Kapan simbion diawetkan. |
+
+### Kurasi {% #curation %}
+
+| Kolom | Catatan |
+| --- | --- |
+| `Penyimpanan` | Jenis wadah, misalnya `Cryovial`. |
+| `Lokasi penyimpanan` | Posisi lemari beku, lemari, rak, atau kotak. |
+| `Koleksi tetap museum`, `Pinjaman museum` | Museum yang menyimpan simbion, dan museum yang menerimanya sebagai pinjaman. |
+| `Catatan` | Informasi lain tentang simbion ini. |
+
+Kolom kustom yang ditempatkan di bagian simbion pada
+[bidang khusus](/id/how-to-recipes/prepare/configure-custom-fields/) muncul di
+akhir formulir.
+
+## Jenis interaksi dan kategori {% #interaction-types-and-categories %}
+
+`Jenis interaksi` menjelaskan hubungan ekologisnya. Nilai bawaannya adalah:
+
+| Jenis interaksi | Arti |
+| --- | --- |
+| `Parasitic` | Hidup di permukaan atau di dalam inang dan merugikannya. |
+| `Parasitoid` | Berkembang di dalam inang dan akhirnya membunuhnya. |
+| `Mutualistic` | Simbion dan inang sama-sama diuntungkan. |
+| `Commensal` | Simbion diuntungkan; inang tidak terpengaruh. |
+| `Phoretic` | Memakai inang hanya sebagai alat angkut. |
+| `Unknown` | Hubungan dengan inang tidak diketahui. |
+
+Bentuk kata benda seperti `Parasitism`, `Mutualism`, `Commensalism`, dan
+`Phoresy` dikenali sebagai jenis yang sama, sehingga nilai yang diimpor dari
+sumber lain mendapat ikon dan perilaku yang tepat. Anda dapat menambahkan jenis
+interaksi sendiri di Pengaturan; nilai itu disimpan dan diekspor sesuai yang
+dimasukkan.
+
+`Kategori` menjelaskan tempat simbion hidup relatif terhadap inang:
+
+- `Ectosymbiont`: di permukaan luar, seperti pinjal, kutu, dan caplak.
+- `Endosymbiont`: di dalam tubuh, seperti cacing di saluran cerna atau parasit
+  darah.
+- `Mesosymbiont`: di lubang dan rongga yang terhubung ke luar, seperti telinga,
+  rongga hidung, atau insang.
+
+Kategori hanya ditampilkan bila jenis interaksinya `Parasitic` atau
+`Parasitoid`. Mengubah jenis interaksi ke nilai lain akan menghapus kategori.
+Catatan tanpa jenis interaksi tetap mempertahankan kategorinya, karena catatan
+yang diimpor atau dibuat sebelum jenis interaksi ada mungkin hanya memuat
+kategori.
+
+Jika Anda hendak membiarkan `Jenis interaksi` kosong, pilih `Unknown` bila
+hubungannya memang tidak diketahui. Nilai kosong berarti hubungan itu tidak
+dicatat.
+
+## Lokasi anatomi {% #anatomical-locations %}
+
+Memilih kategori mempersempit `Lokasi anatomi` ke tempat yang sesuai:
+
+| Kategori | Lokasi yang ditawarkan |
+| --- | --- |
+| `Ectosymbiont` | Head, Ear, Body, Dorsum, Venter, Limb, Tail, Skin, Fur, Feathers, Gill |
+| `Endosymbiont` | Nasal cavity, Oral cavity, Blood, Stomach, Small intestine, Large intestine, Cecum, Liver, Lung, Heart, Kidney, Muscle, Body cavity |
+| `Mesosymbiont` | Ear, Nasal cavity, Oral cavity, Gill, Skin |
+
+Tanpa kategori, atau dengan kategori yang Anda tambahkan sendiri, semua lokasi
+ditawarkan. Lokasi yang Anda tambahkan di `Pengaturan` tidak pernah disaring.
+Nilai kategori lama, seperti `Ectoparasite`, `Endoparasite`, dan
+`Mesoparasite`, menyaring opsi dengan cara yang sama seperti nama simbionnya.
+
+## Daftar simbion {% #symbiont-list %}
+
+Tab simbion menampilkan satu baris per catatan. Ikonnya menunjukkan jenis
+interaksi, dengan ikon tungau untuk catatan tanpa jenis interaksi atau dengan
+jenis kustom. Judulnya menampilkan takson simbion (atau
+`Simbion tak teridentifikasi`), diikuti jumlah dan `ID simbion` jika diisi.
+Subjudulnya menampilkan individu ikan yang ditautkan, jenis interaksi, kategori
+(untuk interaksi parasitik dan parasitoid), lokasi anatomi, tahap hidup, dan
+metode preparasi.
+
+Pilih tombol sunting pada baris untuk mengubahnya. Untuk menghapus catatan,
+aktifkan pemilihan, centang catatan, lalu konfirmasi penghapusan. Menghapus
+spesimen inang juga menghapus simbionnya.
+
+## Kurasi {% #curation-1 %}
+
+[Kurasi jaringan](/id/usages/curation/tissue-curation/) dapat memasukkan tabung
+simbion ke kotak penyimpanan bersama jaringan. Aktifkan `Sertakan simbion` pada
+pengaturannya untuk mencocokkan simbion berdasarkan ID simbion atau ID lapangan
+inangnya, dan gunakan `Kategori simbion` untuk membatasi pencocokan. Sel kotak
+memberi label simbion dengan awalan `P` agar terbedakan dari bagian spesimen.
+
+## Ekspor dan analisis {% #export-and-analysis %}
+
+| Tempat | Hasil |
+| --- | --- |
+| [Ekspor Catatan](/id/usages/export/export-records/) | Jenis catatan `Simbion`: satu baris per simbion, diikuti catatan pengumpulan inangnya. Ekspor spesimen untuk katalog yang memiliki simbion juga menambahkan kolom pemeriksaan dan kolom simbion. |
+| Tabel data | Tabel `Simbion` menampilkan ID simbion, takson, jenis interaksi, kategori, jumlah, dan lokasi anatomi, serta dapat disunting secara massal. |
+| [Templat dokumen](/id/usages/export/export-documents/) | Jenis catatan `Simbion`, untuk label vial dan label slide. |
+| [Statistik](/id/usages/export/export-statistics/) | Measure `Symbionts`, dikelompokkan menurut takson simbion, kategori, lokasi anatomi, atau spesies inang. Tersedia setelah proyek memiliki catatan simbion. |
+| [Paket data](/id/usages/export/export-bundles/) | Tabel `symbiont`, `symbiontDetection`, dan `symbiontIndividual`, ditambah `vocabularies/symbionts.csv` yang berisi pengaturan simbion Anda. |
+
+[Penggabungan proyek](/id/how-to-recipes/protect-and-collaborate/merge-project/)
+dan impor mencocokkan simbion berdasarkan UUID. UUID simbion yang sudah ada di
+basis data ditandai untuk ditinjau alih-alih diimpor dua kali.
+
+### Darwin Core {% #darwin-core %}
+
+Dalam [Darwin Core Archive](/id/how-to-recipes/export-and-print/create-darwin-core-archive/),
+setiap simbion menjadi kejadian tersendiri, yang ditautkan ke inangnya melalui
+baris OrganismInteraction:
+
+| Kolom NAHPU | Darwin Core |
+| --- | --- |
+| `UUID` | `occurrenceID` dan `organismInteractionID` |
+| `ID simbion` | `catalogNumber` |
+| `Takson simbion` | `taxonID`, `scientificName`, dan tingkat takson yang lebih tinggi |
+| `Kolektor` | `recordedBy`, `recordedByID` |
+| `Pengidentifikasi`, `Tanggal identifikasi`, `Metode identifikasi` | `identifiedBy`, `identifiedByID`, `dateIdentified`, `identificationType` |
+| `Jumlah`, `Tahap hidup` | `individualCount`, `lifeStage` |
+| `Metode preparasi`, `Perlakuan` | `preparations` |
+| `Tanggal koleksi`, `Waktu koleksi` | `eventDate`, `eventTime` |
+| `Metode deteksi` | `samplingProtocol` |
+| `Catatan` | `occurrenceRemarks` |
+| `Jenis interaksi` | `organismInteractionType`; catatan tanpa jenis interaksi memakai kategorinya |
+| `Kategori`, `Status asosiasi` | `organismInteractionDescription`, bila jenis interaksi diisi |
+| `Lokasi anatomi` | `relatedOrganismPart` |
+| `Individu` | Penegasan kejadian (*occurrence assertion*) `host individual` |
+
+Kejadian simbion memakai `eventID` yang sama dengan inangnya, memakai
+`basisOfRecord` `PreservedSpecimen`, dan menyebut inangnya di
+`associatedOccurrences`. Kolom penyimpanan, museum, dan tanggal pengawetan
+tidak memiliki istilah Darwin Core dan tetap berada di paket data NAHPU. Lihat
+[audit Darwin Core](/en/contributing/code/database/#symbionts-and-specimen-material)
+(bahasa Inggris) untuk setiap kolom.
+
+## Catatan dari versi lama {% #records-from-older-versions %}
+
+NAHPU hanya mencatat parasit sebelum melacak simbion. Pembaruan aplikasi
+memindahkan catatan tersebut ke simbion secara otomatis: setiap catatan yang
+ada mendapat jenis interaksi `Parasitic`, dan orang-orang di dalamnya menjadi
+kolektor dan pengidentifikasi. Nilai kategori lama seperti `Ectoparasite` tetap
+berfungsi. Ekspor, templat, prasetel, dan konfigurasi yang masih memakai nama
+`parasite` dibaca dengan nama simbionnya.

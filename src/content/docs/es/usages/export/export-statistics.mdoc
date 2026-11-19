@@ -21,119 +21,125 @@ sidebar:
 {% pin id="F" label="Explorar más estadísticas" large2=[68.8, 90.3] small2=[72.6, 82.6] /%}
 {% /screenshots %}
 
-Use la exportación de estadísticas cuando necesite una tabla resumida en lugar
-de los registros completos. Las tablas contienen conteos y porcentajes por
-categoría, que es lo que piden la mayoría de los informes de financiamiento, los
-informes de permisos y las actualizaciones de avance. Toda tabla que aparece en
-la pantalla de estadísticas puede escribirse en CSV, TSV, Excel o JSON.
+Use la exportación de estadísticas cuando necesite conteos y porcentajes
+resumidos —para informes de financiamiento, informes de permisos y reportes de
+avance— en lugar de los registros completos. Todas las tablas de `Conteos` y
+`Espacial` pueden exportarse en formato CSV, TSV, Excel o JSON.
 
-Las estadísticas se calculan solo para el proyecto activo.
+Las estadísticas funcionan en dos alcances:
+
+- **Proyecto activo:** abra el panel `Estadísticas de registros` {% ref id="E" /%}
+  en el panel del proyecto y seleccione
+  `Explorar más estadísticas` {% ref id="F" /%}.
+- **Todos los proyectos:** abra `Estadísticas de la base de datos` desde el
+  menú de la pantalla de inicio para resumir y exportar estadísticas de todos
+  los proyectos guardados.
 
 ## Abrir la pantalla de estadísticas
 
-Abra el panel de estadísticas de registros {% ref id="E" /%} en el dashboard del proyecto y
-seleccione `Explore more stats` {% ref id="F" /%}. Use los botones de la parte superior de la
-pantalla para alternar entre dos vistas:
+Alterne entre dos vistas principales:
 
-- **Summary** {% ref id="A" /%} muestra los totales del proyecto, divididos en un grupo
-  `Record summary` {% ref id="C" /%} y un grupo `Taxonomic breakdown` {% ref id="D" /%} que cuenta las clases,
-  órdenes, familias, géneros y especies distintos, seguidos de los cinco
-  conteos más altos por categoría. Seleccione `View details` en un gráfico
-  para abrirlo en `Explore`.
-- **Explore** {% ref id="B" /%} ofrece dos opciones. `Counts` arma una tabla o un gráfico a
-  partir de la medida, la agrupación, el desglose y el filtro que elija.
-  `Spatial` cuenta registros por coordenada de sitio, en un mapa o como tabla.
+- **`Resumen`** {% ref id="A" /%} muestra totales agrupados en
+  `Resumen de registros` {% ref id="C" /%}, `Desglose taxonómico` {% ref id="D" /%}
+  (clases, órdenes, familias, géneros y especies distintos) y
+  `Desglose de multimedia` —más una tabla `Por proyecto` al ver
+  `Estadísticas de la base de datos`—, seguidos de gráficos con las cinco
+  categorías principales. Seleccione `Ver detalles` en cualquier gráfico para
+  abrirlo en `Explorar`.
+- **`Explorar`** {% ref id="B" /%} ofrece tres secciones:
+  - `Conteos`: construye un gráfico o una tabla exportable según medida,
+    agrupación, desglose y filtro.
+  - `Espacial`: muestra conteos por coordenada en mapa o tabla exportable.
+  - `Grafo`: explora de forma visual las relaciones entre registros (solo
+    exploración visual; no se exporta como tabla).
 
-Las exportaciones están disponibles en la vista de tabla. Cambie el panel de
-`Chart` o `Map` a `Table` y use el botón `Export table` encima de la tabla.
+Para exportar, cambie `Conteos` o `Espacial` de `Gráfico` o `Mapa` a `Tabla` y
+seleccione `Exportar tabla` sobre la tabla.
 
 ## Conteos
 
-Elija primero la medida en `Measure`, porque decide qué agrupaciones están
-disponibles.
+En `Explorar`, seleccione `Conteos` y elija primero la medida, ya que determina
+qué opciones de `Agrupar por` aparecen:
 
 | Medida | Agrupar por |
 | --- | --- |
-| Specimens | Species, Taxon rank, Site, Date, Method, Sex, Life stage |
-| Species | Taxon rank, Site, Date, Method, Sex, Life stage |
-| Part quantity | Part type, Treatment |
+| Especímenes | Especie, rango taxonómico, `Sitio`, `Fecha`, `Método`, `Sexo`, `Etapa de vida` |
+| Especies | Rango taxonómico, `Sitio`, `Fecha`, `Método`, `Sexo`, `Etapa de vida` |
+| `Cantidad de partes` | `Tipo de parte`, `Tratamiento` |
+| `Simbiontes` | `Taxón del simbionte`, categoría, `Ubicación anatómica`, `Especie hospedera` |
 
-`Life stage` solo aparece cuando el proyecto lo registra. Otros tres controles
-aparecen cuando corresponde:
+`Etapa de vida` solo aparece si existen datos registrados, y `Simbiontes` solo
+si hay [registros de simbiontes](/es/usages/specimens/symbionts/). Cuando
+corresponde, aparecen tres controles adicionales:
 
-- **Taxon rank** elige el rango con el que se cuenta: `Class`, `Order`,
-  `Family` o `Genus`. Especie tiene su propia agrupación, porque es la única
-  que ofrece el desglose y el filtro de sitio que siguen. El título del
-  gráfico, el encabezado de la tabla y el nombre del archivo indican el rango
-  elegido y no la agrupación, de modo que contar por familia se lee
-  `Specimens by family`.
-- **Breakdown** divide los conteos de especímenes por especie en `Sex` o
-  `Life stage`. El desglose se convierte en una columna adicional de la tabla
-  exportada.
-- **Filtros** limitan la tabla a un sitio al contar especímenes por especie, o a
-  una especie al contar cantidad de partes. El filtro seleccionado se incluye en
-  el nombre de archivo propuesto.
+- **Rango taxonómico:** elija clase, orden, familia o género (la especie tiene
+  su propia agrupación porque admite desgloses y filtro por sitio). Títulos,
+  encabezados y nombres de archivo reflejan el rango elegido.
+- **`Desglosar por`:** divide especímenes por especie según `Sexo` o
+  `Etapa de vida`, añadiendo una columna de desglose a la tabla exportada.
+- **Filtros:** limite especímenes por especie a un sitio, o limite
+  `Cantidad de partes` o `Simbiontes` a una especie. El filtro activo se
+  incluye en el nombre predeterminado del archivo.
 
-La tabla exportada repite lo que muestra la tabla en pantalla, una fila por
+La tabla exportada coincide con la tabla en pantalla, con una fila por
 categoría:
 
 ```text
-| Rank | Species          | Specimens | Percent (%) |
-| ---- | ---------------- | --------- | ----------- |
-| 1    | Bunomys coelestis| 24        | 40.00       |
-| 2    | Bunomys penitus  | 18        | 30.00       |
+| Rank | Species           | Specimens | Percent (%) |
+| ---- | ----------------- | --------- | ----------- |
+| 1    | Bunomys coelestis | 24        | 40.00       |
+| 2    | Bunomys penitus   | 18        | 30.00       |
 ```
 
-El encabezado de la segunda columna sigue la agrupación seleccionada, y el de la
-columna de conteo sigue la medida. Con un desglose activo, la columna de la
-serie queda entre ambas, y las categorías sin valor registrado se exportan como
-`Not recorded`.
+El segundo encabezado sigue la agrupación activa y la columna de conteo sigue
+la medida. Con desglose activo, su columna se sitúa entre ambos y los valores
+vacíos se exportan como `No registrado`.
 
 ## Espacial
 
-En `Explore`, seleccione `Spatial`. El panel espacial cuenta `Specimens`, `Species` o `Family` por coordenada de
-sitio. `Coordinates by species` le pide elegir una especie primero y luego
-cuenta esa especie en cada coordenada.
+En `Explorar`, seleccione `Espacial` para contar especímenes, especies o
+familias por coordenada de sitio. `Coordenadas por especie` permite elegir una
+especie y contar sus registros en cada coordenada.
 
-La tabla espacial exporta una fila por coordenada con nombre, localidad, latitud, longitud, elevación, conteo y porcentaje. Los conteos describen los registros seleccionados; no miden esfuerzo de muestreo. Revise ubicaciones ausentes y el taxón elegido antes de usar la tabla en informes o SIG.
+La tabla espacial exporta una fila por coordenada con nombre del lugar,
+localidad, latitud, longitud, elevación, conteo y porcentaje. Son conteos
+brutos de registros —no medidas de esfuerzo de muestreo—, por lo que conviene
+revisar coordenadas faltantes y filtros taxonómicos antes de usarlos en
+informes o SIG.
 
-## Escribir el archivo
+## Guardar el archivo
 
-El cuadro de exportación es el mismo en ambos paneles. En el teléfono se abre
-como una hoja inferior y, en pantallas más anchas, como un cuadro de diálogo.
+Tanto `Conteos` como `Espacial` usan el mismo diálogo de exportación (hoja
+inferior en teléfonos, diálogo en pantallas más anchas).
 
 {% steps %}
 
-1. Revise el nombre del archivo. NAHPU propone uno formado por el nombre del
-   proyecto, la medida y la agrupación, el filtro activo y la fecha de hoy.
-
-2. Active `Append date` si quiere agregar la fecha actual al nombre. Esto ayuda
-   cuando exporta la misma tabla varias veces durante una temporada de campo.
-
-3. Elija el formato. `CSV` y `TSV` son los más seguros para análisis, `Excel`
-   escribe un libro `.xlsx` y `JSON` conserva los nombres de encabezado como
-   claves.
-
-4. Seleccione la carpeta de destino. En el escritorio el archivo se escribe
-   donde usted elija; en el móvil NAHPU usa la carpeta de exportación de la
-   aplicación.
-
-5. Seleccione `Export`. Cuando el archivo queda escrito, el botón pasa a
-   `Share`, para enviar la tabla directamente a otra aplicación.
+1. Revise el nombre del archivo. NAHPU propone uno con el nombre del proyecto
+   (o `NAHPU_all-projects` en `Estadísticas de la base de datos`), la medida y
+   agrupación, el filtro activo y la fecha actual.
+2. Active `Añadir fecha` si cambia el nombre a uno personalizado y desea seguir
+   incluyendo la fecha de hoy.
+3. Elija el formato: `CSV` o `TSV` para herramientas de análisis, `Excel` para
+   un libro `.xlsx` o `JSON` para conservar los encabezados como claves.
+4. Seleccione una carpeta de destino en escritorio (en dispositivos móviles
+   NAHPU guarda en la carpeta de exportación de la aplicación).
+5. Seleccione `Exportar`. Al terminar, puede compartir el archivo, abrir la
+   carpeta o guardar una copia.
 
 {% /steps %}
 
 {% aside type="note" %}
 
-La exportación escribe las filas que están en la tabla en ese momento, así que
-la medida, la agrupación, el desglose y el filtro llegan todos al archivo.
-Cambie los controles y exporte de nuevo cuando necesite otro corte de los datos.
+La exportación guarda exactamente las filas visibles en la tabla, respetando la
+medida, agrupación, desglose y filtros activos. Cambie los controles y vuelva a
+exportar si necesita otro corte de los datos.
 
 {% /aside %}
 
 ## Páginas relacionadas
 
-- [Estadísticas de registros en el dashboard](/es/usages/projects/)
-- [Exportar registros](/es/usages/export/export-records/) para los datos de especímenes, sitios y
-  eventos que están detrás de los conteos
-- [Empaquetar registros](/es/usages/export/export-bundles/) para paquetes basados en estándares
+- [Estadísticas de registros en el panel](/es/usages/projects/)
+- [Exportar registros](/es/usages/export/export-records/) para obtener las
+  tablas completas de especímenes, sitios y eventos
+- [Empaquetar registros](/es/usages/export/export-bundles/) para paquetes
+  basados en estándares

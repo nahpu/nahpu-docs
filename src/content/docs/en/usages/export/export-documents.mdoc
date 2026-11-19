@@ -16,9 +16,9 @@ sidebar:
 {% pin id="E" label="Manage presets" large=[32.3, 46.9] small=[52.5, 51.3] /%}
 {% /screenshots %}
 
-Use `Export documents` to print NAHPU records as a PDF: specimen labels,
-tissue tags, catalog sheets, field books, and other formatted documents. For a
-data table instead, use [Export records](../export-records).
+Use `Export documents` to generate PDFs from NAHPU records: specimen labels,
+tissue tags, catalog sheets, field books, and other formatted printouts. For a
+tabular data file instead, use [Export records](../export-records).
 
 ## How the pieces fit together
 
@@ -31,325 +31,299 @@ Pages + preview/export action = PDF
 {% documentlayout /%}
 
 | Piece | Decides | Example |
-|---|---|---|
-| **Template** | What one label or block shows, and how it looks | A 50 × 20 mm skull tag |
-| **Print layout** | The paper, margins, grid, order, and page breaks | 40 skull tags per A4 sheet |
-| **Records** | The values that fill the template | The specimens you select |
+| --- | --- | --- |
+| **Document template** | What one label or block shows, and how it looks | A 50 × 20 mm skull tag |
+| **Print-layout preset** | Paper size, margins, grid, ordering, and page breaks | 40 skull tags per A4 sheet |
+| **Records** | The values that populate the template | The specimens you select |
 
-Templates and print layouts are saved settings you reuse. Keep one layout for
-each printing job you repeat, such as museum labels, tissue tags, or field
+Document templates and print-layout presets are saved settings you reuse. Keep
+one layout per recurring print job—such as museum labels, tissue tags, or field
 sheets.
 
 ## Quick export
 
 {% steps %}
 
-1. Navigate to the `Dashboard` page.
-2. Open the project menu and select `Export documents`.
-3. Select a `Layout profile` {% ref id="A" /%}.
-4. Check the page setup, the template blocks, and which records are selected.
-5. Select `Preview` {% ref id="C" /%} and generate a preview. Look at the first
-   and last pages.
-6. Enter a `File name` and choose the save directory when prompted.
-7. Select `Export documents` {% ref id="D" /%}.
-8. On mobile, use `Share` after the export completes if you need to send the PDF.
+1. Open the project `Dashboard` menu and select `Export documents`.
+2. Choose a `Layout profile` {% ref id="A" /%}. If no print layouts exist yet,
+   select `Load defaults` to add bundled layouts or `Manage presets` {% ref id="E" /%}
+   to create one.
+3. Review the page setup, template blocks, and selected records.
+4. Select `Preview` {% ref id="C" /%} and generate a preview, inspecting the
+   first and last pages.
+5. Enter a `File name` (optionally turn on `Append date`) and choose a
+   destination folder on desktop.
+6. Select `Export documents` {% ref id="D" /%}. Once finished, use `Share`,
+   open the folder, save a copy, or select `Export another`.
 
 {% /steps %}
 
-## Create a template
+## Create a template {% #create-a-template %}
 
-For a worked example from blank template to printed sheet, see
+For a full walkthrough from blank canvas to printed sheet, see
 [Tutorial 4: Create a mammal voucher tag](/en/tutorials/export/voucher-tag/).
 
-Open `Settings` > `Documents` {% ref id="E" /%}, switch to `Templates`, and select `Create
-new template`.
+Open `Settings` > `Documents` {% ref id="E" /%}, switch to `Templates`, and
+select `Create new template`:
 
-1. Enter a unique `Template name` and, optionally, a short `Description` of up to 80 characters.
-2. Choose the correct `Record type`: `Specimen`, `Specimen Part`, `Site`,
-   `Collecting Event`, `Narrative`, or `None`.
-3. Choose `1 sided` or `2 sided`. A two-sided template has separate Front and
-   Back designs; the Back is preserved when one-sided mode is selected but is
-   not printed until two-sided mode is enabled.
-4. Set the template width and height to the size of one label, tag, or block,
-   not the size of the sheet of paper.
-5. Add text, images, lines, and shapes on the canvas. Select an element to set
-   its position, size, style, visibility, locking, and stacking order.
-6. Save the template with `Save template`. Use `Save as...` when creating a variation.
+{% steps %}
 
-Open the settings button in the template editor to change the name,
-description, or side count of a saved template. Renaming repoints every print
-layout that used the old name, so layouts keep working.
+1. Enter a unique `Template name` and an optional `Description` (up to 80
+   characters).
+2. Choose the `Record type`: `Specimen`, `Specimen parts`, `Symbionts`,
+   `Site`, `Collecting event`, `Narrative`, or `No records`.
+3. Choose `1 sided` or `2 sided`. Two-sided templates keep separate Front and
+   Back designs; switching to one-sided keeps the Back design saved without
+   printing it.
+4. Set width and height to the dimensions of one label, tag, or block—not the
+   paper sheet.
+5. Add text, images, lines, and shapes on the canvas. Select any element to
+   adjust position, size, styling, visibility, locking, and stacking order.
+6. Select `Save template` (or `Save as...` for a variation).
 
-The template's record type controls which fields and records are available.
-For specimen templates, choose the appropriate taxon filter before selecting
-taxon-specific fields.
+{% /steps %}
+
+Use the template settings button in the editor to change a saved template's
+name, description, or side count. Renaming automatically updates every print
+layout that references it.
+
+The template's record type determines which fields and records are offered. For
+specimen templates, choose the taxon filter before picking taxon-specific
+fields.
 
 ## Fill a template with record data
 
-A text element shows record data through placeholders, such as
-`[specimen::fieldNumber]`, mixed with ordinary text. Insert them with
-`Insert Field` rather than typing them:
+Text elements display record values using placeholders such as
+`[specimen::fieldNumber]` mixed with fixed text. Use `Insert Field` rather than
+typing keys manually:
 
 ```text
 [taxonomy::genus] [taxonomy::specificEpithet] - [specimen::fieldNumber]
 ```
 
-Use the full `table::field` key in templates you reuse; the short form, such as
-`[fieldNumber]`, can pick the wrong field when two tables share a name. The
-template's record type decides which fields are offered. For specimen
-templates, choose the taxon filter before picking taxon-specific fields.
+Prefer full `table::field` keys in reusable templates; short keys like
+`[fieldNumber]` can resolve to the wrong table when two tables share a column
+name.
 
-Three settings on a text element shape what prints:
+Three text-element settings control formatting:
 
 | Setting | Use it to | Example |
-|---|---|---|
-| `Text type` and `Format` | Format the value as a date, coordinate, number, sex symbol, list, nested table, or decoded code label | `17 Feb 2016`, `♀`, `Scrotal` |
-| `No Content Placeholder` | Choose what an empty field prints: nothing, `N/A`, `None`, the field key, or your own text | `[specimen::preparator??N/A]` |
-| `Conditional output` | Bracket, replace, or add text depending on other fields | `[82.5]` for an estimated weight |
+| --- | --- | --- |
+| `Text type` and `Format` | Format dates, coordinates, numbers, sex symbols, lists, nested tables, or decoded codes | `17 Feb 2016`, `♀`, `Scrotal` |
+| `No Content Placeholder` | Choose what prints when a field is empty: blank, `N/A`, `None`, the field key, or custom text | `[specimen::preparator??N/A]` |
+| `Conditional output` | Bracket, replace, or add text based on field conditions | `[82.5]` for an estimated weight |
 
-`Nested List` prints related records, such as specimen parts or personnel, as a
-table or card list. `Encoded Text` turns stored codes into labels. Uncertain sex
-keeps its question mark in every format: `Female?`, `F?`, `♀?`.
+- `Nested List` prints related records (such as specimen parts or personnel) as
+  a table or card list.
+- `Encoded Text` converts stored numeric codes into labels. Uncertain sex keeps
+  its question mark in every format: `Female?`, `F?`, `♀?`.
+- Set `No Content Placeholder` before finalizing layout spacing, because blank
+  space and `N/A` take different widths.
+- Build conditionals with the `Conditional output` dialog and preview both a
+  matching and a non-matching record.
+- `Replace text` rewrites values after formatting—ideal for repeated
+  abbreviations, whereas conditionals handle changes driven by another field.
 
-Choose the empty-value text before you lay out the label, because a blank and
-`N/A` take different space. Build conditionals with the `Conditional output`
-dialog, which writes the syntax for you, and preview a record where the
-condition matches and one where it does not.
-
-These all work the same way in tabular exports. For every option, worked
-examples, and the full conditional syntax, see
-[Export expressions](../export-expressions), especially
-[Conditional output](../export-expressions#conditional-output) and
+See [Export expressions](../export-expressions) for the complete reference,
+including [Conditional output](../export-expressions#conditional-output) and
 [Text types and their formats](../export-expressions#text-types-and-their-formats).
-
-`Replace text` is a second way to rewrite values. It runs after formatting and
-suits a substitution repeated across many values, such as an abbreviation; use
-a conditional when the change depends on another field.
 
 ## Design for real records
 
-Preview with records that contain the longest expected text, the largest
-repeated lists, missing optional values, and long identifiers. A short sample
-can hide overflow that appears in real fieldwork data.
+Test previews with your longest text, largest repeated lists, missing optional
+fields, and long identifiers—short sample records hide overflow.
 
-For narrative text or nested lists:
+For narratives or nested lists:
 
-- enable dynamic text sizing where the text box should grow;
-- use a layout block's `Auto-fill page` option when block height varies;
-- keep enough width for wrapping and enough padding for the printer;
-- regenerate the preview after changing the template or layout.
+- turn on dynamic text sizing so text boxes expand as needed;
+- turn on `Auto-fill page` on the layout block when block heights vary;
+- leave adequate wrapping width and printer padding;
+- regenerate the preview after any template or layout edit.
 
-For images, use a managed image path that exists on the device and verify the
-image after importing the template on another device. A template JSON describes
-the definition; it is not a copy of every external image file.
+For static images, use a managed image path on the device and verify it after
+importing the template elsewhere; a template JSON stores the reference, not a
+copy of external image files.
 
-## Create a print-layout preset
+## Create a print-layout preset {% #create-a-print-layout-preset %}
 
-In `Settings` > `Documents`, switch to `Print layouts`. Create a new
-layout or use `Save as...` before experimenting with a known-good layout.
-Under the preset name, add an optional description of up to 80 characters;
-`Update` saves the name and description together, and the description appears
-in the preset list.
+Open `Settings` > `Documents` and switch to `Print layouts`. Create a new
+layout or use `Save as...` before modifying a working one. Enter an optional
+description (up to 80 characters) under the preset name and select `Update` to
+save both; the description appears in the preset list.
 
 ### Page setup
 
-Choose `Page size` {% ref id="B" /%}, `Orientation`, custom dimensions when needed, and page
-padding. Page settings describe the sheet; the template describes one block.
+Configure `Page size` {% ref id="B" /%}, `Orientation`, custom dimensions if
+needed, and page padding. Page setup describes the physical sheet; the template
+describes one block.
 
 ### Template blocks
 
-Add one or more `Template blocks`. For each block choose:
+Add one or more `Template blocks`. For each block, set:
 
-- `Template` — the reusable block definition;
-- `Copies` — how many copies to make for each record;
-- `Rows` and `Cols` — the fixed grid for a sheet;
-- `Auto-fill page` — measure each block's rendered height instead of forcing a
-  fixed row height;
-- template padding — space around every block;
-- `Order by` and `Direction` — deterministic record ordering;
-- `Page break after` — force a boundary after the block.
+- `Template`: the reusable document template;
+- `Copies`: copies printed per record;
+- `Rows` and `Cols`: fixed sheet grid;
+- `Auto-fill page`: measure each block's actual height instead of using fixed
+  row heights;
+- template padding: margin around each block;
+- `Order by` and `Direction`: deterministic record sorting;
+- `Page break after`: force a page break after the block.
 
-If a layout block shows `This template no longer exists`, select an available
-replacement template before previewing or exporting. NAHPU does not silently
-substitute a different template.
+If a block shows `This template no longer exists`, pick a replacement template
+before previewing or exporting; NAHPU never substitutes one silently.
 
 ### Multiple blocks
 
-When a layout has multiple blocks, `Multiple blocks mode` controls their order:
+When a layout contains multiple blocks, `Multiple blocks mode` controls print
+order:
 
-- `Continuous (Block-by-block)` prints all records from block 1, then all
-  records from block 2.
-- `Alternate (Record-by-record)` prints block 1 and block 2 for record 1,
-  then block 1 and block 2 for record 2.
-
-Use the first mode for separate sections of a packet and the second for paired
-outputs that should stay together.
+- `Continuous (Block-by-block)`: prints all records for block 1, then all
+  records for block 2 (best for multi-section packets).
+- `Alternate (Record-by-record)`: prints block 1 and block 2 for record 1, then
+  for record 2 (best for paired outputs that stay together).
 
 ## Practical layout recipes
 
 | Goal | Recommended settings |
-|---|---|
-| One full-page document | One block, one row, one column, fixed height |
-| Fixed label grid | Set exact rows and columns, keep `Auto-fill page` off |
-| Variable narrative sheet | Enable dynamic text and `Auto-fill page`; preview long records |
+| --- | --- |
+| One full-page document | One block, 1 row, 1 column, fixed height |
+| Fixed label grid | Exact rows and columns, `Auto-fill page` off |
+| Variable narrative sheet | Dynamic text sizing and `Auto-fill page` on; preview long records |
 | Multiple copies of each label | Increase `Copies` on the block |
-| Two-sided tag | Use a `2 sided` template and verify front/back mirroring |
-| Mixed packet | Add blocks and use `Continuous (Block-by-block)` |
-| Paired record output | Add blocks and use `Alternate (Record-by-record)` |
+| Two-sided tag | `2 sided` template; verify front/back mirroring |
+| Mixed packet | Multiple blocks with `Continuous (Block-by-block)` |
+| Paired record output | Multiple blocks with `Alternate (Record-by-record)` |
 
 ## Preview and export safely
 
-Preview is not a decorative screenshot: it exercises the same template,
-selection, measurement, and pagination path used for the PDF. Before exporting:
+Preview runs the exact same template, measurement, and pagination engine as PDF
+export. Before exporting:
 
 - select representative records for each block;
-- check the first and last page;
-- check long text and repeated values;
-- check fixed-grid alignment and page padding;
-- check both sides of duplex output;
+- inspect both the first and last pages;
+- verify long text, repeated lists, grid alignment, padding, and both duplex
+  sides;
 - regenerate the preview whenever it is marked stale.
 
-Edits made to the selected layout from the export screen are saved back to that
-layout. Use `Save as...` first when testing a new arrangement so an established
-printing profile remains unchanged.
-
-Enter a valid `File name`, select the destination directory on desktop, and
-select `Export documents`. The result is a PDF; it is not a structured data
-export or a restorable database backup.
+Changes made to the selected layout on the export screen save back to that
+layout—use `Save as...` first when testing variations. Exported PDFs are not
+structured data exports or restorable backups.
 
 ## Fonts
 
-Open `Settings` > `Documents` and switch to `Fonts` to see every font
-available to templates. The list is in two parts: the fonts bundled with
-NAHPU, which are always available, and the fonts you installed yourself. The
-right panel previews the selected font at a size you choose, in regular, bold,
-and italic.
+Open `Settings` > `Documents` > `Fonts` to manage fonts available to templates,
+grouped into fonts bundled with NAHPU and fonts you installed. The preview pane
+shows regular, bold, and italic styles at your chosen size.
 
-Select `Install font` to add a `.ttf`, `.otf`, or `.ttc` file from this
-device. `Find fonts` opens a font library in your browser; download the file
-there first, then install it here. You are responsible for the license of any
-font you install.
-
-An installed font lives on that installation only. It is not part of a
-user-config transfer, so an installation that receives a template using it
-does not receive the font. Install the same font on each device that prints
-the template, or accept the replacement NAHPU offers on import. A font used by
-a saved template cannot be deleted until no template refers to it.
+- Select `Install font` to install a `.ttf`, `.otf`, or `.ttc` file from your
+  device.
+- Select `Find fonts` to browse fonts in your browser, then install the
+  downloaded file. You are responsible for font licenses.
+- Installed fonts stay on this installation and are not transferred with user
+  configs. Install the same font on other devices or pick a replacement when
+  importing a template.
+- A font referenced by any saved template cannot be deleted until no template
+  uses it.
 
 ## Import and share templates and layouts
 
-Templates are exported from `Settings` > `Documents` > `Templates`, and
-layouts from `Print layouts`. Both offer two scopes: `Export this ...` on a
-row or in the options menu writes one item, and `Export all ...` writes every
-item. Both write the same file format, so either file can be imported through
-the same `Import` action. The export dialog sets the file name and folder, and
-`Share` sends the file once it is written. A layout export includes the templates
-its blocks use; turn off `Include linked templates` to export the layouts alone.
-Importing such a file adds the templates too, renaming one only when a different
-template already has its name.
+Export templates from `Settings` > `Documents` > `Templates` and layouts from
+`Print layouts`. Both support `Export this ...` (single item) and
+`Export all ...` (all items) using the same file format, imported through the
+same `Import` action. Layout exports include linked templates by default; turn
+off `Include linked templates` to export layouts alone.
 
-Duplicate names are handled separately:
+How conflicts and missing resources are handled on import:
 
-- template import asks whether to replace the existing template or use a new
-  name, and adds a numbered suffix when several arrive at once;
-- layout import creates a non-conflicting name;
-- settings transfer can replace selected configuration sections atomically.
+- **Duplicate template names:** prompts to replace or rename (adding numbered
+  suffixes when importing several at once).
+- **Duplicate layout names:** assigns a non-conflicting name automatically.
+- **User-config import:** replaces selected sections atomically.
+- **Missing fonts:** lists missing fonts and lets you preview and pick
+  replacements before saving, so templates never store unrenderable fonts.
+- **Static images:** referenced by filename only; templates with logos warn on
+  export and require re-adding the image on the target device.
 
-When an imported template uses a font this installation does not have, NAHPU
-lists the missing fonts and asks for a replacement, previewing each choice
-before it is applied. Nothing is stored until the replacements are chosen, so
-a transferred template never carries a font that cannot be rendered.
+Because layouts reference templates by name, transfer matching templates and
+layouts together. For a complete device copy including project data and managed
+files, use `Backup database`.
 
-Images used by a template are referenced by name rather than stored in the
-exported file. A template that uses a logo warns you on export, and the image
-has to be added again on the receiving installation.
+## Printing specimen tags {% #printing-specimen-tags %}
 
-Layouts reference templates by name, so transfer the matching templates and
-layouts together. Current selected names are device-local. For a complete
-installation copy including project data and managed files, use `Backup database`
-instead of a settings-only transfer.
+Printing tags from NAHPU instead of writing them by hand:
 
-## Printing specimen tags
-
-Printed tags are the most common reason to export documents. Printing them
-from NAHPU data instead of writing them by hand:
-
-- **Saves time in the field.** A full handwritten tag can take 10 minutes or
-  more. Instead, write a small temporary tag with identifiers, such as a tissue
-  number (`B-729113`) and field number (`JPO 7299`), and print the complete
-  tags later at the museum.
-- **Gives neat, consistent tags** that anyone can read, whatever their
+- **Saves field time:** attach a small temporary tag with key IDs—such as a
+  tissue number (`B-729113`) and field number (`JPO 7299`)—and print full tags
+  later at the museum.
+- **Improves legibility:** produces uniform, easy-to-read labels regardless of
   handwriting.
-- **Prevents copying errors.** A locality with coordinates and elevation is
-  entered once, linked to each specimen through its site, and corrected in one
-  place if needed.
-- **Leaves time to clean the data.** Before printing, you can fix odd
-  coordinates or elevations, terminology, and spelling.
+- **Prevents transcription errors:** localities, coordinates, and elevations
+  are entered once per site and corrected in one place.
+- **Allows pre-print curation:** clean up coordinates, elevations, terminology,
+  and spelling before printing.
 
 ### Tag-printing workflow
 
-NAHPU can print tags directly from a template and layout preset. When you need
-typesetting that the built-in layouts do not cover, an external label tool
-remains an option:
+NAHPU prints tags directly from templates and print-layout presets. When you
+need specialized external typesetting, you can still pair NAHPU exports with an
+external label tool:
 
 {% steps %}
 
-1. Export specimen data from NAHPU as a `.csv` file.
-2. Do a final data cleanup: spellcheck, correct miscellaneous errors, and
-   organize, combine, or split data columns as necessary.
-3. Upload the spreadsheet to Entomolabels. With the
-   [Entomolabels software](https://labels.entomo.pl/) (unfortunately only
-   available for Windows computers) and custom tag templates, you can format the
-   data on the specimen tag.
-4. Export final tag PDFs for the front and back of the tags, then combine them,
-   alternating front and back pages.
-5. Use an auto-duplex printer to print the final tags.
+1. Export specimen records from NAHPU as a `.csv` file.
+2. Clean the data: spellcheck, fix errors, and combine or split columns as
+   needed.
+3. Load the CSV into
+   [Entomolabels](https://labels.entomo.pl/) (Windows only) with your custom
+   tag template.
+4. Export front and back tag PDFs, then interleave front and back pages.
+5. Print on an auto-duplex printer.
 
 {% /steps %}
 
-### Printing equipment
+### Printing equipment {% #printing-equipment %}
 
-- **Printer.** To print tags, the NAHPU team has used the
+- **Printer:** The NAHPU team has used the
   [Epson WorkForce Pro WF-3820](https://epson.com/For-Work/Printers/Inkjet/WorkForce-Pro-WF-3820-Wireless-All-in-One-Printer/p/C11CJ07201)
-  with [DURABrite® Ultra instant-dry pigment ink](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1).
-  Using this printer, ink, and the paper shown below, we recently printed
-  (spring 2024) over 1000 bird specimen tags for the Louisiana State University
-  Museum of Natural Science.
-- **Paper.** We have used
-  [100% cotton, acid-free paper](https://www.redrivercatalog.com/browse/aurora-art-white-250.html)
-  with a weight of 250 gsm. Since this is a relatively thick and sturdy paper, we
-  found that it was very helpful to flex the paper a bit prior to printing.
-  Otherwise, the printer can have trouble flipping the page internally.
+  with
+  [DURABrite® Ultra instant-dry pigment ink](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1),
+  printing over 1,000 bird specimen tags (spring 2024) for the Louisiana State
+  University Museum of Natural Science.
+- **Paper:**
+  [100% cotton, acid-free 250 gsm paper](https://www.redrivercatalog.com/browse/aurora-art-white-250.html).
+  Because this stock is thick and rigid, gently flex sheets before loading so
+  the duplexer flips pages reliably.
 
 ### Archive the printed output
 
-Keep the digital PDF with the project archive, and keep the layout and template
-presets when the document must be regenerated. Review printed output before
-producing a complete batch, and print on suitable, durable paper. Keep the
-printed copy with the relevant collection records.
-
-Do not treat printed documents as a replacement for the database, the project
-export, or a structured record export. See
+Keep the generated PDF—and the template and layout presets needed to reproduce
+it—with your project archive. Inspect a test printout before running a full
+batch, print on durable archival stock, and store physical copies with the
+collection records. Printed documents never replace a database backup, project
+export, or structured record export; see
 [Archiving a project](../#archiving-a-project).
 
 ## Troubleshooting
 
 | Symptom | What to check |
-|---|---|
-| A placeholder prints literally | Check the template record type and use the full `table::field` key. |
-| A conditional prints literally | The expression is malformed. Check for a missing `]]`, an unquoted value, or mixed `&&` and `\|\|`. |
-| A condition never matches | Comparisons are case-sensitive, read the stored value rather than the displayed label, and an empty record value never matches. |
+| --- | --- |
+| Placeholder prints literally | Check the template record type and use the full `table::field` key. |
+| Conditional prints literally | Expression syntax is invalid—check for missing `]]`, unquoted values, or mixed `&&` and `\|\|`. |
+| Condition never matches | Comparisons are case-sensitive, test stored values rather than display labels, and blank values never match ordinary operators. |
 | Preview is empty | Check the block record type and select matching records. |
-| A template is missing | Reassign the block or restore/import the named template. |
-| Text overlaps or is clipped | Use dynamic text, `Auto-fill page`, a wider block, or a larger block height. |
-| Unexpected blank space | Review fixed rows, template size, page padding, and template padding. |
-| Records are in the wrong order | Set `Order by` and `Direction` on that block. |
-| Labels repeat unexpectedly | Check `Copies` and the selected record list. |
-| Blocks are in the wrong sequence | Change `Multiple blocks mode`. |
-| The back side is absent or rotated | Verify `2 sided`, Back content, and mirror settings. |
-| Preview is marked stale | Generate a new preview after the last edit. |
-| Import changes many settings | A selected-section settings import replaces that entire section. |
+| Template is missing | Reassign the block or import/restore the named template. |
+| Text overlaps or clips | Turn on dynamic text sizing and `Auto-fill page`, or enlarge the block. |
+| Unexpected blank space | Check fixed rows, template size, page padding, and template padding. |
+| Records out of order | Set `Order by` and `Direction` on the block. |
+| Unexpected duplicate labels | Check `Copies` and the selected record list. |
+| Blocks in wrong sequence | Change `Multiple blocks mode`. |
+| Back side missing or rotated | Check `2 sided`, Back content, and mirror settings. |
+| Preview is marked stale | Regenerate the preview after your latest edit. |
+| Config import changed many settings | Selected-section user-config import replaces each selected section (except `Custom fields`, which merge). |
 
-Every option in the template editor is listed in 
-[Export expressions](../export-expressions#template-editor-options). For developer-level
-storage and rendering details, see [Templates and presets](../../../contributing/code/templates-and-presets) and [Export workflows](../../../contributing/code/data-export-workflows).
+Every template editor control is documented under
+[Export expressions](../export-expressions#template-editor-options). For
+developer-level architecture details, see
+[Templates and presets](../../../contributing/code/templates-and-presets) and
+[Export workflows](../../../contributing/code/data-export-workflows).

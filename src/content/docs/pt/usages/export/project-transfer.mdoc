@@ -22,20 +22,20 @@ sidebar:
 {% pin id="G" label="Lembrete de backup" large2=[30.4, 55.6] small2=[5.7, 66.8] /%}
 {% /screenshots %}
 
-Uma transferência de projeto leva um projeto do NAHPU, com registros e mídia, de
-uma instalação para outra. `Exportar projeto` cria o arquivo; o dispositivo que
-recebe o lê de uma de duas formas:
+Uma transferência de projeto move um projeto do NAHPU — com seus registros e
+mídias — de uma instalação para outra. `Exportar projeto` cria o arquivo; o
+dispositivo receptor o lê de uma de duas formas:
 
-| No dispositivo que recebe | Use | Resultado |
-|---|---|---|
+| No dispositivo receptor | Use | Resultado |
+| --- | --- | --- |
 | O projeto ainda não existe | `Importar projeto` na tela inicial | Um novo projeto local |
-| O projeto já existe | `Mesclar projeto` nesse projeto | Os registros importados combinados com os existentes |
+| O projeto já existe | `Mesclar projeto` dentro desse projeto | Registros importados combinados aos existentes |
 
-O arquivo pode ser uma exportação de projeto ou um NAHPU Data Package, que
-contém os mesmos dados do projeto. Tabelas de registros, pacotes Darwin Core e
-documentos não restauram um projeto. Importar um JSON de informações do projeto
-ou um QR code do projeto cria só o nome e os dados do projeto, sem registros nem
-mídia. Para substituir a instalação inteira, veja
+Ambos aceitam uma exportação de projeto ou um NAHPU Data Package, que carrega o
+mesmo conteúdo de transferência. Tabelas de registros, pacotes Darwin Core e
+documentos não restauram um projeto. Importar um JSON ou código QR de
+informações do projeto cria apenas o nome e os metadados, sem registros nem
+mídia. Para substituir toda a instalação, veja
 [Restaurar um banco de dados](/pt/usages/export/#restoring-a-database).
 
 ## Exportar um projeto {% #export-a-project %}
@@ -43,121 +43,126 @@ mídia. Para substituir a instalação inteira, veja
 {% steps %}
 
 1. Abra o projeto no dispositivo de origem.
-2. Abra o menu do painel e selecione `Exportar projeto`.
-3. Confira as contagens de pessoal {% ref id="C" /%}, taxonomia, locais,
-   eventos, espécimes, narrativas e mídia, e leia os avisos de mídia ausente.
+2. Abra o menu do projeto e selecione `Exportar projeto`.
+3. Revise `Conteúdo do arquivo` {% ref id="C" /%}: contagens de pessoal,
+   taxonomia, locais, eventos, espécimes, narrativas e mídias, além de
+   `Tamanho da mídia` (quando a mídia é incluída) e eventuais avisos de
+   arquivos ausentes.
 4. Escolha o que incluir:
-   - Para uma transferência ou um backup completo, deixe `Exportação leve`
-     desativada e escolha `ZIP` ou `TAR.GZ` {% ref id="A" /%}. A mídia é
+   - Para transferência completa ou backup, deixe `Exportação leve` desativada
+     e escolha `TAR.GZ` (padrão) ou `ZIP` {% ref id="A" /%}. A mídia é
      incluída.
-   - Em uma conexão lenta, ative `Exportação leve` {% ref id="B" /%}. O NAHPU
-     grava um arquivo `JSON.GZ` menor, sem mídia.
-5. Selecione `Exportar projeto` {% ref id="D" /%} e guarde ou compartilhe o
-   arquivo com segurança.
+   - Em conexão lenta, ative `Exportação leve` {% ref id="B" /%}. O NAHPU gera
+     um arquivo `JSON.GZ` menor sem mídia.
+5. Verifique o nome do arquivo (opcionalmente ative `Acrescentar data`) e
+   escolha a pasta de destino no desktop.
+6. Selecione `Exportar projeto` {% ref id="D" /%}. É possível cancelar durante
+   a gravação. Ao concluir, compartilhe, abra a pasta ou salve uma cópia.
 
 {% /steps %}
 
 ### O que uma exportação de projeto contém
 
-- Todos os registros do projeto, incluindo os atributos específicos do táxon de
-  cada espécime. Para invertebrados, são interações ecológicas, parâmetros
-  ambientais, morfometria opcional, sexo e observações.
-- Só os táxons usados pelos espécimes do projeto.
-- Fotos de pessoal, mídia do projeto e mídia de táxons cujos arquivos estão no
-  dispositivo. Um arquivo ausente aparece como aviso e o vínculo fica de fora.
+- Todos os registros do projeto, incluindo partes de espécimes, simbiontes,
+  campos personalizados e atributos específicos de cada grupo taxonômico (em
+  invertebrados: interações ecológicas, parâmetros ambientais, morfometria
+  opcional, sexo e observações).
+- Apenas os táxons referenciados pelos espécimes do projeto.
+- Fotos de pessoal, mídias do projeto e mídias de táxons presentes no
+  dispositivo. Arquivos ausentes aparecem como aviso e seus vínculos são
+  omitidos.
 
 ## Importar em outra instalação {% #import-a-project %}
 
-Use para criar o projeto em um dispositivo novo ou recuperá-lo em um
-dispositivo substituto.
+Use `Importar projeto` para configurar o projeto em um novo dispositivo ou
+recuperá-lo em um aparelho substituto.
 
 {% steps %}
 
-1. Guarde o arquivo de origem e faça backup dos dados existentes no dispositivo
-   que recebe.
-2. Na tela inicial, selecione `Importar projeto` e depois `Escolher arquivo`.
-   Escolha um arquivo de projeto `JSON.GZ`, ZIP ou TAR.GZ, ou um NAHPU Data
-   Package.
-3. Confira os dados do projeto e o `Nome do projeto de destino`. Se o projeto
-   já existe neste dispositivo, selecione `Abrir Mesclar projeto`. Um projeto
+1. Guarde o arquivo original e faça backup dos dados existentes no dispositivo
+   receptor.
+2. No menu da tela inicial, selecione `Importar projeto` e depois
+   `Escolher arquivo`. Selecione um arquivo `JSON.GZ`, `ZIP` ou `TAR.GZ` de
+   projeto, ou um NAHPU Data Package.
+3. Verifique os detalhes e o `Nome do projeto de destino`. Se o projeto já
+   existir neste dispositivo, selecione `Abrir Mesclar projeto`. Um projeto
    diferente com o mesmo nome precisa de outro nome de destino.
 4. Confirme o lembrete de backup. Revise pessoal, taxonomia e espécimes e
-   resolva cada item marcado como `Requer atenção`.
-5. Confira as contagens e os avisos de arquivos ausentes e selecione
+   resolva todos os itens marcados com `Requer atenção`.
+5. Revise o resumo final e os avisos de arquivos ausentes, então selecione
    `Importar projeto`.
 6. Abra o projeto importado e confira locais, eventos, IDs de espécimes,
    narrativas e alguns anexos.
 
 {% /steps %}
 
-Um arquivo `JSON.GZ` não tem mídia. Guarde o arquivo de origem até conferir o
-projeto importado.
+Um arquivo `JSON.GZ` não contém mídia. Mantenha o arquivo de origem até validar
+o projeto importado.
 
 ## Mesclar no projeto correspondente {% #merge-into-the-matching-project %}
 
-Use para juntar a cópia do projeto de um colega com a sua.
+Use `Mesclar projeto` para combinar a cópia de um colega com a sua.
 
 {% aside type="caution" %}
 
 Faça backup do banco de dados antes de mesclar. O assistente oferece
-`Fazer backup agora` {% ref id="F" /%} e pede que você confirme o lembrete.
+`Fazer backup agora` {% ref id="F" /%} e exige confirmar o lembrete de backup {% ref id="G" /%}.
 
 {% /aside %}
 
 {% steps %}
 
-1. Abra a sua cópia do projeto.
-2. Abra o menu do painel e selecione `Mesclar projeto`.
-3. Escolha uma exportação de projeto `JSON.GZ` {% ref id="E" /%}, ZIP ou TAR.GZ,
-   ou um NAHPU Data Package.
+1. Abra sua cópia do projeto.
+2. Abra o menu do projeto e selecione `Mesclar projeto`.
+3. Selecione `Escolher arquivo` {% ref id="E" /%} e escolha uma exportação de
+   projeto (`JSON.GZ`, `ZIP` ou `TAR.GZ`) ou um NAHPU Data Package.
 4. Confirme o lembrete de backup {% ref id="G" /%}.
-5. Revise cada seção: informações do projeto, pessoal, taxonomia, locais,
-   eventos, espécimes e narrativas.
-6. Escolha o que fazer com cada correspondência ou conflito.
-7. Confira o resumo final e selecione `Mesclar projeto`.
+5. Revise cada seção na ordem: informações do projeto, pessoal, taxonomia,
+   locais, eventos, espécimes e narrativas.
+6. Escolha como tratar cada correspondência ou conflito.
+7. Verifique o resumo final e selecione `Mesclar projeto`.
 
 {% /steps %}
 
-Nada é gravado enquanto você percorre o assistente. O NAHPU salva todas as
-alterações de uma vez na última etapa. Se a mesclagem falhar, o banco de dados
-fica como estava e os arquivos de mídia recém-copiados são removidos.
+Nada é gravado enquanto você percorre o assistente. O NAHPU aplica todas as
+mudanças juntas no passo final; se a mesclagem falhar, o banco permanece
+inalterado e os arquivos de mídia recém-copiados são removidos.
 
 ## Resolver conflitos {% #resolve-conflicts %}
 
-Quando um registro importado corresponde a um que você já tem, o NAHPU mantém o
-seu, a menos que você escolha outra opção:
+Quando um registro importado coincide com um já existente, o NAHPU mantém o seu
+salvo escolha em contrário:
 
-| Opção | O que acontece |
-|---|---|
-| **Manter atual** | O seu registro fica. Registros importados que dependem dele passam a apontar para o seu. |
-| **Usar importado** | O registro importado substitui o seu, junto com os dados que pertencem a ele. |
-| **Importar como novo** | O registro importado é adicionado como um registro separado. Recebe um novo UUID se necessário, e um ID de local duplicado recebe um sufixo único. |
-| **Pular** | O registro não é importado. Registros que dependem dele e não podem ser religados também são pulados. |
+| Escolha | O que acontece |
+| --- | --- |
+| **Manter atual** | Seu registro permanece. Registros importados que dependem dele vinculam-se ao seu. |
+| **Usar importado** | O registro importado substitui o seu junto com os dados que possui. |
+| **Importar como novo** | O registro é adicionado separadamente, com novo UUID se necessário e sufixo único para IDs de local duplicados. |
+| **Ignorar** | O registro não é importado. Registros dependentes que não puderem ser revinculados também são ignorados. |
 
 ### Como os registros são correspondidos
 
 | Registro | Correspondido por |
-|---|---|
+| --- | --- |
 | Informações do projeto | Comparadas campo a campo |
 | Pessoal, espécimes | UUID |
 | Taxonomia | Gênero e epíteto específico |
-| Locais | ID do local, quando não está vazio |
-| Eventos | Local, data de início e sufixo do ID (a hora de início é ignorada) |
+| Locais | ID do local (quando não vazio) |
+| Eventos | Local, data de início e sufixo do ID (hora de início ignorada) |
 | Narrativas | Local, data, hora e autor |
 
-Pessoal e táxons são compartilhados por todos os projetos do dispositivo, por
-isso o assistente avisa quando substituir um deles pode alterar outro projeto.
-Um UUID de espécime que pertence a outro projeto não pode ser substituído;
-importe como novo ou pule.
+Pessoal e táxons são compartilhados por todos os projetos no dispositivo, por
+isso o assistente avisa quando uma substituição pode afetar outro projeto. Um
+UUID de espécime pertencente a outro projeto não pode ser substituído; importe
+como novo ou ignore.
 
 ## Forçar a mesclagem de um UUID de projeto diferente {% #force-merge-a-different-project-uuid %}
 
-A mesclagem normalmente exige que o UUID do projeto no arquivo seja igual ao do
-projeto aberto. Uma diferença é bloqueada, porque costuma significar que o
-projeto errado está aberto.
+A mesclagem normalmente exige que o UUID do arquivo coincida com o do projeto
+aberto; divergências são bloqueadas para evitar mesclar no projeto errado.
 
-Se os dois forem de fato o mesmo projeto de campo, ative
+Se ambos os arquivos forem de fato do mesmo projeto de campo, ative
 `Forçar mesclagem no projeto ativo` e digite o nome do projeto aberto para
-confirmar. O NAHPU então dá aos registros importados o UUID do projeto aberto.
-Os conflitos não são sobrescritos automaticamente; todas as opções acima
-continuam valendo.
+confirmar. O NAHPU reatribui o UUID do projeto aberto aos registros importados.
+Conflitos nunca são sobrescritos automaticamente: todas as opções de conflito
+acima continuam válidas.

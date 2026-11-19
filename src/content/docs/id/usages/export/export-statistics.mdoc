@@ -6,11 +6,11 @@ sidebar:
 
 {% screenshots
    large="app-screenshots/usage/statistics-large.webp"
-   largeAlt="Layar Statistik Catatan NAHPU di tablet"
+   largeAlt="Layar Statistik catatan NAHPU di tablet"
    large2="app-screenshots/usage/statistics-large-2.webp"
    large2Alt="Layar Dasbor proyek NAHPU di tablet"
    small="app-screenshots/usage/statistics-small.webp"
-   smallAlt="Layar Statistik Catatan NAHPU di ponsel"
+   smallAlt="Layar Statistik catatan NAHPU di ponsel"
    small2="app-screenshots/usage/statistics-small-2.webp"
    small2Alt="Layar Dasbor proyek NAHPU di ponsel" %}
 {% pin id="A" label="Ringkasan" large=[41.2, 14.8] small=[21.9, 17.5] /%}
@@ -18,119 +18,124 @@ sidebar:
 {% pin id="C" label="Ringkasan catatan" large=[12.5, 21.5] small=[35.7, 23.6] /%}
 {% pin id="D" label="Rincian taksonomi" large=[15, 53.1] small=[44, 76.1] /%}
 {% pin id="E" label="Panel statistik" large2=[68, 46] small2=[27, 42] /%}
-{% pin id="F" label="Jelajahi statistik lain" large2=[68.8, 90.3] small2=[72.6, 82.6] /%}
+{% pin id="F" label="Jelajahi statistik lainnya" large2=[68.8, 90.3] small2=[72.6, 82.6] /%}
 {% /screenshots %}
 
-Gunakan ekspor statistik bila Anda memerlukan tabel ringkasan, bukan catatan
-lengkapnya. Tabel ini berisi hitungan dan persentase per kategori, yang
-umumnya diminta oleh laporan hibah, laporan izin, dan laporan kemajuan. Setiap
-tabel yang tampil di layar statistik dapat ditulis ke CSV, TSV, Excel, atau
-JSON.
+Gunakan ekspor statistik bila Anda memerlukan ringkasan jumlah dan
+persentase—untuk laporan hibah, laporan izin, dan laporan kemajuan—bukan
+catatan mentahnya. Setiap tabel di `Jumlah` dan `Spasial` dapat diekspor ke
+CSV, TSV, Excel, atau JSON.
 
-Statistik dihitung hanya untuk proyek yang sedang aktif.
+Statistik bekerja dalam dua cakupan:
+
+- **Proyek aktif:** buka panel `Statistik catatan` {% ref id="E" /%} di dasbor
+  proyek lalu pilih `Jelajahi statistik lainnya` {% ref id="F" /%}.
+- **Semua proyek:** buka `Statistik basis data` dari menu layar beranda untuk
+  meringkas dan mengekspor statistik lintas semua proyek di basis data.
 
 ## Membuka layar statistik
 
-Buka panel statistik catatan {% ref id="E" /%} di dashboard proyek lalu pilih
-`Explore more stats` {% ref id="F" /%}. Gunakan tombol di bagian atas layar untuk berpindah
-antara dua tampilan:
+Beralih antara dua tampilan utama:
 
-- **Summary** {% ref id="A" /%} menampilkan total proyek, terbagi menjadi grup `Record summary` {% ref id="C" /%}
-  dan grup `Taxonomic breakdown` {% ref id="D" /%} yang menghitung jumlah kelas, ordo, famili,
-  genus, dan spesies yang berbeda, lalu diikuti lima hitungan terbesar per
-  kategori. Pilih `View details` pada sebuah grafik untuk membukanya di
-  `Explore`.
-- **Explore** {% ref id="B" /%} menyediakan dua pilihan. `Counts` menyusun satu tabel atau
-  grafik dari measure, pengelompokan, rincian, dan filter yang Anda pilih.
-  `Spatial` menghitung catatan per koordinat lokasi, dalam bentuk peta atau
-  tabel.
+- **`Ringkasan`** {% ref id="A" /%} menampilkan total yang dikelompokkan dalam
+  `Ringkasan catatan` {% ref id="C" /%}, `Rincian taksonomi` {% ref id="D" /%}
+  (jumlah kelas, ordo, famili, genus, dan spesies berbeda), serta
+  `Rincian media`—ditambah tabel `Per proyek` saat membuka
+  `Statistik basis data`—diikuti grafik lima teratas. Pilih `Lihat detail` pada
+  grafik mana pun untuk membukanya di `Jelajahi`.
+- **`Jelajahi`** {% ref id="B" /%} memiliki tiga tab:
+  - `Jumlah`: menyusun grafik atau tabel yang dapat diekspor menurut ukuran,
+    pengelompokan, perincian, dan filter.
+  - `Spasial`: memetakan atau menabulasikan jumlah per koordinat lokasi.
+  - `Graf`: mengeksplorasi jejaring relasi antarcatatan secara interaktif
+    (visual saja; tidak diekspor sebagai tabel).
 
-Ekspor tersedia pada tampilan tabel. Ubah panel dari `Chart` atau `Map` ke
-`Table`, lalu gunakan tombol `Export table` di atas tabel.
+Untuk mengekspor, ubah tampilan `Jumlah` atau `Spasial` dari `Grafik` atau
+`Peta` ke `Tabel`, lalu pilih `Ekspor tabel` di atas tabel.
 
-## Hitungan
+## Jumlah
 
-Pilih `Measure` lebih dulu, karena pilihan ini menentukan pengelompokan yang
-tersedia.
+Di bawah `Jelajahi`, pilih `Jumlah` lalu pilih ukuran terlebih dahulu karena
+menentukan opsi `Kelompokkan menurut`:
 
-| Measure | Kelompokkan menurut |
+| Ukuran | Kelompokkan menurut |
 | --- | --- |
-| Specimens | Species, Taxon rank, Site, Date, Method, Sex, Life stage |
-| Species | Taxon rank, Site, Date, Method, Sex, Life stage |
-| Part quantity | Part type, Treatment |
+| Spesimen | Spesies, peringkat takson, `Lokasi`, `Tanggal`, `Metode`, `Jenis kelamin`, `Tahap hidup` |
+| Spesies | Peringkat takson, `Lokasi`, `Tanggal`, `Metode`, `Jenis kelamin`, `Tahap hidup` |
+| `Jumlah bagian` | `Jenis bagian`, `Perlakuan` |
+| `Simbion` | `Takson simbion`, kategori, `Lokasi anatomi`, `Spesies inang` |
 
-`Life stage` hanya muncul bila proyek mencatatnya. Tiga kontrol tambahan muncul
-bila relevan:
+`Tahap hidup` hanya muncul jika tercatat pada data, dan `Simbion` hanya muncul
+bila proyek memiliki [catatan simbion](/id/usages/specimens/symbionts/). Tiga
+kontrol tambahan muncul bila relevan:
 
-- **Taxon rank** memilih takson yang dihitung: `Class`, `Order`, `Family`, atau
-  `Genus`. Spesies memiliki pengelompokan tersendiri, karena hanya
-  pengelompokan itu yang menyediakan rincian dan filter lokasi di bawah. Judul
-  grafik, tajuk tabel, dan nama berkas menyebutkan takson yang Anda pilih,
-  bukan nama pengelompokannya, sehingga menghitung per famili terbaca
-  `Specimens by family`.
-- **Breakdown** memecah hitungan spesimen per spesies menjadi `Sex` atau
-  `Life stage`. Rincian ini menjadi kolom tambahan pada tabel yang diekspor.
-- **Filter** mempersempit tabel ke satu lokasi saat menghitung spesimen per
-  spesies, atau ke satu spesies saat menghitung jumlah bagian spesimen. Filter
-  yang dipilih ikut masuk ke nama berkas bawaan.
+- **Peringkat takson:** pilih kelas, ordo, famili, atau genus (spesies punya
+  pengelompokan tersendiri karena mendukung perincian dan filter lokasi). Judul
+  grafik, tajuk kolom, dan nama berkas bawaan mengikuti peringkat yang dipilih.
+- **`Rinci menurut`:** memecah hitungan spesimen per spesies menurut
+  `Jenis kelamin` atau `Tahap hidup`, menambahkan kolom perincian pada tabel
+  ekspor.
+- **Filter:** saring spesimen per spesies ke satu lokasi, atau saring
+  `Jumlah bagian` maupun `Simbion` ke satu spesies. Filter aktif masuk ke nama
+  berkas bawaan.
 
-Tabel yang diekspor mengulang isi tabel di layar, satu baris per kategori:
+Tabel ekspor mengikuti tabel di layar, satu baris per kategori:
 
 ```text
-| Rank | Species          | Specimens | Percent (%) |
-| ---- | ---------------- | --------- | ----------- |
-| 1    | Bunomys coelestis| 24        | 40.00       |
-| 2    | Bunomys penitus  | 18        | 30.00       |
+| Rank | Species           | Specimens | Percent (%) |
+| ---- | ----------------- | --------- | ----------- |
+| 1    | Bunomys coelestis | 24        | 40.00       |
+| 2    | Bunomys penitus   | 18        | 30.00       |
 ```
 
-Judul kolom kedua mengikuti pengelompokan yang dipilih, dan judul kolom hitungan
-mengikuti measure. Bila rincian aktif, kolom seri berada di antara keduanya, dan
-kategori tanpa nilai tercatat diekspor sebagai `Not recorded`.
+Tajuk kolom kedua mengikuti pengelompokan dan kolom hitungan mengikuti ukuran.
+Bila perincian aktif, kolomnya berada di antara keduanya dan kategori tanpa
+nilai diekspor sebagai `Tidak tercatat`.
 
 ## Spasial
 
-Pada `Explore`, pilih `Spatial`. Panel spasial menghitung `Specimens`, `Species`, atau `Family` per koordinat
-lokasi. `Coordinates by species` meminta Anda memilih satu spesies lebih dulu,
-lalu menghitung spesies tersebut di setiap koordinat.
+Di bawah `Jelajahi`, pilih `Spasial` untuk menghitung spesimen, spesies, atau
+famili per koordinat lokasi. `Koordinat menurut spesies` memungkinkan Anda
+memilih satu spesies lalu menghitung catatannya di tiap koordinat.
 
-Tabel spasial mengekspor satu baris per koordinat dengan nama, lokalitas, lintang, bujur, elevasi, jumlah, dan persentase. Jumlah ini menggambarkan catatan terpilih, bukan mengukur upaya pengambilan sampel. Tinjau lokasi yang hilang dan takson terpilih sebelum memakai tabel untuk laporan atau SIG.
+Tabel spasial mengekspor satu baris per koordinat berisi nama tempat,
+lokalitas, lintang, bujur, elevasi, jumlah, dan persentase. Angka ini adalah
+jumlah catatan mentah—bukan ukuran usaha pencuplikan—jadi periksa koordinat
+kosong dan filter takson sebelum dipakai untuk laporan atau SIG.
 
 ## Menulis berkas
 
-Kotak ekspor sama untuk kedua panel. Di ponsel kotak ini terbuka sebagai lembar
-bawah, dan di layar lebar sebagai dialog.
+Baik `Jumlah` maupun `Spasial` memakai dialog ekspor yang sama (lembar bawah di
+ponsel dan dialog di layar lebar).
 
 {% steps %}
 
-1. Periksa nama berkas. NAHPU mengusulkan nama dari nama proyek, measure dan
-   pengelompokan, filter yang aktif, serta tanggal hari ini.
-
-2. Aktifkan `Append date` bila Anda ingin menambahkan tanggal saat ini ke nama
-   berkas. Ini membantu ketika tabel yang sama diekspor berulang kali selama satu
-   musim lapangan.
-
-3. Pilih formatnya. `CSV` dan `TSV` paling aman untuk analisis, `Excel` menulis
-   buku kerja `.xlsx`, dan `JSON` mempertahankan nama header sebagai kunci.
-
-4. Pilih folder tujuan. Di desktop berkas ditulis ke folder pilihan Anda; di
-   ponsel NAHPU memakai folder ekspor aplikasi.
-
-5. Pilih `Export`. Setelah berkas ditulis, tombolnya berubah menjadi `Share`
-   sehingga tabel dapat langsung dikirim ke aplikasi lain.
+1. Periksa nama berkas. NAHPU menyarankan nama dari nama proyek (atau
+   `NAHPU_all-projects` pada `Statistik basis data`), ukuran dan pengelompokan,
+   filter aktif, serta tanggal hari ini.
+2. Aktifkan `Tambahkan tanggal` jika Anda mengganti nama berkas dengan nama
+   kustom tetapi tetap ingin menambahkan tanggal hari ini.
+3. Pilih format: `CSV` atau `TSV` untuk alat analisis, `Excel` untuk buku kerja
+   `.xlsx`, atau `JSON` agar tajuk kolom menjadi kunci.
+4. Pilih folder tujuan di desktop (di ponsel, NAHPU menyimpan ke folder ekspor
+   aplikasi).
+5. Pilih `Ekspor`. Setelah selesai, Anda dapat membagikan, membuka folder, atau
+   menyimpan salinan.
 
 {% /steps %}
 
 {% aside type="note" %}
 
-Ekspor menulis baris yang sedang ada di tabel, sehingga measure, pengelompokan,
-rincian, dan filter semuanya ikut ke berkas. Ubah kontrolnya lalu ekspor lagi
-bila Anda memerlukan potongan data yang berbeda.
+Ekspor menulis baris persis seperti yang tampil di tabel—termasuk ukuran,
+pengelompokan, perincian, dan filter aktif. Ubah kontrol lalu ekspor lagi untuk
+irisan data lain.
 
 {% /aside %}
 
 ## Halaman terkait
 
-- [Statistik catatan di dashboard](/id/usages/projects/)
-- [Ekspor catatan](/id/usages/export/export-records/) untuk data spesimen, lokasi, dan kegiatan
-  pengumpulan yang mendasari hitungan tersebut
-- [Paket catatan](/id/usages/export/export-bundles/) untuk paket berbasis standar
+- [Statistik catatan di dasbor](/id/usages/projects/)
+- [Ekspor catatan](/id/usages/export/export-records/) untuk tabel data
+  spesimen, lokasi, dan peristiwa koleksi
+- [Bundel catatan](/id/usages/export/export-bundles/) untuk paket berbasis
+  standar

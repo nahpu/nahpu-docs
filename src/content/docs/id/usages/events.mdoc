@@ -6,13 +6,13 @@ sidebar:
 
 {% screenshots
    large="app-screenshots/usage/events-large.webp"
-   largeAlt="Layar Peristiwa NAHPU di tablet"
+   largeAlt="Layar Kegiatan NAHPU di tablet"
    small="app-screenshots/usage/events-small.webp"
-   smallAlt="Layar Peristiwa NAHPU di ponsel"
+   smallAlt="Layar Kegiatan NAHPU di ponsel"
    small2="app-screenshots/usage/events-small-2.webp"
    small2Alt="Layar Data lingkungan NAHPU di ponsel" %}
-{% pin id="A" label="Buat peristiwa" large=[96, 10.4] small=[80.5, 12.3] /%}
-{% pin id="B" label="ID peristiwa" large=[11.8, 19.2] small=[48.8, 24.1] /%}
+{% pin id="A" label="Buat kegiatan" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="B" label="ID kegiatan" large=[11.8, 19.2] small=[48.8, 24.1] /%}
 {% pin id="C" label="ID lokasi" large=[16.5, 39] small=[20.2, 40.5] /%}
 {% pin id="D" label="Tanggal dan waktu" large=[19, 45.7] small=[23.8, 46.6] /%}
 {% pin id="E" label="Aktivitas utama" large=[65, 27.6] small=[32.1, 81.6] /%}
@@ -21,241 +21,190 @@ sidebar:
 {% pin id="H" label="Data lingkungan" large=[80.5, 63.8] small2=[23.8, 64.5] /%}
 {% /screenshots %}
 
-Kegiatan pengumpulan membantu Anda melacak aktivitas, metode koleksi, personel, data
-lingkungan, dan data astronomi untuk satu periode kerja di sebuah lokasi.
-Catatan spesimen terhubung ke kegiatan pengumpulan, bukan langsung ke lokasi,
-sehingga kegiatan menjadi jembatan antara spesimen dan konteks lokasi,
-koordinat, metode, serta pengumpulnya.
+Kegiatan pengumpulan mencatat aktivitas, metode koleksi, personel, kondisi
+lingkungan, astronomi, dan media untuk suatu periode kerja di sebuah lokasi.
+Spesimen terhubung ke kegiatan pengumpulan dan bukan langsung ke lokasi,
+sehingga kegiatan menghubungkan setiap spesimen dengan lokasi, koordinat,
+metode, dan pengumpulnya.
 
 ## Menyiapkan kegiatan
 
-Daftar bawaan NAHPU untuk `Kegiatan utama` adalah `Collecting`, `Recording`,
-dan `Observing`. `Other` sengaja tidak disertakan, tetapi Anda dapat
-menambahkannya, begitu pula aktivitas khusus sesuai protokol Anda. Nilai
-aktivitas yang sudah tersimpan tetap tersedia meskipun tidak ada dalam daftar
-yang dikonfigurasi.
+Atur kosakata terkontrol kegiatan dan bidang lingkungan yang tampil sebelum ke
+lapangan di `Pengaturan` > `Kegiatan`:
 
 {% steps %}
 
-1. Buka dasbor.
-2. Ketuk atau klik menu hamburger di sudut kiri atas.
-3. Pilih `Pengaturan`.
-4. Pilih `Kegiatan`.
-5. Sunting aktivitas utama, metode koleksi, dan peran personel agar sesuai
-   dengan skenario lapangan Anda.
-6. Di `Bidang data lingkungan`, pilih kolom bawaan yang harus muncul pada
-   formulir kegiatan. Kolom bawaannya adalah suhu lingkungan, kelembapan
-   lingkungan, tutupan awan, curah hujan, dan catatan.
+1. Buka `Pengaturan` dari menu layar beranda, menu `Dasbor proyek`, atau dok
+   `Alat`.
+2. Pilih `Kegiatan`.
+3. Sesuaikan kosakata terkontrol untuk `Kegiatan utama`, `Metode koleksi`, dan
+   `Peran personel`.
+4. Di `Bidang data lingkungan`, aktifkan bidang bawaan yang ingin ditampilkan
+   pada formulir kegiatan (bawaan: `Suhu lingkungan`, `Kelembapan lingkungan`,
+   `Tutupan awan`, `Curah hujan`, dan `Catatan`).
 
 {% /steps %}
 
+**Kosakata terkontrol bawaan:**
+
+- **`Kegiatan utama`**: `Collecting`, `Recording`, dan `Observing`. `Other`
+  tidak disertakan secara bawaan, tetapi Anda dapat menambahkannya atau
+  menambahkan aktivitas sesuai protokol. Nilai yang sudah tersimpan tetap dapat
+  dipilih meski dihapus dari kosakata terkontrol.
+- **`Metode koleksi`**: `Hands`, `Mist net`, `Sweep net`, `Snap trap`,
+  `Cage trap`, `Pitfall`, `Malaise trap`, `Light trap`, `Beating sheet`,
+  `Aspirator`, `Local snare`, `Pellet gun`, dan `Other`.
+- **`Peran personel`**: `Leader` dan `Helper` (tambahkan peran seperti
+  pengemudi, pencatat, atau pengamat sesuai kebutuhan).
+
 ## Mengelola kegiatan pengumpulan
 
-Buka sebuah kegiatan lalu gunakan menu tiga titiknya untuk mengelola catatan.
+Buka sebuah kegiatan dan gunakan menu tiga titik untuk mengelola catatan:
 
-| Tindakan | Fungsinya |
+| Tindakan | Fungsi |
 | --- | --- |
 | `Buat kegiatan` | Menambahkan kegiatan baru. |
-| `Duplikat kegiatan` | Menyalin lokasi, waktu, aktivitas, catatan, akhiran ID, metode koleksi, dan personel. Tanggalnya maju satu hari, dan kegiatan baru memperoleh catatan data lingkungan yang kosong. |
-| `Urutkan catatan` | Memilih kolom dan arah pengurutan daftar kegiatan. |
-| `Tampilkan QR` | Menampilkan kegiatan agar dipindai perangkat lain. |
-| `Ekspor kegiatan` | Menyimpan kegiatan dan data terkaitnya sebagai JSON, atau sebagai arsip ZIP atau TAR.GZ bila kegiatan memiliki media. |
-| `Pindai QR` | Membuat atau mengganti kegiatan dari kode QR kegiatan. Tersedia pada perangkat dengan pemindai kamera (Android, iOS, macOS, dan web). |
+| `Duplikat kegiatan` | Menyalin lokasi, waktu, aktivitas, catatan, sufiks ID, metode koleksi, dan personel; memajukan `Tanggal mulai` dan `Tanggal selesai` satu hari serta membuat catatan data lingkungan baru yang kosong. |
+| `Urutkan catatan` | Memilih bidang dan arah pengurutan daftar kegiatan. |
+| `Tampilkan QR` | Menampilkan kegiatan sebagai kode QR untuk dipindai perangkat lain. |
+| `Ekspor kegiatan` | Menyimpan kegiatan sebagai JSON, atau arsip ZIP / TAR.GZ bila memiliki media. |
+| `Pindai QR` | Membuat atau mengganti kegiatan dari kode QR kegiatan (Android, iOS, macOS, dan web). |
 | `Impor kegiatan` | Membuat atau mengganti kegiatan dari berkas JSON atau arsip hasil ekspor. |
-| `Hapus catatan` | Menghapus kegiatan beserta metode koleksi, personel kegiatan, data lingkungan, dan medianya, serta melepaskan data terkaitnya. Spesimen yang memakai kegiatan tersebut harus dipindahkan atau dihapus lebih dulu. |
-| `Hapus semua catatan` | Melakukan hal yang sama untuk setiap kegiatan dalam proyek. |
+| `Hapus catatan` | Menghapus kegiatan beserta metode koleksi, personel kegiatan, data lingkungan, dan medianya, serta melepaskan data terkait. Diblokir selama masih dirujuk spesimen. |
+| `Hapus semua catatan` | Menghapus semua kegiatan dalam proyek setelah spesimen yang merujuknya dipindahkan atau dihapus. |
 
-Saat mengimpor kegiatan, pilih apakah impor tersebut membuat kegiatan baru atau
-memperbarui kegiatan yang sudah ada, lalu periksa lokasi dan personel yang
-dirujuk.
-
-Metode koleksi bawaan adalah `Hands`, `Mist net`, `Sweep net`, `Snap trap`,
-`Cage trap`, `Pitfall`, `Malaise trap`, `Light trap`, `Beating sheet`,
-`Aspirator`, `Local snare`, `Pellet gun`, dan `Other`. Peran personel bawaan
-adalah `Leader` dan `Helper`. Tambahkan nilai yang sesuai dengan protokol Anda,
-seperti perangkap harpa, survei perjumpaan visual, pengemudi, perekam, atau
-pengamat.
+Saat mengimpor kegiatan, pilih apakah membuat kegiatan baru atau memperbarui
+yang ada, lalu periksa lokasi dan personel terkait.
 
 ## Membuat kegiatan baru
 
 {% steps %}
-1. Buka halaman kegiatan melalui bilah navigasi bawah.
 
-2. Gunakan ikon tambah {% ref id="A" /%} di sudut kanan atas untuk membuat kegiatan baru.
-
-    Anda juga dapat memakai menu tiga titik lalu mengetuk `Buat kegiatan`.
+1. Buka halaman `Kegiatan` dari bilah navigasi.
+2. Pilih ikon tambah {% ref id="A" /%} di kanan atas (atau buka menu tiga titik
+   lalu pilih `Buat kegiatan`).
 
     {% aside type="tip" %}
 
-    Anda dapat mengurangi pengetikan berulang dengan menduplikasi kegiatan.
-    Ketuk atau klik menu tiga titik, lalu pilih `Duplikat kegiatan`. NAHPU
-    menyalin lokasi, waktu, aktivitas, catatan, metode koleksi, dan personel, memajukan
-    `Tanggal mulai` {% ref id="D" /%} dan `Tanggal selesai` satu hari, serta membuat catatan data lingkungan
-    baru yang kosong.
+    Untuk hari kerja berturut-turut di lokasi yang sama, buka menu tiga titik
+    dan pilih `Duplikat kegiatan`. NAHPU menyalin lokasi, waktu, aktivitas,
+    catatan, metode, dan personel, memajukan tanggal satu hari, serta memulai
+    catatan data lingkungan kosong.
 
     {% /aside %}
 
 3. Pilih `ID lokasi` {% ref id="C" /%}.
-
-4. Masukkan `Tanggal mulai` dan `Tanggal selesai`. Tanggal di masa depan tidak
-   dapat dipilih.
-
-    `ID kegiatan` {% ref id="B" /%} dibuat dari `{Site ID}-{Start Date}`.
-
-5. Sunting `ID kegiatan` (opsional).
-
-    Bila Anda memiliki beberapa kegiatan dengan `ID lokasi` dan `Tanggal mulai`
-    yang sama, tambahkan akhiran pada ID tersebut. Ini berguna saat Anda
-    memisahkan kerja siang dan malam, menjalankan beberapa aktivitas di lokasi
-    yang sama, atau perlu membedakan kegiatan berulang pada tanggal yang sama.
-
+4. Masukkan `Tanggal mulai` dan `Tanggal selesai` {% ref id="D" /%} (tanggal
+   masa depan tidak dapat dipilih). NAHPU membentuk `ID kegiatan` {% ref id="B" /%}
+   sebagai `{ID lokasi}-{Tanggal mulai}`.
+5. Secara opsional ketuk ikon sunting di samping `ID kegiatan` untuk menambah
+   sufiks ID bila ada beberapa kegiatan pada lokasi dan tanggal mulai yang sama
+   (misalnya sesi siang dan malam).
 6. Masukkan `Waktu mulai` dan `Waktu selesai`.
-
-7. Tambahkan `Aktivitas utama` {% ref id="E" /%}.
-
-    Nilai bawaannya adalah `Collecting`, `Recording`, dan `Observing`. `Other`
-    bukan nilai bawaan; tambahkan di `Pengaturan` > `Kegiatan` bila protokol
-    Anda memerlukannya. Pada banyak alur kerja spesimen nilainya akan
-    `Collecting`, tetapi buatlah kegiatan terpisah bila aktivitas yang berbeda
-    memerlukan metode koleksi, personel, atau konteks lingkungan sendiri.
+7. Pilih `Aktivitas utama` {% ref id="E" /%} dan tambahkan `Catatan` aktivitas
+   jika diperlukan.
 
 {% /steps %}
 
 ## Detail kegiatan
 
-Kartu `Identitas kegiatan` menyimpan identitas dan waktu utama kegiatan:
+`Identitas kegiatan` menyimpan `ID kegiatan`, `ID lokasi`, `Tanggal mulai`,
+`Tanggal selesai`, `Waktu mulai`, dan `Waktu selesai`.
 
-- `ID kegiatan`: dibuat dari ID lokasi, tanggal mulai, dan akhiran opsional.
-- `ID lokasi`: lokasi tempat kegiatan berlangsung.
-- `Tanggal mulai` dan `Tanggal selesai`: rentang tanggal kegiatan.
-- `Waktu mulai` dan `Waktu selesai`: rentang waktu kegiatan.
-
-Pada proyek mamalia, tanggal mulai bawaannya adalah hari sebelumnya dan pemilih
-waktu dimulai pada `07:00`, yang sesuai untuk pemeriksaan perangkap semalam.
-Untuk format katalog lain, pemilih tanggal dan waktu dimulai pada tanggal dan
-waktu saat ini.
+Saat format katalog aktif adalah `Mammalogy`, pemilih `Tanggal mulai` berawal
+dari hari sebelumnya dan pemilih waktu mulai pada `07:00` untuk pemeriksaan
+perangkap bermalam. Pada format katalog lain, pemilih tanggal dan waktu memakai
+tanggal dan waktu saat ini.
 
 ## Aktivitas {% #activity %}
 
-Kartu `Aktivitas` menyimpan tujuan umum kegiatan.
+Kartu `Aktivitas` mencatat tujuan umum kegiatan:
 
-- `Aktivitas utama`: dipilih dari kosakata terkontrol yang dapat disunting di
-  pengaturan kegiatan. Nilai lama yang sudah tersimpan juga tetap ditawarkan
-  agar data yang ada tidak hilang.
-- `Catatan`: catatan bebas tentang aktivitas, aktivitas sekunder, detail
-  protokol, atau alasan `Other` dipilih.
+- **`Aktivitas utama`** {% ref id="E" /%}: dipilih dari kosakata terkontrol di
+  `Pengaturan` > `Kegiatan` (nilai lama yang tersimpan tetap dapat dipilih
+  meski tidak lagi ada di kosakata).
+- **`Catatan`**: catatan bebas tentang protokol, aktivitas sekunder, atau
+  alasan memilih `Other`.
+
+Buat kegiatan terpisah apabila aktivitas berbeda membutuhkan metode koleksi,
+personel, atau konteks lingkungan sendiri.
 
 ## Menambah metode koleksi
 
+Satu kegiatan dapat memiliki beberapa catatan metode koleksi agar setiap
+spesimen merujuk peralatan yang tepat.
+
 {% steps %}
 
-1. Pilih `Tambah metode koleksi` {% ref id="F" /%} untuk membuat
-    metode koleksi baru.
-
-2. Pilih sebuah metode.
-
-3. Masukkan `Merek dan model` bila metode tersebut memakai peralatan tertentu.
-
-4. Masukkan `Jumlah`.
-
-    Ini adalah jumlah alat, perangkap, jaring, perekam, atau unit lain yang
-    digunakan.
-
-5. Masukkan `Ukuran` bila relevan.
-
-6. Masukkan `Catatan` untuk detail khusus metode tersebut.
+1. Pilih `Tambah metode koleksi` {% ref id="F" /%}.
+2. Pilih `Metode` (dari kosakata terkontrol di `Pengaturan` > `Kegiatan`) dan
+   masukkan `Jumlah` (banyaknya perangkap, jaring, perekam, atau unit lain).
+3. Pada detail metode, tambahkan secara opsional `Merek dan model`, `Ukuran`,
+   dan `Catatan`.
+4. Simpan metode tersebut.
 
 {% /steps %}
 
-Catatan metode koleksi disimpan terpisah dari kegiatan, sehingga satu kegiatan
-dapat mencakup beberapa metode. Setiap metode koleksi memuat:
-
-- `Metode`: metode koleksi yang ditentukan pengguna.
-- `Merek dan model`: merek atau model peralatan bila relevan.
-- `Jumlah`: jumlah alat atau unit.
-- `Ukuran`: ukuran alat atau pemasangannya.
-- `Catatan`: catatan khusus terkait metode.
-
-Catatan penangkapan spesimen nantinya dapat memilih salah satu metode koleksi
-kegiatan ini sebagai `Metode` spesimen tersebut.
+Gunakan ikon sunting pada baris mana pun untuk memperbaruinya, atau `Pilih`
+untuk menghapus metode. Catatan penangkapan spesimen dapat memilih salah satu
+metode ini sebagai `Metode`.
 
 ## Menambah personel pengumpul
 
-Panel kegiatan memiliki tiga tab berikon: orang untuk personel, awan untuk data
-lingkungan, dan penyimpanan untuk data terkait. Gunakan tab personel untuk
-mencatat semua orang yang terlibat dalam kegiatan.
+Panel tab kegiatan memiliki tiga tab ikon: **orang** (`Personel kegiatan`),
+**awan** (`Data lingkungan`), dan **penyimpanan** (`Data terkait`). Kegiatan
+juga memiliki bagian media untuk foto, video, audio, dan berkas.
 
 {% steps %}
 
-1. Buka tab personel (ikon orang) di panel kegiatan.
-2. Pilih `Tambah personel` {% ref id="G" /%}.
-3. Pilih satu entri `Personel` dari daftar personel proyek.
-4. Pilih sebuah `Peran`.
+1. Buka tab orang di panel kegiatan dan pilih `Tambah personel` {% ref id="G" /%}.
+2. Pilih nama dari `Personel` (daftar personel proyek).
+3. Pilih `Peran` (dari kosakata terkontrol di `Pengaturan` > `Kegiatan`).
 
 {% /steps %}
 
-Peran personel ditentukan pengguna di pengaturan kegiatan. Tambahkan semua orang
-yang berkontribusi pada kegiatan, termasuk pengumpul, ketua, pembantu lapangan,
-pengemudi, pengamat, perekam, atau orang yang membantu logistik. Catatan
-penangkapan spesimen nantinya dapat memilih satu entri personel kegiatan sebagai
-`Kolektor` spesimen tersebut.
+Gunakan `Pilih` untuk menghapus baris personel dari kegiatan. Sertakan semua
+orang yang terlibat (pengumpul, pemimpin, pembantu, pengemudi, pengamat, atau
+pencatat). Catatan penangkapan spesimen memilih pengumpulnya dari daftar ini.
 
 ## Data lingkungan dan astronomi {% #environmental-data-and-astronomy %}
 
-NAHPU membuat satu catatan data lingkungan {% ref id="H" /%} untuk setiap kegiatan pengumpulan. Di
-`Pengaturan` > `Kegiatan`, pilih kolom bawaan mana yang muncul pada formulir.
-Menyembunyikan sebuah kolom hanya mengubah formulir: nilai yang sudah tersimpan
-tetap ada di basis data dan dalam hasil ekspor.
+NAHPU membuat satu catatan data lingkungan {% ref id="H" /%} untuk setiap
+kegiatan pengumpulan. Atur bidang bawaan yang tampil di `Pengaturan` >
+`Kegiatan`; menyembunyikan bidang hanya mengubah tampilan formulir dan tidak
+pernah menghapus nilai tersimpan maupun menghilangkannya dari ekspor.
 
-Masukkan data astronomi berdasarkan pengamatan atau sumber yang terdokumentasi;
-NAHPU tidak menghitung waktu matahari terbit, terbenam, atau fase bulan. Ikuti
-ketentuan waktu lokal proyek dan kosongkan nilai yang tidak diukur. Kolom
-tersimpan saat Anda menyunting; periksa pesan validasi sebelum meninggalkan
-formulir.
+Masukkan nilai astronomi dari pengamatan lapangan atau sumber terdokumentasi—
+NAHPU tidak menghitung matahari terbit, matahari terbenam, atau fase bulan.
+Catat waktu dalam zona waktu lokal proyek dan biarkan bidang yang tidak diukur
+tetap kosong. Nilai tersimpan saat disunting; periksa pesan validasi sebelum
+meninggalkan formulir.
 
-Kolom bawaan yang tersedia mencakup:
+| Kelompok | Bidang bawaan | Catatan & satuan |
+| --- | --- | --- |
+| `Suhu` | `Terendah siang`, `Tertinggi siang`, `Terendah malam`, `Tertinggi malam`, `Suhu lingkungan` | Diukur dalam `°C`. |
+| `Kelembapan` | `Rata-rata`, `Titik embun`, `Kelembapan lingkungan` | Kelembapan dalam `%` (0–100); titik embun dalam `°C`. |
+| Cuaca | `Tutupan awan (okta)`, `Curah hujan` | Tutupan awan `0` (cerah) hingga `8` (mendung penuh), atau `9` (langit tertutup); curah hujan dalam `mm`. |
+| `Data perairan` | `Suhu air`, `pH`, `Oksigen terlarut`, `Saturasi oksigen terlarut`, `Konduktivitas`, `Kecepatan arus` | `°C`, `pH` (0–14), `mg/L`, `%` (0–500), `µS/cm`, dan `m/s`. |
+| `Astronomi` | `Matahari terbit`, `Matahari terbenam`, `Fase bulan` | Waktu lokal; 8 fase bulan dari `Bulan baru` sampai `Bulan sabit akhir`. |
+| Catatan & kolom khusus | `Catatan`, kolom khusus | Tambahkan kolom global atau proyek lewat `Tambah bidang khusus` atau kelola kolom khusus. |
 
-- `Terendah siang` dan `Tertinggi siang`: rentang suhu siang dalam derajat Celsius.
-- `Terendah malam` dan `Tertinggi malam`: rentang suhu malam dalam derajat
-  Celsius.
-- `Rata-rata`: persentase kelembapan rata-rata.
-- `Titik embun`: suhu titik embun.
-- `Tutupan awan (okta)`: kode dari `0` (cerah) hingga `8` (tertutup penuh), atau `9`
-  bila langit terhalang. Satu okta mewakili seperdelapan langit yang terlihat.
-- `Curah hujan`, `Suhu lingkungan`, dan `Kelembapan lingkungan`: kondisi pada
-  kegiatan tersebut.
-- `Suhu air`, `pH`, `Oksigen terlarut`, `Saturasi oksigen terlarut`,
-  `Konduktivitas`, dan `Kecepatan arus`: pengukuran perairan. Pengaturan
-  menampilkan satuan setiap kolom, misalnya `mg/L` untuk oksigen terlarut, `%`
-  untuk saturasi, dan `µS/cm` untuk konduktivitas.
-- `Matahari terbit` dan `Matahari terbenam`: waktu matahari terbit dan terbenam
-  setempat.
-- `Fase bulan`: salah satu dari `Bulan baru`, `Bulan sabit awal`,
-  `Kuartal pertama`, `Cembung awal`, `Bulan purnama`, `Cembung akhir`,
-  `Kuartal terakhir`, atau `Bulan sabit akhir`.
-- `Catatan`: catatan tambahan tentang cuaca, habitat, atau astronomi.
-
-Gunakan `Tambah bidang khusus` atau `Kelola bidang khusus` pada bagian ini untuk
-kolom lingkungan yang berlaku di seluruh instalasi atau khusus proyek.
-Nilainya melekat pada kegiatan masing-masing, tidak disaring berdasarkan format
-katalog spesimen, dan disertakan dalam ekspor kegiatan, spesimen, dokumen,
-Darwin Core, pertukaran catatan, dan transfer proyek.
-
-Data lingkungan tidak ikut disalin saat menduplikasi kegiatan. Kegiatan hasil
-duplikasi memperoleh catatan kosong agar Anda dapat mengisi kondisi yang tepat
-untuk tanggal tersebut.
+Kolom khusus lingkungan milik masing-masing kegiatan, tidak disaring menurut
+format katalog, dan disertakan dalam ekspor kegiatan, spesimen, dokumen, Darwin
+Core, pertukaran catatan, serta transfer proyek. Data lingkungan tidak pernah
+disalin saat menduplikasi kegiatan.
 
 ## Bagaimana catatan spesimen memakai kegiatan
 
-Saat Anda membuat atau menyunting spesimen, kartu `Catatan penangkapan`
-mengambil data dari kegiatan pengumpulan:
+Kartu `Catatan penangkapan` spesimen mengambil konteks dari kegiatan
+pengumpulan:
 
-- `ID lokasi` menyaring ID kegiatan yang tersedia.
-- `ID kegiatan` menghubungkan spesimen dengan kegiatan tersebut.
+- `ID lokasi` menyaring kegiatan yang tersedia.
+- `ID kegiatan` menghubungkan spesimen ke kegiatan.
 - `Metode` berasal dari metode koleksi kegiatan.
-- `Kolektor` berasal dari daftar personel kegiatan.
-- `ID koordinat` berasal dari koordinat yang terkait dengan lokasi kegiatan.
+- Pengumpul berasal dari daftar personel kegiatan.
+- Koordinat berasal dari koordinat milik lokasi kegiatan.
 
-Mengubah kegiatan sebuah spesimen akan mengosongkan kolom yang bergantung pada
-kegiatan, seperti metode, pengumpul, dan koordinat, sambil mempertahankan
-tanggal serta waktu tangkapan spesimen.
+Mengganti kegiatan pada spesimen akan mengosongkan bidang yang bergantung pada
+kegiatan (metode, pengumpul, dan koordinat) sambil mempertahankan tanggal dan
+waktu tangkapan.

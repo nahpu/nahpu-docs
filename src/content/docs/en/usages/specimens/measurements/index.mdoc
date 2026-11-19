@@ -5,32 +5,37 @@ sidebar:
   order: 0
 ---
 
-The catalog format selected in `Settings` decides which measurement form a specimen shows. Each taxon group has its own page:
+The catalog format selected in `Settings` > `Catalogs` > `Format` sets which
+measurement form a new specimen uses. A single project can still hold specimens
+from more than one taxon group.
 
 | Catalog format | Taxon group | Measurement page |
 | --- | --- | --- |
-| Mammalogy | Mammals | [Mammals](/en/usages/specimens/measurements/mammals/) |
-| Ornithology | Birds | [Birds](/en/usages/specimens/measurements/birds/) |
-| Herpetology (beta) | Herpetofauna | [Herpetofauna](/en/usages/specimens/measurements/herpetofauna/) |
-| Invertebrate zoology (beta) | Invertebrates | [Invertebrates](/en/usages/specimens/measurements/invertebrates/) |
-| Ichthyology (beta) | Fishes | [Fishes](/en/usages/specimens/measurements/fishes/) |
-| Paleontology (in development, not in current releases) | Fossils | [Paleontology](/en/usages/specimens/measurements/paleontology/) |
+| `Mammalogy` | Mammals | [Mammals](/en/usages/specimens/measurements/mammals/) |
+| `Ornithology` | Birds | [Birds](/en/usages/specimens/measurements/birds/) |
+| `Herpetology` (beta) | Herpetofauna | [Herpetofauna](/en/usages/specimens/measurements/herpetofauna/) |
+| `Invertebrate zoology` (beta) | Invertebrates | [Invertebrates](/en/usages/specimens/measurements/invertebrates/) |
+| `Ichthyology` (beta) | Fishes | [Fishes](/en/usages/specimens/measurements/fishes/) |
+| `Paleontology` (in development, not in current releases) | Fossils | [Paleontology](/en/usages/specimens/measurements/paleontology/) |
 
 Mammal catalogs can also show bat fields; see
 [Mammals](/en/usages/specimens/measurements/mammals/#bat-fields).
 
-Weight fields support `g`, `kg`, and `lbs` and default to `g`. Changing the
-unit only changes the label; it does not convert the entered number. (A fish
-lot's summary does convert each individual's weight to the lot's unit.)
+## Shared fields
 
-Sex is a restricted controlled vocabulary shared by every taxon group. `Male`,
-`Female`, and `Unknown` are always available. To offer `Gynandromorph`,
-`Hermaphrodite`, `Female?`, or `Male?` as well, open `Settings` > `Specimens`
-and select `+` next to the option. The question mark records that the examiner
-is uncertain.
+These fields behave the same way across measurement forms:
 
-`Life stage` is also shared by every taxon group, and replaced the older
-numeric age fields. It is an editable controlled vocabulary: the defaults are
-`Egg`, `Larva`, `Nymph`, `Pupa`, `Neonate`, `Juvenile`, `Subadult`, `Adult`,
-`Metamorph`, and `Unknown`, and the list is configured in `Settings` >
-`Specimens` > `Life Stages`.
+- **Weight units**: weight fields support `g`, `kg`, and `lbs`, defaulting to
+  `g`. Changing the unit updates only the label and does not convert the entered
+  number. In a fish lot, changing the lot's unit updates its individuals' unit
+  as well, and `Lot summary` converts individual weights to the lot's unit.
+- **`Sex`**: restricted controlled vocabulary shared by every taxon group.
+  `Male`, `Female`, and `Unknown` are always available. To enable
+  `Gynandromorph`, `Hermaphrodite`, `Female?`, or `Male?` (a question mark
+  records examiner uncertainty), open `Settings` > `Specimens` and select `+`
+  next to the option. An added option can be removed only when no specimen uses
+  it.
+- **`Life stage`**: editable controlled vocabulary shared by all released taxon
+  groups, replacing older numeric age fields. Defaults are `Egg`, `Larva`,
+  `Nymph`, `Pupa`, `Neonate`, `Juvenile`, `Subadult`, `Adult`, `Metamorph`, and
+  `Unknown`. Configure choices in `Settings` > `Specimens` > `Life Stages`.

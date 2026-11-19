@@ -1,0 +1,278 @@
+---
+title: Symbionts
+sidebar:
+  label: Symbionts
+  order: 7
+---
+
+A symbiont is any organism living on or in a host specimen, whether
+parasitic, parasitoid, mutualistic, commensal, phoretic, or unknown.
+
+Each symbiont has its own UUID and is linked to its host. The link records how
+they interact, where on the host the symbiont was found, and whether the
+association is confirmed. Symbionts are available in the `Mammalogy`,
+`Ornithology`, `Herpetology`, and `Ichthyology` catalog formats (in
+`Invertebrate zoology`, host relationships are recorded in the measurement
+form's `Ecological interactions` section).
+
+## Where symbionts live in the specimen form
+
+Symbionts use two places on a specimen record:
+
+- **Examination fields**, at the end of the measurement form, record whether
+  the host was checked for symbionts and whether any were found. See
+  [Record an examination](#record-an-examination).
+- **The symbiont tab**, the bug icon in the `Specimen Parts` card, holds one
+  record per symbiont lot or individual. See
+  [Add a symbiont record](#add-a-symbiont-record).
+
+Keep both up to date. A host with no symbiont records is ambiguous: it may not
+have been examined, or it may have been examined and found clean. The
+examination fields remove that ambiguity.
+
+## Before you start
+
+Open `Settings` > `Specimens` and scroll to `Symbionts`. These controlled
+vocabularies start with editable defaults and are shared by every project on
+this device:
+
+| Setting | Defaults |
+| --- | --- |
+| `Identification` | `Symbiont ID prefix` and `Symbiont ID number`, used by `New number`. |
+| `Interaction types` | `Parasitic`, `Parasitoid`, `Mutualistic`, `Commensal`, `Phoretic`, `Unknown` |
+| `Categories` | `Ectosymbiont`, `Endosymbiont`, `Mesosymbiont` |
+| `Detection Methods` | `Visual inspection`, `Combing`, `Brushing`, `Ethanol wash`, `Dissection`, `Blood smear`, `Fecal flotation`, `Molecular screening` |
+| `Preparation Methods` | `Whole specimen`, `Fluid preserved`, `Slide mounted`, `Pinned`, `Dried`, `Frozen` |
+| `Anatomical Locations` | 24 sites from `Head` to `Body cavity`; see [Anatomical locations](#anatomical-locations). |
+| `Storage` | `Vial`, `Cryovial`, `Slide`, `Envelope`, `Jar` |
+| `Treatments` | The specimen `Treatments` defaults, plus `RNAlater` and `Glycerol` |
+
+Agree on these controlled vocabularies before fieldwork, then share them via
+[user config transfer](/en/how-to-recipes/protect-and-collaborate/transfer-user-configs/)
+so every device uses the same values. `Setup NAHPU` also includes a `Symbionts`
+step for supported catalog formats.
+
+Register the symbiont taxa you expect in the [taxon registry](/en/usages/taxon/)
+too. A symbiont's taxon is chosen from the same registry as host taxa, and it
+can be a higher rank—such as an order or family—when the symbiont is not yet
+identified to species.
+
+## Record an examination
+
+At the end of the measurement form, the `Symbionts` section has three fields:
+
+| Field | Notes |
+| --- | --- |
+| `Symbionts examined` | `Yes` when the host was checked. Leave it empty when nobody looked. |
+| `Symbionts detected` | `Yes` when anything was found, `No` when the host was examined and found clean. |
+| `Detection remarks` | How and how thoroughly the host was examined, or why it was not. |
+
+Record `Symbionts examined: Yes` and `Symbionts detected: No` for a clean host.
+Do not create an empty symbiont record to say nothing was found.
+
+## Add a symbiont record
+
+{% steps %}
+
+1. Open the host specimen and select the bug icon in the `Specimen Parts` card.
+2. Select `Add symbiont`.
+3. Choose the `Symbiont taxon`, or leave it as `Not identified`. Use the add
+   button beside the field to register a taxon that is not in the list yet.
+4. Choose the `Interaction type`. A one-line definition appears below it.
+5. Fill in what you know of the rest of the form, then save.
+{% /steps %}
+
+A new record starts with the host's preparator as `Collector`, or its
+cataloger when no preparator is set, and with the host's collection date as
+`Date collected`, or its preparation date when no collection date is set.
+Change them when someone else swept, combed, or necropsied the host, or when
+the symbiont was taken on another day.
+
+## Symbiont form
+
+The form is grouped into sections. `Show more` reveals
+`Preparation & preservation`, `Curation`, and any custom fields hidden by
+default.
+
+### IDs
+
+| Field | Notes |
+| --- | --- |
+| `UUID` | Assigned by NAHPU and never changes. It becomes the symbiont's `occurrenceID`. |
+| `Symbiont ID` | Optional ID for the vial, slide, or envelope. The options menu offers `Scan QR/Barcode` on devices with a camera, `New number`, and `Settings`. |
+| `Individuals` | Only for a fish lot with recorded individuals. Links the symbiont to the fish it came from. See [Fishes](/en/usages/specimens/measurements/fishes/#parts-and-symbionts). |
+
+`New number` joins the symbiont ID prefix and the next number, such as `P` and
+`101` for `P101`, then increases the number. It is available only while the
+field is empty. `Settings` in the same menu edits the prefix and the next
+number without leaving the form.
+
+### Symbiont details
+
+| Field | Notes |
+| --- | --- |
+| `Symbiont taxon` | A registered taxon at any rank, or `Not identified`. |
+| `Interaction type` | How the symbiont relates to its host. See [Interaction types and categories](#interaction-types-and-categories). |
+| `Category` | Where a parasite or parasitoid lives on its host. Shown only for those interaction types. |
+| `Anatomical location` | Where on or in the host the symbiont was found. Narrowed by the category. |
+| `Count` | Number of symbiont individuals in this record. |
+| `Life stage` | `Egg`, `Larva`, `Nymph`, `Pupa`, `Juvenile`, `Adult`, `Cyst`, `Oocyst`, `Trophozoite`, `Sporozoite`, `Merozoite`, or `Gametocyte`. This list is fixed. |
+| `Association status` | `Confirmed` when the symbiont is known to belong to this host, `Suspected` when it may be a contaminant, such as a mite from a shared bag or trap. |
+
+### Collection & identification
+
+| Field | Notes |
+| --- | --- |
+| `Collector` | Who recovered the symbiont from the host. |
+| `Detection method` | How it was found, such as `Combing` or `Blood smear`. |
+| `Date collected`, `Time collected` | When it was recovered from the host. |
+| `Determiner` | Who identified the symbiont, often a specialist working later. |
+| `Date determined` | When it was identified. |
+| `Determination method` | How it was identified. Uses the specimen `Identification Methods` controlled vocabulary. |
+
+Collector and determiner are chosen from the project personnel, as on
+specimens. Keeping them separate lets a field team record what they collected
+while a specialist adds the identification afterward.
+
+### Preparation & preservation
+
+| Field | Notes |
+| --- | --- |
+| `Preparation method` | How the symbiont was prepared, such as `Slide mounted`. |
+| `Treatment` | Preservative or fixative, such as `RNAlater`. |
+| `Date preserved`, `Time preserved` | When it was preserved. |
+
+### Curation
+
+| Field | Notes |
+| --- | --- |
+| `Storage` | Container type, such as `Cryovial`. |
+| `Storage location` | Freezer, cabinet, shelf, or box position. |
+| `Museum permanent`, `Museum loan` | The museum holding the symbiont, and one receiving it on loan. |
+| `Remarks` | Anything else about this symbiont. |
+
+Custom fields placed in the symbiont section of
+[custom fields](/en/how-to-recipes/prepare/configure-custom-fields/) appear at
+the end of the form.
+
+## Interaction types and categories
+
+`Interaction type` describes the ecological relationship. The defaults are:
+
+| Interaction type | Meaning |
+| --- | --- |
+| `Parasitic` | Lives on or in the host and harms it. |
+| `Parasitoid` | Develops in the host and eventually kills it. |
+| `Mutualistic` | Both symbiont and host benefit. |
+| `Commensal` | Symbiont benefits; host is unaffected. |
+| `Phoretic` | Uses the host only for transport. |
+| `Unknown` | Relationship to the host is not known. |
+
+Noun forms such as `Parasitism`, `Mutualism`, `Commensalism`, and `Phoresy`
+are recognized as the same types. Values imported in these forms from other
+sources get the matching icon and behavior. You can add your own interaction types in Settings;
+they are saved and exported as entered.
+
+`Category` describes where the symbiont lives relative to the host:
+
+- `Ectosymbiont`: on the outside, such as fleas, lice, and ticks.
+- `Endosymbiont`: inside, such as helminths in the gut or blood parasites.
+- `Mesosymbiont`: in openings and cavities connected to the outside, such as
+  the ear, nasal cavity, or gills.
+
+The category is shown only when the interaction type is `Parasitic` or
+`Parasitoid`. Changing the interaction type to anything else clears the
+category. A record with no interaction type keeps its category, since records
+imported or created before interaction types existed may carry only a category.
+
+When you leave `Interaction type` empty, choose `Unknown` instead if the
+relationship is genuinely unknown. An empty value means it was not recorded.
+
+## Anatomical locations
+
+Choosing a category narrows `Anatomical location` to sites that fit it:
+
+| Category | Locations offered |
+| --- | --- |
+| `Ectosymbiont` | Head, Ear, Body, Dorsum, Venter, Limb, Tail, Skin, Fur, Feathers, Gill |
+| `Endosymbiont` | Nasal cavity, Oral cavity, Blood, Stomach, Small intestine, Large intestine, Cecum, Liver, Lung, Heart, Kidney, Muscle, Body cavity |
+| `Mesosymbiont` | Ear, Nasal cavity, Oral cavity, Gill, Skin |
+
+Without a category, or with a category you added yourself, every location is
+offered. Locations you add in `Settings` are never filtered out. Older category
+values, such as `Ectoparasite`, `Endoparasite`, and `Mesoparasite`, filter the
+options the same way as their symbiont names.
+
+## Symbiont list
+
+The symbiont tab lists one row per record. The icon shows the interaction type,
+with a mite icon for records without one or with a custom type. The title shows
+the symbiont taxon (or `Unidentified symbiont`), followed by the count and
+`Symbiont ID` when set. The subtitle shows linked fish individuals, the
+interaction type, the category (for parasitic and parasitoid interactions), the
+anatomical location, the life stage, and the preparation method.
+
+Select a row's edit button to change it. To delete records, turn on selection,
+check the records, and confirm the delete. Deleting the host specimen deletes
+its symbionts too.
+
+## Curation
+
+[Tissue curation](/en/usages/curation/tissue-curation/) can check symbiont
+tubes into storage boxes alongside tissues. Turn on `Include symbionts` in its
+setup to match symbionts by symbiont ID or by the field ID of their host, and
+use `Symbiont category` to limit the match. Box cells label symbionts with a
+leading `P` that sets them apart from parts.
+
+## Export and analysis
+
+| Where | What you get |
+| --- | --- |
+| [Export Records](/en/usages/export/export-records/) | Record type `Symbionts`: one row per symbiont, followed by its host's collecting record. Specimen exports for catalogs with symbionts also add the examination fields and symbiont columns. |
+| Data table | The `Symbionts` table shows symbiont ID, taxon, interaction type, category, count, and anatomical location, and can be edited in bulk. |
+| [Document templates](/en/usages/export/export-documents/) | Record type `Symbiont`, for vial labels and slide labels. |
+| [Statistics](/en/usages/export/export-statistics/) | Measure `Symbionts`, grouped by symbiont taxon, category, anatomical location, or host species. Offered once the project has a symbiont record. |
+| [Data packages](/en/usages/export/export-bundles/) | The `symbiont`, `symbiontDetection`, and `symbiontIndividual` tables, plus `vocabularies/symbionts.csv` with your symbiont settings. |
+
+[Project merges](/en/how-to-recipes/protect-and-collaborate/merge-project/)
+and imports match symbionts by UUID. A symbiont UUID that is already in the
+database is flagged for review instead of being imported twice.
+
+### Darwin Core
+
+In a [Darwin Core archive](/en/how-to-recipes/export-and-print/create-darwin-core-archive/),
+each symbiont becomes its own occurrence, linked to its host by an
+OrganismInteraction row:
+
+| NAHPU field | Darwin Core |
+| --- | --- |
+| `UUID` | `occurrenceID` and `organismInteractionID` |
+| `Symbiont ID` | `catalogNumber` |
+| `Symbiont taxon` | `taxonID`, `scientificName`, and the higher ranks |
+| `Collector` | `recordedBy`, `recordedByID` |
+| `Determiner`, `Date determined`, `Determination method` | `identifiedBy`, `identifiedByID`, `dateIdentified`, `identificationType` |
+| `Count`, `Life stage` | `individualCount`, `lifeStage` |
+| `Preparation method`, `Treatment` | `preparations` |
+| `Date collected`, `Time collected` | `eventDate`, `eventTime` |
+| `Detection method` | `samplingProtocol` |
+| `Remarks` | `occurrenceRemarks` |
+| `Interaction type` | `organismInteractionType`; a record without one falls back to its category |
+| `Category`, `Association status` | `organismInteractionDescription`, when an interaction type is set |
+| `Anatomical location` | `relatedOrganismPart` |
+| `Individuals` | A `host individual` occurrence assertion |
+
+The symbiont occurrence shares the host's `eventID`, uses `basisOfRecord`
+`PreservedSpecimen`, and names its host in `associatedOccurrences`. Storage,
+museum, and preservation-date fields have no Darwin Core term and stay in the
+NAHPU data package. See the
+[Darwin Core audit](/en/contributing/code/database/#symbionts-and-specimen-material)
+for every column.
+
+## Records from older versions
+
+NAHPU recorded only parasites before it tracked symbionts. Updating moves those
+records into symbionts automatically: every existing record gets the
+interaction type `Parasitic`, and its people become a collector and a
+determiner. Old category values such as `Ectoparasite` keep working. Exports,
+templates, presets, and configs that still use `parasite` names are read with
+their symbiont names.

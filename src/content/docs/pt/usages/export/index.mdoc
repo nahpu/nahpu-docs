@@ -8,218 +8,255 @@ sidebar:
    large="app-screenshots/usage/export-large.webp"
    largeAlt="Tela menu do projeto do NAHPU em um tablet"
    large2="app-screenshots/usage/export-large-2.webp"
-   large2Alt="Tela Backup do banco de dados do NAHPU em um tablet"
+   large2Alt="Tela Fazer backup do banco de dados do NAHPU em um tablet"
    small="app-screenshots/usage/export-small.webp"
    smallAlt="Tela menu do projeto do NAHPU em um celular"
    small2="app-screenshots/usage/export-small-2.webp"
-   small2Alt="Tela Backup do banco de dados do NAHPU em um celular" %}
+   small2Alt="Tela Fazer backup do banco de dados do NAHPU em um celular" %}
 {% pin id="A" label="Mesclar projeto" large=[36, 28.4] small=[66, 37] /%}
 {% pin id="B" label="Exportar projeto" large=[36, 35.1] small=[66, 43.1] /%}
 {% pin id="C" label="Empacotar registros" large=[36, 43.7] small=[66, 51] /%}
 {% pin id="D" label="Exportar registros" large=[36, 50.5] small=[66, 57.1] /%}
 {% pin id="E" label="Exportar documentos" large=[36, 57.2] small=[66, 63.3] /%}
-{% pin id="F" label="Backup do banco de dados" large=[36, 65.7] small=[66, 71.2] /%}
-{% pin id="G" label="Exportar configurações" large=[36, 81.1] small=[66, 85.2] /%}
+{% pin id="F" label="Fazer backup do banco de dados" large=[36, 65.7] small=[66, 71.2] /%}
+{% pin id="G" label="Exportar configurações do usuário" large=[36, 81.1] small=[66, 85.2] /%}
 {% pin id="H" label="Formato do arquivo" large2=[24.8, 33.1] small2=[57.1, 36] /%}
 {% pin id="I" label="Salvar backup" large2=[56.3, 93.3] small2=[69, 92.3] /%}
 {% /screenshots %}
 
-O NAHPU exporta os mesmos dados do projeto de várias formas, cada uma para uma
-tarefa diferente. Todas começam no menu do projeto.
+O NAHPU exporta dados de projetos, mídias, estatísticas, backups e
+configurações em formatos adequados para cada tarefa. As exportações do projeto
+começam no menu do painel do projeto (`Dashboard`); `Fazer backup do banco de
+dados`, `Exportar configurações do usuário` e `Importar configurações do
+usuário` também estão disponíveis no menu da tela inicial.
 
 ## Qual exportação eu preciso?
 
-| Você quer… | Use | Você recebe |
-|---|---|---|
+| Se você quiser… | Use | Você obtém |
+| --- | --- | --- |
 | Levar um projeto para outro dispositivo ou guardar uma cópia completa | `Exportar projeto` {% ref id="B" /%} | Um arquivo de projeto que o NAHPU pode importar ou mesclar |
-| Juntar o arquivo de projeto de um colega ao seu | `Mesclar projeto` {% ref id="A" /%} | Os registros dele adicionados ao seu projeto |
+| Combinar o arquivo de projeto de um colega com o seu | `Mesclar projeto` {% ref id="A" /%} | Os registros dele mesclados ao projeto aberto |
 | Enviar registros para um banco de dados, planilha ou script | [Exportar registros](/pt/usages/export/export-records/) {% ref id="D" /%} | Uma tabela CSV, TSV, Excel ou JSON |
 | Publicar ou arquivar dados com seus arquivos | [Empacotar registros](/pt/usages/export/export-bundles/) {% ref id="C" /%} | Um pacote Darwin Core ou NAHPU Data Package |
 | Imprimir etiquetas, rótulos, catálogos ou cadernos de campo | [Exportar documentos](/pt/usages/export/export-documents/) {% ref id="E" /%} | Um PDF |
-| Relatar contagens, como espécimes por espécie | [Exportar estatísticas](/pt/usages/export/export-statistics/) | Uma tabela de resumo em CSV, TSV, Excel ou JSON |
-| Separar as fotos do projeto | [Exportar imagens](/pt/usages/export/export-images/) | Uma imagem, ou um arquivo ZIP ou TAR.GZ com várias |
-| Proteger tudo o que está neste dispositivo | [`Fazer backup do banco de dados`](#backup-database) {% ref id="F" /%} | Um arquivo compactado com a instalação inteira |
-| Compartilhar suas configurações e predefinições | [`Exportar configurações do usuário`](#export-user-configs) {% ref id="G" /%} | Um arquivo de configurações |
+| Relatar contagens, como espécimes por espécie | [Exportar estatísticas](/pt/usages/export/export-statistics/) | Uma tabela resumida em CSV, TSV, Excel ou JSON |
+| Extrair fotografias e outros arquivos de mídia | [Exportar imagens](/pt/usages/export/export-images/) | Um arquivo individual ou um TAR.GZ ou ZIP com vários |
+| Proteger tudo o que existe neste dispositivo | [`Fazer backup do banco de dados`](#backup-database) {% ref id="F" /%} | Um único arquivo de toda a instalação |
+| Compartilhar configurações, vocabulários controlados e predefinições | [`Exportar configurações do usuário`](#export-user-configs) {% ref id="G" /%} | Um arquivo de configurações JSON ou JSON.GZ |
 
-Só três delas trazem dados de volta para o NAHPU:
+Apenas três dessas opções podem trazer dados de volta para o NAHPU:
 
 - uma **exportação de projeto**, por `Importar projeto` na tela inicial ou
-  `Mesclar projeto` em um projeto existente
-  ([Transferência de projeto](/pt/usages/export/project-transfer/));
-- um **NAHPU Data Package**, que contém os mesmos dados do projeto;
-- um **backup do banco de dados**, que substitui a instalação inteira
+  `Mesclar projeto` em um projeto aberto
+  ([Transferir um Projeto](/pt/usages/export/project-transfer/));
+- um **NAHPU Data Package**, que carrega o mesmo conteúdo de transferência do
+  projeto;
+- um **backup do banco de dados**, que substitui toda a instalação
   ([Restaurar um banco de dados](#restoring-a-database)).
 
-Tabelas de registros, pacotes Darwin Core, documentos e estatísticas são de mão
-única: o NAHPU não reconstrói um projeto a partir deles. Importar um JSON de
-informações do projeto ou um QR code do projeto cria só o nome e os dados do
-projeto, sem registros nem mídia.
+Tabelas de registros, pacotes Darwin Core, documentos e estatísticas são de
+mão única: o NAHPU não consegue reconstruir um projeto a partir deles. Importar
+um JSON ou código QR de informações do projeto cria apenas o nome e os
+metadados do projeto, sem registros nem mídia.
 
 ## Estratégia de backup {% #backup-strategy %}
 
-Guarde uma cópia conferida dos dados de cada dia de campo fora do dispositivo
-em que você trabalha. Dois tipos de backup se completam:
+Mantenha uma cópia verificada de cada dia de campo fora do dispositivo em que
+você coleta. Combine dois tipos de backup:
 
-| Backup | Com que frequência | Contém |
-|---|---|---|
-| Exportação do projeto | Todo dia de campo | Um projeto, com a mídia em ZIP ou TAR.GZ |
-| Backup do banco de dados | Toda semana e antes de importar, mesclar ou substituir dados | Todos os projetos e configurações do dispositivo |
+| Backup | Frequência | Contém |
+| --- | --- | --- |
+| Exportação de projeto | Todo dia de campo | Um projeto, com sua mídia em TAR.GZ ou ZIP |
+| Backup do banco de dados | Semanalmente, e antes de importar, mesclar ou substituir dados | Todos os projetos, arquivos e configurações do dispositivo |
 
 {% steps %}
 
 1. Abra o menu do projeto e selecione `Exportar projeto`.
-2. Confira as contagens de registros e os avisos de arquivos ausentes. Escolha
-   ZIP ou TAR.GZ para incluir a mídia. `Exportação leve` (JSON.GZ) contém só os
-   registros, então não é um backup completo.
-3. Salve o arquivo com o nome do projeto e a data, e copie-o para outro
-   armazenamento ou outro dispositivo.
-4. Abra a cópia para ver se ela está legível. De vez em quando, importe-a em
-   outra instalação para testar a recuperação.
+2. Verifique as contagens de registros e os avisos de arquivos ausentes. Deixe
+   `Exportação leve` desativada e escolha `TAR.GZ` ou `ZIP` para incluir mídia;
+   `Exportação leve` (`JSON.GZ`) grava apenas registros e não é um backup
+   completo.
+3. Salve o arquivo com o nome do projeto e a data (ou ative
+   `Acrescentar data`) e copie-o para outro armazenamento ou dispositivo.
+4. Abra a cópia para confirmar que está legível e, periodicamente, teste a
+   importação em outra instalação.
 5. No seu ponto de controle regular, crie também um
-   `Fazer backup do banco de dados` {% ref id="F" /%}. Mantenha o backup
-   conferido anterior até conferir o novo.
+   `Fazer backup do banco de dados` {% ref id="F" /%}. Guarde o backup anterior
+   até verificar o novo.
 
 {% /steps %}
 
-Para recuperar um projeto, use `Importar projeto` na tela inicial ou
+Para recuperar um único projeto, use `Importar projeto` na tela inicial ou
 `Mesclar projeto` dentro de um projeto existente.
 
 ## Backup do banco de dados {% #backup-database %}
 
-`Fazer backup do banco de dados` salva a instalação inteira em um arquivo ZIP ou
-TAR.GZ {% ref id="H" /%}: o banco de dados SQLite e as pastas de projetos,
-pessoal e configurações, inclusive arquivos que nenhum registro atual usa. Um
-arquivo SQLite sozinho contém os registros, mas não a mídia nem os outros
-arquivos.
+`Fazer backup do banco de dados` salva toda a instalação em um único arquivo
+`TAR.GZ` (padrão) ou `ZIP` {% ref id="H" /%}: o banco SQLite mais as pastas de
+projetos, pessoal e configurações, incluindo arquivos sem vínculo atual. Um
+`.sqlite3` isolado contém apenas os registros, sem mídias nem outros arquivos.
+
+Abra `Fazer backup do banco de dados` pelo menu da tela inicial, pelo menu do
+projeto ou em `Configurações` > `Banco de dados`.
 
 {% steps %}
 
-1. Abra o menu do projeto e selecione `Fazer backup do banco de dados`.
-2. Escolha o formato do arquivo, o nome e o destino.
-3. Selecione `Salvar backup` {% ref id="I" /%}.
-4. Copie o arquivo para fora do dispositivo e confira-o antes de apagar um
+1. Selecione `Fazer backup do banco de dados` {% ref id="F" /%}.
+2. Escolha `TAR.GZ` ou `ZIP` {% ref id="H" /%}, informe o nome do arquivo
+   (opcionalmente ative `Acrescentar data`) e escolha a pasta de destino no
+   desktop.
+3. Revise o resumo do backup e selecione `Salvar backup` {% ref id="I" /%}. É
+   possível cancelar enquanto o arquivo é gravado.
+4. Copie o arquivo para fora do dispositivo e verifique-o antes de apagar um
    backup mais antigo.
 
 {% /steps %}
 
 ## Exportar configurações do usuário {% #export-user-configs %}
 
-`Exportar configurações do usuário` {% ref id="G" /%} salva suas configurações
-para que outro dispositivo, ou você no futuro, trabalhe do mesmo jeito. O
-arquivo inclui predefinições de exportação, layouts de documentos, modelos e
-listas controladas.
+`Exportar configurações do usuário` {% ref id="G" /%} salva sua configuração
+para que outro dispositivo — ou uma instalação futura — trabalhe da mesma forma
+sem alterar dados de projetos. Está disponível no menu da tela inicial, no menu
+do projeto e em `Configurar o NAHPU`.
+
+Escolha quais seções exportar:
+
+- `Vocabulários controlados e configurações`
+- `Predefinições de exportação tabular`
+- `Modelos de documentos`
+- `Predefinições de layout de documentos`
+- `Colunas de prévia da tabela de modelos`
+- `Campos personalizados` (com seleção individual de definições)
 
 {% steps %}
 
-1. Abra a página `Painel`.
-2. Abra o menu do projeto e selecione `Exportar configurações do usuário`.
-3. Escolha o formato: `JSON (.json)` ou o menor `JSON.GZ (.json.gz)`.
-4. Digite o `Nome do arquivo` e escolha a pasta.
-5. Selecione `Exportar configurações do usuário`.
+1. Abra `Exportar configurações do usuário` pelo menu da tela inicial, pelo
+   menu do projeto ou em `Configurar o NAHPU`.
+2. Marque as seções de configuração a incluir. Se `Campos personalizados`
+   estiver marcado, escolha quais definições exportar.
+3. Revise o conteúdo em `Será exportado` (aba `Visualizar` no celular).
+4. Escolha `JSON (.json)` ou o menor `JSON.GZ (.json.gz)`, defina o nome do
+   arquivo (com `Acrescentar data` opcional) e escolha a pasta de destino no
+   desktop.
+5. Selecione `Exportar configurações do usuário`. Ao concluir, compartilhe,
+   abra a pasta ou salve uma cópia.
 
 {% /steps %}
 
 ## Restaurar um banco de dados {% #restoring-a-database %}
 
-Restaure um banco de dados para substituir tudo o que o NAHPU tem neste
-dispositivo por um backup.
+Restaurar um banco de dados substitui tudo no NAHPU neste dispositivo pelo
+backup escolhido.
+
+{% aside type="caution" %}
+
+Mantenha ativada a opção de fazer backup dos dados atuais primeiro, a menos que
+tenha certeza de não precisar mais deles. A restauração não pode ser desfeita.
+
+{% /aside %}
 
 {% steps %}
 
 1. Abra `Configurações`.
 2. Em `Banco de dados`, selecione `Substituir banco de dados`.
-3. Em `Substituir por`, selecione `Procurar` e escolha um arquivo `.sqlite3`,
-   ZIP ou TAR.GZ.
-4. Compare os dois bancos de dados. O NAHPU mostra a versão do esquema, os
-   registros, os arquivos e o tamanho do backup ao lado do banco atual. Um
-   backup mais antigo é atualizado depois da restauração. Um arquivo que não é
-   um banco de dados do NAHPU, ou que vem de uma versão mais nova do NAHPU, não
-   pode ser restaurado; atualize o NAHPU antes.
-5. Mantenha `Fazer backup dos dados atuais primeiro` ativado, a menos que tenha
-   certeza de que não precisa mais dos dados atuais. O NAHPU os salva como um
-   arquivo TAR.GZ na pasta de backup.
+3. Escolha o arquivo substituto: um `.sqlite3`, um arquivo `ZIP` ou um arquivo
+   `TAR.GZ`.
+4. Compare os dois bancos de dados. O NAHPU exibe lado a lado versão de esquema,
+   registros, arquivos e tamanho. Backups antigos são atualizados
+   automaticamente após a restauração; arquivos de uma versão mais recente do
+   NAHPU exigem atualizar o aplicativo primeiro.
+5. Mantenha ativado o backup prévio para que o NAHPU salve os dados atuais em
+   `TAR.GZ` na pasta de backups.
 6. Selecione `Substituir banco de dados` e confirme o aviso.
 
 {% /steps %}
 
 O que a restauração faz:
 
-- Substitui o banco de dados ativo pelo do backup.
-- A partir de um arquivo compactado, também copia os arquivos do projeto para a
-  pasta de documentos do NAHPU e importa as configurações incluídas. Fotos de
-  pessoal de backups antigos vão para a pasta de fotos de pessoal.
-- Um arquivo de mídia ou de configurações com o mesmo nome de um arquivo do
-  backup é sobrescrito, sem uma segunda cópia. Arquivos idênticos não são
-  alterados.
-- Arquivos que existem só no dispositivo são mantidos e aparecem nos próximos
-  backups.
-
-A restauração não pode ser desfeita; por isso
-`Fazer backup dos dados atuais primeiro` deve ficar ativado.
+- Substitui o banco ativo pelo banco do backup.
+- A partir de um arquivo compactado, copia os arquivos de projeto para a pasta
+  de documentos do NAHPU e importa as configurações incluídas. Fotos de pessoal
+  de backups antigos são movidas para a pasta de fotos de pessoal.
+- Sobrescreve arquivos de mídia ou configuração com o mesmo nome; arquivos
+  idênticos permanecem intactos.
+- Mantém arquivos que existem apenas neste dispositivo, que passarão a constar
+  em backups futuros.
 
 ## Restaurar configurações do usuário {% #restoring-user-configs %}
 
-Restaure as configurações do usuário para substituir as suas por outras de
-outro dispositivo ou backup.
+Importe um arquivo de configurações do usuário para aplicar vocabulários
+controlados, predefinições, modelos, layouts ou campos personalizados de outro
+dispositivo ou backup. Assim como a exportação, `Importar configurações do
+usuário` está disponível no menu da tela inicial, no menu do projeto e em
+`Configurar o NAHPU`.
 
 {% steps %}
 
-1. Abra o menu `Painel` do projeto.
-2. Selecione `Importar configurações do usuário`.
-3. Escolha um arquivo de configurações `.json` ou `.json.gz`.
-4. Selecione `Substituir` e confirme o aviso.
+1. Abra `Importar configurações do usuário` no menu da tela inicial, no menu do
+   projeto ou em `Configurar o NAHPU`.
+2. Escolha um arquivo `.json` ou `.json.gz` de configurações do usuário.
+3. Marque as seções a importar e revise em `Será importado` (aba `Visualizar`
+   no celular). Se `Campos personalizados` estiver marcado com um projeto
+   aberto, defina `Destino dos campos personalizados` como `Global` ou
+   `Projeto atual`.
+4. Selecione `Importar configurações selecionadas` e confirme em `Importar`.
 
 {% /steps %}
 
-Isso altera só as configurações, não os dados do projeto. Para restaurar os
-dois juntos, restaure um backup do banco de dados em ZIP ou TAR.GZ. Para saber
-como o armazenamento e a compatibilidade funcionam por dentro, veja
+As seções selecionadas substituem as configurações correspondentes neste
+dispositivo, exceto `Campos personalizados`, que são pareados por ID do modelo
+e mesclados para manter definições existentes. Seções não marcadas não mudam.
+Se modelos importados usarem fontes ausentes neste dispositivo, o NAHPU pede
+para escolher substitutas.
+
+Isso altera apenas configurações, não registros de projetos. Para restaurar
+ambos juntos, restaure um backup de banco de dados `ZIP` ou `TAR.GZ`. Para
+detalhes técnicos de armazenamento, consulte
 [Importação e exportação de dados](../../contributing/code/data-import-export-overview).
 
 ## Arquivar um projeto {% #archiving-a-project %}
 
-Um arquivo de longo prazo mantém um projeto concluído utilizável por anos, para
-pessoas que talvez não tenham trabalhado nele. Guarde os dados com contexto
-suficiente para saber o que são, quando foram feitos, com qual software e quem
-é o responsável.
+Um arquivo mantém um projeto concluído utilizável anos depois, inclusive por
+quem não participou da coleta. Armazene os dados junto com contexto suficiente
+para identificar o que são, quando foram gerados, qual software foi usado e
+quem é responsável por eles.
 
 Antes de arquivar:
 
-- Termine a curadoria dos dados e corrija ou registre os problemas conhecidos.
-  Veja [Gerenciamento de dados](../../best-practices/data-management).
-- Crie um backup do banco de dados novo.
-- Exporte as configurações do usuário se as listas controladas, predefinições,
-  modelos ou layouts forem necessários para repetir o trabalho.
-- Crie uma exportação completa do projeto com `Exportação leve` desativada,
-  para incluir a mídia. Confira as contagens e os avisos de mídia ausente antes
-  de salvar.
-- Acrescente tabelas de registros ou um pacote de dados se os dados forem
-  analisados, publicados ou reutilizados fora do NAHPU.
+- Conclua a curadoria dos dados e corrija ou documente problemas conhecidos.
+  Veja [Gestão de dados](../../best-practices/data-management).
+- Crie um backup recente do banco de dados.
+- Exporte configurações do usuário se vocabulários controlados, predefinições
+  de exportação, modelos, layouts de impressão ou campos personalizados forem
+  necessários para reproduzir o trabalho.
+- Crie uma exportação completa do projeto com `Exportação leve` desativada para
+  incluir mídia, revisando contagens e avisos de arquivos ausentes.
+- Inclua tabelas de registros ou um pacote de dados se o conjunto for
+  analisado, publicado ou reutilizado fora do NAHPU.
 
-Dê aos arquivos nomes que se expliquem, com o projeto, o tipo de exportação e a
-data, como `BorneoMammals_project_20241015.tar.gz`. Guarde juntos a exportação
-do projeto, o backup do banco de dados, o arquivo de configurações e um leia-me
-curto.
+Dê nomes autoexplicativos com projeto, tipo de exportação e data, como
+`BorneoMammals_project_20241015.tar.gz`. Mantenha juntos a exportação do
+projeto, o backup do banco de dados, o arquivo de configurações e um breve
+leia-me.
 
-Guarde pelo menos duas cópias em lugares diferentes e mantenha o original até o
-arquivo abrir corretamente em outro dispositivo. Registre a data, o conteúdo,
-os locais de armazenamento e as restrições de acesso. De tempos em tempos, abra
-ou teste a restauração dos arquivos para confirmar que continuam legíveis.
-Guarde os arquivos digitais e os documentos impressos conforme as políticas de
-retenção da sua instituição.
+Guarde pelo menos duas cópias em locais distintos e mantenha o original até
+abrir o arquivo com sucesso em outro dispositivo. Registre data, conteúdo,
+locais e restrições de acesso, e teste a leitura ou restauração periodicamente
+conforme as políticas de retenção da sua instituição.
 
 ## Antes de compartilhar dados {% #before-sharing-data %}
 
-Antes de enviar dados do NAHPU a um museu, a um colaborador ou a outro
-dispositivo:
+Antes de enviar dados do NAHPU para um museu, colaborador ou outro dispositivo:
 
-- Crie um backup do banco de dados novo.
-- Escolha o arquivo de projeto certo:
-  - `Exportação leve` (JSON.GZ) quando o destinatário precisa dos registros mas
-    não da mídia, como em uma conexão lenta;
-  - ZIP ou TAR.GZ quando a mídia ou uma cópia completa precisa ir junto.
-- Exporte as configurações do usuário se o destinatário precisar das suas listas
-  controladas, predefinições, modelos ou layouts.
-- Acrescente os arquivos de registros ou documentos que o destinatário pediu.
-- Teste se pelo menos uma forma de restauração funciona antes de apagar algo do
-  dispositivo original.
+- Crie um backup recente do banco de dados.
+- Escolha o arquivo de projeto adequado:
+  - `Exportação leve` (`JSON.GZ`) quando o destinatário precisar apenas dos
+    registros sem mídia (por exemplo, em conexão lenta);
+  - `TAR.GZ` ou `ZIP` quando a mídia ou uma cópia completa precisar acompanhar
+    o projeto.
+- Exporte configurações do usuário se o destinatário precisar de seus
+  vocabulários controlados, predefinições, modelos, layouts ou campos
+  personalizados.
+- Inclua tabelas, pacotes ou documentos solicitados.
+- Verifique ao menos uma forma de restauração antes de apagar qualquer coisa do
+  dispositivo de origem.

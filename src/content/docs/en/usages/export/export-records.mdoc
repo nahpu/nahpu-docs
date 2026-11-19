@@ -21,51 +21,51 @@ sidebar:
 {% /screenshots %}
 
 Use `Export records` to save the active project's records as a CSV, TSV, Excel,
-or JSON file. A saved export preset decides which records become rows, which
-columns they have, and what the columns are called.
+or JSON file. A saved record-export preset defines which records become rows,
+which columns are included, and how headers are named.
 
 ## Quick way to export records
 
 {% steps %}
 
-1. Open the project menu and select `Export records`.
-2. Choose an `Export preset` {% ref id="A" /%}. To create or change one, select
-   `Manage presets` {% ref id="B" /%}.
-3. Check the preset summary: its record type, header format, and columns.
-   Select `Preview Table` {% ref id="D" /%} to see real rows. On a phone, the
-   preview is under the `Preview` tab {% ref id="F" /%}.
-4. Choose the file format {% ref id="C" /%} and type a file name. Turn on
-   `Append date` {% ref id="G" /%} to add the date to the name. JSON cannot use
-   Darwin Core headers.
-5. Choose where to save the file and select `Export records` {% ref id="E" /%}.
-6. Open the file and check the rows, headers, units, and repeated values. Use
-   `Share` to send it, or `Export another` to make another file.
+1. Open the project `Dashboard` menu and select `Export records`.
+2. Choose an `Export preset` {% ref id="A" /%}. To create or edit presets,
+   select `Manage presets` {% ref id="B" /%}.
+3. Review the preset summary (record type, header format, and columns) and
+   select `Preview Table` {% ref id="D" /%} to inspect real rows. On a phone,
+   open the `Preview` tab {% ref id="F" /%}.
+4. Choose a file format {% ref id="C" /%} and enter a file name. Turn on
+   `Append date` {% ref id="G" /%} to add today's date to the name. JSON cannot
+   use Darwin Core headers.
+5. Choose a destination folder on desktop and select `Export records` {% ref id="E" /%}.
+6. Inspect the exported file for rows, headers, units, and repeated values. Use
+   `Share`, open the folder, save a copy, or select `Export another`.
 
 {% /steps %}
 
-## Deep dive
+## Deep dive {% #deep-dive %}
 
-A tabular export preset is a saved recipe for one table. It decides three
+A record-export preset is a reusable recipe for one table. It defines three
 things:
 
-- **Which records** become rows: the `Record type`, and for specimens the
-  `Specimen taxon group`.
-- **Which columns** each row has, set under `Edit Fields`.
-- **What the headers are called**, set by `Generated header format` or by
-  naming each column yourself.
+- **Rows:** the `Record type`, and for specimens the `Specimen taxon group`
+  (`All taxa`, `Mammals`—which includes bats, `Birds`, `Herpetofauna`,
+  `Invertebrates`, or `Fishes`).
+- **Columns:** the fields configured under `Edit Fields`.
+- **Headers:** set by `Generated header format` or overridden per column.
 
-You change these in `Settings` > `Tabular Data`, not on the export screen. Field
-and setting changes save as you make them. The preset's name and its optional
-`Description` (up to 80 characters, shown under the name in the list) save only
-when you select `Update`. Use `Duplicate` to start a new preset from an existing
+Edit presets under `Settings` > `Tabular Data`, not on the export screen. Field
+and format edits save automatically; the preset's name and optional
+`Description` (up to 80 characters, shown under the name in the list) save when
+you select `Update`. Use `Duplicate` to build a new preset from an existing
 one.
 
 ### What one row is
 
 | Record type | One row per |
-|---|---|
-| `Specimen` | Specimen. Its parts and other repeated details can be joined into one cell or spread across numbered columns. |
-| `Specimen parts` | Specimen part, such as a skin or a tissue tube, with its specimen's details repeated on each row. Suits tissue inventories. |
+| --- | --- |
+| `Specimen` | Specimen. Parts and other repeated details can be joined into one cell or spread across numbered columns. |
+| `Specimen parts` | Specimen part (such as a skin or tissue tube), with its specimen details repeated on each row. Ideal for tissue inventories. |
 | `Site` | Site. |
 | `Collecting event` | Collecting event. |
 | `Narrative` | Narrative entry. |
@@ -73,121 +73,118 @@ one.
 
 ### Kinds of columns
 
-Each column in `Selected Mappings` is one of four kinds, chosen as its
-`Mapping type`:
+Each column in `Selected Mappings` uses one of four `Mapping type` options:
 
 | Mapping type | Use it for | Example output |
-|---|---|---|
-| `Single field` | One NAHPU field, as stored or reformatted. | `Rattus` |
-| `List field` | Several fields joined, skipping empty ones. | `Indonesia, West Java, Cibodas` |
-| `Custom field` | Fields mixed with your own text, or text alone. | `HH-156` |
-| `Nested records` | Repeated records, such as a specimen's parts or collectors. | `Skin; Skull; Tissue` |
+| --- | --- | --- |
+| `Single field` | One NAHPU field, stored as-is or reformatted. | `Rattus` |
+| `List field` | Multiple fields joined together, skipping empty values. | `Indonesia, West Java, Cibodas` |
+| `Custom field` | Fields mixed with fixed text, or fixed text alone. | `HH-156` |
+| `Nested records` | Repeated child records, such as specimen parts or collectors. | `Skin; Skull; Tissue` |
 
-Check a field under `Insert Source Field` (`Available Fields` on a phone) to
-add it as a `Single field`. Use `Add custom field` and `Add nested` for the
-other kinds. Select a column's pencil to change it, and drag its handle to
-reorder it. Custom fields and conditional output are explained in
-[Export expressions](/en/usages/export/export-expressions/#custom-fields).
+Check a field under `Insert Source Field` (`Available Fields` on phones) to add
+it as a `Single field`. Use `Add custom field` and `Add nested` for the other
+types. Select a column's edit icon to configure it, and drag its handle to
+reorder. See [Export expressions](/en/usages/export/export-expressions/#custom-fields)
+for custom fields and conditional output.
 
 ### Format a single field
 
-A `Single field` column can reformat its value with `Value format`:
+A `Single field` column can transform its value using `Value format`:
 
 | Value format | What it does |
-|---|---|
+| --- | --- |
 | `Normal text` | Writes the value as stored. |
-| `Encoded text` | Writes the label of a stored code, such as `Male` for `0`. |
-| `Coordinates` | Writes a coordinate in the format set under `Advanced`. |
-| `Date` | Writes a date in the format set under `Advanced` > `Raw format option`, such as `dd/mm/yyyy`. |
-| `Conditional brackets`, `Conditional field`, `Conditional value` | Bracket or replace the value when conditions match; see [Conditional output](/en/usages/export/export-expressions/#conditional-output). |
+| `Encoded text` | Writes the human-readable label for a stored code, such as `Male` for `0`. |
+| `Coordinates` | Formats coordinates using the style under `Advanced`. |
+| `Date` | Formats dates using `Advanced` > `Raw format option`, such as `dd/mm/yyyy`. |
+| `Conditional brackets`, `Conditional field`, `Conditional value` | Brackets or replaces the value when conditions match; see [Conditional output](/en/usages/export/export-expressions/#conditional-output). |
 
-Every kind of column can also use `Replace text` to rewrite values after
-formatting, for example to rename a part type for the receiving database.
+Every column type also supports `Replace text` to rewrite formatted values—for
+example, renaming a part type to match a museum database.
 
 ### Repeated values
 
-Some values repeat: a specimen can have many parts, collectors, or collecting
-methods. `List field` and `Nested records` columns choose how to write them:
+When a specimen has multiple parts, collectors, or collecting methods,
+`List field` and `Nested records` columns control how those values appear:
 
 | Output | Result |
-|---|---|
-| `One column` | All values in one cell, joined by the separator you choose. |
-| `Indexed columns` | One column, or one group of columns, per value, such as `prep_1_type`, `prep_2_type`, … The number of columns follows the record with the most values. |
-| `Repeated rows` | Nested records only: one row per value, with the rest of the record repeated. Only one column per preset can do this. |
+| --- | --- |
+| `One column` | All values in one cell, joined by your chosen separator. |
+| `Indexed columns` | One column (or group of columns) per value, such as `prep_1_type`, `prep_2_type`, … The count matches the record with the most values. |
+| `Repeated rows` | Nested records only: one row per value, repeating the parent record. At most one column per preset can use this. |
 
 With `Indexed columns` or `Repeated rows`, each child field of a nested column
-can have its own `Column name (optional)`. Write `{n}` where the number goes:
+can take its own `Column name (optional)`. Place `{n}` where the index belongs:
 `PrepType{n}Count` writes `PrepType1Count`, `PrepType2Count`, and so on. A name
-without `{n}` takes the number in the `Indexed column names` style.
+without `{n}` uses the `Indexed column names` numbering style.
 
-Preview a record with several values to check that the shape suits the
-receiving software.
+Preview a record with multiple values to confirm the layout suits the receiving
+tool.
 
 ### Column headers
 
-`Generated header format` names every column you have not named yourself:
+`Generated header format` names any column without an explicit `Column name`:
 
 | Format | Header for `specimen::uuid` |
-|---|---|
+| --- | --- |
 | `table::fieldName` | `specimen::uuid` |
 | `fieldName` | `uuid` |
 | `Darwin Core (dwc:/dcterms:)` | `dwc:occurrenceID` |
 | `NAHPU namespace (nahpu:table.field)` | `nahpu:specimen.uuid` |
 
-A name typed into a column's `Column name` always wins. Choose the format the
-recipient asks for, then check the headers in the preview.
+An explicit `Column name` always overrides the generated header.
 
-With Darwin Core headers, a field that has no Darwin Core term keeps a NAHPU
-header; the format does not turn every observation into a standard term. Darwin
-Core output also:
+With Darwin Core headers, fields without a Darwin Core term keep a NAHPU
+header rather than forcing an approximate term. Darwin Core output also:
 
 - credits the identification to the specimen's determiner;
-- keeps verbatim coordinates;
+- preserves verbatim coordinates;
 - adds a positive specimen coordinate extent to a positive coordinate
-  uncertainty. Check that combined value against the project's
+  uncertainty—verify this combined value against your project's
   [georeferencing method](/en/best-practices/data-collection/#georeferencing).
 
-Measurement units are not converted; check them in the output.
+Measurement units are not converted; verify them in the exported table.
 
 ### Blank columns
 
-A receiving sheet may have columns NAHPU does not record, such as a continent.
-Add a custom field, give it a column name, and leave its value empty. It is
-written as an empty column, so the file still lines up with the sheet.
+If a receiving spreadsheet expects a column NAHPU does not record (such as
+continent), add a custom field with that `Column name` and leave its expression
+empty. NAHPU writes an empty column so your columns line up.
 
 ### Additional observation fields
 
-Custom fields you defined in `Settings`, such as environmental observations,
-export like any other field. Their source keys use the field's ID, such as
-`customEnvironment::<definition UUID>`. Event and specimen exports include
-stored values even when those fields are hidden in the form; hiding a field
-does not filter it out of exports.
+Custom fields defined in `Settings` (such as environmental observations) export
+like built-in fields, using keys like `customEnvironment::<definition UUID>`.
+Event and specimen exports include stored values even if those fields are
+currently hidden on forms; hiding a field never filters it out of exports.
 
 ### File formats
 
-| Format | Use it for |
-|---|---|
-| CSV or TSV | Exchange with databases and scripts. |
-| Excel | Reviewing in a spreadsheet. |
-| JSON | Software that reads JSON. Darwin Core headers are not available. |
+| Format | Best for |
+| --- | --- |
+| `CSV` or `TSV` | Exchange with databases, R, Python, and other scripts. |
+| `Excel` | Reviewing tables in a spreadsheet app. |
+| `JSON` | Software consuming JSON directly (Darwin Core headers are unavailable). |
 
-Open the file in the tool that will use it. Spreadsheets can drop the leading
-zeros of IDs and reinterpret dates.
+Always inspect the exported file in the destination tool—spreadsheets can strip
+leading zeros from IDs or reformat dates automatically.
 
-The [LSUMZ Mammalogy tutorial](/en/tutorials/export/specify-export-preset/) builds a
-complete preset for a museum database, using most of the options on this page.
+The [LSUMZ Mammalogy tutorial](/en/tutorials/export/specify-export-preset/)
+walks through building a complete museum database preset using most of these
+options.
 
 ## Transfers and recovery
 
-A record export is a one-way copy: NAHPU cannot import it back as a project.
-To move or restore data in NAHPU, use:
+A record export is one-way: NAHPU cannot import it back as a project. To move
+or restore data in NAHPU, use:
 
-- a [project transfer](/en/usages/export/project-transfer/) or a
-  [NAHPU Data Package](/en/usages/export/export-bundles/) to move a project to
-  another installation, with `Import project` on the home screen, or to combine
-  contributions with `Merge project` in an existing project;
-- a [database backup](/en/usages/export/#backup-database) to restore a whole
+- a [project transfer](/en/usages/export/project-transfer/) or
+  [NAHPU Data Package](/en/usages/export/export-bundles/) with
+  `Import project` on the home screen or `Merge project` inside an open
+  project;
+- a [database backup](/en/usages/export/#backup-database) to restore the entire
   installation.
 
-To share one preset with your team, see
+To share a single preset with your team, see
 [Create a tabular export preset](/en/how-to-recipes/export-and-print/create-export-preset/).

@@ -5,41 +5,50 @@ sidebar:
   order: 7
 ---
 
-Use `Datos asociados` para datos digitales vinculados al espécimen que no se
-guardan mejor como parte del espécimen o como registro multimedia. Algunos
-ejemplos son accesiones de GenBank, registros de MorphoSource, archivos de
-análisis o enlaces a bases de datos externas. Es la pestaña con el icono de
-almacenamiento de la tarjeta `Partes del espécimen`.
+Use `Datos asociados` para archivos digitales vinculados al espécimen y enlaces
+externos que no son partes del espécimen ni registros multimedia, como
+accesiones de GenBank, registros de MorphoSource, archivos de análisis o URL de
+bases de datos externas. Es la pestaña con el icono de almacenamiento de la
+tarjeta `Partes del espécimen`.
 
-Los campos de datos asociados incluyen:
-
-- `Tipo de datos`: `Enlace` o `Archivo`.
-- `Nombre`: nombre de la fuente o del conjunto de datos, como `GenBank`.
-- `Descripción`: número de acceso o descripción de los datos.
-- `Fecha`: fecha asociada a los datos.
-- `URI`: URL externa cuando el tipo de datos es `Enlace`.
-- Selector de archivos: archivo local adjunto cuando el tipo de datos es
-  `Archivo`.
+| Campo | Notas |
+| --- | --- |
+| `Tipo de datos` | `Enlace` o `Archivo`. |
+| `Nombre` | Nombre de la fuente o del conjunto de datos, como `GenBank` o `MorphoSource`. |
+| `Descripción` | Número de acceso o breve descripción de los datos. |
+| `Fecha` | Fecha asociada a los datos. |
+| `URI` | URL externa (con esquema válido, como `https://`) cuando `Tipo de datos` es `Enlace`. |
+| Selector de archivos | Archivo local no multimedia adjunto cuando `Tipo de datos` es `Archivo`. Los archivos multimedia van en `Multimedia`, más abajo. |
 
 {% steps %}
 
-1. Elija el `Tipo de datos`.
-2. Para un `Enlace`, escriba la dirección en `URI`. Para un `Archivo`,
-   seleccione el archivo. En escritorio, elija `Copiar al proyecto` para
-   guardar una copia con NAHPU, o `Vincular original` para apuntar al archivo
-   donde está; un original vinculado debe permanecer en esa ruta.
-3. Agregue un `Nombre`, una `Descripción` y una `Fecha`.
+1. Abra la pestaña con el icono de almacenamiento de la tarjeta
+   `Partes del espécimen` y seleccione `Agregar datos asociados`.
+2. Elija `Tipo de datos` (`Enlace` o `Archivo`) y luego ingrese `Nombre`,
+   `Descripción` y `Fecha`.
+3. En `Recurso`, escriba la URL en `URI` para un `Enlace`, o seleccione un
+   archivo para un `Archivo`. En escritorio, elija `Copiar al proyecto` para
+   guardar una copia administrada en NAHPU, o `Vincular original` para apuntar
+   al archivo en su ubicación actual; un original vinculado deja de funcionar
+   si el archivo se mueve o se elimina.
+4. Guarde el registro.
 
 {% /steps %}
 
-Compruebe los archivos vinculados después de una transferencia e investigue
-cualquier aviso de archivo ausente. Use Multimedia, más abajo, para imágenes,
-audio y video.
+Use el menú de cada elemento para elegir `Editar`, `Mostrar información`,
+`Compartir` o abrirlo (`Abrir enlace`, o `Abrir en la aplicación predeterminada`
+en escritorio). Compruebe los archivos vinculados después de transferir un
+proyecto y revise cualquier icono de advertencia de archivo no disponible.
 
-## Multimedia
+## Multimedia {% #media %}
 
-Use `Multimedia` para fotos, videos y audio del espécimen. Agréguelos con
-`Tomar fotos/videos`, `Grabar audio`, `Agregar desde la galería` o
-`Agregar desde un archivo`. Cada elemento puede llevar un pie de foto,
-etiquetas y el nombre del fotógrafo. Los medios se guardan una sola vez en la
-biblioteca multimedia compartida de NAHPU y se vinculan al espécimen.
+Use `Multimedia` al final del formulario del espécimen para fotos, videos y
+audio del espécimen. Seleccione `Agregar` para adjuntar archivos con
+`Tomar fotos/videos` (móvil), `Grabar audio`, `Agregar desde la galería`
+(móvil) o `Agregar desde un archivo`, o seleccione `Galería` para explorar la
+galería multimedia compartida.
+
+Abra el menú de un elemento y elija `Editar` para actualizar `Nombre del archivo`,
+`Leyenda`, `Etiqueta` y `Fotógrafo`. Los archivos multimedia se guardan una
+sola vez en la biblioteca multimedia compartida de NAHPU y se vinculan al
+espécimen.

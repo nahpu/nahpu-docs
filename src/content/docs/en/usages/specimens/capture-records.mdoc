@@ -5,32 +5,34 @@ sidebar:
   order: 4
 ---
 
-Capture records connect a specimen to the collecting event, site, coordinate,
+`Capture Records` links a specimen to the collection event, site, coordinate,
 method, and collector that produced it.
 
 {% steps %}
 
-1. Choose the `Site ID`. The `Event ID` list then shows only that site's
-   collecting events.
-2. Choose the `Event ID`.
+1. Choose `Site ID` (only sites with collection events appear). The `Event ID`
+   menu then filters to that site's collection events.
+2. Choose `Event ID`.
 3. Fill in the capture details below.
 
 {% /steps %}
 
-Changing the site or the event asks for confirmation, then clears this card
-except the capture date and time. When you change only the event, the
-coordinate is kept if it belongs to the same site.
+Changing `Site ID` or `Event ID` after one is set asks for confirmation, then
+clears the linked event fields (`Method`, `Collector`, and `Coordinate ID`)
+while keeping `Capture date` and `Capture time`. When you change only
+`Event ID`, `Coordinate ID` is kept if it belongs to the same site.
 
 | Field | Notes |
 | --- | --- |
 | `Capture date`, `Capture time` | When the specimen was captured. |
-| `Relative time` | Replaces the exact time with `Dawn`, `Morning`, `Afternoon`, `Dusk`, or `Night`. Shown after `Show more`. |
-| `Method` | A collection method from the selected event. |
-| `Method ID` | Optional trap, net, or other method identifier. Shown after `Show more`. |
-| `Coordinate ID` | A coordinate of the event's site. |
-| `Coordinate extent (m)` | Optional positive distance the capture extends beyond the coordinate point. |
-| `Collector` | Optional, from the event's personnel. Shown when it has a value, after `Show more`, or always if `Always show collector field` is on in Settings. |
+| `Relative time` | Shown after `Show more` (or when enabled). Replaces exact `Capture time` with `Dawn`, `Morning`, `Afternoon`, `Dusk`, or `Night`. |
+| `Method` | A collection method from the selected collection event. |
+| `Method ID` | Optional trap, net, or other method identifier. Shown after `Show more`, or once it has a value. |
+| `Coordinate ID` | A coordinate from the event's site. |
+| `Coordinate extent (m)` | Optional positive distance (in meters) the capture extends beyond the coordinate point. |
+| `Collector` | Optional, from the event's personnel. Shown when it has a value, after `Show more`, or always if `Always show collector field` is on in `Settings` > `Specimens`. |
 
-In Darwin Core exports, a positive coordinate extent is added to the saved
-coordinate uncertainty. If the coordinate has no valid uncertainty, the extent
-is used by itself. Empty, zero, and negative values are ignored.
+In Darwin Core exports, a positive `Coordinate extent (m)` value is added to
+the coordinate's saved uncertainty (`coordinateUncertaintyInMeters`). If the
+coordinate has no valid uncertainty, the extent is used by itself. Empty, zero,
+and negative values are ignored.

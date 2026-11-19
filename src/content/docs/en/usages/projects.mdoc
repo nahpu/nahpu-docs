@@ -22,164 +22,178 @@ sidebar:
 {% pin id="G" label="Scan project QR" large2=[87.5, 39] small2=[94, 49] /%}
 {% /screenshots %}
 
-Projects keep NAHPU data organized. A project can contain personnel, taxa,
-sites, collecting events, specimen records, narratives, and linked media.
+Projects keep NAHPU data organized. Each project holds its own sites,
+collecting events, specimen records, narratives, associated data, and linked
+media, while sharing personnel and taxonomy records from the NAHPU database.
 
 ## Creating a project
 
 {% aside type="caution" %}
-A project needs at least one person with the `Cataloger` role. When you choose `Personnel` Field IDs, the wizard adds a conditional `Cataloger` step and will not let you finish until an eligible person exists. See [Personnel](/en/usages/personnel/#adding-personnel-to-a-project).
+
+Projects using `Personnel` Field IDs need at least one person with the
+`Cataloger` role and a registered personal field number. When you choose
+`Personnel` in the wizard, a `Cataloger` step lets you pick or create one; if
+you choose `Skip`, the wizard leaves your current `Field ID` setting unchanged.
+See [Personnel](/en/usages/personnel/#adding-personnel-to-a-project).
+
 {% /aside %}
 
-From the home screen, select `Create project`, and then choose whether
-to create a new identity or reuse project information from another device.
+From the home screen, select `Create project` to create a new project identity
+or reuse project information from another device.
 
 {% steps %}
 
-1. On `Welcome`, select `Create new project` {% ref id="E" /%}. To reuse an existing project
-   identity instead, select `Import project-info JSON` {% ref id="F" /%} or, on
-   a device with a camera scanner (Android, iOS, macOS, or web),
-   `Scan project QR`.
-2. Under `Project information`, enter a unique project name between 3 and 25
-   characters. Optionally add a description, principal investigator,
-   institutional accession, location, IANA time zone, and start and end dates.
-3. Under `Main taxon`, choose the taxon that should control new specimen forms
-   on this device. A project can contain multiple taxon groups. This step can
-   be skipped and changed later in `Settings` > `Catalogs` > `Format`.
-4. Under `Field ID`, choose `Personnel` or `Project`. This step can also be
-   skipped and completed later in `Settings` > `Catalogs` > `Specimens`.
-   - `Personnel` uses an eligible Cataloger's initials and personal field
-     number. Select an existing Cataloger or create one when the conditional
-     `Cataloger` step appears.
-   - `Project` combines a prefix, current catalog number, and suffix. NAHPU
-     inserts no separators. Turn on auto-increment to advance the project
-     number when it is assigned.
-5. On `Review`, check the project identity, device setup, and taxonomy
-   readiness. Select `Create project` to open the dashboard.
+1. On `Welcome`, select `Create new project` {% ref id="E" /%}. To reuse an
+   existing project identity instead, choose `Import project-info JSON` {% ref id="F" /%}
+   or, on a device with camera scanning (Android, iOS, macOS,
+   or web), `Scan project QR` {% ref id="G" /%}.
+2. Under `Project information`, enter a unique `Project name` (3–25
+   characters). Optionally add a `Description` (up to 160 characters),
+   `Principal investigator`, `Accession`, `Location`, IANA `Time zone`,
+   `Start date`, and `End date`.
+3. Under `Main taxon`, choose the catalog format for new specimen forms on this
+   device. A single project can still hold specimens from multiple taxon
+   groups. You can `Skip` this step and change it later in `Settings` >
+   `Catalogs` > `Format`.
+4. Under `Field ID`, choose `Personnel` or `Project` (or `Skip` and configure
+   it later in `Settings` > `Catalogs` > `Specimens`):
+   - **`Personnel`** uses an eligible cataloger's initials and running field
+     number. Select an existing cataloger or create a new one on the next
+     `Cataloger` step.
+   - **`Project`** joins `Prefix`, `Current catalog number`, and `Suffix`
+     directly with no inserted separators. Turn on `Auto-increment catalog
+     number` to advance the number automatically.
+5. On `Review`, check the project details, device setup, and taxonomy
+   readiness, then select `Create project` to open the dashboard.
 
 {% /steps %}
 
-NAHPU generates a UUID for a new project. On wide screens, the wizard displays
-its steps in a left rail; on narrower screens, the same steps appear as
-horizontal chips. The workflow and validation are the same in both layouts.
+NAHPU assigns a UUID to every new project. On wide screens, wizard steps appear
+in a left rail; on narrower screens, they appear as horizontal chips with the
+same validation.
 
-Importing project-info JSON or scanning its QR preserves the source UUID and
-goes directly to review. It copies project metadata only—not records,
-personnel, taxa, media, or device settings. Use a full project transfer when
-those data must also move between devices.
+Importing project-info JSON or scanning a project QR code preserves the source
+UUID and jumps straight to `Review`. It copies project metadata only—not
+records, personnel, taxa, media, or device settings. Use a full project
+transfer when records and media must also move between devices.
 
 ## Project time zone
 
-The `Time zone` field records where the fieldwork happens, as an IANA time-zone
-name such as `Asia/Jakarta` or `America/New_York`. Choose the fieldwork's time
-zone, not the time zone of the device used to enter data.
+`Time zone` records where the fieldwork takes place using an IANA name such as
+`Asia/Jakarta` or `America/New_York`. Choose the fieldwork location's time
+zone, not the time zone of the data-entry device.
 
-**NAHPU never converts times.** Every date and time in a record is stored
-exactly as entered, as the local clock time in the field. Opening the project
-on a device in another time zone does not shift them. That device may only
-format them differently, such as a different date order or a 12-hour clock.
+**NAHPU never converts times.** Dates and times are stored exactly as entered
+in the field's local clock. Opening the project in another time zone does not
+shift stored times—it may only change how dates or 12/24-hour clocks display.
+For example, with `Asia/Jakarta`, an event entered as **12 May, 08:30** always
+shows `08:30` on every device, and the project time zone documents which clock
+that `08:30` refers to.
 
-For example, with the project time zone `Asia/Jakarta`, an event entered as
-**12 May, 08:30** shows as 08:30 on every device. The project time zone tells
-readers which clock that `08:30` refers to.
-
-The time zone is shown in the Project overview, travels with project
-information and project transfers, and is available as `project::timeZone` in
-document templates and exports. A database that stores times in UTC can use it
-to convert them correctly.
-
-Changing the time zone does not change the device clock or rewrite times
-already entered. Keep it the same on every device in the project.
-
-If a team works across time zones, or enters historical data from elsewhere,
-note the exception in the project description or a narrative. A separate
-project for each time zone is usually clearer.
+- The time zone appears in `Project overview`, travels with project-info and
+  project transfers, and is exposed as `project::timeZone` in templates and
+  exports so downstream databases can convert local times to UTC.
+- Changing `Time zone` never alters the device clock or rewrites existing
+  records. Keep the same value on every device sharing a project.
+- If a team spans multiple time zones or enters historical records from
+  elsewhere, note exceptions in the project description or a narrative—or use a
+  separate project per time zone.
 
 ## Managing projects from the home screen
 
-Each project has an action menu with these options:
+When projects exist, the home screen provides a search bar, quick actions
+(`Create project`, `Gallery`, `Import project`, and `Statistics`), and a
+list/grid view toggle. Each project's three-dot menu includes:
 
-- **Edit info** - Update the project form.
-- **Show QR** - Display project information for a mobile device to scan.
-- **Export info** - Export project information as JSON. This contains project
-  details, not the project's records and media.
-- **Details** - View project information without editing it.
+| Action | What it does |
+| --- | --- |
+| `Edit info` | Opens the project form to update metadata. |
+| `Show QR` | Displays a QR code of the project metadata for another device to scan. |
+| `Export info` | Saves project metadata as JSON (without records or media). |
+| `Details` | Views project information without editing it. |
 
 ## Project dashboard
 
-The dashboard contains four panels:
+The `Project dashboard` has four panels and a bottom `Tools` dock:
 
-- **Project overview** {% ref id="A" /%} - Shows the project name, UUID, description, principal
-  investigator, accession, location, time zone, dates, creation date, and last
-  access. Information is grouped as Identity, Description, Project details,
-  Schedule, and Record metadata.
-  Use `Edit` {% ref id="B" /%} to change the project and `Export info` to share {% ref id="C" /%} its information.
-- **Personnel** {% ref id="D" /%} - Lists personnel assigned to the project. Use `Add personnel`
-  to select an existing database entry or create a new one, and `Manage` to
-  edit the project's personnel.
-- **Taxon registry** - Lists registered taxa and provides controls to add or
-  import taxa.
-- **Record statistics** - Summarizes records in the project and provides
-  access to more detailed statistics.
+- **`Project overview`** {% ref id="A" /%}: shows the project QR code and
+  metadata grouped under `Identity`, `Description`, `Project details`,
+  `Schedule`, and `Record metadata`. Use `Edit` {% ref id="B" /%} to update
+  details or `Export info` {% ref id="C" /%} to export metadata as JSON.
+- **`Personnel`** {% ref id="D" /%}: lists people assigned to the project, with
+  `Add personnel`, `Manage`, edit icons, and selection controls.
+- **`Taxon registry`**: shows counts of registered orders, families, species
+  (and total taxa when higher-rank or subspecies entries exist), with `Manage`
+  and `Add taxon`.
+- **`Record statistics`**: summarizes project records and opens detailed
+  statistics.
+- **`Tools` dock**: provides quick launchers along the bottom of the dashboard
+  (configured in `Settings` > `Tools` or via `Edit` at the end of the dock).
 
-The project menu also contains project transfer, export, backup, settings, and
-project deletion actions.
+The project menu (a side rail on desktop, or a drawer on smaller screens)
+provides `Merge project`, `Export project`, `Batch import`, `Bundle records`,
+`Export records`, `Export documents`, `Backup database`, `Settings`,
+`Export user configs`, `Import user configs`, and `Delete project`.
 
 ## Updating project information
 
-From the dashboard, select `Edit` in the Project overview panel. From the
-home screen, open a project's action menu and select `Edit info`. The edit form
-groups fields under Project details, Place and time, and Project dates. Change
-the main taxon or field-ID defaults in [Settings](../settings).
+Select `Edit` {% ref id="B" /%} in `Project overview` on the dashboard, or
+choose `Edit info` from a project's home-screen menu. Fields are grouped under
+`Project details`, `Place and time`, and `Project dates`. Change the active
+catalog format or `Field ID` settings in [Settings](../settings).
 
 ## Sharing project information
 
-Project information can be copied to another device without transferring
+Copy a project's identity and metadata to another device without transferring
 records:
 
-1. On the source device, choose `Export info` or `Show QR` from the project's
-   home-screen action menu.
-2. On the receiving device, choose `Create project`, then use `Import project-info
-   JSON` or `Scan project QR` {% ref id="G" /%} on a device with a camera
-   scanner.
+{% steps %}
 
-These methods retain the source project's UUID and create a project with the
-same project information. To transfer records, media, and related data, use
-the [Transfer a Project](../export/project-transfer) workflow instead.
+1. On the source device, choose `Export info` or `Show QR` from the project's
+   home-screen menu (or tap the QR code / `Export info` in `Project overview`).
+2. On the receiving device, select `Create project`, then choose
+   `Import project-info JSON` {% ref id="F" /%} or `Scan project QR` {% ref id="G" /%}
+   on a device with camera scanning.
+
+{% /steps %}
+
+This preserves the source UUID and creates a matching project shell. To move
+records, media, and linked data, use
+[Project transfer](../export/project-transfer) instead.
 
 ## Transferring project data
 
-To move records and media, use `Export project` from the project menu, then on
+To move records and media, run `Export project` from the project menu, then on
 the receiving device:
 
 | On the receiving device | Use | Result |
 | --- | --- | --- |
-| The project does not exist yet | `Import project` on the home screen | A new local project |
-| The project already exists | `Merge project` in that project's Dashboard menu | The imported records combined with the existing ones |
+| Project does not exist yet | `Import project` on the home screen | Creates a new local project |
+| Project already exists | `Merge project` in that project's menu | Merges imported records into the existing project |
 
 ZIP and TAR.GZ exports include media; `Light export` (JSON.GZ) includes records
-only. A NAHPU Data Package can also be imported or merged. Darwin Core packages
-and tabular exports cannot restore a project. Keep the source file until you
-have checked the records and attachments on the receiving device. See
-[Project transfer](../export/project-transfer) for every step.
+only. A NAHPU data package can also be imported or merged. Darwin Core packages
+and tabular exports cannot restore a project. Keep the source archive until you
+have verified the records and media on the receiving device. See
+[Project transfer](../export/project-transfer) for full steps.
 
 ## Deleting a project
 
-Open the project menu and choose `Delete project`. NAHPU asks you to enter the
+Open the project menu and select `Delete project`. NAHPU asks you to type the
 first five characters of the project's UUID because deletion cannot be undone.
 
 Deleting a project removes its specimen records and measurements, collecting
-events and their collection methods, event personnel, narratives, sites and coordinates,
-project-personnel links, project media, and the project record. Stored project
-files are also removed. Media still shared with a taxonomy record is detached
-rather than deleted. If file cleanup fails, NAHPU reports a warning after the
-database records have been deleted.
+events (with collection methods, event personnel, and environmental data),
+narratives, sites and coordinates, associated data, project-personnel links,
+project media, stored project files, and the project record itself. Media still
+referenced by a taxonomy record is detached rather than deleted. If file
+cleanup fails, NAHPU shows a warning after removing the database records.
 
-Export a project transfer or database backup before deleting if you may need
-the data later.
+Export a project transfer or database backup first if you may need the data
+later.
 
 ## Terminology
 
 ### Principal Investigator
 
-The principal investigator is the person responsible for the project.
+The person responsible for the project.

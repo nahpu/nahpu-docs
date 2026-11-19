@@ -6,100 +6,118 @@ sidebar:
 
 {% screenshots
    large="app-screenshots/usage/personnel-large.webp"
-   largeAlt="Tela Gerenciar equipe do NAHPU em um tablet"
+   largeAlt="Tela Gerenciar pessoal do NAHPU em um tablet"
    large2="app-screenshots/usage/personnel-large-2.webp"
-   large2Alt="Tela Adicionar equipe do NAHPU em um tablet"
+   large2Alt="Tela Adicionar membro da equipe do NAHPU em um tablet"
    small="app-screenshots/usage/personnel-small.webp"
    smallAlt="Tela Detalhes da equipe do NAHPU em um celular"
    small2="app-screenshots/usage/personnel-small-2.webp"
-   small2Alt="Tela Adicionar equipe do NAHPU em um celular" %}
-{% pin id="A" label="Gerenciar equipe" large=[40, 7.3] small=[38.1, 8.6] /%}
+   small2Alt="Tela Adicionar membro da equipe do NAHPU em um celular" %}
+{% pin id="A" label="Gerenciar pessoal" large=[40, 7.3] small=[38.1, 8.6] /%}
 {% pin id="B" label="Função no cuidado de espécimes" large=[34, 64] small=[63.1, 62.4] /%}
 {% pin id="C" label="Número de campo" large=[34, 73.1] small=[54.5, 70.7] /%}
-{% pin id="D" label="Editar equipe" large=[83.5, 90.9] small=[57.5, 91.9] /%}
+{% pin id="D" label="Editar pessoa" large=[83.5, 90.9] small=[57.5, 91.9] /%}
 {% pin id="E" label="Selecionar do banco de dados" large2=[36, 14.4] small2=[21, 17.1] /%}
-{% pin id="F" label="Adicionar novo membro" large2=[64, 14.4] small2=[81, 17.1] /%}
+{% pin id="F" label="Adicionar nova pessoa" large2=[64, 14.4] small2=[81, 17.1] /%}
 {% pin id="G" label="Nome" large2=[71.9, 48.1] small2=[95.2, 49.3] /%}
 {% pin id="H" label="Mostrar mais" large2=[44.8, 84.9] small2=[62.4, 81.6] /%}
 {% /screenshots %}
 
-Os registros de pessoal são compartilhados no banco de dados do NAHPU e podem
-ser atribuídos a vários projetos. Um projeto exibe apenas o pessoal atribuído a
-ele.
+Os registros de pessoal ficam salvos no banco de dados compartilhado do NAHPU e
+podem ser atribuídos a vários projetos. Cada projeto exibe apenas as pessoas
+atribuídas a ele.
 
 ## Adicionar pessoal a um projeto {% #adding-personnel-to-a-project %}
 
 {% aside type="caution" %}
-Field IDs por pessoa exigem um `Catalogador` com número de campo pessoal registrado. Field IDs por projeto usam a convenção de numeração do projeto; não exigem que cada número venha da sequência de uma pessoa. Escolha a função com cuidado: depois que uma pessoa é salva como `Catalogador`, essa função não pode ser alterada.
+
+`ID de campo` por `Equipe` exige um `Catalogador` com número de campo pessoal
+registrado. `ID de campo` por `Projeto` usa a convenção de numeração do
+projeto. Escolha a função com cuidado: depois que uma pessoa é salva como
+`Catalogador`, essa função não pode ser alterada.
+
 {% /aside %}
 
-No painel Pessoal do painel do projeto, selecione `Adicionar membro da equipe`.
-Se já houver pessoas no banco de dados, escolha `Selecionar do banco de dados` {% ref id="E" /%} e
-selecione quem deseja atribuir. Caso contrário, escolha `Adicionar nova pessoa` {% ref id="F" /%}. Em
-uma tela estreita, essas opções aparecem como `Selecionar existente` e `Adicionar nova`.
+No painel `Equipe` do painel do projeto, selecione
+`Adicionar membro da equipe`:
 
-O formulário inclui:
+- Se já houver pessoas no banco de dados, escolha
+  `Selecionar do banco de dados` {% ref id="E" /%} (`Selecionar existente` em
+  telas estreitas) para atribuí-las, ou mude para `Adicionar nova pessoa` {% ref id="F" /%}
+  (`Adicionar nova` em telas estreitas) para criar um novo
+  cadastro.
+- Se ainda não houver pessoas no banco de dados, o formulário de cadastro abre
+  diretamente.
 
-| Campo | Exibição | Observações |
+| Campo | Exibido | Notas |
 | --- | --- | --- |
 | `Nome*` {% ref id="G" /%} | Sempre | Obrigatório. |
-| Foto | Sempre | Um avatar ou uma foto da pessoa. |
-| Afiliação | Sempre | A instituição da pessoa. |
-| `ORCID iD` | Sempre | Opcional, com hifens e dígito verificador válido, como `0000-0002-1825-0097`. |
-| Função no cuidado de espécimes {% ref id="B" /%} | Sempre | `Catalogador`, `Somente preparador`, `Somente identificador` ou `Nenhuma`. |
-| E-mail | Após `Mostrar mais` {% ref id="H" /%} | Salvo em minúsculas. |
-| Telefone | Após `Mostrar mais` | Somente dígitos. |
-| Notas | Após `Mostrar mais` | Informações adicionais sobre a pessoa. |
+| Foto | Sempre | Avatar ou retrato opcional. |
+| `Afiliação` | Sempre | Instituição da pessoa. |
+| `ORCID iD` | Sempre | Opcional, com hifens e dígito verificador válido (por exemplo, `0000-0002-1825-0097`). |
+| `Função no cuidado de espécimes` {% ref id="B" /%} | Sempre | `Catalogador`, `Somente preparador`, `Somente identificador` ou `Nenhuma`. |
+| `E-mail` | Após `Mostrar mais` {% ref id="H" /%} | Salvo em minúsculas ao adicionar nova pessoa. |
+| `Telefone` | Após `Mostrar mais` | Somente dígitos. |
+| `Notas` | Após `Mostrar mais` | Observações adicionais sobre a pessoa. |
 
-As exportações Darwin Core usam a URL canônica `https://orcid.org/...` como
-identificador de agente da pessoa quando há ORCID. Caso contrário, usam o UUID
-de pessoal do NAHPU.
+Ao editar uma pessoa já cadastrada, as seções de contato e notas abrem
+expandidas. Nas exportações Darwin Core, o NAHPU usa a URL canônica
+`https://orcid.org/...` como identificador do agente quando há um `ORCID iD`, e
+recorre ao UUID da pessoa no NAHPU caso contrário.
 
 ## Números de campo para catalogadores
 
-Quando a função é `Catalogador`, {% ref id="C" /%} o NAHPU oferece a opção
-`Registrar número de campo pessoal`. Ative-a quando as iniciais e o número do
-catalogador devem gerar os Field IDs dos espécimes. Informe `Iniciais` (até cinco
-letras, salvas em maiúsculas) e o `Número do catalogador*` inicial; o número
-avança conforme os espécimes são criados.
+Quando `Função no cuidado de espécimes` é `Catalogador`, o NAHPU mostra
+`Registrar número de campo pessoal` {% ref id="C" /%}. Ative essa opção quando
+as iniciais e o número sequencial do catalogador devem gerar os valores de
+`ID de campo` dos espécimes:
 
-Se a coleção usa numeração por projeto, configure a convenção de Field ID do projeto em `Configurações` em vez de registrar uma pessoa fictícia com o código do projeto.
+- **`Iniciais*`**: de 2 a 5 caracteres (letras, dígitos, `-` ou `_`), salvos em
+  maiúsculas.
+- **`Número do catalogador*`**: inteiro inicial; avança automaticamente a cada
+  espécime criado.
 
-O registro do número de campo é opcional. Depois que uma pessoa é salva como
-`Catalogador`, essa função não pode ser alterada.
+Registrar o número de campo é opcional. Se a coleção usar numeração baseada no
+projeto, configure o `ID de campo` por `Projeto` em
+[Configurações](../settings/#field-id) em vez de criar uma pessoa fictícia com
+o código do projeto.
 
 ## Editar e remover pessoal
 
-Use o menu de três pontos ao lado de uma pessoa no painel Pessoal do projeto
-para editá-la ou removê-la do projeto. Remover uma pessoa de um projeto não
-exclui o registro compartilhado de pessoal. Uma pessoa não pode ser removida
-enquanto registros do projeto ainda a utilizarem.
-
-Para pesquisar, editar ou excluir permanentemente o pessoal do banco de dados {% ref id="D" /%},
-abra `Configurações` e escolha `Equipe` ou `Gerenciar pessoal` {% ref id="A" /%}. O NAHPU impede a
-exclusão permanente quando a pessoa ainda está atribuída a um projeto.
+- **Editar em um projeto**: selecione o ícone de edição ao lado da pessoa no
+  painel `Equipe` do painel do projeto.
+- **Remover de um projeto**: selecione `Selecionar` no painel `Equipe`, marque
+  as pessoas a remover e escolha `Remover N pessoas do projeto`. Remover alguém
+  de um projeto preserva seu registro compartilhado no banco de dados. Uma
+  pessoa não pode ser removida enquanto registros do projeto ainda a
+  referenciarem.
+- **Gerenciar todo o pessoal do banco de dados**: selecione `Gerenciar` no
+  painel `Equipe` ou abra `Configurações` > `Banco de dados` > `Equipe` para
+  abrir `Gerenciar pessoal` {% ref id="A" /%}. Pesquise ou veja detalhes,
+  selecione `Editar pessoa` {% ref id="D" /%} para atualizar um registro ou use
+  `Selecionar` para excluir permanentemente pessoas que não estejam atribuídas
+  a nenhum projeto (pessoas atribuídas ficam protegidas e não podem ser
+  selecionadas).
 
 ## Terminologia
 
 ### Catalogador {% #cataloger %}
 
-Pessoa que cria e edita os registros de catálogo dos espécimes. Catalogadores
-podem aparecer nos campos de catalogador, preparador e pessoal de coleta. A
-função `Catalogador` não pode ser alterada depois que a pessoa é salva; as
-outras funções podem ser editadas.
+Cria e edita registros de catálogo de espécimes e pode aparecer nos campos de
+catalogador, preparador e pessoal de coleta. A função `Catalogador` não pode
+ser alterada após salvar; as outras funções podem ser editadas.
 
 ### Somente preparador {% #preparator-only %}
 
-Pessoa que ajuda a preparar espécimes, mas não cria nem edita registros de
-catálogo.
+Auxilia na preparação de espécimes sem criar nem editar registros de catálogo.
 
 ### Somente identificador {% #determiner-only %}
 
-Pessoa que identifica espécimes, mas não os cataloga nem os prepara. Selecione
-essa pessoa no campo `Determiner` do formulário do espécime.
+Identifica espécimes sem catalogá-los nem prepará-los. Aparece no campo de
+determinador do formulário de espécime.
 
 ### Nenhuma {% #none %}
 
-Pessoa que apoia o trabalho de campo sem uma função no cuidado de espécimes,
-como guia, motorista ou cozinheiro. O nome dela ainda pode ser registrado como
-pessoal de coleta.
+Apoia o trabalho de campo sem função de cuidado de espécimes (como guia,
+motorista ou cozinheiro). Ainda pode ser registrada como pessoal de coleta nos
+eventos.

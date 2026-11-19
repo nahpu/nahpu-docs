@@ -1,8 +1,8 @@
 ---
 // Day One practice trail: one waypoint per step of the `steps` list that
 // follows the figure. Selecting a waypoint jumps to its step and checks it off
-// in this browser. The artwork and waypoint positions are shared with the
-// NAHPU app (see `src/assets/day-one/`).
+// in this browser, synced with per-step completion buttons. The artwork and
+// waypoint positions are shared with the NAHPU app (see `src/assets/day-one/`).
 import art from "../../assets/day-one/field-trail.svg?raw";
 import figures from "../../assets/day-one/figures.json";
 
@@ -15,11 +15,15 @@ interface Props {
 const { label, hint, progress } = Astro.props;
 const { width, height, waypoints } = figures.fieldTrail;
 const pct = (value: number, total: number) => `${(value / total) * 100}%`;
+const initialProgress = progress
+  .replace("{visited}", "0")
+  .replace("{total}", String(waypoints.length));
 ---
 
 <figure
   class="day-one-figure not-content"
   data-field-trail
+  data-hint={hint}
   data-progress={progress}
   aria-label={label}
 >
@@ -43,7 +47,16 @@ const pct = (value: number, total: number) => `${(value / total) * 100}%`;
         ))
       }
     </div>
-    <p class="detail" aria-live="polite">{hint}</p>
+    <div class="footer">
+      <div class="progress-row">
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-fill" data-progress-fill></div>
+        </div>
+        <span class="progress-label" data-progress-label>{initialProgress}</span>
+        <button type="button" class="reset-btn" data-reset hidden>Reset</button>
+      </div>
+      <p class="detail" aria-live="polite">{hint}</p>
+    </div>
   </div>
 </figure>
 
@@ -94,12 +107,14 @@ const pct = (value: number, total: number) => `${(value / total) * 100}%`;
     transform: translate(-50%, -50%);
     transition:
       background 150ms ease,
-      box-shadow 150ms ease;
+      box-shadow 150ms ease,
+      transform 150ms ease;
   }
   .waypoint:hover,
   .waypoint:focus-visible {
     outline: none;
     box-shadow: 0 0 0 3px rgb(104 138 44 / 0.45);
+    transform: translate(-50%, -50%) scale(1.06);
   }
   .waypoint[aria-pressed="true"] {
     box-shadow: 0 0 0 3px #688a2c;
@@ -130,14 +145,74 @@ const pct = (value: number, total: number) => `${(value / total) * 100}%`;
     display: block;
   }
 
-  .detail {
-    margin: 0.75rem 0 0;
+  .footer {
+    margin-top: 0.75rem;
+    border: 1px solid rgb(28 43 33 / 0.08);
     border-radius: 0.75rem;
     background: rgb(243 246 244 / 0.9);
     padding: 0.75rem 1rem;
+  }
+
+  .progress-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .progress-track {
+    flex: 1 1 8rem;
+    height: 0.4rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgb(28 43 33 / 0.12);
+  }
+
+  .progress-fill {
+    width: 0%;
+    height: 100%;
+    border-radius: 999px;
+    background: #688a2c;
+    transition: width 200ms ease;
+  }
+
+  .progress-label {
+    color: #33473a;
+    font-size: var(--sl-text-xs);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .reset-btn {
+    padding: 0.15rem 0.55rem;
+    border: 1px solid rgb(28 43 33 / 0.2);
+    border-radius: 999px;
+    background: transparent;
+    color: #283a2e;
+    font: inherit;
+    font-size: var(--sl-text-xs);
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease;
+  }
+  .reset-btn:hover,
+  .reset-btn:focus-visible {
+    outline: none;
+    border-color: #405847;
+    background: rgb(28 43 33 / 0.06);
+  }
+  .reset-btn[hidden] {
+    display: none;
+  }
+
+  .detail {
+    margin: 0;
     color: #283a2e;
     font-size: var(--sl-text-sm);
-    line-height: 1.6;
+    line-height: 1.5;
   }
   .detail :global(strong) {
     color: #1c2b21;
@@ -147,6 +222,41 @@ const pct = (value: number, total: number) => `${(value / total) * 100}%`;
     border-radius: 0.5rem;
     animation: day-one-target 1.6s ease-out;
   }
+  :global(.day-one-step-actions) {
+    display: flex;
+    align-items: center;
+    margin-top: 0.6rem;
+  }
+  :global(.day-one-step-toggle) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.65rem;
+    border: 1px solid rgb(28 43 33 / 0.2);
+    border-radius: 999px;
+    background: transparent;
+    color: #283a2e;
+    font: inherit;
+    font-size: var(--sl-text-xs);
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+  :global(.day-one-step-toggle:hover),
+  :global(.day-one-step-toggle:focus-visible) {
+    outline: none;
+    border-color: #688a2c;
+    background: rgb(104 138 44 / 0.08);
+  }
+  :global(.day-one-step-toggle[aria-pressed="true"]) {
+    border-color: #506a25;
+    background: #688a2c;
+    color: #fff;
+  }
+
   @keyframes day-one-target {
     from {
       background: rgb(155 191 79 / 0.25);
@@ -156,6 +266,12 @@ const pct = (value: number, total: number) => `${(value / total) * 100}%`;
     }
   }
   @media (prefers-reduced-motion: reduce) {
+    .waypoint,
+    .progress-fill,
+    .reset-btn,
+    :global(.day-one-step-toggle) {
+      transition: none;
+    }
     :global(.sl-steps > li.day-one-target) {
       animation: none;
     }
@@ -165,12 +281,47 @@ const pct = (value: number, total: number) => `${(value / total) * 100}%`;
     border-color: rgb(226 233 227 / 0.1);
     background: rgb(14 26 18 / 0.4);
   }
-  :global([data-theme="dark"]) .detail {
+  :global([data-theme="dark"]) .footer {
+    border-color: rgb(226 233 227 / 0.1);
     background: rgb(28 43 33 / 0.8);
+  }
+  :global([data-theme="dark"]) .progress-track {
+    background: rgb(226 233 227 / 0.16);
+  }
+  :global([data-theme="dark"]) .progress-fill {
+    background: #9bbf4f;
+  }
+  :global([data-theme="dark"]) .progress-label {
+    color: #c5d3c8;
+  }
+  :global([data-theme="dark"]) .reset-btn {
+    border-color: rgb(226 233 227 / 0.22);
+    color: #d7e3da;
+  }
+  :global([data-theme="dark"]) .reset-btn:hover,
+  :global([data-theme="dark"]) .reset-btn:focus-visible {
+    border-color: #9bbf4f;
+    background: rgb(155 191 79 / 0.14);
+  }
+  :global([data-theme="dark"]) .detail {
     color: #c5d3c8;
   }
   :global([data-theme="dark"]) .detail :global(strong) {
     color: #f3f6f4;
+  }
+  :global([data-theme="dark"]) :global(.day-one-step-toggle) {
+    border-color: rgb(226 233 227 / 0.24);
+    color: #d7e3da;
+  }
+  :global([data-theme="dark"]) :global(.day-one-step-toggle:hover),
+  :global([data-theme="dark"]) :global(.day-one-step-toggle:focus-visible) {
+    border-color: #9bbf4f;
+    background: rgb(155 191 79 / 0.14);
+  }
+  :global([data-theme="dark"]) :global(.day-one-step-toggle[aria-pressed="true"]) {
+    border-color: #b5d177;
+    background: #9bbf4f;
+    color: #1c270c;
   }
   :global([data-theme="dark"]) .waypoint {
     border-color: #9db3a3;
@@ -230,11 +381,27 @@ const pct = (value: number, total: number) => `${(value / total) * 100}%`;
 <script>
   const smooth = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
 
+  const UI_STRINGS: Record<string, { reset: string; markDone: string; done: string }> = {
+    en: { reset: "Reset", markDone: "Mark done", done: "Done" },
+    es: { reset: "Restablecer", markDone: "Marcar hecho", done: "Hecho" },
+    id: { reset: "Atur ulang", markDone: "Tandai selesai", done: "Selesai" },
+    pt: { reset: "Redefinir", markDone: "Marcar concluído", done: "Concluído" },
+  };
+
+  function uiForLang(lang: string) {
+    const code = lang.toLowerCase().split("-")[0];
+    return UI_STRINGS[code] ?? UI_STRINGS.en;
+  }
+
   // Visited steps are a per-browser convenience; the page works without them.
-  function readVisited(key: string): Set<number> {
+  function readVisited(key: string, max: number): Set<number> {
     try {
       const stored = JSON.parse(localStorage.getItem(key) ?? "[]");
-      return new Set(Array.isArray(stored) ? stored.filter(Number.isInteger) : []);
+      return new Set(
+        Array.isArray(stored)
+          ? stored.filter((n): n is number => Number.isInteger(n) && n >= 0 && n < max)
+          : [],
+      );
     } catch {
       return new Set();
     }
@@ -259,25 +426,84 @@ const pct = (value: number, total: number) => `${(value / total) * 100}%`;
     const steps = followingSteps(figure);
     const titles = steps.map((step) => step.querySelector("strong")?.textContent?.trim() ?? "");
     const detail = figure.querySelector<HTMLElement>(".detail");
+    const progressFill = figure.querySelector<HTMLElement>("[data-progress-fill]");
+    const progressLabel = figure.querySelector<HTMLElement>("[data-progress-label]");
+    const resetBtn = figure.querySelector<HTMLButtonElement>("[data-reset]");
+    const hint = figure.dataset.hint ?? "";
     const progress = figure.dataset.progress ?? "";
-    const key = `nahpu-day-one-trail:${document.documentElement.lang}`;
-    const visited = readVisited(key);
+    const lang = document.documentElement.lang || "en";
+    const ui = uiForLang(lang);
+    const key = `nahpu-day-one-trail:${lang}`;
+    const visited = readVisited(key, steps.length);
     const buttons = [...figure.querySelectorAll<HTMLButtonElement>(".waypoint")];
+    const stepToggles: HTMLButtonElement[] = [];
 
-    const render = (selected: number | null) => {
+    let selected: number | null = null;
+    let previewed: number | null = null;
+
+    if (resetBtn) resetBtn.textContent = ui.reset;
+
+    const renderDetail = () => {
+      if (!detail) return;
+      const active = previewed ?? selected;
+      if (active === null) {
+        detail.textContent = hint;
+        return;
+      }
+      const title = document.createElement("strong");
+      title.textContent = `${active + 1}. ${titles[active]}`;
+      detail.replaceChildren(title);
+    };
+
+    const render = () => {
+      const total = steps.length;
+      const count = visited.size;
       for (const button of buttons) {
         const index = Number(button.dataset.index);
         button.classList.toggle("visited", visited.has(index));
         button.setAttribute("aria-pressed", String(index === selected));
       }
-      if (selected === null || !detail) return;
-      const title = document.createElement("strong");
-      title.textContent = `${selected + 1}. ${titles[selected]}`;
-      const count = progress
-        .replace("{visited}", String(visited.size))
-        .replace("{total}", String(steps.length));
-      detail.replaceChildren(title, ` · ${count}`);
+      for (const [index, toggle] of stepToggles.entries()) {
+        const isDone = visited.has(index);
+        toggle.setAttribute("aria-pressed", String(isDone));
+        toggle.textContent = isDone ? `✓ ${ui.done}` : ui.markDone;
+      }
+      if (progressFill) {
+        const ratio = total > 0 ? Math.round((count / total) * 100) : 0;
+        progressFill.style.width = `${ratio}%`;
+      }
+      if (progressLabel) {
+        progressLabel.textContent = progress
+          .replace("{visited}", String(count))
+          .replace("{total}", String(total));
+      }
+      if (resetBtn) {
+        resetBtn.hidden = count === 0;
+      }
+      renderDetail();
     };
+
+    for (const [index, step] of steps.entries()) {
+      const wrap = document.createElement("div");
+      wrap.className = "day-one-step-actions";
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "day-one-step-toggle";
+      toggle.setAttribute("aria-pressed", String(visited.has(index)));
+      toggle.addEventListener("click", () => {
+        if (visited.has(index)) {
+          visited.delete(index);
+        } else {
+          visited.add(index);
+          selected = index;
+        }
+        writeVisited(key, visited);
+        render();
+      });
+      wrap.append(toggle);
+      step.append(wrap);
+      stepToggles.push(toggle);
+    }
 
     for (const button of buttons) {
       const index = Number(button.dataset.index);
@@ -288,16 +514,43 @@ const pct = (value: number, total: number) => `${(value / total) * 100}%`;
       }
       button.setAttribute("aria-label", `${index + 1}. ${titles[index]}`);
       button.title = titles[index];
+      button.addEventListener("mouseenter", () => {
+        previewed = index;
+        renderDetail();
+      });
+      button.addEventListener("mouseleave", () => {
+        previewed = null;
+        renderDetail();
+      });
+      button.addEventListener("focus", () => {
+        previewed = index;
+        renderDetail();
+      });
+      button.addEventListener("blur", () => {
+        previewed = null;
+        renderDetail();
+      });
       button.addEventListener("click", () => {
         visited.add(index);
+        selected = index;
+        previewed = null;
         writeVisited(key, visited);
-        render(index);
+        render();
         step.classList.remove("day-one-target");
         void step.offsetWidth;
         step.classList.add("day-one-target");
         step.scrollIntoView({ behavior: smooth, block: "start" });
       });
     }
-    render(null);
+
+    resetBtn?.addEventListener("click", () => {
+      visited.clear();
+      selected = null;
+      previewed = null;
+      writeVisited(key, visited);
+      render();
+    });
+
+    render();
   }
 </script>

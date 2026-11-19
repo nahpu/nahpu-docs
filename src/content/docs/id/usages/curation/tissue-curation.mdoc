@@ -4,15 +4,12 @@ sidebar:
   order: 1
 ---
 
-Kurasi jaringan mencatat tabung ke dalam kotak penyimpanan. Untuk setiap
-tabung yang Anda pindai atau tempatkan, NAHPU menulis kode museum ke
-`Koleksi tetap museum` atau `Pinjaman museum` dan sel kosong berikutnya ke
-`Lokasi penyimpanan`, misalnya `Box 1: D1`. Tabung adalah bagian spesimen dan,
-jika Anda menyertakannya, simbion.
-
-Gunakan alat ini saat tabung dimasukkan ke kotak freezer museum. Pindai setiap
-tabung saat memasukkannya ke kotak, dan catatan akan sesuai dengan isi kotak
-tanpa perlu mengetik.
+Kurasi jaringan mencatat tabung bagian spesimen —dan secara opsional tabung
+simbion— ke dalam kotak penyimpanan. Untuk setiap tabung yang Anda pindai atau
+tempatkan, NAHPU menulis kode museum ke `Koleksi tetap museum` atau
+`Pinjaman museum` dan menetapkan sel kosong berikutnya sebagai
+`Lokasi penyimpanan` (seperti `Box 1: D1`), menjaga catatan basis data selaras
+dengan kotak freezer fisik tanpa mengetik manual.
 
 {% screenshots
    large="app-screenshots/usage/curation-large.webp"
@@ -26,7 +23,7 @@ tanpa perlu mengetik.
 {% pin id="A" label="Sel berikutnya" large=[35.3, 24.2] small=[54.3, 26.7] /%}
 {% pin id="B" label="Pindai" large=[55.4, 24.5] small=[26.8, 73.4] /%}
 {% pin id="C" label="Daftar kerja" large=[83.3, 24.5] small=[72.9, 73.4] /%}
-{% pin id="D" label="Cari dengan ID lapangan" large=[94.8, 32.1] small=[88.9, 80.4] /%}
+{% pin id="D" label="Cari berdasarkan ID lapangan" large=[94.8, 32.1] small=[88.9, 80.4] /%}
 {% pin id="E" label="Kolom pindai" large=[52.2, 38.9] small=[36.2, 86.7] /%}
 {% pin id="F" label="Urungkan" large=[93.3, 46] small=[84.5, 93.1] /%}
 {% pin id="G" label="Pengaturan" large=[54.8, 55.5] small=[50, 16.1] /%}
@@ -38,80 +35,78 @@ tanpa perlu mengetik.
 
 ## Tata letak layar
 
-Layar memiliki empat area:
+Layar memiliki empat area (dengan pemilih mode `Tissue` di atas kotak):
 
 - **Kotak**: kisi kotak yang sedang diisi. Sel terisi menampilkan karakter
-  terakhir ID tabung. Tabung simbion diawali `P`. Sel yang disorot adalah sel
+  terakhir ID tabung (tabung simbion diawali `P`). Sel yang disorot adalah sel
   berikutnya yang akan diisi {% ref id="A" /%}.
-- **Pindai**: kolom untuk memindai atau mengetik kode {% ref id="E" /%}, atau
-  daftar kerja {% ref id="C" /%}.
-- **Pengaturan** {% ref id="G" /%}: tabung yang dicari, kolom yang ditulis, dan
-  pengaturan kotak.
-- **Log** {% ref id="J" /%}: tabung yang dicatat dan dilewati dalam sesi ini.
+- **Pindai**: kolom input kode {% ref id="E" /%} atau `Daftar kerja` {% ref id="C" /%}.
+- **Pengaturan** {% ref id="G" /%}: filter tabung, bidang kurasi tujuan, dan
+  opsi kotak.
+- **Log** {% ref id="J" /%}: tabung yang tercatat dan dilewati dalam sesi ini.
 
-Pemilih `Tissue` di atas kotak menentukan apa yang dikurasi; saat ini tabung
-jaringan adalah satu-satunya mode.
-
-Di ponsel, `Kotak`, `Pengaturan`, dan `Log` berupa tab, dan kolom pindai tetap
-di bagian bawah layar. Di tablet atau desktop, kotak ada di kiri, dan kolom
-pindai ada di kanan di atas tab `Pengaturan` dan `Log`. Pada jendela desktop
-yang lebar, log mendapat kolomnya sendiri.
+Di ponsel, `Kotak`, `Pengaturan`, dan `Log` muncul sebagai tab dengan panel
+pindai menempel di bagian bawah. Di tablet dan desktop, kotak berada di kiri di
+samping panel pindai dan tab `Pengaturan`/`Log`; jendela desktop yang lebar
+menampilkan `Log` pada kolom ketiganya sendiri.
 
 ## Menyiapkan pemeriksaan
 
 Buka `Pengaturan` sebelum pemindaian pertama. NAHPU menyimpan pengaturan ini di
-perangkat, sehingga sesi berikutnya dimulai dari tempat Anda berhenti.
+perangkat sehingga sesi berikutnya dilanjutkan dari tempat Anda berhenti.
 
 ### Cari tabung
 
-Filter ini menentukan tabung mana yang dicocokkan oleh pemindaian dan daftar
-kerja.
+Filter ini menentukan tabung mana yang cocok dengan pemindaian dan muncul di
+daftar kerja:
 
-- `Sertakan simbion`: juga menemukan tabung simbion, berdasarkan ID simbion
+- `Sertakan simbion`: ikut mencocokkan tabung simbion berdasarkan ID simbion
   atau ID lapangan inangnya.
-- `Jenis jaringan`: jenis bagian yang dicocokkan, misalnya Liver. Biarkan
-  `Apa saja` untuk mencocokkan semua jenis. Simbion tidak memiliki jenis
-  bagian, sehingga filter ini tidak pernah mengecualikannya.
-- `Pengawetan`: perlakuan yang dicocokkan, misalnya ETOH.
-- `Kategori simbion`: muncul saat `Sertakan simbion` aktif. Mencocokkan
-  kategori seperti Ectoparasite.
+- `Jenis jaringan`: jenis bagian yang dicocokkan (misalnya `Liver`). Biarkan di
+  `Apa saja` untuk mencocokkan semua jenis. Simbion tidak memiliki jenis bagian,
+  sehingga filter ini tidak pernah mengecualikannya.
+- `Pengawetan`: perlakuan yang dicocokkan (misalnya `ETOH`).
+- `Kategori simbion`: tampil saat `Sertakan simbion` aktif; mencocokkan kategori
+  seperti `Ectosymbiont`.
 
 ### Bidang yang diperbarui
 
 - `Bidang`: `Koleksi tetap museum` atau `Pinjaman museum`.
-- `Nilai`: kode yang ditulis ke setiap tabung, biasanya kode museum.
-  Pemindaian diblokir sampai Anda mengisi nilai.
+- `Nilai`: kode yang ditulis ke setiap tabung yang ditempatkan (biasanya kode
+  museum). Pemindaian dan penempatan diblokir sampai nilai diisi.
 
 ### Kotak
 
-- `Ukuran kotak`: 81 (9×9) atau 100 (10×10) sel.
+- `Ukuran kotak`: `81 (9×9)` atau `100 (10×10)` sel.
 - `Urutan pengisian`: `Baris, kiri ke kanan`, `Kolom, atas ke bawah`, atau
-  `Baris berliku`. Pada urutan berliku, setiap baris berjalan berlawanan arah
-  dengan baris sebelumnya.
-- `Label kotak` dan `Nomor kotak`: menamai kotak di lokasi penyimpanan,
-  misalnya `Box 1`. Gunakan label untuk awalan freezer atau rak, misalnya
-  `F2 Box`.
+  `Baris berliku` (setiap baris berbalik arah dari baris sebelumnya).
+- `Label kotak` dan `Nomor kotak`: menentukan nama kotak di
+  `Lokasi penyimpanan`, seperti `Box 1`. Gunakan `Label kotak` untuk awalan
+  freezer atau rak, seperti `F2 Box`.
 
-Saat kotak penuh, tabung berikutnya masuk ke sel pertama kotak berikutnya.
-Pilih `Kotak berikutnya` atau `Kotak sebelumnya` di bawah kisi untuk berpindah
-kotak sendiri. NAHPU membaca lokasi penyimpanan setiap tabung di proyek,
-sehingga sel yang diisi sebelumnya, baik dengan alat ini maupun diketik di
-formulir bagian, tampil sebagai terisi.
+Saat kotak penuh, tabung berikutnya otomatis berpindah ke sel kosong pertama di
+kotak berikutnya (atau melaporkan konflik jika kotak itu juga sudah penuh).
+Gunakan `Kotak berikutnya` atau `Kotak sebelumnya` di bawah kisi untuk berpindah
+kotak secara manual. NAHPU membaca lokasi penyimpanan di seluruh proyek,
+sehingga sel yang sudah terisi sebelumnya —baik lewat alat ini maupun diketik di
+formulir bagian atau simbion— tampil sebagai terisi.
 
 ### Label dan penimpaan
 
-- `Sesuaikan label sel`: mengubah cara lokasi ditulis:
+- `Sesuaikan label sel`: mengubah format penulisan lokasi penyimpanan:
   - `Penomoran`: `A1, A2, A3…`, `1, 2, 3…`, atau `1-1, 1-2, 1-3…`.
-  - `Pemisah kotak`: teks di antara kotak dan sel.
-  - `Pemisah baris–kolom`: teks di antara baris dan kolom.
+  - `Pemisah kotak`: teks di antara nama kotak dan label sel.
+  - `Pemisah baris–kolom`: teks di antara baris dan kolom (hanya tampil untuk
+    penomoran `1-1, 1-2, 1-3…`).
   - `Isi angka dengan nol`: menulis `A01`, bukan `A1`.
 
-  Contoh di bawah kolom menampilkan hasilnya, misalnya `Box 1 / A01`. Matikan
-  untuk kembali ke format standar `Box 1: A1`. NAHPU menyimpan format kustom
-  Anda untuk penggunaan berikutnya.
-- `Timpa nilai yang ada`: mengizinkan pemindaian mengganti lokasi yang
-  tersimpan atau kode museum yang berbeda. Jika dimatikan, tabung tersebut
-  dilaporkan sebagai konflik dan dibiarkan apa adanya.
+  Pratinjau contoh menampilkan rentang hasilnya (seperti
+  `Box 1 / A01 … Box 1 / I09`). Matikan sakelar untuk kembali ke format standar
+  `Box 1: A1`; NAHPU mengingat pengaturan kustom Anda jika diaktifkan lagi
+  nanti.
+- `Timpa nilai yang ada`: mengizinkan pemindaian mengganti lokasi penyimpanan
+  yang sudah ada atau kode museum yang berbeda. Jika dimatikan, tabung tersebut
+  dilaporkan sebagai konflik dan dibiarkan tidak berubah.
 
 ## Memindai tabung
 
@@ -120,99 +115,110 @@ Gunakan `Pindai` saat tabung datang tanpa urutan tertentu.
 {% steps %}
 
 1. Pilih `Pindai` {% ref id="B" /%} di atas kolom pindai.
-2. Pindai barcode tabung dengan pemindai barcode, atau ketik kodenya lalu
-   tekan Enter. Di ponsel atau tablet, `Pindai dengan kamera` membaca kode
-   dengan kamera perangkat.
-3. Periksa pesan di bawah kolom. Tabung yang tercatat menampilkan lokasi dan
-   nilai barunya, misalnya `AC-T0128 → Box 1: D1 · Museum permanent = EXM`.
-4. Masukkan tabung ke sel yang disebutkan pesan, lalu pindai tabung berikutnya.
+2. Pindai kode batang atau kode QR tabung dengan pemindai keyboard-wedge, atau
+   ketik kodenya lalu tekan Enter. Pada perangkat dengan pemindaian kamera,
+   pilih `Pindai dengan kamera` untuk memindai kode batang dan kode QR secara
+   berkelanjutan.
+3. Periksa pesan umpan balik di bawah kolom. Tabung yang tercatat melaporkan
+   lokasi dan nilai barunya, seperti
+   `AC-T0128 → Box 1: D1 · Museum permanent = EXM`.
+4. Masukkan tabung ke sel yang disebutkan, lalu pindai tabung berikutnya.
 
 {% /steps %}
 
-Secara bawaan, kode dicocokkan dengan ID jaringan atau barcode bagian, atau
-ID simbion jika simbion disertakan. Kecocokan barcode didahulukan daripada
-kecocokan ID jaringan. Saran muncul saat Anda mengetik. Menekan Enter selalu
-memakai teks yang diketik, sehingga kode dari pemindai tidak pernah tertukar
-dengan saran.
+Secara bawaan, kode yang dipindai atau diketik dicocokkan dengan `ID jaringan`
+atau kode batang bagian (atau ID simbion saat `Sertakan simbion` aktif).
+Kecocokan kode batang lebih diutamakan daripada `ID jaringan`. Saran muncul saat
+mengetik, tetapi menekan Enter selalu memakai teks persis yang dimasukkan
+sehingga masukan pemindai tidak pernah tertukar dengan saran. Untuk payload QR
+multibaris atau URL, NAHPU juga memeriksa setiap baris serta segmen jalur dan
+parameter URL.
 
-Aktifkan `Cari berdasarkan ID lapangan` {% ref id="D" /%} jika tabung justru
-dilabeli dengan ID lapangan spesimen:
+Aktifkan `Cari berdasarkan ID lapangan` {% ref id="D" /%} bila tabung dilabeli
+dengan ID lapangan spesimen:
 
-| Yang Anda ketik | Yang dicocokkan |
+| Yang Anda masukkan | Yang dicocokkan |
 | --- | --- |
-| `AC128` | Setiap tabung spesimen AC128, misalnya hati dan ototnya |
+| `AC128` | Semua tabung spesimen AC128 (misalnya hati dan otot) |
 | `AC128 liver etoh` | Hanya tabung AC128 dengan jenis bagian dan perlakuan tersebut |
-| `128` | Setiap spesimen bernomor 128, apa pun prefiksnya |
+| `128` | Semua spesimen bernomor 128, apa pun prefiksnya |
 | ID simbion | Simbion tersebut, saat `Sertakan simbion` aktif |
 
-Jika kode masih cocok dengan lebih dari satu tabung, NAHPU menanyakan tabung
-mana yang Anda pegang. Menutup daftar itu tanpa memilih akan mencatat kode
-sebagai dilewati.
+Jika kode masih cocok dengan beberapa tabung, NAHPU meminta Anda memilih tabung
+yang sedang dipegang; menutup dialog tanpa memilih akan mencatat kode sebagai
+dilewati.
 
-Pesan di bawah kolom melaporkan setiap hasil:
+Pesan umpan balik di bawah kolom melaporkan setiap hasil:
 
 | Hasil | Arti |
 | --- | --- |
 | Tercatat | Tabung ditulis ke sel dan kotak berlanjut. |
-| Tidak ditemukan | Tidak ada tabung yang cocok dengan kode dan filter. Tidak ada sel yang dipakai. |
-| Sudah tercatat | Tabung sudah dicatat sebelumnya dalam sesi ini. |
-| Konflik | Tabung sudah memiliki lokasi atau kode museum lain. Aktifkan `Timpa nilai yang ada` untuk menggantinya. |
-| Dilewati | Pilihan di antara tabung yang cocok dibatalkan. |
+| Tidak ditemukan | Tidak ada tabung yang cocok dengan kode dan filter aktif. Tidak ada sel yang dipakai. |
+| Kecocokan dekat (`Apakah maksud Anda`) | Tidak ada kecocokan persis; chip yang dapat diketuk menawarkan kode serupa tanpa memakai sel hingga Anda memilih salah satunya. |
+| Sudah tercatat | Tabung sudah tercatat sebelumnya dalam sesi ini. |
+| Konflik | Tabung sudah memiliki lokasi penyimpanan atau kode museum lain. Aktifkan `Timpa nilai yang ada` untuk menggantinya. |
+| Dilewati | Dialog pilihan beberapa kecocokan ditutup tanpa memilih tabung. |
 
-`Urungkan` {% ref id="F" /%} membatalkan pencatatan terakhir. Tabung kembali
-ke nilai dan lokasi sebelumnya, dan selnya kosong lagi. Pilih `Urungkan` lagi
+Pilih `Urungkan` {% ref id="F" /%} untuk membatalkan pencatatan terakhir,
+mengembalikan nilai sebelumnya, lokasi sebelumnya, dan tabung apa pun yang
+tergeser, serta mengosongkan selnya kembali. Pilih `Urungkan` berulang kali
 untuk mundur lebih jauh.
 
 ## Mengikuti daftar kerja
 
-Gunakan `Daftar kerja` saat mengisi kotak berdasarkan urutan ID lapangan,
-misalnya semua tabung hati dari satu perjalanan.
+Gunakan `Daftar kerja` saat mengisi kotak sesuai urutan ID lapangan, misalnya
+semua tabung hati dari satu ekspedisi.
 
 {% steps %}
 
 1. Pilih `Daftar kerja` {% ref id="C" /%} di atas kolom pindai.
-2. NAHPU mencantumkan tabung yang belum memiliki lokasi penyimpanan dan cocok
-   dengan filter `Cari tabung`, berdasarkan urutan ID lapangan. Tabung saat
-   ini dan sel tujuannya ditampilkan paling atas.
-3. Pilih `Tempatkan` untuk menulis tabung ke sel berikutnya, atau `Lewati`
-   untuk melewatinya. Tabung yang dilewati tetap ada di daftar dan tampil di
-   `Dilewati` pada log.
-4. Gunakan `Cari daftar kerja` untuk melompat ke tabung berdasarkan ID,
-   barcode, jenis, atau perlakuan.
+2. NAHPU mencantumkan tabung yang belum ditempatkan (tanpa
+   `Lokasi penyimpanan`) yang cocok dengan filter `Cari tabung`, diurutkan
+   menurut ID lapangan. Tabung saat ini, jumlah tersisa, dan sel tujuannya
+   tampil di atas, diikuti daftar tabung berikutnya di bawahnya.
+3. Pilih `Tempatkan` untuk memasukkan tabung ke sel berikutnya, atau `Lewati`
+   untuk melewatinya (tabung yang dilewati tetap berada di daftar kerja dan
+   tampil di bawah `Dilewati` pada log).
+4. Gunakan `Cari daftar kerja` untuk langsung melompat ke tabung berdasarkan ID,
+   kode batang, jenis, atau perlakuan, atau ketuk tabung berikutnya dalam
+   daftar.
 
 {% /steps %}
 
 ## Bekerja dengan kotak
 
-- **Mengubah sel berikutnya**: ketuk sel kosong. Tabung berikutnya masuk ke
-  sana, dan pengisian berlanjut sesuai urutan pengisian dari sel itu.
-- **Melihat sel terisi**: ketuk sel terisi untuk melihat tabungnya
-  {% ref id="H" /%}. `Detail` menampilkan ID, jumlah, dan lokasi penyimpanan
-  tabung, dan `Buka catatan` membuka formulir spesimennya. Sel yang dipakai
-  bersama oleh beberapa tabung, biasanya karena lokasi diketik manual,
-  menampilkan jumlah tabung di dalamnya.
-- **Mengganti sel**: pada sel terisi, pilih `Ganti` {% ref id="I" /%} lalu
+- **Mengubah sel berikutnya**: ketuk sel kosong mana pun. Tabung berikutnya
+  masuk ke sana, dan pengisian berlanjut sesuai urutan pengisian dari sel
+  tersebut.
+- **Memeriksa sel terisi**: ketuk sel terisi untuk membuka pemeriksa sel {% ref id="H" /%}.
+  Pilih `Detail` untuk melihat ID, jumlah, lokasi
+  penyimpanan, dan kode museum tabung, atau `Buka catatan` untuk membuka
+  formulir spesimennya. Sel yang dipakai bersama oleh beberapa tabung (biasanya
+  dari lokasi yang diketik manual) menampilkan peringatan dan jumlah tabungnya.
+- **Mengganti sel**: di pemeriksa sel, pilih `Ganti` {% ref id="I" /%} lalu
   konfirmasi. Tabung berikutnya yang Anda pindai atau tempatkan masuk ke sel
-  itu, dan tabung yang sebelumnya ada di sana kehilangan lokasinya dan kembali
-  ke daftar kerja. `Urungkan` mengembalikannya.
+  tersebut, sementara lokasi penyimpanan tabung yang tergeser dihapus dan
+  dikembalikan ke daftar kerja. `Urungkan` mengembalikannya.
 
 ## Log sesi dan ekspor
 
-Log mencantumkan tabung yang dicatat dalam sesi ini, dari yang terbaru, di
-bawah `Tercatat`, dan tabung yang dilewati di bawah `Dilewati`. Tabung yang
-dilewati keluar dari daftar setelah ditempatkan.
+Log sesi mencantumkan tabung yang dicatat (terbaru lebih dulu) di bawah
+`Tercatat` dan tabung yang dilewati di bawah `Dilewati`. Menempatkan tabung yang
+dilewati akan menghapusnya dari `Dilewati`.
 
-Pilih `Ekspor log` {% ref id="K" /%} untuk menyimpan sesi sebagai CSV, TSV,
-atau Excel. Setiap baris diawali kolom kurasi: `Status`, `Urutan`,
+Pilih `Ekspor log` {% ref id="K" /%} untuk menyimpan sesi sebagai CSV, TSV, atau
+Excel. Baris diekspor sesuai urutan penempatan (tabung yang diperiksa dulu, lalu
+yang dilewati) dan selalu diawali kolom kurasi: `Status`, `Urutan`,
 `ID lapangan`, `ID tabung`, `Jenis`, `Tipe`, `Perlakuan`, `Kolom diperbarui`,
-`Nilai`, `Lokasi`, `Kotak`, `Sel`, `Nilai sebelumnya`, `Lokasi sebelumnya`,
-dan `Diganti`.
+`Nilai`, `Lokasi`, `Kotak`, `Sel`, `Nilai sebelumnya`, `Lokasi sebelumnya`, dan
+`Diganti`.
 
-Di bawah `Kolom`, pilih `Tambah kolom` untuk menambahkan kolom bagian,
-spesimen, dan catatan terkait setelahnya, misalnya nomor katalog atau spesies.
-`Judul kolom tambahan` menamai kolom tersebut dengan `Nama kolom` atau
-`Kunci NAHPU`, misalnya `specimenPart::remark`. NAHPU menyimpan kolom yang
-Anda tambahkan untuk ekspor berikutnya.
+Di bawah `Kolom`, pilih `Tambah kolom` untuk menambahkan kolom bagian, spesimen,
+simbion, atau catatan terkait (misalnya nomor katalog atau spesies); seret untuk
+mengatur ulang atau hapus kolom tambahan. Atur `Judul kolom tambahan` ke
+`Nama kolom` atau `Kunci NAHPU` (seperti `specimenPart::remark`; nama kolom yang
+sama otomatis menggunakan kunci NAHPU-nya). NAHPU mengingat kolom tambahan dan
+gaya judul Anda untuk ekspor berikutnya.
 
-Simpan log yang diekspor bersama inventaris kotak. Log mencatat apa yang
-diubah setiap pemindaian, termasuk nilai sebelumnya yang diganti.
+Simpan log yang diekspor bersama inventaris kotak sebagai jejak audit atas
+setiap perubahan dan nilai yang diganti.

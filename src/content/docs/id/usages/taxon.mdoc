@@ -15,137 +15,172 @@ sidebar:
    small2Alt="Layar Tambah takson NAHPU di ponsel" %}
 {% pin id="A" label="Takson terdaftar" large=[31.8, 28.9] small=[19, 15.9] /%}
 {% pin id="B" label="Kode QR takson" large=[89, 26.1] small=[65.5, 29.6] /%}
-{% pin id="C" label="Edit takson" large=[85.5, 90.9] small=[65.5, 91.9] /%}
+{% pin id="C" label="Sunting takson" large=[85.5, 90.9] small=[65.5, 91.9] /%}
 {% pin id="D" label="Mode manual" large2=[41.5, 14.4] small2=[26.7, 17.1] /%}
 {% pin id="E" label="Mode impor" large2=[58.4, 14.4] small2=[74.3, 17.1] /%}
 {% pin id="F" label="Peringkat takson" large2=[69.4, 27.5] small2=[95.2, 26.9] /%}
 {% pin id="G" label="Tambah takson" large2=[58.4, 91.8] small2=[76.2, 89.4] /%}
 {% /screenshots %}
 
-Anda dapat mendaftarkan takson baru secara manual, mengimpor berkas, atau memindai kode QR takson NAHPU.
+Registri takson dipakai bersama oleh semua proyek dalam basis data NAHPU. Anda
+dapat mendaftarkan takson secara manual, mengimpor lembar sebar atau berkas
+berpembatas, atau memindai kode QR takson NAHPU.
 
-Mengimpor takson menambahkan data ke registri. Tindakan ini tidak menambahkan
-grup katalog spesimen baru ke aplikasi. Kontributor yang menambahkan grup baru
-sebaiknya mengikuti [Menambahkan grup takson (bahasa Inggris)](/en/contributing/code/adding-a-taxon-group/).
+Mengimpor takson hanya menambahkan entri ke registri; tindakan ini tidak
+menambahkan format katalog spesimen baru. Kontributor yang menambahkan kelompok
+takson baru dapat mengikuti
+[Menambahkan kelompok takson](../../contributing/code/adding-a-taxon-group).
 
 ## Mendaftarkan takson baru
 
-Sebuah entri registri tidak harus berupa spesies. `Peringkat takson` menetapkan
-tingkat takson yang diwakili catatan tersebut, dan formulir akan menampilkan
-kolom nama sampai tingkat itu:
-
-- **Kelas**
-- **Ordo**
-- **Famili**
-- **Genus**
-- **Spesies**
-- **Subspesies**
-
-Memilih `Famili`, misalnya, menampilkan Kerajaan, Filum, Kelas, Ordo, dan
-Famili, serta tidak menampilkan tingkat di bawahnya. Dengan begitu Anda dapat
-mendaftarkan takson yang belum teridentifikasi sampai spesies, hal yang lazim
-pada material yang masih menunggu determinasi.
+Entri registri tidak harus berupa spesies. `Peringkat takson` {% ref id="F" /%}
+menentukan peringkat yang diwakili catatan (`Kelas`, `Ordo`, `Famili`, `Genus`,
+`Spesies`, atau `Subspesies`), dan formulir menampilkan bidang nama sampai
+peringkat tersebut. Misalnya, memilih `Famili` akan menampilkan `Kerajaan`,
+`Filum`, `Kelas`, `Ordo`, dan `Famili` tanpa peringkat di bawahnya—berguna
+untuk spesimen yang belum teridentifikasi hingga tingkat spesies.
 
 ### Kolom wajib
 
-- **Peringkat takson**: tingkat takson yang diwakili catatan ini.
-- **Kolom nama untuk tingkat tersebut**: `Famili` untuk catatan tingkat famili,
-  `Epitet spesifik` untuk spesies, `Epitet subspesifik` untuk subspesies, dan
-  seterusnya. Aplikasi tidak akan menyimpan catatan sebelum keduanya diisi.
+- **`Peringkat takson`**: peringkat yang diwakili catatan ini.
+- **Nama peringkat target**: bidang yang sesuai peringkat tersebut (`Famili`
+  untuk catatan tingkat famili, `Epitet spesifik` untuk spesies, `Epitet
+  subspesifik` untuk subspesies, dan seterusnya). NAHPU tidak menyimpan sebelum
+  keduanya terisi.
 
 ### Kolom klasifikasi
 
-- **Kerajaan** dan **Filum**: selalu tersedia, apa pun tingkatnya.
-- **Kelas**, **Ordo**, **Famili**, **Genus**, **Epitet spesifik**, dan
-  **Epitet subspesifik**: muncul bila tingkat yang dipilih mencapainya. Epitet
+- **`Kerajaan`** dan **`Filum`**: selalu tersedia untuk peringkat apa pun.
+- **`Kelas`**, **`Ordo`**, **`Famili`**, **`Genus`**, **`Epitet spesifik`**,
+  dan **`Epitet subspesifik`**: tampil sampai peringkat yang dipilih. Epitet
   disimpan dalam huruf kecil.
 
 ### Detail tambahan
 
-- **Penulis**: pengarang takson dan tahun publikasinya.
-- **Nama umum**: nama umum takson.
-- **Kategori Daftar Merah IUCN**: status takson pada Daftar Merah IUCN.
-- **Status CITES**: status CITES takson.
-- **Status konservasi negara**: status konservasi takson di suatu negara.
-- **Urutan penyortiran**: urutan bebas untuk menyortir takson. Umumnya dipakai saat mengekspor catatan. Misalnya, Anda dapat memakai urutan filogenetik.
-- **Catatan**: informasi tambahan apa pun tentang takson.
+| Bidang | Tampil | Catatan |
+| --- | --- | --- |
+| `Penulis` | Selalu | Penulis takson dan tahun publikasi. |
+| `Nama umum` | Selalu | Nama lokal atau nama umum. |
+| `Kategori Daftar Merah IUCN` | Setelah `Tampilkan lebih banyak` | Status Daftar Merah IUCN. |
+| `Status CITES` | Setelah `Tampilkan lebih banyak` | Status lampiran CITES. |
+| `Status konservasi negara` | Setelah `Tampilkan lebih banyak` | Status konservasi nasional. |
+| `Urutan penyortiran` | Setelah `Tampilkan lebih banyak` | Urutan angka opsional untuk ekspor (misalnya urutan filogenetik). |
+| `Catatan` | Setelah `Tampilkan lebih banyak` | Catatan tambahan tentang takson. |
+
+Bidang di balik `Tampilkan lebih banyak` langsung terlihat bila sudah memiliki
+nilai.
 
 ### Pendaftaran manual
 
-1. Buka dasbor proyek.
-2. Pada panel takson, pilih `Tambah takson` {% ref id="G" /%} lalu pilih mode `Manual` {% ref id="D" /%}.
-3. Pilih `Peringkat takson` {% ref id="F" /%}.
-4. Isi informasi takson.
+{% steps %}
+
+1. Di dasbor proyek, pilih `Tambah takson` {% ref id="G" /%} pada panel
+   `Registri takson`, lalu pilih `Manual` {% ref id="D" /%}.
+2. Pilih `Peringkat takson` {% ref id="F" /%}.
+3. Isi klasifikasi dan detail opsional, lalu pilih `Tambah`.
+
+{% /steps %}
 
 ### Impor dari berkas {% #import-from-file %}
 
-1. Siapkan berkas impor Anda. Format yang disarankan adalah `.xlsx`, `.csv`, dan `.tsv`.
-2. Buka dasbor proyek.
-3. Pada panel takson, pilih `Tambah takson` lalu pilih mode `Impor` {% ref id="E" /%}.
-4. Gunakan tombol `Pilih berkas` untuk menambahkan berkas. Aplikasi akan memetakan kolom ke kolom yang sesuai secara otomatis. Pada layar sempit, gunakan tab `Penyiapan` dan `Pratinjau` untuk mengatur impor dan meninjau baris yang terdeteksi.
+{% steps %}
 
-Perilaku pemisah:
+1. Siapkan berkas berformat `.xlsx`, `.csv`, atau `.tsv`.
+2. Pada panel `Registri takson` di dasbor, pilih `Tambah takson` lalu pindah ke
+   `Impor` {% ref id="E" /%}.
+3. Pilih `Pilih berkas`. NAHPU memetakan tajuk kolom yang dikenali secara
+   otomatis. Di layar sempit, beralihlah antara tab `Penyiapan` dan `Pratinjau`
+   untuk menyesuaikan pemetaan dan memeriksa baris.
+4. Pilih `Tinjau takson`, periksa pratinjau, pilih entri yang ingin disimpan,
+   lalu konfirmasi impor. Takson yang sudah terdaftar dinonaktifkan dan tidak
+   pernah ditimpa.
 
-- `.csv` memakai koma, `.tsv` memakai tab, dan berkas Excel dibaca sebagai lembar kerja.
+{% /steps %}
+
+**Pembatas dan pemulihan galat:**
+
+- `.csv` memakai koma, `.tsv` memakai tab, dan `.xlsx` dibaca sebagai lembar
+  sebar.
 - Untuk ekstensi lain, NAHPU mencoba Excel, lalu koma, tab, dan titik koma.
-- Bila cara itu gagal, masukkan pemisah khusus pada penggantian pengurai lanjutan.
-
-Kolom yang dikenali, sesuai namanya pada menu pilihan setiap kolom: `Taxon rank`,
-`Kingdom`, `Phylum`, `Class`, `Order`, `Family`, `Genus`, `Specific epithet`,
-`Subspecific epithet`, `Authors`, `Common name`, `IUCN Category`,
-`CITES status`, `Country status`, `Sorting order`, dan `Notes`. Pencocokan tajuk
-bersifat lentur, sehingga alias seperti `taxonClass`, `specificEpithet`, `epithet`,
-`infraspecificEpithet`, `vernacularName`, `iucnStatus`, dan `appendixStatus`
-juga diterima. Kolom yang tidak dikenali dibiarkan tanpa pemetaan; tetapkan
-melalui menu pilihan di atas setiap kolom, atau biarkan sebagai `Ignore`.
-
-Nilai tingkat takson adalah `class`, `order`, `family`, `genus`, `species`, dan
-`subspecies`. Kebutuhan setiap baris bergantung pada ada tidaknya tingkat takson
-dalam berkas:
-
-| Kasus | Kolom wajib | Yang diisi NAHPU |
-| --- | --- | --- |
-| Tidak ada kolom `Taxon rank` | `Order`, `Family`, `Genus`, `Specific epithet`, dan kelas (dipetakan, atau dipilih di `Pilih kelas yang sama untuk semua baris`) | Tingkat takson: spesies, atau subspesies jika epitet subspesifik tersedia |
-| Kelas yang dikenali, dengan atau tanpa tingkat takson | Semua kolom klasifikasi dari kelas sampai tingkat takson baris tersebut | Kerajaan dan filum yang kosong |
-| Kelas lain | `Taxon rank`, `Kingdom`, `Phylum`, `Class`, dan semua kolom klasifikasi sampai tingkat takson | Tidak ada |
-
-Baris subspesies, misalnya, memerlukan kelas, ordo, famili, genus, epitet
-spesifik, dan epitet subspesifik. Berkas yang berisi lebih dari satu kelas
-memerlukan kolom `Class`. Kelas yang dikenali adalah Mammalia, Aves, Reptilia,
-Amphibia, Osteichthyes, Chondrichthyes, Agnatha, Insecta, Arachnida, Chilopoda,
-Diplopoda, Gastropoda, Bivalvia, dan Cephalopoda. Nilai kerajaan dan filum yang
-disediakan selalu dipertahankan.
+- Penggantian pembatas dan detail pembacaan berada di `Opsi lanjutan` (otomatis
+  terbuka saat terjadi galat pembacaan), termasuk pembatas khusus.
 
 {% aside type="note" %}
 
-Dukungan terbaik adalah `.xlsx`. Format Excel yang lebih lama atau berbeda dapat gagal. Bila perlu, simpan ulang sebagai `.xlsx`, `.csv`, atau `.tsv`.
+Dukungan terbaik adalah `.xlsx`; format Excel lama dapat gagal dibaca. Simpan
+ulang sebagai `.xlsx`, `.csv`, atau `.tsv` bila perlu.
 
 {% /aside %}
 
-Kontrol pemisah dan detail penguraian berada di `Opsi lanjutan`, yang terbuka otomatis setelah kesalahan penguraian. Pilih `Tinjau takson`, periksa pratinjau, lalu impor takson yang dipilih. Takson yang sudah terdaftar dinonaktifkan dan tidak pernah ditimpa.
+**Kolom yang dikenali:** `Taxon rank`, `Kingdom`, `Phylum`, `Class`, `Order`,
+`Family`, `Genus`, `Specific epithet`, `Subspecific epithet`, `Authors`,
+`Common name`, `IUCN Category`, `CITES status`, `Country status`,
+`Sorting order`, dan `Notes`. Alias umum seperti `taxonClass`,
+`specificEpithet`, `epithet`, `infraspecificEpithet`, `vernacularName`,
+`iucnStatus`, dan `appendixStatus` juga dicocokkan otomatis. Kolom tak dikenal
+berstatus `Abaikan` dan dapat dipetakan lewat menu tarik-turunnya.
+
+Nilai peringkat yang valid adalah `class`, `order`, `family`, `genus`,
+`species`, dan `subspecies`. Kolom wajib bergantung pada keberadaan kolom
+peringkat dan kelas yang dikenali:
+
+| Kasus | Kolom wajib | Yang diisi otomatis oleh NAHPU |
+| --- | --- | --- |
+| Tanpa kolom peringkat | `Ordo`, `Famili`, `Genus`, `Epitet spesifik`, dan kelas (dipetakan atau dipilih pada `Pilih kelas yang sama untuk semua baris`) | Peringkat (`species`, atau `subspecies` bila `Epitet subspesifik` terisi) |
+| Kelas yang dikenali, dengan atau tanpa peringkat | Semua kolom klasifikasi dari `Kelas` hingga peringkat baris tersebut | `Kerajaan` dan `Filum` yang kosong |
+| Kelas lainnya | `Peringkat takson`, `Kerajaan`, `Filum`, `Kelas`, dan semua kolom klasifikasi hingga peringkatnya | Tidak ada |
+
+Berkas dengan lebih dari satu kelas harus memiliki kolom `Class`. Nilai
+kerajaan dan filum yang sudah terisi selalu dipertahankan. Ke-14 kelas yang
+dikenali adalah `Mammalia`, `Aves`, `Reptilia`, `Amphibia`, `Osteichthyes`,
+`Chondrichthyes`, `Agnatha`, `Insecta`, `Arachnida`, `Chilopoda`, `Diplopoda`,
+`Gastropoda`, `Bivalvia`, dan `Cephalopoda`.
 
 ### Impor dari QR {% #import-from-qr %}
 
-1. Buka takson di `Registri takson`, lalu pilih kode QR-nya {% ref id="B" /%} untuk ditampilkan dan dibagikan.
-2. Pada perangkat penerima, pilih `Tambah takson` → `Impor` → `Pindai QR`.
-3. Pilih `Takson tunggal` untuk membuka pratinjau setelah pemindaian valid pertama, atau `Banyak takson` untuk terus memindai. Pemindai beberapa takson menampilkan hasil terakhir dan jumlah takson yang siap diimpor; pilih `Selesai` untuk meninjaunya.
-4. Periksa pratinjau, pilih takson yang ingin disimpan, lalu konfirmasi dengan tombol impor. Tidak ada data yang disimpan sebelum konfirmasi.
+{% steps %}
 
-Setiap takson berbeda hanya dimasukkan sekali. Takson yang sudah terdaftar tidak dapat dipilih dan tidak pernah ditimpa. Kode tidak valid atau tidak terkait menampilkan pesan kesalahan tanpa menutup kamera. Pembatalan mempertahankan impor sebelumnya; menyelesaikan sesi QR menggantikan impor berkas atau QR yang tertunda.
+1. Di perangkat sumber, buka `Kelola takson` (lewat `Registri takson` >
+   `Kelola` atau `Pengaturan` > `Basis data` > `Takson`), buka satu takson,
+   lalu ketuk kode QR-nya {% ref id="B" /%}.
+2. Di perangkat penerima, pilih `Tambah takson` > `Impor` > `Pindai QR`.
+3. Pilih `Takson tunggal` untuk langsung membuka pratinjau setelah pemindaian
+   valid pertama, atau `Banyak takson` untuk memindai banyak sekaligus lalu
+   pilih `Selesai` saat siap meninjau.
+4. Periksa pratinjau, pilih takson yang ingin disimpan, lalu konfirmasi impor.
+   Tidak ada data yang disimpan sebelum dikonfirmasi.
 
-Impor QR mempertahankan klasifikasi, pengarang, nama umum, dan status konservasi yang dibawa kode. Tingkat takson yang didukung dan namanya sudah cukup; klasifikasi yang lebih tinggi boleh kosong. Untuk kode lama tanpa tingkat takson, NAHPU menggunakan kolom nama paling spesifik yang terisi. Impor QR tidak memerlukan pemetaan kolom atau pemilihan kelas. Kode QR takson tidak membawa urutan penyortiran maupun catatan.
+{% /steps %}
 
-Pemindaian menggunakan kamera pada Android, iOS, macOS, dan peramban web yang mendukungnya. Jika akses kamera ditolak, izinkan melalui pengaturan perangkat lalu coba lagi. Berkas gambar QR dan teks yang ditempel tidak didukung; gunakan impor berkas jika pemindaian kamera tidak tersedia.
+- Setiap takson berbeda masuk antrean sekali; takson yang sudah terdaftar tidak
+  dapat dipilih dan tidak pernah ditimpa. Kode yang tidak valid menampilkan
+  pesan galat sambil menjaga kamera tetap terbuka.
+- Membatalkan tidak mengubah impor tertunda sebelumnya; menyelesaikan sesi QR
+  menggantikan pratinjau berkas atau QR yang tertunda.
+- Kode QR membawa klasifikasi, penulis, nama umum, dan status konservasi
+  (urutan penyortiran dan catatan tidak disertakan). Peringkat yang didukung
+  beserta namanya sudah cukup; untuk kode lama tanpa peringkat, NAHPU memakai
+  peringkat terdalam yang terisi.
+- Pemindaian kamera bekerja di Android, iOS, macOS, dan peramban web yang
+  didukung. Bila akses kamera ditolak, aktifkan di pengaturan perangkat lalu
+  coba lagi. Berkas gambar QR dan tempelan teks tidak didukung—gunakan impor
+  berkas saat kamera tidak tersedia.
 
 ## Mengedit takson
 
-1. Buka dasbor proyek.
-2. Pada panel takson, pilih `Kelola` {% ref id="A" /%} untuk membuka `Kelola takson`.
-3. Buka takson tersebut lalu ketuk/klik `Sunting takson` {% ref id="C" /%}.
+{% steps %}
+
+1. Buka `Kelola takson` dari `Registri takson` > `Kelola` {% ref id="A" /%} di
+   dasbor proyek (atau dari `Pengaturan` > `Basis data` > `Takson`).
+2. Cari di semua bidang atau saring menurut kategori bidang tertentu lewat
+   tombol penyaring pada bilah pencarian.
+3. Buka takson lalu pilih `Sunting takson` {% ref id="C" /%}.
+
+{% /steps %}
 
 ## Menghapus takson
 
-Di `Kelola takson`, pilih takson yang ingin dihapus lalu hapus. Takson yang
-dipakai oleh spesimen mana pun dilindungi: NAHPU menghapus takson lainnya dan
-melaporkan berapa banyak yang tidak dapat dihapus. Ubah dahulu takson pada
-spesimen tersebut jika takson itu memang harus dihapus.
+Di `Kelola takson`, pilih `Pilih`, centang takson yang ingin dihapus, lalu
+konfirmasi. Takson yang dipakai oleh spesimen mana pun dilindungi dan tidak
+dapat dipilih (ditandai ikon sedang dipakai). Ganti dulu takson spesimen
+tersebut jika entri itu harus dihapus.

@@ -411,6 +411,7 @@ export default defineConfig({
                   ],
                 },
                 { slug: "usages/specimens/parts" },
+                { slug: "usages/specimens/symbionts" },
                 { slug: "usages/specimens/associated-data-and-media" },
                 { slug: "usages/specimens/managing-records" },
               ],

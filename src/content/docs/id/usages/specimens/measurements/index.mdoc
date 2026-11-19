@@ -5,32 +5,39 @@ sidebar:
   order: 0
 ---
 
-Format katalog yang dipilih di `Pengaturan` menentukan formulir pengukuran yang ditampilkan spesimen. Setiap kelompok takson memiliki halamannya sendiri:
+Format katalog yang dipilih di `Pengaturan` > `Katalog` > `Format` menentukan
+formulir pengukuran yang digunakan spesimen baru. Satu proyek tetap dapat
+menyimpan spesimen dari lebih dari satu kelompok takson.
 
 | Format katalog | Kelompok takson | Halaman pengukuran |
 | --- | --- | --- |
-| Mamalogi | Mamalia | [Mamalia](/id/usages/specimens/measurements/mammals/) |
-| Ornitologi | Burung | [Burung](/id/usages/specimens/measurements/birds/) |
-| Herpetologi (beta) | Herpetofauna | [Herpetofauna](/id/usages/specimens/measurements/herpetofauna/) |
-| Zoologi invertebrata (beta) | Invertebrata | [Invertebrata](/id/usages/specimens/measurements/invertebrates/) |
-| Iktiologi (beta) | Ikan | [Ikan](/id/usages/specimens/measurements/fishes/) |
-| Paleontologi (dalam pengembangan, belum ada di rilis saat ini) | Fosil | [Paleontologi](/id/usages/specimens/measurements/paleontology/) |
+| `Mamalogi` | Mamalia | [Mamalia](/id/usages/specimens/measurements/mammals/) |
+| `Ornitologi` | Burung | [Burung](/id/usages/specimens/measurements/birds/) |
+| `Herpetologi` (beta) | Herpetofauna | [Herpetofauna](/id/usages/specimens/measurements/herpetofauna/) |
+| `Zoologi invertebrata` (beta) | Invertebrata | [Invertebrata](/id/usages/specimens/measurements/invertebrates/) |
+| `Iktiologi` (beta) | Ikan | [Ikan](/id/usages/specimens/measurements/fishes/) |
+| `Paleontology` (dalam pengembangan, belum ada di rilis saat ini) | Fosil | [Paleontologi](/id/usages/specimens/measurements/paleontology/) |
 
 Katalog mamalia juga dapat menampilkan kolom kelelawar; lihat
 [Mamalia](/id/usages/specimens/measurements/mammals/#bat-fields).
 
-Kolom berat mendukung `g`, `kg`, dan `lbs`, dengan bawaan `g`. Mengganti
-satuan hanya mengubah labelnya; angka yang dimasukkan tidak dikonversi.
-(Ringkasan lot ikan memang mengonversi berat setiap individu ke satuan lot.)
+## Kolom bersama {% #shared-fields %}
 
-Jenis kelamin adalah kosakata terkontrol terbatas yang dipakai bersama oleh
-semua kelompok takson. `Male`, `Female`, dan `Unknown` selalu tersedia. Untuk
-menawarkan juga `Gynandromorph`, `Hermaphrodite`, `Female?`, atau `Male?`, buka
-`Pengaturan` > `Spesimen` dan pilih `+` di samping opsi tersebut. Tanda tanya
-mencatat bahwa pemeriksa tidak yakin.
+Kolom-kolom berikut bekerja dengan cara yang sama di semua formulir pengukuran:
 
-`Tahap hidup` juga dipakai bersama oleh semua kelompok takson dan menggantikan
-kolom umur numerik yang lama. Ini adalah kosakata terkontrol yang dapat
-disunting: nilai bawaannya adalah `Egg`, `Larva`, `Nymph`, `Pupa`, `Neonate`,
-`Juvenile`, `Subadult`, `Adult`, `Metamorph`, dan `Unknown`, dan daftarnya
-diatur di `Pengaturan` > `Spesimen` > `Tahap hidup`.
+- **Satuan berat**: kolom berat mendukung `g`, `kg`, dan `lbs`, dengan bawaan
+  `g`. Mengubah satuan hanya mengubah labelnya dan tidak mengonversi angka yang
+  dimasukkan. Pada lot ikan, mengubah satuan lot juga memperbarui satuan pada
+  individu di dalamnya, dan `Ringkasan lot` mengonversi berat individu ke satuan
+  lot.
+- **`Jenis kelamin`**: kosakata terkontrol terbatas yang dipakai bersama oleh
+  semua kelompok takson. `Male`, `Female`, dan `Unknown` selalu tersedia. Untuk
+  mengaktifkan `Gynandromorph`, `Hermaphrodite`, `Female?`, atau `Male?` (tanda
+  tanya mencatat ketidakpastian pemeriksa), buka `Pengaturan` > `Spesimen` lalu
+  pilih `+` di samping opsi tersebut. Opsi yang ditambahkan hanya dapat dihapus
+  jika tidak ada spesimen yang memakainya.
+- **`Tahap hidup`**: kosakata terkontrol yang dapat disunting dan dipakai
+  bersama oleh semua kelompok takson yang telah dirilis, menggantikan kolom umur
+  numerik lama. Nilai bawaannya adalah `Egg`, `Larva`, `Nymph`, `Pupa`,
+  `Neonate`, `Juvenile`, `Subadult`, `Adult`, `Metamorph`, dan `Unknown`. Atur
+  pilihannya di `Pengaturan` > `Spesimen` > `Tahap hidup`.

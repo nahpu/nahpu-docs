@@ -13,253 +13,199 @@ sidebar:
    small2Alt="Tela Dados ambientais do NAHPU em um celular" %}
 {% pin id="A" label="Criar evento" large=[96, 10.4] small=[80.5, 12.3] /%}
 {% pin id="B" label="ID do evento" large=[11.8, 19.2] small=[48.8, 24.1] /%}
-{% pin id="C" label="ID da localidade" large=[16.5, 39] small=[20.2, 40.5] /%}
+{% pin id="C" label="ID do local" large=[16.5, 39] small=[20.2, 40.5] /%}
 {% pin id="D" label="Datas e horários" large=[19, 45.7] small=[23.8, 46.6] /%}
 {% pin id="E" label="Atividade principal" large=[65, 27.6] small=[32.1, 81.6] /%}
 {% pin id="F" label="Adicionar método de coleta" large=[37.8, 87.1] small2=[69, 16.1] /%}
-{% pin id="G" label="Adicionar equipe" large=[84, 89.3] small2=[12.4, 57.9] /%}
+{% pin id="G" label="Adicionar membro da equipe" large=[84, 89.3] small2=[12.4, 57.9] /%}
 {% pin id="H" label="Dados ambientais" large=[80.5, 63.8] small2=[23.8, 64.5] /%}
 {% /screenshots %}
 
-Os eventos de coleta ajudam você a acompanhar a atividade, os métodos de
-coleta, o pessoal, os dados ambientais e os dados astronômicos de um período de trabalho
-em um local. Os registros de espécimes se vinculam a um evento de coleta, e não
-diretamente a um local, de modo que o evento é a ponte entre o espécime e o
-contexto de local, coordenada, método e coletor.
+Eventos de coleta registram atividade, métodos de coleta, equipe, condições
+ambientais, astronomia e mídias de um período de trabalho em um local. Os
+espécimes vinculam-se a um evento de coleta, e não diretamente a um local, de
+modo que o evento conecta cada espécime ao local, à coordenada, ao método e ao
+coletor.
 
 ## Configurando eventos
 
-A lista padrão do NAHPU para `Atividades principais` é `Collecting`,
-`Recording` e `Observing`. `Other` foi deliberadamente deixado de fora, mas
-você pode adicioná-lo, assim como qualquer atividade específica do seu
-protocolo. Os valores de atividade já existentes continuam disponíveis mesmo
-quando não estão na lista configurada.
+Configure os vocabulários controlados de eventos e os campos ambientais
+visíveis antes de ir a campo em `Configurações` > `Eventos`:
 
 {% steps %}
 
-1. Vá para o painel.
-2. Toque ou clique no menu hambúrguer no canto superior esquerdo.
-3. Selecione `Configurações`.
-4. Selecione `Eventos`.
-5. Edite as atividades principais, os métodos de coleta e as funções do pessoal
-   conforme o seu cenário de campo.
-6. Em `Campos de dados ambientais`, selecione os campos internos que devem
-   aparecer no formulário do evento. Os padrões são temperatura ambiente,
-   umidade ambiente, nebulosidade, precipitação e notas.
+1. Abra `Configurações` pelo menu da tela inicial, pelo menu do
+   `Painel do projeto` ou pela barra `Ferramentas`.
+2. Selecione `Eventos`.
+3. Personalize os vocabulários controlados de `Atividades principais`,
+   `Métodos de coleta` e `Funções da equipe`.
+4. Em `Campos de dados ambientais`, ative os campos nativos que devem aparecer
+   nos formulários (padrão: `Temperatura ambiente`, `Umidade ambiente`,
+   `Cobertura de nuvens`, `Precipitação` e `Notas`).
 
 {% /steps %}
 
+**Vocabulários controlados padrão:**
+
+- **`Atividades principais`**: `Collecting`, `Recording` e `Observing`. `Other`
+  é omitido por padrão, mas você pode adicioná-lo ou incluir qualquer atividade
+  do seu protocolo. Valores já salvos continuam selecionáveis mesmo se forem
+  removidos do vocabulário controlado.
+- **`Métodos de coleta`**: `Hands`, `Mist net`, `Sweep net`, `Snap trap`,
+  `Cage trap`, `Pitfall`, `Malaise trap`, `Light trap`, `Beating sheet`,
+  `Aspirator`, `Local snare`, `Pellet gun` e `Other`.
+- **`Funções da equipe`**: `Leader` e `Helper` (adicione funções como
+  motorista, anotador ou observador conforme necessário).
+
 ## Gerenciando eventos de coleta
 
-Abra um evento e use o menu de três pontos para gerenciar o registro.
+Abra um evento e use seu menu de três pontos para gerenciar registros:
 
 | Ação | O que faz |
 | --- | --- |
 | `Criar evento` | Adiciona um novo evento. |
-| `Duplicar evento` | Copia o local, os horários, a atividade, as notas, o sufixo do ID, os métodos de coleta e o pessoal. As datas avançam um dia, e o novo evento recebe um registro de dados ambientais vazio. |
-| `Ordenar registros` | Escolhe o campo e a direção da lista de eventos. |
-| `Mostrar QR` | Exibe o evento para outro dispositivo ler. |
-| `Exportar evento` | Salva o evento e os dados relacionados em JSON ou, quando ele tem mídia, em um arquivo ZIP ou TAR.GZ. |
-| `Ler QR` | Cria ou substitui um evento a partir de um código QR de evento. Disponível em dispositivos com leitor pela câmera (Android, iOS, macOS e web). |
-| `Importar evento` | Cria ou substitui um evento a partir de um arquivo JSON ou arquivo compactado exportado. |
-| `Excluir registro` | Exclui o evento com seus métodos de coleta, pessoal do evento, dados ambientais e mídia, e desvincula seus dados associados. Um espécime que usa o evento precisa ser movido ou excluído antes. |
-| `Excluir todos os registros` | Faz o mesmo para todos os eventos do projeto. |
+| `Duplicar evento` | Copia local, horários, atividade, notas, sufixo de ID, métodos de coleta e equipe; avança `Data de início` e `Data de término` em um dia e cria um registro ambiental vazio. |
+| `Ordenar registros` | Escolhe o campo e a direção de ordenação da lista de eventos. |
+| `Mostrar QR` | Exibe o evento como código QR para leitura em outro dispositivo. |
+| `Exportar evento` | Salva o evento em JSON, ou em arquivo ZIP ou TAR.GZ quando inclui mídias. |
+| `Ler QR` | Cria ou substitui um evento a partir de um código QR de evento (Android, iOS, macOS e web). |
+| `Importar evento` | Cria ou substitui um evento a partir de um arquivo JSON ou compactado exportado. |
+| `Excluir registro` | Exclui o evento com seus métodos de coleta, equipe, dados ambientais e mídias, desvinculando dados associados. Bloqueado enquanto algum espécime o referenciar. |
+| `Excluir todos os registros` | Exclui todos os eventos do projeto depois que os espécimes que os referenciam forem movidos ou excluídos. |
 
-Ao importar um evento, escolha se ele cria um novo evento ou atualiza um
-existente e, em seguida, confirme o local e o pessoal referenciados.
-
-Os métodos de coleta padrão são `Hands`, `Mist net`, `Sweep net`,
-`Snap trap`, `Cage trap`, `Pitfall`, `Malaise trap`, `Light trap`,
-`Beating sheet`, `Aspirator`, `Local snare`, `Pellet gun` e `Other`. As
-funções padrão do pessoal são `Leader` e `Helper`. Adicione valores adequados
-ao seu protocolo, como armadilha de harpa, levantamento por encontro visual,
-motorista, anotador ou observador.
+Ao importar um evento, escolha criar um novo evento ou atualizar um existente e
+confirme em seguida o local e a equipe vinculados.
 
 ## Criando um novo evento
 
 {% steps %}
-1. Vá para a página de eventos usando a barra de navegação inferior.
 
-2. Use o ícone de adicionar {% ref id="A" /%} no canto superior direito para criar um novo evento.
-
-    Você também pode usar o menu de três pontos e tocar em `Criar evento`.
+1. Abra a página `Eventos` na barra de navegação.
+2. Selecione o ícone de adicionar {% ref id="A" /%} no canto superior direito
+   (ou abra o menu de três pontos e escolha `Criar evento`).
 
     {% aside type="tip" %}
 
-    Você pode reduzir a digitação repetida duplicando um evento. Toque ou clique
-    no menu de três pontos e escolha `Duplicar evento`. O NAHPU copia o local,
-    os horários, a atividade, as notas, os métodos de coleta e o pessoal, avança
-    a `Data de início` {% ref id="D" /%} e a `Data de término` em um dia e cria
-    um novo registro de dados ambientais vazio.
+    Para dias consecutivos no mesmo local, abra o menu de três pontos e escolha
+    `Duplicar evento`. O NAHPU copia local, horários, atividade, notas, métodos
+    e equipe, avança as datas em um dia e inicia um registro ambiental vazio.
 
     {% /aside %}
 
-3. Selecione o `ID do local` {% ref id="C" /%}.
-
-4. Adicione a `Data de início` e a `Data de término`. Não é possível escolher
-   datas futuras.
-
-    O `ID do evento` {% ref id="B" /%} é gerado a partir de `{Site ID}-{Start Date}`.
-
-5. Edite o `ID do evento` (opcional).
-
-    Se você tiver vários eventos com o mesmo `ID do local` e a mesma `Data de
-    início`, adicione um sufixo ao ID. Isso é útil quando você separa o trabalho
-    diurno e noturno, executa várias atividades no mesmo local ou precisa
-    distinguir eventos repetidos na mesma data.
-
-6. Adicione a `Hora de início` e a `Hora de término`.
-
-7. Adicione a `Atividade principal` {% ref id="E" /%}.
-
-    Os padrões são `Collecting`, `Recording` e `Observing`. `Other` não é um
-    padrão; adicione-o em `Configurações` > `Eventos` se o seu protocolo
-    precisar dele. Em muitos fluxos com espécimes isso será `Collecting`, mas
-    crie eventos separados quando atividades diferentes precisarem dos próprios
-    métodos de coleta, pessoal ou contexto ambiental.
+3. Selecione `ID do local` {% ref id="C" /%}.
+4. Informe `Data de início` e `Data de término` {% ref id="D" /%} (datas
+   futuras não podem ser escolhidas). O NAHPU gera o `ID do evento` {% ref id="B" /%}
+   como `{ID do local}-{Data de início}`.
+5. Opcionalmente toque no ícone de edição ao lado de `ID do evento` para
+   incluir um sufixo de ID quando vários eventos compartilham o mesmo local e a
+   mesma data de início (por exemplo, sessões diurnas e noturnas).
+6. Informe `Hora de início` e `Hora de término`.
+7. Escolha `Atividade principal` {% ref id="E" /%} e adicione `Notas` sobre a
+   atividade, se necessário.
 
 {% /steps %}
 
 ## Detalhes do evento
 
-O cartão `Identidade do evento` armazena a identidade e os horários principais
-do evento:
+`Identidade do evento` armazena `ID do evento`, `ID do local`,
+`Data de início`, `Data de término`, `Hora de início` e `Hora de término`.
 
-- `ID do evento`: gerado a partir do ID do local, da data de início e de um
-  sufixo opcional.
-- `ID do local`: local onde o evento ocorreu.
-- `Data de início` e `Data de término`: intervalo de datas do evento.
-- `Hora de início` e `Hora de término`: intervalo de horários do evento.
-
-Em projetos de mamíferos, a data de início padrão é o dia anterior e o seletor
-de horário começa em `07:00`, o que atende às verificações de armadilhas
-noturnas. Nos demais formatos de catálogo, os seletores de data e hora começam
-na data e hora atuais.
+Quando o formato de catálogo ativo é `Mammalogy`, o seletor de `Data de início`
+começa no dia anterior e os seletores de horário começam em `07:00` para
+revisões matinais de armadilhas. Nos demais formatos de catálogo, os seletores
+usam a data e a hora atuais.
 
 ## Atividade {% #activity %}
 
-O cartão `Atividade` armazena a finalidade geral do evento.
+O cartão `Atividade` registra o objetivo geral do evento:
 
-- `Atividade principal`: selecionada no vocabulário controlado editável das
-  configurações de evento. Valores antigos já armazenados também são oferecidos,
-  para que nenhum dado existente se perca.
-- `Notas`: notas livres sobre a atividade, atividades secundárias, detalhes do
-  protocolo ou o motivo de `Other` ter sido escolhido.
+- **`Atividade principal`** {% ref id="E" /%}: escolhida no vocabulário
+  controlado em `Configurações` > `Eventos` (valores salvos anteriormente
+  continuam selecionáveis mesmo que não estejam mais no vocabulário).
+- **`Notas`**: texto livre sobre protocolos, atividades secundárias ou o motivo
+  de selecionar `Other`.
+
+Crie eventos separados sempre que atividades distintas precisarem de seus
+próprios métodos de coleta, equipe ou contexto ambiental.
 
 ## Adicionando métodos de coleta
 
+Um evento pode ter vários registros de método de coleta para que cada espécime
+aponte para o equipamento exato usado.
+
 {% steps %}
 
-1. Selecione `Adicionar método de coleta` {% ref id="F" /%} para criar um novo
-    método de coleta.
-
-2. Selecione um método.
-
-3. Adicione `Marca e modelo` quando o método usar equipamento específico.
-
-4. Adicione `Contagem`.
-
-    É o número de ferramentas, armadilhas, redes, gravadores ou outras unidades
-    utilizadas.
-
-5. Adicione `Tamanho` quando aplicável.
-
-6. Adicione `Notas` para detalhes específicos do método.
+1. Selecione `Adicionar método de coleta` {% ref id="F" /%}.
+2. Escolha `Método` (do vocabulário controlado em `Configurações` > `Eventos`)
+   e informe `Contagem` (número de armadilhas, redes, gravadores ou unidades).
+3. Em detalhes do método, informe opcionalmente `Marca e modelo`, `Tamanho` e
+   `Notas`.
+4. Salve o método.
 
 {% /steps %}
 
-Os registros de métodos de coleta são armazenados separadamente do evento, de
-modo que um evento pode incluir vários métodos. Cada método de coleta contém:
-
-- `Método de coleta`: método de coleta definido pelo usuário.
-- `Marca e modelo`: marca ou modelo do equipamento, quando relevante.
-- `Contagem`: número de ferramentas ou unidades.
-- `Tamanho`: tamanho da ferramenta ou da montagem.
-- `Notas`: quaisquer notas específicas do método.
-
-Os registros de captura de espécimes podem depois selecionar um desses métodos
-de coleta do evento como o `Método` do espécime.
+Use o ícone de edição em qualquer linha para atualizá-la, ou `Selecionar` para
+excluir métodos. Os registros de captura de espécimes podem escolher qualquer
+um desses métodos em `Método`.
 
 ## Adicionando pessoal de coleta
 
-O painel do evento tem três abas com ícones: pessoas para o pessoal, uma nuvem
-para os dados ambientais e armazenamento para os dados associados. Use a aba de
-pessoal para registrar todas as pessoas envolvidas no evento.
+O painel de abas do evento tem três ícones: **pessoas** (`Pessoal do evento`),
+**nuvem** (`Dados ambientais`) e **armazenamento** (`Dados associados`). Os
+eventos também possuem uma seção de mídia para fotos, vídeo, áudio e arquivos.
 
 {% steps %}
 
-1. Abra a aba de pessoal (ícone de pessoas) no painel do evento.
-2. Selecione `Adicionar membro da equipe` {% ref id="G" /%}.
-3. Selecione uma entrada em `Equipe` na lista de pessoal do projeto.
-4. Selecione uma `Função`.
+1. Abra a aba de pessoas no painel do evento e selecione
+   `Adicionar membro da equipe` {% ref id="G" /%}.
+2. Escolha uma pessoa em `Equipe` (lista de equipe do projeto).
+3. Escolha uma `Função` (do vocabulário controlado em `Configurações` >
+   `Eventos`).
 
 {% /steps %}
 
-As funções do pessoal são definidas pelo usuário nas configurações de evento.
-Adicione todas as pessoas que contribuíram para o evento, incluindo coletores,
-líderes, auxiliares, motoristas, observadores, anotadores ou pessoas que
-ajudaram na logística. Os registros de captura de espécimes podem depois
-selecionar uma entrada de pessoal do evento como o `Coletor` do espécime.
+Use `Selecionar` para remover linhas de equipe do evento. Inclua todos os
+participantes (coletores, líderes, auxiliares, motoristas, observadores ou
+anotadores). Os registros de captura de espécimes escolhem seu coletor a partir
+desta lista.
 
 ## Dados ambientais e astronomia {% #environmental-data-and-astronomy %}
 
-O NAHPU cria um registro de dados ambientais {% ref id="H" /%} para cada evento de coleta. Em
-`Configurações` > `Eventos`, selecione quais campos internos aparecem no
-formulário. Ocultar um campo altera apenas o formulário: os valores já
-armazenados permanecem no banco de dados e nas exportações.
+O NAHPU cria um registro ambiental {% ref id="H" /%} por evento de coleta.
+Ative ou oculte campos nativos em `Configurações` > `Eventos`; ocultar um campo
+muda apenas o formulário e nunca apaga valores salvos nem os remove das
+exportações.
 
-Informe os dados astronômicos a partir de observações ou de uma fonte
-documentada; o NAHPU não calcula nascer e pôr do sol nem fase da lua. Siga a
-convenção de horário local do projeto e deixe vazios os valores não medidos. Os
-campos são salvos durante a edição; confira qualquer mensagem de validação
-antes de sair do formulário.
+Informe os valores astronômicos com base em observações de campo ou fonte
+documentada—o NAHPU não calcula nascer do sol, pôr do sol nem fase da lua.
+Registre horários no fuso horário local do projeto e deixe em branco o que não
+foi medido. Os valores são salvos conforme você edita; confira eventuais avisos
+de validação antes de sair.
 
-Os campos internos disponíveis incluem:
+| Grupo | Campos nativos | Notas e unidades |
+| --- | --- | --- |
+| `Temperatura` | `Mínima diurna`, `Máxima diurna`, `Mínima noturna`, `Máxima noturna`, `Temperatura ambiente` | Em `°C`. |
+| `Umidade` | `Média`, `Ponto de orvalho`, `Umidade ambiente` | Umidade em `%` (0–100); ponto de orvalho em `°C`. |
+| Clima | `Nebulosidade (oktas)`, `Precipitação` | Nebulosidade de `0` (céu limpo) a `8` (encoberto), ou `9` (céu obscurecido); precipitação em `mm`. |
+| `Dados aquáticos` | `Temperatura da água`, `pH`, `Oxigênio dissolvido`, `Saturação de oxigênio dissolvido`, `Condutividade`, `Velocidade do fluxo` | `°C`, `pH` (0–14), `mg/L`, `%` (0–500), `µS/cm` e `m/s`. |
+| `Astronomia` | `Nascer do sol`, `Pôr do sol`, `Fase da lua` | Horários locais; 8 fases da lua de `Lua nova` até `Lua minguante`. |
+| Notas e campos personalizados | `Notas`, campos personalizados | Adicione campos globais ou do projeto com `Adicionar campo personalizado` ou gerencie campos personalizados. |
 
-- `Mínima diurna` e `Máxima diurna`: intervalo de temperatura diurna em graus
-  Celsius.
-- `Mínima noturna` e `Máxima noturna`: intervalo de temperatura noturna em
-  graus Celsius.
-- `Média`: percentual médio de umidade.
-- `Ponto de orvalho`: temperatura do ponto de orvalho.
-- `Nebulosidade (oktas)`: um código de `0` (céu limpo) a `8` (totalmente
-  encoberto), ou `9` quando o céu está obscurecido. Um okta representa um
-  oitavo do céu visível.
-- `Precipitação`, `Temperatura ambiente` e `Umidade ambiente`: condições no
-  evento.
-- `Temperatura da água`, `pH`, `Oxigênio dissolvido`,
-  `Saturação de oxigênio dissolvido`, `Condutividade` e `Velocidade do fluxo`:
-  medições aquáticas. As configurações mostram a unidade de cada campo, como
-  `mg/L` para oxigênio dissolvido, `%` para saturação e `µS/cm` para
-  condutividade.
-- `Nascer do sol` e `Pôr do sol`: horários locais do nascer e do pôr do sol.
-- `Fase da lua`: uma entre `Lua nova`, `Lua crescente`, `Quarto crescente`,
-  `Gibosa crescente`, `Lua cheia`, `Gibosa minguante`, `Quarto minguante` ou
-  `Lua minguante`.
-- `Notas`: notas adicionais sobre clima, habitat ou astronomia.
-
-Use `Adicionar campo personalizado` ou `Gerenciar campos personalizados` nesta
-seção para campos ambientais válidos para toda a instalação ou específicos do
-projeto. Seus valores pertencem ao evento individual, não são filtrados pelo
-formato de catálogo do espécime e são incluídos nas exportações de eventos,
-espécimes, documentos, Darwin Core, intercâmbio de registros e transferência de
-projeto.
-
-Os dados ambientais não são copiados ao duplicar um evento. O evento duplicado
-recebe um registro em branco, para que você informe as condições corretas
-daquela data.
+Campos personalizados ambientais pertencem a cada evento, não são filtrados
+pelo formato de catálogo e são incluídos em exportações de eventos, espécimes,
+documentos, Darwin Core, troca de registros e transferências de projeto. Os
+dados ambientais nunca são copiados ao duplicar um evento.
 
 ## Como os registros de espécimes usam os eventos
 
-Quando você cria ou edita um espécime, o cartão `Registros de captura` obtém
-dados dos eventos de coleta:
+O cartão `Registros de captura` de um espécime busca contexto no evento de
+coleta:
 
-- `ID do local` filtra os IDs de evento disponíveis.
+- `ID do local` filtra os eventos disponíveis.
 - `ID do evento` vincula o espécime ao evento.
 - `Método` vem dos métodos de coleta do evento.
-- `Coletor` vem da lista de pessoal do evento.
-- `ID da coordenada` vem das coordenadas associadas ao local do evento.
+- Coletor vem da lista de pessoal do evento.
+- Coordenada vem das coordenadas do local do evento.
 
-Alterar o evento de um espécime limpa os campos dependentes do evento, como
-método, coletor e coordenada, preservando a data e a hora de captura do
-espécime.
+Trocar o evento de um espécime limpa os campos dependentes do evento (método,
+coletor e coordenada), preservando a data e a hora da captura.

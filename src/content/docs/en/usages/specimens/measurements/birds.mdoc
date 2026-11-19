@@ -5,9 +5,9 @@ sidebar:
   order: 2
 ---
 
-Specimens in a project that uses the `Ornithology` catalog format show the bird
-measurement form. Sex, life stage, and weight units work the same way in every
-taxon group; see [Measurements](/en/usages/specimens/measurements/).
+Specimens in the `Ornithology` catalog format show the bird measurement form.
+Weight units, sex, and life stage work the same way across taxon groups; see
+[Measurements](/en/usages/specimens/measurements/).
 
 ## Measurements
 
@@ -15,34 +15,47 @@ taxon group; see [Measurements](/en/usages/specimens/measurements/).
 - `Wingspan (mm)`: wingspan length.
 - Soft-part colors: `Bill color`, `Maxilla color`, `Mandible color`,
   `Iris color`, `Tarsus color`, and `Toe color`.
-- `Sex`: select from the configured specimen-sex vocabulary.
-- `Life stage`: select from the configured life-stage vocabulary.
-- `Brood patch`: yes or no.
-- `Bursa present`: yes or no. If present, record bursa length and width.
-- `Skull ossification (%)`: `100`, `95`, `90`, `75`, `50`, `25`, `10`, `5`, or `0`.
+- `Sex`: select from the configured specimen-sex controlled vocabulary. Changing
+  `Sex` prompts `Change sex?` and clears gonad data that no longer applies.
+- `Life stage`: select from the configured life-stage controlled vocabulary.
+- `Brood patch`: `Yes` or `No`.
+- `Bursa present`: `Yes` or `No`. Choosing `Yes` reveals `Bursa length (mm)` and
+  `Bursa width (mm)`.
+- `Skull ossification (%)`: `100`, `95`, `90`, `75`, `50`, `25`, `10`, `5`, or
+  `0`.
 - `Fat`: `None`, `Trace`, `Light`, `Moderate`, `Heavy`, or `Extremely Heavy`.
 - `Stomach contents`: notes on stomach contents.
 
 ## Gonads
 
-| Sex | Field | Options |
+Male gonad fields appear for `Male`, `Male?`, `Gynandromorph`, and
+`Hermaphrodite`. Female gonad fields appear for `Female`, `Female?`,
+`Gynandromorph`, and `Hermaphrodite`.
+
+| Sex | Field | Options / Notes |
 | --- | --- | --- |
-| Male | `Left testis size (mm)` | Length and width |
-| Male | Testis remarks | Notes |
-| Female | Ovary length and width | Numbers |
-| Female | Ovary appearance | Smooth, Ova minute, At least one ovum ≥ 1 mm dia. |
-| Female | Diameter of three largest ova (mm) | Numbers |
-| Female | Oviduct width | Number |
-| Female | Oviduct appearance | Straight, Convoluted |
-| Female | Ovary remarks | Notes |
+| Male | `Left testis size (mm)` — `Size` | `minute` or `1 mm or greater` (reveals `Length` and `Width`) |
+| Male | `Remarks` | Notes, such as right testis size |
+| Female | `Ovary size` | `Length (mm)` and `Width (mm)` |
+| Female | `Appearance` (ovary) | `Smooth`, `Ova minute`, or `At least one ovum ≥ 1 mm dia.` |
+| Female | `Diameter of three largest ova (mm)` | `First`, `Second`, `Third`; shown only when ovary `Appearance` is `At least one ovum ≥ 1 mm dia.` |
+| Female | `Oviduct` — `Width` | `minute` or `1 mm or greater` (reveals `Width (mm)`) |
+| Female | `Oviduct` — `Appearance` | `Straight`, `Convoluted` |
+| Female | `Remarks` | Additional gonad notes |
 
 ## Molt and notes
 
-- Molt fields: wing molt, tail molt, body molt (`None`, `Trace`, `Light`,
-  `Moderate`, or `Heavy`), and molt remarks.
-- Notes: habitat remarks and specimen remarks.
+- `Molt`:
+  - `Body molt`: `None`, `Trace`, `Light`, `Moderate`, or `Heavy`.
+  - `Wing molt`: `Yes` or `No`; choosing `Yes` reveals a text field for wing
+    molt details.
+  - `Tail molt`: `Yes` or `No`; choosing `Yes` reveals a text field for tail
+    molt details.
+  - `Remarks`: additional molt notes.
+- `Notes`: `Habitat` and `Specimen` remark fields.
 
 ## Parts and symbionts
 
-Bird catalogs show symbiont-detection fields and the symbiont tab. See
-[Specimen Parts](/en/usages/specimens/parts/).
+Bird catalogs include the `Symbionts` examination fields at the bottom of the
+measurement form and the symbiont tab in `Specimen Parts`. See
+[Symbionts](/en/usages/specimens/symbionts/).

@@ -20,106 +20,89 @@ sidebar:
 {% pin id="G" label="Buat bundel" large=[58.2, 93.2] small=[69.3, 92.3] /%}
 {% /screenshots %}
 
-Gunakan `Bundel catatan` untuk mengemas data proyek beserta berkasnya, untuk
-diterbitkan, diarsipkan, atau dianalisis secara terulang. Layar bundel
-menampilkan berkas dan bidang yang akan ditulis sebelum apa pun dibuat.
+Gunakan `Bundel catatan` untuk mengemas data proyek bersama metadata dan
+medianya guna publikasi, pengarsipan, atau analisis terulang. Sebelum menulis
+apa pun, `Isi paket` menampilkan setiap berkas, jumlah catatan, kolom, dan
+peringatan.
 
 ## Memilih format bundel {% #choose-a-bundle-format %}
 
 | Format | Pilih bila | Isinya | Dapat diimpor NAHPU |
-|---|---|---|---|
-| **Darwin Core Archive** (`.dwca.zip`) | Basis data museum atau portal keanekaragaman hayati, seperti GBIF, meminta DwC-A | Spesimen dalam satu tabel datar, dengan bagian, ukuran, dan media di tabel ekstensi | Tidak |
-| **Darwin Core Data Package** (`.dwc-dp.tar.gz`) | Penerima mendukung format Darwin Core relasional yang lebih baru | Spesimen, peristiwa, identifikasi, bagian, dan orang dalam tabel Darwin Core yang saling terhubung | Tidak |
-| **NAHPU Data Package** (`.nahpu-dp.tar.gz`) | Anda memerlukan semuanya, untuk analisis di R atau Python, arsip jangka panjang, atau salinan lengkap | Seluruh proyek, setiap tabel NAHPU, pengaturan, dan berkas | Ya, dengan `Impor proyek` atau `Gabungkan proyek` |
+| --- | --- | --- | --- |
+| **Darwin Core Archive** (`.dwca.zip`) | Basis data museum atau portal biodiversitas (seperti GBIF) meminta DwC-A | Spesimen dalam satu tabel inti datar, dengan bagian, pengukuran, dan media di tabel ekstensi | Tidak |
+| **Darwin Core Data Package** (`.dwc-dp.tar.gz`) | Penerima mendukung standar relasional Darwin Core terbaru | Spesimen, peristiwa, identifikasi, bagian, dan personel dalam tabel Darwin Core yang saling tertaut | Tidak |
+| **NAHPU Data Package** (`.nahpu-dp.tar.gz`) | Anda memerlukan seluruh data untuk analisis R/Python, arsip jangka panjang, atau salinan proyek penuh | Proyek lengkap, setiap tabel NAHPU yang terisi, konfigurasi pengguna, dan berkas | Ya, melalui `Impor proyek` atau `Gabungkan proyek` |
 
-Format Darwin Core hanya berisi nilai yang memiliki istilah Darwin Core, Dublin
-Core, atau Audubon Core yang terdaftar. Pilih NAHPU Data Package bila tidak ada
-yang boleh hilang, termasuk bidang kustom. Paket ini dapat dibaca dengan alat
-[Frictionless](https://frictionlessdata.io) apa pun;
-[Tutorial 3](/id/tutorials/export/custom-data-package-script/) menunjukkan caranya.
+Bundel Darwin Core hanya menyertakan nilai yang memiliki istilah resmi terdaftar
+di Darwin Core, Dublin Core, atau Audubon Core. Pilih **NAHPU Data Package**
+jika tidak boleh ada data yang terlewat, termasuk bidang kustom. Paket ini
+dapat dibaca alat [Frictionless](https://frictionlessdata.io); lihat
+[Tutorial 3](/id/tutorials/export/custom-data-package-script/).
 
-## Membuat paket
+## Membuat bundel
 
 {% steps %}
 
-1. Buka halaman `Dashboard`.
-2. Buka menu proyek lalu pilih `Bundle records`.
-3. Pilih `Bundle format` {% ref id="B" /%}.
-4. Pilih `Archive format` {% ref id="C" /%} bila paket yang dipilih mendukung lebih dari satu
-   wadah.
+1. Buka menu dasbor proyek lalu pilih `Bundel catatan`.
+2. Pilih format bundel {% ref id="B" /%}.
+3. Pilih format arsip {% ref id="C" /%} bila format mendukung lebih dari satu
+   wadah:
    - `TAR.GZ` adalah bawaan untuk Data Package.
-   - `ZIP` tersedia untuk perkakas dan sistem operasi yang lebih menyukai arsip
-     ZIP baku.
-   - Darwin Core Archive selalu memakai ZIP.
-5. Untuk paket Darwin Core, pilih `All taxa` {% ref id="A" /%} atau `Selected taxa`. Memilih
-   Mammals juga menyertakan Bats.
-6. Masukkan `File name` {% ref id="D" /%} dan pilih `Directory` tujuan.
-7. Tinjau `Package contents` {% ref id="E" /%}. Bentangkan sebuah sumber daya CSV {% ref id="F" /%} untuk melihat
-   kolom yang diekspor.
-8. Tinjau peringatan yang muncul, terutama media yang hilang atau pemberitahuan
-   kompatibilitas ZIP untuk DwC-DP.
-9. Klik `Create bundle` {% ref id="G" /%}.
+   - `ZIP` tersedia untuk alat dan sistem yang lebih memilih arsip ZIP standar.
+   - Darwin Core Archive selalu memakai `ZIP`.
+4. Untuk bundel Darwin Core, pilih `Semua takson` {% ref id="A" /%} atau
+   `Takson terpilih`. Memilih Mamalia otomatis menyertakan kelelawar.
+5. Masukkan nama berkas {% ref id="D" /%} (opsional aktifkan
+   `Tambahkan tanggal`) dan pilih folder tujuan di desktop.
+6. Periksa `Isi paket` {% ref id="E" /%} (di tab isi pada ponsel). Buka sumber
+   daya CSV {% ref id="F" /%} untuk melihat kolomnya.
+7. Tinjau peringatan, seperti media hilang atau catatan kompatibilitas ZIP
+   untuk DwC-DP.
+8. Pilih `Buat bundel` {% ref id="G" /%}. Anda dapat membatalkan saat proses
+   berjalan. Setelah selesai, bagikan, buka folder, simpan salinan, atau pilih
+   `Bundel lainnya`.
 
 {% /steps %}
 
-{% aside type="caution" title="Tinjau sebelum dibagikan" %}
-NAHPU Data Package memuat seluruh data transfer proyek aktif beserta konfigurasi
-penggunanya. Paket ini dapat memuat detail personel, lokasi proyek, media, dan
-fon khusus. Perlakukan sebagai berkas yang berpotensi sensitif.
+{% aside type="caution" title="Periksa sebelum berbagi" %}
+
+NAHPU Data Package memuat data transfer proyek aktif dan konfigurasi pengguna
+secara lengkap, termasuk detail personel, lokasi proyek, media, dan fon kustom.
+Periksa isinya sebelum dibagikan secara publik.
+
 {% /aside %}
 
 ## Memilih wadah arsip
 
-### TAR.GZ
-
-`TAR.GZ` mula-mula menggabungkan berkas paket menjadi arsip tar, lalu
-memampatkan aliran itu dengan gzip. Ini adalah bawaan untuk Darwin Core Data
-Package dan NAHPU Data Package.
-
-Nama berkas yang lazim:
-
-- `specimens.dwc-dp.tar.gz`
-- `nahpu-data.nahpu-dp.tar.gz`
-
-Setelah diekstrak, `datapackage.json` dan metadata khusus paket berada di akar
-paket hasil ekstraksi.
-
-### ZIP
-
-ZIP menyimpan dan memampatkan banyak berkas dalam satu arsip yang didukung
-secara luas. NAHPU Data Package mendukung ZIP sebagai wadah biasa. Darwin Core
-Data Package mendukung ZIP sebagai opsi kompatibilitas, tetapi TAR.GZ adalah
-pilihan yang selaras dengan standar menurut panduan pemampatan DwC-DP saat ini.
-
-Darwin Core Archive selalu memakai ZIP karena ZIP merupakan bagian dari alur
-pertukarannya yang normal.
+| Wadah | Ekstensi umum | Catatan |
+| --- | --- | --- |
+| `TAR.GZ` | `.dwc-dp.tar.gz`, `.nahpu-dp.tar.gz` | Bawaan untuk Data Package dan pilihan sesuai standar DwC-DP. Setelah diekstrak, `datapackage.json` dan metadata berada di direktori akar. |
+| `ZIP` | `.dwca.zip`, `.dwc-dp.zip`, `.nahpu-dp.zip` | Wajib untuk Darwin Core Archive; opsi normal untuk NAHPU Data Package; opsi kompatibilitas untuk DwC-DP (menampilkan peringatan karena panduan DwC-DP mengutamakan gzip). |
 
 ## Penjelasan mendalam
 
-Bagian di bawah ini menjelaskan berkas setiap paket dan cara NAHPU mengisinya.
-Anda tidak memerlukannya untuk membuat bundel; gunakan bila penerima bertanya
-isi sebuah berkas, atau bila Anda memproses paket sendiri.
+Bagian berikut menjelaskan berkas yang ditulis setiap paket dan cara NAHPU
+memetakan catatan. Gunakan saat penerima menanyakan struktur paket atau saat
+Anda memprosesnya lewat skrip.
 
-### Darwin Core Archive
+### Darwin Core Archive {% #darwin-core-archive %}
 
-Darwin Core Archive adalah paket pertukaran yang berpusat pada spesimen dan
-mengacu pada [Darwin Core Text Guidelines](https://dwc.tdwg.org/text/).
+Darwin Core Archive (DwC-A) adalah paket pertukaran berpusat pada spesimen
+berdasarkan [Darwin Core Text Guidelines](https://dwc.tdwg.org/text/).
 
-#### Cakupan
+#### Cakupan dan bidang
 
-Grup takson yang dipilih menentukan kejadian spesimen di dalam arsip. NAHPU
-kemudian menelusuri hubungan dari spesimen tersebut untuk menyertakan, bila
-tersedia:
+Kelompok takson terpilih menentukan spesimen yang diekspor. NAHPU mengikuti
+relasinya untuk menyertakan peristiwa koleksi, bagian spesimen dan entitas
+material, pengukuran, media, serta personel (kolektor, pengkatalog, preparator,
+dan pembuat media). Bidang opsional kosong dan tabel ekstensi kosong diabaikan.
 
-- kegiatan pengumpulan;
-- bagian spesimen dan entitas material lain;
-- pengukuran;
-- media;
-- pengumpul, pengatalog, preparator, dan pembuat media.
+Kolom hanya ditulis jika memiliki istilah terdaftar tepat di Darwin Core,
+Dublin Core, atau Audubon Core; bidang lain diabaikan dan ditampilkan pada
+`Isi paket` sebelum ekspor. Gunakan NAHPU Data Package bila setiap nilai harus
+dipertahankan.
 
-Kolom opsional yang kosong dan tabel ekstensi yang kosong tidak disertakan.
-
-#### Berkas di akar
+#### Berkas akar dan relasi
 
 {% filetree %}
 - meta.xml
@@ -131,40 +114,26 @@ Kolom opsional yang kosong dan tabel ekstensi yang kosong tidak disertakan.
 - media/
 {% /filetree %}
 
-Hanya berkas yang didukung oleh data terpilih yang ditulis.
+Hanya berkas yang memiliki data yang ditulis:
 
-`meta.xml` menjelaskan inti kejadian dan berkas ekstensinya, posisi kolomnya,
-serta pengenal istilah Darwin Core-nya. `eml.xml` memuat metadata pada tingkat
-kumpulan data. `occurrence.csv` selalu menjadi tabel inti.
+- `meta.xml` menjelaskan tabel inti, tabel ekstensi, posisi kolom, dan URI
+  istilah Darwin Core.
+- `eml.xml` berisi metadata tingkat himpunan data.
+- `occurrence.csv` selalu menjadi tabel inti.
+- Baris ekstensi merujuk ke inti: bagian spesimen masuk ke `material.csv`,
+  pengukuran ke `measurement_or_fact.csv`, dan `multimedia.csv` menautkan
+  spesimen ke berkas di bawah `media/`.
 
-#### Hubungan antarcatatan
-
-Catatan ekstensi merujuk ke inti kejadian. Misalnya:
-
-- sebuah bagian spesimen menjadi catatan material yang tertaut melalui pengenal
-  kejadian;
-- pengukuran menjadi catatan MeasurementOrFact;
-- baris media merujuk pada kejadian sekaligus jalur media yang dikemas.
-
-#### Keluaran
-
-Darwin Core Archive menghasilkan:
-
-```text
-<file-name>.dwca.zip
-```
-
-Pilih format ini bila repositori penerima, sistem pengelolaan koleksi, atau alur
-publikasi secara tegas mengharapkan Darwin Core Archive.
+Keluaran: `<nama-berkas>.dwca.zip`.
 
 ### Darwin Core Data Package
 
-Darwin Core Data Package, atau DwC-DP, menyajikan data Darwin Core sebagai
-tabel-tabel yang saling terkait menurut
-[spesifikasi Darwin Core Data Package](https://dwc.tdwg.org/dp/). Paket ini juga
-mengikuti model Frictionless Data Package.
+Darwin Core Data Package (DwC-DP) menyajikan data Darwin Core sebagai tabel
+relasional ternormalisasi sesuai
+[spesifikasi Darwin Core Data Package](https://dwc.tdwg.org/dp/) dan model
+Frictionless Data Package.
 
-#### Berkas di akar
+#### Berkas akar
 
 {% filetree %}
 - datapackage.json
@@ -184,84 +153,55 @@ mengikuti model Frictionless Data Package.
 - media/
 {% /filetree %}
 
-Tabel opsional hanya muncul bila datanya ada.
-
-#### Descriptor
-
-`datapackage.json` menetapkan profil DwC-DP berversi dan menjelaskan:
-
-- setiap sumber daya CSV;
-- tipe media dan format CSV;
-- deskriptor kolom yang berurutan;
-- kunci utama;
-- kunci asing;
-- predikat hubungan.
-
-DwC-DP memakai model relasional yang dinormalkan. Kolom kunci utama dan kunci
-asing internal mempertahankan tautan bahkan ketika pengenal asli yang mudah
-dibaca manusia juga tetap disimpan.
+Tabel opsional hanya muncul jika ada datanya. `datapackage.json` menyatakan
+profil DwC-DP, setiap sumber daya CSV, urutan bidang, kunci primer, kunci
+asing, dan predikat relasi. Kolom struktural `_pk` dan `_fk` menjaga tautan
+relasional bersama pengenal yang terbaca manusia.
 
 #### Pemetaan data
 
-NAHPU memetakan data spesimen terpilih ke konsep seperti:
+NAHPU memetakan data ke kelas standar alih-alih mengulanginya di
+`occurrence.csv`:
 
-- `occurrence` untuk kejadian spesimen;
-- `event` untuk aktivitas pengumpulan dan konteks lokasinya;
-- `material` untuk bagian spesimen;
-- `occurrence-assertion` untuk pengukuran;
-- `agent` dan tabel peran untuk orang beserta perannya;
-- `media` dan `occurrence-media` untuk metadata dan hubungan media.
+- `occurrence`: kemunculan spesimen;
+- `identification`: determinasi dan peringkat taksonomi;
+- `event`: aktivitas koleksi dan konteks lokasi;
+- `material`: bagian spesimen, katalog, dan preparasi;
+- `occurrence-assertion`: pengukuran dan asersi non-kelas (seperti asosiasi
+  inang);
+- `agent` dan `*-agent-role`: personel dan perannya (mengutamakan URL ORCID
+  kanonis, dengan UUID NAHPU sebagai cadangan);
+- `media` dan `occurrence-media`: metadata dan tautan media.
 
-DwC-DP bersifat relasional, sehingga sebuah nilai ditulis pada kelas yang
-ditetapkan standar, bukan diulang pada baris occurrence. Peringkat taksonomi
-berada di `identification`, nilai lokasi dan pengumpulan di `event`, serta
-nilai katalog dan preparasi di `material`. Nilai tanpa kolom kelas, seperti
-asosiasi inang, menjadi asersi. Kolom `_pk` dan `_fk` adalah kunci struktural
-yang memversikan istilah pengenal yang diwakilinya.
+Aturan cakupan istilah ketat yang sama berlaku seperti DwC-A. Teks asli DDM,
+DMS, atau UTM dipertahankan pada istilah koordinat verbatim, luas tangkapan
+positif ditambahkan ke ketidakpastian koordinat, dan satuan berat pilihan
+dipertahankan.
 
-Hanya istilah baku yang terdaftar dan cocok persis yang ditulis. Kolom tanpa
-istilah tersebut tidak ditulis ke paket Darwin Core; ekspor NAHPU Data Package
-bila alur kerja memerlukan seluruh nilai yang tercatat. `Package contents`
-mencantumkan kolom yang ditahan sebelum Anda mengekspor.
-Teks DDM, DMS, atau UTM yang asli dipertahankan pada istilah koordinat verbatim,
-rentang tangkapan positif ditambahkan ke ketidakpastian koordinat, satuan berat
-yang dipilih dipertahankan, dan pengenal agen mengutamakan URL ORCID kanonis
-dengan UUID NAHPU sebagai cadangan.
+Untuk invertebrata, jenis kelamin, tahap hidup, kasta, asosiasi inang, dan
+catatan spesimen merupakan istilah occurrence; bagian inang dan morfometrik
+opsional (lebar kepala, panjang tubuh, bentang sayap atas dan bawah) diekspor
+sebagai asersi MeasurementOrFact dalam milimeter. Tutupan tajuk dan parameter
+lingkungan menempel pada peristiwa koleksi dengan satuan terdefinisi (`°C`,
+`%`, `mg/L`, `m/s`, `mm`, `okta`).
 
-Untuk invertebrata, jenis kelamin, tahap hidup, kasta, hubungan dengan inang,
-dan keterangan spesimen merupakan istilah kejadian. Bagian inang dan morfometri
-opsional — lebar kepala, panjang tubuh, serta rentang sayap atas dan bawah —
-menjadi catatan MeasurementOrFact dalam milimeter. Tutupan tajuk dan parameter
-lingkungan merupakan asersi pada kegiatan pengumpulan, bukan pada spesimen,
-dengan satuan yang mencakup °C, %, mg/L, m/s, mm, dan okta.
+Keluaran: `<nama-berkas>.dwc-dp.tar.gz` (bawaan) atau
+`<nama-berkas>.dwc-dp.zip` (opsi kompatibilitas, dengan peringatan).
 
-#### Opsi arsip
+### NAHPU Data Package {% #nahpu-data-package %}
 
-- `TAR.GZ` menghasilkan `<file-name>.dwc-dp.tar.gz` dan merupakan bawaan.
-- `ZIP` menghasilkan `<file-name>.dwc-dp.zip` untuk kompatibilitas.
+NAHPU Data Package adalah format pertukaran lengkap dan reprodusibel milik
+NAHPU—sebuah Frictionless Data Package dengan metadata NAHPU. Tidak seperti
+bundel Darwin Core, paket ini tidak disaring menurut takson: isinya mencakup
+JSON transfer proyek aktif yang lengkap, tabel CSV bertipe yang selaras,
+pemetaan enum, potret kosakata terkontrol, konfigurasi pengguna, dan berkas
+terkait.
 
-Bila ZIP dipilih, NAHPU menampilkan peringatan karena panduan DwC-DP saat ini
-menetapkan gzip untuk pemampatan seluruh paket.
-
-Pilih DwC-DP bila penerima mendukung descriptor Frictionless dan memerlukan
-skema tabel yang tersurat serta tautan relasional.
-
-### NAHPU Data Package
-
-NAHPU Data Package adalah format NAHPU untuk reproduksibilitas dan pertukaran
-data yang lengkap. Format ini merupakan Frictionless Data Package dengan
-metadata tambahan dari NAHPU.
-
-Berbeda dengan format Darwin Core, paket ini tidak terbatas pada takson spesimen
-yang dipilih. Paket ini memuat JSON proyek aktif yang lengkap dan sama dengan
-yang dipakai `Export project`, sumber daya tabel yang bersesuaian, dan berkas
-terkaitnya.
-
-Sumber daya CSV yang bertipe dan relasional, pemetaan enum, serta cuplikan
-kosakata terkontrol membuat paket ini cocok untuk analisis lanjutan dengan
-Python, R, dan perkakas lain yang kompatibel dengan Frictionless. Gunakan
-Darwin Core Data Package bila alur kerja memerlukan tabel dan istilah Darwin
-Core yang terstandardisasi.
+Inilah satu-satunya bundel yang mempertahankan bidang kustom tanpa istilah
+Darwin Core. Hanya tabel yang terisi dalam proyek yang diekspor (proyek khusus
+mamalia tidak memuat tabel burung, herpetofauna, invertebrata, maupun ikan),
+dan `mappings/sqlite_enums.csv` hanya mencantumkan kolom enum dari tabel yang
+hadir.
 
 #### Tata letak akar
 
@@ -287,120 +227,84 @@ Core yang terstandardisasi.
   - ...
 {% /filetree %}
 
-`project.csv` dan setiap tabel basis data lain yang berisi catatan disertakan.
 Tabel proyek yang kosong dihilangkan dari `tables/` dan `datapackage.json`,
-sehingga daftar tepatnya bergantung pada proyek. Sumber daya metadata, termasuk
-pemetaan enum dan CSV kosakata terkontrol, tetap tersedia meskipun tidak berisi
-baris.
+sedangkan sumber daya metadata (`mappings/sqlite_enums.csv` dan
+`vocabularies/*.csv`) selalu disertakan (hanya baris tajuk jika kosong).
 
-#### JSON proyek
+#### JSON proyek dan tabel CSV
 
-`nahpu-project.json` adalah muatan berversi yang sama dengan hasil operasi
-`Export project` yang lengkap. Berkas ini memuat proyek aktif, catatan terkait,
-manifes media, metadata ekspor, dan peringatan. Berkas ini mempertahankan
-pembedaan seperti nilai null dan untai kosong yang memang disengaja, tanpa
-memerlukan SQLite.
-
-Berkas CSV merupakan penyajian terbuka yang tidak bergantung perkakas, untuk
-pemeriksaan, analisis, dan pemrosesan yang kompatibel dengan Frictionless.
-Catatannya dihasilkan dari muatan yang sama, sehingga cakupan JSON dan tabelnya
-tetap selaras. Koleksi kosong tetap berada di `nahpu-project.json` untuk
-transfer proyek meskipun sumber daya CSV yang bersesuaian tidak diekspor.
+`nahpu-project.json` adalah muatan berversi yang sama dengan hasil
+`Ekspor proyek` (proyek aktif, catatan terkait, manifes media, metadata, dan
+peringatan), mempertahankan perbedaan seperti `null` versus string kosong tanpa
+memerlukan SQLite. Berkas CSV di `tables/` dibangkitkan dari muatan yang sama
+agar tetap konsisten; koleksi kosong tetap berada di `nahpu-project.json` untuk
+transfer proyek meskipun tidak ditulis sebagai CSV.
 
 #### Pemetaan enum SQLite
 
-`mappings/sqlite_enums.csv` menjelaskan nilai bilangan bulat yang disimpan NAHPU
-sebagai indeks enum. Setiap baris memuat:
+`mappings/sqlite_enums.csv` menerjemahkan indeks bilangan bulat yang disimpan
+di tabel ekspor. Setiap baris memuat tabel SQLite, kolom, tipe enum, indeks
+mulai dari nol, nama kode stabil, dan label terbaca NAHPU.
 
-- tabel dan kolom SQLite-nya;
-- tipe enum Dart atau tipe terindeks logisnya;
-- bilangan bulat SQLite berbasis nol;
-- nama enum stabil yang dipakai di kode;
-- nama yang mudah dibaca dan ditampilkan di NAHPU.
+Pemetaan yang disertakan (disaring sesuai tabel yang hadir dalam paket)
+mencakup:
 
-Konteks tabel dan kolom disertakan karena lebih dari satu jenis catatan dapat
-memakai enum dengan nama pendek yang sama tetapi urutan nilai yang berbeda.
-Pemetaan ini mencakup jenis kelamin spesimen dan keyakinan identifikasi, umur
-dan kolom reproduksi mamalia, kolom reproduksi serta pergantian bulu burung,
-umur herpetofauna, dan kategori ekolokasi. Bilangan bulat boolean dan pengukuran
-numerik bukan indeks enum sehingga tidak dicantumkan.
+- jenis kelamin spesimen (`mammalAttribute`, `birdAttribute`, `herpAttribute`,
+  `invertebrateAttribute`, `fishAttribute`, dan `specimenIndividual`) dengan
+  kode stabil di mana `0`, `1`, dan `2` mempertahankan makna historisnya;
+- tingkat keyakinan identifikasi (`specimen.iDConfidence`);
+- jenis spesimen ikan (`Individual` / `Lot`) dan kasta invertebrata;
+- bidang reproduksi mamalia dan kategori ekolokasi;
+- bidang reproduksi dan ganti bulu burung.
 
-Berkas pemetaan juga memuat enum jenis kelamin invertebrata. Baris jenis kelamin
-spesimen memakai kode stabil yang tersurat alih-alih menurunkannya dari urutan
-enum; kode lama `0`, `1`, dan `2` mempertahankan makna aslinya. Pemetaan tetap
-tersedia meskipun tabel proyek yang bersesuaian kosong dan karena itu
-dihilangkan.
+Bilangan bulat boolean dan pengukuran numerik bukan indeks enum sehingga tidak
+dicantumkan.
 
 #### Kosakata terkontrol
 
-Paket ini mengambil cuplikan nama tipe yang dikendalikan pengguna dari
-pengaturan NAHPU ke dalam empat sumber daya CSV:
+Empat sumber daya CSV memotret kosakata terkontrol aktif dari Pengaturan NAHPU
+(atau bawaan NAHPU jika belum diubah):
 
-- `vocabularies/site.csv` memuat tipe lokasi dan tipe habitat;
-- `vocabularies/events.csv` memuat metode pengumpulan dan peran personel
-  pengumpul;
-- `vocabularies/specimens.csv` memuat tipe spesimen, perlakuan, kondisi, dan
-  kosakata jenis kelamin spesimen terbatas yang diaktifkan.
-- `vocabularies/symbionts.csv` memuat jenis interaksi dan kategori simbion,
-  metode deteksi dan
-  preparasi, lokasi anatomi, penyimpanan, dan perlakuan.
+- `vocabularies/site.csv`: jenis lokasi dan jenis habitat;
+- `vocabularies/events.csv`: metode koleksi dan peran personel koleksi;
+- `vocabularies/specimens.csv`: jenis spesimen, perlakuan, kondisi, opsi jenis
+  kelamin yang diaktifkan, metode identifikasi, dan tahap hidup;
+- `vocabularies/symbionts.csv`: jenis interaksi simbion, kategori, metode
+  deteksi, metode preparasi, lokasi anatomi, penyimpanan, dan perlakuan.
 
-Setiap baris mencatat kunci konfigurasi pengguna, nama kosakata, posisi dalam
-daftar berbasis nol, dan nilai yang dikonfigurasi. Bila sebuah pengaturan belum
-disesuaikan, CSV memuat kosakata bawaan NAHPU yang berlaku saat ekspor
-dilakukan. Berkas ini membuat label yang dirujuk catatan tabel langsung
-tersedia bagi perkakas CSV dan Frictionless, tanpa harus mengurai dokumen
-konfigurasi yang lengkap.
+Setiap baris mencatat kunci konfigurasi, nama kosakata, posisi berbasis nol,
+dan nilainya, sehingga alat analisis dapat membacanya langsung tanpa mengurai
+`configs/user_configs.json`.
 
-#### Descriptor Frictionless
+#### Deskriptor Frictionless dan analisis
 
-`datapackage.json` memakai profil baku `data-package`. Setiap tabel proyek yang
-berisi catatan merupakan `tabular-data-resource` dengan:
+`datapackage.json` memakai profil standar `data-package`, mendeklarasikan
+setiap tabel terisi sebagai sumber daya tabular UTF-8 lengkap dengan urutan
+kolom, tipe data, batasan wajib, kunci primer, dan kunci asing, beserta skema
+pemetaan enum, kosakata terkontrol, dan sumber daya nontabular.
 
-- urutan kolom;
-- tipe data kolom;
-- batasan kolom wajib;
-- kunci utama;
-- rujukan kunci asing;
-- pengodean CSV UTF-8.
-
-Descriptor juga mendeklarasikan pemetaan enum dan keempat CSV kosakata terkontrol
-sebagai sumber daya tabel, lengkap dengan skema kolom dan kunci utama gabungan.
-Descriptor mencantumkan JSON proyek, konfigurasi pengguna, manifes, dan berkas
-pengguna yang dikemas sebagai sumber daya nontabel.
-
-#### Analisis dengan Frictionless
-
-Ekstrak arsip ZIP atau TAR.GZ sebelum memuat `datapackage.json` karena
-descriptor memakai jalur relatif terhadap akar paket. Karena tabel proyek yang
-kosong dihilangkan, periksa nama sumber daya sebelum membaca tabel opsional.
-
-Pengguna Python dapat memasang
-[Frictionless Framework](https://framework.frictionlessdata.io/docs/getting-started.html)
-dan membaca tabel spesimen bila tersedia:
+Ekstrak arsip terlebih dahulu sebelum memuat `datapackage.json` karena jalur
+berkas bersifat relatif terhadap akar paket. Periksa keberadaan tabel opsional
+sebelum membacanya:
 
 ```python
 from collections import Counter
 
 from frictionless import Package
 
-package = Package("/jalur/ke/paket-yang-diekstrak/datapackage.json")
+package = Package("/path/to/extracted-package/datapackage.json")
 print(package.resource_names)
 
 if package.has_resource("specimen"):
     specimens = package.get_resource("specimen").read_rows()
-    counts = Counter(row["taxonGroup"] or "Tidak ditentukan" for row in specimens)
+    counts = Counter(row["taxonGroup"] or "Unspecified" for row in specimens)
     print(counts)
 ```
-
-Pengguna R dapat memasang
-[paket frictionless](https://docs.ropensci.org/frictionless/) dan melakukan
-pemeriksaan serta ringkasan yang sama:
 
 ```r
 library(frictionless)
 
-package <- read_package("/jalur/ke/paket-yang-diekstrak/datapackage.json")
+package <- read_package("/path/to/extracted-package/datapackage.json")
 resource_names(package)
 
 if ("specimen" %in% resource_names(package)) {
@@ -409,77 +313,42 @@ if ("specimen" %in% resource_names(package)) {
 }
 ```
 
-#### Manifes reproduksibilitas
+#### Manifes reprodusibilitas, konfigurasi, dan berkas
 
-`nahpu.toml` mencatat:
+- **`nahpu.toml`** mencatat nama dan versi format, cap waktu ekspor, versi dan
+  nomor build aplikasi, versi skema basis data dan konfigurasi pengguna, jumlah
+  tabel/enum/kosakata, serta versi crate `nahpu_api` (`nahpu_dp`, `nahpu_dwc`,
+  `nahpu_db`, `nahpu_configs`, dan lainnya).
+- **`configs/user_configs.json`** menyimpan ekspor konfigurasi pengguna
+  berversi (pengaturan umum, prasetel ekspor catatan, templat dokumen, dan
+  prasetel tata letak cetak).
+- **`media/` dan `files/`** memuat media proyek yang dirujuk, foto personel
+  yang dirujuk (di bawah `media/` dengan jalur kompatibel transfer), dan fon
+  kustom pengguna (di bawah `files/`). Berkas yang hilang dilaporkan sebagai
+  peringatan.
 
-- nama dan versi format paket;
-- stempel waktu ekspor;
-- nama, versi, dan nomor build aplikasi;
-- versi skema basis data NAHPU;
-- versi skema konfigurasi pengguna;
-- jumlah tabel yang diekspor;
-- jalur dan jumlah sumber daya pemetaan enum serta kosakata terkontrol;
-- versi crate `nahpu_api` yang dikompilasi, termasuk `nahpu_dp`, `nahpu_dwc`,
-  `nahpu_db`, dan `nahpu_configs`.
+Keluaran: `<nama-berkas>.nahpu-dp.tar.gz` (bawaan) atau
+`<nama-berkas>.nahpu-dp.zip`, dengan isi internal yang sama persis.
 
-Metadata ini membantu menentukan versi NAHPU dan komponen Rust mana yang membuat
-paket tersebut.
-
-#### Konfigurasi pengguna
-
-`configs/user_configs.json` memuat ekspor konfigurasi NAHPU yang berversi:
-
-- nilai konfigurasi pengguna umum;
-- prasetel ekspor catatan;
-- prasetel templat dokumen;
-- tata letak dokumen.
-
-#### Berkas pengguna
-
-Bila tersedia, NAHPU menyertakan:
-
-- media yang dirujuk proyek aktif;
-- foto personel yang dirujuk proyek aktif;
-- fon khusus milik pengguna.
-
-Media proyek mempertahankan jalur yang kompatibel dengan transfer di bawah
-`media/`; fon khusus mempertahankan jalur relatif yang aman di bawah `files/`.
-Berkas yang hilang menghasilkan peringatan dan tidak diam-diam disajikan sebagai
-konten yang berhasil dikemas.
-
-#### Opsi arsip
-
-- `TAR.GZ` menghasilkan `<file-name>.nahpu-dp.tar.gz`.
-- `ZIP` menghasilkan `<file-name>.nahpu-dp.zip`.
-
-Isi paket di dalamnya sama pada kedua wadah tersebut.
-
-## Paket dibandingkan cadangan
+## Bundel versus cadangan
 
 | | Bundel Darwin Core | NAHPU Data Package | Cadangan basis data |
-|---|---|---|---|
-| Memulihkan proyek NAHPU | Tidak | Ya, melalui `Impor proyek` atau `Gabungkan proyek` | Ya, seluruh instalasi |
-| Tujuan utama | Pertukaran dengan sistem lain | Salinan satu proyek yang terdokumentasi dan dapat dipakai ulang | Pemulihan perangkat ini |
+| --- | --- | --- | --- |
+| Memulihkan proyek NAHPU | Tidak | Ya (`Impor proyek` atau `Gabungkan proyek`) | Ya (seluruh instalasi) |
+| Tujuan utama | Pertukaran dengan sistem eksternal | Salinan terdokumentasi dan dapat dipakai ulang untuk satu proyek | Pemulihan penuh perangkat |
 
-Tetap buat [cadangan basis data](../#backup-database) bila Anda memerlukan
-salinan semua isi perangkat. NAHPU Data Package hanya mencakup satu proyek,
-sehingga tidak menggantikan cadangan tersebut.
+NAHPU Data Package hanya mencakup satu proyek, jadi tetap buat
+[cadangan basis data](../#backup-database) rutin untuk pemulihan seluruh
+perangkat.
 
-Kontributor yang memperluas bidang bundel atau kelompok takson sebaiknya membaca
+Kontributor yang memperluas bidang bundel atau kelompok takson dapat membaca
 [Alur kerja ekspor](../../../contributing/code/data-export-workflows) dan
 [Menambahkan kelompok takson](../../../contributing/code/adding-a-taxon-group).
 
 ## Validasi paket dan peringatan
 
-Sebelum menulis, NAHPU memvalidasi data wajib dan hubungan antarbagian paket.
-Setelah menulis, NAHPU membuka kembali arsipnya dan memeriksa keberadaan
-metadata wajib di akar.
-
-Peringatan dapat mencakup:
-
-- media tertaut yang tidak lagi ada pada perangkat;
-- mode kompatibilitas ZIP untuk DwC-DP.
-
-Peringatan belum tentu menghalangi ekspor, tetapi sebaiknya ditinjau sebelum
-paket dibagikan atau disetorkan.
+Sebelum menulis, NAHPU memvalidasi bidang wajib dan relasi; setelah selesai,
+arsip dibuka kembali untuk memastikan metadata akar tersedia. Peringatan—seperti
+media tertaut yang hilang atau mode kompatibilitas ZIP untuk DwC-DP—tidak
+selalu menghentikan ekspor, jadi periksa sebelum membagikan atau menyetorkan
+paket.

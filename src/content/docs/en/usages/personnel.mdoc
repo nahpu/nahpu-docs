@@ -23,80 +23,92 @@ sidebar:
 {% pin id="H" label="Show more" large2=[44.8, 84.9] small2=[62.4, 81.6] /%}
 {% /screenshots %}
 
-Personnel records are shared in the NAHPU database and can be assigned to
-multiple projects. A project only displays the personnel assigned to it.
+Personnel records are stored in the shared NAHPU database and can be assigned
+to multiple projects. Each project shows only the personnel assigned to it.
 
 ## Adding personnel to a project
 
 {% aside type="caution" %}
-Personnel Field IDs require a `Cataloger` with a registered personal field number. Project Field IDs use the project numbering convention instead; they do not require every number to come from a person's sequence. Choose the role carefully: once a person is saved as a `Cataloger`, that role cannot be changed.
+
+`Personnel` Field IDs require a `Cataloger` with a registered personal field
+number. `Project` Field IDs use the project numbering convention instead.
+Choose the role carefully: once a person is saved as a `Cataloger`, that role
+cannot be changed.
+
 {% /aside %}
 
-From the Personnel panel on the project dashboard, select `Add personnel`.
-If personnel already exist in the database, choose `Select from database` {% ref id="E" /%} and
-select the people to assign. Otherwise, choose `Add new personnel` {% ref id="F" /%}. On a
-narrow screen, these read `Select existing` and `Add new`.
+From the `Personnel` panel on the project dashboard, select `Add personnel`:
 
-The form includes:
+- If people already exist in the database, choose `Select from database` {% ref id="E" /%}
+  (`Select existing` on narrow screens) to pick and assign
+  them, or switch to `Add new personnel` {% ref id="F" /%} (`Add new` on narrow
+  screens) to create someone new.
+- If the database has no personnel yet, the new-person form opens directly.
 
 | Field | Shown | Notes |
 | --- | --- | --- |
 | `Name*` {% ref id="G" /%} | Always | Required. |
-| Photo | Always | An avatar or personnel photo. |
-| Affiliation | Always | The person's institution. |
-| `ORCID iD` | Always | Optional, hyphenated, with a valid checksum, such as `0000-0002-1825-0097`. |
-| Specimen care role {% ref id="B" /%} | Always | `Cataloger`, `Preparator only`, `Determiner only`, or `None`. |
-| Email | After `Show more` {% ref id="H" /%} | Saved in lowercase. |
-| Phone | After `Show more` | Digits only. |
-| Notes | After `Show more` | Additional information about the person. |
+| Photo | Always | Optional avatar or portrait. |
+| `Affiliation` | Always | The person's institution. |
+| `ORCID iD` | Always | Optional, hyphenated, with a valid checksum (for example, `0000-0002-1825-0097`). |
+| `Specimen care role` {% ref id="B" /%} | Always | `Cataloger`, `Preparator only`, `Determiner only`, or `None`. |
+| `Email` | After `Show more` {% ref id="H" /%} | Saved in lowercase when adding a new person. |
+| `Phone` | After `Show more` | Digits only. |
+| `Notes` | After `Show more` | Additional notes about the person. |
 
-Darwin Core exports use the canonical `https://orcid.org/...` URL as the
-person's agent identifier when ORCID is present. Otherwise, they use the NAHPU
-personnel UUID.
+When editing an existing person, the `Contact` and `Notes` sections start
+expanded. In Darwin Core exports, NAHPU uses the canonical
+`https://orcid.org/...` URL as the agent identifier when an `ORCID iD` is
+present, and falls back to the NAHPU personnel UUID otherwise.
 
 ## Field numbers for catalogers
 
-When the role is `Cataloger`, {% ref id="C" /%} NAHPU provides the `Register personal field
-number` option. Turn it on when the cataloger's initials and number should
-generate specimen field IDs. Enter `Initials` (up to five letters, saved in
-capitals) and the starting `Cataloger number*`; the number advances as specimens
-are created.
+When `Specimen care role` is `Cataloger`, NAHPU shows `Register personal field
+number` {% ref id="C" /%}. Turn it on when that cataloger's initials and
+running number should generate specimen `Field ID` values:
 
-If the collection uses project-based numbering, configure the project Field ID convention in Settings instead of registering a fictitious person with the project code.
+- **`Initials*`**: 2–5 characters (letters, digits, `-`, or `_`), saved in
+  capitals.
+- **`Cataloger number*`**: starting integer; advances automatically as
+  specimens are created.
 
-Field-number registration is optional. Once a person is saved as a
-`Cataloger`, that role cannot be changed.
+Field-number registration is optional. If your collection uses project-based
+numbering, configure `Project` Field IDs in [Settings](../settings/#field-id)
+instead of creating a fictitious person for the project code.
 
 ## Editing and removing personnel
 
-Use the three-dot menu beside a person in the project Personnel panel to edit
-or remove that person from the project. Removing a person from a project does
-not delete the shared personnel record. A person cannot be removed while
-project records still use that person.
-
-To search, edit, or permanently delete database personnel {% ref id="D" /%}, open `Settings` and
-choose `Personnel` or `Manage personnel` {% ref id="A" /%}. NAHPU prevents permanent deletion
-when a person is still assigned to a project.
+- **Edit in a project**: select the edit icon beside a person in the dashboard
+  `Personnel` panel.
+- **Remove from a project**: select `Select` in the dashboard `Personnel`
+  panel, check the people to remove, and choose `Remove N personnel from
+  project`. Removing someone from a project keeps their shared database record.
+  A person cannot be removed while project records still reference them.
+- **Manage all database personnel**: select `Manage` in the dashboard
+  `Personnel` panel or open `Settings` > `Database` > `Personnel` to open
+  `Manage personnel` {% ref id="A" /%}. Search or inspect details, choose
+  `Edit personnel` {% ref id="D" /%} to update a record, or use `Select` to
+  permanently delete people who are not assigned to any project (assigned
+  people are protected and cannot be selected).
 
 ## Terminology
 
 ### Cataloger
 
-A person who creates and edits specimen catalog records. Catalogers can appear
-in cataloger, preparator, and collecting-personnel fields. The `Cataloger`
-role cannot be changed after the person is saved; other roles can be edited.
+Creates and edits specimen catalog records, and can appear in cataloger,
+preparator, and collecting-personnel fields. The `Cataloger` role cannot be
+changed after saving; other roles can be edited.
 
 ### Preparator only
 
-A person who helps prepare specimens but does not create or edit catalog
-records.
+Helps prepare specimens without creating or editing catalog records.
 
 ### Determiner only
 
-A person who identifies specimens but does not catalog or prepare them. Select
-this person in the specimen form's `Determiner` field.
+Identifies specimens without cataloging or preparing them. Appears in the
+specimen form's `Determiner` field.
 
 ### None
 
-A person who supports fieldwork without a specimen-care role, such as a guide,
-driver, or cook. Their name can still be recorded as collecting personnel.
+Supports fieldwork without a specimen-care role (such as a guide, driver, or
+cook). Can still be recorded as collecting personnel on events.

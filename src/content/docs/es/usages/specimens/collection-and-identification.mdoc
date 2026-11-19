@@ -6,39 +6,42 @@ sidebar:
 ---
 
 La tarjeta `Colecta e identificación` guarda los metadatos principales del
-espécimen, en este orden en la pantalla:
+espécimen, en este orden en pantalla:
 
 | Campo | Notas |
 | --- | --- |
-| ID de campo | El número de campo del catalogador o un número de proyecto con formato. Use `Editar ID de campo` para cambiar el tipo en este espécimen; NAHPU le pide confirmación, elimina el identificador anterior y no reutiliza números ya asignados. |
+| `UUID del espécimen` | Identificador único asignado por NAHPU; de solo lectura y seleccionable. |
 | `ID del museo` | Número de catálogo o de acceso del museo, opcional. Se muestra tras `Mostrar más`, o cuando ya tiene un valor. |
-| `Catalogador` | La persona que cataloga el espécimen. Al elegirla también se asignan `Preparador` y `Determinador`. |
-| `Preparador` | La persona que preparó el espécimen o el ejemplar de referencia. |
-| `Condición` | La condición del espécimen, de la lista en Configuración. |
+| `ID de campo` | El número de campo del catalogador o un número de proyecto con formato. Seleccione el icono de edición para abrir `Editar ID de campo` y alternar entre `Personal` y `Proyecto`; NAHPU le pide confirmación, elimina el identificador anterior y no reutiliza números ya asignados. |
+| `Catalogador` | La persona que cataloga el espécimen (del personal con rol `Catalogador`). Al elegirla también se asignan `Preparador` y `Determinador`. |
+| `Preparador` | La persona que preparó el espécimen o el ejemplar de referencia (roles `Catalogador` o `Solo preparador`). |
+| `Condición` | La condición del espécimen, del vocabulario controlado `Condiciones` en `Configuración`. |
 | `Fecha de colecta`, `Hora de colecta` | Cuándo se colectó el espécimen. |
 | `Fecha de prep.`, `Hora de prep.` | Cuándo se preparó el espécimen. |
 
-La parte de **identificación** de la tarjeta contiene:
+La sección **Identificación** de la tarjeta contiene:
 
 | Campo | Notas |
 | --- | --- |
 | `Taxón` | Un registro del registro de taxones del proyecto. |
-| `Determinador` | La persona que identificó el espécimen. |
-| `Confianza de la identificación` | `Low`, `Medium` o `High`. |
-| `Método de identificación` | Evidencia usada, opcional. Aparece una vez definida la `Confianza de la identificación`. |
+| `Determinador` | La persona que identificó el espécimen (roles `Catalogador` o `Solo determinador`). |
+| `Confianza de la identificación` | `High`, `Medium`, `Low` o `Sin asignar`. |
+| `Método de identificación` | Evidencia usada, opcional, del vocabulario controlado `Métodos de identificación`. Aparece una vez definida `Confianza de la identificación`. |
 
-## Taxonomía
+## Taxonomía {% #taxonomy %}
 
-La tarjeta `Información del taxón` se lee del taxón seleccionado en
-`Colecta e identificación`. Muestra la clase, el orden y la familia en el
-formulario del espécimen. Seleccione `Ver detalles` para revisar el registro
-taxonómico completo, que incluye:
+La tarjeta `Información del taxón` se llena a partir del taxón seleccionado en
+`Colecta e identificación`. En el formulario del espécimen muestra `Clase`,
+`Orden` y `Familia`. Seleccione `Ver detalles` para revisar el registro
+taxonómico completo de solo lectura:
 
-- el `Rango` del registro;
-- el reino y el filo, tomados del registro de taxones cuando están anotados e
-  inferidos a partir de la clase en caso contrario;
-- la clase, el orden, la familia, el género y, cuando el registro llega a esos
-  rangos, la especie y la subespecie, además de los autores y el nombre común;
-- la categoría de la Lista Roja, el estado CITES, el estado por país y las
-  notas cuando existen;
-- el número de registros que usan el taxón y un código QR para compartirlo.
+- **Encabezado**: nombre científico, `Autores` y `Nombre común` cuando existen.
+- **Clasificación**: `Rango`, `Reino` y `Filo` (tomados del registro de taxones
+  cuando están anotados, o inferidos a partir de la clase en caso contrario),
+  `Clase`, `Orden`, `Familia`, `Género` y, cuando corresponde, `Especie`,
+  `Subespecie` y `Autores`.
+- **Conservación**: `Categoría de la Lista Roja`, `Estado CITES` y
+  `Estado en el país` cuando existen, además de `Notas`.
+- **Total de registros y uso compartido**: conteos de registros para
+  `Proyecto actual` y `Todos los proyectos`, y un `Código QR del taxón` para
+  compartir el taxón.

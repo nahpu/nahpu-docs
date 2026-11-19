@@ -11,14 +11,14 @@ sidebar:
    smallAlt="Tela Exportar documentos do NAHPU em um celular" %}
 {% pin id="A" label="Perfil de layout" large=[47.5, 36] small=[29.8, 41] /%}
 {% pin id="B" label="Tamanho da página" large=[23.8, 64.2] small=[67.4, 67.1] /%}
-{% pin id="C" label="Pré-visualização" large=[82.2, 17.7] small=[81, 16.1] /%}
+{% pin id="C" label="Visualizar" large=[82.2, 17.7] small=[81, 16.1] /%}
 {% pin id="D" label="Exportar documentos" large=[59, 93.2] small=[72.6, 92.3] /%}
 {% pin id="E" label="Gerenciar predefinições" large=[32.3, 46.9] small=[52.5, 51.3] /%}
 {% /screenshots %}
 
-Use `Exportar documentos` para imprimir registros do NAHPU em PDF: etiquetas de
-espécimes, rótulos de tecido, folhas de catálogo, cadernos de campo e outros
-documentos formatados. Para uma tabela de dados, use
+Use `Exportar documentos` para gerar PDFs a partir de registros do NAHPU:
+etiquetas de espécimes, rótulos de tecido, folhas de catálogo, cadernos de
+campo e outros impressos formatados. Para uma tabela de dados, use
 [Exportar registros](../export-records).
 
 ## Como as partes se combinam
@@ -29,316 +29,301 @@ Blocos preenchidos + layout de impressão = páginas
 Páginas + prévia/exportação = PDF
 ```
 
-{% documentlayout locale="pt" /%}
+{% documentlayout /%}
 
-| Parte | Decide | Exemplo |
-|---|---|---|
-| **Modelo** | O que uma etiqueta ou bloco mostra e como aparece | Uma etiqueta de crânio de 50 × 20 mm |
-| **Layout de impressão** | Papel, margens, grade, ordem e quebras de página | 40 etiquetas de crânio por folha A4 |
-| **Registros** | Os valores que preenchem o modelo | Os espécimes que você seleciona |
+| Peça | Define | Exemplo |
+| --- | --- | --- |
+| **Modelo de documento** | O que uma etiqueta ou bloco exibe e sua aparência | Uma etiqueta de crânio de 50 × 20 mm |
+| **Predefinição de layout de impressão** | Papel, margens, grade, ordenação e quebras de página | 40 etiquetas de crânio por folha A4 |
+| **Registros** | Os valores que preenchem o modelo | Os espécimes selecionados |
 
-Modelos e layouts de impressão são configurações salvas que você reutiliza.
-Mantenha um layout para cada tarefa de impressão que se repete, como etiquetas
-de museu, rótulos de tecido ou folhas de campo.
+Modelos de documentos e layouts de impressão são configurações salvas e
+reutilizáveis. Mantenha um layout para cada trabalho recorrente — como
+etiquetas de museu, rótulos de tecido ou fichas de campo.
 
 ## Exportação rápida
 
 {% steps %}
 
-1. Abra a página `Painel`.
-2. Abra o menu do projeto e selecione `Exportar documentos`.
-3. Selecione um `Perfil de layout` {% ref id="A" /%}.
-4. Confira a configuração da página, os blocos de modelo e quais registros
-   estão selecionados.
-5. Selecione `Visualizar` {% ref id="C" /%} e gere uma prévia. Veja a primeira
-   e a última página.
-6. Digite o `Nome do arquivo` e escolha onde salvar quando for pedido.
-7. Selecione `Exportar documentos` {% ref id="D" /%}.
-8. No celular, use `Compartilhar` depois da exportação para enviar o PDF.
+1. Abra o menu do projeto e selecione `Exportar documentos`.
+2. Escolha um `Perfil de layout` {% ref id="A" /%}. Se ainda não houver layouts
+   de impressão, carregue os padrões ou selecione `Gerenciar predefinições` {% ref id="E" /%}
+   para criar um.
+3. Confira a configuração de página, os blocos do modelo e os registros
+   selecionados.
+4. Selecione `Visualizar` {% ref id="C" /%} e gere a prévia, conferindo a
+   primeira e a última páginas.
+5. Informe o nome do arquivo (opcionalmente ative `Acrescentar data`) e escolha
+   a pasta de destino no desktop.
+6. Selecione `Exportar documentos` {% ref id="D" /%}. Ao concluir, compartilhe
+   o PDF, abra a pasta, salve uma cópia ou selecione `Exportar outro`.
 
 {% /steps %}
 
 ## Criar um modelo {% #create-a-template %}
 
-Abra `Settings` > `Documents` {% ref id="E" /%}, mude para `Templates` e selecione `Create
-new template`.
+Para um guia completo do modelo em branco até a folha impressa, veja o
+[Tutorial 4: Create a mammal voucher tag](/pt/tutorials/export/voucher-tag/)
+(em inglês).
 
-1. Informe um `Template name` único e, se quiser, uma `Description` curta de até 80 caracteres.
-2. Escolha o `Record type` correto: `Specimen`, `Specimen Part`, `Site`,
-   `Collecting Event`, `Narrative` ou `None`.
-3. Escolha `1 sided` ou `2 sided`. Um modelo frente e verso tem desenhos
-   separados para Front e Back; o verso é preservado no modo de um lado, mas
-   não é impresso até o modo frente e verso ser ativado.
-4. Defina largura e altura para o tamanho de uma etiqueta, rótulo ou bloco,
-   não para o tamanho da folha.
-5. Adicione textos, imagens, linhas e formas. Selecione um elemento para ajustar
-   posição, tamanho, estilo, visibilidade, bloqueio e ordem de sobreposição.
-6. Salve com `Save template`; use `Save as...` para criar uma variação.
+Abra `Configurações` > `Documentos` {% ref id="E" /%}, vá para a aba de modelos
+e crie um novo modelo:
 
-Abra o botão de configurações do editor de modelos para alterar o nome, a
-descrição ou o número de lados de um modelo salvo. Renomear reaponta todos os
-layouts de impressão que usavam o nome anterior, então eles continuam
-funcionando.
+{% steps %}
 
-O tipo de registro controla os campos e registros disponíveis. Em modelos de
-espécimes, escolha o filtro de táxon antes de selecionar campos específicos.
+1. Informe um nome único e uma descrição opcional (até 80 caracteres).
+2. Escolha o tipo de registro: `Espécime`, `Partes do espécime`, `Simbiontes`,
+   `Local`, `Evento de coleta`, `Narrativa` ou `Sem registros`.
+3. Escolha `1 face` ou `2 faces`. Modelos frente e verso mantêm designs
+   separados para Frente e Verso; ao alternar para uma face, o Verso fica salvo
+   mas não é impresso.
+4. Defina largura e altura para uma etiqueta, rótulo ou bloco — não o tamanho
+   da folha de papel.
+5. Adicione texto, imagens, linhas e formas na tela. Selecione qualquer
+   elemento para ajustar posição, tamanho, estilo, visibilidade, bloqueio e
+   empilhamento.
+6. Selecione `Salvar modelo` (ou `Salvar como…` para criar uma variação).
 
-## Preencher um modelo com dados de registro
+{% /steps %}
 
-Um elemento de texto mostra dados do registro por meio de placeholders, como
-`[specimen::fieldNumber]`, misturados com texto comum. Insira-os com
-`Inserir campo` em vez de digitá-los:
+Use o botão `Configurações do modelo` no editor para alterar nome, descrição ou
+número de faces de um modelo salvo. Renomear atualiza automaticamente todos os
+layouts que o referenciam.
+
+O tipo de registro define os campos disponíveis. Em modelos de espécimes,
+escolha o filtro de táxon antes de selecionar campos específicos do grupo.
+
+## Preencher um modelo com dados de registros
+
+Elementos de texto mostram valores de registros usando marcadores como
+`[specimen::fieldNumber]` combinados com texto fixo. Use `Inserir campo` em vez
+de digitar as chaves manualmente:
 
 ```text
 [taxonomy::genus] [taxonomy::specificEpithet] - [specimen::fieldNumber]
 ```
 
-Use a chave completa `table::field` em modelos que você reutiliza; a forma
-curta, como `[fieldNumber]`, pode pegar o campo errado quando duas tabelas têm o
-mesmo nome. O tipo de registro do modelo decide quais campos são oferecidos. Em
-modelos de espécime, escolha o filtro de táxon antes de escolher campos
-específicos do táxon.
+Prefira chaves completas `tabela::campo` em modelos reutilizáveis; formas
+curtas como `[fieldNumber]` podem escolher a tabela errada quando duas tabelas
+compartilham o mesmo nome de coluna.
 
-Três configurações de um elemento de texto definem o que é impresso:
+Três configurações moldam a saída de um elemento de texto:
 
 | Configuração | Use para | Exemplo |
-|---|---|---|
-| `Tipo` e `Formato` | Formatar o valor como data, coordenada, número, símbolo de sexo, lista, tabela aninhada ou rótulo de código | `17 Feb 2016`, `♀`, `Scrotal` |
-| `Marcador sem conteúdo` | Escolher o que um campo vazio imprime: nada, `N/A`, `None`, a chave do campo ou o seu texto | `[specimen::preparator??N/A]` |
-| `Saída condicional` | Colocar entre colchetes, substituir ou acrescentar texto conforme outros campos | `[82.5]` para um peso estimado |
+| --- | --- | --- |
+| Tipo de texto e `Formato` | Formatar datas, coordenadas, números, símbolos de sexo, listas, tabelas aninhadas ou códigos | `17 Feb 2016`, `♀`, `Scrotal` |
+| `Marcador sem conteúdo` | Definir o que imprimir quando o campo está vazio: em branco, `N/A`, `None`, a chave do campo ou texto próprio | `[specimen::preparator??N/A]` |
+| `Saída condicional` | Colocar entre colchetes, substituir ou acrescentar texto conforme condições | `[82.5]` para peso estimado |
 
-`Lista aninhada` imprime registros relacionados, como partes do espécime ou
-pessoal, como tabela ou lista de cartões. `Texto codificado` transforma códigos
-salvos em rótulos. Um sexo incerto mantém o ponto de interrogação em todos os
-formatos: `Female?`, `F?`, `♀?`.
+- Lista aninhada imprime registros relacionados (partes ou pessoal) como tabela
+  ou cartões.
+- Texto codificado converte códigos numéricos em rótulos. Sexo incerto mantém o
+  ponto de interrogação em todo formato: `Female?`, `F?`, `♀?`.
+- Defina `Marcador sem conteúdo` antes de finalizar o espaçamento, pois vazio e
+  `N/A` ocupam larguras diferentes.
+- Monte condições com o diálogo `Saída condicional` e visualize um registro que
+  atende à condição e outro que não atende.
+- Substituição de texto reescreve valores após a formatação — ideal para
+  abreviações fixas; use condicionais quando a mudança depender de outro campo.
 
-Escolha o texto para valores vazios antes de montar a etiqueta, porque um vazio
-e `N/A` ocupam espaços diferentes. Crie condicionais com a caixa de diálogo
-`Saída condicional`, que escreve a sintaxe para você, e visualize um registro em
-que a condição corresponde e outro em que não corresponde.
+Veja [Expressões de exportação](../export-expressions) para a referência
+completa, especialmente [Saída condicional](../export-expressions#conditional-output)
+e [Tipos de texto e seus formatos](../export-expressions#text-types-and-their-formats).
 
-Tudo isso funciona da mesma forma nas exportações tabulares. Para todas as
-opções, exemplos e a sintaxe condicional completa, veja
-[Expressões de exportação](../export-expressions), em especial
-[Saída condicional](../export-expressions#conditional-output) e
-[Tipos de texto e seus formatos](../export-expressions#text-types-and-their-formats).
+## Projetar para registros reais
 
-`Substituir texto` é outra forma de reescrever valores. Ele age depois da
-formatação e serve para uma substituição repetida em muitos valores, como uma
-abreviação; use uma condicional quando a mudança depender de outro campo.
+Teste prévias com os textos mais longos, listas mais extensas, campos opcionais
+em branco e identificadores compridos — amostras curtas escondem estouros de
+layout.
 
-## Preparar para dados reais
+Para narrativas ou listas aninhadas:
 
-Faça a prévia com o maior texto esperado, listas repetidas grandes, valores
-ausentes, identificadores longos e ambos os lados de modelos frente e verso.
-Para narrativas e listas aninhadas, habilite texto dinâmico e `Auto-fill page`,
-reserve largura para quebra de linha e gere a prévia novamente após editar.
+- ative o tamanho dinâmico de texto para que a caixa cresça com o conteúdo;
+- ative `Preencher página automaticamente` no bloco quando a altura variar;
+- deixe largura suficiente para quebra de linha e margem de impressão;
+- gere novamente a prévia após cada alteração.
 
-Imagens usam um caminho local gerenciado pelo dispositivo. Um JSON de modelo
-descreve a definição, não uma cópia de cada arquivo de imagem externo; verifique
-as imagens depois de importar em outro dispositivo.
+Para imagens estáticas, use um caminho gerenciado existente no dispositivo e
+verifique a imagem após importar o modelo em outro equipamento; o JSON do
+modelo armazena apenas a referência, não uma cópia dos arquivos externos.
 
 ## Criar um preset de layout de impressão {% #create-a-print-layout-preset %}
 
-Em `Settings` > `Documents`, mude para `Print layouts`. Crie um layout ou
-use `Save as...` antes de experimentar com um layout já aprovado.
-Abaixo do nome, adicione uma descrição opcional de até 80 caracteres; `Update`
-salva o nome e a descrição juntos, e a descrição aparece na lista de presets.
+Em `Configurações` > `Documentos`, vá para os layouts de impressão. Crie um
+novo layout ou use `Salvar como…` antes de alterar um layout que já funciona.
+Adicione uma descrição opcional (até 80 caracteres) e selecione atualizar para
+salvar nome e descrição juntos.
 
-### Configuração da página
+### Configuração de página
 
-Escolha `Page size` {% ref id="B" /%}, `Orientation`, dimensões personalizadas quando necessário e
-o espaçamento da página. As configurações de página descrevem a folha; o modelo
-descreve um bloco.
+Configure `Tamanho da página` {% ref id="B" /%}, orientação, dimensões
+personalizadas quando necessário e margens da página. Essas opções descrevem a
+folha física; o modelo descreve um bloco.
 
-### Blocos de modelo
+### Blocos do modelo
 
-Adicione um ou mais `Template blocks`. Para cada bloco, escolha:
+Adicione um ou mais `Blocos do modelo`. Para cada bloco, defina:
 
-- `Template` — a definição de bloco reutilizável;
-- `Copies` — quantas cópias fazer para cada registro;
-- `Rows` e `Cols` — a grade fixa de uma folha;
-- `Auto-fill page` — medir a altura renderizada de cada bloco em vez de impor
-  uma altura de linha fixa;
-- espaçamento do modelo — o espaço ao redor de cada bloco;
-- `Order by` e `Direction` — ordenação determinística dos registros;
-- `Page break after` — forçar uma quebra depois do bloco.
+- modelo de documento reutilizável;
+- cópias impressas por registro;
+- linhas e colunas para grade fixa;
+- `Preencher página automaticamente` para medir a altura real de cada bloco em
+  vez de altura fixa de linha;
+- espaçamento ao redor de cada bloco;
+- ordenação e direção para ordem determinística;
+- quebra de página após o bloco.
 
-Se um bloco do layout exibir `This template no longer exists`, selecione um
-modelo substituto disponível antes de gerar a prévia ou exportar. O NAHPU não
-substitui um modelo silenciosamente.
+Se um bloco indicar que o modelo não existe mais, escolha um substituto antes
+de visualizar ou exportar; o NAHPU nunca substitui modelos silenciosamente.
 
-### Vários blocos
+### Múltiplos blocos
 
-Quando um layout tem vários blocos, `Multiple blocks mode` controla a ordem
-deles:
+Quando há mais de um bloco, o modo de múltiplos blocos define a ordem:
 
-- `Continuous (Block-by-block)` imprime todos os registros do bloco 1 e depois
-  todos os registros do bloco 2.
-- `Alternate (Record-by-record)` imprime o bloco 1 e o bloco 2 do registro 1 e,
-  em seguida, o bloco 1 e o bloco 2 do registro 2.
+- contínuo (bloco por bloco): imprime todos os registros do bloco 1 e depois
+  todos os do bloco 2 (ideal para pacotes com seções separadas);
+- alternado (registro por registro): imprime bloco 1 e bloco 2 do registro 1 e
+  depois do registro 2 (ideal para saídas pareadas).
 
-Use o primeiro modo para seções separadas de um conjunto e o segundo para saídas
-pareadas que devem permanecer juntas.
+## Receitas práticas de layout
 
-## Receitas práticas
+| Objetivo | Configurações recomendadas |
+| --- | --- |
+| Documento de página inteira | Um bloco, 1 linha, 1 coluna, altura fixa |
+| Grade fixa de etiquetas | Linhas e colunas exatas, `Preencher página automaticamente` desativado |
+| Folha de narrativa variável | Texto dinâmico e `Preencher página automaticamente` ativados; testar registros longos |
+| Várias cópias de cada etiqueta | Aumentar o número de cópias do bloco |
+| Etiqueta frente e verso | Modelo de `2 faces`; verificar espelhamento frente/verso |
+| Pacote misto | Múltiplos blocos no modo contínuo (bloco por bloco) |
+| Saída pareada | Múltiplos blocos no modo alternado (registro por registro) |
 
-| Objetivo | Configuração recomendada |
-|---|---|
-| Documento de página inteira | Um bloco, uma linha e uma coluna |
-| Grade de etiquetas fixas | Linhas e colunas exatas, `Auto-fill page` desligado |
-| Folha narrativa variável | Texto dinâmico e `Auto-fill page` ligados |
-| Várias cópias | Aumente `Copies` |
-| Etiqueta frente e verso | Modelo `2 sided` e teste o espelhamento |
-| Pacote misto | Vários blocos e `Continuous (Block-by-block)` |
-| Saída de registros pareados | Vários blocos e `Alternate (Record-by-record)` |
+## Visualizar e exportar com segurança
 
-## Pré-visualizar, exportar e compartilhar
+A prévia executa o mesmo mecanismo de modelos, medição e paginação da
+exportação PDF. Antes de exportar:
 
-A prévia usa o mesmo caminho de seleção, substituição, medição e paginação do
-PDF. Verifique registros longos, listas repetidas, primeira e última página,
-alinhamento da grade e ambos os lados. Gere uma nova prévia quando ela estiver
-desatualizada.
+- selecione registros representativos para cada bloco;
+- confira a primeira e a última páginas;
+- verifique textos longos, listas repetidas, alinhamento, margens e ambas as
+  faces em frente e verso;
+- gere a prévia novamente sempre que aparecer como desatualizada.
 
-Alterações feitas no layout selecionado pela tela de exportação são salvas no
-próprio layout. Use `Save as...` antes de testar uma nova disposição. Informe
-`File name`, selecione o diretório e use `Export documents`. O PDF é um artefato
-de apresentação, não uma exportação estruturada nem um backup restaurável.
+Edições feitas ao layout selecionado na tela de exportação são salvas nele —
+use `Salvar como…` antes de testar variações. O PDF gerado não é exportação de
+dados estruturados nem backup restaurável.
 
 ## Fontes
 
-Abra `Settings` > `Documents` e mude para `Fonts` para ver todas as fontes
-disponíveis para os modelos. A lista tem duas partes: as fontes incluídas no
-NAHPU, sempre disponíveis, e as que você instalou. O painel direito
-pré-visualiza a fonte selecionada no tamanho que você escolher, em normal,
-negrito e itálico.
+Abra `Configurações` > `Documentos` > `Fontes` para ver as fontes incluídas no
+NAHPU e as fontes instaladas por você. O painel de prévia exibe estilos normal,
+negrito e itálico no tamanho escolhido.
 
-Selecione `Install font` para adicionar um arquivo `.ttf`, `.otf` ou `.ttc`
-deste dispositivo. `Find fonts` abre uma biblioteca de fontes no navegador;
-baixe o arquivo lá primeiro e depois instale-o aqui. Você é responsável pela
-licença de qualquer fonte que instalar.
+- Selecione `Instalar fonte` para instalar um arquivo `.ttf`, `.otf` ou `.ttc`
+  do dispositivo.
+- Selecione `Encontrar fontes` para explorar fontes no navegador e depois
+  instalar o arquivo baixado. Você é responsável pela licença de cada fonte
+  instalada.
+- Fontes instaladas ficam apenas nesta instalação e não acompanham a
+  transferência de configurações do usuário. Instale a mesma fonte em outros
+  dispositivos ou escolha uma substituta ao importar o modelo.
+- Uma fonte usada por algum modelo salvo não pode ser excluída até deixar de
+  ser referenciada.
 
-Uma fonte instalada existe apenas naquela instalação. Ela não faz parte de uma
-transferência de configurações de usuário, então a instalação que receber um
-modelo que a use não recebe a fonte. Instale a mesma fonte em cada dispositivo
-que imprimir o modelo, ou aceite a substituição que o NAHPU oferece na
-importação. Uma fonte usada por um modelo salvo não pode ser excluída enquanto
-algum modelo a referenciar.
+## Importar e compartilhar modelos e layouts
 
-## Importar e compartilhar
+Exporte modelos e layouts em `Configurações` > `Documentos`, individualmente ou
+todos de uma vez; ambos usam o mesmo formato e a mesma ação de importação. A
+exportação de layouts inclui os modelos vinculados por padrão (desative essa
+opção para exportar somente os layouts).
 
-Modelos são exportados em `Settings` > `Documents` > `Templates`, e layouts em
-`Print layouts`. Ambos oferecem dois escopos: `Export this ...` em uma linha ou
-no menu de opções grava um único item, e `Export all ...` grava todos. Ambos
-escrevem o mesmo formato de arquivo, então qualquer um é importado pela mesma
-ação `Import`. A caixa de diálogo de exportação define o nome e a pasta do
-arquivo, e `Share` o envia depois de gravado. Exportar um layout inclui os
-modelos usados pelos seus blocos; desative `Include linked templates` para
-exportar só os layouts. Ao importar esse arquivo, os modelos também são
-adicionados, e um modelo só é renomeado quando já existe outro diferente com o
-mesmo nome.
+Como conflitos e recursos ausentes são tratados na importação:
 
-A importação de modelo pergunta se deve substituir ou usar outro nome, e
-acrescenta um sufixo numerado quando vários chegam de uma vez; a importação de
-layout cria um nome disponível.
+- **Nomes duplicados de modelos:** pergunta se deseja substituir ou escolher
+  outro nome (adicionando sufixos numéricos ao importar vários).
+- **Nomes duplicados de layouts:** cria automaticamente um nome sem conflito.
+- **Importação de configurações do usuário:** substitui atomicamente as seções
+  selecionadas.
+- **Fontes ausentes:** lista as fontes faltantes e permite visualizar e
+  escolher substitutas antes de salvar.
+- **Imagens estáticas:** referenciadas apenas pelo nome; modelos com logotipos
+  avisam na exportação e exigem recolocar a imagem no dispositivo receptor.
 
-Quando um modelo importado usa uma fonte que esta instalação não tem, o NAHPU
-lista as fontes ausentes e pede uma substituição, com uma prévia de cada
-escolha antes de aplicá-la. Nada é armazenado até que as substituições sejam
-escolhidas, então um modelo transferido nunca carrega uma fonte que não possa
-ser renderizada.
-
-As imagens usadas por um modelo são referenciadas por nome e não ficam
-armazenadas no arquivo exportado. Um modelo que use um logotipo avisa você na
-exportação, e a imagem precisa ser adicionada novamente na instalação
-receptora.
-
-Layouts referenciam modelos por nome, portanto transfira ambos juntos. Para uma
-cópia completa com dados e arquivos gerenciados, use `Backup database`.
+Como layouts referenciam modelos pelo nome, transfira ambos juntos. Para uma
+cópia completa do dispositivo com dados e arquivos gerenciados, use
+`Fazer backup do banco de dados`.
 
 ## Imprimindo etiquetas de espécimes {% #printing-specimen-tags %}
 
-As etiquetas impressas são o motivo mais comum para exportar documentos.
-Imprimi-las a partir dos dados do NAHPU, em vez de escrevê-las à mão:
+Imprimir etiquetas pelo NAHPU em vez de escrevê-las à mão:
 
-- **Economiza tempo em campo.** Uma etiqueta completa escrita à mão pode levar
-  10 minutos ou mais. Em vez disso, escreva uma etiqueta provisória pequena com
-  identificadores, como um número de tecido (`B-729113`) e um número de campo
-  (`JPO 7299`), e imprima as etiquetas completas depois, no museu.
-- **Dá etiquetas limpas e padronizadas**, que qualquer pessoa consegue ler,
-  seja qual for a caligrafia.
-- **Evita erros de cópia.** Uma localidade com coordenadas e elevação é
-  digitada uma vez, ligada a cada espécime pelo seu local e corrigida em um só
-  lugar quando preciso.
-- **Abre espaço para limpar os dados.** Antes de imprimir, você pode corrigir
-  coordenadas ou elevações estranhas, terminologia e ortografia.
+- **Economiza tempo em campo:** prenda uma etiqueta temporária pequena com IDs
+  principais — como número de tecido (`B-729113`) e número de campo
+  (`JPO 7299`) — e imprima as etiquetas completas depois no museu.
+- **Garante legibilidade:** produz etiquetas limpas e padronizadas.
+- **Evita erros de cópia:** localidades, coordenadas e elevações são inseridas
+  uma única vez por local e corrigidas em um só lugar.
+- **Permite curadoria antes da impressão:** corrija coordenadas, elevações,
+  terminologia e ortografia antes de imprimir.
 
 ### Fluxo de impressão de etiquetas
 
-O NAHPU pode imprimir etiquetas diretamente de um modelo e de uma predefinição
-de layout. Quando você precisar de uma composição tipográfica que os layouts
-internos não cobrem, uma ferramenta externa de etiquetas continua sendo uma
-opção:
+O NAHPU imprime etiquetas diretamente a partir de modelos e layouts de
+impressão. Se precisar de diagramação externa específica, ainda é possível
+combinar exportações do NAHPU com uma ferramenta dedicada:
 
 {% steps %}
 
-1. Exporte os dados de espécimes do NAHPU como um arquivo `.csv`.
-2. Faça a limpeza final dos dados: revisão ortográfica, correção de erros
-   diversos e organização, combinação ou divisão de colunas conforme necessário.
-3. Envie a planilha para o Entomolabels. Com o
-   [software Entomolabels](https://labels.entomo.pl/) (infelizmente disponível
-   apenas para computadores Windows) e modelos de etiqueta personalizados, você
-   pode formatar os dados na etiqueta do espécime.
-4. Exporte os PDFs finais para a frente e o verso das etiquetas e combine-os,
-   alternando as páginas de frente e verso.
-5. Use uma impressora com duplex automático para imprimir as etiquetas finais.
+1. Exporte os registros de espécimes do NAHPU em `.csv`.
+2. Faça a limpeza final: ortografia, correção de erros e combinação ou divisão
+   de colunas.
+3. Carregue a planilha no [Entomolabels](https://labels.entomo.pl/) (somente
+   Windows) com seu modelo personalizado.
+4. Exporte os PDFs de frente e verso e intercale as páginas.
+5. Imprima em uma impressora com duplex automático.
 
 {% /steps %}
 
-### Equipamento de impressão
+### Equipamento de impressão {% #printing-equipment %}
 
-- **Impressora.** Para imprimir etiquetas, a equipe do NAHPU usou a
+- **Impressora:** A equipe do NAHPU utilizou a
   [Epson WorkForce Pro WF-3820](https://epson.com/For-Work/Printers/Inkjet/WorkForce-Pro-WF-3820-Wireless-All-in-One-Printer/p/C11CJ07201)
-  com [tinta pigmentada de secagem instantânea DURABrite® Ultra](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1).
-  Com essa impressora, essa tinta e o papel indicado abaixo, imprimimos
-  recentemente (primavera de 2024) mais de 1000 etiquetas de espécimes de aves
+  com tinta pigmentada de secagem instantânea
+  [DURABrite® Ultra](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1),
+  imprimindo mais de 1.000 etiquetas de espécimes de aves (primavera de 2024)
   para o Louisiana State University Museum of Natural Science.
-- **Papel.** Usamos [papel 100% algodão, livre de ácido](https://www.redrivercatalog.com/browse/aurora-art-white-250.html)
-  com gramatura de 250 g/m². Como é um papel relativamente espesso e rígido,
-  achamos muito útil flexionar um pouco as folhas antes de imprimir. Caso
-  contrário, a impressora pode ter dificuldade para virar a página
-  internamente.
+- **Papel:**
+  [Papel 100% algodão livre de ácido de 250 gsm](https://www.redrivercatalog.com/browse/aurora-art-white-250.html).
+  Como é espesso e firme, flexione levemente as folhas antes de carregar para
+  facilitar a viragem automática na impressora.
 
-### Arquive o material impresso
+### Arquivar o material impresso
 
-Guarde o PDF digital junto com o arquivo do projeto e preserve as predefinições
-de layout e de modelo caso o documento precise ser gerado novamente. Revise a
-impressão antes de produzir um lote completo e imprima em papel adequado e
-durável. Mantenha a cópia impressa junto aos registros de coleção
-correspondentes.
-
-Não trate documentos impressos como substitutos do banco de dados, da
-exportação do projeto ou da exportação estruturada de registros. Consulte
-[Arquivando um projeto](../#archiving-a-project).
+Guarde o PDF gerado — junto aos modelos e layouts necessários para reproduzi-lo
+— no arquivo do projeto. Revise um teste impresso antes do lote completo, use
+papel durável e guarde cópias físicas com os registros da coleção. Documentos
+impressos nunca substituem um backup do banco de dados ou exportação
+estruturada; veja [Arquivar um projeto](../#archiving-a-project).
 
 ## Solução de problemas
 
-| Sintoma | Verifique |
-|---|---|
-| Placeholder aparece literalmente | Tipo de registro e chave completa `table::field`. |
-| Uma condicional aparece literalmente | A expressão está malformada. Verifique se falta um `]]`, se há um valor sem aspas ou `&&` e `\|\|` misturados. |
-| Uma condição nunca coincide | As comparações diferenciam maiúsculas de minúsculas, leem o valor armazenado em vez do rótulo exibido, e um valor vazio do registro nunca coincide. |
-| Prévia vazia | Tipo do bloco e registros selecionados. |
-| Modelo ausente | Reatribua o bloco ou restaure/import o modelo. |
-| Texto sobreposto ou cortado | Texto dinâmico, `Auto-fill page`, largura e altura do bloco. |
-| Espaço vazio inesperado | Linhas fixas, tamanho do modelo e espaçamentos. |
-| Ordem incorreta | `Order by` e `Direction` do bloco. |
-| Repetição inesperada | `Copies` e a seleção de registros. |
-| Blocos na sequência errada | `Multiple blocks mode`. |
-| Verso ausente ou girado | `2 sided`, conteúdo Back e espelhamento. |
-| Prévia desatualizada | Gere a prévia novamente. |
-| Importação altera muitos presets | A transferência de uma seção substitui toda aquela seção. |
+| Sintoma | O que verificar |
+| --- | --- |
+| Marcador impresso literalmente | Verifique o tipo de registro do modelo e use a chave completa `tabela::campo`. |
+| Condicional impresso literalmente | Sintaxe inválida — verifique `]]` ausente, valores sem aspas ou mistura de `&&` e `\|\|`. |
+| Condição nunca corresponde | Comparações diferenciam maiúsculas, testam valores armazenados (não rótulos) e valores vazios não correspondem a operadores comuns. |
+| Prévia vazia | Verifique o tipo de registro do bloco e selecione registros. |
+| Modelo ausente | Reatribua o bloco ou importe/restaure o modelo nomeado. |
+| Texto sobreposto ou cortado | Ative texto dinâmico e `Preencher página automaticamente`, ou aumente o bloco. |
+| Espaço em branco inesperado | Revise linhas fixas, tamanho do modelo, margens da página e espaçamento do bloco. |
+| Registros fora de ordem | Configure ordenação e direção nesse bloco. |
+| Etiquetas repetidas sem querer | Verifique número de cópias e a lista de registros selecionados. |
+| Blocos em sequência incorreta | Altere o modo de múltiplos blocos. |
+| Verso ausente ou invertido | Verifique `2 faces`, conteúdo do Verso e espelhamento. |
+| Prévia marcada como desatualizada | Gere a prévia novamente após a última edição. |
+| Importação mudou muitas configurações | Importação de seções de configurações do usuário substitui cada seção escolhida (exceto `Campos personalizados`, que são mesclados). |
 
-Todas as opções do editor de modelos estão listadas em
-[Expressões de exportação](../export-expressions#template-editor-options). Para detalhes
-de armazenamento e renderização, consulte [Templates and presets (em inglês)](/en/contributing/code/templates-and-presets/) e [Export workflows (em inglês)](/en/contributing/code/data-export-workflows/).
+Todos os controles do editor de modelos estão descritos em
+[Expressões de exportação](../export-expressions#template-editor-options). Para
+detalhes de arquitetura para desenvolvedores, veja
+[Templates and presets](/en/contributing/code/templates-and-presets/) e
+[Export workflows](/en/contributing/code/data-export-workflows/) (em inglês).
