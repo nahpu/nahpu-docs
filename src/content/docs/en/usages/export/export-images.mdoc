@@ -22,102 +22,94 @@ sidebar:
 {% pin id="G" label="Export" large2=[54.5, 80.2] small2=[69, 91.9] /%}
 {% /screenshots %}
 
-Use the media export when you need the photographs themselves rather than the
-records that describe them. It is the quickest way to pull a set of field
-images out of a project for a grant report, a permit report, a presentation, or
-a colleague who does not use NAHPU.
+Use media export when you need the image, audio, or video files themselves—for
+a grant report, permit report, presentation, or colleague who does not use
+NAHPU.
 
-There are two ways to export. Export one file when you want full control over
-its size and quality, or export a selection as a single archive when you need
-many files at once. Audio and video are included in a selection, but the image
-options below only apply to images.
+You can export one file with full control over dimensions and quality, or
+export a multi-file selection as a single archive. Audio and video can be
+included in a selection, while conversion and resizing apply to images only.
 
 ## Export a single file
 
-Open the media item, then choose `Export` {% ref id="G" /%}.
+Open any media item and select `Export` {% ref id="G" /%} to open `Export media`
+(shown as a bottom sheet on phones and a dialog on wider screens).
 
 {% steps %}
 
-1. Check the file name {% ref id="E" /%}. NAHPU proposes the current name of the file, and you
-   can turn on `Append date` {% ref id="F" /%} to add today's date.
-
-2. Choose the format. `Original` always works {% ref id="D" /%}. `JPEG`, `PNG`, and `WebP` are
-   offered when NAHPU can read the image, which covers `.jpg`, `.jpeg`,
-   `.png`, and `.webp` sources.
-
-3. Turn on `Resize image` if the file is larger than you need. The aspect ratio
-   is locked, so typing a width updates the height, and neither value can go
-   above the original dimensions shown above the switch.
-
-4. Adjust `JPEG quality` when exporting to JPEG. The default of 85 percent is a
-   good balance of size and detail. Lower it for email or upload over a slow
-   connection.
-
-5. Select a destination folder, then `Export`. When the file is written, the
-   button becomes `Share`.
+1. Review `File name` {% ref id="E" /%}. NAHPU suggests the current filename;
+   turn on `Append date` {% ref id="F" /%} to add today's date.
+2. Choose a file format {% ref id="D" /%}. `Original` is always available;
+   `JPEG`, `PNG`, and `WebP` appear when NAHPU can decode the image (`.jpg`,
+   `.jpeg`, `.png`, and `.webp` sources).
+3. When exporting to `JPEG`, `PNG`, or `WebP`, turn on `Resize image` if you
+   want a smaller file. Aspect ratio is locked so editing width updates height,
+   and neither dimension can exceed the original size shown above the switch.
+4. For `JPEG`, adjust `JPEG quality` (default `85%` balances detail and size;
+   lower values suit email or slow uploads).
+5. Choose a destination folder on desktop and select `Export`. Once written,
+   you can `Share`, open the folder, or save a copy.
 
 {% /steps %}
 
 {% aside type="note" %}
 
-Formats that NAHPU cannot decode, such as RAW camera files, can still be
-exported in their original format. The dialog says so instead of offering the
-conversion options.
+Files NAHPU cannot decode—such as camera RAW files—still export in their
+`Original` format; conversion and resizing controls are hidden.
 
 {% /aside %}
 
 ## Export a selection as an archive
 
-Open the media gallery {% ref id="A" /%} from any record media panel, or use the media panel of
-the record itself. Turn on selection {% ref id="B" /%}, choose the files you want, then select
-`Export`. This opens the `Export selected media` {% ref id="C" /%} screen.
+Open `Media gallery` {% ref id="A" /%} from the home screen menu (to browse
+media across all projects) or from any record's media panel, or select files
+directly inside a record's media panel. Enable selection {% ref id="B" /%},
+pick your files, and select `Export` to open `Export selected media` {% ref id="C" /%}.
 
-The summary lists how many files were selected, how many were found on disk,
-how many are images, audio, video, or other, and the total source size. Files
-that cannot be found are reported as warnings rather than silently dropped.
+`Archive contents` summarizes how many files were selected, how many were found
+on disk, counts by media type (images, audio, video, other), total
+`Source size`, and warnings for missing or unconvertible files.
 
-The settings panel has:
+Configure the archive under `Archive`:
 
-- **Archive format**. Choose ZIP or TAR.GZ according to the tools available to the recipient. Compare actual output sizes when transfer size matters; compression savings depend on the files.
-- **Image format**. `Original` copies the files unchanged. `JPEG`, `PNG`, or
-  `WebP` converts every readable image in the selection.
-- **Limit image dimensions**. Available once you convert. Enter a maximum
-  width or height in pixels, and NAHPU constrains whichever side is longer.
-  Images already smaller than the limit are not upscaled.
-- **JPEG quality**. Applies when the image format is JPEG.
-- **File name**, **Append date**, and the destination folder.
+| Setting | What it does |
+| --- | --- |
+| Archive format | Choose `TAR.GZ` (default) or `ZIP` based on the recipient's tools. |
+| `Image format` | `Original` copies images unchanged; `JPEG`, `PNG`, or `WebP` converts every readable image. |
+| `Limit image dimensions` | Shown when converting: caps the longer side to a maximum pixel size without upscaling smaller images. |
+| `JPEG quality` | Shown when converting to `JPEG` (default `85%`). |
+| `File name` and `Append date` | Sets the archive name (and optionally appends today's date). |
 
-Inside the archive, files are grouped into `specimen`, `site`, `event`,
-`narrative`, and `other` folders so you can tell where each file came from.
-Audio and video are copied unchanged regardless of the image format.
+Inside the archive, files are organized into `specimen`, `site`, `event`,
+`narrative`, and `other` folders. Audio and video files are always copied
+unchanged.
 
 {% aside type="caution" %}
 
-A large selection can take several minutes, especially when converting. The
-screen shows progress and a `Cancel` button while it runs. Keep NAHPU open
-until it finishes, and check the exported and skipped counts and any warnings
-in the summary before you send the archive on.
+Large batches—especially with image conversion—can take several minutes. Keep
+NAHPU open while progress runs (use `Cancel` if you need to stop), then check
+the exported count, skipped count, and warnings before sharing the archive.
 
 {% /aside %}
 
 ## Choosing settings
 
 | Use | Format | Size | JPEG quality |
-|---|---|---|---|
-| Archiving or further processing | `Original` | Unchanged | — |
-| Printed report or poster | `JPEG` or `PNG` | Large enough for the print size | 85–95 |
-| Slides or a web page | `JPEG` or `WebP` | About 2000 px on the long side | 80–85 |
-| Email or slow upload | `JPEG` | About 1200 px on the long side | 70–80 |
+| --- | --- | --- | --- |
+| Archiving or further editing | `Original` | Unchanged | — |
+| Printed report or poster | `JPEG` or `PNG` | Large enough for print dimensions | 85–95% |
+| Slides or web page | `JPEG` or `WebP` | ~2000 px on the long side | 80–85% |
+| Email or slow upload | `JPEG` | ~1200 px on the long side | 70–80% |
 
-These are starting points. Open an exported image at the size it will be used
-before you send a batch. Resizing and JPEG compression remove detail for good,
-so always keep the originals.
+Inspect a sample exported image at its intended viewing size before sharing a
+batch. Resizing and JPEG compression permanently discard detail, so keep the
+original files.
 
 ## Related pages
 
-- [Attach data and media](/en/how-to-recipes/collect/attach-data-and-media)
-  for adding media to a record
-- [Export project](/en/usages/export/project-transfer/) when media should travel with the
-  records
-- [Bundle records](/en/usages/export/export-bundles/) for packages that include media alongside
-  standards-based tables
+- [Attach data and media](/en/how-to-recipes/collect/attach-data-and-media) for
+  attaching media to records
+- [Transfer a Project](/en/usages/export/project-transfer/) when media should
+  travel together with project records
+- [Bundle records](/en/usages/export/export-bundles/) for standards-based
+  packages that include media alongside data tables

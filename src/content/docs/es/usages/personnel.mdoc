@@ -23,86 +23,102 @@ sidebar:
 {% pin id="H" label="Mostrar más" large2=[44.8, 84.9] small2=[62.4, 81.6] /%}
 {% /screenshots %}
 
-Los registros de personal se comparten en la base de datos de NAHPU y pueden
-asignarse a varios proyectos. Un proyecto solo muestra el personal asignado a
-él.
+Los registros de personal se guardan en la base de datos compartida de NAHPU y
+pueden asignarse a varios proyectos. Cada proyecto muestra solo el personal
+asignado a él.
 
 ## Agregar personal a un proyecto {% #adding-personnel-to-a-project %}
 
 {% aside type="caution" %}
-Los ID de campo por persona requieren un `Catalogador` con un número de campo personal registrado. Los ID de campo por proyecto usan la convención de numeración del proyecto; no requieren que cada número provenga de la secuencia de una persona. Elija el rol con cuidado: una vez que una persona se guarda como `Catalogador`, ese rol no puede cambiarse.
+
+Los ID de campo de `Personal` requieren un `Catalogador` con un número de campo
+personal registrado. Los ID de campo de `Proyecto` usan en su lugar la
+convención de numeración del proyecto. Elija la función con cuidado: una vez
+guardada una persona como `Catalogador`, esa función no se puede cambiar.
+
 {% /aside %}
 
-En el panel Personal del panel del proyecto, seleccione `Agregar personal`. Si
-ya hay personas en la base de datos, elija `Seleccionar de la base de datos` {% ref id="E" /%} y
-seleccione a quienes desea asignar. De lo contrario, elija `Agregar nuevo personal` {% ref id="F" /%}. En
-una pantalla estrecha, estas opciones se muestran como `Seleccionar existente` y
-`Agregar nuevo`.
+Desde el panel `Personal` en el panel del proyecto, seleccione
+`Agregar personal`:
 
-El formulario incluye:
+- Si ya existen personas en la base de datos, elija
+  `Seleccionar de la base de datos` {% ref id="E" /%} (`Seleccionar existente`
+  en pantallas estrechas) para asignarlas, o cambie a `Agregar nuevo personal` {% ref id="F" /%}
+  (`Agregar nuevo` en pantallas estrechas) para crear una
+  persona nueva.
+- Si todavía no hay personal en la base de datos, el formulario de persona
+  nueva se abre directamente.
 
-| Campo | Se muestra | Notas |
+| Campo | Cuándo aparece | Notas |
 | --- | --- | --- |
 | `Nombre*` {% ref id="G" /%} | Siempre | Obligatorio. |
-| Foto | Siempre | Un avatar o una foto del personal. |
-| Afiliación | Siempre | La institución de la persona. |
-| `ORCID iD` | Siempre | Opcional, con guiones y un dígito de verificación válido, como `0000-0002-1825-0097`. |
-| Función en el cuidado de especímenes {% ref id="B" /%} | Siempre | `Catalogador`, `Solo preparador`, `Solo determinador` o `Ninguno`. |
-| Correo electrónico | Tras `Mostrar más` {% ref id="H" /%} | Se guarda en minúsculas. |
-| Teléfono | Tras `Mostrar más` | Solo dígitos. |
-| Notas | Tras `Mostrar más` | Información adicional sobre la persona. |
+| Foto | Siempre | Avatar o retrato opcional. |
+| `Afiliación` | Siempre | Institución de la persona. |
+| `ORCID iD` | Siempre | Opcional, con guiones y suma de comprobación válida (por ejemplo, `0000-0002-1825-0097`). |
+| `Función en el cuidado de especímenes` {% ref id="B" /%} | Siempre | `Catalogador`, `Solo preparador`, `Solo determinador` o `Ninguno`. |
+| `Correo electrónico` | Tras `Mostrar más` {% ref id="H" /%} | Se guarda en minúsculas al agregar una persona nueva. |
+| `Teléfono` | Tras `Mostrar más` | Solo dígitos. |
+| `Notas` | Tras `Mostrar más` | Notas adicionales sobre la persona. |
 
-Las exportaciones Darwin Core usan la URL canónica `https://orcid.org/...` como
-identificador de agente de la persona cuando hay ORCID. En caso contrario, usan
-el UUID de personal de NAHPU.
+Al editar una persona existente, las secciones de contacto y notas aparecen
+expandidas. En las exportaciones Darwin Core, NAHPU usa la URL canónica
+`https://orcid.org/...` como identificador del agente cuando hay un `ORCID iD`,
+y de lo contrario usa el UUID del personal en NAHPU.
 
 ## Números de campo para catalogadores
 
-Cuando el rol es `Catalogador`, {% ref id="C" /%} NAHPU ofrece la opción
-`Registrar número de campo personal`. Actívela cuando las iniciales y el número
-del catalogador deban generar los ID de campo de los especímenes. Ingrese las
-`Iniciales` (hasta cinco letras, guardadas en mayúsculas) y el
-`Número del catalogador*` inicial; el número avanza a medida que se crean
-especímenes.
+Cuando `Función en el cuidado de especímenes` es `Catalogador`, NAHPU muestra
+`Registrar número de campo personal` {% ref id="C" /%}. Actívelo cuando las
+iniciales y el número correlativo del catalogador deban generar los valores de
+`ID de campo` de los especímenes:
 
-Si la colección usa numeración por proyecto, configure la convención de ID de campo del proyecto en Configuración en vez de registrar una persona ficticia con el código del proyecto.
+- **`Iniciales*`**: de 2 a 5 caracteres (letras, dígitos, `-` o `_`),
+  guardados en mayúsculas.
+- **`Número del catalogador*`**: número entero inicial; avanza automáticamente
+  al crear especímenes.
 
-El registro del número de campo es opcional. Una vez que una persona se guarda
-como `Catalogador`, ese rol no puede cambiarse.
+Registrar el número de campo es opcional. Si su colección usa numeración por
+proyecto, configure los ID de campo de `Proyecto` en
+[Configuración](../settings/#field-id) en lugar de crear una persona ficticia
+con el código del proyecto.
 
 ## Editar y quitar personal
 
-Use el menú de tres puntos junto a una persona en el panel Personal del proyecto
-para editarla o quitarla del proyecto. Quitar a una persona de un proyecto no
-elimina el registro compartido de personal. No se puede quitar a una persona
-mientras los registros del proyecto sigan usándola.
-
-Para buscar, editar o eliminar permanentemente al personal de la base de datos {% ref id="D" /%},
-abra `Configuración` y elija `Personal` o `Gestionar personal` {% ref id="A" /%}. NAHPU impide la
-eliminación permanente cuando la persona sigue asignada a un proyecto.
+- **Editar en un proyecto**: seleccione el icono de edición junto a la persona
+  en el panel `Personal` del panel del proyecto.
+- **Quitar de un proyecto**: seleccione `Seleccionar` en el panel `Personal`,
+  marque las personas a quitar y pulse `Quitar N personas del proyecto`. Quitar
+  a alguien de un proyecto conserva su registro compartido en la base de datos.
+  No se puede quitar a una persona mientras los registros del proyecto sigan
+  haciendo referencia a ella.
+- **Gestionar todo el personal de la base de datos**: seleccione `Gestionar` en
+  el panel `Personal` o abra `Configuración` > `Base de datos` > `Personal`
+  para abrir `Gestionar personal` {% ref id="A" /%}. Busque o consulte
+  detalles, seleccione `Editar personal` {% ref id="D" /%} para actualizar un
+  registro o use `Seleccionar` para eliminar permanentemente a personas que no
+  estén asignadas a ningún proyecto (las personas asignadas están protegidas y
+  no se pueden seleccionar).
 
 ## Terminología
 
 ### Catalogador {% #cataloger %}
 
-Persona que crea y edita los registros de catálogo de los especímenes. Los
-catalogadores pueden aparecer en los campos de catalogador, preparador y
-personal de recolecta. El rol `Catalogador` no puede cambiarse después de
-guardar a la persona; los demás roles pueden editarse.
+Crea y edita registros de catálogo de especímenes, y puede aparecer en los
+campos de catalogador, preparador y personal de recolecta. La función
+`Catalogador` no puede cambiarse después de guardarla; las demás funciones sí
+se pueden editar.
 
 ### Solo preparador {% #preparator-only %}
 
-Persona que ayuda a preparar especímenes, pero no crea ni edita registros de
-catálogo.
+Ayuda a preparar especímenes sin crear ni editar registros de catálogo.
 
 ### Solo determinador {% #determiner-only %}
 
-Persona que identifica especímenes, pero no los cataloga ni los prepara.
-Seleccione a esta persona en el campo `Determinador` del formulario del
-espécimen.
+Identifica especímenes sin catalogarlos ni prepararlos. Aparece en el campo de
+determinador del formulario de espécimen.
 
 ### Ninguno {% #none %}
 
-Persona que apoya el trabajo de campo sin un rol de cuidado del espécimen, como
-un guía, un conductor o un cocinero. Su nombre aún puede registrarse como
-personal de recolecta.
+Apoya el trabajo de campo sin función de cuidado de especímenes (por ejemplo,
+guía, conductor o cocinero). Puede seguir registrándose como personal de
+recolecta en los eventos.

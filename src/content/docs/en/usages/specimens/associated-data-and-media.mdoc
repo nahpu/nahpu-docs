@@ -5,37 +5,45 @@ sidebar:
   order: 7
 ---
 
-Use `Associated Data` for specimen-linked digital data that is not better stored
-as a specimen part or media record. Examples include GenBank accessions,
-MorphoSource records, analysis files, or external database links. It is the
+Use `Associated Data` for specimen-linked digital files and external links that
+are not specimen parts or media records—such as GenBank accessions,
+MorphoSource records, analysis files, or external database URLs. It is the
 storage-icon tab of the `Specimen Parts` card.
 
-Associated data fields include:
-
-- `Data type`: `Link` or `File`.
-- `Name`: source or dataset name, such as `GenBank`.
-- `Description`: accession number or description of the data.
-- `Date`: date associated with the data.
-- `URI`: external URL when the data type is `Link`.
-- File selector: local file attachment when the data type is `File`.
+| Field | Notes |
+| --- | --- |
+| `Data type` | `Link` or `File`. |
+| `Name` | Source or dataset name, such as `GenBank` or `MorphoSource`. |
+| `Description` | Accession number or short description of the data. |
+| `Date` | Date associated with the data. |
+| `URI` | External URL (with a valid scheme, such as `https://`) when `Data type` is `Link`. |
+| File selector | Local non-media file attachment when `Data type` is `File`. Media files belong in `Media` below. |
 
 {% steps %}
 
-1. Choose the `Data type`.
-2. For a `Link`, enter the address in `URI`. For a `File`, select the file. On
-   desktop, choose `Copy to project` to store a copy with NAHPU, or
-   `Link original` to point at the file where it is; a linked original must
-   stay at that path.
-3. Add a `Name`, `Description`, and `Date`.
+1. Open the storage-icon tab of the `Specimen Parts` card and select
+   `Add associated data`.
+2. Choose `Data type` (`Link` or `File`), then enter `Name`, `Description`,
+   and `Date`.
+3. Under `Resource`, enter the URL in `URI` for a `Link`, or select a file for
+   a `File`. On desktop, choose `Copy to project` to store a managed copy with
+   NAHPU, or `Link original` to point to the file in place; a linked original
+   stops working if the file is moved or deleted.
+4. Save the entry.
 
 {% /steps %}
 
-Check linked files after a transfer, and look into any missing-file warning. Use
-Media, below, for images, audio, and video.
+Use an entry's menu to `Edit`, `Show info`, `Share`, or open it (`Open link` or
+`Open in default app` on desktop). Check linked files after a project transfer
+and inspect any missing-file warning icon.
 
 ## Media
 
-Use `Media` for photos, video, and audio of the specimen. Add them with
-`Take photos/videos`, `Record audio`, `Add from gallery`, or `Add from file`.
-Each item can carry a caption, tags, and the photographer's name. Media are
-stored once in NAHPU's shared media library and linked to the specimen.
+Use `Media` at the bottom of the specimen form for photos, video, and audio of
+the specimen. Select `Add` to attach items using `Take photos/videos` (mobile),
+`Record audio`, `Add from gallery` (mobile), or `Add from file`, or select
+`Gallery` to browse the shared media gallery.
+
+Open an item's menu and choose `Edit` to update its `File name`, `Caption`,
+`Tag`, and `Photographer`. Media are stored once in NAHPU's shared media
+library and linked to the specimen.

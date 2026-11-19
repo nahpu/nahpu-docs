@@ -9,9 +9,12 @@ Um simbionte é qualquer organismo que vive sobre ou dentro de um espécime
 hospedeiro, seja parasítico, parasitoide, mutualístico, comensal, forético ou
 desconhecido.
 
-Cada simbionte tem UUID próprio e é vinculado ao seu hospedeiro. O vínculo registra como eles interagem, onde no hospedeiro o
-simbionte foi encontrado e se a associação está confirmada. Os simbiontes estão
-disponíveis em todos os formatos de catálogo.
+Cada simbionte tem UUID próprio e é vinculado ao seu hospedeiro. O vínculo
+registra como eles interagem, onde no hospedeiro o simbionte foi encontrado e
+se a associação está confirmada. Os simbiontes estão disponíveis nos formatos
+de catálogo `Mastozoologia`, `Ornitologia`, `Herpetologia` e `Ictiologia` (em
+`Zoologia de invertebrados`, as relações com o hospedeiro são registradas na
+seção `Interações ecológicas` do formulário de medições).
 
 ## Onde os simbiontes ficam no formulário do espécime
 
@@ -30,9 +33,9 @@ nada. Os campos de exame eliminam essa ambiguidade.
 
 ## Antes de começar
 
-Abra `Configurações` > `Espécimes` e role até `Simbiontes`. Estas listas
-começam com valores padrão editáveis e são compartilhadas por todos os projetos
-no dispositivo:
+Abra `Configurações` > `Espécimes` e role até `Simbiontes`. Estes vocabulários
+controlados começam com valores padrão editáveis e são compartilhados por todos
+os projetos neste dispositivo:
 
 | Configuração | Valores padrão |
 | --- | --- |
@@ -43,17 +46,18 @@ no dispositivo:
 | `Métodos de preparação` | `Whole specimen`, `Fluid preserved`, `Slide mounted`, `Pinned`, `Dried`, `Frozen` |
 | `Localizações anatômicas` | 24 locais, de `Head` a `Body cavity`; consulte [Localizações anatômicas](#anatomical-locations). |
 | `Armazenamento` | `Vial`, `Cryovial`, `Slide`, `Envelope`, `Jar` |
-| `Tratamentos` | Os tratamentos padrão de espécimes, mais `RNAlater` e `Glycerol` |
+| `Tratamentos` | Os valores padrão de `Tratamentos` do espécime, mais `RNAlater` e `Glycerol` |
 
-Combine essas listas antes do trabalho de campo e compartilhe-as com a
+Combine esses vocabulários controlados antes do trabalho de campo e
+compartilhe-os via
 [transferência de configurações do usuário](/pt/how-to-recipes/protect-and-collaborate/transfer-user-configs/)
-para que todos os dispositivos registrem os mesmos valores. O assistente de
-configuração também tem uma etapa de vocabulário `Simbiontes`.
+para que todos os dispositivos usem os mesmos valores. `Configurar o NAHPU`
+também inclui uma etapa `Simbiontes` para formatos de catálogo compatíveis.
 
 Registre também os táxons de simbiontes esperados no
 [registro de táxons](/pt/usages/taxon/). O táxon de um simbionte é escolhido no
-mesmo registro dos táxons de hospedeiros e pode ser de uma categoria superior,
-como ordem ou família, quando o simbionte ainda não foi identificado até
+mesmo registro dos táxons de hospedeiros e pode ser de uma categoria superior
+— como ordem ou família — quando o simbionte ainda não foi identificado até
 espécie.
 
 ## Registrar um exame {% #record-an-examination %}
@@ -131,7 +135,7 @@ próximo número sem sair do formulário.
 | `Data de coleta`, `Hora de coleta` | Quando foi recuperado do hospedeiro. |
 | `Determinador` | Quem identificou o simbionte, muitas vezes um especialista trabalhando depois. |
 | `Data de determinação` | Quando foi identificado. |
-| `Método de determinação` | Como foi identificado. Usa a mesma lista dos `Métodos de identificação` do espécime. |
+| `Método de determinação` | Como foi identificado. Usa o vocabulário controlado `Métodos de identificação` do espécime. |
 
 Coletor e determinador são escolhidos entre o pessoal do projeto, como nos
 espécimes. Mantê-los separados permite que a equipe de campo registre o que
@@ -187,9 +191,9 @@ como foram digitados.
 
 A categoria só é exibida quando o tipo de interação é `Parasitic` ou
 `Parasitoid`. Mudar o tipo de interação para qualquer outro valor apaga a
-categoria ao salvar. Um registro sem tipo de interação mantém sua categoria,
-já que registros importados ou criados antes da existência dos tipos de
-interação podem ter apenas uma categoria.
+categoria. Um registro sem tipo de interação mantém sua categoria, já que
+registros importados ou criados antes da existência dos tipos de interação
+podem ter apenas uma categoria.
 
 Quando for deixar `Tipo de interação` vazio, escolha `Unknown` se a relação
 for de fato desconhecida. Um valor vazio significa que ela não foi registrada.
@@ -206,19 +210,20 @@ encaixam nela:
 | `Mesosymbiont` | Ear, Nasal cavity, Oral cavity, Gill, Skin |
 
 Sem categoria, ou com uma categoria que você mesmo adicionou, todas as
-localizações são oferecidas. As localizações que você adiciona nas
-Configurações nunca são filtradas. Valores antigos de categoria, como
-`Ectoparasite`, `Endoparasite` e `Mesoparasite`, filtram a lista da mesma forma
-que seus nomes de simbionte.
+localizações são oferecidas. As localizações que você adiciona em
+`Configurações` nunca são filtradas. Valores antigos de categoria, como
+`Ectoparasite`, `Endoparasite` e `Mesoparasite`, filtram as opções da mesma
+forma que seus nomes de simbionte.
 
 ## Lista de simbiontes
 
 A aba de simbiontes lista uma linha por registro. O ícone mostra o tipo de
 interação, com um ícone de ácaro para registros sem tipo ou com um tipo
-personalizado. O título é o táxon do simbionte, ou `Simbionte não identificado`,
-seguido da quantidade. O subtítulo mostra os indivíduos de peixe vinculados, o
-tipo de interação, a categoria, a localização anatômica, o estágio de vida e o
-método de preparação.
+personalizado. O título mostra o táxon do simbionte (ou
+`Simbionte não identificado`), seguido da quantidade e do `ID do simbionte`
+quando definido. O subtítulo mostra os indivíduos de peixe vinculados, o tipo
+de interação, a categoria (para interações parasíticas e parasitoides), a
+localização anatômica, o estágio de vida e o método de preparação.
 
 Selecione o botão de edição de uma linha para alterá-la. Para excluir
 registros, ative a seleção, marque os registros e confirme a exclusão. Excluir

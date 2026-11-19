@@ -22,132 +22,165 @@ sidebar:
 {% pin id="G" label="Adicionar táxon" large2=[58.4, 91.8] small2=[76.2, 89.4] /%}
 {% /screenshots %}
 
-Você pode registrar um táxon manualmente, importar um arquivo ou escanear um código QR de táxon do NAHPU.
+O registro de táxons é compartilhado entre todos os projetos no banco de dados
+do NAHPU. Você pode registrar um táxon manualmente, importar uma planilha ou
+arquivo delimitado, ou ler um código QR de táxon do NAHPU.
 
-Importar um táxon adiciona dados ao registro. Isso não adiciona um novo grupo de
-catálogo de espécimes ao aplicativo. Quem contribui implementando um novo grupo
-deve seguir [Adicionar um grupo taxonômico (em inglês)](/en/contributing/code/adding-a-taxon-group/).
+Importar táxons adiciona apenas entradas ao registro; não cria um novo formato
+de catálogo de espécimes. Quem contribui implementando um novo grupo taxonômico
+deve seguir
+[Adicionar um grupo taxonômico](../../contributing/code/adding-a-taxon-group).
 
 ## Registrar um novo táxon
 
-Uma entrada do registro não precisa ser uma espécie. `Categoria taxonômica`
-define a categoria que o registro representa, e o formulário exibe os campos de
-nome até essa categoria:
-
-- **Classe**
-- **Ordem**
-- **Família**
-- **Gênero**
-- **Espécie**
-- **Subespécie**
-
-Escolher `Família`, por exemplo, exibe reino, filo, classe, ordem e família, e
-deixa de fora as categorias inferiores. Isso permite registrar um táxon que
-ainda não foi identificado até a espécie, algo comum para material que aguarda
-determinação.
+Uma entrada no registro não precisa ser uma espécie. `Categoria taxonômica` {% ref id="F" /%}
+define a categoria representada pelo registro (`Classe`,
+`Ordem`, `Família`, `Gênero`, `Espécie` ou `Subespécie`), e o formulário exibe
+os campos de nome até essa categoria. Escolher `Família`, por exemplo, exibe
+`Reino`, `Filo`, `Classe`, `Ordem` e `Família`, sem categorias inferiores—útil
+para material que ainda aguarda determinação até espécie.
 
 ### Campos obrigatórios
 
-- **Categoria taxonômica**: a categoria que este registro representa.
-- **O campo de nome dessa categoria**: `Família` para um registro de nível
-  família, `Epíteto específico` para uma espécie, `Epíteto subespecífico` para
-  uma subespécie, e assim por diante. O aplicativo não salva o registro
-  enquanto os dois não estiverem preenchidos.
+- **`Categoria taxonômica`**: a categoria representada por este registro.
+- **Nome da categoria escolhida**: o campo correspondente a essa categoria
+  (`Família` para registro em família, `Epíteto específico` para espécie,
+  `Epíteto subespecífico` para subespécie e assim por diante). O NAHPU não
+  salva enquanto ambos não estiverem preenchidos.
 
 ### Campos de classificação
 
-- **Reino** e **Filo**: sempre disponíveis, qualquer que seja a categoria.
-- **Classe**, **Ordem**, **Família**, **Gênero**, **Epíteto específico** e
-  **Epíteto subespecífico**: exibidos quando a categoria selecionada os
-  alcança. Os epítetos são armazenados em minúsculas.
+- **`Reino`** e **`Filo`**: sempre disponíveis em qualquer categoria.
+- **`Classe`**, **`Ordem`**, **`Família`**, **`Gênero`**, **`Epíteto
+  específico`** e **`Epíteto subespecífico`**: exibidos até a categoria
+  selecionada. Os epítetos são salvos em minúsculas.
 
 ### Detalhes adicionais
 
-- **Autores**: o autor do táxon e o ano da publicação.
-- **Nome comum**: o nome comum do táxon.
-- **Categoria da Lista Vermelha da IUCN**: o status do táxon na Lista Vermelha da IUCN.
-- **Status CITES**: o status CITES do táxon.
-- **Status de conservação no país**: o status de conservação do táxon em um país específico.
-- **Ordem de classificação**: ordem arbitrária para classificar o táxon. É usada principalmente na exportação dos registros. Você pode usar a ordem filogenética, por exemplo.
-- **Notas**: qualquer informação adicional sobre o táxon.
+| Campo | Exibido | Notas |
+| --- | --- | --- |
+| `Autores` | Sempre | Autor e ano da publicação. |
+| `Nome comum` | Sempre | Nome popular ou vernáculo. |
+| `Categoria da Lista Vermelha da IUCN` | Após `Mostrar mais` | Status na Lista Vermelha da IUCN. |
+| `Status CITES` | Após `Mostrar mais` | Status de apêndice CITES. |
+| `Status de conservação no país` | Após `Mostrar mais` | Status nacional de conservação. |
+| `Ordem de classificação` | Após `Mostrar mais` | Ordem numérica opcional para exportações (como ordem filogenética). |
+| `Notas` | Após `Mostrar mais` | Observações adicionais sobre o táxon. |
+
+Os campos sob `Mostrar mais` abrem automaticamente quando já contêm algum valor.
 
 ### Registro manual
 
-1. Vá para o painel do projeto.
-2. No painel de táxons, selecione `Adicionar táxon` {% ref id="G" /%} e escolha o modo `Manual` {% ref id="D" /%}.
-3. Selecione a `Categoria taxonômica` {% ref id="F" /%}.
-4. Preencha as informações do táxon.
+{% steps %}
+
+1. No painel do projeto, selecione `Adicionar táxon` {% ref id="G" /%} no
+   painel `Registro de táxons` e escolha `Manual` {% ref id="D" /%}.
+2. Selecione `Categoria taxonômica` {% ref id="F" /%}.
+3. Preencha a classificação e os detalhes opcionais e selecione `Adicionar`.
+
+{% /steps %}
 
 ### Importar de arquivo {% #import-from-file %}
 
-1. Prepare o arquivo de importação. Os formatos preferidos são `.xlsx`, `.csv` e `.tsv`.
-2. Vá para o painel do projeto.
-3. No painel de táxons, selecione `Adicionar táxon` e escolha o modo `Importar` {% ref id="E" /%}.
-4. Use o botão `Selecionar arquivo` para adicionar o arquivo. O aplicativo mapeia automaticamente as colunas para os campos corretos. Em telas estreitas, use as abas `Configuração` e `Visualizar` para configurar a importação e revisar as linhas detectadas.
+{% steps %}
 
-Comportamento do delimitador:
+1. Prepare seu arquivo em `.xlsx`, `.csv` ou `.tsv`.
+2. No painel `Registro de táxons`, selecione `Adicionar táxon` e mude para
+   `Importar` {% ref id="E" /%}.
+3. Selecione `Selecionar arquivo`. O NAHPU mapeia automaticamente os cabeçalhos
+   reconhecidos. Em telas estreitas, alterne entre `Configuração` e
+   `Visualizar` para ajustar mapeamentos e inspecionar as linhas.
+4. Selecione `Revisar táxons`, confira a prévia, marque as entradas desejadas e
+   confirme a importação. Táxons já registrados ficam desabilitados e nunca são
+   sobrescritos.
 
-- `.csv` usa vírgula, `.tsv` usa tabulação e arquivos Excel são lidos como planilhas.
-- Para qualquer outra extensão, o NAHPU tenta Excel e depois vírgula, tabulação e ponto e vírgula.
-- Se isso falhar, informe um delimitador personalizado na substituição avançada do analisador.
+{% /steps %}
 
-Colunas reconhecidas, com os nomes exibidos no menu suspenso de cada coluna:
-`Taxon rank`, `Kingdom`, `Phylum`, `Class`, `Order`, `Family`, `Genus`,
-`Specific epithet`, `Subspecific epithet`, `Authors`, `Common name`,
-`IUCN Category`, `CITES status`, `Country status`, `Sorting order` e `Notes`. O
-reconhecimento de cabeçalhos é flexível, então aliases como `taxonClass`,
-`specificEpithet`, `epithet`, `infraspecificEpithet`, `vernacularName`,
-`iucnStatus` e `appendixStatus` também são aceitos. Colunas não reconhecidas
-ficam sem mapeamento; atribua-as com o menu suspenso acima de cada coluna ou
-deixe-as como `Ignore`.
+**Delimitadores e recuperação de erros:**
 
-Os valores de categoria são `class`, `order`, `family`, `genus`, `species` e
-`subspecies`. O que cada linha precisa depende de o arquivo ter ou não uma
-categoria:
-
-| Caso | Colunas obrigatórias | O que o NAHPU preenche |
-| --- | --- | --- |
-| Sem coluna `Taxon rank` | `Order`, `Family`, `Genus`, `Specific epithet` e uma classe (mapeada ou escolhida em `Selecione a classe comum a todas as linhas`) | A categoria: espécie, ou subespécie quando há epíteto subespecífico |
-| Uma classe conhecida, com ou sem categoria | Todas as colunas de classificação desde a classe até a categoria da linha | Reino e filo ausentes |
-| Qualquer outra classe | `Taxon rank`, `Kingdom`, `Phylum`, `Class` e todas as colunas de classificação até a categoria | Nada |
-
-Uma linha de subespécie, por exemplo, precisa de classe, ordem, família, gênero,
-epíteto específico e epíteto subespecífico. Arquivos com mais de uma classe
-precisam de uma coluna `Class`. As classes conhecidas são Mammalia, Aves,
-Reptilia, Amphibia, Osteichthyes, Chondrichthyes, Agnatha, Insecta, Arachnida,
-Chilopoda, Diplopoda, Gastropoda, Bivalvia e Cephalopoda. Os valores de reino e
-filo fornecidos são sempre mantidos.
+- `.csv` usa vírgula, `.tsv` usa tabulação e `.xlsx` é lido como planilha.
+- Para outras extensões, o NAHPU testa Excel e depois vírgula, tabulação e
+  ponto e vírgula.
+- As opções de delimitador e detalhes de leitura ficam em `Opções avançadas`
+  (abertas automaticamente após erro de leitura), incluindo um delimitador
+  personalizado.
 
 {% aside type="note" %}
 
-O melhor suporte é para `.xlsx`. Formatos Excel mais antigos ou diferentes podem falhar. Se necessário, salve novamente como `.xlsx`, `.csv` ou `.tsv`.
+O melhor suporte é para `.xlsx`; formatos antigos de Excel podem falhar. Salve
+novamente como `.xlsx`, `.csv` ou `.tsv` se necessário.
 
 {% /aside %}
 
-Os controles de delimitador e os detalhes da análise ficam em `Opções avançadas`, que abre automaticamente após um erro de análise. Selecione `Revisar táxons`, confira a prévia e importe os táxons selecionados. Táxons já registrados ficam desabilitados e nunca são sobrescritos.
+**Colunas reconhecidas:** `Taxon rank`, `Kingdom`, `Phylum`, `Class`, `Order`,
+`Family`, `Genus`, `Specific epithet`, `Subspecific epithet`, `Authors`,
+`Common name`, `IUCN Category`, `CITES status`, `Country status`,
+`Sorting order` e `Notes`. Aliases comuns como `taxonClass`, `specificEpithet`,
+`epithet`, `infraspecificEpithet`, `vernacularName`, `iucnStatus` e
+`appendixStatus` também são reconhecidos automaticamente. Colunas não
+reconhecidas ficam em `Ignorar` e podem ser mapeadas pelo menu suspenso.
+
+Os valores válidos de categoria são `class`, `order`, `family`, `genus`,
+`species` e `subspecies`. As colunas obrigatórias dependem de o arquivo trazer
+categoria e uma classe conhecida:
+
+| Caso | Colunas obrigatórias | O que o NAHPU preenche |
+| --- | --- | --- |
+| Sem coluna de categoria | `Ordem`, `Família`, `Gênero`, `Epíteto específico` e uma classe (mapeada ou escolhida em `Selecione a classe comum a todas as linhas`) | Categoria (`species`, ou `subspecies` quando houver `Epíteto subespecífico`) |
+| Classe conhecida, com ou sem categoria | Todas as colunas de classificação de `Classe` até a categoria da linha | `Reino` e `Filo` ausentes |
+| Qualquer outra classe | `Categoria taxonômica`, `Reino`, `Filo`, `Classe` e todas as colunas de classificação até a categoria | Nada |
+
+Arquivos com mais de uma classe precisam de uma coluna `Class`. Os valores de
+reino e filo fornecidos são sempre mantidos. As 14 classes conhecidas são
+`Mammalia`, `Aves`, `Reptilia`, `Amphibia`, `Osteichthyes`, `Chondrichthyes`,
+`Agnatha`, `Insecta`, `Arachnida`, `Chilopoda`, `Diplopoda`, `Gastropoda`,
+`Bivalvia` e `Cephalopoda`.
 
 ### Importar de QR {% #import-from-qr %}
 
-1. Abra um táxon no `Registro de táxons` e selecione seu código QR {% ref id="B" /%} para exibi-lo e compartilhá-lo.
-2. No dispositivo que receberá os dados, escolha `Adicionar táxon` → `Importar` → `Ler QR`.
-3. Escolha `Táxon único` para abrir a prévia após a primeira leitura válida, ou `Vários táxons` para continuar lendo. O leitor em lote mostra o último resultado e quantos táxons estão prontos para importar; selecione `Concluído` para revisá-los.
-4. Confira a prévia, selecione os táxons que deseja manter e confirme com o botão de importação. Nada é salvo antes da confirmação.
+{% steps %}
 
-Cada táxon distinto entra na fila uma única vez. Táxons já registrados não podem ser selecionados e nunca são sobrescritos. Códigos inválidos ou de outro tipo mostram um erro sem fechar a câmera. Cancelar preserva a importação anterior; concluir uma sessão QR substitui a importação pendente, seja de arquivo ou QR.
+1. No dispositivo de origem, abra `Gerenciar táxons` (por `Registro de táxons`
+   > `Gerenciar` ou `Configurações` > `Banco de dados` > `Táxons`), abra um
+   táxon e toque no seu código QR {% ref id="B" /%}.
+2. No dispositivo receptor, escolha `Adicionar táxon` > `Importar` > `Ler QR`.
+3. Escolha `Táxon único` para abrir a prévia após a primeira leitura válida, ou
+   `Vários táxons` para ler em lote e toque em `Concluído` ao terminar.
+4. Confira a prévia, marque os táxons que deseja manter e confirme a
+   importação. Nada é salvo antes da confirmação.
 
-A importação QR preserva a classificação, os autores, o nome comum e os estados de conservação incluídos no código. Bastam uma categoria compatível e seu nome; a classificação superior pode estar ausente. Em códigos antigos sem categoria, o NAHPU usa o campo de nome mais específico preenchido. A importação QR não exige mapeamento de colunas nem seleção de classe. Códigos QR de táxon não incluem a ordem de classificação nem as notas.
+{% /steps %}
 
-A leitura usa a câmera no Android, iOS, macOS e em navegadores web compatíveis. Se o acesso à câmera for negado, permita-o nas configurações do dispositivo e tente novamente. Arquivos de imagem QR e conteúdo colado não são aceitos; use a importação de arquivo onde a leitura pela câmera não estiver disponível.
+- Cada táxon distinto entra na fila apenas uma vez; táxons já registrados não
+  podem ser selecionados e nunca são sobrescritos. Códigos inválidos ou sem
+  relação mostram um erro mantendo a câmera aberta.
+- Cancelar mantém inalterada qualquer importação pendente anterior; concluir
+  uma sessão de QR substitui a prévia pendente de arquivo ou QR.
+- Os códigos QR carregam classificação, autores, nome comum e status de
+  conservação (ordem de classificação e notas não são incluídas). Uma categoria
+  suportada e seu nome bastam; em códigos antigos sem categoria, o NAHPU infere
+  a categoria mais específica preenchida.
+- A leitura por câmera funciona no Android, iOS, macOS e navegadores web
+  compatíveis. Se o acesso à câmera for negado, habilite-o nas configurações do
+  dispositivo e tente novamente. Arquivos de imagem de QR e textos colados não
+  são suportados—use importação de arquivo onde não houver câmera.
 
 ## Editar um táxon
 
-1. Vá para o painel do projeto.
-2. No painel de táxons, selecione `Gerenciar` {% ref id="A" /%} para abrir `Gerenciar táxons`.
-3. Abra o táxon e toque/clique em `Editar táxon` {% ref id="C" /%}.
+{% steps %}
+
+1. Abra `Gerenciar táxons` em `Registro de táxons` > `Gerenciar` {% ref id="A" /%}
+   no painel do projeto (ou em `Configurações` >
+   `Banco de dados` > `Táxons`).
+2. Pesquise em todos os campos ou filtre por categoria de campo usando o botão
+   de filtro na barra de pesquisa.
+3. Abra um táxon e selecione `Editar táxon` {% ref id="C" /%}.
+
+{% /steps %}
 
 ## Excluir táxons
 
-Em `Gerenciar táxons`, selecione os táxons a remover e exclua-os. Um táxon
-usado por qualquer espécime fica protegido: o NAHPU exclui os demais e informa
-quantos não puderam ser excluídos. Altere primeiro o táxon desses espécimes se
-o táxon precisar ser removido.
+Em `Gerenciar táxons`, selecione `Selecionar`, marque os táxons a remover e
+confirme a exclusão. Táxons usados por algum espécime ficam protegidos e não
+podem ser selecionados (marcados com um ícone de em uso). Reatribua primeiro
+esses espécimes a outro táxon se precisar excluir a entrada.

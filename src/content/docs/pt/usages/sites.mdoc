@@ -6,16 +6,16 @@ sidebar:
 
 {% screenshots
    large="app-screenshots/usage/sites-large.webp"
-   largeAlt="Página Localidades do NAHPU em um tablet com os painéis de identidade, geografia, habitat e coordenadas"
+   largeAlt="Página Locais do NAHPU em um tablet com os painéis de identidade, geografia, hábitat e coordenadas"
    large2="app-screenshots/usage/sites-large-2.webp"
    large2Alt="Página Adicionar coordenadas do NAHPU em um tablet com a opção Importar selecionada"
    small="app-screenshots/usage/sites-small.webp"
-   smallAlt="Página Localidades do NAHPU em um celular com os painéis de identidade e geografia"
+   smallAlt="Página Locais do NAHPU em um celular com os painéis de identidade e geografia"
    small2="app-screenshots/usage/sites-small-2.webp"
    small2Alt="Página Adicionar coordenadas do NAHPU em um celular com a opção Importar selecionada" %}
-{% pin id="A" label="Página de localidades" large=[3.9, 31.6] small=[39.3, 90.6] /%}
-{% pin id="B" label="Criar uma localidade" large=[96, 10.4] small=[80.5, 12.3] /%}
-{% pin id="C" label="Identidade da localidade" large=[43, 13.9] small=[32.1, 17.9] /%}
+{% pin id="A" label="Página de locais" large=[3.9, 31.6] small=[39.3, 90.6] /%}
+{% pin id="B" label="Criar local" large=[96, 10.4] small=[80.5, 12.3] /%}
+{% pin id="C" label="Identidade do local" large=[43, 13.9] small=[32.1, 17.9] /%}
 {% pin id="D" label="Geografia" large=[46, 31.4] small=[33.3, 45] /%}
 {% pin id="E" label="Adicionar coordenada" large=[88.5, 95.1] small2=[23.8, 10.5] /%}
 {% pin id="F" label="Importar coordenadas" large2=[58.5, 14.4] small2=[74.5, 17.1] /%}
@@ -23,227 +23,141 @@ sidebar:
 {% pin id="H" label="Adicionar pontos selecionados" large2=[61.9, 91.8] small2=[84.3, 91] /%}
 {% /screenshots %}
 
-## Criando um novo local
-
 Um local é um registro de lugar reutilizável. Os eventos de coleta pertencem a
 um local, e os registros de captura de espécimes chegam ao local por meio do
-seu evento de coleta. Crie um local para cada acampamento, linha de armadilhas,
-localidade ou outro lugar distinto usado pelo seu projeto.
+evento. Crie um local para cada acampamento, linha de armadilhas, localidade ou
+área de amostragem distinta do projeto.
+
+## Criando um novo local
 
 {% steps %}
-1. Navegue até a página de locais usando a barra de navegação inferior {% ref id="A" /%}.
 
-2. Use o ícone de adicionar {% ref id="B" /%} no canto superior direito para criar um novo local.
-
-    Você também pode usar o ícone do menu de três pontos e tocar em `Criar local`.
-
-    {% aside type="tip" %}
-
-    Você pode evitar digitar as mesmas informações duplicando um local em vez
-    de criar um novo. Abra o menu de três pontos e escolha `Duplicar local`. O
-    NAHPU copia as informações do local, mas deixa o `ID do local` e as
-    coordenadas vazios. Insira um ID único e adicione as coordenadas corretas;
-    os campos do local são salvos enquanto você digita.
-
-    {% /aside %}
-
-3. Crie um ID de local {% ref id="C" /%}. Use até 40 letras, dígitos, `-` ou
-   `_`; o NAHPU converte as letras em maiúsculas. Mantenha cada ID único no
-   projeto: o NAHPU não impõe essa regra, mas a correspondência de registros
-   importados depende dela.
-
-    Recomendamos criar uma convenção de ID de local para sua equipe. Um exemplo de convenção de ID de local para trabalho de campo em mastozoologia:
-
-    - Cidade, vila ou povoado é identificado como é. Por exemplo, a cidade de Bogor será `BOGOR`.
-    - O acampamento usa o formato `{abreviação da localidade com 2 letras}-CAMP{número do acampamento}`. Por exemplo, o acampamento 1 no Mt. Gede-Pangrango é `GP-CAMP1`.
-    - A linha de armadilhas usa o formato `{abreviação da localidade com 2 letras}{inicial do líder da linha de armadilhas}-L{número da linha}`. Por exemplo, a linha 1 no Mt. Gede-Pangrango liderada por Heru Handika é `GPHH-L1`.
-    - A linha de pitfall usa o formato `{abreviação da localidade com 2 letras}{inicial do líder da linha de pitfall}-P{número da linha}`. Por exemplo, a linha 1 no Mt. Gede-Pangrango liderada por Heru Handika é `GPHH-P1`.
+1. Abra a página `Locais` na barra de navegação {% ref id="A" /%}.
+2. Selecione o ícone de adicionar {% ref id="B" /%} no canto superior direito
+   (ou abra o menu de três pontos e escolha `Criar local`).
 
     {% aside type="tip" %}
 
-    Para um projeto que usa vários dispositivos, use o mesmo `ID do local` para
-    um local idêntico. Isso facilita a correspondência de registros de locais e
-    eventos trocados quando forem importados em outro dispositivo do projeto.
+    Para evitar digitação repetida, abra o menu de três pontos e escolha
+    `Duplicar local`. O NAHPU copia os dados do local, deixando o `ID do local`
+    e as coordenadas em branco para que você informe um novo ID e os pontos.
 
     {% /aside %}
 
-4. Adicione o `Responsável pelo local` {% ref id="C" /%}
+3. Em `Identidade do local` {% ref id="C" /%}, informe um `ID do local` (até 40
+   letras, dígitos, `-` ou `_`; letras são convertidas para maiúsculas),
+   escolha um `Responsável pelo local` na equipe do projeto e selecione um
+   `Tipo de local` no vocabulário controlado em `Configurações` > `Locais`.
 
-    Se for um acampamento de campo, você pode colocar o nome do líder da equipe. Se for uma linha de armadilhas, você pode designar a pessoa responsável por essa linha como responsável pelo local.
+    Mantenha cada `ID do local` único no projeto—o NAHPU não impõe unicidade,
+    mas a correspondência de registros importados depende disso. Em projetos
+    com vários dispositivos, use exatamente o mesmo `ID do local` para o mesmo
+    local físico.
 
-5. Adicione o `Tipo de local` {% ref id="C" /%}
+    Exemplo de convenção de `ID do local` em mastozoologia:
+    - Cidade ou vila: `BOGOR`
+    - Acampamento (`{sigla}-CAMP{número}`): `GP-CAMP1`
+    - Linha de armadilhas (`{sigla}{iniciais}-L{número}`): `GPHH-L1`
+    - Linha de pitfall (`{sigla}{iniciais}-P{número}`): `GPHH-P1`
 
-    O tipo de local categoriza o local por suas características ou uso.
-    Escolha um valor da lista de tipos de local configurada para o projeto.
+4. Em `Geografia` {% ref id="D" /%}, use `Buscar localidade existente` (exibido
+   assim que houver pelo menos uma localidade salva no banco de dados) para
+   preencher toda a hierarquia de uma vez, ou digite valores com sugestões por
+   campo. As localidades são salvas uma vez e compartilhadas entre locais.
+   Configure os campos geográficos visíveis em `Configurações` > `Locais`.
 
-6. Preencha os detalhes geográficos {% ref id="D" /%}
+    Siga a convenção do seu museu para `Localidade precisa` e `Observações`
+    (por exemplo, descreva o trajeto de uma linha de armadilhas:
+    `A linha de armadilhas vai do Abrigo I ao Abrigo IV ao longo das trilhas entre os dois acampamentos.`).
 
-    Comece com `Buscar localidade existente`. Ele compara o que você digita com
-    todas as localidades já salvas no projeto, e selecionar uma sugestão
-    preenche toda a hierarquia geográfica de uma vez. Cada campo também sugere
-    valores já registrados para ele, então um país ou estado que você já
-    digitou volta como opção.
-
-    As localidades são armazenadas uma única vez e compartilhadas entre locais,
-    então reutilizar uma localidade salva evita criar um registro de lugar
-    quase duplicado. Os campos geográficos exibidos podem ser configurados nas
-    Configurações.
-
-    Recomendamos seguir a convenção do seu museu para escrever a localidade precisa e as observações.
-
-    {% aside type="tip" title="Escrevendo observações" %}
-
-    Se o local for uma linha de armadilhas, é uma boa prática explicar como a linha é operada.
-
-    Por exemplo:
-
-    ```text
-    A linha de armadilhas vai do Abrigo I ao Abrigo IV ao longo das trilhas entre os dois acampamentos.
-    ```
-
-    {% /aside %}
-
-7. Preencha as informações do habitat
-
-    - Tipo: o tipo de habitat, escolhido na lista de tipos de habitat nas
-      Configurações: plantação, floresta tropical de terras baixas, floresta montana alta etc.
-    - Condição: a condição do habitat: perturbado, não perturbado, perturbação mínima etc.
-    - `Cobertura do dossel`: a cobertura do dossel no local.
-    - Descrição: uma breve descrição do habitat. Por exemplo:
-
-      ```text
-      Dominado por carvalhos. O solo estava coberto principalmente por samambaias, gengibres e mudas de carvalho.
-      ```
+5. Em `Atributos do local`, escolha `Tipo de hábitat` (do vocabulário
+   controlado em `Configurações` > `Locais`), preencha `Condição do hábitat`,
+   `Descrição do hábitat` e `Cobertura do dossel`, e complete eventuais campos
+   personalizados do local.
 
 {% /steps %}
 
+`Identidade do local`, `Observações` e `Atributos do local` salvam conforme
+você digita; `Geografia` é resolvida e salva ao sair do cartão `Geografia` ou
+trocar de registro.
+
 ## Informações do local
 
-O formulário do local registra o lugar e as pessoas responsáveis por ele:
-
-- `ID do local`: identificador usado por eventos e registros trocados. Até 40
-  letras, dígitos, `-` ou `_`, em maiúsculas. Mantenha-o único; o NAHPU não
-  verifica.
-- `Responsável pelo local`: a pessoa responsável pelo acampamento, linha de
-  armadilhas ou outro local.
-- `Tipo de local`: a categoria configurada para o local.
-- Geografia: `País`, `Grupo de ilhas`, `Estado/Província`,
-  `Condado/Paróquia/Distrito` e `Município/Cidade/Vila`, compartilhados entre
-  locais que registram o mesmo lugar.
-- `Localidade precisa` e `Observações`: o lugar nomeado específico abaixo do
-  nível de município e notas sobre como o local é usado ou operado.
-- Tipo, condição e descrição do habitat e `Cobertura do dossel`: o ambiente
-  observado no local.
-
-A segunda aba do painel do local contém os dados associados, e o local também
-pode ter mídia.
+| Cartão / Aba | Campos | Notas |
+| --- | --- | --- |
+| `Identidade do local` {% ref id="C" /%} | `ID do local`, `Responsável pelo local`, `Tipo de local` | `Tipo de local` usa o vocabulário controlado em `Configurações` > `Locais`. |
+| `Geografia` {% ref id="D" /%} | `País`, `Grupo de ilhas`, `Estado/Província`, `Condado/Paróquia/Distrito`, `Município/Cidade/Vila`, `Localidade precisa`, `Observações` | Localidades compartilhadas evitam registros quase duplicados; campos visíveis ficam em `Configurações` > `Locais`. |
+| `Atributos do local` | `Tipo de hábitat`, `Condição do hábitat`, `Descrição do hábitat`, `Cobertura do dossel`, campos personalizados | `Tipo de hábitat` usa o vocabulário controlado em `Configurações` > `Locais`; crie campos personalizados em `Configurações` > `Campos personalizados`. |
+| Abas Coordenadas e Dados associados | Coordenadas (aba do pino) e Dados associados (aba de armazenamento) | Um local pode ter várias coordenadas, vínculos de dados associados e mídias do local. |
 
 ## Gerenciando locais
 
-Abra o menu de três pontos na página do local para usar estas ações:
+Abra o menu de três pontos na página `Locais` para estas ações:
 
-- `Criar local`: criar um novo registro de local.
-- `Duplicar local`: copiar os detalhes do local para um novo registro com ID e
-  coordenadas vazios.
-- `Copiar de um projeto…`: copiar informações selecionadas de um local de outro
-  projeto para o local vazio atual.
-- `Ordenar registros`: escolher o campo e a direção usados para ordenar a lista
-  de locais.
-- `Mostrar QR`: exibir o registro do local para outro dispositivo móvel ler.
-- `Exportar local`: salvar o registro do local como arquivo JSON. O arquivo
-    pode ser importado em outro dispositivo ou compartilhado com outros membros da equipe.
-    {% aside type="tip" %}
-    Para registros de locais grandes ou para importar o local em outro dispositivo sem acesso à câmera, use esta opção. Depois, transfira o arquivo para o outro dispositivo e importe-o lá.
-    {% /aside %}
-- `Ler QR`: criar ou substituir um local a partir do código QR de um local.
-  Disponível em dispositivos com leitor pela câmera (Android, iOS, macOS e web).
-- `Importar local`: criar ou substituir um local a partir de um registro JSON
-  exportado.
-- `Excluir registro`: excluir o local atual. Um local não pode ser excluído
-  enquanto um evento ainda fizer referência a ele.
-- `Excluir todos os registros`: excluir todos os locais do projeto atual. Os
-  eventos que fazem referência a esses locais precisam ser removidos primeiro.
+| Ação | O que faz |
+| --- | --- |
+| `Criar local` | Cria um novo registro de local vazio. |
+| `Duplicar local` | Copia os detalhes do local para um novo registro com `ID do local` e coordenadas em branco. |
+| `Copiar de um projeto…` | Copia campos e coordenadas selecionados de um local de outro projeto para o local vazio atual. |
+| `Ordenar registros` | Escolhe o campo e a direção de ordenação da lista de locais. |
+| `Mostrar QR` | Exibe o registro do local como código QR para leitura em outro dispositivo. |
+| `Exportar local` | Salva o local como JSON (útil para registros grandes ou dispositivos sem câmera). |
+| `Ler QR` | Cria ou substitui um local a partir de um código QR de local (Android, iOS, macOS e web). |
+| `Importar local` | Cria ou substitui um local a partir de um arquivo JSON exportado. |
+| `Excluir registro` | Exclui o local atual. Bloqueado enquanto algum evento de coleta o referenciar. |
+| `Excluir todos os registros` | Exclui todos os locais do projeto após remover os eventos que os referenciam. |
 
-Ao importar um local, escolha se o registro importado criará um novo local ou
-atualizará um local existente. Revise o pessoal e as coordenadas vinculados
-após a importação.
+Ao importar um local, escolha entre criar um local novo ou atualizar um
+existente e revise em seguida a equipe vinculada e as coordenadas.
 
 ## Copiar dados de local de outro projeto
 
-Use `Copiar de um projeto…` quando um local de outro projeto tiver informações
-que você queira reutilizar no projeto atual. Essa ação preenche o local atual;
-ela não cria um novo local nem altera o projeto de origem.
-
-O local atual precisa estar vazio antes de começar. Um local com informações,
-coordenadas, mídia ou dados vinculados não pode receber dados copiados. É
-preciso haver pelo menos dois projetos, porque a origem deve ser um projeto
-diferente.
+Use `Copiar de um projeto…` para reutilizar dados de um local de outro projeto
+sem alterar o projeto de origem. O local atual precisa estar vazio (sem dados,
+coordenadas, mídias nem dados vinculados) e deve haver pelo menos dois projetos.
 
 {% steps %}
 
-1. Abra o local que vai receber as informações copiadas. Confirme que é um
-   registro de local vazio.
-
+1. Abra um local vazio no projeto de destino.
 2. Abra o menu de três pontos e selecione `Copiar de um projeto…`.
-
-3. Selecione o projeto de origem pelo nome e depois selecione um de seus locais.
-
-4. Selecione os dados a copiar. As opções disponíveis incluem:
-
-   - ID do local
-   - Responsável pelo local
-   - Tipo de local
-   - Campos de geografia, incluindo país, grupo de ilhas, estado/província,
-     condado/paróquia/distrito, município/cidade/vila e localidade precisa
-   - Observações
-   - Tipo, condição e descrição do habitat e cobertura do dossel
-   - Coordenadas
-
-   Campos sem dados no local de origem ficam indisponíveis. Selecionar
-   `Coordenadas` copia todas as coordenadas pertencentes ao local de origem
-   selecionado.
-
+3. Escolha o projeto de origem e depois um de seus locais.
+4. Selecione os campos a copiar (`ID do local`, `Responsável pelo local`,
+   `Tipo de local`, campos geográficos, `Observações`, campos de hábitat e
+   `Coordenadas`). Campos vazios na origem ficam indisponíveis; marcar
+   `Coordenadas` copia todos os pontos do local de origem.
 5. Selecione `Copiar` para preencher o local atual.
 
 {% /steps %}
 
-O local de origem permanece inalterado. Essa ação copia apenas campos do local e
-coordenadas; ela não copia mídia do local, vínculos de dados associados,
-registros de sítio fossilífero, eventos de coleta ou outros registros vinculados
-ao local de origem.
+Esta ação copia apenas campos do local e coordenadas—não copia mídias do local,
+vínculos de dados associados, registros de sítio fóssil nem eventos de coleta.
 
 {% aside type="tip" title="Se a cópia não estiver disponível" %}
 
 Se o NAHPU informar que são necessários vários projetos, crie ou importe outro
 projeto primeiro. Se informar que o local não está vazio, crie um novo local ou
-remova as informações, coordenadas, mídia e dados vinculados do local existente
-antes de tentar novamente.
+limpe antes os campos, coordenadas, mídias e dados vinculados do local atual.
 
 {% /aside %}
 
 ## Adicionando coordenadas {% #adding-coordinates %}
 
-Cada local pode ter vários registros de coordenadas para as extremidades de
-uma linha de armadilhas, pontos de coleta separados ou outros pontos que
-pertencem ao mesmo local. Adicione uma coordenada manualmente, use o GPS do
-dispositivo ou importe pontos de um arquivo GIS/GPS.
+Cada local pode guardar várias coordenadas (como acampamento, início, centro e
+fim de uma linha de armadilhas). Capture um ponto pelo GPS do dispositivo,
+insira manualmente, leia um código QR de coordenada ou importe pontos de um
+arquivo.
 
 ### Usar o GPS do dispositivo ao adicionar uma coordenada {% #use-device-gps-while-adding-a-coordinate %}
 
 {% steps %}
 
-1. Na página do local, abra o painel de coordenadas e toque/clique em
-   `Adicionar coordenada` {% ref id="E" /%}.
-
-2. Na página `Adicionar coordenadas`, use o cartão `GPS do dispositivo` e
-   toque/clique em `Obter localização`.
-
-3. O NAHPU preenche a latitude decimal, a longitude decimal, a elevação e a
-   incerteza do GPS quando o sistema operacional as fornece. Revise os valores,
-   preencha os campos restantes e selecione `Adicionar`.
-
-    Insira o nome da unidade GPS separadamente, usando o modelo exato do
-    dispositivo, como `iPad Mini 4`.
+1. No painel de coordenadas do local, selecione `Adicionar coordenada` {% ref id="E" /%}.
+2. Na tela `Adicionar coordenadas`, toque no botão de GPS `Obter localização`
+   no cartão `GPS do dispositivo`.
+3. Revise a latitude decimal, longitude decimal, elevação e incerteza
+   preenchidas pelo sistema operacional.
+4. Informe o modelo exato do dispositivo na unidade GPS (por exemplo,
+   `iPad Mini 6`), complete os demais campos e selecione `Adicionar`.
 
 {% /steps %}
 
@@ -251,101 +165,89 @@ dispositivo ou importe pontos de um arquivo GIS/GPS.
 
 {% steps %}
 
-1. Na página do local, no painel de coordenadas, toque/clique no botão `Adicionar coordenada`.
-
-2. Insira o nome da coordenada.
-
-    Mantenha o nome curto e informativo. Você pode usar o campo `Notas` para adicionar informações adicionais sobre a coordenada.
+1. No painel de coordenadas do local, selecione `Adicionar coordenada` {% ref id="E" /%}
+   e permaneça no modo `Manual`.
+2. Informe um `Nome` curto e informativo (use `Notas` para contexto extra).
 
     {% aside type="tip" %}
 
-    Recomendamos criar uma convenção de nomes de coordenadas para sua equipe. Exemplo de convenção de coordenadas para mastozoologia:
-
-      - `{siteID}S` para uma coordenada tirada no início da linha de armadilhas, como `KMHH-L1S`.
-      - `{siteID}C` para a coordenada tirada no centro da linha de armadilhas.
-      - `{siteID}E` para uma coordenada tirada no final da linha de armadilhas, como `KMHH-L1E`.
-      - Se a linha de armadilhas se estender além do primeiro ponto inicial, a coordenada no novo início é sufixada com `{número}`. Por exemplo, `KMHH-L1S2` para a primeira extensão, `KMHH-L1S3` para a próxima extensão, e assim por diante até que a linha seja totalmente movida.
-      - Se a linha de armadilhas se estender além do primeiro ponto final, a coordenada no novo final é sufixada com `{número}`. Por exemplo, `KMHH-L1E2` para a primeira extensão, e continue de maneira semelhante à extensão da linha inicial.
+    Exemplo de convenção de nomes de coordenadas em mastozoologia:
+    - `{siteID}S`, `{siteID}C`, `{siteID}E` para início, centro e fim de uma
+      linha de armadilhas (por exemplo, `KMHH-L1S`, `KMHH-L1E`).
+    - Adicione `{número}` para extensões da linha (por exemplo, `KMHH-L1S2`,
+      `KMHH-L1E2`).
 
     {% /aside %}
 
-3. Selecione o formato e informe os valores da coordenada.
-
-    O NAHPU aceita graus decimais (DD), graus e minutos decimais (DDM),
-    graus-minutos-segundos (DMS) e um valor UTM no formato
-    `zone hemisphere easting northing` (zona, hemisfério, leste, norte). A
-    entrada UTM usa WGS84. As direções de latitude e longitude precisam
-    corresponder aos seus eixos, e os valores decimais convertidos precisam
-    estar dentro dos intervalos válidos de latitude e longitude.
-
-    Para DDM e DMS, insira graus, minutos e segundos em campos numéricos
-    separados. Em seguida, selecione N/S para latitude e E/W para longitude. O
-    NAHPU adiciona os símbolos e concatena as partes para os valores verbatim de
-    latitude e longitude do Darwin Core.
-
-    O NAHPU salva a latitude e a longitude decimais para cálculos e também
-    guarda o valor concatenado e o sistema de coordenadas para os campos
-    verbatim do Darwin Core. Se já houver valores de coordenada, a mudança de
-    formato pede confirmação antes de apagá-los. Selecionar DD limpa os valores
-    verbatim anteriores depois que a coordenada é salva.
-
-4. Adicione a elevação em metros.
-
-5. Selecione o datum.
-
-    O datum padrão é WGS84. Verifique as configurações do seu GPS para o datum exato das suas coordenadas.
-
-6. Insira os valores de incerteza em metros.
-
-    Observe a incerteza do seu GPS. Alguns GPS antigos podem não registrar o número. É uma boa prática anotar a incerteza se você não levar o dispositivo NAHPU com você até o local da coordenada.
-
-7. Insira o nome do GPS que você usa.
-
-    Exemplo de nome de dispositivo: `Garmin 62sc`
-
-8. Adicione notas.
-
-    Adicione informações adicionais, se houver.
+3. Escolha um `Formato de coordenadas` e informe os valores:
+   - **Graus decimais (`DD`)**, **graus e minutos decimais (`DDM`)**,
+     **graus, minutos e segundos (`DMS`)** ou **UTM** (`zona hemisfério leste
+     norte`, em WGS84).
+   - Para `DDM` e `DMS`, insira os números em campos separados e escolha
+     `N`/`S` e `E`/`W`; o NAHPU formata e guarda os valores verbatim Darwin
+     Core junto com as coordenadas decimais convertidas.
+   - Trocar de formato com valores já digitados pede confirmação antes de
+     limpá-los. Salvar em `DD` limpa valores verbatim anteriores.
+   - Use o botão de atualizar mapa (ou o botão de mapa em telas estreitas) para
+     conferir o ponto na prévia.
+4. Informe a elevação (metros), escolha o `Datum` (padrão `WGS84`; combine com
+   a configuração do seu GPS), informe a incerteza (metros), o nome da unidade
+   GPS (por exemplo, `Garmin 62sc`) e `Notas` opcionais.
+5. Selecione `Adicionar`.
 
 {% /steps %}
 
 ### Importar coordenadas de um arquivo {% #import-coordinates-from-a-file %}
 
-Use `Adicionar coordenada` > `Importar` {% ref id="F" /%} > `Selecionar arquivo de coordenadas` {% ref id="G" /%} para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile compactado ou GPX.
+Escolha `Adicionar coordenada` > `Importar` {% ref id="F" /%} para importar
+pontos de um arquivo ou ler um código QR de coordenada:
 
-Em arquivos tabulares, `Associar colunas` exige `Latitude` e `Longitude` em graus decimais. Os campos opcionais são `Nome / ID`, `Altitude (m)`, `Unidade GPS` e `Notas`. Revise o mapeamento sugerido, deixe campos indesejados como `Não incluído` e selecione `Revisar coordenadas`. Use `Editar mapeamento de colunas` para corrigir uma prévia inesperada.
+- **De arquivo**: selecione `Selecionar arquivo de coordenadas` {% ref id="G" /%}
+  para CSV, TSV, Excel, GeoJSON/JSON, KML, Shapefile
+  compactado em ZIP ou GPX.
+  - Em arquivos tabulares, o mapeamento exige `Latitude` e `Longitude` em graus
+    decimais; `Nome / ID`, elevação (m), `Unidade GPS` e `Notas` são opcionais.
+    Deixe colunas indesejadas em `Não incluído`, selecione
+    `Revisar coordenadas` e use `Editar mapeamento de colunas` se a prévia não
+    estiver correta.
+  - Revise avisos e pontos no mapa, use as caixas de seleção
+    (`Selecionar tudo` / `Limpar tudo`) e selecione `Adicionar N selecionadas` {% ref id="H" /%}.
+- **De QR**: em dispositivos com leitura por câmera (Android, iOS, macOS e
+  web), escolha `Ler QR` para carregar uma coordenada compartilhada no
+  formulário `Manual` e revisá-la antes de salvar.
 
-Revise os avisos e as posições mapeadas. Use as caixas de seleção individuais, `Selecionar tudo` ou `Limpar tudo` e depois `Adicionar N selecionadas` {% ref id="H" /%} para adicionar os pontos escolhidos ao local atual. Confira os pontos salvos antes de usá-los para espécimes.
+**Regras de importação:**
 
-As posições importadas usam WGS84. Confirme o datum da origem; esse fluxo não converte outro datum para WGS84. A elevação é em metros. A importação não fornece incerteza da coordenada; revise e adicione a informação da origem quando conhecida. Arquivos tabulares podem fornecer a unidade GPS; importações GIS não a fornecem.
-
-Apenas geometrias de ponto são importadas. Geometrias não aceitas e linhas inválidas são ignoradas com avisos; rotas e trilhas GPX são ignoradas. Sem pontos válidos, ocorre um erro em vez da criação de coordenadas.
+- Coordenadas importadas são salvas em WGS84—confirme o datum de origem antes
+  da importação, pois o NAHPU não reprojeta outros data.
+- A elevação está em metros; a importação por arquivo não traz incerteza,
+  portanto adicione-a manualmente quando conhecida. Arquivos tabulares podem
+  mapear `Unidade GPS`; arquivos GIS não a fornecem.
+- Apenas geometrias de ponto são importadas. Linhas inválidas, geometrias não
+  suportadas e rotas ou trilhas GPX são ignoradas com avisos; arquivos sem
+  pontos válidos exibem um erro.
 
 ### Gerenciar e exportar coordenadas
 
-O botão `Manage` no painel de coordenadas de um local abre todas as
-coordenadas do projeto. Você pode filtrar a lista por local, selecionar pontos
-individuais ou todos os visíveis, focar um ponto no mapa e abrir o mapa em tela
-cheia.
+Selecione `Gerenciar` no painel de coordenadas de um local para abrir
+`Gerenciar coordenadas` de todo o projeto. Filtre por local, selecione pontos
+individuais ou todos os visíveis, foque um ponto no mapa, abra `Camadas do
+mapa` ou expanda o mapa para tela cheia.
 
 {% steps %}
 
-1. Abra o painel de coordenadas de um local e toque/clique em `Manage`.
-
-2. Filtre por local, se necessário, e selecione as coordenadas a exportar.
-
-3. Toque/clique em `Exportar coordenadas (N)`.
-
-4. Escolha `GeoJSON (.geojson)`, `KML (.kml)` ou `Pacote Shapefile (.zip)`.
-   Digite o nome do arquivo, escolha o diretório de destino e selecione `Exportar`.
-
-5. Depois que o arquivo for criado, use `Compartilhar` nos dispositivos que oferecem compartilhamento.
+1. Abra o painel de coordenadas de um local e selecione `Gerenciar`.
+2. Filtre por local se necessário e selecione as coordenadas para exportar.
+3. Selecione `Exportar coordenadas (N)`.
+4. Escolha `GeoJSON (.geojson)`, `KML (.kml)` ou `Pacote Shapefile (.zip)`,
+   digite um nome de arquivo, escolha a pasta de destino se disponível e
+   selecione `Exportar`.
+5. Use `Compartilhar` (ou ações de salvar/abrir) após criar o arquivo.
 
 {% /steps %}
 
-Cada coordenada exportada precisa ter latitude e longitude decimais válidas.
-As exportações GIS incluem nome, notas, latitude e longitude decimais WGS84 e
-elevação quando disponível. A exportação de coordenadas é diferente de
-`Exportar registros`, pacotes do projeto e backups do banco de dados; use essas
-opções quando precisar de registros tabulares ou de uma cópia restaurável do
-projeto NAHPU.
+Cada ponto exportado precisa ter latitude e longitude decimais válidas. As
+exportações GIS incluem nome da coordenada, notas, latitude e longitude
+decimais WGS84 e elevação quando disponível. A exportação de coordenadas é
+separada de `Exportar registros`, transferências de projeto e backups do banco
+de dados.

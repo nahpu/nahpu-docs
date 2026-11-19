@@ -22,105 +22,103 @@ sidebar:
 {% pin id="G" label="Exportar" large2=[54.5, 80.2] small2=[69, 91.9] /%}
 {% /screenshots %}
 
-Use la exportación de medios cuando necesite las fotografías en sí y no los
-registros que las describen. Es la manera más rápida de sacar un conjunto de
-imágenes de campo de un proyecto para un informe de financiamiento, un informe
-de permiso, una presentación o un colega que no usa NAHPU.
+Use la exportación de multimedia cuando necesite las fotografías, audios o
+videos en sí —por ejemplo, para un informe de financiamiento, un informe de
+permiso, una presentación o un colega que no usa NAHPU.
 
-Hay dos maneras de exportar. Exporte un archivo cuando quiera control total
-sobre su tamaño y calidad, o exporte una selección como un solo paquete cuando
-necesite muchos archivos a la vez. El audio y el video se incluyen en una
-selección, pero las opciones de imagen descritas abajo solo se aplican a
-imágenes.
+Puede exportar un solo archivo con control total sobre dimensiones y calidad, o
+exportar una selección múltiple en un solo archivo comprimido. Los audios y
+videos pueden incluirse en una selección, aunque la conversión y el cambio de
+tamaño aplican solo a imágenes.
 
 ## Exportar un solo archivo
 
-Abra el elemento de medios y elija `Export` {% ref id="G" /%}.
+Abra cualquier elemento multimedia y seleccione `Exportar` {% ref id="G" /%}
+para abrir `Exportar multimedia` (hoja inferior en teléfonos, diálogo en
+pantallas más anchas).
 
 {% steps %}
 
-1. Revise el nombre del archivo {% ref id="E" /%}. NAHPU propone el nombre actual del archivo, y
-   puede activar `Append date` {% ref id="F" /%} para agregar la fecha de hoy.
-
-2. Elija el formato. `Original` siempre funciona {% ref id="D" /%}. `JPEG`, `PNG` y `WebP` se
-   ofrecen cuando NAHPU puede leer la imagen, lo que cubre orígenes `.jpg`,
-   `.jpeg`, `.png` y `.webp`.
-
-3. Active `Resize image` si el archivo es más grande de lo que necesita. La
-   proporción queda bloqueada, así que escribir un ancho actualiza el alto, y
-   ninguno de los dos valores puede superar las dimensiones originales que se
-   muestran encima del control.
-
-4. Ajuste `JPEG quality` al exportar a JPEG. El valor predeterminado de 85 por
-   ciento equilibra bien tamaño y detalle. Bájelo para correo electrónico o para
-   subidas por una conexión lenta.
-
-5. Seleccione la carpeta de destino y luego `Export`. Cuando el archivo queda
-   escrito, el botón pasa a `Share`.
+1. Revise el nombre del archivo {% ref id="E" /%}. NAHPU propone el nombre
+   actual; active `Añadir fecha` {% ref id="F" /%} para agregar la fecha de
+   hoy.
+2. Elija el formato de archivo {% ref id="D" /%}. `Original` siempre está
+   disponible; `JPEG`, `PNG` y `WebP` aparecen cuando NAHPU puede decodificar
+   la imagen (orígenes `.jpg`, `.jpeg`, `.png` y `.webp`).
+3. Al exportar a `JPEG`, `PNG` o `WebP`, active `Cambiar tamaño de la imagen`
+   si necesita un archivo más pequeño. La proporción se mantiene bloqueada al
+   editar ancho o alto, y ninguna dimensión puede superar el tamaño original
+   indicado arriba del interruptor.
+4. En formato `JPEG`, ajuste `Calidad JPEG` (el valor predeterminado de `85%`
+   equilibra detalle y tamaño; valores menores convienen para correo o subidas
+   lentas).
+5. Seleccione una carpeta de destino en escritorio y pulse `Exportar`. Al
+   terminar, puede compartir, abrir la carpeta o guardar una copia.
 
 {% /steps %}
 
 {% aside type="note" %}
 
-Los formatos que NAHPU no puede decodificar, como los archivos RAW de cámara,
-igual pueden exportarse en su formato original. El cuadro de diálogo lo indica
-en lugar de ofrecer las opciones de conversión.
+Los formatos que NAHPU no puede decodificar —como archivos RAW de cámara— se
+exportan igualmente en su formato `Original`; los controles de conversión y
+cambio de tamaño permanecen ocultos.
 
 {% /aside %}
 
-## Exportar una selección como paquete
+## Exportar una selección como archivo comprimido
 
-Abra la galería de medios {% ref id="A" /%} desde el panel de medios de cualquier registro, o use
-el panel de medios del registro mismo. Active la selección {% ref id="B" /%}, elija los archivos y
-seleccione `Export`. Esto abre la pantalla `Export selected media` {% ref id="C" /%}.
+Abra `Galería multimedia` {% ref id="A" /%} desde el menú de la pantalla de
+inicio (para explorar multimedia de todos los proyectos) o desde el panel
+multimedia de cualquier registro, o bien seleccione archivos directamente en el
+panel del registro. Active la selección {% ref id="B" /%}, marque los archivos
+y seleccione `Exportar` para abrir `Exportar multimedia seleccionada` {% ref id="C" /%}.
 
-El resumen enumera cuántos archivos se seleccionaron, cuántos se encontraron en
-disco, cuántos son imágenes, audio, video u otros, y el tamaño total de origen.
-Los archivos que no se encuentran se informan como advertencias en lugar de
-descartarse en silencio.
+`Contenido del archivo` resume cuántos archivos se seleccionaron, cuántos se
+encontraron en disco, el conteo por tipo (imágenes, audio, video, otros), el
+`Tamaño de origen` total y las advertencias por archivos faltantes o no
+convertibles.
 
-El panel de configuración tiene:
+Configure las opciones del archivo comprimido:
 
-- **Archive format**. Elija ZIP o TAR.GZ según las herramientas del destinatario. Compare los tamaños reales cuando sean relevantes; el ahorro por compresión depende de los archivos.
-- **Image format**. `Original` copia los archivos sin cambios. `JPEG`, `PNG` o
-  `WebP` convierte todas las imágenes legibles de la selección.
-- **Limit image dimensions**. Disponible cuando hay conversión. Introduzca un
-  ancho o alto máximo en píxeles y NAHPU limita el lado más largo. Las imágenes
-  que ya son más pequeñas que el límite no se amplían.
-- **JPEG quality**. Se aplica cuando el formato de imagen es JPEG.
-- **File name**, **Append date** y la carpeta de destino.
+| Opción | Qué hace |
+| --- | --- |
+| Formato de archivo comprimido | Elija `TAR.GZ` (predeterminado) o `ZIP` según las herramientas del destinatario. |
+| `Formato de imagen` | `Original` copia sin cambios; `JPEG`, `PNG` o `WebP` convierte cada imagen legible. |
+| `Limitar las dimensiones de la imagen` | Disponible al convertir: limita el lado mayor a un máximo en píxeles sin ampliar imágenes más pequeñas. |
+| `Calidad JPEG` | Disponible al convertir a `JPEG` (predeterminado `85%`). |
+| Nombre del archivo y `Añadir fecha` | Define el nombre del archivo comprimido (y opcionalmente añade la fecha actual). |
 
-Dentro del paquete, los archivos se agrupan en las carpetas `specimen`, `site`,
-`event`, `narrative` y `other`, para que sepa de dónde vino cada archivo. El
-audio y el video se copian sin cambios, sea cual sea el formato de imagen.
+Dentro del archivo comprimido, los archivos se agrupan en las carpetas
+`specimen`, `site`, `event`, `narrative` y `other`. Los audios y videos se
+copian siempre sin cambios.
 
 {% aside type="caution" %}
 
-Una selección grande puede tardar varios minutos, sobre todo al convertir. La
-pantalla muestra el progreso y un botón `Cancel` mientras se ejecuta. Mantenga
-NAHPU abierto hasta que termine y revise los conteos de exportados y omitidos,
-junto con cualquier advertencia del resumen, antes de enviar el paquete.
+Una selección grande —en especial con conversión de imágenes— puede tardar
+varios minutos. Mantenga NAHPU abierto durante el proceso (puede usar
+`Cancelar` para detenerlo) y revise los conteos de exportados, omitidos y
+advertencias antes de enviar el archivo.
 
 {% /aside %}
 
 ## Elegir la configuración
 
 | Uso | Formato | Tamaño | Calidad JPEG |
-|---|---|---|---|
-| Archivo o procesamiento posterior | `Original` | Sin cambios | — |
-| Informe impreso o póster | `JPEG` o `PNG` | Suficiente para el tamaño de impresión | 85–95 |
-| Diapositivas o página web | `JPEG` o `WebP` | Unos 2000 px en el lado largo | 80–85 |
-| Correo electrónico o subida lenta | `JPEG` | Unos 1200 px en el lado largo | 70–80 |
+| --- | --- | --- | --- |
+| Archivo o edición posterior | `Original` | Sin cambios | — |
+| Informe impreso o póster | `JPEG` o `PNG` | Suficiente para el tamaño de impresión | 85–95% |
+| Diapositivas o página web | `JPEG` o `WebP` | ~2000 px en el lado largo | 80–85% |
+| Correo electrónico o subida lenta | `JPEG` | ~1200 px en el lado largo | 70–80% |
 
-Son puntos de partida. Abra una imagen exportada al tamaño en que se usará antes
-de enviar un lote. Cambiar el tamaño y comprimir en JPEG elimina detalle para
-siempre, así que conserve siempre los originales.
+Revise una imagen exportada al tamaño de uso previsto antes de compartir un
+lote. Redimensionar y comprimir en JPEG descartan detalle de forma permanente,
+así que conserve siempre los originales.
 
 ## Páginas relacionadas
 
-- [Adjunte datos y medios](/es/how-to-recipes/collect/attach-data-and-media)
-  para agregar medios a un registro
-- [Transferir un proyecto](/es/usages/export/project-transfer/) cuando los medios deben viajar
-  con los registros
-- [Empaquetar registros](/es/usages/export/export-bundles/) para paquetes que incluyen medios
-  junto a tablas basadas en estándares
+- [Adjuntar datos y medios](/es/how-to-recipes/collect/attach-data-and-media)
+  para agregar multimedia a los registros
+- [Transferir un Proyecto](/es/usages/export/project-transfer/) cuando la
+  multimedia deba viajar junto con los registros del proyecto
+- [Empaquetar registros](/es/usages/export/export-bundles/) para paquetes
+  estandarizados que incluyen multimedia junto con tablas de datos

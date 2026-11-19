@@ -1,6 +1,6 @@
 ---
 title: Ikan
-description: Catatan individu dan lot, pengukuran, serta ID tag untuk spesimen dalam katalog Ichthyology.
+description: Catatan individu dan lot, pengukuran, serta ID tag untuk spesimen dalam katalog Iktiologi.
 sidebar:
   order: 5
   badge:
@@ -8,126 +8,133 @@ sidebar:
     variant: caution
 ---
 
-Spesimen dalam proyek yang memakai format katalog `Ichthyology` menampilkan
-formulir pengukuran ikan. Jenis kelamin, tahap hidup, dan satuan berat bekerja
-dengan cara yang sama di setiap kelompok takson; lihat
-[Pengukuran](/id/usages/specimens/measurements/).
+Spesimen dalam format katalog `Iktiologi` menampilkan formulir pengukuran ikan.
+Satuan berat, jenis kelamin, dan tahap hidup bekerja dengan cara yang sama di
+semua kelompok takson; lihat [Pengukuran](/id/usages/specimens/measurements/).
 
 {% aside type="caution" %}
 
-Dukungan Ichthyology masih dalam tahap beta. Periksa hasil ekspor terhadap
+Dukungan Iktiologi masih dalam tahap beta. Periksa hasil ekspor terhadap
 persyaratan koleksi Anda sebelum mengandalkannya.
 
 {% /aside %}
 
 ## Tipe spesimen {% #specimen-type %}
 
-Setiap catatan ikan dimulai dengan `Specimen type`:
+Setiap catatan ikan dimulai dengan `Jenis spesimen`:
 
-- `Individual`: satu ikan dengan pengukurannya sendiri.
-- `Lot`: banyak individu yang disimpan bersama, misalnya satu stoples ikan
-  dari spesies yang sama dari satu kegiatan pengumpulan.
+- `Individu`: satu ikan yang dikatalogkan dan disimpan sendiri, dengan
+  pengukurannya sendiri.
+- `Lot`: beberapa individu yang berbagi satu nomor katalog dan wadah, misalnya
+  satu stoples ikan dari spesies yang sama dari satu kegiatan koleksi.
 
-Pilih `Individual` bila ikan dikatalogkan dan disimpan sendiri. Pilih `Lot`
-bila beberapa ikan berbagi satu nomor katalog dan wadah. Catatan menyimpan
-nilai kedua tipe, tetapi hanya kolom dari tipe yang dipilih yang ditampilkan
-dan diekspor.
+Catatan menyimpan nilai kedua jenis jika Anda beralih, tetapi hanya kolom dari
+jenis yang dipilih yang ditampilkan dan diekspor.
 
 ## Pengukuran individu {% #individual-measurements %}
 
-- `Sex`: dipilih dari kosakata terkontrol jenis kelamin spesimen.
-- `Life stage`: dipilih dari kosakata terkontrol tahap hidup.
-- `Standard length (mm)`: panjang dari ujung moncong hingga ujung tulang
+- `Jenis kelamin`: pilih dari kosakata terkontrol jenis kelamin spesimen yang
+  diatur.
+- `Tahap hidup`: pilih dari kosakata terkontrol tahap hidup yang diatur.
+- `Panjang standar (mm)`: panjang dari ujung moncong hingga ujung tulang
   belakang, tidak termasuk sirip ekor.
-- `Total length (mm)`: panjang dari ujung moncong hingga ujung jari-jari sirip
+- `Panjang total (mm)`: panjang dari ujung moncong hingga ujung jari-jari sirip
   ekor terpanjang.
-- `Weight`: berat spesimen dalam satuan yang dipilih.
-- `Remarks`: informasi tambahan tentang spesimen.
+- `Berat`: berat spesimen dalam satuan yang dipilih.
+- `Catatan`: catatan tambahan tentang spesimen.
 
 ## Pengukuran lot {% #lot-measurements %}
 
-- `Total individuals`: jumlah ikan dalam lot, baik yang diukur maupun tidak.
-- `Life stage`: tahap hidup lot.
-- `Auto-update min and max`: bila aktif, NAHPU mengisi rentang di bawah ini
-  dari individu yang diukur dalam lot, dan kolom rentang menjadi hanya-baca.
-  Nonaktifkan untuk memasukkan rentang secara manual, misalnya bila hanya ikan
-  terkecil dan terbesar yang diukur.
-- `Min. standard length (mm)` dan `Max. standard length (mm)`.
-- `Min. total length (mm)` dan `Max. total length (mm)`.
-- `Min. weight` dan `Max. weight`: rentang berat dalam satuan yang dipilih.
-- `Remarks`: informasi tambahan tentang lot.
+- `Total individu`: jumlah ikan dalam lot, baik yang diukur maupun tidak.
+- `Tahap hidup`: tahap hidup lot.
+- `Perbarui min dan maks otomatis`: bila aktif, NAHPU mengisi kolom rentang di
+  bawah ini dari individu yang diukur dalam lot dan menjadikannya hanya-baca
+  (serta menaikkan `Total individu` jika jumlah individu yang dimasukkan
+  melebihi hitungan yang tercatat). Nonaktifkan untuk mengisi rentang secara
+  manual, misalnya saat hanya ikan terkecil dan terbesar yang diukur.
+- `Panjang standar min. (mm)` dan `Panjang standar maks. (mm)`.
+- `Panjang total min. (mm)` dan `Panjang total maks. (mm)`.
+- `Berat min.` dan `Berat maks.`: rentang berat dalam satuan yang dipilih.
+  Mengubah satuan berat lot juga memperbarui satuan berat yang tersimpan pada
+  individu di dalamnya.
+- `Catatan`: catatan tambahan tentang lot.
 
-`Lot summary` menampilkan rata-rata, simpangan baku, jumlah yang diukur (`n`),
-dan rentang individu dalam lot untuk panjang standar, panjang total, dan berat.
-Ringkasan ini juga menampilkan berapa banyak dari `Total individuals` yang
-sudah diukur.
+`Ringkasan lot` menampilkan rata-rata, simpangan baku (`SD`, jika minimal dua
+individu diukur), jumlah yang diukur (`n`), dan rentang untuk
+`Panjang standar`, `Panjang total`, dan `Berat`, beserta berapa banyak dari
+`Total individu` yang sudah diukur.
 
 ## Individu dalam lot {% #individuals-in-a-lot %}
 
-Gunakan bagian `Individuals` pada lot untuk mencatat ikan yang diukur satu per
-satu.
+Gunakan bagian `Individu` pada catatan lot untuk mencatat ikan yang diukur satu
+per satu.
 
 {% steps %}
 
-1. Pilih `Add individual`.
-2. Di `Identity`, masukkan `Tag ID`, atau pertahankan tag bernomor otomatis.
-   Pilih `Sex` dan `Life stage`.
-3. Di `Measurements`, masukkan `SL (mm)`, `TL (mm)`, dan berat dalam satuan
-   berat lot. Tambahkan `Remarks` bila perlu.
-4. Pilih `Save and add another` untuk melanjutkan ke ikan berikutnya, atau
-   `Save` untuk menutup formulir.
+1. Pilih `Tambah individu`.
+2. Di bawah `Identitas`, masukkan `ID tag` atau pertahankan tag yang sudah
+   terisi, lalu pilih `Jenis kelamin` dan `Tahap hidup`.
+3. Di bawah `Pengukuran`, masukkan `PS (mm)`, `PT (mm)`, dan `Berat` dalam
+   satuan berat lot. Tambahkan `Catatan` bila perlu.
+4. Pilih `Simpan dan tambah lagi` untuk memasukkan ikan berikutnya, atau
+   `Simpan` untuk menutup formulir.
 
 {% /steps %}
 
-Pilih individu dalam daftar untuk menyuntingnya. Menghapus individu juga
-melepaskan tautannya dari bagian spesimen dan simbion.
+Pilih individu mana pun dalam daftar untuk menyuntingnya. Menghapus individu
+akan menghapus catatannya dan melepaskan tautannya dari semua bagian spesimen
+dan simbion.
 
 ## Penomoran ID tag {% #tag-id-numbering %}
 
-ID tag individu dapat diberi nomor secara otomatis. Atur formatnya di
-`Settings` > `Specimens` > `Individual tag ID`, yang hanya muncul untuk format
-katalog Ichthyology, atau buka menu pada kolom `Tag ID` lalu pilih `Settings`.
+ID tag individu dapat diberi nomor otomatis. Atur formatnya di `Pengaturan` >
+`Spesimen` > `ID tag individu` (hanya tampil saat `Iktiologi` aktif), atau buka
+menu opsi pada kolom `ID tag` lalu pilih `Pengaturan`.
 
-- `Prefix`: teks sebelum nomor, misalnya `FT-`.
-- `Next number`: nomor yang diberikan ke individu berikutnya. Angka nol di
-  depan dipertahankan, sehingga `0007` diikuti oleh `0008`.
-- `Suffix`: teks setelah nomor, misalnya `-A`.
-- `Next tag`: pratinjau ID tag berikutnya.
+| Kolom | Fungsi |
+| --- | --- |
+| `Prefiks` | Teks sebelum nomor, misalnya `FT-` |
+| `Nomor berikutnya` | Nomor yang diberikan ke individu berikutnya; nol di depan dipertahankan (`0007` → `0008`) |
+| `Sufiks` | Teks setelah nomor, misalnya `-A` |
+| `Tag berikutnya` | Pratinjau langsung ID tag berikutnya |
 
-Tag bernomor otomatis ditandai `Auto-numbered. Edit to override.` Mengetik tag
-yang berbeda akan mempertahankan nilai Anda dan tidak memakai nomor berikutnya.
-Pilih `New number` di menu kolom untuk mengembalikan tag bernomor otomatis
-berikutnya.
+Tag bernomor otomatis menampilkan `Bernomor otomatis. Sunting untuk mengganti.`
+Mengetik tag lain mempertahankan nilai Anda tanpa memajukan penghitung. Pilih
+`Nomor baru` di menu kolom untuk mengembalikan tag bernomor otomatis
+berikutnya. Jika penomoran otomatis tidak diatur, NAHPU menyarankan nomor urut
+(`1`, `2`, `3`, …) di dalam lot.
 
 ## Bagian spesimen dan simbion {% #parts-and-symbionts %}
 
-Katalog ikan menampilkan kolom deteksi simbion dan tab simbion. Bila lot
-memiliki individu, bagian spesimen dan simbion menampilkan pemilih
-`Individuals`. Gunakan `Add individual` untuk menautkan bagian atau simbion ke
-ikan asalnya, misalnya potongan sirip dari satu ikan bertag. Lihat
+Katalog ikan mencakup kolom pemeriksaan `Simbion` di bagian bawah formulir
+pengukuran serta tab simbion pada `Bagian spesimen`. Bila lot memiliki individu
+tercatat, bagian spesimen dan simbion menampilkan pemilih `Individu`: gunakan
+`Tambah individu` untuk menautkan bagian atau simbion ke ikan asalnya (misalnya
+potongan sirip dari ikan bertag). Lihat
 [Bagian Spesimen](/id/usages/specimens/parts/) dan
 [Simbion](/id/usages/specimens/symbionts/).
 
 ## Kondisi perairan {% #water-conditions %}
 
-Catat kondisi perairan pada kegiatan pengumpulan, bukan pada spesimen.
-[Data lingkungan](/id/usages/events/) kegiatan pengumpulan mencakup suhu air,
-pH, oksigen terlarut, saturasi oksigen terlarut (%), konduktivitas (µS/cm), dan
-kecepatan aliran.
+Catat kondisi perairan pada kegiatan koleksi, bukan pada spesimen.
+[Data lingkungan](/id/usages/events/) kegiatan koleksi mencakup `Suhu air`,
+`pH`, `Oksigen terlarut`, `Saturasi oksigen terlarut` (%), `Konduktivitas`
+(µS/cm), dan `Kecepatan arus`.
 
 ## Ekspor {% #export %}
 
-Ekspor spesimen untuk katalog Ichthyology menambahkan kolom pengukuran berikut:
+Ekspor spesimen untuk katalog `Iktiologi` menambahkan kolom pengukuran berikut:
 `specimenType`, `individualCount`, `sex`, `lifeStage`, `standardLength`,
 `totalLength`, `weight`, `weightUnit`, `minStandardLength`,
 `maxStandardLength`, `minTotalLength`, `maxTotalLength`, `minWeight`,
 `maxWeight`, dan `remark`.
 
-Kolom `individuals` mencantumkan individu dalam lot, dipisahkan oleh `|`.
-Setiap entri berbentuk
-`ID: FT-0001;SL: 52 mm;TL: 61 mm;Weight: 3.1 g;Sex: Female;Life stage: Adult`.
-Ekspor bagian spesimen dan simbion mencantumkan ID individu yang tertaut,
-dipisahkan oleh koma.
+Kolom `individuals` mencantumkan individu dalam lot yang dipisahkan oleh `|`,
+dengan format
+`ID: FT-0001;SL: 52 mm;TL: 61 mm;Weight: 3.1 g;Sex: Female;Life stage: Adult`
+(dengan `Remark: ...` ditambahkan bila ada). Ekspor bagian spesimen dan simbion
+mencantumkan ID individu yang tertaut, dipisahkan oleh koma.
 
-Dalam ekspor Darwin Core, `individualCount` adalah `Total individuals` lot,
-atau `1` untuk ikan individu. Lihat [Ekspor Catatan](/id/usages/export/export-records/).
+Dalam ekspor Darwin Core, `individualCount` adalah `Total individu` lot, atau
+`1` untuk ikan individu. Lihat
+[Ekspor Catatan](/id/usages/export/export-records/).

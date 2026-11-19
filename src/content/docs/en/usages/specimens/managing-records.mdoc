@@ -5,19 +5,22 @@ sidebar:
   order: 8
 ---
 
-Open the three-dot menu on the specimen page to manage records:
+Open the three-dot menu on the `Specimen Records` page to manage records:
 
 | Action | What it does |
 | --- | --- |
-| `Create specimen` | Adds a new specimen record. |
-| `Duplicate part` | Immediately creates a new specimen with a copy of the current specimen's parts: type, count, treatments, storage, and museum fields. Tissue IDs, barcodes, preparators, dates, and remarks are not copied. |
-| `Sort records` | Chooses the field and direction for the specimen list. Each record viewer keeps its own sort. |
+| `Create specimen` | Adds a new specimen record using the active catalog format. |
+| `Duplicate part` | Immediately creates a new specimen with a copy of the current specimen's parts (type, count, treatments, storage, and museum fields). Tissue IDs, barcodes, preparators, dates, time taken, PMI, and remarks are not copied. Does nothing if the specimen has no parts. |
+| `Sort records` | Sets the sort field and direction for the specimen list. Each record viewer keeps its own sort. |
 | `Export specimen` | Saves a JSON record, or an archive that includes the specimen's media. |
-| `Import specimen` | Chooses a new or existing target specimen, then maps the imported event, site, and taxon to records in this project. It can also create a new event or site. |
-| `Delete record` | Deletes the specimen with its measurements, parts, symbionts, fish individuals, and media links. Associated data is detached and removed only if nothing else uses it. The field number is not reused. |
-| `Delete all records` | Does the same for every specimen in the project. |
+| `Import specimen` | Imports into a new or existing target specimen, then maps the imported event, site, and taxon to records in this project (or creates a new event or site). |
+| `Delete record` | Deletes the specimen along with its measurements, parts, symbionts, fish individuals, and media links. Associated data is detached and removed only if nothing else uses it. The field number is not reused automatically. |
+| `Delete all records` | Does the same for every specimen in the current project. |
 
-`Duplicate part`, `Export specimen`, and `Delete record` need a specimen open.
-After an import, check the linked event, site, taxon, and any new identifiers.
-For what changing an event clears, see
-[Capture records](/en/usages/specimens/capture-records/).
+`Duplicate part`, `Export specimen`, and `Delete record` require an open
+specimen. Use the search icon in the app bar to find specimens by field number,
+taxon, personnel, condition, preparation date or time, or preparation type.
+
+After an import, verify the linked collection event, site, taxon, and any new
+identifiers. For what changing an event clears, see
+[Capture Records](/en/usages/specimens/capture-records/).

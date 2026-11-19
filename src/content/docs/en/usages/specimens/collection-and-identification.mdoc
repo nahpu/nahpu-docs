@@ -10,33 +10,35 @@ this order on screen:
 
 | Field | Notes |
 | --- | --- |
-| Field ID | The cataloger's field number or a formatted project number. Use `Edit field ID` to switch the type for this specimen; NAHPU asks you to confirm, removes the old identifier, and does not reuse numbers already taken. |
+| `Specimen UUID` | Unique identifier assigned by NAHPU; read-only and selectable. |
 | `Museum ID` | Optional museum catalog or accession number. Shown after `Show more`, or once it has a value. |
-| `Cataloger` | The person who catalogs the specimen. Choosing one also sets `Preparator` and `Determiner`. |
-| `Preparator` | The person who prepared the specimen or voucher. |
-| `Condition` | The specimen's condition, from the list in Settings. |
+| `Field ID` | The cataloger's field number or a formatted project number. Select the edit icon to open `Edit field ID` and switch between `Personnel` and `Project`; NAHPU asks you to confirm, removes the previous identifier, and does not reuse numbers already taken. |
+| `Cataloger` | The person who catalogs the specimen (from personnel with the `Cataloger` role). Choosing one also sets `Preparator` and `Determiner`. |
+| `Preparator` | The person who prepared the specimen or voucher (`Cataloger` or `Preparator only` roles). |
+| `Condition` | The specimen's condition, from the `Conditions` controlled vocabulary in `Settings`. |
 | `Collection date`, `Collection time` | When the specimen was collected. |
 | `Prep. date`, `Prep. time` | When the specimen was prepared. |
 
-The **Identification** part of the card holds:
+The **Identification** section of the card holds:
 
 | Field | Notes |
 | --- | --- |
 | `Taxon` | A record from the project's taxon registry. |
-| `Determiner` | The person who identified the specimen. |
-| `ID Confidence` | `Low`, `Medium`, or `High`. |
-| `Identification Method` | Optional evidence used. Appears once `ID Confidence` is set. |
+| `Determiner` | The person who identified the specimen (`Cataloger` or `Determiner only` roles). |
+| `ID Confidence` | `High`, `Medium`, `Low`, or `Not assigned`. |
+| `Identification Method` | Optional evidence used, from the `Identification Methods` controlled vocabulary. Appears once `ID Confidence` is set. |
 
 ## Taxonomy
 
-The `Taxon Info` card is read from the taxon selected in `Collection & Identification`.
-It shows class, order, and family in the specimen form. Select `View details` to
-review the full taxonomy record, including:
+The `Taxon Info` card reads from the taxon selected in `Collection & Identification`.
+On the specimen form it displays `Class`, `Order`, and `Family`. Select
+`View details` to review the full read-only taxonomy record:
 
-- the record's `Rank`;
-- kingdom and phylum, taken from the registry when recorded and inferred from
-  class otherwise;
-- class, order, family, genus, and — when the record reaches those ranks —
-  species and subspecies, plus authors and common name;
-- Red List category, CITES status, country status, and notes when present;
-- the number of records that use the taxon, and a QR code to share it.
+- **Header**: scientific name, `Authors`, and `Common name` when present.
+- **Classification**: `Rank`, `Kingdom` and `Phylum` (taken from the registry
+  when recorded, or inferred from class otherwise), `Class`, `Order`, `Family`,
+  `Genus`, and — when applicable — `Species`, `Subspecies`, and `Authors`.
+- **Conservation**: `Red List category`, `CITES status`, and `Country status`
+  when present, plus `Notes`.
+- **Total records & sharing**: record counts for `Current project` and
+  `All projects`, and a `Taxon QR code` to share the taxon.

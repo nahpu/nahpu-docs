@@ -7,11 +7,11 @@ sidebar:
 
 {% screenshots
    large="app-screenshots/usage/expressions-large.webp"
-   largeAlt="Layar Editor Templat NAHPU di tablet"
+   largeAlt="Layar Penyunting Templat NAHPU di tablet"
    large2="app-screenshots/usage/expressions-large-2.webp"
    large2Alt="Layar Templat dokumen NAHPU di tablet"
    small="app-screenshots/usage/expressions-small.webp"
-   smallAlt="Layar Editor Templat NAHPU di ponsel"
+   smallAlt="Layar Penyunting Templat NAHPU di ponsel"
    small2="app-screenshots/usage/expressions-small-2.webp"
    small2Alt="Layar Templat dokumen NAHPU di ponsel" %}
 {% pin id="A" label="Templat bawaan" large=[22.2, 12.3] small=[13.5, 10.5] /%}
@@ -21,43 +21,42 @@ sidebar:
 {% pin id="E" label="Daftar templat" large2=[93, 40.3] small2=[94, 48.2] /%}
 {% /screenshots %}
 
-**Ekspresi ekspor** memberi tahu NAHPU apa yang harus ditulis: bidang catatan
-mana yang dipakai, teks apa yang mengapitnya, dan apa yang dilakukan saat nilai
-kosong. Ekspresi ditulis di dua tempat:
+**Ekspresi ekspor** memberi tahu NAHPU bidang catatan mana yang ditulis, teks
+tetap apa yang mengapitnya, dan cara menangani nilai kosong atau bersyarat.
+Ekspresi bekerja di dua tempat:
 
-- elemen teks pada [templat dokumen](../export-documents), seperti label
+- elemen teks dalam [templat dokumen](../export-documents), seperti label
   spesimen;
-- kolom `Bidang kustom` pada [prasetel ekspor tabular](../export-records).
+- kolom bidang kustom dalam [prasetel ekspor tabel](../export-records).
 
-Ekspresi yang sama memberi hasil yang sama di keduanya. Misalnya,
+Ekspresi yang sama menghasilkan keluaran yang sama di keduanya. Misalnya,
 `[taxonomy::genus] [taxonomy::specificEpithet]` {% ref id="C" /%} mencetak
-`Rattus rattus` pada label dan menulis `Rattus rattus` di kolom lembar kerja.
+`Rattus rattus` pada label dan menulis `Rattus rattus` di sel lembar kerja.
 
 ## Dasar-dasar dalam satu menit
 
-Bidang ditulis di dalam kurung siku, sebagai `[table::field]`. Semua yang di luar
-kurung ditulis apa adanya:
+Bungkus kunci bidang dalam tanda kurung siku sebagai `[tabel::bidang]`. Semua
+teks di luar kurung siku ditulis apa adanya:
 
 ```text
 Field no. [specimen::fieldNumber]
 ```
 
-mencetak `Field no. 156`. Tiga tambahan kecil mencakup sebagian besar
-kebutuhan:
+menghasilkan `Field no. 156`. Tiga tambahan menangani sebagian besar kebutuhan:
 
-| Tambahkan | Untuk | Contoh | Mencetak |
-|---|---|---|---|
-| `??teks` | Menulis `teks` saat bidang kosong | `[taxonomy::specificEpithet??sp.]` | `sp.` saat epitet tidak dicatat |
-| `#label` | Menulis label bidang berkode, bukan kodenya | `[mammalAttribute::testisPosition#label]` | `Scrotal`, bukan `0` |
-| `[[if]…]]` | Menulis teks hanya saat kondisi terpenuhi | `[[if][coordinate::elevationInMeter!=""]=>"m"]]` | `m` hanya saat elevasi dicatat |
+| Tambahan | Kegunaan | Contoh | Hasil |
+| --- | --- | --- | --- |
+| `??teks` | Nilai pengganti jika bidang kosong | `[taxonomy::specificEpithet??sp.]` | `sp.` bila epitet belum dicatat |
+| `#label` | Menulis label bidang berkode alih-alih angka kodenya | `[mammalAttribute::testisPosition#label]` | `Scrotal` alih-alih `0` |
+| `[[if]…]]` | Menulis teks hanya saat syarat terpenuhi | `[[if][coordinate::elevationInMeter!=""]=>"m"]]` | `m` hanya jika elevasi tercatat |
 
-Anda jarang perlu mengetik kunci sendiri. `Sisipkan bidang` di editor templat
-dan `Tambah bidang` pada bidang kustom menyisipkannya untuk Anda.
+Anda jarang perlu mengetik kunci secara manual: gunakan `Sisipkan bidang` di
+penyunting templat atau tombol tambah bidang pada bidang kustom.
 
 ## Ekspresi umum {% #common-expressions %}
 
-Salin ekspresi ini ke elemen teks templat dokumen, atau ke kolom tabular seperti
-dijelaskan pada masing-masing. Semuanya memakai bidang spesimen.
+Salin contoh ini ke elemen teks templat dokumen atau ke kolom prasetel tabel
+sesuai catatan. Semuanya memakai bidang spesimen.
 
 ### Nama spesies {% #species-name %}
 
@@ -65,59 +64,59 @@ dijelaskan pada masing-masing. Semuanya memakai bidang spesimen.
 [taxonomy::genus] [taxonomy::specificEpithet]
 ```
 
-Mencetak `Rattus rattus`. Untuk spesimen yang hanya diidentifikasi sampai genus,
-tambahkan fallback agar namanya menjadi `Rattus sp.`:
+Menghasilkan `Rattus rattus`. Untuk spesimen yang baru teridentifikasi sampai
+genus, tambahkan pengganti agar terbaca `Rattus sp.`:
 
 ```text
 [taxonomy::genus] [taxonomy::specificEpithet??sp.]
 ```
 
-Untuk nama lengkap, termasuk subspesies, gunakan `[specimen::scientificName]`.
-Pada prasetel tabular, letakkan salah satu ekspresi di kolom `Bidang kustom`.
+Untuk nama ilmiah lengkap beserta subspesies, gunakan
+`[specimen::scientificName]`. Pada prasetel tabel, letakkan ekspresi di kolom
+bidang kustom.
 
 ### Lokalitas lengkap {% #full-locality %}
 
-Menggabungkan bidang geografi menjadi satu nilai dan melewati yang kosong,
-sehingga kabupaten yang tidak dicatat tidak meninggalkan koma ganda:
+Menggabungkan bidang geografi menjadi satu string sambil melewati bagian yang
+kosong sehingga tidak muncul koma ganda:
 
 ```text
 [geography::country]|[geography::islandGroup]|[geography::stateProvince]|[geography::county]|[geography::municipality]|[geography::locality]
 ```
 
-Setiap `|` memisahkan dua bagian. Pemisah yang benar-benar ditulis, seperti
-koma, berasal dari pengaturan daftar:
+Setiap `|` memisahkan bagian; pemisah yang benar-benar tercetak ditentukan oleh
+pengaturan daftar:
 
-- **Templat dokumen:** atur `Jenis` ke `Nilai daftar` dan pilih format koma.
-- **Prasetel ekspor tabular:** atur `Jenis pemetaan` ke `Bidang daftar`,
-  `Keluaran daftar` ke `Satu kolom`, dan `Pemisah` ke `Koma (A, B)`. Tempelkan
-  ekspresi ke `Lanjutan` > `Ekspresi sumber mentah` dan isi
-  `Nama kolom (opsional)`; format tajuk Darwin Core dan namespace NAHPU
-  mewajibkan nama.
+- **Templat dokumen:** atur jenis teks ke daftar nilai dan pilih format koma.
+- **Prasetel ekspor tabel:** atur jenis pemetaan ke bidang daftar, keluaran
+  satu kolom, dan pemisah koma. Tempel ekspresi ke ekspresi sumber mentah di
+  `Lanjutan` lalu isi nama kolom (wajib untuk tajuk Darwin Core dan ruang nama
+  NAHPU).
 
-Sebuah catatan mencetak `Indonesia, West Java, Bogor, Cibodas`; catatan tanpa
-kabupaten mencetak `Indonesia, West Java, Cibodas`. Hapus, ubah urutan, atau
-tambahkan bagian sesuai kebutuhan.
+Catatan lengkap mencetak `Indonesia, West Java, Bogor, Cibodas`; catatan tanpa
+kabupaten mencetak `Indonesia, West Java, Cibodas`. Tambah, hapus, atau ubah
+urutan bagian sesuai kebutuhan.
 
 ### Ukuran testis {% #testis-size %}
 
-Mencetak `panjang x lebar` hanya saat testis skrotal dan kedua ukuran dicatat.
-Catatan lainnya tidak mencetak apa pun:
+Mencetak `panjang x lebar` hanya jika testis skrotal dan kedua ukuran tercatat;
+selain itu tidak mencetak apa-apa:
 
 ```text
 [[if][mammalAttribute::testisPosition=="0"&&mammalAttribute::testisLength!=""&&mammalAttribute::testisWidth!=""]=>"[mammalAttribute::testisLength] x [mammalAttribute::testisWidth]"]]
 ```
 
 | Catatan | Keluaran |
-|---|---|
-| Skrotal, 10 mm kali 6,5 mm | `10 x 6.5` |
-| Skrotal, lebar tidak dicatat | Tidak ada |
-| Abdominal | Tidak ada |
-| Betina | Tidak ada |
+| --- | --- |
+| Skrotal, 10 mm kali 6.5 mm | `10 x 6.5` |
+| Skrotal, lebar tidak tercatat | Kosong |
+| Abdominal | Kosong |
+| Betina | Kosong |
 
 `"0"` adalah kode tersimpan untuk skrotal. Tambahkan ` mm` di dalam tanda kutip
-untuk satuan, atau `|"not scrotal"` sebelum `]]` penutup untuk menulis sesuatu
-pada semua catatan lain. Lihat [Teks bersyarat](#conditional-text) untuk cara
-kerjanya. Pada prasetel tabular, gunakan kolom `Bidang kustom`.
+untuk satuan, atau `|"not scrotal"` sebelum `]]` untuk alternatif saat tidak
+cocok. Lihat [Teks bersyarat](#conditional-text). Di prasetel tabel, gunakan
+kolom bidang kustom.
 
 ### Label bidang berkode {% #encoded-labels %}
 
@@ -125,27 +124,27 @@ kerjanya. Pada prasetel tabular, gunakan kolom `Bidang kustom`.
 [mammalAttribute::testisPosition#label]
 ```
 
-Mencetak `Scrotal`, bukan kode tersimpan `0`. Berfungsi di jenis teks apa pun,
-termasuk kolom `Bidang kustom`. Lihat
+Menghasilkan `Scrotal` alih-alih kode tersimpan `0`. Berlaku di semua jenis
+teks, termasuk kolom bidang kustom. Lihat
 [Menerjemahkan bidang berkode](#decode-an-encoded-field).
 
-## Placeholder secara rinci
+## Penanda secara rinci
 
 ### Simbol
 
 | Simbol | Arti | Contoh |
-|---|---|---|
-| `[ ]` | Placeholder bidang. | `[fieldNumber]` |
-| `::` | Memisahkan tabel dan bidang dalam kunci lengkap. | `[specimen::fieldNumber]` |
-| `??` | Fallback yang ditulis saat bidang kosong. | `[specimen::preparator??N/A]` |
-| `#label` | Menulis label bidang berkode, bukan kodenya. | `[mammalAttribute::testisPosition#label]` |
-| `-img` | Menggambar bidang `.sex` sebagai ikon, bukan teks. | `[mammal.sex]-img` |
-| `[[ ]]` | Ekspresi bersyarat. | `[[specimen::condition][…]]` |
-| `[[if]` … `]]` | Teks bersyarat, ditulis hanya saat kondisi terpenuhi. | `[[if][…]=>" mm"]]` |
+| --- | --- | --- |
+| `[ ]` | Penanda bidang | `[fieldNumber]` |
+| `::` | Memisahkan tabel dan bidang dalam kunci lengkap | `[specimen::fieldNumber]` |
+| `??` | Pengganti ketika bidang kosong | `[specimen::preparator??N/A]` |
+| `#label` | Menulis label bidang berkode alih-alih kodenya | `[mammalAttribute::testisPosition#label]` |
+| `-img` | Menggambar bidang `.sex` sebagai ikon alih-alih teks | `[mammal.sex]-img` |
+| `[[ ]]` | Ekspresi bersyarat | `[[specimen::condition][…]]` |
+| `[[if]` … `]]` | Teks bersyarat yang ditulis hanya saat syarat cocok | `[[if][…]=>" mm"]]` |
 
 ### Kunci bidang
 
-Placeholder berisi kunci lengkap `table::field` atau hanya nama bidang:
+Penanda menerima kunci lengkap `tabel::bidang` atau hanya nama bidang:
 
 ```text
 Field number: [specimen::fieldNumber]
@@ -153,60 +152,57 @@ Scientific name: [taxonomy::scientificName]
 Locality: [site::specificLocality]
 ```
 
-Bentuk pendek seperti `[fieldNumber]` juga berfungsi, tetapi gunakan kunci
-lengkap bila dua tabel memiliki bidang dengan nama yang sama. Pemilih bidang
-hanya menawarkan bidang yang dapat disediakan jenis catatan templat atau
-prasetel.
+Gunakan kunci lengkap setiap kali dua tabel memiliki nama bidang sama. Pemilih
+bidang hanya menawarkan bidang yang tersedia untuk jenis catatan aktif.
 
 ### Nilai kosong
 
-`??` menentukan apa yang ditulis saat bidang kosong. Kontrol
-`Pengganti tanpa konten` menuliskannya untuk Anda:
+`??` menentukan keluaran saat bidang kosong. Kontrol `Pengganti tanpa konten`
+menulis sintaks ini otomatis:
 
-| Opsi | Ditulis sebagai | Keluaran saat bidang kosong |
-|---|---|---|
-| `Kosong` | `[specimen::preparator]` | Tidak ada |
-| `table::field` | `[specimen::preparator??specimen::preparator]` | Kunci bidang, sebagai pengingat yang terlihat |
-| `T/A` | `[specimen::preparator??N/A]` | `N/A` |
-| `Tidak ada` | `[specimen::preparator??None]` | `None` |
-| Kustom | `[specimen::preparator??not recorded]` | Apa pun yang Anda ketik |
+| Opsi | Penulisan | Keluaran saat kosong |
+| --- | --- | --- |
+| Kosong | `[specimen::preparator]` | Tidak ada |
+| `table::field` | `[specimen::preparator??specimen::preparator]` | Kunci bidang sebagai pengingat visual |
+| `N/A` | `[specimen::preparator??N/A]` | `N/A` |
+| `None` | `[specimen::preparator??None]` | `None` |
+| Kustom | `[specimen::preparator??not recorded]` | Teks kustom Anda |
 
-Teks setelah `??` ditulis apa adanya. Placeholder yang diakhiri `-img` tidak
-dapat memakai fallback.
+Teks setelah `??` ditulis apa adanya. Penanda berakhiran `-img` tidak mendukung
+nilai pengganti.
 
 ### Ikon jenis kelamin dan gambar
 
-Dua placeholder menggambar gambar, bukan teks. Masing-masing harus sendirian di
+Dua penanda menggambar citra alih-alih teks dan harus berdiri sendiri dalam
 elemen teksnya:
 
-- `[mammal.sex]-img` menggambar jenis kelamin sebagai ikon. Kuncinya harus
-  diakhiri `.sex`. Atur ukuran ikon dengan bidang lebar dan tinggi.
-- `[media::media]`, dengan `Jenis` diatur ke `Gambar`, menggambar gambar yang
-  dilampirkan pada catatan dalam bentuk kisi.
+- `[mammal.sex]-img` menggambar ikon jenis kelamin (kunci harus berakhiran
+  `.sex`; atur ukuran lewat lebar dan tinggi).
+- `[media::media]` dengan jenis teks gambar menampilkan gambar lampiran catatan
+  dalam kisi.
 
 ## Bidang kustom {% #custom-fields %}
 
-Bidang kustom mencampur bidang dengan teks Anda sendiri, atau hanya berisi teks.
-Di templat dokumen, setiap elemen teks sudah merupakan bidang kustom: sisipkan
-bidang dengan `Sisipkan bidang` lalu ketik di sekitarnya. Di prasetel ekspor
-tabular, pilih `Tambah bidang kustom` di `Sunting Kolom`, atau ubah
-`Jenis pemetaan` kolom yang ada menjadi `Bidang kustom`.
+Bidang kustom memadukan penanda dengan teks tetap, atau berisi teks tetap saja.
+Di templat dokumen, setiap elemen teks bekerja demikian (`Sisipkan bidang`
+ditambah teks biasa). Di prasetel ekspor tabel, pilih `Tambah bidang kustom`
+atau ubah jenis pemetaan kolom menjadi bidang kustom.
 
-Editor bidang kustom menyusun ekspresi satu bagian, atau segmen, sekaligus:
+Editor membangun ekspresi segmen demi segmen:
 
 | Kontrol | Fungsinya |
-|---|---|
-| `Tambah bidang` | Menambahkan bidang yang dipilih dari pemilih bidang. |
-| `Tambah teks` {% ref id="B" /%} | Menambahkan teks atau pemisah. |
-| `Tambah teks bersyarat` | Menambahkan [teks bersyarat](#conditional-text): teks yang ditulis hanya saat kondisinya terpenuhi. |
-| `Tampilkan label` | Pada bidang berkode, menambahkan `#label` agar kolom menampilkan label, bukan kode. |
-| `Sunting teks bersyarat` | Membuka kembali segmen teks bersyarat. |
-| `Pindahkan segmen ke atas` / `Pindahkan segmen ke bawah` | Mengubah urutan segmen. Segmen ditulis dari kiri ke kanan. |
-| `Hapus segmen` | Menghapus segmen. |
-| `Ekspresi:` | Menampilkan ekspresi yang akan disimpan. |
-| `Nama kolom` | Menamai kolom keluaran. |
+| --- | --- |
+| Tambah bidang | Menyisipkan bidang dari pemilih. |
+| `Tambah teks` {% ref id="B" /%} | Menyisipkan teks tetap atau pemisah. |
+| Tambah teks bersyarat | Menyisipkan [teks bersyarat](#conditional-text). |
+| Tampilkan label | Menambahkan `#label` pada bidang berkode agar tampil labelnya. |
+| Sunting teks bersyarat | Membuka kembali segmen bersyarat untuk diubah. |
+| Geser segmen naik / turun | Mengatur urutan segmen (ditulis dari kiri ke kanan). |
+| Hapus segmen | Menghapus segmen. |
+| Ekspresi | Menampilkan ekspresi akhir yang akan disimpan. |
+| Nama kolom | Menentukan tajuk kolom keluaran. |
 
-Masing-masing berikut adalah bidang kustom yang lengkap:
+Contoh bidang kustom lengkap:
 
 ```text
 [personnel::initial]-[specimen::fieldNumber]
@@ -214,137 +210,124 @@ Masing-masing berikut adalah bidang kustom yang lengkap:
 NAHPU
 ```
 
-Yang terakhir menulis `NAHPU` di setiap baris, cocok untuk kolom tetap seperti
-kode institusi. Bidang kustom yang memiliki `Nama kolom` tetapi tanpa segmen
-sama sekali menulis kolom kosong, untuk kolom lembar penerima yang tidak dicatat
-NAHPU.
+`NAHPU` menulis teks tetap yang sama di setiap baris (berguna untuk kode
+institusi). Bidang kustom dengan nama kolom tanpa segmen menulis kolom kosong
+untuk menyelaraskan tabel dengan lembar kerja eksternal.
 
-Beri setiap bidang kustom sebuah `Nama kolom`. Nama ini wajib untuk format tajuk
-Darwin Core dan namespace NAHPU. Dengan `table::fieldName` atau `fieldName`,
-bidang kustom tanpa nama memakai tajuk dari bidang pertamanya, atau dari teksnya
-bila tidak ada bidang.
+Selalu isi nama kolom (wajib untuk tajuk Darwin Core dan ruang nama NAHPU).
+Dengan tajuk `table::fieldName` atau `fieldName`, bidang kustom tanpa nama
+memakai bidang pertama atau teks tetapnya.
 
-Kolom bidang kustom menulis ekspresinya sebagai teks biasa. Untuk format nilai
-seperti `Teks terkode` atau `Tanggal`, untuk kurung bersyarat, atau untuk kolom
-daftar berindeks, gunakan kolom `Bidang tunggal` atau `Bidang daftar`.
+Kolom bidang kustom menghasilkan teks biasa. Jika Anda memerlukan teks berkode,
+format tanggal, kurung bersyarat, atau daftar berindeks, gunakan kolom bidang
+tunggal atau bidang daftar.
 
 ## Keluaran bersyarat {% #conditional-output %}
 
-Ekspresi bersyarat memeriksa satu atau beberapa bidang, lalu mengubah apa yang
-ditulis. Buat dengan `Keluaran bersyarat` di bilah alat teks editor templat,
-yang menuliskan sintaksnya untuk Anda dan membukanya kembali untuk disunting. Di
-prasetel tabular, pilih `Format nilai` bersyarat pada kolom `Bidang tunggal`;
-bidang kolom itu sendiri menjadi targetnya.
+Ekspresi bersyarat memeriksa satu atau beberapa bidang sebelum menentukan apa
+yang ditulis. Di penyunting templat, gunakan `Keluaran bersyarat` pada bilah
+alat teks. Di prasetel tabel, pilih format nilai bersyarat pada kolom bidang
+tunggal (bidangnya sendiri menjadi target).
 
-### Pilih jenis
+### Memilih jenis
 
-| Anda ingin… | Jenis | Contoh hasil |
-|---|---|---|
-| Mengurung nilai saat bidang lain menunjukkannya | `Kurung bersyarat` | `[82.5]` saat bobot diperkirakan |
-| Mengganti nilai dengan teks Anda saat bidang lain menunjukkannya | `Bidang bersyarat` | `?` menggantikan epitet saat identifikasi belum pasti |
-| Mengganti nilai berdasarkan nilai itu sendiri | `Nilai bersyarat` | `Not recorded` saat nilainya `0` |
-| Menulis teks yang tidak memiliki bidang sendiri, seperti satuan | `Teks bersyarat` | ` mm` hanya setelah lebar yang dicatat |
+| Jika ingin… | Jenis | Contoh hasil |
+| --- | --- | --- |
+| Mengapit nilai dengan tanda kurung berdasarkan bidang lain | Kurung bersyarat | `[82.5]` saat bobot berupa perkiraan |
+| Mengganti nilai berdasarkan bidang lain | Bidang bersyarat | `?` menggantikan epitet saat ID belum pasti |
+| Mengganti nilai berdasarkan nilainya sendiri | Nilai bersyarat | `Not recorded` saat nilainya `0` |
+| Menulis teks mandiri (seperti satuan) secara bersyarat | Teks bersyarat | ` mm` hanya setelah lebar yang tercatat |
 
-Di dialog:
+Di dalam dialog:
 
 {% steps %}
 
-1. Pilih `Jenis bersyarat`.
-2. Pilih `Bidang target`, yaitu nilai yang dikurung atau diganti.
-   `Teks bersyarat` tidak memiliki target; teks itu ditambahkan ke akhir teks
-   elemen.
-3. Tambahkan kondisi. Masing-masing memiliki `Bidang pengendali`, perbandingan,
-   dan nilai. `Nilai bersyarat` memakai target itu sendiri, sehingga pemilih
-   bidangnya disembunyikan.
-4. Bila ada lebih dari satu kondisi, atur `Logika pencocokan` ke
-   `Salah satu kondisi (ATAU)` atau `Semua kondisi (DAN)`.
-5. Isi `Teks pengganti`, atau `Teks jika cocok` dan
-   `Teks jika tidak (opsional)` untuk teks bersyarat. Biarkan `Teks pengganti`
-   kosong untuk menyembunyikan nilai saat kondisi terpenuhi.
+1. Pilih jenis bersyarat.
+2. Pilih bidang target (nilai yang dikurung atau diganti). Teks bersyarat tidak
+   memiliki target dan ditambahkan ke akhir teks elemen.
+3. Tambahkan satu atau lebih syarat (bidang pengendali, operator perbandingan,
+   dan nilai). Nilai bersyarat menguji targetnya sendiri sehingga pemilih
+   bidang disembunyikan.
+4. Untuk beberapa syarat, pilih logika `OR` (salah satu) atau `AND` (semua).
+5. Isi teks pengganti (atau teks saat cocok dan teks alternatif opsional untuk
+   teks bersyarat). Biarkan pengganti kosong untuk menyembunyikan nilai saat
+   cocok.
 
 {% /steps %}
 
 ### Teks bersyarat (if dan else) {% #conditional-text %}
 
-Teks bersyarat menulis teks sesuai kondisi, bukan mengubah bidang. Gunakan untuk
-teks yang menyertai nilai tetapi hanya boleh muncul bersamanya, seperti satuan:
+Teks bersyarat menulis teks berdasarkan kondisi alih-alih mengubah bidang—cocok
+untuk satuan atau label pendamping:
 
 ```text
 [mammalAttribute::testisWidth][[if][mammalAttribute::testisWidth!=""]=>" mm"]]
 ```
 
-Lebar `6.5` mencetak `6.5 mm`; lebar yang tidak dicatat tidak mencetak apa pun,
-bukan `mm` yang tertinggal sendirian.
+Lebar `6.5` mencetak `6.5 mm`; lebar kosong tidak mencetak apa-apa.
 
-Tambahkan teks kedua setelah `|` untuk menulis sesuatu saat kondisi tidak
-terpenuhi:
+Tambahkan `|` dan teks berkutip kedua untuk cabang selainnya:
 
 ```text
 [[if][mammalAttribute::testisPosition=="0"]=>"scrotal"|"not scrotal"]]
 ```
 
-Teks dapat berisi bidang, dengan fallback dan `#label`. Bidang itu diisi saat
-teks ditulis:
+Teks berkutip dapat memuat penanda, pengganti `??`, dan `#label`:
 
 ```text
 [[if][mammalAttribute::testisLength!=""&&mammalAttribute::testisWidth!=""]=>"[mammalAttribute::testisPosition#label], [mammalAttribute::testisLength] x [mammalAttribute::testisWidth] mm"]]
 ```
 
-- Apit setiap teks dengan tanda kutip. Tulis tanda kutip di dalamnya sebagai
-  `\"`. `|` di dalam tanda kutip adalah teks biasa.
-- Tanpa teks kedua, tidak ada yang ditulis saat kondisi tidak terpenuhi.
-- Ekspresi bersyarat di dalam teks tidak dievaluasi.
+- Apit setiap teks dengan tanda kutip ganda; tulis tanda kutip literal sebagai
+  `\"`. Simbol `|` di dalam kutip dianggap teks biasa.
+- Tanpa cabang kedua, tidak ada yang ditulis jika syarat tidak terpenuhi.
+- Ekspresi bersyarat bersarang di dalam kutip tidak dievaluasi.
 - `if` harus huruf kecil.
 
-### Menyembunyikan nilai kecuali bidang lain dicatat
+### Menyembunyikan nilai kecuali bidang lain terisi
 
-Gunakan `Kosong` dengan pengganti kosong. Ini mencetak panjang testis hanya saat
-posisi testis dicatat:
+Gunakan uji kosong dengan pengganti kosong. Ini mencetak panjang testis hanya
+jika posisi testis dicatat:
 
 ```text
 [[mammalAttribute::testisLength][mammalAttribute::testisPosition==""]=>""]]
 ```
 
-Ekspresi bersyarat hanya menyembunyikan bidangnya sendiri. Teks di sebelahnya,
-seperti satuan atau ` x ` di antara dua ukuran, tetap tercetak. Beri teks itu
-kondisi sendiri dengan teks bersyarat:
+Kondisi hanya menyembunyikan targetnya sendiri; teks di sekitarnya (seperti
+satuan atau ` x `) tetap tercetak kecuali diberi teks bersyarat:
 
 ```text
 [[mammalAttribute::testisLength][mammalAttribute::testisPosition==""]=>""]][[if][mammalAttribute::testisPosition!=""&&mammalAttribute::testisLength!=""]=>" mm"]]
 ```
 
-[Ukuran testis](#testis-size) menunjukkan pola lengkapnya.
+Lihat [Ukuran testis](#testis-size) untuk pola gabungan lengkap.
 
-### Contoh
+### Contoh terapan
 
-**Mengurung bobot yang diperkirakan.** Catatan akurasi mamalia menyebutkan
-ukuran yang tidak diukur dengan presisi. Kurung bobot bila bobot termasuk di
-antaranya:
+**Mengurung bobot perkiraan.** Catatan akurasi mamalia mencantumkan ukuran yang
+diperkirakan:
 
 ```text
 [[mammalAttribute::weight][mammalAttribute::accuracy~="weight"]]
 ```
 
-Bobot yang ditandai mencetak `[82.5]`; bobot yang presisi mencetak `82.5`. Pada
-`mammalAttribute::accuracy`, `~=` menanyakan apakah ukuran yang disebut
-ditandai, bukan apakah teksnya mengandung kata itu.
+Bobot yang ditandai keluar sebagai `[82.5]`; bobot presisi keluar sebagai
+`82.5`. Pada `mammalAttribute::accuracy`, `~=` memeriksa apakah ukuran tersebut
+ditandai.
 
-**Menandai identifikasi yang belum pasti.** Tingkat keyakinan identifikasi
-disimpan sebagai `0` (rendah), `1` (sedang), atau `2` (tinggi), sehingga "bukan
-tinggi" adalah `!="2"`. Letakkan genus dan epitet dalam satu elemen teks dan
-jadikan epitet bersyarat:
+**Menandai identifikasi yang belum pasti.** Keyakinan identifikasi disimpan
+sebagai `0` (rendah), `1` (sedang), atau `2` (tinggi):
 
 ```text
 [taxonomy::genus] [[taxonomy::specificEpithet][specimen::iDConfidence!="2"]=>"?"]]
 ```
 
-Identifikasi dengan keyakinan tinggi mencetak `Rattus rattus`; selain itu
-mencetak `Rattus ?`. Pengganti menempati tempat epitet; pengganti tidak
-ditambahkan setelahnya. Untuk mempertahankan nilai dan menambahkan sesuatu
-setelahnya, tulis nilainya lalu ikuti dengan [teks bersyarat](#conditional-text).
+Keyakinan tinggi mencetak `Rattus rattus`; di bawahnya mencetak `Rattus ?`.
+Karena pengganti mengganti seluruh target, untuk menambahkan teks setelah nilai
+gunakan [teks bersyarat](#conditional-text) sesudahnya.
 
-`!="2"` tidak cocok dengan catatan yang tingkat keyakinannya tidak dicatat.
-Untuk menyertakannya juga, tambahkan `Kosong` sebagai kondisi ATAU tambahan:
+`!="2"` tidak cocok dengan bidang keyakinan yang kosong. Sertakan catatan
+kosong dengan menambahkan `==""` memakai `||`:
 
 ```text
 [[taxonomy::specificEpithet][specimen::iDConfidence=="0"||specimen::iDConfidence=="1"||specimen::iDConfidence==""]=>"?"]]
@@ -352,45 +335,43 @@ Untuk menyertakannya juga, tambahkan `Kosong` sebagai kondisi ATAU tambahan:
 
 ### Aturan kondisi
 
-- **Kondisi membandingkan nilai tersimpan, bukan label.** Bidang berkode
-  dibandingkan berdasarkan kodenya: tulis `specimen::iDConfidence!="2"`, bukan
-  `!="High"`, dan `mammalAttribute::testisPosition=="0"`, bukan `=="Scrotal"`.
-- **Perbandingan membedakan huruf besar dan kecil** dan mengabaikan spasi di
-  kedua ujung.
-- **Bidang kosong tidak pernah cocok** dengan perbandingan biasa, bahkan `!=`.
-  Gunakan `Kosong` (`==""`) atau `Tidak kosong` (`!=""`) untuk menguji ada
-  tidaknya nilai.
-- **Gunakan satu penghubung per ekspresi:** semuanya `&&` atau semuanya `||`,
-  jangan keduanya.
-- **Target yang kosong** memakai `Pengganti tanpa konten`, bukan teks pengganti.
-- **Pengganti menggantikan seluruh nilai.** Pengganti kosong
+- **Membandingkan nilai tersimpan, bukan label:** uji kodenya
+  (`specimen::iDConfidence!="2"`, `mammalAttribute::testisPosition=="0"`),
+  bukan label tampilan.
+- **Peka huruf besar/kecil** dan mengabaikan spasi di awal atau akhir.
+- **Bidang kosong tidak pernah cocok dengan operator biasa** (termasuk `!=`).
+  Gunakan `==""` (kosong) atau `!=""` (tidak kosong).
+- **Satu penghubung per ekspresi:** semua `&&` atau semua `||`, tidak dicampur.
+- **Target kosong:** memakai `Pengganti tanpa konten`, bukan teks pengganti.
+- **Penggantian penuh:** teks pengganti mengganti seluruh nilai; kosong
   menyembunyikannya.
-- **Ekspresi yang salah tulis tercetak sebagai teks biasa.** Pratinjau catatan
-  yang cocok dan yang tidak.
+- **Salah sintaks dicetak apa adanya:** selalu pratinjau catatan yang cocok dan
+  yang tidak cocok.
 
 ### Referensi sintaks
 
-Dialog menuliskan ini untuk Anda; gunakan tabel ini untuk membaca atau
-menyunting ekspresi secara manual.
+Dialog menghasilkan sintaks ini otomatis; gunakan tabel berikut saat membaca
+atau menyunting manual:
 
-| Simbol | Nama | Fungsinya |
-|---|---|---|
+| Simbol | Nama | Fungsi |
+| --- | --- | --- |
 | `[[` … `]]` | Pembatas ekspresi | Membuka dan menutup ekspresi bersyarat. |
-| `][` | Pemisah target | Mengakhiri bidang target dan memulai kondisi. |
-| `==` | Sama dengan | Cocok saat nilai persis sama dengan nilai pembanding. |
-| `!=` | Tidak sama dengan | Cocok saat nilai berbeda dari nilai pembanding. |
-| `~=` | Mengandung | Cocok saat nilai pembanding muncul di bagian mana pun dari nilai. |
-| `!=""` | Tidak kosong | Cocok saat bidang berisi nilai apa pun. |
-| `==""` | Kosong | Cocok saat bidang kosong atau tidak ada. |
-| `&&` | Semua | Setiap kondisi harus cocok. |
-| `\|\|` | Salah satu | Setidaknya satu kondisi harus cocok. |
-| `"` … `"` | Tanda kutip nilai | Mengapit setiap nilai pembanding; kosong untuk dua uji kekosongan. |
-| `\"` `\\` | Escape | Tanda kutip atau garis miring terbalik di dalam nilai. |
-| `]=>` | Penanda pengganti | Mengakhiri kondisi dan memulai pengganti atau teks. |
-| `if` | Kata kunci teks bersyarat | Menempati tempat target, sehingga ekspresi menulis teks. |
-| `\|` | Pemisah else | Setelah teks, memulai teks yang ditulis saat kondisi tidak terpenuhi. |
+| `][` | Pemisah target | Memisahkan bidang target dari kondisi. |
+| `==` | Sama dengan | Cocok dengan nilai persis. |
+| `!=` | Tidak sama dengan | Cocok dengan nilai tidak kosong yang berbeda. |
+| `~=` | Mengandung | Cocok jika teks muncul di bagian mana pun dari nilai. |
+| `!=""` | Tidak kosong | Cocok jika bidang berisi nilai apa pun. |
+| `==""` | Kosong | Cocok jika bidang kosong atau tidak ada. |
+| `&&` | Semua (AND) | Semua kondisi harus terpenuhi. |
+| `\|\|` | Salah satu (OR) | Minimal satu kondisi harus terpenuhi. |
+| `"` … `"` | Kutip nilai | Mengapit setiap nilai perbandingan (kosong untuk uji kosong). |
+| `\"`, `\\` | Escape | Tanda kutip atau garis miring terbalik literal di dalam nilai. |
+| `]=>` | Penanda pengganti | Mengakhiri kondisi dan memulai teks pengganti atau keluaran. |
+| `if` | Kata kunci teks bersyarat | Menggantikan target agar ekspresi menulis teks. |
+| `\|` | Pemisah else | Memulai teks cadangan saat kondisi tidak terpenuhi. |
 
-Ketiga bentuknya adalah:
+Tiga bentuk sah (semuanya diakhiri `]]`; `|"otherwise"` opsional; `~=""` tidak
+sah):
 
 ```text
 [[target][conditions]]
@@ -398,43 +379,37 @@ Ketiga bentuknya adalah:
 [[if][conditions]=>"text"|"otherwise"]]
 ```
 
-Bentuk pertama mengurung target, bentuk kedua menggantinya, dan bentuk ketiga
-menulis teks. Semuanya diakhiri `]]`; `|"otherwise"` bersifat opsional. `~=""`
-tidak valid.
-
 ## Jenis teks dan formatnya {% #text-types-and-their-formats %}
 
-Di templat dokumen, `Jenis` dan `Format` menentukan tampilan nilai. Kolom
-tabular `Bidang tunggal` memakai format yang sama melalui `Format nilai`.
+Pada templat dokumen, jenis teks dan `Format` mengatur tampilan nilai. Kolom
+bidang tunggal pada prasetel tabel menawarkan format yang sama.
 
 | Jenis teks | Opsi format |
-|---|---|
-| `Teks biasa` | `Biasa`, `Huruf besar`, `Huruf kecil`, `Kapitalisasi` |
-| `Gambar` | Diatur dengan lebar dan tinggi, bukan format |
-| `Markdown` | `Biasa`; menampilkan teks kaya seperti narasi |
-| `Koordinat` | Desimal, desimal arah mata angin, DMS, DDM |
-| `Nilai daftar` | Garis tegak, koma, titik koma, garis miring, baris baru, berpoin, pemisah kustom |
-| `Daftar bertingkat` | `Tabel` atau `Daftar kartu`; tabel menambahkan kontrol `Kapitalisasi judul` |
-| `Tanggal` | `YYYY-MM-DD`, `DD-MM-YYYY`, `MM-DD-YYYY`, `DD/MM/YYYY`, `MM/DD/YYYY`, `Bulan DD, YYYY`, `DD Bulan YYYY`, `DD Bln YYYY` |
-| `Tanggal dan waktu` | Tujuh belas kombinasi format tanggal di atas dengan keluaran 24 jam, 12 jam, ISO, dan waktu saja |
-| `Waktu` | 24 jam, 24 jam dengan detik, 12 jam, 12 jam dengan nol di depan |
-| `Jenis kelamin` | `Format` dan `Kosong`, dijelaskan di bawah |
-| `Angka` | `Asli`, atau 0, 1, 2, atau 3 tempat desimal |
-| `Teks terkode` | `Pemetaan bawaan` atau `Pemetaan khusus…` |
+| --- | --- |
+| Teks normal | Normal, huruf besar, huruf kecil, kapital |
+| Gambar | Diatur dengan lebar dan tinggi alih-alih format |
+| Markdown | Normal; merender teks kaya seperti narasi |
+| Koordinat | Desimal, desimal mata angin, DMS, DDM |
+| Daftar nilai | Garis tegak, koma, titik koma, garis miring, baris baru, poin, pemisah kustom |
+| Daftar bersarang | Tabel (menambah opsi kapitalisasi tajuk) atau daftar kartu |
+| Tanggal | `YYYY-MM-DD`, `DD-MM-YYYY`, `MM-DD-YYYY`, `DD/MM/YYYY`, `MM/DD/YYYY`, `Month DD, YYYY`, `DD Month YYYY`, `DD Mon YYYY` |
+| Tanggal dan waktu | 17 kombinasi format tanggal di atas dengan 24 jam, 12 jam, ISO, dan waktu saja |
+| Waktu | `24h`, `24h detik`, `12h`, `12h dengan nol` |
+| Jenis kelamin | Format dan nilai kosong, dijelaskan di bawah |
+| Angka | Asli, atau 0, 1, 2, atau 3 angka desimal |
+| Teks berkode | Pemetaan bawaan atau pemetaan kustom |
 
-`Daftar bertingkat` dipakai untuk catatan terkait, seperti bagian spesimen,
-personel, atau metode koleksi, dan merupakan jenis teks yang paling sering
-membutuhkan ukuran dinamis.
+Daftar bersarang digunakan untuk catatan terkait (bagian spesimen, personel,
+metode koleksi) dan paling sering membutuhkan ukuran dinamis.
 
-### `Teks terkode`: apa yang diterjemahkan
+### Teks berkode: bidang yang diterjemahkan
 
-Sebagian bidang menyimpan angka yang mewakili sebuah kata. `Teks terkode`
-menulis katanya. `Pemetaan bawaan` memakai tabel ini, dicocokkan pada akhir
-kunci bidang, sehingga `mammalAttribute::testisPosition` maupun `testisPosition`
-diterjemahkan. Label bawaannya dalam bahasa Inggris.
+Beberapa bidang menyimpan kode numerik. Pemetaan bawaan dicocokkan pada akhiran
+kunci bidang (jadi `mammalAttribute::testisPosition` dan `testisPosition`
+sama-sama diterjemahkan):
 
-| Kunci bidang diakhiri | Kode 0 | 1 | 2 | 3 | 4 | 5 | 6 |
-|---|---|---|---|---|---|---|---|
+| Kunci berakhir dengan | Kode 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 | `::sex` | Male | Female | Unknown | Gynandromorph | Hermaphrodite | Female? | Male? |
 | `::iDConfidence` | Low | Medium | High | | | | |
 | `mammalAttribute::age` | Adult | Subadult | Juvenile | Unknown | | | |
@@ -451,226 +426,194 @@ diterjemahkan. Label bawaannya dalam bahasa Inggris.
 | `::fat` | None | Trace | Light | Moderate | Heavy | Extremely Heavy | |
 | `::bodyMolt` | None | Trace | Light | Moderate | Heavy | | |
 
-Bidang berikut diterjemahkan sebagai `Yes` untuk `1` dan `No` untuk `0`:
+Bidang boolean ini diterjemahkan sebagai `Yes` (`1`) dan `No` (`0`):
 `::broodPatch`, `::hasBursa`, `::wingIsMolt`, `::tailIsMolt`,
 `::showBatFields`, dan `::showEchoFields`.
 
-Selain itu ditulis tanpa perubahan: bidang yang tidak ada di tabel, nilai yang
-bukan bilangan bulat, atau kode di luar daftarnya. Angka polos pada label
-biasanya berarti salah satu hal ini. Gunakan `Pemetaan khusus…` untuk memberi
-label pada bidang yang tidak tercakup tabel.
-
-Untuk jenis kelamin, jenis teks `Jenis kelamin` juga dapat menulis simbol atau
-huruf, dan `[…sex]-img` menggambar ikon. Gunakan `Teks terkode` pada jenis
-kelamin hanya untuk kata biasa.
+Bidang di luar tabel, nilai bukan bilangan bulat, atau kode di luar jangkauan
+ditulis apa adanya. Gunakan pemetaan kustom untuk bidang lainnya. Untuk simbol
+atau huruf jenis kelamin gunakan jenis teks jenis kelamin; untuk ikon gunakan
+`[…sex]-img`.
 
 ### Menerjemahkan bidang berkode {% #decode-an-encoded-field %}
 
-Placeholdernya tidak berubah; jenis teks atau `#label` yang mengubah kode
-menjadi labelnya.
+Penanda tetap sama; jenis teks berkode atau `#label` menerjemahkannya:
 
-**Di templat dokumen,** letakkan placeholder di elemen teks dan atur `Jenis` ke
-`Teks terkode`:
+- **Templat dokumen:** atur jenis teks ke teks berkode; setiap penanda di
+  elemen diterjemahkan menurut bidang masing-masing:
+  ```text
+  Testes: [mammalAttribute::testisPosition]
+  [mammalAttribute::age], [mammalAttribute::testisPosition]
+  ```
+- **Prasetel ekspor tabel:** pilih format teks berkode pada kolom bidang
+  tunggal, atau tambahkan `#label` (atau aktifkan tampilkan label) pada bidang
+  kustom:
+  ```text
+  [mammalAttribute::testisPosition#label], [mammalAttribute::mammaeCondition#label]
+  ```
+- **Sebaris dengan `#label`:** menerjemahkan satu penanda di jenis teks apa
+  pun. Letakkan `#label` sebelum pengganti `??`:
+  `[mammalAttribute::sex#label??Unknown]`.
+- **Label buatan sendiri:** di penyunting templat pilih pemetaan kustom lalu
+  petakan nilai (dimulai dari label bawaan). Di prasetel tabel, tulis
+  `custom_map:` di opsi format mentah bawah `Lanjutan`:
+  ```text
+  custom_map:0=Scrotal,1=Abdominal
+  ```
+  Pisahkan tiap pasangan `kode=label` dengan koma (label tidak boleh memuat
+  `,` atau `=`). Pemetaan kustom berlaku untuk seluruh penanda di elemen, jadi
+  berikan elemen terpisah untuk tiap bidang berpemetaan kustom.
 
-```text
-Testes: [mammalAttribute::testisPosition]
-```
+Penerjemahan hanya mengubah tampilan; kondisi tetap memeriksa kode tersimpan
+dan nilai kosong memakai `Pengganti tanpa konten`.
 
-Spesimen yang menyimpan `0` mencetak `Testes: Scrotal`. Setiap placeholder di
-elemen diterjemahkan menurut bidangnya sendiri, sehingga satu elemen dapat berisi
-beberapa:
-
-```text
-[mammalAttribute::age], [mammalAttribute::testisPosition]
-```
-
-**Di prasetel ekspor tabular,** gunakan kolom `Bidang tunggal` dan atur
-`Format nilai` ke `Teks terkode`. Di kolom `Bidang kustom`, tambahkan `#label`
-pada bidang, atau pilih `Tampilkan label` pada segmennya:
-
-```text
-[mammalAttribute::testisPosition#label], [mammalAttribute::mammaeCondition#label]
-```
-
-**Dengan `#label`,** satu placeholder diterjemahkan dengan pemetaan bawaan di
-jenis teks apa pun, sehingga satu elemen atau kolom dapat mencampur kode dan
-label. Tulis setelah kunci dan sebelum fallback:
-`[mammalAttribute::sex#label??Unknown]`. Nilai tanpa label bawaan ditulis tanpa
-perubahan.
-
-**Untuk label Anda sendiri,** pilih `Pemetaan khusus…` sebagai format di editor
-templat, lalu `Petakan nilai terkode` untuk mengetik label bagi setiap kode.
-Dialog dimulai dari label bawaan. Di prasetel tabular, tulis pemetaannya di
-`Lanjutan` > `Opsi format mentah`:
-
-```text
-custom_map:0=Scrotal,1=Abdominal
-```
-
-Tulis setiap pasangan sebagai `kode=label`, dipisahkan koma. Label tidak boleh
-berisi koma atau tanda sama dengan, dan kode tanpa pasangan ditulis tanpa
-perubahan. Pemetaan khusus berlaku untuk semua placeholder di elemen, jadi beri
-bidang dengan pemetaan khusus elemen teksnya sendiri.
-
-Penerjemahan hanya mengubah apa yang ditulis. Kondisi tetap membandingkan kode
-tersimpan, dan bidang kosong memakai `Pengganti tanpa konten`.
-
-### Pemformatan jenis kelamin
+### Format jenis kelamin
 
 | Kontrol | Opsi |
-|---|---|
-| `Format` | `Simbol (♂/♀)`, `Huruf (J/B)`, `Teks (Jantan/Betina)` |
-| `Kosong` | `Tidak diketahui`, `T/A`, `Tidak ada` |
+| --- | --- |
+| `Format` | `Simbol (♂/♀)`, `Huruf (M/F)`, `Teks (Male/Female)` |
+| Kosong | `Unknown`, `N/A`, `None` |
 
-Penentuan yang belum pasti tetap memakai tanda tanya di setiap format:
-`Female?`, `F?`, `♀?`, dan `Male?`, `M?`, `♂?`. Teks yang dicetak tetap dalam
-bahasa Inggris.
+Penentuan yang belum pasti mempertahankan tanda tanya di semua format:
+`Female?`, `F?`, `♀?` serta `Male?`, `M?`, `♂?`.
 
-## Mengatasi masalah
+## Pemecahan masalah
 
 | Gejala | Yang perlu diperiksa |
-|---|---|
-| Ekspresi bersyarat tercetak sebagai teks | Ekspresi salah tulis. Cari `]]` yang hilang, nilai tanpa tanda kutip, atau `&&` dan `\|\|` yang tercampur. |
-| Fallback mencetak `[table::field]` | `Pengganti tanpa konten` diatur ke `table::field`. Ubah ke `Kosong`, `T/A`, `Tidak ada`, atau teks Anda sendiri. |
-| Ikon jenis kelamin tercetak sebagai teks | Elemen hanya boleh berisi `[…sex]-img`, dan kuncinya harus diakhiri `.sex`. |
-| Gambar catatan tidak muncul | Elemen hanya boleh berisi `[media::media]` dan memakai jenis teks `Gambar`. |
-| Kolom bidang kustom memiliki tajuk yang tidak terduga | Atur `Nama kolom`. Tanpanya, tajuk diambil dari bidang pertama atau dari teks. |
-| Bidang berkode mencetak angka | Gunakan `Teks terkode`, atau `Teks terkode` pada kolom `Bidang tunggal`, atau tambahkan `#label`. Pastikan kodenya ada di pemetaan bawaan. |
-| Kondisi tidak pernah cocok | Kondisi membandingkan kode tersimpan, bukan label, dan membedakan huruf besar dan kecil. Bidang kosong hanya cocok dengan `Kosong`. |
-| Teks bersyarat tidak mencetak apa pun | Tanpa teks kedua setelah `\|`, tidak ada yang ditulis saat kondisi tidak terpenuhi. Pastikan `if` huruf kecil. |
+| --- | --- |
+| Kondisi tercetak sebagai teks biasa | Sintaks keliru: kurang `]]`, nilai tanpa kutip, atau mencampur `&&` dan `\|\|`. |
+| Pengganti mencetak `[table::field]` | `Pengganti tanpa konten` diatur ke `table::field`; ubah ke kosong, `N/A`, `None`, atau teks sendiri. |
+| Ikon jenis kelamin tercetak sebagai teks | Elemen harus hanya berisi `[…sex]-img` dengan kunci berakhiran `.sex`. |
+| Gambar catatan tidak muncul | Elemen harus hanya berisi `[media::media]` dengan jenis teks gambar. |
+| Tajuk kolom bidang kustom tak terduga | Isi nama kolom; tanpanya tajuk diambil dari bidang pertama atau teks tetap. |
+| Bidang berkode mencetak angka | Gunakan teks berkode atau `#label`, dan pastikan kode ada di pemetaan. |
+| Kondisi tidak pernah cocok | Kondisi membandingkan kode tersimpan, peka huruf besar/kecil, dan bidang kosong hanya cocok dengan `==""`. |
+| Teks bersyarat tidak mencetak apa-apa | Tanpa cabang `\|`, tidak ada teks saat syarat gagal. Pastikan `if` huruf kecil. |
 
 ## Opsi editor templat {% #template-editor-options %}
 
-Opsi berikut hanya berlaku untuk editor templat dokumen {% ref id="E" /%}. Prasetel ekspor tabel
-tidak menggunakannya.
+Opsi berikut hanya berlaku untuk penyunting templat dokumen {% ref id="E" /%};
+prasetel ekspor tabel tidak memakainya.
 
-Ukuran pada kanvas dinyatakan dalam milimeter (`mm`). Ketebalan garis, ukuran
-fon, dan padding dinyatakan dalam poin PDF (`pt`, di mana 1 pt adalah 1/72
-inci). Warna disimpan sebagai nilai `0xAARRGGBB`, tetapi selalu dipilih melalui
-pemilih warna.
+Ukuran pada kanvas memakai milimeter (`mm`). Ketebalan garis, ukuran fon, dan
+bantalan memakai poin PDF (`pt`, 1 pt = 1/72 inci). Warna disimpan sebagai
+`0xAARRGGBB` dan dipilih lewat pemilih warna.
 
 ### Bilah alat
 
 | Kontrol | Fungsinya |
-|---|---|
-| `Add text` | Menempatkan elemen teks baru pada kanvas. |
-| `Add image` | Menempatkan gambar statis dari perangkat. |
-| `Add line` | Menempatkan garis lurus. |
-| `Add shape` | Menempatkan persegi panjang, elips, lingkaran, segitiga, atau poligon. |
-| `Save template` | Menyimpan templat. Gunakan `Save as...` untuk membuat variasi. |
-| `Undo` / `Redo` | Menelusuri riwayat pengeditan. |
-| `Template border` | Membuka panel garis tepi untuk batas templat. |
-| `Show grid` / `Hide grid` | Mengalihkan grid perataan. |
-| `Enable snap` / `Disable snap` | Mengalihkan pengancingan ke grid dan ke elemen lain. |
-| Kunci kanvas | Membekukan penggeseran agar tarikan tidak memindahkan kanvas. |
-| `Select specimen for text preview` | Memilih catatan yang nilainya mengisi placeholder saat Anda merancang. |
-| `Template settings` {% ref id="D" /%} | Nama, deskripsi, jumlah sisi, dan ukuran templat. |
-| `Preset template` {% ref id="A" /%} | Memuat titik awal yang sudah disediakan. |
-| `Zoom in` / `Zoom out` | Hanya mengubah skala tampilan kanvas; tidak ada yang berubah pada hasilnya. |
-| `1 sided` / `Front` / `Back` | Mengalihkan mode sisi dan sisi yang sedang diedit. |
-| Cermin | Mencerminkan satu sisi, untuk tag yang dilipat pada satu tepi. |
+| --- | --- |
+| `Tambah teks` | Menempatkan elemen teks baru di kanvas. |
+| Tambah gambar | Menempatkan gambar statis dari perangkat. |
+| Tambah garis | Menempatkan garis lurus. |
+| Tambah bentuk | Menempatkan persegi panjang, elips, lingkaran, segitiga, atau poligon. |
+| `Simpan templat` | Menyimpan templat (`Simpan sebagai…` untuk variasi). |
+| Urungkan / Ulangi | Menelusuri riwayat suntingan. |
+| Batas templat | Mengatur bingkai luar templat. |
+| Tampilkan / sembunyikan kisi | Mengaktifkan atau mematikan kisi perataan. |
+| Aktifkan / nonaktifkan tempel | Mengaktifkan tempel ke kisi dan elemen lain. |
+| Kunci kanvas | Mengunci geseran kanvas saat menyeret. |
+| Pilih spesimen pratinjau | Memilih catatan contoh pengisi penanda saat merancang. |
+| `Pengaturan templat` {% ref id="D" /%} | Nama, deskripsi, jumlah sisi, dan ukuran templat. |
+| `Templat bawaan` {% ref id="A" /%} | Memuat templat awal bawaan. |
+| Perbesar / Perkecil | Menskalakan tampilan kanvas saja (tidak mengubah ukuran PDF). |
+| `1 sisi` / Depan / Belakang | Mengubah mode sisi dan sisi yang sedang disunting. |
+| Cermin | Mencerminkan sisi untuk label lipat. |
 
 ### Opsi elemen teks
 
 #### Konten
 
 | Opsi | Nilai | Catatan |
-|---|---|---|
-| Teks | Teks apa pun, placeholder, kondisional | Isi elemen. |
-| `Text type` | Lihat tabel di bawah | Menentukan bagaimana nilainya diformat. |
-| `Format` | Bergantung pada jenis teks | Format spesifik di dalam jenis tersebut. |
-| `No Content Placeholder` | Blank, `table::field`, `N/A`, `None`, kustom | Menuliskan fallback `??`. |
-| `Conditional output` | Kurung, field, nilai | Menuliskan ekspresi `[[ … ]]`. |
-| `Find and replace` | — | Mengedit teks elemen. |
-| Replacement rule | Pola, pengganti, jenis kecocokan, kepekaan huruf | Menulis ulang nilai setelah pemformatan. |
-| `Map encoded values` | Pemetaan bawaan atau kustom | Mengubah kode tersimpan menjadi label untuk `Encoded Text`. |
+| --- | --- | --- |
+| Teks | Teks, penanda, kondisi | Isi elemen. |
+| Jenis teks | Lihat tabel di atas | Kategori pemformatan nilai. |
+| `Format` | Bergantung pada jenis teks | Format spesifik dalam kategori tersebut. |
+| `Pengganti tanpa konten` | Kosong, `table::field`, `N/A`, `None`, kustom | Menulis pengganti `??`. |
+| `Keluaran bersyarat` | Kurung, bidang, nilai, teks | Menulis ekspresi `[[ … ]]` atau `[[if] … ]]`. |
+| Cari dan ganti | — | Menyunting teks elemen. |
+| Aturan penggantian | Pola, pengganti, jenis kecocokan, huruf besar/kecil | Menulis ulang nilai setelah format. |
+| Petakan nilai berkode | Pemetaan bawaan atau kustom | Menerjemahkan kode ke label pada teks berkode. |
 
 #### Tipografi dan gaya
 
 | Opsi | Nilai |
-|---|---|
-| `Font` | Fon bawaan dan terpasang; fon yang tidak terpasang ditandai `(not installed)` |
-| Ukuran fon | Poin, dengan tombol untuk menambah dan mengurangi |
-| `Bold`, `Italic`, `Underline`, `Strikethrough` | Aktif atau tidak |
-| Perataan | `Align left`, `Align center`, `Align right` |
-| Huruf | `Normal`, `Uppercase`, `Lowercase`, `Capitalize` |
+| --- | --- |
+| Fon | Fon bawaan dan terpasang (fon belum terpasang ditandai `(not installed)`) |
+| Ukuran fon | Poin, dengan tombol tambah dan kurang |
+| Tebal, miring, garis bawah, coret | Aktif atau nonaktif |
+| Perataan | Rata kiri, tengah, kanan |
+| Kapitalisasi | Normal, huruf besar, huruf kecil, kapital |
 | Warna teks | Pemilih warna |
 
-#### Kotak dan penempatan
+#### Kotak dan posisi
 
 | Opsi | Nilai | Catatan |
-|---|---|---|
-| Posisi | X dan Y dalam mm | Diukur dari sudut kiri atas templat. |
-| Lebar maksimum | mm | Teks dilipat pada lebar ini. Bila tidak disetel, teks tidak dilipat. |
-| Tinggi | mm | Membatasi tinggi kotak teks. |
-| Padding | pt | Ruang di dalam kotak, di sekitar teks. |
-| Rotasi | 0–359 derajat | Derajat bulat. |
-| Warna latar | Warna atau tidak ada | — |
-| Warna, ketebalan, dan gaya garis tepi | Warna, pt, `solid` / `dashed` / `dotted` / `double` | — |
-| Radius sudut | pt | Membulatkan sudut kotak. |
-| Ukuran dinamis | Aktif atau tidak | Membiarkan kotak tumbuh mengikuti teks. Pasangkan dengan `Auto-fill page` pada blok tata letak. |
-| Penumpukan | `Bring to front`, `Bring forward`, `Send backward`, `Send to back` | — |
-| Kunci | Aktif atau tidak | Elemen yang terkunci tidak dapat ditarik atau diubah ukurannya. |
-| Terlihat | Aktif atau tidak | Elemen yang disembunyikan tetap ada di templat, tetapi tidak dicetak. |
+| --- | --- | --- |
+| Posisi | X dan Y dalam `mm` | Diukur dari sudut kiri atas templat. |
+| Lebar maks | `mm` | Membungkus teks pada lebar ini (kosong = tanpa bungkus). |
+| Tinggi | `mm` | Membatasi tinggi kotak teks. |
+| Bantalan | `pt` | Ruang dalam kotak di sekitar teks. |
+| Rotasi | `0–359°` | Derajat bulat. |
+| Warna latar | Warna atau tanpa warna | — |
+| Batas (warna, tebal, garis) | Warna, `pt`, `solid` / `dashed` / `dotted` / `double` | — |
+| Radius sudut | `pt` | Membulatkan sudut kotak. |
+| Ukuran dinamis | Aktif atau nonaktif | Kotak membesar mengikuti teks; padukan dengan `Isi halaman otomatis`. |
+| Susunan lapis | Ke paling depan, maju, mundur, ke paling belakang | — |
+| Kunci | Aktif atau nonaktif | Mencegah seret atau ubah ukuran. |
+| Terlihat | Aktif atau nonaktif | Elemen tersembunyi tetap tersimpan tetapi tidak dicetak. |
 
 #### Kode QR
 
-Ubah elemen teks menjadi kode QR untuk membawa identifier yang dapat dibaca
-kembali oleh ponsel.
+Ubah elemen teks menjadi kode QR yang dapat dipindai:
 
 | Opsi | Nilai |
-|---|---|
-| Kode QR | Aktif atau tidak |
-| Ukuran | mm |
+| --- | --- |
+| Kode QR | Aktif atau nonaktif |
+| Ukuran | `mm` |
 | Warna latar | Pemilih warna |
-| Bentuk | `Square` atau `Circle` |
+| Bentuk | Persegi atau lingkaran |
 
-Muatan QR menyimpan nilai terformat apa adanya, termasuk `.0` di akhir yang
-akan dibuang oleh teks cetak, sehingga kode yang dipindai sama persis dengan
-nilai yang tersimpan.
+Muatan QR mempertahankan nilai mentah terformat—termasuk akhiran `.0` yang
+dihilangkan pada teks cetak—agar hasil pindai cocok persis dengan nilai
+tersimpan.
 
 #### Gambar
 
 | Opsi | Nilai |
-|---|---|
-| Lebar, tinggi | mm |
+| --- | --- |
+| Lebar, tinggi | `mm` |
 
-Hanya elemen yang berisi `[media::media]` atau `[media]` saja yang diuraikan
-menjadi gambar catatan. Mencampur placeholder ini dengan teks lain memang
-tidak akan bekerja.
+Hanya elemen berisi `[media::media]` atau `[media]` saja yang menampilkan
+gambar catatan; mencampurnya dengan teks lain menonaktifkan penampilan gambar.
 
 ### Opsi gambar, garis, dan bentuk
 
-Gambar statis, garis, dan bentuk bersifat dekoratif. Ketiganya tidak membawa
-data catatan, sehingga tidak memiliki jenis teks, format, maupun opsi
-kondisional.
+Gambar statis, garis, dan bentuk bersifat dekoratif dan tidak membawa data
+catatan:
 
 | Elemen | Opsi |
-|---|---|
-| Gambar | Path gambar, posisi, lebar, tinggi, rotasi, penumpukan, kunci, visibilitas |
-| Garis | Posisi, panjang, rotasi, ketebalan (pt), warna, gaya garis, penumpukan, kunci, visibilitas |
-| Bentuk | Jenis bentuk, posisi, lebar, tinggi, rotasi, ketebalan garis, warna garis, gaya garis, warna isian atau `Clear fill`, penumpukan, kunci, visibilitas |
+| --- | --- |
+| Gambar | Jalur gambar, posisi, lebar, tinggi, rotasi, susunan lapis, kunci, visibilitas |
+| Garis | Posisi, panjang, rotasi, ketebalan (`pt`), warna, gaya garis, susunan lapis, kunci, visibilitas |
+| Bentuk | Jenis (`rect`, `ellipse`, `circle`, `triangle`, `polygon` dengan jumlah sisi), posisi, lebar, tinggi, rotasi, ketebalan/warna/gaya garis, warna isi atau hapus isi, susunan lapis, kunci, visibilitas |
 
-Jenis bentuknya adalah `rect`, `ellipse`, `circle`, `triangle`, dan `polygon`;
-poligon juga memerlukan jumlah sisi. Gaya garis untuk garis dan bentuk adalah
-`solid`, `dashed`, `dotted`, dan `double`.
-
-Elemen gambar menyimpan path, bukan gambarnya. Templat yang diekspor ke
-perangkat lain menyebutkan nama gambarnya dan memintanya kembali di sana.
+Gaya garis adalah `solid`, `dashed`, `dotted`, dan `double`. Elemen gambar
+menyimpan jalur berkas, bukan salinan gambarnya; templat yang dipindahkan ke
+perangkat lain akan meminta gambarnya lagi di sana.
 
 ### Opsi templat
 
 | Opsi | Nilai | Catatan |
-|---|---|---|
-| `Template name` | Teks | Harus unik. Mengganti nama akan mengarahkan ulang setiap tata letak yang memakai nama lama. |
-| `Description` | Teks, hingga 80 karakter | Opsional. |
-| `Record type` | `Specimen`, `Specimen Part`, `Site`, `Collecting Event`, `Narrative`, `None` | Menentukan field dan catatan mana yang tersedia. |
-| Jumlah sisi | `1 sided` atau `2 sided` | Templat satu sisi tetap menyimpan rancangan sisi belakangnya, tetapi tidak mencetaknya. |
-| Lebar, tinggi | mm | Ukuran satu blok, bukan lembarnya. |
-| `Template border` | Gaya, ketebalan (pt), warna | Gayanya adalah `solid`, `dashed`, `dotted`, dan `double line`. |
+| --- | --- | --- |
+| Nama templat | Teks | Harus unik; mengganti nama memperbarui semua tata letak cetak yang merujuknya. |
+| Deskripsi | Teks (maksimal 80 karakter) | Opsional. |
+| Jenis catatan | `Spesimen`, `Bagian spesimen`, `Simbion`, `Lokasi`, `Peristiwa koleksi`, `Narasi`, `Tanpa catatan` | Menentukan bidang dan catatan yang tersedia. |
+| Jumlah sisi | `1 sisi` atau `2 sisi` | Mode 1 sisi menjaga desain Belakang tersimpan tanpa mencetaknya. |
+| Lebar, tinggi | `mm` | Ukuran satu blok, bukan lembar kertas. |
+| Batas templat | `solid`, `dashed`, `dotted`, `double line`; tebal (`pt`); warna | — |
 
-Opsi cetak yang disimpan bersama templat mencakup duplex, pencerminan sisi
-depan dan belakang, ukuran halaman, baris dan kolom per halaman, padding
-halaman, serta padding dokumen. Preset tata letak cetak menimpa opsi ini untuk
-lembar yang dihasilkannya; lihat
-[Ekspor Dokumen](../export-documents#create-a-print-layout-preset).
+Opsi cetak yang disimpan pada templat mencakup dupleks, cermin depan/belakang,
+ukuran halaman, baris/kolom, margin halaman, dan bantalan dokumen. Prasetel
+tata letak cetak menggantikan nilai tersebut pada PDF akhir; lihat
+[Membuat preset tata letak cetak](../export-documents#create-a-print-layout-preset).

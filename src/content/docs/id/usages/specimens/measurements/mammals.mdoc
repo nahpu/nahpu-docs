@@ -1,63 +1,80 @@
 ---
 title: Mamalia
-description: Kolom pengukuran untuk spesimen dalam katalog Mammalogy.
+description: Kolom pengukuran untuk spesimen dalam katalog Mamalogi.
 sidebar:
   order: 1
 ---
 
-Spesimen dalam proyek yang memakai format katalog `Mamalogi` menampilkan
-formulir pengukuran mamalia. Jenis kelamin, tahap hidup, dan satuan berat
-bekerja dengan cara yang sama di setiap kelompok takson; lihat
+Spesimen dalam format katalog `Mamalogi` menampilkan formulir pengukuran
+mamalia. Satuan berat, jenis kelamin, dan tahap hidup bekerja dengan cara yang
+sama di semua kelompok takson; lihat
 [Pengukuran](/id/usages/specimens/measurements/).
 
 ## Pengukuran {% #measurements %}
 
-- `Panjang total (mm)`: panjang total dari ujung hidung hingga ujung ekor.
+- `Tampilkan peringatan pencilan`: aktif secara bawaan. Menandai nilai
+  `Panjang total (mm)`, `Panjang ekor (mm)`, `Panjang kaki belakang (mm)`,
+  `Panjang telinga (mm)`, dan `Berat` yang berada di luar rentang lazim untuk
+  spesies (atau genus) yang sama setelah proyek memiliki minimal 10 catatan
+  pembanding. Nonaktifkan untuk menyembunyikan peringatan ini.
+- `Panjang total (mm)`: panjang dari ujung hidung hingga ujung ekor.
 - `Panjang ekor (mm)`: panjang ekor dari pangkal hingga ujung.
-- `Panjang kepala dan badan (mm)`: dihitung otomatis dari `Panjang total (mm) - Panjang ekor (mm)`.
-- `Panjang ekor/KB`: dihitung otomatis dari `Panjang ekor (mm) / Panjang kepala dan badan (mm)`.
-- `Panjang kaki belakang (mm)`: panjang kaki belakang dari pangkal hingga ujung kuku.
+- `Panjang kepala dan badan (mm)`: dihitung otomatis dari
+  `Panjang total (mm) - Panjang ekor (mm)`.
+- `Panjang ekor/KB`: dihitung otomatis sebagai persentase,
+  `(Panjang ekor / Panjang kepala dan badan) × 100`.
+- `Panjang kaki belakang (mm)`: panjang kaki belakang dari pangkal hingga ujung
+  kuku.
 - `Panjang telinga (mm)`: panjang telinga.
 - `Berat`: berat spesimen dalam satuan yang dipilih.
-- `Akurasi`: `Accurate` atau `Inaccurate`. Memilih `Inaccurate` membuka
-  `Pilih pengukuran tidak akurat`, tempat Anda mencentang setiap pengukuran
-  yang terdampak (total, ekor, kaki belakang, telinga, dan berat, ditambah
-  lengan bawah dan tibia jika kolom kelelawar ditampilkan), serta kolom
-  `Catatan akurasi` untuk alasannya. Ekspor dan label dapat memberi tanda kurung
-  pada nilai yang ditandai.
-- `Jenis kelamin`: dipilih dari kosakata jenis kelamin spesimen yang diatur.
-- `Tahap hidup`: dipilih dari kosakata tahap hidup yang diatur.
+- `Akurasi`: `Accurate` atau `Inaccurate`. Memilih `Inaccurate` membuka dialog
+  `Pengukuran tidak akurat`, tempat Anda mencentang minimal satu pengukuran yang
+  terdampak (total, ekor, kaki belakang, telinga, dan berat, ditambah lengan
+  bawah dan tibia bila bidang kelelawar ditampilkan) serta dapat mengisi
+  `Catatan akurasi`. Pilih `Pilih pengukuran tidak akurat` untuk menyunting
+  pilihan nanti. Kolom yang ditandai menampilkan `*` di formulir dan dapat
+  diberi tanda kurung pada ekspor dan label.
+- `Jenis kelamin`: pilih dari kosakata terkontrol jenis kelamin spesimen yang
+  diatur. Mengubah `Jenis kelamin` memunculkan `Ubah jenis kelamin?` dan
+  menghapus data reproduksi yang tidak lagi berlaku.
+- `Tahap hidup`: pilih dari kosakata terkontrol tahap hidup yang diatur.
 - `Catatan`: catatan tambahan tentang pengukuran.
-
-Aktifkan `Tampilkan peringatan pencilan` untuk menandai pengukuran yang tampak
-tidak biasa untuk takson tersebut. Mengganti `Jenis kelamin` memunculkan
-`Ubah jenis kelamin?` dan mengosongkan data reproduksi yang tidak lagi berlaku.
 
 ## Data reproduksi {% #reproductive-data %}
 
-| Jenis kelamin | Kolom | Opsi |
+Kolom jantan tampil untuk `Male`, `Male?`, `Gynandromorph`, dan `Hermaphrodite`.
+Kolom betina tampil untuk `Female`, `Female?`, `Gynandromorph`, dan
+`Hermaphrodite`.
+
+| Jenis kelamin | Kolom | Opsi / Catatan |
 | --- | --- | --- |
-| Male | `Posisi` testis | Scrotal, Abdominal |
-| Male | Panjang dan lebar testis (mm) | Angka |
-| Male | Penampakan epididimis | Tubular, Partial, Not Tubular |
-| Female | Bukaan vagina | Imperforate, Perforate |
-| Female | Simfisis pubis | Close, Small Open, Open |
-| Female | Tahap reproduksi | Nulliparous, Primiparous, Multiparous |
-| Female | Kondisi mamae | Small, Large, Lactating |
-| Female | Jumlah mamae | Pasangan aksila, abdomen, dan inguinal |
-| Female | Bekas plasenta, embrio | Dihitung kiri dan kanan |
-| Female | `Panjang CR (mm)` embrio | Panjang crown-rump |
+| Jantan | `Testis` — `Posisi` | `Scrotal`, `Abdominal` |
+| Jantan | `Panjang (mm)` dan `Lebar (mm)` | Testis kanan; hanya tampil bila `Posisi` adalah `Scrotal` |
+| Jantan | `Epididimis` | `Tubular`, `Partial`, `Not Tubular`; hanya tampil bila `Posisi` adalah `Scrotal` |
+| Betina | `Bukaan vagina` | `Imperforate`, `Perforate` |
+| Betina | `Simfisis pubis` | `Close`, `Small Open`, `Open`; tampil bila `Tahap hidup` adalah `Adult` |
+| Betina | `Tahap reproduksi` | `Nulliparous`, `Primiparous`, `Multiparous` (hanya `Adult`) |
+| Betina | `Jumlah mamae (pasang)` | Pasangan `Aksila`, `Abdomen`, dan `Inguinal` (hanya `Adult`) |
+| Betina | `Kondisi mamae` | `Small`, `Large`, `Lactating` (hanya `Adult`) |
+| Betina | `Embrio` | Jumlah `Kiri` dan `Kanan`, ditambah `Panjang CR (mm)` (mahkota-pantat) (hanya `Adult`) |
+| Betina | `Bekas luka plasenta` | Jumlah `Kiri` dan `Kanan` (hanya `Adult`) |
 
 ## Kolom kelelawar {% #bat-fields %}
 
-Aktifkan `Tampilkan bidang kelelawar` pada spesimen untuk menambahkan panjang
-lengan bawah, panjang tibia, `Berekolokasi?`, tipe ekolokasi (`FM`, `CF`,
-`QCF`, atau `None`), frekuensi maksimum dan minimum, frekuensi pada energi
-maksimum, dan durasi. Untuk menampilkannya di setiap spesimen mamalia, aktifkan
-`Selalu tampilkan bidang kelelawar` di `Pengaturan` > `Katalog` > `Format`.
-Spesimen yang memiliki data kelelawar tersimpan selalu menampilkan bagian ini.
+Aktifkan `Tampilkan bidang kelelawar` pada spesimen untuk menambahkan
+`Panjang lengan bawah (mm)`, `Panjang tibia (mm)`, dan `Berekolokasi?`.
+Mengaktifkan `Berekolokasi?` menambahkan `Ekolokasi` (`FM`, `CF`, `QCF`, atau
+`None`), `Frekuensi maksimum (kHz)`, `Frekuensi minimum (kHz)`,
+`Frekuensi pada energi maksimum (kHz)`, dan `Durasi (detik)`.
+
+Untuk menampilkan bidang kelelawar di setiap spesimen mamalia, aktifkan
+`Selalu tampilkan bidang kelelawar` di `Pengaturan` > `Katalog` > `Format` (di
+bawah `Catatan pengukuran` saat `Mamalogi` dipilih). Setelah data kelelawar atau
+ekolokasi tersimpan pada spesimen, bagian ini tetap terlihat dan tidak dapat
+dimatikan.
 
 ## Bagian spesimen dan simbion {% #parts-and-symbionts %}
 
-Katalog mamalia menampilkan kolom deteksi simbion dan tab simbion. Lihat
+Katalog mamalia mencakup kolom pemeriksaan `Simbion` di bagian bawah formulir
+pengukuran serta tab simbion pada `Bagian spesimen`. Lihat
 [Simbion](/id/usages/specimens/symbionts/).

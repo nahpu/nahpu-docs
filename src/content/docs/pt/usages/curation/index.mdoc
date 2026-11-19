@@ -5,37 +5,43 @@ sidebar:
   order: 0
 ---
 
-`Curadoria de espécimes` é uma ferramenta do projeto para conferir o material
-físico com os registros depois da coleta. Ela grava campos de curadoria em
-muitos registros de uma só vez, sem abrir o formulário de cada espécime. A
-ferramenta está em versão beta.
+`Curadoria de espécimes` (beta) é uma ferramenta do projeto para conferir o
+material físico com os seus registros depois da coleta. Ela grava campos de
+curadoria em muitos registros de uma só vez, sem abrir cada formulário de
+espécime individualmente.
 
 ## Abrir a ferramenta
 
 Abra um projeto e selecione `Curadoria` na barra de ferramentas do painel do
-projeto. A barra mostra a ferramenta por padrão. Se você a removeu, selecione
-`Editar lista` na barra e ative `Curadoria` novamente.
+projeto. Ela aparece na barra por padrão. Se você a removeu, selecione
+`Editar lista` na barra — ou abra `Configurações` > `Aplicativo` >
+`Ferramentas` — e ative `Curadoria` novamente.
 
-O seletor de modo no topo da tela define o que você vai curar. Por enquanto,
-há apenas um modo:
+O seletor de modo no topo da tela define o que você vai curar. Por enquanto, há
+um modo disponível:
 
-- [Curadoria de tecidos](/pt/usages/curation/tissue-curation/): escaneie tubos
-  de partes do espécime, e de simbiontes se quiser, em caixas de
-  armazenamento. Cada tubo recebe um código de museu e a próxima célula livre
-  como local de armazenamento.
+- [Curadoria de tecidos](/pt/usages/curation/tissue-curation/): leia ou
+  posicione tubos de partes do espécime — e opcionalmente tubos de simbiontes —
+  em caixas de armazenamento. Cada tubo recebe um código de museu e a próxima
+  célula livre como local de armazenamento.
 
 ## Como a curadoria altera os registros
 
-A curadoria grava nos mesmos campos que você editaria no formulário do
-espécime. A curadoria de tecidos grava `Acervo permanente do museu` ou `Empréstimo do museu` e
-`Local de armazenamento` em uma parte ou simbionte. Os valores aparecem no registro,
-na tabela de dados e em todas as exportações.
+A curadoria atualiza os mesmos campos que você edita no formulário do espécime.
+A curadoria de tecidos grava `Acervo permanente do museu` ou
+`Empréstimo do museu` e `Local de armazenamento` diretamente no registro da
+parte ou do simbionte. As alterações aparecem imediatamente no registro, na
+tabela de dados e em todas as exportações.
 
-Cada alteração é salva no momento em que é feita. O registro da sessão lista
-o que foi alterado nesta visita, e `Desfazer` desfaz a alteração mais recente,
-incluindo qualquer valor substituído. Fechar a tela encerra a sessão. As
-alterações continuam salvas, mas o registro e o histórico de desfazer são
-apagados.
+Cada alteração é salva assim que é feita:
+
+- O registro da sessão acompanha cada tubo verificado ou ignorado durante a
+  visita atual.
+- `Desfazer` reverte a verificação mais recente, restaurando qualquer valor
+  substituído e quaisquer tubos deslocados daquela célula.
+- Fechar `Curadoria de espécimes` encerra a sessão: as alterações salvas
+  permanecem no banco de dados, enquanto o registro da sessão e o histórico de
+  desfazer são apagados.
 
 Faça backup do banco de dados antes de curar uma coleção grande. Consulte
 [Backup do banco de dados](/pt/usages/export/#backup-database).

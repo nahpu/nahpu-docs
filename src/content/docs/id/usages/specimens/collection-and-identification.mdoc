@@ -6,15 +6,16 @@ sidebar:
 ---
 
 Kartu `Koleksi & identifikasi` menyimpan metadata inti spesimen, dengan urutan
-seperti di layar:
+berikut di layar:
 
 | Kolom | Catatan |
 | --- | --- |
-| ID lapangan | Nomor lapangan pengatalog atau nomor proyek berformat. Gunakan `Sunting ID lapangan` untuk mengganti jenisnya bagi spesimen ini; NAHPU meminta konfirmasi, menghapus pengenal lama, dan tidak memakai ulang nomor yang sudah terpakai. |
-| `ID museum` | Nomor katalog atau nomor akses museum, opsional. Ditampilkan setelah `Tampilkan lebih banyak`, atau setelah kolom ini berisi nilai. |
-| `Katalogator` | Orang yang mengatalogkan spesimen. Memilih pengatalog juga mengisi `Preparator` dan `Pengidentifikasi`. |
-| `Preparator` | Orang yang mempreparasi spesimen atau spesimen bukti. |
-| `Kondisi` | Kondisi spesimen, dari daftar di Pengaturan. |
+| `UUID spesimen` | Pengenal unik yang ditetapkan NAHPU; hanya-baca dan dapat disalin. |
+| `ID museum` | Nomor katalog atau nomor akses museum, opsional. Ditampilkan setelah `Tampilkan lebih banyak`, atau setelah berisi nilai. |
+| `ID lapangan` | Nomor lapangan katalogis atau nomor proyek berformat. Pilih ikon sunting untuk membuka `Sunting ID lapangan` dan beralih antara `Personel` dan `Proyek`; NAHPU meminta konfirmasi, menghapus pengenal sebelumnya, dan tidak memakai ulang nomor yang sudah terpakai. |
+| `Katalogator` | Orang yang mengatalogkan spesimen (dari personel berperan `Katalogis`). Memilihnya juga mengisi `Preparator` dan `Pengidentifikasi`. |
+| `Preparator` | Orang yang mempreparasi spesimen atau spesimen bukti (peran `Katalogis` atau `Hanya preparator`). |
+| `Kondisi` | Kondisi spesimen, dari kosakata terkontrol `Kondisi` di `Pengaturan`. |
 | `Tanggal koleksi`, `Waktu koleksi` | Kapan spesimen dikumpulkan. |
 | `Tanggal prep.`, `Waktu prep.` | Kapan spesimen dipreparasi. |
 
@@ -22,22 +23,23 @@ Bagian **Identifikasi** pada kartu ini memuat:
 
 | Kolom | Catatan |
 | --- | --- |
-| `Takson` | Catatan dari daftar takson proyek. |
-| `Pengidentifikasi` | Orang yang mengidentifikasi spesimen. |
-| `Keyakinan identifikasi` | `Low`, `Medium`, atau `High`. |
-| `Metode identifikasi` | Bukti yang digunakan, opsional. Muncul setelah `Keyakinan identifikasi` diisi. |
+| `Takson` | Catatan dari registri takson proyek. |
+| `Pengidentifikasi` | Orang yang mengidentifikasi spesimen (peran `Katalogis` atau `Hanya identifikator`). |
+| `Keyakinan identifikasi` | `High`, `Medium`, `Low`, atau `Belum ditetapkan`. |
+| `Metode identifikasi` | Bukti yang digunakan, opsional, dari kosakata terkontrol `Metode identifikasi`. Muncul setelah `Keyakinan identifikasi` diisi. |
 
 ## Taksonomi {% #taxonomy %}
 
-Kartu `Info takson` dibaca dari takson yang dipilih di `Koleksi & identifikasi`.
-Dalam formulir spesimen, kartu ini menampilkan kelas, ordo, dan famili. Pilih
-`Lihat detail` untuk meninjau catatan taksonomi lengkap, termasuk:
+Kartu `Info takson` membaca takson yang dipilih di `Koleksi & identifikasi`.
+Pada formulir spesimen, kartu ini menampilkan `Kelas`, `Ordo`, dan `Famili`.
+Pilih `Lihat detail` untuk meninjau catatan taksonomi lengkap hanya-baca:
 
-- `Peringkat` catatan tersebut;
-- kerajaan dan filum, diambil dari daftar takson jika dicatat dan disimpulkan
-  dari kelas jika tidak;
-- kelas, ordo, famili, genus, dan — jika catatan mencapai tingkat tersebut —
-  spesies dan subspesies, beserta penulis dan nama umum;
-- kategori Daftar Merah, status CITES, status negara, dan catatan jika ada;
-- jumlah catatan yang menggunakan takson tersebut, serta kode QR untuk
-  membagikannya.
+- **Tajuk**: nama ilmiah, `Penulis`, dan `Nama umum` jika ada.
+- **Klasifikasi**: `Peringkat`, `Kerajaan` dan `Filum` (diambil dari registri
+  jika dicatat, atau disimpulkan dari kelas jika tidak), `Kelas`, `Ordo`,
+  `Famili`, `Genus`, serta — jika berlaku — `Spesies`, `Subspesies`, dan
+  `Penulis`.
+- **Konservasi**: `Kategori Daftar Merah`, `Status CITES`, dan `Status negara`
+  jika ada, ditambah `Catatan`.
+- **Total catatan & berbagi**: jumlah catatan untuk `Proyek saat ini` dan
+  `Semua proyek`, serta `Kode QR takson` untuk membagikan takson.
