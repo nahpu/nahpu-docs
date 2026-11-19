@@ -19,96 +19,118 @@ title: Settings
 {% /screenshots %}
 
 Settings control how NAHPU works on this device: catalog formats, controlled
-lists, custom fields, presets, and app preferences. Open `Settings` from the
-home screen menu or from a project's Dashboard menu. Custom fields for one
-project need that project open.
+vocabularies, custom fields, presets, and app preferences.
+
+Open `Settings` from the home screen menu or from a project's `Dashboard` menu.
+To configure project-scoped custom fields or a project's `Field ID` values,
+open that project first. To walk through initial device setup step by step, use
+`Setup NAHPU` from the home screen menu.
 
 ## What each setting affects
 
 | Kind | Examples | Transfer behavior |
 | --- | --- | --- |
-| Project information | Name, accession, location, time zone, dates, project field-ID values | Included in project-info and project transfers |
+| Project information | Name, accession, location, time zone, dates, project `Field ID` values | Included in project-info and project transfers |
 | Shared database records | Taxa and personnel | Stored in the NAHPU database and associated with projects |
-| User configs | Controlled vocabularies and export or document presets | Transfer with `Export user configs` and `Import user configs` |
-| Installation state | Theme, language, and current main taxon | Remains on the current installation |
+| User configs | Controlled vocabularies, field visibility, custom-field definitions, and export or document presets | Transferred with `Export user configs` and `Import user configs` |
+| Installation state | Theme, language, regional format, dashboard tools, and active catalog format | Stays on this device |
 
-Changing a setting while one project is open can affect other projects on the
-same installation. Review transferred user configs before replacing your
-current configuration.
+Controlled vocabularies, presets, and installation preferences are shared by
+every project on this device. Changing them while one project is open also
+affects other projects on the same installation.
 
-## Catalogs
+## Catalogs {% #catalogs %}
 
-### Format
+Across `Sites`, `Events`, and `Specimens`, settings work in two consistent ways:
 
-`Format` {% ref id="A" /%} selects the main taxon used for new specimen forms
-on this device. A project can contain more than one taxon group; this setting
-only controls the currently active specimen format and its measurement fields.
+- **Controlled vocabularies** let you add or remove choices, set a text case
+  format (`A`), or pull existing values from your records with `Match database`.
+- **Field-visibility toggles** only show or hide built-in fields on forms;
+  hiding a field never deletes values already stored in the database.
 
-### Sites
+### Format {% #format %}
 
-`Sites` {% ref id="B" /%} manages:
+`Format` {% ref id="A" /%} sets the active catalog format for new specimen
+forms and measurement fields on this device. A single project can still hold
+specimens from more than one taxon group.
 
-- the site types and habitat types offered on site forms;
-- coordinate datums;
-- `Geography fields`: which geography fields site forms show;
-- `Map layers` for the coordinate map.
+When `Mammalogy` is selected, `Measurement records` also offers
+`Always show bat fields` so bat-specific fields always appear on mammal
+measurement forms instead of being toggled per specimen.
 
-Hiding a field never deletes values already stored in it.
+### Sites {% #sites %}
 
-### Events
+`Sites` {% ref id="B" /%} configures site forms and coordinate maps:
 
-`Events` {% ref id="C" /%} manages the primary-activity list {% ref id="G" /%},
-collection methods, event-personnel roles, and the environmental fields shown
-on event forms. Primary activities default to `Collecting`, `Recording`, and
-`Observing`; `Other` is not included unless you add it. Environmental forms
-start with ambient temperature, ambient humidity, cloud cover, rainfall, and
-notes; show or hide other fields the same way as geography fields.
+- `Map layers`: choose a base layer or import and arrange custom layers
+  (GeoJSON, zipped WGS84 Shapefiles, and PMTiles).
+- `Geography fields`: choose which geography fields appear on site forms.
+- Controlled vocabularies: manage `Site Types`, `Habitat Types`, and `Datums`.
 
-Keep these lists the same on every field device by transferring user configs.
+### Events {% #events %}
 
-### Specimens
+`Events` {% ref id="C" /%} configures collection event forms:
 
-`Specimens` {% ref id="D" /%} contains:
+- `Primary Activities` {% ref id="G" /%}: defaults to `Collecting`,
+  `Recording`, and `Observing` (`Other` is not included unless you add it).
+- `Collection Methods` and `Personnel Roles`: controlled vocabularies for
+  methods and event roles.
+- `Environmental data fields`: choose which temperature, humidity, measurement,
+  aquatic, astronomy, and note fields appear on event forms. Forms start with
+  ambient temperature, ambient humidity, cloud cover, rainfall, and notes.
 
-- `Always show collector field` and other capture-field visibility;
-- `Field ID` and `Tissue ID` numbering, described below;
-- controlled lists for specimen sex, `Identification Methods`, `Life Stages`,
-  specimen types, treatments, and conditions;
-- symbiont settings: interaction types, categories, detection and preparation
-  methods, anatomical locations, storage, and treatments, all starting with
-  editable defaults.
+Transfer user configs to keep these vocabularies identical across field
+devices.
 
-The specimen-sex list is restricted. `Male`, `Female`, and `Unknown` are always
-available. Use the `+` chips to add `Gynandromorph`, `Hermaphrodite`,
-`Female?`, or `Male?`. An added option can be removed only when no specimen in
-the database uses it.
+### Specimens {% #specimens %}
 
-#### Field ID
+`Specimens` {% ref id="D" /%} configures specimen capture, numbering,
+controlled vocabularies, and symbionts:
 
-Under `Field ID`, choose how specimens are numbered:
+- `Capture records`: turn `Always show collector field` on or off.
+- Numbering: configure `Field ID`, `Tissue ID`, and (when `Ichthyology` is
+  active) `Individual tag ID`, described below.
+- `Sex`: restricted controlled vocabulary. `Male`, `Female`, and `Unknown` are
+  always available. Use the `+` chips to add `Gynandromorph`, `Hermaphrodite`,
+  `Female?`, or `Male?` (a question mark records examiner uncertainty). An
+  added option can be removed only when no specimen in the database uses it.
+- Controlled vocabularies: manage `Identification Methods`, `Life Stages`,
+  `Specimen Types`, `Treatments`, and `Conditions`.
+- `Symbionts` (for `Mammalogy`, `Ornithology`, `Herpetology`, and
+  `Ichthyology`): configure `Identification` (`Symbiont ID prefix` and
+  `Symbiont ID number`) and editable default vocabularies for
+  `Interaction types`, `Categories`, `Detection Methods`,
+  `Preparation Methods`, `Anatomical Locations`, `Storage`, and `Treatments`.
+  See [Symbionts](/en/usages/specimens/symbionts/).
 
-| Choice | Field ID is built from | Needs |
+#### Field ID {% #field-id %}
+
+Under `Field ID`, choose how new specimens are numbered:
+
+| Choice | Built from | Requires |
 | --- | --- | --- |
-| `Personnel ID` (default) | The Cataloger's initials and their own running number | A person with the `Cataloger` role in the project, with initials and a current field number |
-| `Project ID` | `Prefix` + `Current catalog number` + `Suffix` | The three values, and whether `Auto-increment catalog number` is on |
+| `Personnel ID` (default) | The Cataloger's initials and running number | A person with the `Cataloger` role in the project, with initials and a current field number |
+| `Project ID` | `Prefix` + `Current catalog number` + `Suffix` | An open project, the three values, and whether `Auto-increment catalog number` is on |
 
 With `Project ID`, NAHPU joins the three values directly: `NAHPU-`, `120`, and
-`-M` give `NAHPU-120-M`. Select `Save field ID settings` to apply them.
+`-M` produce `NAHPU-120-M`. Select `Save field ID settings` to apply changes.
 
 {% aside type="caution" %}
 
-Changing a project-ID prefix or suffix changes how assigned project IDs are
-displayed, and NAHPU asks you to confirm. Check first whether those IDs are
-already exported or written on labels.
+Changing a `Project ID` prefix or suffix changes how already-assigned project
+IDs display, and NAHPU asks you to confirm. Check first whether those IDs have
+already been exported or written on specimen labels.
 
 {% /aside %}
 
-#### Tissue ID
+#### Tissue ID {% #tissue-id %}
 
-`Tissue ID` takes a prefix, a next number, and a suffix, and previews the next
-tissue ID. Leading zeros are kept, so `M0042-T` is followed by `M0043-T`. For
-the Ichthyology catalog format, `Individual tag ID` numbers the individuals in a
-fish lot the same way; see
+`Tissue ID` takes a prefix, a next number, and a suffix, and shows a live
+preview of the next tissue ID. Leading zeros are preserved, so `M0042-T` is
+followed by `M0043-T`.
+
+When the active catalog format is `Ichthyology`, `Individual tag ID` numbers
+individuals in a fish lot the same way. See
 [Fishes](/en/usages/specimens/measurements/fishes/#tag-id-numbering).
 
 ### Custom fields {% #custom-fields %}
@@ -118,99 +140,116 @@ specimen, part, and symbiont forms.
 
 | Setting | Options |
 | --- | --- |
-| Type | Text, Number, Yes / No, Dropdown |
-| Scope | `Current project` (this project only) or `Global` (every project on this installation); chosen at creation |
-| Catalog | Specimen-related fields can be limited to some catalog formats |
+| Type | `Text`, `Number`, `Yes / No`, or `Dropdown` |
+| Scope | `Current project` (this project only) or `Global` (every project on this device), chosen at creation |
+| Catalog | Specimen-related fields can be limited to selected catalog formats |
 | Darwin Core mapping | Optional export term for the field |
 
 {% steps %}
 
-1. Open the project, go to `Settings` > `Custom fields`, and select
-   `Add custom field`. Choose where the field appears.
-2. Set `Label` and `Type`. For a dropdown, enter the allowed options. Put the
-   unit in the label of a number field, such as "Canopy height (m)".
-3. Choose the scope, and for specimen fields, the catalog formats.
-4. Optionally set a Darwin Core mapping. Mapping a field does not check its
-   values, so inspect a sample export before sharing data.
-5. Save, open a record in that section, enter a test value, and reopen the
-   record to check it.
-6. To share the field, export it from `Custom fields` or with the user configs,
-   import it on the other device, and check the section, scope, and options.
+1. Open the project if the field is project-scoped, go to `Settings` >
+   `Custom fields`, choose where the field appears, and select
+   `Add custom field`.
+2. Enter a `Label` and choose a `Type`. For a dropdown, add the allowed
+   options. For a number field, include the unit in the label (such as
+   `Canopy height (m)`).
+3. Choose the `Scope` and, for specimen-related fields, the applicable catalog
+   formats.
+4. Optionally set a Darwin Core mapping. NAHPU does not validate values against
+   the mapped term, so inspect a sample export before sharing data.
+5. Save, enter a test value on a record in that section, and reopen the record
+   to confirm it saves properly.
+6. To share definitions with another device, export them from `Custom fields`
+   (as a file or QR code) or with user configs, then import and verify the
+   section, scope, and options on the target device.
 
 {% /steps %}
 
-To stop using a field, select `Archive`: its data stays, and `Restore` brings it
-back. `Delete` shows as `Delete (values in use)` and is unavailable while any
-record stores a value. Discarding legacy values is a separate, irreversible
-action.
+Use the actions menu on an existing field to reorder it (`Move up` /
+`Move down`), archive it, or delete it:
 
-## Database
+- `Archive` hides a field while keeping its stored data; `Restore` brings it
+  back.
+- `Delete` appears as `Delete (values in use)` and stays unavailable while any
+  record holds a value.
+- `Discard legacy values` clears legacy values separately and cannot be undone.
+
+## Database {% #database %}
 
 - `Taxa` {% ref id="F" /%} manages taxonomy records available to projects.
 - `Personnel` manages people in the database and their specimen-care roles.
-- `Backup database` saves a full ZIP or TAR.GZ archive of every project, record,
-  and managed file.
-- `Replace database` replaces the active SQLite database from a backup.
+- `Backup database` saves a full ZIP or TAR.GZ archive of all projects,
+  records, managed media, and settings.
+- `Replace database` restores a NAHPU backup archive (ZIP or TAR.GZ) or SQLite
+  file (`.sqlite3`). NAHPU shows a side-by-side comparison before overwriting
+  and leaves `Back up current data first` turned on by default.
 
 {% aside type="caution" %}
 
-Make a current backup before using `Replace database`. Replacing the database
-is different from merging a project or importing user configs.
+Keep `Back up current data first` turned on, or save a separate backup before
+replacing the database. Replacing the database overwrites the whole
+installation and is different from merging a project or importing user configs.
+See [Restoring a database](../export/#restoring-a-database).
 
 {% /aside %}
 
-## Exports
+## Exports {% #exports %}
 
-- `Tabular Data` manages reusable record-export presets.
-- `Documents` manages document templates, print-layout presets, and the
-  fonts available to templates.
+- `Tabular Data` manages reusable presets for exporting tabular records.
+- `Documents` manages print-layout presets, document templates, and fonts
+  available to templates.
 - `Template Editor` creates and edits document templates.
 
-`Load defaults` in the options menu, or in an empty preset list, lets you choose
-which bundled presets to add. Presets that suit any catalog format start
-checked; presets written for one catalog format start unchecked and are also
-offered in `Setup NAHPU`. Loading never overwrites a preset of the same name, and
+Choose `Load defaults` from the options menu—or from an empty preset list—to
+add bundled presets. Presets that work with any catalog format start checked;
+catalog-specific presets start unchecked and are also offered in `Setup NAHPU`.
+Loading defaults never overwrites an existing preset with the same name, and
 any preset can be deleted.
 
-These presets are user configs. Export them when another installation must
-reproduce the same columns, labels, or layouts.
+Export these presets as user configs when another installation needs the same
+columns, labels, or layouts.
 
-## Applications
+## Applications {% #applications %}
 
 These preferences apply only to this installation.
 
 | Setting | What it does |
 | --- | --- |
-| `Theme` | `System`, `Light`, or `Dark`. |
-| `Language` | The app's language. In beta. |
-| `Regional format` | How dates and numbers are shown on screen. Saved records and exports keep standard formats. In beta. |
-| `Tools` | Chooses the tools shown on the project dashboard. |
-| `Data usage` | Storage report and cleanup, described below. |
+| `Theme` | Switches between `Light`, `Dark`, and `System`. |
+| `Language` | Sets the app language (`System default` or a specific language). In beta. |
+| `Regional format` | Controls how dates and numbers display on screen (`Match language` or a region). Saved records and exports keep standard formats. In beta. |
+| `Tools` | Chooses which tools appear in the project dashboard dock. Use `Reset` to restore defaults. |
+| `Data usage` | Reports storage usage and cleans up unlinked files, described below. |
 
-### Data usage and cleanup
+### Data usage and cleanup {% #data-usage-and-cleanup %}
 
-Open `Data usage` to scan the folders managed by NAHPU. The summary reports
-total storage, file and media counts, and space that can be reclaimed from
-unlinked files.
-
-`Remove unlinked files` deletes files that are no longer used by any record,
-including leftovers from deleted media or cancelled imports. Linked files,
-databases and backups, custom fonts, map layers, and files outside
-NAHPU-managed folders are not affected. Remove an installed font from
-`Documents` > `Fonts` rather than from here.
-
-The `Files` tree lets you inspect stored files, save a copy, or remove eligible
-files one by one. Choose `Select` to work with several files. Use `Clear` or
-`Select all`, then choose the floating `Review` button to check the file count,
-size, and locations before exporting an archive or permanently removing the
+Open `Data usage` to scan NAHPU-managed folders. The summary shows
+`Total usage`, `Files`, `Media files`, and `Reclaimable` space from unlinked
 files.
 
-Choose `Rescan` after files have changed outside NAHPU to refresh the report.
+- **`Remove unlinked files`** deletes files no longer used by any record, such
+  as leftovers from deleted media or cancelled imports. Linked files, databases
+  and backups, custom fonts, map layers, and files outside NAHPU-managed
+  folders are never affected. Remove installed fonts from `Documents` > `Fonts`
+  instead.
+- **The `Files` tree** lets you expand or collapse folders (`Expand all` /
+  `Collapse all`), inspect stored files, save a copy, remove empty folders, or
+  remove eligible files one by one.
+- **Multi-file cleanup**: choose `Select`, then pick individual files, folders,
+  or `Select all`. Use the bottom toolbar (`Clear`, `Review`, `Done`) to check
+  the count, size, and locations before exporting the selection to an archive
+  (with an option to remove the originals afterward) or deleting the files
+  permanently.
+- **`Rescan`** refreshes the report if files changed outside NAHPU.
 
-## Transferring user configs
+## Transferring user configs {% #transferring-user-configs %}
 
-`Export user configs` is in the home screen menu and the project Dashboard
-menu; `Import user configs` is in the Dashboard menu. Neither is inside the
-Settings page. A user-config transfer reproduces controlled lists and presets
-without replacing the project database. See [Export](../export) before
-replacing configs or data.
+Both `Export user configs` and `Import user configs` are available from the
+home screen menu, the project `Dashboard` menu, and `Setup NAHPU`—not inside
+the `Settings` page.
+
+A user-config transfer lets you pick which sections to share (controlled
+vocabularies and field visibility, record-export presets, document templates
+and layouts, and custom fields) without replacing the project database. Review
+imported configs before replacing your current setup, and see
+[Export user configs](../export/#export-user-configs) for full steps.
