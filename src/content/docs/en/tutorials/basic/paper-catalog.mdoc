@@ -2,113 +2,115 @@
 title: "Basic tutorial 1: Meet the 2014 Mt. Tujuh paper catalog"
 authors:
   - Heru Handika
-lastUpdated: 2026-11-13
+lastUpdated: 2026-11-19
 sidebar:
   label: "1. Meet the paper catalog"
   order: 1
 ---
 
-The Basic tutorials take one real field survey from paper to a Darwin Core
-Archive. Along the way you learn the core of NAHPU: projects, personnel, taxa,
-sites, collecting events, specimen records, narratives, and export. You also
-see where a structured catalog keeps data linked and consistent in ways a paper
-form cannot.
+This tutorial series takes one real field survey from paper notes to a Darwin
+Core Archive. Along the way, you will learn NAHPU's core workflow—projects,
+personnel, taxa, sites, collecting events, specimen records, narratives, and
+export—and see how a structured digital catalog keeps data linked and consistent
+in ways paper forms cannot.
 
 The data come from a young Heru Handika, now the NAHPU project lead. In
-September 2014 he surveyed small mammals on Mt. Tujuh (Gunung Tujuh) in Kerinci,
-Jambi, Indonesia. He kept two paper records: a specimen catalog on printed
-forms and a handwritten field journal. That same year he failed two
-standardized English tests, and his journal shows it, so in
-[Basic tutorial 6](/en/tutorials/basic/narrative/) you also correct the English
-before you enter it.
+September 2014, he surveyed small mammals on Mt. Tujuh (Gunung Tujuh) in
+Kerinci, Jambi, Indonesia, keeping two paper records: printed specimen forms and
+a handwritten field journal. That same year he failed two standardized English
+tests, and his journal shows it—so in
+[Basic tutorial 6](/en/tutorials/basic/narrative/), you will also clean up the
+English before entering it.
 
 {% aside type="note" title="Names in these tutorials" %}
-Heru Handika is the only real person named. Teammates, the local guide, and the
-boatman appear under fictional names: Bima Sampel, Citra Contoh, Dian Teladan,
-Eko Pemandu, and Fajar Nelayan.
+Among the people you enter into NAHPU, Heru Handika is the only real person
+named. Teammates, the local guide, and the boatman appear under fictional names:
+Bima Sampel, Citra Contoh, Dian Teladan, Eko Pemandu, and Fajar Nelayan.
 {% /aside %}
 
-## The tutorials
+## Series overview
 
-| Tutorial | You enter | NAHPU idea |
+| Tutorial | What you enter | Core NAHPU concept |
 | --- | --- | --- |
-| [1. Meet the paper catalog](/en/tutorials/basic/paper-catalog/) | Nothing yet | Read the source and list its problems |
-| [2. Create the project](/en/tutorials/basic/project-personnel-taxa/) | Project, personnel, taxa | Enter shared context once |
-| [3. Create sites](/en/tutorials/basic/sites/) | The camp and six trap and pitfall lines | One place, one record |
-| [4. Record collecting events](/en/tutorials/basic/events/) | When and how each line was run | The bridge between place and specimen |
+| [1. Meet the paper catalog](/en/tutorials/basic/paper-catalog/) | Nothing yet | Read the source critically and spot its problems |
+| [2. Create the project](/en/tutorials/basic/project-personnel-taxa/) | Project, personnel, and taxa | Enter shared context once |
+| [3. Create sites](/en/tutorials/basic/sites/) | One camp and six trap/pitfall lines | One place, one reusable record |
+| [4. Record collecting events](/en/tutorials/basic/events/) | When, how, and by whom each line was run | The bridge between place and specimen |
 | [5. Enter specimen records](/en/tutorials/basic/specimens/) | Seven representative specimens | Linked, validated fields |
-| [6. Correct and enter the journal](/en/tutorials/basic/narrative/) | Five corrected journal entries | Context that has no form field |
-| [7. Review and export](/en/tutorials/basic/export-darwin-core/) | A Darwin Core Archive | Standard data from linked records |
+| [6. Correct and enter the journal](/en/tutorials/basic/narrative/) | Five corrected journal entries | Field context that has no form field |
+| [7. Review and export](/en/tutorials/basic/export-darwin-core/) | A Darwin Core Archive | Standard data built from linked records |
 
-Allow about two hours for the whole series. You need NAHPU on a tablet or
-computer; a phone works, but the larger screen helps while you learn.
+Allow about two hours for the full series. You can follow along on a tablet or
+computer; a phone works, but a larger screen makes it easier to learn.
 
 ## What the paper catalog looks like
 
-Each specimen sheet holds four specimens under one `Locality` header. Below is
-the top of the first sheet: the locality, then HH 436 and HH 437.
+Each printed sheet holds four specimens under a single `Locality` header. Below
+is the top of the first sheet, showing the locality followed by HH 436 and
+HH 437:
 
 ![Paper specimen form with the locality header for Mt. Tujuh, Sungai Jernih, Pondok Merah, and the records for HH 436, Lariscus insignis, and HH 437, Mus crociduroides](../../../../../assets/images/tutorials/basic/paper-hh436-437.jpg)
 
-The form asks for many of the right things: collector number, species,
-standard measurements, sex and reproductive condition, capture date and time,
-method, trap line, tissues, habitat, and remarks. The trouble is in how the
-values relate to each other.
+The form asks for many of the right details: collector number, species, standard
+measurements, sex and reproductive condition, capture date and time, method,
+trap line, tissues, habitat, and remarks. The trouble is not the fields
+themselves, but how the values relate to one another across sheets and
+notebooks.
 
-## The problems in Heru's paper catalogs
+## Problems in Heru's paper records
 
-These are the problems found across the full specimen catalog and journal; the
-two crops on this page show some of them. Each problem returns later in the
-tutorial where NAHPU handles it.
+The table below lists the issues found across the full specimen catalog and
+journal; the two crops on this page illustrate several of them. Each issue comes
+back later in the tutorial where NAHPU solves it.
 
-| Problem on paper | Example | Where NAHPU handles it |
+| Problem on paper | Example | How NAHPU handles it |
 | --- | --- | --- |
-| The locality is written only once per sheet; later sheets leave it blank | Every sheet after the first, including specimens from Pasir Putih, a different place across the lake | Specimens link to an event, and the event to its site ([Tutorials 3–5](/en/tutorials/basic/sites/)) |
-| A unit is crossed out, then changes between sheets | `Elev. 2004 feet m.` on sheet 1, `2004 m asl` on sheet 2 | Elevation is always stored in meters ([Tutorial 3](/en/tutorials/basic/sites/)) |
-| Coordinates use hemisphere letters, with no datum or uncertainty | `01.70274° S 101.39032° E` | Signed decimal degrees, datum, and uncertainty fields ([Tutorial 3](/en/tutorials/basic/sites/)) |
-| One species, many spellings | `Maxorys`, `Maxomy`, `Maxotys`, `hylomyoider`, `hylomyoides` | Pick each name from the taxon registry ([Tutorial 2](/en/tutorials/basic/project-personnel-taxa/)) |
-| Corrections overwrite the original | HH 437: the number is written over `436`, and `male` is scribbled out for `female` | Fields hold one value, set from a list ([Tutorial 5](/en/tutorials/basic/specimens/)) |
-| A struck-out identification with no name or date | HH 456: `Mus crociduroides` crossed out for `Maxomys hylomyoides` | Determiner, `ID Confidence`, and remarks ([Tutorial 5](/en/tutorials/basic/specimens/)) |
-| A date that breaks the sequence, plus missing fields | HH 442 says `17 Sept` among 13 September records, with no time, line, or age | Records are reviewed in context ([Tutorial 5](/en/tutorials/basic/specimens/)) |
-| A standard time with no explanation | Most forms say `07.00`. That was the team's standard practice, because no one could tell when an animal entered a trap, but nothing on the form says so | The practice is written into each event's notes ([Tutorial 4](/en/tutorials/basic/events/)) |
-| `Line 1` names two methods | Pitfalls and snap traps were both called Line 1 | Separate sites and events per method ([Tutorial 3](/en/tutorials/basic/sites/)) |
-| The collector is always Heru | On 17 September teammates checked Pasir Putih while Heru stayed in camp | Capture `Collector` chosen from the event's people ([Tutorial 4](/en/tutorials/basic/events/)) |
-| Habitat filled once, on one specimen | HH 436: `Mature secondary forest` | Habitat belongs to the site ([Tutorial 3](/en/tutorials/basic/sites/)) |
-| Wrong text in a field | HH 529: `Blank Tube` in the `Museum` box | Separate fields for museum and tissue numbers ([Tutorial 5](/en/tutorials/basic/specimens/)) |
-| Codes with no legend | Preparation codes `SA` and `AL` | Each part is its own record with a type and treatment ([Tutorial 5](/en/tutorials/basic/specimens/)) |
-| Tissue circled on some records, not others | HH 442 has no tissue circled | A tissue is recorded only when it exists ([Tutorial 5](/en/tutorials/basic/specimens/)) |
-| A remark that only makes sense with the journal | HH 523: `Underpart darker than M. hylomyoides` | Journal and specimen live in one project, linked by date and line ([Tutorial 6](/en/tutorials/basic/narrative/)) |
+| Locality written once per sheet; later sheets left blank | Every sheet after the first, including specimens from Pasir Putih across the lake | Specimens link to an event, and the event links to its site ([Tutorials 3–5](/en/tutorials/basic/sites/)) |
+| Elevation unit crossed out and inconsistent | `Elev. 2004 feet m.` on sheet 1; `2004 m asl` on sheet 2 | Elevation is always stored in meters ([Tutorial 3](/en/tutorials/basic/sites/)) |
+| Hemisphere letters with no datum or uncertainty | `01.70274° S 101.39032° E` | Signed decimal degrees, explicit datum, and uncertainty fields ([Tutorial 3](/en/tutorials/basic/sites/)) |
+| Multiple spellings for one species | `Maxorys`, `Maxomy`, `Maxotys`, `hylomyoider`, `hylomyoides` | Pick every name from one taxon registry ([Tutorial 2](/en/tutorials/basic/project-personnel-taxa/)) |
+| Corrections written over original values | HH 437: number written over `436`; `male` scribbled out for `female` | Fields hold one clean value chosen from a list ([Tutorial 5](/en/tutorials/basic/specimens/)) |
+| Struck-out identification with no determiner or date | HH 456: `Mus crociduroides` crossed out for `Maxomys hylomyoides` | Dedicated `Determiner`, `ID Confidence`, and `Remarks` fields ([Tutorial 5](/en/tutorials/basic/specimens/)) |
+| Out-of-sequence date and missing fields | HH 442 reads `17 Sept` among 13 September records, with no time, line, or age | Records are reviewed in context and explained in remarks ([Tutorial 5](/en/tutorials/basic/specimens/)) |
+| Standard capture time with no explanation | Most forms read `07.00`—the team's convention for overnight captures—but nothing on the form states this | Documented once in each event's notes ([Tutorial 4](/en/tutorials/basic/events/)) |
+| `Line 1` names two methods | Pitfalls and snap traps were both labeled Line 1 | Separate sites and events per method ([Tutorial 3](/en/tutorials/basic/sites/)) |
+| Collector always listed as Heru | On 17 September, teammates checked Pasir Putih while Heru stayed in camp | Capture `Collector` is chosen from the event's personnel ([Tutorial 4](/en/tutorials/basic/events/)) |
+| Habitat written once, on a single specimen | HH 436: `Mature secondary forest` | Habitat belongs to the site, not one animal ([Tutorial 3](/en/tutorials/basic/sites/)) |
+| Tissue numbers and tube notes written in the `Museum` box | Tissue numbers (`Z26230`–`Z26317`) and HH 529's `Blank Tube` written in the `Museum` box, even though museums usually assign catalog numbers only after accessioning | Leave `Museum ID` empty in the field; store tissue numbers in `Tissue ID` and tube notes in part `Remarks` ([Tutorial 5](/en/tutorials/basic/specimens/)) |
+| Preparation codes with no legend | `SA` and `AL` | Explicit specimen parts with type and treatment ([Tutorial 5](/en/tutorials/basic/specimens/)) |
+| Tissue circled inconsistently | HH 442 has no tissue circled | A tissue part is added only when it exists ([Tutorial 5](/en/tutorials/basic/specimens/)) |
+| Remark that only makes sense alongside the journal | HH 523: `Underpart darker than M. hylomyoides` | Journal and specimens live in one project, linked by date and site ([Tutorial 6](/en/tutorials/basic/narrative/)) |
 
-HH 523 is the last case. Its sheet has no locality at all, so on paper it looks
-as if it came from Pondok Merah:
+HH 523 is a clear example of how paper separates linked facts. Its sheet has no
+locality header at all, making it look as if it came from Pondok Merah:
 
 ![Paper specimen form for HH 523, Maxomys cf. hylomyoides, from trap line 3, with the remark: underpart darker than M. hylomyoides](../../../../../assets/images/tutorials/basic/paper-hh523.jpg)
 
-Only the journal for 16–18 September says that Line 3 was at Pasir Putih,
-1.5 hours away by boat.
+Only the field journal for 16–18 September reveals that Line 3 was at Pasir
+Putih, a 1.5-hour boat ride across the lake.
 
-## The records you will enter
+## The seven records you will enter
 
-The catalog has over 100 specimens. These tutorials use seven that cover
-both survey areas, three methods, and most of the problems above. Where the
-paper disagrees with itself, the tutorials explain which value is best
-supported, and why.
+The full catalog holds over 100 specimens. These tutorials use seven that span
+both survey areas, three methods, and most of the problems above. Whenever the
+paper contradicts itself, the tutorials explain which value is best supported
+and why.
 
-| Field ID | Paper name | Name to enter | Line | Why it was chosen |
+| Field ID | Paper spelling | Name to enter | Line | Why it was chosen |
 | --- | --- | --- | --- | --- |
-| HH 436 | `Lariscur insignis` | *Lariscus insignis* | 1, snap trap | First record; the only one with habitat; matches the journal for 12 September |
-| HH 437 | `Mur crociduroider` | *Mus crociduroides* | 1, snap trap | Overwritten number and sex |
+| HH 436 | `Lariscur insignis` | *Lariscus insignis* | 1, snap trap | First record; only one with habitat; matches the 12 September journal |
+| HH 437 | `Mur crociduroider` | *Mus crociduroides* | 1, snap trap | Overwritten field number and sex |
 | HH 442 | `Maxomy hylomyoider` | *Maxomys hylomyoides* | Not recorded | Conflicting date; missing line, time, and age |
-| HH 453 | `Crocidura beccari` | *Crocidura beccarii* | 1, pitfall | A pitfall capture on a line named for snap traps |
+| HH 453 | `Crocidura beccari` | *Crocidura beccarii* | 1, pitfall | Pitfall capture sharing a line name with snap traps |
 | HH 456 | `Mus crociduroides`, crossed out for `Maxotys hylomyoides` | *Maxomys hylomyoides* | 2, snap trap | Changed identification |
-| HH 523 | `Maxomys cf. hylomyoider` | *Maxomys*, remark `cf. hylomyoides` | 3, snap trap | Pasir Putih; remark tied to the journal; time differs from the standard 07:00 |
-| HH 529 | `Crocidura neglecta` | *Crocidura neglecta* | 4, pitfall | Heru listed as collector while he was in camp; `Blank Tube` in the museum field |
+| HH 523 | `Maxomys cf. hylomyoider` | *Maxomys* (remark: `cf. hylomyoides`) | 3, snap trap | Pasir Putih site; remark tied to the journal; non-standard capture time |
+| HH 529 | `Crocidura neglecta` | *Crocidura neglecta* | 4, pitfall | Heru listed as collector while in camp; `Blank Tube` in the museum box |
 
-Measurements, dates, and other values are copied exactly from the paper unless
-a tutorial says otherwise.
+Measurements, dates, and other values follow the paper exactly unless a tutorial
+notes a correction.
 
 By the end of [Basic tutorial 5](/en/tutorials/basic/specimens/), the seven
-records look like this in NAHPU's Data table:
+records appear like this in NAHPU's Data table:
 
 ![NAHPU Data table on an iPad listing the seven specimen records with cataloger, field number, family, genus, specific epithet, and sex](../../../../../assets/images/app-screenshots/tutorials/basic/data-table-specimens.webp)
 

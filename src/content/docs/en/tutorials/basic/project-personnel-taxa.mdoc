@@ -2,28 +2,29 @@
 title: "Basic tutorial 2: Create the project, personnel, and taxa"
 authors:
   - Heru Handika
-lastUpdated: 2026-11-13
+lastUpdated: 2026-11-19
 sidebar:
   label: "2. Create the project"
   order: 2
 ---
 
-On paper, the survey name, the collector, and the species list live in the
-collector's head, or are written again on every form. In NAHPU you enter them
-once, before the first specimen, and every later record points to them.
+On paper, the survey name, team members, and species list either live in the
+collector's memory or get rewritten on every sheet. In NAHPU, you enter this
+shared context once before the first specimen, and every record that follows
+links back to it.
 
-You build:
+In this tutorial, you will set up:
 
-- a project for the Mt. Tujuh survey;
-- personnel for Heru and the team, with Heru as `Cataloger`;
-- a taxon registry with one correct spelling for each name.
+- a project for the 2014 Mt. Tujuh survey;
+- personnel records for Heru and the field team, with Heru as `Cataloger`;
+- a taxon registry with one clean spelling for each name.
 
 ## 1. Create the project
 
 {% steps %}
 
 1. On the home screen, select `Create project` > `Create new project`.
-2. Enter the project information:
+2. Fill in the project details:
 
     | Field | Value |
     | --- | --- |
@@ -31,31 +32,32 @@ You build:
     | Description | `Small-mammal survey of Mt. Tujuh, Kerinci, Jambi, 9–18 September 2014. Entered from the paper catalog of Heru Handika.` |
     | Time zone | `Asia/Jakarta` |
 
-    Jambi uses Western Indonesia Time (WIB), which is `Asia/Jakarta`. The time
-    zone documents the clock behind the recorded times, such as the trap-check
-    times on the specimen forms. It does not change those times.
+    Jambi uses Western Indonesia Time (WIB), which corresponds to
+    `Asia/Jakarta`. Setting the time zone documents the clock behind recorded
+    times—such as trap-check times on specimen forms—without altering the times
+    themselves.
 
-3. Choose `Mammalogy` as the main taxon format. It gives specimen forms the
-   same measurements and reproductive fields as the paper form.
-4. Choose a personnel Field ID. Heru's forms number specimens with his initials
-   and his own running number, so this mode reproduces `HH 436`, `HH 437`, and
-   so on.
-5. Complete the Cataloger details when asked (next section), review the
-   summary, and select `Create project`.
+3. Choose `Mammalogy` as the main taxon format so specimen forms display the
+   same standard measurements and reproductive fields as the paper catalog.
+4. Choose a personnel Field ID. Heru numbered specimens with his initials and a
+   running counter, so this mode reproduces `HH 436`, `HH 437`, and so on.
+5. Complete the Cataloger details when prompted (see the next section), review
+   the summary, and select `Create project`.
 
 {% /steps %}
 
 {% aside type="tip" %}
-Name a practice project clearly, for example `Mt. Tujuh tutorial`, if you work
-in an installation that also holds research data.
+If your NAHPU installation already holds active research data, give this
+practice project a clear label—such as `Mt. Tujuh tutorial`—so it stays easy to
+tell apart.
 {% /aside %}
 
 ## 2. Add personnel
 
 Heru is the `Cataloger`: he numbered, prepared, and identified the specimens.
-His teammates helped set and check traps. The guide and the boatman do not
-appear anywhere on the paper catalog, although the 16–18 September work at
-Pasir Putih depended on them.
+His teammates helped set and check trap lines, while the local guide and
+boatman made the 16–18 September work at Pasir Putih possible—even though
+neither appears anywhere in the paper catalog.
 
 {% steps %}
 
@@ -69,16 +71,16 @@ Pasir Putih depended on them.
     | `Initials` | `HH` |
     | `Cataloger number*` | `436` |
 
-    The cataloger number is the next number NAHPU proposes. Setting it to `436`
-    makes the first new specimen `HH436`, the first number in this catalog.
-    NAHPU then increases it by one for each new specimen. Because these
-    tutorials skip numbers, you will override it in
+    `Cataloger number` is the next number NAHPU proposes. Setting it to `436`
+    makes the first specimen `HH436`, matching the paper catalog, and NAHPU
+    increments it by one for each new record. Because these tutorials skip
+    numbers, you will override the proposed number in
     [Basic tutorial 5](/en/tutorials/basic/specimens/).
 
-3. Add the other people. They do not catalog specimens, so give them the role
-   `None`:
+3. Add the remaining team members with role `None` (they did not catalog
+   specimens):
 
-    | Name | Their part in the survey |
+    | Name | Role in the survey |
     | --- | --- |
     | `Bima Sampel` | Set and checked lines with Heru |
     | `Citra Contoh` | Set and checked lines |
@@ -86,34 +88,33 @@ Pasir Putih depended on them.
     | `Eko Pemandu` | Local guide |
     | `Fajar Nelayan` | Fisherman who ran the boat to Pasir Putih |
 
-4. Check that all six people appear on the dashboard.
+4. Confirm that all six people appear on the project dashboard.
 
 {% /steps %}
 
-The dashboard now shows the project and its people. Heru's cataloger number
-reads `530` here because the screenshot was taken after all seven specimens
-were entered.
+The dashboard now shows the project and its personnel. Heru's cataloger number
+reads `530` below because the screenshot was captured after all seven tutorial
+specimens were entered:
 
 ![NAHPU Project dashboard on an iPad for Mt. Tujuh small mammals 2014, with Heru Handika as Cataloger and the teammates in Personnel](../../../../../assets/images/app-screenshots/tutorials/basic/project-dashboard.webp)
 
 {% aside type="caution" %}
-The `Cataloger` role cannot be changed after the person is created. Personnel
-records are shared by every project in the installation, so editing Heru's
-record later changes it everywhere.
+You cannot change the `Cataloger` role after creating a person. Personnel
+records are also shared across every project in your NAHPU installation, so
+editing a person's record later updates it everywhere.
 {% /aside %}
 
-Roles such as leader, helper, guide, and boatman describe a person's part in one
-collecting event. You assign them in
-[Basic tutorial 4](/en/tutorials/basic/events/).
+Event-specific roles—such as leader, helper, local guide, and boat operator—are
+assigned per collecting event in [Basic tutorial 4](/en/tutorials/basic/events/).
 
 ## 3. Register the taxa
 
-The paper catalog spells *Maxomys hylomyoides* at least five ways. A
-spreadsheet made from those forms would hold five "species". In NAHPU, a
-specimen's name is chosen from the taxon registry, so it can only be spelled
-the way the registry spells it.
+The paper catalog spells *Maxomys hylomyoides* at least five different ways. A
+spreadsheet typed straight from those sheets would treat them as five separate
+"species". In NAHPU, specimen identifications are chosen from the taxon
+registry, enforcing one consistent spelling across the entire project.
 
-Use the correct names, not the paper spellings:
+Register the corrected names below rather than the paper spellings:
 
 | Paper spelling | Rank | Name to register | Order | Family |
 | --- | --- | --- | --- | --- |
@@ -124,37 +125,40 @@ Use the correct names, not the paper spellings:
 | `Crocidura beccari`, `beccarii` | Species | *Crocidura beccarii* | Eulipotyphla | Soricidae |
 | `Crocidura neglecta` | Species | *Crocidura neglecta* | Eulipotyphla | Soricidae |
 
-All are in the class Mammalia.
+All six belong to the class `Mammalia`.
 
 {% steps %}
 
-1. On the dashboard, find `Taxon registry` and select `Add taxon`.
-2. Stay on `Manual` and choose the `Taxon rank`.
-3. Fill in the name fields, from `Class` down to `Specific epithet`.
-4. Add a common name if you like, such as `Three-striped ground squirrel` for
+1. On the dashboard, open `Taxon registry` and select `Add taxon`.
+2. Keep `Manual` selected and choose the `Taxon rank`.
+3. Fill in the taxonomic fields from `Class` down to `Specific epithet` (leave
+   `Specific epithet` empty for the genus-level *Maxomys* entry).
+4. Optionally add a common name, such as `Three-striped ground squirrel` for
    *Lariscus insignis*.
-5. Repeat for each row, then check that the registry shows six entries.
+5. Repeat for each row, then verify that the registry lists six entries.
 
 {% /steps %}
 
-The genus *Maxomys* is for HH 523, which Heru marked `cf. hylomyoides`: it
-resembles *M. hylomyoides* but he was not sure it is that species. Recording the
-genus keeps the identification at the level the evidence supports. Tutorial 5
-puts the `cf.` note in the specimen's remarks.
+The genus-level *Maxomys* entry is for HH 523, which Heru labeled
+`cf. hylomyoides`—meaning it resembled *M. hylomyoides*, but he was unsure of
+the species. Recording the genus keeps the identification honest to the
+evidence; in [Basic tutorial 5](/en/tutorials/basic/specimens/), you will put
+the `cf.` qualifier in the specimen's remarks.
 
 {% aside type="tip" %}
-For a longer list, prepare a CSV or Excel file and use `Add taxon` > `Import`.
-See [Import a taxon list](/en/how-to-recipes/prepare/import-taxa/).
+For longer species lists, prepare a CSV or Excel file and use
+`Add taxon` > `Import`. See
+[Import a taxon list](/en/how-to-recipes/prepare/import-taxa/).
 {% /aside %}
 
 ## What you gained over paper
 
-- The survey has a name, a description, and a declared time zone, so later
-  readers know what the times mean.
-- Everyone who worked on the survey is on record, including the local guide
-  and the boatman.
-- Each name has one spelling. Correcting a misspelled entry in the registry
-  corrects it for every specimen that uses it.
+- The survey has a clear name, description, and declared time zone, so future
+  readers know what every recorded time means.
+- Everyone who contributed to the survey—including the local guide and
+  boatman—is on record.
+- Every taxon has a single authoritative spelling; fixing a typo in the registry
+  updates every specimen linked to it.
 
 ## Next
 
