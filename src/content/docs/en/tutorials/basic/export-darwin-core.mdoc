@@ -1,11 +1,11 @@
 ---
-title: "Basic tutorial 7: Review and export a Darwin Core Archive"
+title: "Basic tutorial 9: Export a Darwin Core Archive"
 authors:
   - Heru Handika
-lastUpdated: 2026-11-19
+lastUpdated: 2026-11-20
 sidebar:
-  label: "7. Review and export"
-  order: 7
+  label: "9. Export Darwin Core"
+  order: 9
 ---
 
 Darwin Core is the shared standard used by natural history museums and portals
@@ -14,85 +14,10 @@ everything into a spreadsheet and manually fixing spellings, units, dates, and
 missing localities. Because you resolved those issues at entry, NAHPU can build
 the archive directly from your linked records.
 
-In this final tutorial, you will review the seven specimens, explore their
-summary statistics, export a Darwin Core Archive, and inspect the output.
+In this final tutorial, you will export a Darwin Core Archive and inspect the
+output.
 
-## 1. Review before exporting
-
-Check your records against the paper catalog one last time. Tutorials 3–5
-prevented most errors at entry; this pass catches anything left over.
-
-| Check | Where | What to verify |
-| --- | --- | --- |
-| Field IDs | Specimens list | `HH436`, `HH437`, `HH442`, `HH453`, `HH456`, `HH523`, `HH529`, each listed once |
-| Taxon names | Each specimen | One spelling per name; *Maxomys* (genus) only on `HH523` |
-| Localities | Each specimen | Pondok Merah for `HH436–456`; Pasir Putih for `HH523` and `HH529` |
-| Methods | Each specimen | `Pitfall` for `HH453` and `HH529`; `Snap trap` for the rest |
-| Documented decisions | `Remarks` | `HH437`, `HH442`, `HH456`, `HH523`, and `HH529` note what changed and why |
-| Gaps | Sites and events | No coordinates for Pasir Putih; no uncertainty for Pondok Merah; no pitfall count for Line 4 |
-
-Do not "fix" those gaps before exporting—they are honest records of what the
-2014 paper catalog did not capture.
-
-{% aside type="tip" %}
-For a quick spreadsheet view to proofread, use `Export records` with Darwin
-Core headers. See
-[Export tabular records](/en/how-to-recipes/export-and-print/export-tabular-records/).
-{% /aside %}
-
-## 2. Explore the statistics
-
-Before exporting, look at the dataset as a whole. Reviewing record statistics
-is a core NAHPU best practice: it highlights sampling imbalances, tracks how
-consistently specimen parts were collected, and—during active fieldwork—helps
-you prioritize parts when supplies such as tubes or ethanol run low.
-
-On the dashboard, open `Record statistics` and select `Explore more stats`. The
-`Summary` view totals the project:
-
-![NAHPU Record statistics summary on an iPad: 7 specimens, 19 specimen parts, 5 narratives, 7 recorded sites, 6 events, and a taxonomic breakdown of 2 orders, 3 families, 4 genera, and 5 species](../../../../../assets/images/app-screenshots/tutorials/basic/statistics-summary.webp)
-
-### Check for sampling imbalance
-
-Select `Explore` > `Counts` > `Specimens`. Group by `Species`, break down by
-`Sex`, and switch to `Table`:
-
-![NAHPU Explore view on an iPad showing specimens by species and sex as a table](../../../../../assets/images/app-screenshots/tutorials/basic/statistics-species-sex.webp)
-
-Five of the seven specimens are male, and *Maxomys hylomyoides* is the only
-species represented by both sexes. Seven hand-picked records are too small to
-draw conclusions, so treat this as a demonstration. With a full catalog, the
-same table reveals whether a skew reflects trap bias or seasonality and should
-be noted before analysis.
-
-### Check part sampling
-
-Select `Part quantity` and group by `Part type`:
-
-![NAHPU Explore view on an iPad showing part quantity by part type: Liver 6, Whole body 4, Skeleton 3, Skin 3, Skull 3](../../../../../assets/images/app-screenshots/tutorials/basic/statistics-parts.webp)
-
-Six of the seven specimens include a liver sample; the lone exception is
-`HH442`, whose paper form has no tissue circled. In the field, checking this
-table at the end of each day shows whether every specimen received the parts
-your protocol requires and which part types consume the most tubes, ethanol,
-and formalin.
-
-Every table here includes an `Export table` button for reports. See
-[Export statistics](/en/usages/export/export-statistics/).
-
-### Scan records in the Data table
-
-To inspect individual rows, open `Data table` under `Tools` at the bottom of
-the dashboard. Pick a view—`Specimen records`, `Specimen parts`, `Sites`,
-`Events`, or `Narrative`—then sort, search, or filter. Below is the parts table
-for the seven specimens:
-
-![NAHPU Data table on an iPad listing specimen parts with type, count, treatment, cataloger, and field number](../../../../../assets/images/app-screenshots/tutorials/basic/data-table-parts.webp)
-
-The Data table lets you spot gaps—such as a part missing its treatment or a
-specimen missing a tissue—without opening each record one by one.
-
-## 3. Create the archive
+## 1. Create the archive
 
 {% steps %}
 
@@ -109,7 +34,7 @@ specimen missing a tissue—without opening each record one by one.
 
 NAHPU writes `mt-tujuh-2014.dwca.zip`.
 
-## 4. Inspect the archive
+## 2. Inspect the archive
 
 Unzip `mt-tujuh-2014.dwca.zip` to see its structure:
 
@@ -175,7 +100,7 @@ export again.
 
 ## What you accomplished
 
-Across these seven tutorials, you:
+Across these nine tutorials, you:
 
 - audited a real paper catalog and identified its data-quality risks;
 - created a project with personnel records and a standardized taxon registry;
@@ -186,14 +111,18 @@ Across these seven tutorials, you:
   written;
 - reviewed sample balance and part coverage using record statistics and the
   Data table;
+- checked six liver tubes into a freezer box by tissue ID, and the unnumbered
+  tube by field ID;
 - exported a standards-compliant Darwin Core Archive directly from linked
   records.
 
-Young Heru's paper catalog was already more thorough than many: it included
-standard measurements, trap lines, and a field journal. NAHPU does not replace
-that field discipline—it preserves the links between place, time, method,
-people, and specimen parts so none of that context disappears when the notebook
-closes.
+Young Heru was quite thorough. He numbered and measured every specimen,
+recorded trap lines, and kept a field journal. His catalog still had five
+spellings of one species, coordinates without a datum, blank locality headers,
+and a tube with no label. Mistakes like these are common in field data. NAHPU
+does not replace that field discipline—it preserves the links between place,
+time, method, people, and specimen parts so none of that context disappears
+when the notebook closes.
 
 ## Where to go next
 
