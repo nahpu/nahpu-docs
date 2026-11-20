@@ -203,6 +203,10 @@ Use o menu de ações de um campo existente para reordená-lo (`Mover para cima`
   TAR.GZ) ou um arquivo SQLite (`.sqlite3`). O NAHPU mostra uma comparação lado
   a lado antes de sobrescrever e mantém `Fazer backup dos dados atuais primeiro`
   ativado por padrão.
+- `Verificar banco de dados` verifica todos os projetos em busca de problemas
+  que podem interromper exportações ou ocultar registros, e repara os que podem
+  ser corrigidos com segurança. Veja
+  [Verificar banco de dados](#check-database).
 
 {% aside type="caution" %}
 
@@ -213,6 +217,39 @@ configurações de usuário. Consulte
 [Restaurar um banco de dados](../export/#restoring-a-database).
 
 {% /aside %}
+
+### Verificar banco de dados {% #check-database %}
+
+`Verificar banco de dados` verifica todo o banco de dados, incluindo todos os
+projetos, ao abrir a página. Erros interrompem exportações de projetos e
+pacotes de dados; avisos não.
+
+| Problema | O que significa | Correção |
+| --- | --- | --- |
+| Arquivo de banco de dados danificado | O SQLite encontrou danos no próprio arquivo do banco de dados | Restaurar um backup com `Substituir banco de dados` |
+| Links quebrados | Um registro aponta para um registro que não existe mais | `Limpar o link`, ou `Excluir este registro` quando o registro só pertencia ao registro ausente |
+| Links para outros projetos | Um espécime ou evento aponta para um evento ou local de outro projeto | `Limpar o link` |
+| Arquivos de mídia ausentes | Um registro de mídia não tem arquivo neste dispositivo | `Excluir o registro de mídia` |
+| Fotos de pessoal ausentes | Uma foto de pessoal não está mais neste dispositivo | `Remover a foto` |
+| Registros de medidas ausentes | Um espécime não tem registro de medidas para o seu grupo taxonômico | `Adicionar um registro vazio` |
+| Conflitos de número de campo | Um espécime tem um número de campo pessoal e um número de campo do projeto | Corrigir manualmente |
+| Números de campo duplicados | Vários espécimes compartilham um número de campo | Corrigir manualmente |
+
+O botão de abrir ao lado de cada problema mostra os registros afetados na
+tabela de dados, de todos os projetos. Selecione as correções uma a uma ou com
+`Selecionar todas as correções`, e depois selecione o botão `Corrigir`. A
+opção `Fazer backup do banco de dados primeiro` fica ativada por padrão e salva
+uma cópia do banco de dados na pasta de backup do NAHPU, onde
+`Substituir banco de dados` pode restaurá-la. Os arquivos de mídia não fazem
+parte desta cópia porque nenhuma correção exclui arquivos.
+
+Um registro que perdeu o seu projeto não tem correção automática, porque limpar
+o projeto ocultaria o registro em todos os projetos. O NAHPU recusa uma
+correção, sem alterar nada, quando outros registros ainda dependem do registro
+que a correção alteraria.
+
+Quando uma exportação falha, a mensagem de falha mostra o botão
+`Verificar banco de dados`.
 
 ## Exportações {% #exports %}
 

@@ -36,9 +36,9 @@ Deskripsi itulah yang menangkap koordinat yang salah belahan bumi atau tertukar 
 
 ### Selalu catat datum
 
-**Datum yang tidak dicatat atau keliru adalah salah satu sumber galat posisi terbesar.** Pergeseran antara yang tercatat pada sebagian peta dan WGS84 berkisar dari nol hingga 5359 m: galat berskala kilometer yang muncul hanya karena satu kolom dibiarkan pada nilai bawaannya.
+**Datum yang tidak dicatat atau keliru adalah salah satu sumber galat posisi terbesar.** Pergeseran antara yang tercatat pada sebagian peta dan WGS84 berkisar dari nol hingga 5359 m: galat berskala kilometer yang muncul hanya karena satu kolom dibiarkan pada nilai default-nya.
 
-Kolom `Datum` NAHPU berisi WGS84 secara bawaan dan diekspor sebagai `dwc:geodeticDatum`. **Periksa setelan datum pada unit GPS itu sendiri**, jangan menganggapnya sudah cocok. Mengubah kolom `Datum` tidak mengonversi koordinat yang direkam dalam datum lain, begitu pula peralihan antarformat masukan yang diterima. Konversikan data semacam itu dengan perkakas geospasial sebelum diimpor, dan catat konversinya pada catatan.
+Kolom `Datum` NAHPU berisi WGS84 secara default dan diekspor sebagai `dwc:geodeticDatum`. **Periksa setelan datum pada unit GPS itu sendiri**, jangan menganggapnya sudah cocok. Mengubah kolom `Datum` tidak mengonversi koordinat yang direkam dalam datum lain, begitu pula peralihan antarformat masukan yang diterima. Konversikan data semacam itu dengan perkakas geospasial sebelum diimpor, dan catat konversinya pada catatan.
 
 ### Pertahankan semua desimal dari sumbernya
 
@@ -69,7 +69,7 @@ Ponsel kelas atas beberapa tahun terakhir merekam koordinat dengan ketepatan yan
 Dua aturan yang bisa langsung diterapkan:
 
 - **Masukkan sekurang-kurangnya dua kali lipat ketepatan yang dilaporkan GPS** pada saat pengambilan.
-- **Bila ketepatannya tidak diketahui, gunakan 30 m**, nilai bawaan yang konservatif untuk pembacaan alat genggam setelah Mei 2000, saat Selective Availability dihentikan.
+- **Bila ketepatannya tidak diketahui, gunakan 30 m**, nilai default yang konservatif untuk pembacaan alat genggam setelah Mei 2000, saat Selective Availability dihentikan.
 
 Alasan memperlebar angka perangkat adalah bahwa ketepatan yang dilaporkan mengandaikan kondisi yang jarang Anda dapatkan di bawah tegakan hutan. **Merata-ratakan beberapa pembacaan pada satu posisi** membawa penerima modern ke sekitar 3 m atau lebih baik, sepadan dengan beberapa menit di lokasi yang akan Anda kutip selama puluhan tahun.
 

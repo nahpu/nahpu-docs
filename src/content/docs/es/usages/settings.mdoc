@@ -204,6 +204,10 @@ Use el menú de acciones de un campo existente para reordenarlo (`Subir` /
   TAR.GZ) o un archivo SQLite (`.sqlite3`). NAHPU muestra una comparación lado
   a lado antes de sobrescribir y mantiene activada de forma predeterminada la
   opción `Respaldar primero los datos actuales`.
+- `Revisar la base de datos` revisa todos los proyectos en busca de problemas
+  que pueden detener las exportaciones u ocultar registros, y repara los que se
+  pueden corregir de forma segura. Consulte
+  [Revisar la base de datos](#check-database).
 
 {% aside type="caution" %}
 
@@ -214,6 +218,40 @@ importar configuraciones de usuario. Consulte
 [Restaurar una base de datos](../export/#restoring-a-database).
 
 {% /aside %}
+
+### Revisar la base de datos {% #check-database %}
+
+`Revisar la base de datos` revisa toda la base de datos, incluidos todos los
+proyectos, al abrir la página. Los errores detienen las exportaciones de
+proyectos y los paquetes de datos; las advertencias no.
+
+| Problema | Qué significa | Corrección |
+| --- | --- | --- |
+| Archivo de base de datos dañado | SQLite encontró daños en el propio archivo de la base de datos | Restaurar una copia con `Reemplazar base de datos` |
+| Enlaces rotos | Un registro apunta a un registro que ya no existe | `Borrar el enlace`, o `Eliminar este registro` cuando el registro solo pertenecía al registro faltante |
+| Enlaces a otros proyectos | Un espécimen o evento apunta a un evento o sitio de otro proyecto | `Borrar el enlace` |
+| Archivos multimedia faltantes | Un registro multimedia no tiene archivo en este dispositivo | `Eliminar el registro multimedia` |
+| Fotos de personal faltantes | Una foto de personal ya no está en este dispositivo | `Quitar la foto` |
+| Registros de medidas faltantes | Un espécimen no tiene registro de medidas para su grupo taxonómico | `Agregar un registro vacío` |
+| Conflictos de número de campo | Un espécimen tiene un número de campo personal y uno de proyecto | Corregir manualmente |
+| Números de campo duplicados | Varios especímenes comparten un número de campo | Corregir manualmente |
+
+El botón de apertura junto a cada problema muestra los registros afectados en
+la tabla de datos, de todos los proyectos. Seleccione las correcciones una por
+una o con `Seleccionar todas las correcciones`, y luego seleccione el botón
+`Corregir`. La opción `Hacer primero una copia de la base de datos` está
+activada de forma predeterminada y guarda una copia de la base de datos en la
+carpeta de copias de seguridad de NAHPU, donde `Reemplazar base de datos`
+permite restaurarla. Los archivos multimedia no forman parte de esta copia
+porque ninguna corrección elimina archivos.
+
+Un registro que perdió su proyecto no tiene corrección automática, porque
+borrar el proyecto ocultaría el registro en todos los proyectos. NAHPU rechaza
+una corrección, sin cambiar nada, cuando otros registros todavía dependen del
+registro que la corrección modificaría.
+
+Cuando una exportación falla, el mensaje de error muestra el botón
+`Revisar la base de datos`.
 
 ## Exportaciones {% #exports %}
 

@@ -183,6 +183,9 @@ Use the actions menu on an existing field to reorder it (`Move up` /
 - `Replace database` restores a NAHPU backup archive (ZIP or TAR.GZ) or SQLite
   file (`.sqlite3`). NAHPU shows a side-by-side comparison before overwriting
   and leaves `Back up current data first` turned on by default.
+- `Check database` scans every project for problems that can stop exports or
+  hide records, and repairs the safe ones. See
+  [Check database](#check-database).
 
 {% aside type="caution" %}
 
@@ -192,6 +195,37 @@ installation and is different from merging a project or importing user configs.
 See [Restoring a database](../export/#restoring-a-database).
 
 {% /aside %}
+
+### Check database {% #check-database %}
+
+`Check database` scans the whole database, every project included, when the
+page opens. Errors stop project exports and data packages; warnings do not.
+
+| Problem | What it means | Fix |
+| --- | --- | --- |
+| Damaged database file | SQLite found damage in the database file itself | Restore a backup with `Replace database` |
+| Broken links | A record points to a record that no longer exists | `Clear the link`, or `Delete this record` when the record only belonged to the missing record |
+| Links to other projects | A specimen or event points to an event or site in another project | `Clear the link` |
+| Missing media files | A media record has no file on this device | `Delete the media record` |
+| Missing personnel photos | A personnel photo is no longer on this device | `Remove the photo` |
+| Missing measurement records | A specimen has no measurement record for its taxon group | `Add an empty record` |
+| Field number conflicts | A specimen has both a personnel field number and a project field number | Fix by hand |
+| Duplicate field numbers | Several specimens share a field number | Fix by hand |
+
+The open button beside each problem shows the affected records in the data
+table, across all projects. You can select fixes one at a time or with
+`Select all fixes`, then select `Fix N selected`. The
+`Back up the database first` option is turned on by default and saves a copy
+of the database to the NAHPU backup folder, where `Replace database` can
+restore the copy. Media files are not part of the copy because no fix deletes
+files.
+
+A record that lost its project has no automatic fix, because clearing the
+project would hide the record from every project. NAHPU refuses a fix, and
+changes nothing, when other records still depend on the record that the fix
+would change.
+
+When an export fails, the failure message offers a `Check database` button.
 
 ## Exports {% #exports %}
 

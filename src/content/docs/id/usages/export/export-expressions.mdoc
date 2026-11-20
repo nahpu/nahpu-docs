@@ -7,27 +7,27 @@ sidebar:
 
 {% screenshots
    large="app-screenshots/usage/expressions-large.webp"
-   largeAlt="Layar Penyunting Templat NAHPU di tablet"
+   largeAlt="Layar Penyunting Template NAHPU di tablet"
    large2="app-screenshots/usage/expressions-large-2.webp"
-   large2Alt="Layar Templat dokumen NAHPU di tablet"
+   large2Alt="Layar Template dokumen NAHPU di tablet"
    small="app-screenshots/usage/expressions-small.webp"
-   smallAlt="Layar Penyunting Templat NAHPU di ponsel"
+   smallAlt="Layar Penyunting Template NAHPU di ponsel"
    small2="app-screenshots/usage/expressions-small-2.webp"
-   small2Alt="Layar Templat dokumen NAHPU di ponsel" %}
-{% pin id="A" label="Templat bawaan" large=[22.2, 12.3] small=[13.5, 10.5] /%}
+   small2Alt="Layar Template dokumen NAHPU di ponsel" %}
+{% pin id="A" label="Template default" large=[22.2, 12.3] small=[13.5, 10.5] /%}
 {% pin id="B" label="Tambah teks" large=[29, 18.9] small=[14.8, 19.7] /%}
 {% pin id="C" label="Ekspresi yang dirender" large=[44.5, 54.7] small=[44, 55.9] /%}
-{% pin id="D" label="Pengaturan templat" large=[93, 18.9] small=[96.5, 16.4] /%}
-{% pin id="E" label="Daftar templat" large2=[93, 40.3] small2=[94, 48.2] /%}
+{% pin id="D" label="Pengaturan template" large=[93, 18.9] small=[96.5, 16.4] /%}
+{% pin id="E" label="Daftar template" large2=[93, 40.3] small2=[94, 48.2] /%}
 {% /screenshots %}
 
 **Ekspresi ekspor** memberi tahu NAHPU bidang catatan mana yang ditulis, teks
 tetap apa yang mengapitnya, dan cara menangani nilai kosong atau bersyarat.
 Ekspresi bekerja di dua tempat:
 
-- elemen teks dalam [templat dokumen](../export-documents), seperti label
+- elemen teks dalam [template dokumen](../export-documents), seperti label
   spesimen;
-- kolom bidang kustom dalam [prasetel ekspor tabel](../export-records).
+- kolom bidang kustom dalam [setelan awal ekspor tabel](../export-records).
 
 Ekspresi yang sama menghasilkan keluaran yang sama di keduanya. Misalnya,
 `[taxonomy::genus] [taxonomy::specificEpithet]` {% ref id="C" /%} mencetak
@@ -51,11 +51,11 @@ menghasilkan `Field no. 156`. Tiga tambahan menangani sebagian besar kebutuhan:
 | `[[if]…]]` | Menulis teks hanya saat syarat terpenuhi | `[[if][coordinate::elevationInMeter!=""]=>"m"]]` | `m` hanya jika elevasi tercatat |
 
 Anda jarang perlu mengetik kunci secara manual: gunakan `Sisipkan bidang` di
-penyunting templat atau tombol tambah bidang pada bidang kustom.
+penyunting template atau tombol tambah bidang pada bidang kustom.
 
 ## Ekspresi umum {% #common-expressions %}
 
-Salin contoh ini ke elemen teks templat dokumen atau ke kolom prasetel tabel
+Salin contoh ini ke elemen teks template dokumen atau ke kolom setelan awal tabel
 sesuai catatan. Semuanya memakai bidang spesimen.
 
 ### Nama spesies {% #species-name %}
@@ -72,7 +72,7 @@ genus, tambahkan pengganti agar terbaca `Rattus sp.`:
 ```
 
 Untuk nama ilmiah lengkap beserta subspesies, gunakan
-`[specimen::scientificName]`. Pada prasetel tabel, letakkan ekspresi di kolom
+`[specimen::scientificName]`. Pada setelan awal tabel, letakkan ekspresi di kolom
 bidang kustom.
 
 ### Lokalitas lengkap {% #full-locality %}
@@ -87,8 +87,8 @@ kosong sehingga tidak muncul koma ganda:
 Setiap `|` memisahkan bagian; pemisah yang benar-benar tercetak ditentukan oleh
 pengaturan daftar:
 
-- **Templat dokumen:** atur jenis teks ke daftar nilai dan pilih format koma.
-- **Prasetel ekspor tabel:** atur jenis pemetaan ke bidang daftar, keluaran
+- **Template dokumen:** atur jenis teks ke daftar nilai dan pilih format koma.
+- **Setelan awal ekspor tabel:** atur jenis pemetaan ke bidang daftar, keluaran
   satu kolom, dan pemisah koma. Tempel ekspresi ke ekspresi sumber mentah di
   `Lanjutan` lalu isi nama kolom (wajib untuk tajuk Darwin Core dan ruang nama
   NAHPU).
@@ -115,7 +115,7 @@ selain itu tidak mencetak apa-apa:
 
 `"0"` adalah kode tersimpan untuk skrotal. Tambahkan ` mm` di dalam tanda kutip
 untuk satuan, atau `|"not scrotal"` sebelum `]]` untuk alternatif saat tidak
-cocok. Lihat [Teks bersyarat](#conditional-text). Di prasetel tabel, gunakan
+cocok. Lihat [Teks bersyarat](#conditional-text). Di setelan awal tabel, gunakan
 kolom bidang kustom.
 
 ### Label bidang berkode {% #encoded-labels %}
@@ -184,8 +184,8 @@ elemen teksnya:
 ## Bidang kustom {% #custom-fields %}
 
 Bidang kustom memadukan penanda dengan teks tetap, atau berisi teks tetap saja.
-Di templat dokumen, setiap elemen teks bekerja demikian (`Sisipkan bidang`
-ditambah teks biasa). Di prasetel ekspor tabel, pilih `Tambah bidang kustom`
+Di template dokumen, setiap elemen teks bekerja demikian (`Sisipkan bidang`
+ditambah teks biasa). Di setelan awal ekspor tabel, pilih `Tambah bidang kustom`
 atau ubah jenis pemetaan kolom menjadi bidang kustom.
 
 Editor membangun ekspresi segmen demi segmen:
@@ -225,8 +225,8 @@ tunggal atau bidang daftar.
 ## Keluaran bersyarat {% #conditional-output %}
 
 Ekspresi bersyarat memeriksa satu atau beberapa bidang sebelum menentukan apa
-yang ditulis. Di penyunting templat, gunakan `Keluaran bersyarat` pada bilah
-alat teks. Di prasetel tabel, pilih format nilai bersyarat pada kolom bidang
+yang ditulis. Di penyunting template, gunakan `Keluaran bersyarat` pada bilah
+alat teks. Di setelan awal tabel, pilih format nilai bersyarat pada kolom bidang
 tunggal (bidangnya sendiri menjadi target).
 
 ### Memilih jenis
@@ -381,8 +381,8 @@ sah):
 
 ## Jenis teks dan formatnya {% #text-types-and-their-formats %}
 
-Pada templat dokumen, jenis teks dan `Format` mengatur tampilan nilai. Kolom
-bidang tunggal pada prasetel tabel menawarkan format yang sama.
+Pada template dokumen, jenis teks dan `Format` mengatur tampilan nilai. Kolom
+bidang tunggal pada setelan awal tabel menawarkan format yang sama.
 
 | Jenis teks | Opsi format |
 | --- | --- |
@@ -397,14 +397,14 @@ bidang tunggal pada prasetel tabel menawarkan format yang sama.
 | Waktu | `24h`, `24h detik`, `12h`, `12h dengan nol` |
 | Jenis kelamin | Format dan nilai kosong, dijelaskan di bawah |
 | Angka | Asli, atau 0, 1, 2, atau 3 angka desimal |
-| Teks berkode | Pemetaan bawaan atau pemetaan kustom |
+| Teks berkode | Pemetaan default atau pemetaan kustom |
 
 Daftar bersarang digunakan untuk catatan terkait (bagian spesimen, personel,
 metode koleksi) dan paling sering membutuhkan ukuran dinamis.
 
 ### Teks berkode: bidang yang diterjemahkan
 
-Beberapa bidang menyimpan kode numerik. Pemetaan bawaan dicocokkan pada akhiran
+Beberapa bidang menyimpan kode numerik. Pemetaan default dicocokkan pada akhiran
 kunci bidang (jadi `mammalAttribute::testisPosition` dan `testisPosition`
 sama-sama diterjemahkan):
 
@@ -439,13 +439,13 @@ atau huruf jenis kelamin gunakan jenis teks jenis kelamin; untuk ikon gunakan
 
 Penanda tetap sama; jenis teks berkode atau `#label` menerjemahkannya:
 
-- **Templat dokumen:** atur jenis teks ke teks berkode; setiap penanda di
+- **Template dokumen:** atur jenis teks ke teks berkode; setiap penanda di
   elemen diterjemahkan menurut bidang masing-masing:
   ```text
   Testes: [mammalAttribute::testisPosition]
   [mammalAttribute::age], [mammalAttribute::testisPosition]
   ```
-- **Prasetel ekspor tabel:** pilih format teks berkode pada kolom bidang
+- **Setelan awal ekspor tabel:** pilih format teks berkode pada kolom bidang
   tunggal, atau tambahkan `#label` (atau aktifkan tampilkan label) pada bidang
   kustom:
   ```text
@@ -454,8 +454,8 @@ Penanda tetap sama; jenis teks berkode atau `#label` menerjemahkannya:
 - **Sebaris dengan `#label`:** menerjemahkan satu penanda di jenis teks apa
   pun. Letakkan `#label` sebelum pengganti `??`:
   `[mammalAttribute::sex#label??Unknown]`.
-- **Label buatan sendiri:** di penyunting templat pilih pemetaan kustom lalu
-  petakan nilai (dimulai dari label bawaan). Di prasetel tabel, tulis
+- **Label buatan sendiri:** di penyunting template pilih pemetaan kustom lalu
+  petakan nilai (dimulai dari label default). Di setelan awal tabel, tulis
   `custom_map:` di opsi format mentah bawah `Lanjutan`:
   ```text
   custom_map:0=Scrotal,1=Abdominal
@@ -490,12 +490,12 @@ Penentuan yang belum pasti mempertahankan tanda tanya di semua format:
 | Kondisi tidak pernah cocok | Kondisi membandingkan kode tersimpan, peka huruf besar/kecil, dan bidang kosong hanya cocok dengan `==""`. |
 | Teks bersyarat tidak mencetak apa-apa | Tanpa cabang `\|`, tidak ada teks saat syarat gagal. Pastikan `if` huruf kecil. |
 
-## Opsi editor templat {% #template-editor-options %}
+## Opsi editor template {% #template-editor-options %}
 
-Opsi berikut hanya berlaku untuk penyunting templat dokumen {% ref id="E" /%};
-prasetel ekspor tabel tidak memakainya.
+Opsi berikut hanya berlaku untuk penyunting template dokumen {% ref id="E" /%};
+setelan awal ekspor tabel tidak memakainya.
 
-Ukuran pada kanvas memakai milimeter (`mm`). Ketebalan garis, ukuran fon, dan
+Ukuran pada kanvas memakai milimeter (`mm`). Ketebalan garis, ukuran font, dan
 bantalan memakai poin PDF (`pt`, 1 pt = 1/72 inci). Warna disimpan sebagai
 `0xAARRGGBB` dan dipilih lewat pemilih warna.
 
@@ -507,15 +507,15 @@ bantalan memakai poin PDF (`pt`, 1 pt = 1/72 inci). Warna disimpan sebagai
 | Tambah gambar | Menempatkan gambar statis dari perangkat. |
 | Tambah garis | Menempatkan garis lurus. |
 | Tambah bentuk | Menempatkan persegi panjang, elips, lingkaran, segitiga, atau poligon. |
-| `Simpan templat` | Menyimpan templat (`Simpan sebagai…` untuk variasi). |
+| `Simpan template` | Menyimpan template (`Simpan sebagai…` untuk variasi). |
 | Urungkan / Ulangi | Menelusuri riwayat suntingan. |
-| Batas templat | Mengatur bingkai luar templat. |
+| Batas template | Mengatur bingkai luar template. |
 | Tampilkan / sembunyikan kisi | Mengaktifkan atau mematikan kisi perataan. |
 | Aktifkan / nonaktifkan tempel | Mengaktifkan tempel ke kisi dan elemen lain. |
 | Kunci kanvas | Mengunci geseran kanvas saat menyeret. |
 | Pilih spesimen pratinjau | Memilih catatan contoh pengisi penanda saat merancang. |
-| `Pengaturan templat` {% ref id="D" /%} | Nama, deskripsi, jumlah sisi, dan ukuran templat. |
-| `Templat bawaan` {% ref id="A" /%} | Memuat templat awal bawaan. |
+| `Pengaturan template` {% ref id="D" /%} | Nama, deskripsi, jumlah sisi, dan ukuran template. |
+| `Template default` {% ref id="A" /%} | Memuat template awal default. |
 | Perbesar / Perkecil | Menskalakan tampilan kanvas saja (tidak mengubah ukuran PDF). |
 | `1 sisi` / Depan / Belakang | Mengubah mode sisi dan sisi yang sedang disunting. |
 | Cermin | Mencerminkan sisi untuk label lipat. |
@@ -533,14 +533,14 @@ bantalan memakai poin PDF (`pt`, 1 pt = 1/72 inci). Warna disimpan sebagai
 | `Keluaran bersyarat` | Kurung, bidang, nilai, teks | Menulis ekspresi `[[ … ]]` atau `[[if] … ]]`. |
 | Cari dan ganti | — | Menyunting teks elemen. |
 | Aturan penggantian | Pola, pengganti, jenis kecocokan, huruf besar/kecil | Menulis ulang nilai setelah format. |
-| Petakan nilai berkode | Pemetaan bawaan atau kustom | Menerjemahkan kode ke label pada teks berkode. |
+| Petakan nilai berkode | Pemetaan default atau kustom | Menerjemahkan kode ke label pada teks berkode. |
 
 #### Tipografi dan gaya
 
 | Opsi | Nilai |
 | --- | --- |
-| Fon | Fon bawaan dan terpasang (fon belum terpasang ditandai `(not installed)`) |
-| Ukuran fon | Poin, dengan tombol tambah dan kurang |
+| Font | Font default dan terpasang (font belum terpasang ditandai `(not installed)`) |
+| Ukuran font | Poin, dengan tombol tambah dan kurang |
 | Tebal, miring, garis bawah, coret | Aktif atau nonaktif |
 | Perataan | Rata kiri, tengah, kanan |
 | Kapitalisasi | Normal, huruf besar, huruf kecil, kapital |
@@ -550,7 +550,7 @@ bantalan memakai poin PDF (`pt`, 1 pt = 1/72 inci). Warna disimpan sebagai
 
 | Opsi | Nilai | Catatan |
 | --- | --- | --- |
-| Posisi | X dan Y dalam `mm` | Diukur dari sudut kiri atas templat. |
+| Posisi | X dan Y dalam `mm` | Diukur dari sudut kiri atas template. |
 | Lebar maks | `mm` | Membungkus teks pada lebar ini (kosong = tanpa bungkus). |
 | Tinggi | `mm` | Membatasi tinggi kotak teks. |
 | Bantalan | `pt` | Ruang dalam kotak di sekitar teks. |
@@ -599,21 +599,21 @@ catatan:
 | Bentuk | Jenis (`rect`, `ellipse`, `circle`, `triangle`, `polygon` dengan jumlah sisi), posisi, lebar, tinggi, rotasi, ketebalan/warna/gaya garis, warna isi atau hapus isi, susunan lapis, kunci, visibilitas |
 
 Gaya garis adalah `solid`, `dashed`, `dotted`, dan `double`. Elemen gambar
-menyimpan jalur berkas, bukan salinan gambarnya; templat yang dipindahkan ke
+menyimpan jalur berkas, bukan salinan gambarnya; template yang dipindahkan ke
 perangkat lain akan meminta gambarnya lagi di sana.
 
-### Opsi templat
+### Opsi template
 
 | Opsi | Nilai | Catatan |
 | --- | --- | --- |
-| Nama templat | Teks | Harus unik; mengganti nama memperbarui semua tata letak cetak yang merujuknya. |
+| Nama template | Teks | Harus unik; mengganti nama memperbarui semua tata letak cetak yang merujuknya. |
 | Deskripsi | Teks (maksimal 80 karakter) | Opsional. |
 | Jenis catatan | `Spesimen`, `Bagian spesimen`, `Simbion`, `Lokasi`, `Peristiwa koleksi`, `Narasi`, `Tanpa catatan` | Menentukan bidang dan catatan yang tersedia. |
 | Jumlah sisi | `1 sisi` atau `2 sisi` | Mode 1 sisi menjaga desain Belakang tersimpan tanpa mencetaknya. |
 | Lebar, tinggi | `mm` | Ukuran satu blok, bukan lembar kertas. |
-| Batas templat | `solid`, `dashed`, `dotted`, `double line`; tebal (`pt`); warna | — |
+| Batas template | `solid`, `dashed`, `dotted`, `double line`; tebal (`pt`); warna | — |
 
-Opsi cetak yang disimpan pada templat mencakup dupleks, cermin depan/belakang,
-ukuran halaman, baris/kolom, margin halaman, dan bantalan dokumen. Prasetel
+Opsi cetak yang disimpan pada template mencakup dupleks, cermin depan/belakang,
+ukuran halaman, baris/kolom, margin halaman, dan bantalan dokumen. Setelan awal
 tata letak cetak menggantikan nilai tersebut pada PDF akhir; lihat
 [Membuat preset tata letak cetak](../export-documents#create-a-print-layout-preset).

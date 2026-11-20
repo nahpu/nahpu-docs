@@ -11,8 +11,8 @@ sidebar:
    smallAlt="Layar Ekspor catatan NAHPU di ponsel"
    small2="app-screenshots/usage/records-small-2.webp"
    small2Alt="Layar Pratinjau Ekspor catatan NAHPU di ponsel" %}
-{% pin id="A" label="Prasetel ekspor" large=[47.2, 33.7] small=[30.5, 41.2] /%}
-{% pin id="B" label="Kelola prasetel" large=[34, 43.1] small=[56, 51.5] /%}
+{% pin id="A" label="Setelan awal ekspor" large=[47.2, 33.7] small=[30.5, 41.2] /%}
+{% pin id="B" label="Kelola setelan awal" large=[34, 43.1] small=[56, 51.5] /%}
 {% pin id="C" label="Format berkas" large=[47.2, 59.5] small=[28.1, 65.4] /%}
 {% pin id="D" label="Pratinjau tabel" large=[83, 83.5] small2=[69, 81.7] /%}
 {% pin id="E" label="Ekspor catatan" large=[57.5, 93.2] small=[69.8, 92.3] /%}
@@ -21,7 +21,7 @@ sidebar:
 {% /screenshots %}
 
 Gunakan `Ekspor catatan` untuk menyimpan catatan proyek aktif sebagai berkas
-CSV, TSV, Excel, atau JSON. Prasetel ekspor tabel yang tersimpan menentukan
+CSV, TSV, Excel, atau JSON. Setelan awal ekspor tabel yang tersimpan menentukan
 catatan mana yang menjadi baris, kolom apa saja yang disertakan, dan bagaimana
 nama tajuknya.
 
@@ -30,9 +30,9 @@ nama tajuknya.
 {% steps %}
 
 1. Buka menu dasbor proyek lalu pilih `Ekspor catatan`.
-2. Pilih `Prasetel ekspor` {% ref id="A" /%}. Untuk membuat atau mengubah
-   prasetel, pilih `Kelola prasetel` {% ref id="B" /%}.
-3. Periksa ringkasan prasetel (jenis catatan, format tajuk, dan kolom) lalu
+2. Pilih `Setelan awal ekspor` {% ref id="A" /%}. Untuk membuat atau mengubah
+   setelan awal, pilih `Kelola setelan awal` {% ref id="B" /%}.
+3. Periksa ringkasan setelan awal (jenis catatan, format tajuk, dan kolom) lalu
    pilih `Pratinjau tabel` {% ref id="D" /%} untuk melihat baris data nyata. Di
    ponsel, buka tab `Pratinjau` {% ref id="F" /%}.
 4. Pilih format berkas {% ref id="C" /%} dan isi nama berkas. Aktifkan
@@ -47,8 +47,8 @@ nama tajuknya.
 
 ## Penjelasan {% #deep-dive %}
 
-Prasetel ekspor tabel adalah resep yang dapat dipakai ulang untuk satu tabel.
-Prasetel menentukan tiga hal:
+Setelan awal ekspor tabel adalah resep yang dapat dipakai ulang untuk satu tabel.
+Setelan awal menentukan tiga hal:
 
 - **Baris:** jenis catatan dan, untuk spesimen, kelompok takson spesimen
   (`Semua takson`, `Mamalia`—termasuk kelelawar, `Burung`, `Herpetofauna`,
@@ -57,10 +57,10 @@ Prasetel menentukan tiga hal:
 - **Tajuk:** diatur melalui format tajuk otomatis atau penamaan manual tiap
   kolom.
 
-Ubah prasetel di `Pengaturan` > `Data tabular`, bukan di layar ekspor.
-Perubahan bidang dan format tersimpan langsung; nama prasetel dan deskripsi
+Ubah setelan awal di `Pengaturan` > `Data tabular`, bukan di layar ekspor.
+Perubahan bidang dan format tersimpan langsung; nama setelan awal dan deskripsi
 opsional (maksimal 80 karakter, tampil di bawah nama pada daftar) tersimpan
-saat Anda memilih perbarui. Gunakan duplikasi untuk membuat prasetel baru dari
+saat Anda memilih perbarui. Gunakan duplikasi untuk membuat setelan awal baru dari
 yang sudah ada.
 
 ### Arti setiap baris
@@ -118,7 +118,7 @@ daftar dan catatan bersarang mengatur cara penulisan nilai berulang:
 | --- | --- |
 | Satu kolom | Semua nilai dalam satu sel, dipisahkan pemisah pilihan Anda. |
 | Kolom berindeks | Satu kolom (atau grup kolom) per nilai, seperti `prep_1_type`, `prep_2_type`, … Jumlah kolom mengikuti catatan dengan nilai terbanyak. |
-| Baris berulang | Khusus catatan bersarang: satu baris per nilai dengan mengulang catatan induk. Maksimal satu kolom per prasetel. |
+| Baris berulang | Khusus catatan bersarang: satu baris per nilai dengan mengulang catatan induk. Maksimal satu kolom per setelan awal. |
 
 Pada kolom berindeks atau baris berulang, setiap bidang anak dapat diberi nama
 kolom sendiri. Tulis `{n}` di posisi nomor urut: `PrepType{n}Count` menjadi
@@ -162,7 +162,7 @@ ekspresinya kosong agar urutan kolom tetap sejajar.
 ### Bidang pengamatan tambahan
 
 Bidang kustom yang dibuat di `Pengaturan` (seperti pengamatan lingkungan)
-diekspor seperti bidang bawaan dengan kunci seperti
+diekspor seperti bidang default dengan kunci seperti
 `customEnvironment::<UUID definisi>`. Ekspor peristiwa dan spesimen menyertakan
 nilai tersimpan meskipun bidang disembunyikan di formulir; menyembunyikan
 bidang tidak mengecualikannya dari ekspor.
@@ -179,7 +179,7 @@ Selalu periksa berkas hasil di aplikasi tujuan—lembar kerja dapat menghapus
 angka nol di awal ID atau menafsirkan ulang tanggal secara otomatis.
 
 [Tutorial Mamalogi LSUMZ](/id/tutorials/export/specify-export-preset/)
-menunjukkan pembuatan prasetel lengkap untuk basis data museum menggunakan
+menunjukkan pembuatan setelan awal lengkap untuk basis data museum menggunakan
 sebagian besar opsi di halaman ini.
 
 ## Transfer dan pemulihan
@@ -194,5 +194,5 @@ sebagai proyek. Untuk memindahkan atau memulihkan data di NAHPU, gunakan:
 - [cadangan basis data](/id/usages/export/#backup-database) untuk memulihkan
   seluruh instalasi.
 
-Untuk membagikan satu prasetel ke tim Anda, lihat
-[Membuat prasetel ekspor tabular](/id/how-to-recipes/export-and-print/create-export-preset/).
+Untuk membagikan satu setelan awal ke tim Anda, lihat
+[Membuat setelan awal ekspor tabular](/id/how-to-recipes/export-and-print/create-export-preset/).

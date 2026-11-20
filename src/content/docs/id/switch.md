@@ -34,7 +34,7 @@ Anda dalam entri data, pencadangan, dan ekspor sebagian besar tetap berlaku.
 | Standar | Beragam, bergantung pada implementasinya | Kepatuhan pada Darwin Core dan prinsip FAIR merupakan tujuan proyek ini |
 | Keterbukaan | Bisa bersifat proprietary, dengan format proprietary | Sumber terbuka, pustaka terbuka, ekspor CSV dan JSON, serta basis data SQLite biasa yang dapat Anda buka sendiri |
 | Perangkat | Dukungan perangkat bergantung pada implementasinya | Ponsel, tablet, laptop, dan desktop, dengan aksesibilitas Flutter dan Material Design |
-| Statistik | Laporan ringkasan harus dirancang dan dipelihara sebagai bagian dari implementasinya | Tersedia bawaan: ringkasan spesies, famili, dan preservasi per proyek dan lokasi, dapat diekspor ke lembar kerja |
+| Statistik | Laporan ringkasan harus dirancang dan dipelihara sebagai bagian dari implementasinya | Tersedia default: ringkasan spesies, famili, dan preservasi per proyek dan lokasi, dapat diekspor ke lembar kerja |
 
 ## Merencanakan transisi
 
