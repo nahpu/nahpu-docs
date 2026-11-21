@@ -30,17 +30,20 @@ const fraction = (index: number) => ((index + 1) / steps.length).toFixed(3);
           <span class="ramp__week">
             {weekLabel} {step.week}
           </span>
-          <button
-            type="button"
-            class="ramp__bar"
-            style={`--f: ${fraction(index)}`}
-            aria-pressed={String(index === 0)}
-            aria-controls={detailId}
-            data-title={step.title}
-            data-detail={step.detail}
-          >
-            <span class="ramp__pill">{step.title}</span>
-          </button>
+          <div class="ramp__track">
+            <button
+              type="button"
+              class="ramp__bar"
+              style={`--f: ${fraction(index)}`}
+              aria-pressed={String(index === 0)}
+              aria-controls={detailId}
+              data-week={`${weekLabel} ${step.week}`}
+              data-title={step.title}
+              data-detail={step.detail}
+            >
+              <span class="ramp__pill">{step.title}</span>
+            </button>
+          </div>
         </li>
       ))
     }
@@ -49,8 +52,11 @@ const fraction = (index: number) => ((index + 1) / steps.length).toFixed(3);
     {
       steps[0] && (
         <>
-          <strong>{steps[0].title}</strong>
-          {steps[0].detail}
+          <div class="ramp__detail-head">
+            <span class="ramp__detail-week">{weekLabel} {steps[0].week}</span>
+            <strong>{steps[0].title}</strong>
+          </div>
+          <p class="ramp__detail-body">{steps[0].detail}</p>
         </>
       )
     }
@@ -60,13 +66,13 @@ const fraction = (index: number) => ((index + 1) / steps.length).toFixed(3);
 <style>
   .ramp {
     display: grid;
-    gap: 0.75rem;
+    gap: 0.9rem;
     margin: 1.5rem 0 2rem;
-    border: 1px solid rgb(28 43 33 / 0.1);
+    border: 1px solid color-mix(in srgb, var(--color-silver-tree-500) 22%, transparent);
     border-radius: 1rem;
-    background: rgb(255 255 255 / 0.7);
-    padding: 0.75rem;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    background: color-mix(in srgb, var(--color-silver-tree-50) 78%, white);
+    padding: 0.9rem;
+    box-shadow: 0 4px 18px rgb(14 37 31 / 0.06);
   }
 
   @media (min-width: 56rem) {
@@ -77,14 +83,15 @@ const fraction = (index: number) => ((index + 1) / steps.length).toFixed(3);
 
   .ramp__hint {
     margin: 0;
-    color: #465d4e;
+    color: var(--color-silver-tree-800);
     font-size: var(--sl-text-xs);
+    font-weight: 500;
     line-height: 1.4;
   }
 
   .ramp__rows {
     display: grid;
-    gap: 0.4rem;
+    gap: 0.45rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -92,17 +99,24 @@ const fraction = (index: number) => ((index + 1) / steps.length).toFixed(3);
 
   .ramp__row {
     display: grid;
-    grid-template-columns: 4.25rem minmax(0, 1fr);
-    gap: 0.5rem;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 0.6rem;
     align-items: center;
     margin: 0;
   }
 
   .ramp__week {
-    color: #465d4e;
+    color: var(--color-silver-tree-800);
     font-size: var(--sl-text-xs);
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.02em;
     white-space: nowrap;
+  }
+
+  .ramp__track {
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-silver-tree-200) 42%, transparent);
+    padding: 2px;
   }
 
   .ramp__bar {
@@ -112,23 +126,28 @@ const fraction = (index: number) => ((index + 1) / steps.length).toFixed(3);
     /* Every bar fits the longest label, then grows with the step. */
     --min: min(100%, 15.5rem);
     width: calc(var(--min) + (100% - var(--min)) * var(--f));
-    min-height: 2.25rem;
-    padding: 0.25rem;
+    min-height: 2.2rem;
+    padding: 0.2rem;
     border: 0;
-    border-radius: 0 999px 999px 0;
-    background: linear-gradient(90deg, rgb(54 201 227 / 0.35), rgb(54 201 227 / 0.85));
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-silver-tree-300) 65%, white),
+      var(--color-silver-tree-500)
+    );
     font: inherit;
     cursor: pointer;
     transition:
       box-shadow 150ms ease,
-      transform 150ms ease;
+      transform 150ms ease,
+      filter 150ms ease;
   }
 
   .ramp__pill {
-    padding: 0.25rem 0.75rem;
+    padding: 0.24rem 0.8rem;
     border-radius: 999px;
-    background: #0047ab;
-    color: #ffffff;
+    background: var(--color-silver-tree-800);
+    color: var(--color-silver-tree-50);
     font-size: var(--sl-text-sm);
     font-weight: 600;
     line-height: 1.3;
@@ -139,58 +158,122 @@ const fraction = (index: number) => ((index + 1) / steps.length).toFixed(3);
   .ramp__bar:hover,
   .ramp__bar:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px #0047ab;
+    box-shadow: 0 0 0 2px var(--color-silver-tree-700);
   }
 
   .ramp__bar[aria-pressed="true"] {
-    box-shadow: 0 0 0 3px #0047ab;
+    background: linear-gradient(
+      90deg,
+      var(--color-golden-grass-300),
+      var(--color-golden-grass-500)
+    );
+    box-shadow: 0 2px 10px rgb(165 96 3 / 0.25);
+  }
+
+  .ramp__bar[aria-pressed="true"] .ramp__pill {
+    background: var(--color-golden-grass-900);
+    color: var(--color-golden-grass-50);
   }
 
   .ramp__detail {
-    min-height: 4.5rem;
-    border: 1px solid rgb(28 43 33 / 0.08);
+    min-height: 4.75rem;
+    border: 1px solid color-mix(in srgb, var(--color-silver-tree-500) 20%, transparent);
+    border-left: 3.5px solid var(--color-golden-grass-500);
     border-radius: 0.75rem;
-    background: rgb(243 246 244 / 0.9);
-    padding: 0.75rem 1rem;
-    color: #283a2e;
+    background: rgb(255 255 255 / 0.85);
+    padding: 0.8rem 1rem;
+    color: var(--sl-color-gray-2);
     font-size: var(--sl-text-sm);
     line-height: 1.6;
   }
 
+  .ramp__detail :global(.ramp__detail-head) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .ramp__detail :global(.ramp__detail-week) {
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    background: var(--color-golden-grass-100);
+    color: var(--color-golden-grass-900);
+    font-size: var(--sl-text-xs);
+    font-weight: 700;
+  }
+
   .ramp__detail :global(strong) {
-    display: block;
-    margin-bottom: 0.2rem;
-    color: #1c2b21;
+    color: var(--color-silver-tree-950);
+  }
+
+  .ramp__detail :global(.ramp__detail-body) {
+    margin: 0;
   }
 
   :global([data-theme="dark"]) .ramp {
-    border-color: rgb(226 233 227 / 0.1);
-    background: rgb(14 26 18 / 0.4);
+    border-color: color-mix(in srgb, var(--color-silver-tree-400) 22%, transparent);
+    background: color-mix(in srgb, var(--color-silver-tree-950) 68%, #17181c);
+    box-shadow: 0 6px 24px rgb(0 0 0 / 0.35);
   }
 
   :global([data-theme="dark"]) .ramp__hint,
   :global([data-theme="dark"]) .ramp__week {
-    color: #9db3a3;
+    color: var(--color-silver-tree-200);
+  }
+
+  :global([data-theme="dark"]) .ramp__track {
+    background: color-mix(in srgb, var(--color-silver-tree-800) 40%, transparent);
+  }
+
+  :global([data-theme="dark"]) .ramp__bar {
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-silver-tree-700) 80%, transparent),
+      var(--color-silver-tree-500)
+    );
   }
 
   :global([data-theme="dark"]) .ramp__pill {
-    background: #2f6fd1;
+    background: var(--color-silver-tree-950);
+    color: var(--color-silver-tree-100);
   }
 
   :global([data-theme="dark"]) .ramp__bar:hover,
-  :global([data-theme="dark"]) .ramp__bar:focus-visible,
+  :global([data-theme="dark"]) .ramp__bar:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-silver-tree-300);
+  }
+
   :global([data-theme="dark"]) .ramp__bar[aria-pressed="true"] {
-    box-shadow: 0 0 0 3px #8fb7f2;
+    background: linear-gradient(
+      90deg,
+      var(--color-golden-grass-700),
+      var(--color-golden-grass-500)
+    );
+    box-shadow: 0 2px 12px rgb(0 0 0 / 0.4);
+  }
+
+  :global([data-theme="dark"]) .ramp__bar[aria-pressed="true"] .ramp__pill {
+    background: var(--color-golden-grass-950);
+    color: var(--color-golden-grass-100);
   }
 
   :global([data-theme="dark"]) .ramp__detail {
-    border-color: rgb(226 233 227 / 0.1);
-    background: rgb(28 43 33 / 0.8);
-    color: #c5d3c8;
+    border-color: color-mix(in srgb, var(--color-silver-tree-400) 18%, transparent);
+    border-left-color: var(--color-golden-grass-400);
+    background: rgb(14 37 31 / 0.55);
+    color: var(--sl-color-gray-2);
+  }
+
+  :global([data-theme="dark"]) .ramp__detail :global(.ramp__detail-week) {
+    background: color-mix(in srgb, var(--color-golden-grass-800) 70%, transparent);
+    color: var(--color-golden-grass-100);
   }
 
   :global([data-theme="dark"]) .ramp__detail :global(strong) {
-    color: #f3f6f4;
+    color: var(--color-silver-tree-50);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -209,9 +292,20 @@ const fraction = (index: number) => ((index + 1) / steps.length).toFixed(3);
       for (const other of bars) other.setAttribute("aria-pressed", String(other === bar));
       if (focus) bar.focus();
       if (!detail) return;
+      const head = document.createElement("div");
+      head.className = "ramp__detail-head";
+      const week = document.createElement("span");
+      week.className = "ramp__detail-week";
+      week.textContent = bar.dataset.week ?? "";
       const title = document.createElement("strong");
       title.textContent = bar.dataset.title ?? "";
-      detail.replaceChildren(title, bar.dataset.detail ?? "");
+      head.append(week, title);
+
+      const body = document.createElement("p");
+      body.className = "ramp__detail-body";
+      body.textContent = bar.dataset.detail ?? "";
+
+      detail.replaceChildren(head, body);
     };
 
     for (const [index, bar] of bars.entries()) {

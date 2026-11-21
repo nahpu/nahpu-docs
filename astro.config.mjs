@@ -318,6 +318,15 @@ export default defineConfig({
               },
             },
             {
+              label: "Supported Workflows",
+              link: "usages/workflows",
+              translations: {
+                "pt-BR": "Fluxos de Trabalho Suportados",
+                es: "Flujos de Trabajo Compatibles",
+                id: "Alur Kerja yang Didukung",
+              },
+            },
+            {
               label: "Projects",
               link: "usages/projects",
               translations: {

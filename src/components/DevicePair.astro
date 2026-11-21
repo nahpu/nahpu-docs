@@ -58,8 +58,15 @@ const shots = [
   {
     shots.map((shot) => (
       <figure class={`nh-pair__shot nh-pair__shot--${shot.kind}`}>
-        {shot.label && <figcaption class="nh-pair__label">{shot.label}</figcaption>}
-        <Image src={shot.src} alt={shot.alt} width={shot.width} densities={[1.5, 2]} />
+        {shot.label && (
+          <figcaption class="nh-pair__label">
+            <span class={`nh-pair__dot nh-pair__dot--${shot.kind}`} aria-hidden="true" />
+            <span>{shot.label}</span>
+          </figcaption>
+        )}
+        <div class="nh-pair__frame">
+          <Image src={shot.src} alt={shot.alt} width={shot.width} densities={[1.5, 2]} />
+        </div>
       </figure>
     ))
   }
@@ -69,10 +76,14 @@ const shots = [
   .nh-pair {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-    align-items: end;
+    gap: 1.25rem;
+    align-items: start;
     justify-items: center;
     margin-block: 1.5rem 2rem;
+    padding: 1rem 1.125rem 1.25rem;
+    background: color-mix(in srgb, var(--sl-color-gray-6) 55%, transparent);
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 0.875rem;
   }
 
   .nh-pair__shot {
@@ -82,29 +93,56 @@ const shots = [
   }
 
   .nh-pair__shot--phone {
-    max-width: 16rem;
+    max-width: 17.5rem;
   }
 
   .nh-pair__label {
-    margin: 0 0 0.375rem;
-    color: var(--sl-color-gray-3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 0.5rem;
+    color: var(--sl-color-gray-2);
     font-size: var(--sl-text-xs);
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
   }
 
-  .nh-pair__shot img {
+  .nh-pair__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+
+  .nh-pair__dot--tablet {
+    background-color: var(--color-silver-tree-500);
+  }
+
+  .nh-pair__dot--phone {
+    background-color: var(--color-golden-grass-500);
+  }
+
+  .nh-pair__frame {
+    overflow: hidden;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.08);
+  }
+
+  :global(:root[data-theme="dark"]) .nh-pair__frame {
+    box-shadow: 0 6px 20px rgb(0 0 0 / 0.35);
+  }
+
+  .nh-pair__frame img {
     display: block;
     width: 100%;
     height: auto;
-    border: 1px solid var(--sl-color-hairline);
-    border-radius: 0.625rem;
   }
 
   @media (min-width: 40rem) {
     .nh-pair--both {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 12rem);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 13rem);
     }
   }
 </style>

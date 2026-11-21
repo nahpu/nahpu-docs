@@ -2,71 +2,86 @@
 title: "Teamwork tutorial 6: Merge the catalogs"
 authors:
   - Heru Handika
-lastUpdated: 2026-11-20
+lastUpdated: 2026-11-21
 sidebar:
   label: "6. Merge the catalogs"
   order: 6
 ---
 
-Both catalogs are complete. Bima's iPhone holds his share of the Line 1 check
-(Workflow A) and his own Line 2 (Workflow B). In this tutorial, Bima sends his
-catalog to Heru, and one merge on the iPad brings in both.
+Both catalogs are complete. Bima's device holds his share of the Line 1 check
+(Workflow A) and his own Line 2 (Workflow B). In this tutorial, Bima exports
+his catalog and sends it to Heru, and a single merge on Heru's device combines
+both workflows into one project.
 
-## 1. Export Bima's catalog and merge it
+## 1. Export Bima's catalog and start the merge
 
 {% steps %}
 
-1. On the iPhone, Bima opens the menu and selects `Export project`. Turn on
-   `Light export` for a small `JSON.GZ` file without media (about 3 KB here),
-   select `Export project`, and share the file with Heru.
-2. On the iPad, Heru opens the menu, selects `Merge project`, and chooses the
-   file with `Choose archive`. Check that `Project UUID` matches.
-3. Select `Back up now`, tick the backup reminder, and select `Continue`.
-4. Step through each section and select `Merge project` at the end.
+1. **Bima:** Open the menu and select `Export project`. Turn on `Light export`
+   to create a compact `JSON.GZ` file without media (about 3 KB here), select
+   `Export project`, and send the file to Heru.
+2. **Heru:** Open the menu, select `Merge project`, and pick Bima's file with
+   `Choose archive`. Confirm that `Project UUID` matches.
+3. **Heru:** Select `Back up now`, tick the backup confirmation box, and select
+   `Continue`.
+4. **Heru:** Review each section (detailed below) and select `Merge project` at
+   the end.
 
 {% /steps %}
+
+{% aside type="tip" title="Merging catalogs from three or more lab members" %}
+If additional lab members practiced as extra catalogers, repeat these steps
+once for each teammate's export file. NAHPU merges each catalog cleanly into
+the same project.
+{% /aside %}
 
 {% devicepair
    phone="app-screenshots/tutorials/teamwork/iphone-export-project.webp"
    phoneAlt="NAHPU Export project screen on an iPhone with Light export on and the file name tujuh-teamwork-2014-nahpu-transfer.json.gz"
    phoneLabel="Bima · iPhone" /%}
 
-## 2. Review each section
+## 2. Review each merge section
 
-The merge shows how well the shared setup worked. Under `Personnel`, all three
-people are `Matched` and none is new. Bima's record is marked `Conflict` only
-because his cataloger number differs: `1` on the iPad and `5` on the iPhone
-after five specimens. For each cataloger, keep the copy from the device they
-catalog on—choose `Use imported` for Bima and keep `Keep current` for Heru.
+The review steps show how cleanly the shared setup pays off:
+
+- **Personnel:** All three team members appear as `Matched`, with zero new
+  people. Bima's record is flagged `Conflict` only because his cataloger number
+  changed (i.e., it is still `1` on Heru's device, while it advanced to `5` on
+  Bima's after cataloging five specimens). For each cataloger, keep the version
+  from the device they cataloged on: choose `Use imported` for Bima and leave
+  `Keep current` for Heru.
 
 {% devicepair
    tablet="app-screenshots/tutorials/teamwork/ipad-merge-personnel.webp"
    tabletAlt="NAHPU Merge project Personnel step on an iPad with 0 new, 3 matched, and 0 needing attention; Bima Sampel's conflict action set to Use imported"
    tabletLabel="Heru · iPad" /%}
 
-Under `Taxonomy`, every taxon is matched. Under `Sites` and `Events`, the two
-workflows show side by side: the shared Line 1 records (Workflow A) are
-`Matched`, so the team keeps one shared site catalog, while Bima's own `TJBS-L2`
-site and event (Workflow B) are `New`. Keep `Keep current` for the matched
-records. The `Conflict` labels here only mean that a matching record exists.
+- **Taxonomy:** Every taxon is matched.
+- **Sites and Events:** Both workflows appear side by side. The shared Line 1
+  records (Workflow A) are `Matched`, preserving one shared site catalog, while
+  Bima's `TJBS-L2` site and event (Workflow B) are `New`. Keep `Keep current`
+  for the matched records; the `Conflict` badge simply indicates that a
+  matching record already exists on Heru's device.
 
 {% devicepair
    tablet="app-screenshots/tutorials/teamwork/ipad-merge-sites.webp"
    tabletAlt="NAHPU Merge project Sites step on an iPad with 1 new, 2 matched, and 0 needing attention; TJHH-L1 and TJHH-P1 are listed as matches"
    tabletLabel="Heru · iPad" /%}
 
-Under `Specimens`, Bima's five records are new, with nothing needing attention.
+- **Specimens:** Bima's five records arrive as `New`, with no conflicts or
+  items needing attention.
 
 {% devicepair
    tablet="app-screenshots/tutorials/teamwork/ipad-merge-specimens.webp"
    tabletAlt="NAHPU Merge project Specimens step on an iPad with 5 new, 0 matched, and no conflicts"
    tabletLabel="Heru · iPad" /%}
 
-## 3. Check the merged records
+## 3. Verify the merged project
 
-Nothing is written until the final `Merge project`, and a failure rolls
-everything back. Afterward, open `Data table` under `Tools` on the dashboard:
-both catalogs now sit in one project, with three sites and three events.
+Nothing is written to the database until the final `Merge project` button is
+selected, and any error rolls the entire transaction back safely. Once the
+merge finishes, open `Data table` under `Tools` on the dashboard: all ten
+specimens, three sites, and three events now live together in one project.
 
 {% devicepair
    tablet="app-screenshots/tutorials/teamwork/ipad-data-table-merged.webp"
@@ -74,7 +89,7 @@ both catalogs now sit in one project, with three sites and three events.
    tabletLabel="Heru · iPad" /%}
 
 {% aside type="tip" %}
-For conflicts and duplicate identifiers in larger merges, see
+For resolving conflicts and duplicate identifiers in larger team merges, see
 [Merge a project and resolve conflicts](/en/how-to-recipes/protect-and-collaborate/merge-project/).
 {% /aside %}
 

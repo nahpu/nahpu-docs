@@ -1,6 +1,6 @@
 ---
 // One workflow inside `WorkflowExplorer`: a schematic of who records what on
-// which device, with the page's explanation beside it. The three schematics
+// which device, with the page's explanation below it. The three schematics
 // follow Figure 2 of the NAHPU paper; their only words come from the page.
 interface Props {
   id: "A" | "B" | "C";
@@ -11,168 +11,215 @@ interface Props {
 }
 
 const { id, title, source, people, result } = Astro.props;
-const columns = [150, 320, 490];
+const columns = [148, 320, 492];
 const arrow = `wf-arrow-${id}`;
+const shareArrow = `wf-share-arrow-${id}`;
 const headingId = `workflow-${id.toLowerCase()}`;
 ---
 
 <section class="wfp" id={`wf-panel-${id}`} data-workflow-panel data-id={id}>
-  <svg
-    class="wfp__art"
-    viewBox="0 0 640 300"
-    role="img"
-    aria-label={`${title}: ${source}. ${people}. ${result}.`}
-  >
-    <defs>
-      <marker
-        id={arrow}
-        viewBox="0 0 10 10"
-        refX="9"
-        refY="5"
-        markerWidth="7"
-        markerHeight="7"
-        orient="auto-start-reverse"
-      >
-        <path d="M0 0 L10 5 L0 10 z" class="wfp__head"></path>
-      </marker>
-    </defs>
+  <div class="wfp__stage">
+    <svg
+      class="wfp__art"
+      viewBox="0 0 640 312"
+      role="img"
+      aria-label={`${title}: ${source}. ${people}. ${result}.`}
+    >
+      <defs>
+        <marker
+          id={arrow}
+          viewBox="0 0 10 10"
+          refX="8.5"
+          refY="5"
+          markerWidth="6.5"
+          markerHeight="6.5"
+          orient="auto-start-reverse"
+        >
+          <path d="M0 1 L9 5 L0 9 z" class="wfp__head"></path>
+        </marker>
+        <marker
+          id={shareArrow}
+          viewBox="0 0 10 10"
+          refX="8.5"
+          refY="5"
+          markerWidth="6"
+          markerHeight="6"
+          orient="auto-start-reverse"
+        >
+          <path d="M0 1 L9 5 L0 9 z" class="wfp__share-head"></path>
+        </marker>
+      </defs>
 
-    {/* Where the specimens come from. */}
-    {
-      id === "B" ? (
-        <>
-          <text x="320" y="16" class="wfp__caption">
-            {source}
-          </text>
-          {columns.map((cx, index) => (
-            <>
-              <rect x={cx - 60} y="26" width="120" height="40" rx="12" class="wfp__place" />
+      {/* Where the specimens come from. */}
+      {
+        id === "B" ? (
+          <>
+            <text x="320" y="16" class="wfp__caption">
+              {source}
+            </text>
+            {columns.map((cx, index) => (
+              <>
+                <rect x={cx - 58} y="30" width="116" height="40" rx="12" class="wfp__place" />
+                <path
+                  d={`M${cx - 18} 47 a7 7 0 1 1 14 0 c0 5.5 -7 11 -7 11 s-7 -5.5 -7 -11z`}
+                  class="wfp__pin"
+                />
+                <circle cx={cx - 11} cy="47" r="2.5" class="wfp__pin-hole" />
+                <text x={cx + 12} y="51" class="wfp__num">
+                  {index + 1}
+                </text>
+                <line
+                  x1={cx}
+                  y1="70"
+                  x2={cx}
+                  y2="108"
+                  class="wfp__flow"
+                  marker-end={`url(#${arrow})`}
+                />
+              </>
+            ))}
+          </>
+        ) : (
+          <>
+            <rect x="156" y="20" width="328" height="46" rx="14" class="wfp__place" />
+            <path
+              d="M178 40 a7 7 0 1 1 14 0 c0 5.5 -7 11 -7 11 s-7 -5.5 -7 -11z"
+              class="wfp__pin"
+            />
+            <circle cx="185" cy="40" r="2.5" class="wfp__pin-hole" />
+            <text x="330" y="44" class="wfp__label">
+              {source}
+            </text>
+            {id === "A" ? (
+              columns.map((cx) => (
+                <path
+                  d={`M320 66 C320 88, ${cx} 86, ${cx} 108`}
+                  class="wfp__flow"
+                  marker-end={`url(#${arrow})`}
+                />
+              ))
+            ) : (
               <path
-                d={`M${cx - 18} 52 a7 7 0 1 1 14 0 c0 5 -7 10 -7 10 s-7 -5 -7 -10z`}
-                class="wfp__pin"
-              />
-              <text x={cx + 8} y="51" class="wfp__num">
-                {index + 1}
-              </text>
-              <line
-                x1={cx}
-                y1="66"
-                x2={cx}
-                y2="106"
+                d={`M256 66 C256 88, ${columns[0]} 86, ${columns[0]} 108`}
                 class="wfp__flow"
                 marker-end={`url(#${arrow})`}
               />
-            </>
-          ))}
-        </>
-      ) : (
-        <>
-          <rect x="170" y="20" width="300" height="46" rx="12" class="wfp__place" />
-          <text x="320" y="48" class="wfp__label">
-            {source}
-          </text>
-          {(id === "A" ? columns : [columns[0]]).map((cx) => (
-            <line
-              x1={id === "A" ? 320 : 200}
-              y1="66"
-              x2={cx}
-              y2="106"
-              class="wfp__flow"
-              marker-end={`url(#${arrow})`}
-            />
-          ))}
-        </>
-      )
-    }
-
-    {/* The team. */}
-    {
-      columns.map((cx) => (
-        <g class="wfp__person">
-          <circle cx={cx} cy="122" r="11" />
-          <rect x={cx - 17} y="137" width="34" height="24" rx="12" />
-        </g>
-      ))
-    }
-
-    {/* Workflows A and B: one device per person, kept identical by QR sharing. */}
-    {
-      id !== "C" &&
-        columns.map((cx, index) => (
-          <>
-            <rect x={cx + 26} y="118" width="24" height="40" rx="5" class="wfp__device" />
-            <line x1={cx + 33} y1="152" x2={cx + 43} y2="152" class="wfp__device-bar" />
-            {index < columns.length - 1 && (
-              <>
-                <line x1={cx + 54} y1="138" x2={columns[index + 1] - 24} y2="138" class="wfp__share" />
-                <g class="wfp__qr" transform={`translate(${(cx + columns[index + 1]) / 2 + 9} 127)`}>
-                  <rect x="0" y="0" width="22" height="22" rx="3" class="wfp__qr-bg" />
-                  <rect x="3" y="3" width="6" height="6" />
-                  <rect x="13" y="3" width="6" height="6" />
-                  <rect x="3" y="13" width="6" height="6" />
-                  <rect x="13" y="13" width="3" height="3" />
-                  <rect x="16" y="16" width="3" height="3" />
-                </g>
-              </>
             )}
-            <line
-              x1={cx + 38}
-              y1="192"
-              x2={320 + (cx - 320) * 0.35}
-              y2="232"
-              class="wfp__flow"
-              marker-end={`url(#${arrow})`}
-            />
           </>
-        ))
-    }
+        )
+      }
 
-    {/* Workflow C: an assembly line that reports to one device. */}
-    {
-      id === "C" && (
-        <>
-          {columns.slice(0, -1).map((cx, index) => (
-            <line
-              x1={cx + 24}
-              y1="140"
-              x2={columns[index + 1] - 26}
-              y2="140"
-              class="wfp__flow"
-              marker-end={`url(#${arrow})`}
-            />
-          ))}
-          {columns.map((cx) => (
-            <line
-              x1={cx}
-              y1="192"
-              x2={320 + (cx - 320) * 0.35}
-              y2="232"
-              class="wfp__share"
-              marker-end={`url(#${arrow})`}
-            />
-          ))}
-        </>
-      )
-    }
+      {/* Soft team zone band for visual grouping. */}
+      <rect x="52" y="104" width="536" height="92" rx="16" class="wfp__band" />
 
-    <text x="320" y="180" class="wfp__caption">
-      {people}
-    </text>
+      {/* The team avatars. */}
+      {
+        columns.map((cx) => {
+          const px = id === "C" ? cx : cx - 14;
+          return (
+            <g class="wfp__person">
+              <circle cx={px} cy="126" r="10.5" />
+              <path
+                d={`M${px - 17} 162 C${px - 17} 146, ${px - 9} 140, ${px} 140 C${px + 9} 140, ${px + 17} 146, ${px + 17} 162 Z`}
+              />
+            </g>
+          );
+        })
+      }
 
-    {/* What the team ends with. */}
-    <rect x="170" y="236" width="300" height="46" rx="12" class="wfp__result" />
-    {
-      id === "C" && (
-        <>
-          <rect x="186" y="243" width="20" height="32" rx="4" class="wfp__device" />
-          <line x1="192" y1="270" x2="200" y2="270" class="wfp__device-bar" />
-        </>
-      )
-    }
-    <text x={id === "C" ? 332 : 320} y="264" class="wfp__label">
-      {result}
-    </text>
-  </svg>
+      {/* Workflows A and B: one device per cataloger, kept aligned via QR/file sharing. */}
+      {
+        id !== "C" &&
+          columns.map((cx, index) => {
+            const dx = cx + 10;
+            const nextLeft = columns[index + 1] - 32;
+            const midX = (dx + 28 + nextLeft) / 2;
+            return (
+              <>
+                <g class="wfp__device-group">
+                  <rect x={dx} y="116" width="26" height="44" rx="5.5" class="wfp__device" />
+                  <rect x={dx + 3} y="121" width="20" height="30" rx="2" class="wfp__screen" />
+                  <line x1={dx + 6} y1="127" x2={dx + 20} y2="127" class="wfp__screen-line" />
+                  <line x1={dx + 6} y1="132" x2={dx + 17} y2="132" class="wfp__screen-line" />
+                  <line x1={dx + 6} y1="137" x2={dx + 19} y2="137" class="wfp__screen-line" />
+                  <line x1={dx + 9} y1="155.5" x2={dx + 17} y2="155.5" class="wfp__device-bar" />
+                </g>
+                {index < columns.length - 1 && (
+                  <>
+                    <line x1={dx + 30} y1="138" x2={nextLeft - 4} y2="138" class="wfp__share" />
+                    <g class="wfp__qr" transform={`translate(${midX - 12} 126)`}>
+                      <rect x="0" y="0" width="24" height="24" rx="4.5" class="wfp__qr-bg" />
+                      <rect x="3.5" y="3.5" width="6" height="6" rx="1" />
+                      <rect x="14.5" y="3.5" width="6" height="6" rx="1" />
+                      <rect x="3.5" y="14.5" width="6" height="6" rx="1" />
+                      <rect x="14.5" y="14.5" width="2.75" height="2.75" rx="0.5" />
+                      <rect x="17.75" y="17.75" width="2.75" height="2.75" rx="0.5" />
+                    </g>
+                  </>
+                )}
+                <path
+                  d={`M${dx + 13} 196 C${dx + 13} 220, ${320 + (cx - 320) * 0.35} 214, ${320 + (cx - 320) * 0.35} 240`}
+                  class="wfp__flow"
+                  marker-end={`url(#${arrow})`}
+                />
+              </>
+            );
+          })
+      }
+
+      {/* Workflow C: an assembly line that reports to one device. */}
+      {
+        id === "C" && (
+          <>
+            {columns.slice(0, -1).map((cx, index) => (
+              <line
+                x1={cx + 26}
+                y1="142"
+                x2={columns[index + 1] - 28}
+                y2="142"
+                class="wfp__flow"
+                marker-end={`url(#${arrow})`}
+              />
+            ))}
+            {columns.map((cx) => (
+              <path
+                d={`M${cx} 196 C${cx} 220, ${320 + (cx - 320) * 0.35} 214, ${320 + (cx - 320) * 0.35} 240`}
+                class="wfp__share"
+                marker-end={`url(#${shareArrow})`}
+              />
+            ))}
+          </>
+        )
+      }
+
+      <text x="320" y="182" class="wfp__caption">
+        {people}
+      </text>
+
+      {/* What the team ends with. */}
+      <rect x="156" y="246" width="328" height="48" rx="14" class="wfp__result" />
+      {
+        id === "C" ? (
+          <g>
+            <rect x="174" y="253" width="20" height="34" rx="4.5" class="wfp__device" />
+            <rect x="176.5" y="257" width="15" height="22" rx="1.5" class="wfp__screen" />
+            <line x1="181" y1="283" x2="187" y2="283" class="wfp__device-bar" />
+          </g>
+        ) : (
+          <g class="wfp__merge-icon" transform="translate(174 259)">
+            <circle cx="5" cy="4" r="3" />
+            <circle cx="17" cy="4" r="3" />
+            <circle cx="11" cy="18" r="3.2" />
+            <path d="M5 7 C5 12, 11 11, 11 15" fill="none" stroke-width="1.8" />
+            <path d="M17 7 C17 12, 11 11, 11 15" fill="none" stroke-width="1.8" />
+          </g>
+        )
+      }
+      <text x="330" y="271" class="wfp__result-label">
+        {result}
+      </text>
+    </svg>
+  </div>
 
   <div class="wfp__text">
     <h3 id={headingId}>
@@ -186,7 +233,7 @@ const headingId = `workflow-${id.toLowerCase()}`;
 <style>
   .wfp {
     display: grid;
-    gap: 1rem;
+    gap: 1.1rem;
     align-items: start;
   }
 
@@ -194,27 +241,34 @@ const headingId = `workflow-${id.toLowerCase()}`;
     display: none;
   }
 
+  .wfp__stage {
+    border: 1px solid color-mix(in srgb, var(--color-silver-tree-500) 16%, transparent);
+    border-radius: 0.75rem;
+    background: rgb(255 255 255 / 0.82);
+    padding: 0.75rem 0.5rem 0.5rem;
+  }
+
   .wfp__art {
     display: block;
     width: 100%;
     height: auto;
-    max-width: 36rem;
+    max-width: 37rem;
     margin: 0 auto;
-    color: #283a2e;
+    color: var(--color-silver-tree-900);
   }
 
   .wfp__text {
-    color: #283a2e;
+    color: var(--sl-color-gray-2);
     font-size: var(--sl-text-sm);
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   .wfp__text h3 {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin: 0 0 0.5rem;
-    color: #1c2b21;
+    gap: 0.55rem;
+    margin: 0 0 0.55rem;
+    color: var(--color-silver-tree-950);
     font-size: var(--sl-text-lg);
     line-height: 1.3;
   }
@@ -226,51 +280,64 @@ const headingId = `workflow-${id.toLowerCase()}`;
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 50%;
-    background: #405847;
-    color: #f3f6f4;
+    background: var(--color-silver-tree-700);
+    color: var(--color-silver-tree-50);
     font-size: var(--sl-text-sm);
+    font-weight: 700;
   }
 
   .wfp__text :global(p),
   .wfp__text :global(ul) {
-    margin: 0 0 0.6rem;
+    margin: 0 0 0.65rem;
   }
 
   .wfp__text :global(ul) {
-    padding-left: 1.1rem;
+    padding-left: 1.15rem;
   }
 
   .wfp__text :global(li + li) {
-    margin-top: 0.25rem;
+    margin-top: 0.3rem;
   }
 
   .wfp__text :global(a) {
-    color: #2d6a4a;
+    color: var(--color-silver-tree-700);
+    font-weight: 500;
   }
 
   .wfp__text :global(code) {
     font-size: 0.85em;
   }
 
+  .wfp__band {
+    fill: color-mix(in srgb, var(--color-silver-tree-100) 46%, transparent);
+    stroke: color-mix(in srgb, var(--color-silver-tree-400) 28%, transparent);
+    stroke-width: 1;
+  }
+
   .wfp__place {
-    fill: #e7efe9;
-    stroke: #405847;
+    fill: var(--color-silver-tree-100);
+    stroke: var(--color-silver-tree-600);
     stroke-width: 1.5;
   }
 
   .wfp__result {
-    fill: #eef3e3;
-    stroke: #688a2c;
+    fill: var(--color-golden-grass-100);
+    stroke: var(--color-golden-grass-600);
     stroke-width: 1.5;
   }
 
   .wfp__label,
-  .wfp__num {
-    fill: #1c2b21;
-    font-size: 15px;
+  .wfp__num,
+  .wfp__result-label {
+    fill: var(--color-silver-tree-950);
+    font-size: 14.5px;
     font-weight: 600;
     text-anchor: middle;
     dominant-baseline: middle;
+  }
+
+  .wfp__result-label {
+    fill: var(--color-golden-grass-950);
   }
 
   .wfp__num {
@@ -278,112 +345,186 @@ const headingId = `workflow-${id.toLowerCase()}`;
   }
 
   .wfp__caption {
-    fill: #465d4e;
-    font-size: 13px;
+    fill: var(--color-silver-tree-800);
+    font-size: 12.5px;
+    font-weight: 500;
     text-anchor: middle;
     dominant-baseline: middle;
   }
 
   .wfp__pin {
-    fill: #405847;
+    fill: var(--color-silver-tree-700);
+  }
+
+  .wfp__pin-hole {
+    fill: var(--color-silver-tree-50);
   }
 
   .wfp__person {
-    fill: #405847;
+    fill: var(--color-silver-tree-700);
   }
 
   .wfp__device {
-    fill: #f4f7f8;
-    stroke: #637c86;
+    fill: #ffffff;
+    stroke: var(--color-silver-tree-600);
     stroke-width: 1.5;
   }
 
+  .wfp__screen {
+    fill: var(--color-silver-tree-50);
+    stroke: color-mix(in srgb, var(--color-silver-tree-500) 35%, transparent);
+    stroke-width: 0.75;
+  }
+
+  .wfp__screen-line {
+    stroke: var(--color-silver-tree-400);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
   .wfp__device-bar {
-    stroke: #637c86;
-    stroke-width: 2;
+    stroke: var(--color-silver-tree-600);
+    stroke-width: 1.75;
     stroke-linecap: round;
   }
 
   .wfp__flow {
-    stroke: #405847;
-    stroke-width: 1.5;
+    stroke: var(--color-silver-tree-600);
+    stroke-width: 1.6;
     fill: none;
   }
 
   .wfp__share {
-    stroke: #637c86;
-    stroke-width: 1.5;
+    stroke: var(--color-golden-grass-600);
+    stroke-width: 1.6;
     stroke-dasharray: 4 4;
     fill: none;
   }
 
   .wfp__head {
-    fill: #405847;
+    fill: var(--color-silver-tree-600);
+  }
+
+  .wfp__share-head {
+    fill: var(--color-golden-grass-600);
   }
 
   .wfp__qr {
-    fill: #323c41;
+    fill: var(--color-silver-tree-900);
   }
 
   .wfp__qr-bg {
     fill: #ffffff;
-    stroke: #637c86;
-    stroke-width: 1;
+    stroke: var(--color-golden-grass-600);
+    stroke-width: 1.25;
+  }
+
+  .wfp__merge-icon {
+    fill: var(--color-golden-grass-700);
+    stroke: var(--color-golden-grass-700);
+  }
+
+  :global([data-theme="dark"]) .wfp__stage {
+    border-color: color-mix(in srgb, var(--color-silver-tree-400) 18%, transparent);
+    background: rgb(14 37 31 / 0.45);
   }
 
   :global([data-theme="dark"]) .wfp__text {
-    color: #c5d3c8;
+    color: var(--sl-color-gray-2);
   }
 
   :global([data-theme="dark"]) .wfp__text h3 {
-    color: #f3f6f4;
+    color: var(--color-silver-tree-50);
   }
 
   :global([data-theme="dark"]) .wfp__text :global(a) {
-    color: #9bd3b2;
+    color: var(--color-silver-tree-300);
   }
 
   :global([data-theme="dark"]) .wfp__id {
-    background: #9db3a3;
-    color: #1c2b21;
+    background: var(--color-silver-tree-300);
+    color: var(--color-silver-tree-950);
+  }
+
+  :global([data-theme="dark"]) .wfp__band {
+    fill: color-mix(in srgb, var(--color-silver-tree-800) 32%, transparent);
+    stroke: color-mix(in srgb, var(--color-silver-tree-400) 22%, transparent);
   }
 
   :global([data-theme="dark"]) .wfp__place {
-    fill: #283a2e;
-    stroke: #718e78;
+    fill: var(--color-silver-tree-900);
+    stroke: var(--color-silver-tree-400);
   }
 
   :global([data-theme="dark"]) .wfp__result {
-    fill: #1c270c;
-    stroke: #9bbf4f;
+    fill: color-mix(in srgb, var(--color-golden-grass-950) 80%, #17181c);
+    stroke: var(--color-golden-grass-400);
   }
 
   :global([data-theme="dark"]) .wfp__label,
   :global([data-theme="dark"]) .wfp__num {
-    fill: #f3f6f4;
+    fill: var(--color-silver-tree-50);
+  }
+
+  :global([data-theme="dark"]) .wfp__result-label {
+    fill: var(--color-golden-grass-100);
   }
 
   :global([data-theme="dark"]) .wfp__caption {
-    fill: #9db3a3;
+    fill: var(--color-silver-tree-200);
   }
 
   :global([data-theme="dark"]) .wfp__pin,
   :global([data-theme="dark"]) .wfp__person,
   :global([data-theme="dark"]) .wfp__head {
-    fill: #9db3a3;
+    fill: var(--color-silver-tree-300);
+  }
+
+  :global([data-theme="dark"]) .wfp__pin-hole {
+    fill: var(--color-silver-tree-950);
   }
 
   :global([data-theme="dark"]) .wfp__flow {
-    stroke: #9db3a3;
+    stroke: var(--color-silver-tree-400);
+  }
+
+  :global([data-theme="dark"]) .wfp__share {
+    stroke: var(--color-golden-grass-400);
+  }
+
+  :global([data-theme="dark"]) .wfp__share-head {
+    fill: var(--color-golden-grass-400);
   }
 
   :global([data-theme="dark"]) .wfp__device {
-    fill: #1e2629;
-    stroke: #8199a2;
+    fill: #1b2421;
+    stroke: var(--color-silver-tree-400);
   }
 
-  :global([data-theme="dark"]) .wfp__device-bar,
-  :global([data-theme="dark"]) .wfp__share {
-    stroke: #8199a2;
+  :global([data-theme="dark"]) .wfp__screen {
+    fill: var(--color-silver-tree-950);
+    stroke: color-mix(in srgb, var(--color-silver-tree-400) 30%, transparent);
+  }
+
+  :global([data-theme="dark"]) .wfp__screen-line {
+    stroke: var(--color-silver-tree-500);
+  }
+
+  :global([data-theme="dark"]) .wfp__device-bar {
+    stroke: var(--color-silver-tree-400);
+  }
+
+  :global([data-theme="dark"]) .wfp__qr {
+    fill: var(--color-silver-tree-100);
+  }
+
+  :global([data-theme="dark"]) .wfp__qr-bg {
+    fill: #1b2421;
+    stroke: var(--color-golden-grass-400);
+  }
+
+  :global([data-theme="dark"]) .wfp__merge-icon {
+    fill: var(--color-golden-grass-300);
+    stroke: var(--color-golden-grass-300);
   }
 </style>
