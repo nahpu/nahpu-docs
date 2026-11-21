@@ -415,29 +415,45 @@
 
 /* ------------------------------------------------------------ timeline ---- */
 
-/* A field-log rail: solid for released milestones, dashed gold for planned
-   work, with the first-commit-to-release span drawn long to show its length.
-   Small screens stack it newest first; large screens run it left to right. */
-.nh-timeline {
+/* A transit-map rail: bold solid track for released milestones, dashed gold
+   extension for planned work, with crisp station stops and a smooth right-hand
+   U-turn around "Today" on wide screens so every milestone keeps comfortable
+   width. Small screens stack newest first along a single vertical line. */
+.nh-timeline-wrap {
   --nh-tl-released: var(--color-silver-tree-600);
   --nh-tl-planned: var(--color-golden-grass-600);
   --nh-tl-planned-text: var(--color-golden-grass-800);
   --nh-tl-ground: var(--color-silver-tree-100);
   --nh-tl-muted: var(--color-silver-tree-600);
-  --nh-tl-dot: 0.875rem;
+  --nh-tl-track: 4px;
+  --nh-tl-dot: 1rem;
   display: flex;
   flex-direction: column-reverse;
-  list-style: none;
-  margin-left: 0;
-  padding: 0;
 }
 
-:root[data-theme="dark"] .nh-timeline {
+:root[data-theme="dark"] .nh-timeline-wrap {
   --nh-tl-released: var(--color-silver-tree-400);
   --nh-tl-planned: var(--color-golden-grass-400);
   --nh-tl-planned-text: var(--color-golden-grass-300);
   --nh-tl-ground: var(--color-silver-tree-950);
   --nh-tl-muted: var(--color-silver-tree-400);
+}
+
+.nh-timeline-band {
+  position: relative;
+}
+
+.nh-timeline {
+  display: flex;
+  flex-direction: column-reverse;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nh-tl-curve-top,
+.nh-tl-curve-bottom {
+  display: none;
 }
 
 .nh-tl-row {
@@ -475,39 +491,51 @@
 .nh-tl-axis::before {
   content: "";
   position: absolute;
-  inset: 0 auto;
-  width: 2px;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - var(--nh-tl-track) / 2);
+  width: var(--nh-tl-track);
   background: var(--nh-tl-released);
 }
 
 .nh-tl-planned .nh-tl-axis::before {
-  background: repeating-linear-gradient(
-    var(--nh-tl-planned) 0 6px,
-    transparent 6px 12px
-  );
+  width: 0;
+  background: none;
+  border-left: var(--nh-tl-track) dashed var(--nh-tl-planned);
 }
 
-/* Newest first: the latest entry is on top, the first commit at the bottom. */
-.nh-tl-row:last-child .nh-tl-axis::before {
-  top: 1.125rem;
+/* Newest first on small screens: latest planned entry on top, first commit at bottom. */
+.nh-timeline-planned .nh-tl-row:last-child .nh-tl-axis::before {
+  top: 1.25rem;
 }
 
-.nh-tl-row:first-child .nh-tl-axis::before {
-  bottom: calc(100% - 1.125rem);
+.nh-timeline-released .nh-tl-row:first-child .nh-tl-axis::before {
+  bottom: calc(100% - 1.25rem);
 }
 
+/* Transit-map station stops */
 .nh-tl-dot {
   position: relative;
+  z-index: 1;
   margin-top: 0.75rem;
   width: var(--nh-tl-dot);
   height: var(--nh-tl-dot);
   border-radius: 9999px;
+  background: var(--nh-tl-ground);
+  border: 3.5px solid var(--nh-tl-released);
+}
+
+.nh-timeline-released .nh-tl-row:first-child .nh-tl-dot,
+.nh-timeline-released .nh-tl-row:last-child .nh-tl-dot {
   background: var(--nh-tl-released);
+  box-shadow:
+    0 0 0 2px var(--nh-tl-ground),
+    0 0 0 4px var(--nh-tl-released);
 }
 
 .nh-tl-planned .nh-tl-dot {
   background: var(--nh-tl-ground);
-  border: 2px solid var(--nh-tl-planned);
+  border: 3px solid var(--nh-tl-planned);
 }
 
 .nh-tl-body {
@@ -539,7 +567,7 @@
   align-self: center;
   padding-top: 0;
   font-size: 0.6875rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--nh-tl-muted);
@@ -570,9 +598,35 @@
   }
 }
 
-@media (min-width: 72rem) {
+@media (min-width: 64rem) {
+  .nh-timeline-wrap {
+    flex-direction: column;
+    padding-right: 1.5rem;
+  }
+
+  .nh-tl-today-mobile {
+    display: none;
+  }
+
+  .nh-timeline-band {
+    padding-right: 3rem;
+  }
+
+  .nh-timeline-band-released {
+    padding-bottom: 2.25rem;
+  }
+
   .nh-timeline {
+    position: relative;
+    z-index: 1;
+  }
+
+  .nh-timeline-released {
     flex-direction: row;
+  }
+
+  .nh-timeline-planned {
+    flex-direction: row-reverse;
   }
 
   .nh-tl-row {
@@ -596,29 +650,10 @@
     justify-content: flex-start;
   }
 
-  .nh-tl-axis::before,
-  .nh-tl-row:first-child .nh-tl-axis::before,
-  .nh-tl-row:last-child .nh-tl-axis::before {
-    inset: calc(50% - 1px) 0 auto;
-    width: auto;
-    height: 2px;
-  }
-
-  .nh-tl-planned .nh-tl-axis::before {
-    background: repeating-linear-gradient(
-      90deg,
-      var(--nh-tl-planned) 0 6px,
-      transparent 6px 12px
-    );
-  }
-
-  /* The track starts at the first dot and stops at the last one. */
-  .nh-tl-row:first-child .nh-tl-axis::before {
-    left: calc(var(--nh-tl-dot) / 2);
-  }
-
-  .nh-tl-row:last-child .nh-tl-axis::before {
-    right: calc(100% - var(--nh-tl-dot) / 2);
+  /* Per-item segments are hidden on wide screens; the band curves draw one
+     continuous transit-map track per row with zero seams or dash breaks. */
+  .nh-tl-axis::before {
+    display: none;
   }
 
   .nh-tl-dot {
@@ -626,7 +661,7 @@
   }
 
   .nh-tl-body {
-    padding: 0 0.5rem 0 0;
+    padding: 0 0.75rem 0 0;
   }
 
   .nh-tl-body h3 {
@@ -639,39 +674,62 @@
   }
 
   .nh-tl-span {
-    flex: 1.5 1 0;
+    flex: 1.25 1 0;
     min-height: 0;
   }
 
   .nh-tl-span-label {
     align-self: auto;
-    padding: 0 0.5rem;
+    padding: 0 0.75rem 0 0;
     text-align: center;
   }
 
-  .nh-tl-today {
-    flex: 0 0 3.5rem;
+  /* Continuous transit-map track: solid teal across Row 1 and down the right
+     bend, meeting the dashed gold track around the bottom bend and across Row 2. */
+  .nh-tl-curve-top {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: calc(2.5rem - var(--nh-tl-track) / 2);
+    left: calc(var(--nh-tl-dot) / 2);
+    right: 0;
+    bottom: 0;
+    border-top: var(--nh-tl-track) solid var(--nh-tl-released);
+    border-right: var(--nh-tl-track) solid var(--nh-tl-released);
+    border-top-right-radius: 2.25rem;
+    pointer-events: none;
   }
 
-  .nh-tl-today .nh-tl-when {
-    align-self: auto;
-    text-align: center;
+  .nh-tl-curve-bottom {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: calc(var(--nh-tl-dot) / 2);
+    right: 0;
+    height: calc(2.5rem + var(--nh-tl-track) / 2);
+    border-right: var(--nh-tl-track) dashed var(--nh-tl-planned);
+    border-bottom: var(--nh-tl-track) dashed var(--nh-tl-planned);
+    border-bottom-right-radius: 2.25rem;
+    pointer-events: none;
   }
 
-  .nh-tl-today .nh-tl-axis::before {
-    background: linear-gradient(
-      90deg,
-      var(--nh-tl-released) 50%,
-      var(--nh-tl-planned) 50%
-    );
-  }
-
-  .nh-tl-rule {
-    width: 0;
-    height: 3rem;
-    margin: 0;
-    border-top: 0;
-    border-left: 1px dashed var(--nh-tl-muted);
+  .nh-tl-today-badge {
+    position: absolute;
+    right: calc(var(--nh-tl-track) / -2);
+    bottom: 0;
+    z-index: 2;
+    transform: translate(50%, 50%);
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    border: 2px solid var(--nh-tl-released);
+    background: var(--nh-tl-ground);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--nh-tl-released);
+    white-space: nowrap;
   }
 }
 

@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import AboutGlyph, { type GlyphName } from "../components/AboutGlyph.astro";
+import AboutLayers from "../components/AboutLayers.astro";
 import cntl from "cntl";
 import bawakaraeng from "../assets/images/landscapes/handika-bawakaraeng.webp";
 import napu from "../assets/images/animals/inaturalist_615649674-napu.jpg";
@@ -126,6 +127,37 @@ const philosophy: Highlight[] = [
   },
 ];
 
+const appLayers = [
+  {
+    number: "1",
+    title: "User interface",
+    tag: "Flutter",
+    accent: "teal",
+    body: "The screens, forms, maps, and controls shared across phones, tablets, and desktops, designed for clarity and low visual fatigue in the field.",
+  },
+  {
+    number: "2",
+    title: "Application workflows",
+    tag: "Dart",
+    accent: "teal",
+    body: "Coordinates data entry, validation, and relationships across sites, collecting events, specimens, and media without requiring a network connection.",
+  },
+  {
+    number: "3",
+    title: "Core engine",
+    tag: "Rust · NAHPU API",
+    accent: "gold",
+    body: "Handles computationally intensive tasks—Darwin Core exports, GIS conversions, PDF generation, archives, and upcoming on-device analytics—efficiently while conserving battery life.",
+  },
+  {
+    number: "4",
+    title: "Local storage",
+    tag: "SQLite & files",
+    accent: "teal",
+    body: "Keeps the project database, media, and backups directly on the device, ensuring offline reliability and straightforward handoff to institutional collections.",
+  },
+];
+
 const roadmap: Highlight[] = [
   {
     glyph: "taxonomy",
@@ -185,25 +217,37 @@ const timeline: Milestone[] = [
     released: true,
   },
   {
-    date: new Date(2026, 10, 1),
+    date: new Date(2026, 9, 25),
+    title: "NAHPU v1.2.0",
+    body: "Data table view, batch import, tissue curation, and beta translations.",
+    released: true,
+  },
+  {
+    date: new Date(2026, 10, 8),
+    title: "NAHPU v1.3.0",
+    body: "Symbiont support with Darwin Core interaction types and resizable table columns.",
+    released: true,
+  },
+  {
+    date: new Date(2027, 0, 1),
     title: "Integrated resources",
     body: "Links to GenBank, Crossref, and the Mammal Diversity Database.",
     released: false,
   },
   {
-    date: new Date(2026, 11, 1),
+    date: new Date(2027, 1, 1),
     title: "Morphometric analyses",
     body: "On-device analysis of specimen measurements.",
     released: false,
   },
   {
-    date: new Date(2027, 0, 1),
+    date: new Date(2027, 2, 1),
     title: "Paleontology support",
     body: "Catalog format for fossil specimens.",
     released: false,
   },
   {
-    date: new Date(2027, 1, 1),
+    date: new Date(2027, 3, 1),
     title: "Phenomic analyses",
     body: "Trait analyses using deep learning.",
     released: false,
@@ -211,7 +255,7 @@ const timeline: Milestone[] = [
 ];
 
 // Released milestones show the exact day ("18 Jul 2022"); planned ones only a
-// target month ("Oct 2026").
+// target month ("Jan 2027").
 const formatDate = (item: Milestone) => {
   const month = item.date.toLocaleDateString("en-US", { month: "short" });
   const monthYear = `${month} ${item.date.getFullYear()}`;
@@ -239,7 +283,8 @@ const developmentSpan = [
 ]
   .filter(Boolean)
   .join(", ");
-const firstPlannedIndex = timeline.findIndex((item) => !item.released);
+const releasedMilestones = timeline.filter((item) => item.released);
+const plannedMilestones = timeline.filter((item) => !item.released);
 ---
 
 <Layout
@@ -468,6 +513,100 @@ const firstPlannedIndex = timeline.findIndex((item) => !item.released);
           ))
         }
       </div>
+
+      <!-- Built in layers -->
+      <header class="nh-reveal mt-16 max-w-3xl">
+        <p class={kickerClasses}>Architecture</p>
+        <h2 class={titleClasses}>Built in layers</h2>
+        <p class={leadClasses}>
+          Much like a layered cake—such as tres leches, where the sponge, milk
+          soak, and topping each serve a distinct role—NAHPU is structured into
+          separate layers that operate together as one application. We work
+          across every layer to maintain performance and efficiency, and this
+          clear separation supports interdisciplinary training.
+        </p>
+      </header>
+
+      <div
+        class="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[1.05fr_1fr] lg:items-center"
+      >
+        <div
+          class="nh-reveal rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/80 p-5 sm:p-6 dark:border-silver-tree-700/70 dark:bg-silver-tree-950/50"
+        >
+          <AboutLayers />
+        </div>
+
+        <ol class="flex flex-col gap-3">
+          {
+            appLayers.map((layer, index) => (
+              <li
+                class="nh-reveal flex items-start gap-3.5 rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/70 p-4 dark:border-silver-tree-700/70 dark:bg-silver-tree-900/50"
+                style={`transition-delay: ${index * 60}ms`}
+              >
+                <span
+                  class={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                    layer.accent === "gold"
+                      ? "bg-golden-grass-600 text-white dark:bg-golden-grass-400 dark:text-golden-grass-950"
+                      : "bg-silver-tree-700 text-silver-tree-50 dark:bg-silver-tree-400 dark:text-silver-tree-950"
+                  }`}
+                >
+                  {layer.number}
+                </span>
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <h3 class="text-sm font-semibold text-silver-tree-950 dark:text-silver-tree-50">
+                      {layer.title}
+                    </h3>
+                    <span class="rounded-full bg-silver-tree-200/80 px-2 py-0.5 text-[11px] font-medium text-silver-tree-800 dark:bg-silver-tree-800 dark:text-silver-tree-200">
+                      {layer.tag}
+                    </span>
+                  </div>
+                  <p class="mt-1.5 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
+                    {layer.body}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <article class={cardClasses}>
+          <h3 class={cardTitleClasses}>
+            Performance and efficiency at every layer
+          </h3>
+          <p class={cardBodyClasses}>
+            We actively work on every layer—from interface responsiveness on
+            modest field hardware, to native processing in Rust, to how records
+            are stored on disk. Addressing efficiency throughout the stack keeps
+            NAHPU fast, dependable, and conservative with battery power during
+            extended fieldwork.
+          </p>
+        </article>
+
+        <article class={cardClasses} style="transition-delay: 60ms">
+          <h3 class={cardTitleClasses}>
+            Interdisciplinary training and experimentation
+          </h3>
+          <p class={cardBodyClasses}>
+            Clear boundaries between layers allow biologists, museum curators,
+            designers, and computer science students to collaborate and train on
+            real scientific software. Students also use a dedicated scratch
+            repository to practice workflows, experiment with new ideas, and
+            prototype features without affecting the stability of the main
+            application.
+          </p>
+          <p class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+            <a class={linkClasses} href="/en/contributing/"
+              >Become a contributor</a
+            >
+            <a class={linkClasses} href="/en/contributing/code/architecture/"
+              >Technical architecture</a
+            >
+          </p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -478,7 +617,7 @@ const firstPlannedIndex = timeline.findIndex((item) => !item.released);
     <div class={innerClasses}>
       <header class="nh-reveal max-w-3xl">
         <p class={kickerClasses}>Looking ahead</p>
-        <h2 class={titleClasses}>Development roadmap for 2026</h2>
+        <h2 class={titleClasses}>Development roadmap</h2>
       </header>
 
       <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -521,52 +660,80 @@ const firstPlannedIndex = timeline.findIndex((item) => !item.released);
         <h2 class={titleClasses}>From first commit to what comes next</h2>
       </header>
 
-      <ol class="nh-timeline nh-reveal mt-10 max-w-3xl min-[72rem]:max-w-none">
-        {
-          timeline.map((item, index) => (
-            <>
-              {index === firstPlannedIndex && index > 0 && (
-                <li class="nh-tl-row nh-tl-today">
-                  <span class="nh-tl-when">Today</span>
-                  <span class="nh-tl-axis" />
-                  <span class="nh-tl-rule" />
+      <div class="nh-timeline-wrap nh-reveal mt-10 max-w-3xl lg:max-w-none">
+        <div class="nh-timeline-band nh-timeline-band-released">
+          <ol class="nh-timeline nh-timeline-released">
+            {
+              releasedMilestones.map((item) => (
+                <>
+                  <li class="nh-tl-row nh-tl-released">
+                    <time
+                      class="nh-tl-when nh-tl-date"
+                      datetime={formatIsoDate(item)}
+                    >
+                      {formatDate(item)}
+                    </time>
+                    <span class="nh-tl-axis">
+                      <span class="nh-tl-dot" />
+                    </span>
+                    <div class="nh-tl-body">
+                      <h3 class={cardTitleClasses}>{item.title}</h3>
+                      <p class="mt-1 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
+                        {item.body}
+                      </p>
+                    </div>
+                  </li>
+                  {item === firstCommit && (
+                    <li class="nh-tl-row nh-tl-span">
+                      <span class="nh-tl-when" />
+                      <span class="nh-tl-axis" />
+                      <p class="nh-tl-span-label">
+                        {developmentSpan} of development
+                      </p>
+                    </li>
+                  )}
+                </>
+              ))
+            }
+          </ol>
+          <div class="nh-tl-curve-top" aria-hidden="true">
+            <span class="nh-tl-today-badge">Today</span>
+          </div>
+        </div>
+
+        <div class="nh-tl-row nh-tl-today nh-tl-today-mobile" aria-hidden="true">
+          <span class="nh-tl-when">Today</span>
+          <span class="nh-tl-axis" />
+          <span class="nh-tl-rule" />
+        </div>
+
+        <div class="nh-timeline-band nh-timeline-band-planned">
+          <ol class="nh-timeline nh-timeline-planned">
+            {
+              plannedMilestones.map((item) => (
+                <li class="nh-tl-row nh-tl-planned">
+                  <time
+                    class="nh-tl-when nh-tl-date"
+                    datetime={formatIsoDate(item)}
+                  >
+                    {formatDate(item)}
+                  </time>
+                  <span class="nh-tl-axis">
+                    <span class="nh-tl-dot" />
+                  </span>
+                  <div class="nh-tl-body">
+                    <h3 class={cardTitleClasses}>{item.title}</h3>
+                    <p class="mt-1 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
+                      {item.body}
+                    </p>
+                  </div>
                 </li>
-              )}
-              <li
-                class:list={[
-                  "nh-tl-row",
-                  item.released ? "nh-tl-released" : "nh-tl-planned",
-                ]}
-              >
-                <time
-                  class="nh-tl-when nh-tl-date"
-                  datetime={formatIsoDate(item)}
-                >
-                  {formatDate(item)}
-                </time>
-                <span class="nh-tl-axis">
-                  <span class="nh-tl-dot" />
-                </span>
-                <div class="nh-tl-body">
-                  <h3 class={cardTitleClasses}>{item.title}</h3>
-                  <p class="mt-1 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
-                    {item.body}
-                  </p>
-                </div>
-              </li>
-              {item === firstCommit && (
-                <li class="nh-tl-row nh-tl-span">
-                  <span class="nh-tl-when" />
-                  <span class="nh-tl-axis" />
-                  <p class="nh-tl-span-label">
-                    {developmentSpan} of development
-                  </p>
-                </li>
-              )}
-            </>
-          ))
-        }
-      </ol>
+              ))
+            }
+          </ol>
+          <div class="nh-tl-curve-bottom" aria-hidden="true" />
+        </div>
+      </div>
 
       <p
         class="nh-reveal mt-8 flex items-start gap-2.5 text-sm text-silver-tree-700 dark:text-silver-tree-300"
