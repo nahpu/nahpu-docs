@@ -1,0 +1,81 @@
+---
+title: "Teamwork tutorial 2: Share the project and sites by QR"
+authors:
+  - Heru Handika
+lastUpdated: 2026-11-20
+sidebar:
+  label: "2. Share project and sites"
+  order: 2
+---
+
+Bima's iPhone starts with nothing. In this tutorial, Bima copies the project
+identity and the two sites from Heru's iPad by scanning QR codes, so both
+devices hold the same records with the same UUIDs.
+
+## 1. Bima: create the project from Heru's QR
+
+{% steps %}
+
+1. On the iPad, Heru opens the `Dashboard` and taps the QR code in
+   `Project overview`.
+2. On the iPhone, Bima selects `Create project`, then `Scan project QR`, and
+   points the camera at the iPad.
+3. Bima checks that `Project UUID` matches the iPad and selects
+   `Create project`.
+
+{% /steps %}
+
+{% devicepair
+   tablet="app-screenshots/tutorials/teamwork/ipad-project-qr.webp"
+   tabletAlt="NAHPU Project QR code dialog on an iPad with the caption: scan this code when creating a new project to transfer project information"
+   tabletLabel="Heru · iPad"
+   phone="app-screenshots/tutorials/teamwork/iphone-create-project.webp"
+   phoneAlt="NAHPU Create project screen on an iPhone with Create new project, Import project-info JSON, and Scan project QR"
+   phoneLabel="Bima · iPhone" /%}
+
+The review screen lists what the QR carries: the project UUID, name,
+description, time zone, and dates. It also states what it does not carry:
+records, personnel, taxa, and device settings. Those come next.
+
+{% devicepair
+   phone="app-screenshots/tutorials/teamwork/iphone-review-project.webp"
+   phoneAlt="NAHPU Review imported project on an iPhone with project UUID 3f6c2a8e-9b41-4d7e-a5c2-71e0d4b8c913, name Tujuh teamwork 2014, time zone Asia/Jakarta, and dates 12 to 18 September 2014"
+   phoneLabel="Bima · iPhone" /%}
+
+## 2. Copy the site catalog by QR
+
+{% steps %}
+
+1. On the iPad, Heru opens `Sites`, shows `TJHH-L1`, and selects
+   `Show QR` from the three-dot menu.
+2. On the iPhone, Bima opens `Sites` and selects `Scan QR` from the three-dot
+   menu.
+3. In `Import site`, Bima keeps `Create new site` and selects `Continue`.
+4. Repeat for `TJHH-P1`.
+
+{% /steps %}
+
+{% devicepair
+   phone="app-screenshots/tutorials/teamwork/iphone-site-menu.webp"
+   phoneAlt="NAHPU Sites menu on an iPhone with Show QR and Export site unavailable, and Scan QR and Import site available"
+   phoneLabel="Bima · iPhone" /%}
+
+{% aside type="caution" title="Create a new site, not an update" %}
+When a site is already open on the receiving device, `Import site` selects
+`Update an existing site` by default, which would overwrite that site with the
+scanned one. For the second site, select `Create new site` before continuing.
+{% /aside %}
+
+{% devicepair
+   phone="app-screenshots/tutorials/teamwork/iphone-site-import.webp"
+   phoneAlt="NAHPU Import site dialog on an iPhone for TJHH-P1 with one coordinate and one person, reusing the saved Pondok Merah locality, and Create new site selected instead of updating TJHH-L1"
+   phoneLabel="Bima · iPhone" /%}
+
+Each site QR carries its geography, habitat, coordinates, and site leader. The
+second site reuses the Pondok Merah locality saved by the first, so the iPhone
+ends up with one locality and two sites—the same as the iPad. Heru's personnel
+record arrives with the site leader.
+
+## Next
+
+[Teamwork tutorial 3: Share events and taxa](/en/tutorials/teamwork/share-events-and-taxa/)

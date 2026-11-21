@@ -1,0 +1,134 @@
+---
+title: "Teamwork tutorial 1: Plan the team workflow and set it up"
+authors:
+  - Heru Handika
+lastUpdated: 2026-11-20
+sidebar:
+  label: "1. Plan and set up"
+  order: 1
+---
+
+Field teams rarely catalog on a single device. NAHPU supports three
+[field workflows](/en/usages/workflows/), and these tutorials teach the two
+that put several catalogers on several devices:
+
+- **[Workflow A](/en/usages/workflows/#workflow-a): shared site, parallel
+  catalogs.** Specimens come from a shared site and collecting event—a
+  mist-net check, a pitfall line, a Malaise trap—and each person catalogs the
+  specimens they sort on their own device.
+- **[Workflow B](/en/usages/workflows/#workflow-b): separate sites, parallel
+  catalogs.** Each person runs their own trap line, then prepares and catalogs
+  its catch on their own device.
+
+In both, everyone needs the same project and people, each person keeps a
+separate specimen catalog, and the catalogs are merged into one project at the
+end. Real teams often mix the two, and so do these tutorials.
+
+A pair works the same Mt. Tujuh survey from the
+[Basic tutorials](/en/tutorials/basic/paper-catalog/):
+
+- **Heru** (on an iPad) creates the project and the shared site catalog.
+- **Bima** (on an iPhone) copies them by scanning QR codes.
+- **Workflow A:** both catalog the morning check of Line 1 on 13 September 2014
+  in parallel.
+- **Workflow B:** Bima also runs Line 2 on his own and catalogs its catch.
+- Heru merges Bima's catalog, checks all tissues into one freezer box, and
+  exports a Darwin Core Archive.
+
+{% aside type="note" title="A re-enactment of real records" %}
+In 2014, Heru cataloged every specimen himself. These tutorials imagine that
+Bima Sampel (a fictional teammate) cataloged the pitfall catch and ran Line 2.
+Bima's five records are real specimens from the paper catalog—HH 451 to HH 454
+and HH 456—renumbered `BS1` to `BS5` for teaching. All measurements, dates, and tissue numbers are as
+written on the paper forms.
+{% /aside %}
+
+Before starting, work through
+[Basic tutorials 2–5](/en/tutorials/basic/project-personnel-taxa/), which
+explain each form used here. Allow about an hour for the series. You need
+two NAHPU installations, such as a tablet and a phone. Scanning QR codes works
+on Android, iOS, macOS, and the web; on other devices, use the JSON export and
+import shown in [Teamwork tutorial 3: Share events and taxa](/en/tutorials/teamwork/share-events-and-taxa/).
+
+## Series overview
+
+| Tutorial | Workflow | Device | What happens |
+| --- | --- | --- | --- |
+| [1. Plan and set up](/en/tutorials/teamwork/plan-and-set-up/) | A and B | iPad | Plan what is shared; Heru enters the project, people, taxa, sites, and events |
+| [2. Share project and sites](/en/tutorials/teamwork/share-project-and-sites/) | A | Both | Bima creates the project and copies the sites by QR |
+| [3. Share events and taxa](/en/tutorials/teamwork/share-events-and-taxa/) | A | Both | Events travel as files; taxa by QR |
+| [4. Catalog in parallel](/en/tutorials/teamwork/catalog-in-parallel/) | A | Both | Each cataloger enters the specimens they sorted from the shared line |
+| [5. Run your own line](/en/tutorials/teamwork/run-your-own-line/) | B | iPhone | Bima creates his own site and event and catalogs its catch |
+| [6. Merge the catalogs](/en/tutorials/teamwork/merge-catalogs/) | A and B | Both | Bima exports; Heru merges |
+| [7. Check tissues and export](/en/tutorials/teamwork/check-tissues-and-export/) | A and B | iPad | One freezer box and one Darwin Core Archive |
+
+## 1. Plan what is shared
+
+Teamwork works because both devices hold *identical* copies of the shared
+records, with the same UUIDs. When the catalogs are merged, NAHPU recognizes
+those records as the same rather than duplicating them. Records that only one
+person needs—such as the site and event for their own line in Workflow B—stay on
+that person's device until the merge, which adds them as new.
+
+| Record | Who creates it | How the other device gets it |
+| --- | --- | --- |
+| Project identity | Heru | Project QR |
+| Personnel, including both catalogers | Heru | Inside the site and event QR codes and files |
+| Sites `TJHH-L1` and `TJHH-P1` (Workflow A) | Heru | Site QR |
+| Events for both sites (Workflow A) | Heru | Event JSON file |
+| Site `TJBS-L2` and its event (Workflow B) | Bima | Merged at the end |
+| Taxa for Bima's specimens | Heru | Taxon QR |
+| Specimen records | Each cataloger | Merged at the end |
+| Field journal | Each cataloger | Not merged |
+
+## 2. Heru: set up the shared context
+
+On the iPad, Heru follows Basic tutorials 2–4 with the values below.
+
+{% steps %}
+
+1. Create the project:
+
+    | Field | Value |
+    | --- | --- |
+    | Project name | `Tujuh teamwork 2014` |
+    | Description | `Two-cataloger practice project (Workflow A) built from the 2014 Mt. Tujuh small-mammal survey, Kerinci, Jambi.` |
+    | Time zone | `Asia/Jakarta` |
+
+    Project names accept letters, numbers, spaces, hyphens, and underscores, up
+    to 25 characters. A period, as in `Mt.`, is not accepted.
+
+2. Add personnel. Heru creates **both** catalogers here, including Bima:
+
+    | `Name*` | Role | `Initials` | `Cataloger number*` |
+    | --- | --- | --- | --- |
+    | `Heru Handika` | `Cataloger` | `HH` | `445` |
+    | `Bima Sampel` | `Cataloger` | `BS` | `1` |
+    | `Citra Contoh` | `None` | `CC` | — |
+
+3. Register five taxa in the taxon registry: *Mus crociduroides*, *Maxomys
+   hylomyoides*, and *Niviventer cremoriventer* (Rodentia, Muridae);
+   *Crocidura neglecta* and *Crocidura beccarii* (Eulipotyphla, Soricidae).
+
+4. Create the sites `TJHH-L1` (`Trapline`) and `TJHH-P1` (`Pitfall line`) with
+   the geography, habitat, and `TJHH-PM` coordinate from
+   [Basic tutorial 3](/en/tutorials/basic/sites/).
+
+5. Create one event per site, 12–16 September 2014, with the methods and notes
+   from [Basic tutorial 4](/en/tutorials/basic/events/): 31 snap traps on
+   `TJHH-L1` and 10 pitfalls on `TJHH-P1`. Add Heru Handika as `Leader` and
+   Bima Sampel and Citra Contoh as `Helper` on both events.
+
+{% /steps %}
+
+{% aside type="caution" title="Why Heru creates Bima's record" %}
+NAHPU identifies each person by a UUID, not by name. If Bima created his own
+record on the iPhone, the merge would see two different people named Bima
+Sampel. Created once on the iPad, Bima's record travels to the iPhone inside
+the site and event transfers with the same UUID. The `Cataloger` role also
+cannot be changed after a person is created, so set it now.
+{% /aside %}
+
+## Next
+
+[Teamwork tutorial 2: Share the project and sites by QR](/en/tutorials/teamwork/share-project-and-sites/)

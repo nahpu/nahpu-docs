@@ -1,0 +1,110 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+// One tutorial step seen on two devices, such as a tablet showing a QR code and the phone that
+// imports it. Either capture may be left out; a lone phone capture is kept at phone width.
+interface Props {
+  /// Path under `src/assets/images/`, such as `app-screenshots/tutorials/teamwork/a.webp`.
+  tablet?: string;
+  tabletAlt?: string;
+  /// Short device label shown above the capture, such as `Heru · iPad`.
+  tabletLabel?: string;
+  phone?: string;
+  phoneAlt?: string;
+  phoneLabel?: string;
+}
+
+const { tablet, tabletAlt, tabletLabel, phone, phoneAlt, phoneLabel } = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/**/*.{png,jpg,jpeg,webp}",
+  { eager: true },
+);
+
+function resolveImage(path: string): ImageMetadata {
+  const image = images[`/src/assets/images/${path}`];
+  if (!image) {
+    throw new Error(`Screenshot not found in src/assets/images: ${path}`);
+  }
+  return image.default;
+}
+
+const shots = [
+  tablet && {
+    kind: "tablet",
+    src: resolveImage(tablet),
+    alt: tabletAlt ?? "",
+    label: tabletLabel,
+    width: 1000,
+  },
+  phone && {
+    kind: "phone",
+    src: resolveImage(phone),
+    alt: phoneAlt ?? "",
+    label: phoneLabel,
+    width: 320,
+  },
+].filter(Boolean) as {
+  kind: "tablet" | "phone";
+  src: ImageMetadata;
+  alt: string;
+  label?: string;
+  width: number;
+}[];
+---
+
+<div class:list={["nh-pair not-content", { "nh-pair--both": shots.length === 2 }]}>
+  {
+    shots.map((shot) => (
+      <figure class={`nh-pair__shot nh-pair__shot--${shot.kind}`}>
+        {shot.label && <figcaption class="nh-pair__label">{shot.label}</figcaption>}
+        <Image src={shot.src} alt={shot.alt} width={shot.width} densities={[1.5, 2]} />
+      </figure>
+    ))
+  }
+</div>
+
+<style>
+  .nh-pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    align-items: end;
+    justify-items: center;
+    margin-block: 1.5rem 2rem;
+  }
+
+  .nh-pair__shot {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .nh-pair__shot--phone {
+    max-width: 16rem;
+  }
+
+  .nh-pair__label {
+    margin: 0 0 0.375rem;
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .nh-pair__shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 0.625rem;
+  }
+
+  @media (min-width: 40rem) {
+    .nh-pair--both {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 12rem);
+    }
+  }
+</style>

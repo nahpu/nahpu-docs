@@ -1,0 +1,234 @@
+---
+// A training ramp: the roles a new team member takes on, from easiest to
+// hardest, and the NAHPU records each role fills. Each row is a button; the
+// selected row's detail shows below. Bars grow with the step, echoing a rising
+// difficulty curve. The page supplies every word through `skillstep` tags.
+interface Step {
+  title: string;
+  week: string;
+  detail: string;
+}
+
+interface Props {
+  label: string;
+  hint: string;
+  weekLabel: string;
+  steps: Step[];
+}
+
+const { label, hint, weekLabel, steps } = Astro.props;
+const detailId = "skill-ramp-detail";
+const fraction = (index: number) => ((index + 1) / steps.length).toFixed(3);
+---
+
+<figure class="ramp not-content" data-skill-ramp aria-label={label}>
+  <p class="ramp__hint">{hint}</p>
+  <ol class="ramp__rows">
+    {
+      steps.map((step, index) => (
+        <li class="ramp__row">
+          <span class="ramp__week">
+            {weekLabel} {step.week}
+          </span>
+          <button
+            type="button"
+            class="ramp__bar"
+            style={`--f: ${fraction(index)}`}
+            aria-pressed={String(index === 0)}
+            aria-controls={detailId}
+            data-title={step.title}
+            data-detail={step.detail}
+          >
+            <span class="ramp__pill">{step.title}</span>
+          </button>
+        </li>
+      ))
+    }
+  </ol>
+  <div class="ramp__detail" id={detailId} aria-live="polite">
+    {
+      steps[0] && (
+        <>
+          <strong>{steps[0].title}</strong>
+          {steps[0].detail}
+        </>
+      )
+    }
+  </div>
+</figure>
+
+<style>
+  .ramp {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.5rem 0 2rem;
+    border: 1px solid rgb(28 43 33 / 0.1);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.7);
+    padding: 0.75rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  }
+
+  @media (min-width: 56rem) {
+    .ramp {
+      padding: 1.25rem;
+    }
+  }
+
+  .ramp__hint {
+    margin: 0;
+    color: #465d4e;
+    font-size: var(--sl-text-xs);
+    line-height: 1.4;
+  }
+
+  .ramp__rows {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ramp__row {
+    display: grid;
+    grid-template-columns: 4.25rem minmax(0, 1fr);
+    gap: 0.5rem;
+    align-items: center;
+    margin: 0;
+  }
+
+  .ramp__week {
+    color: #465d4e;
+    font-size: var(--sl-text-xs);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .ramp__bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* Every bar fits the longest label, then grows with the step. */
+    --min: min(100%, 15.5rem);
+    width: calc(var(--min) + (100% - var(--min)) * var(--f));
+    min-height: 2.25rem;
+    padding: 0.25rem;
+    border: 0;
+    border-radius: 0 999px 999px 0;
+    background: linear-gradient(90deg, rgb(54 201 227 / 0.35), rgb(54 201 227 / 0.85));
+    font: inherit;
+    cursor: pointer;
+    transition:
+      box-shadow 150ms ease,
+      transform 150ms ease;
+  }
+
+  .ramp__pill {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: #0047ab;
+    color: #ffffff;
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+
+  .ramp__bar:hover,
+  .ramp__bar:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #0047ab;
+  }
+
+  .ramp__bar[aria-pressed="true"] {
+    box-shadow: 0 0 0 3px #0047ab;
+  }
+
+  .ramp__detail {
+    min-height: 4.5rem;
+    border: 1px solid rgb(28 43 33 / 0.08);
+    border-radius: 0.75rem;
+    background: rgb(243 246 244 / 0.9);
+    padding: 0.75rem 1rem;
+    color: #283a2e;
+    font-size: var(--sl-text-sm);
+    line-height: 1.6;
+  }
+
+  .ramp__detail :global(strong) {
+    display: block;
+    margin-bottom: 0.2rem;
+    color: #1c2b21;
+  }
+
+  :global([data-theme="dark"]) .ramp {
+    border-color: rgb(226 233 227 / 0.1);
+    background: rgb(14 26 18 / 0.4);
+  }
+
+  :global([data-theme="dark"]) .ramp__hint,
+  :global([data-theme="dark"]) .ramp__week {
+    color: #9db3a3;
+  }
+
+  :global([data-theme="dark"]) .ramp__pill {
+    background: #2f6fd1;
+  }
+
+  :global([data-theme="dark"]) .ramp__bar:hover,
+  :global([data-theme="dark"]) .ramp__bar:focus-visible,
+  :global([data-theme="dark"]) .ramp__bar[aria-pressed="true"] {
+    box-shadow: 0 0 0 3px #8fb7f2;
+  }
+
+  :global([data-theme="dark"]) .ramp__detail {
+    border-color: rgb(226 233 227 / 0.1);
+    background: rgb(28 43 33 / 0.8);
+    color: #c5d3c8;
+  }
+
+  :global([data-theme="dark"]) .ramp__detail :global(strong) {
+    color: #f3f6f4;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ramp__bar {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  for (const figure of document.querySelectorAll<HTMLElement>("[data-skill-ramp]")) {
+    const detail = figure.querySelector<HTMLElement>(".ramp__detail");
+    const bars = [...figure.querySelectorAll<HTMLButtonElement>(".ramp__bar")];
+
+    const select = (bar: HTMLButtonElement, focus = false) => {
+      for (const other of bars) other.setAttribute("aria-pressed", String(other === bar));
+      if (focus) bar.focus();
+      if (!detail) return;
+      const title = document.createElement("strong");
+      title.textContent = bar.dataset.title ?? "";
+      detail.replaceChildren(title, bar.dataset.detail ?? "");
+    };
+
+    for (const [index, bar] of bars.entries()) {
+      bar.addEventListener("click", () => select(bar));
+      bar.addEventListener("keydown", (event) => {
+        let next: number | null = null;
+        if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+          next = (index + 1) % bars.length;
+        } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+          next = (index - 1 + bars.length) % bars.length;
+        } else if (event.key === "Home") next = 0;
+        else if (event.key === "End") next = bars.length - 1;
+        if (next !== null) {
+          event.preventDefault();
+          select(bars[next], true);
+        }
+      });
+    }
+  }
+</script>

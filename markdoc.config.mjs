@@ -68,6 +68,79 @@ export default defineMarkdocConfig({
         return new Markdoc.Tag(this.render, { ...attributes, pins }, []);
       },
     },
+    // Field-data workflows (A, B, C) as tabs. Each `workflow` child renders its
+    // own schematic and the page text inside it.
+    workflows: {
+      render: component("./src/components/diagram/WorkflowExplorer.astro"),
+      children: ["tag"],
+      attributes: {
+        label: { type: String, required: true },
+      },
+      transform(node, config) {
+        const attributes = node.transformAttributes(config);
+        const items = node.children
+          .filter((child) => child.type === "tag" && child.tag === "workflow")
+          .map((child) => child.transformAttributes(config));
+        return new Markdoc.Tag(
+          this.render,
+          { ...attributes, items },
+          node.transformChildren(config),
+        );
+      },
+    },
+    workflow: {
+      render: component("./src/components/diagram/WorkflowPanel.astro"),
+      attributes: {
+        id: { type: String, required: true, matches: ["A", "B", "C"] },
+        short: { type: String, required: true },
+        title: { type: String, required: true },
+        source: { type: String, required: true },
+        people: { type: String, required: true },
+        result: { type: String, required: true },
+      },
+    },
+    // A training ramp: roles a new team member takes on, easiest first.
+    skillramp: {
+      render: component("./src/components/diagram/SkillRamp.astro"),
+      children: ["tag"],
+      attributes: {
+        label: { type: String, required: true },
+        hint: { type: String, required: true },
+        weekLabel: { type: String, required: true },
+      },
+      transform(node, config) {
+        const attributes = node.transformAttributes(config);
+        const steps = node.children
+          .filter((child) => child.type === "tag" && child.tag === "skillstep")
+          .map((child) => child.transformAttributes(config));
+        return new Markdoc.Tag(this.render, { ...attributes, steps }, []);
+      },
+    },
+    skillstep: {
+      selfClosing: true,
+      attributes: {
+        title: { type: String, required: true },
+        week: { type: String, required: true },
+        detail: { type: String, required: true },
+      },
+      transform() {
+        return null;
+      },
+    },
+    // A tutorial step seen on two devices (tablet and phone), each optional, with a
+    // short device label above each capture.
+    devicepair: {
+      render: component("./src/components/DevicePair.astro"),
+      selfClosing: true,
+      attributes: {
+        tablet: { type: String },
+        tabletAlt: { type: String },
+        tabletLabel: { type: String },
+        phone: { type: String },
+        phoneAlt: { type: String },
+        phoneLabel: { type: String },
+      },
+    },
     // One element shown in the figure. Each placement is `[x, y]` in percent of
     // that capture's width and height.
     pin: {

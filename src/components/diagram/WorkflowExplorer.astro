@@ -1,0 +1,203 @@
+---
+// Field-data workflows supported by NAHPU (Workflows A, B, and C). The page
+// supplies every word through `workflow` child tags; each child renders its own
+// schematic and text panel. Without JavaScript, all panels stay visible in
+// order; with it, tabs switch between them.
+interface WorkflowTab {
+  id: string;
+  short: string;
+}
+
+interface Props {
+  label: string;
+  items: WorkflowTab[];
+}
+
+const { label, items } = Astro.props;
+---
+
+<figure class="wf not-content" data-workflows aria-label={label}>
+  <div class="wf__tabs" role="tablist" aria-label={label} hidden>
+    {
+      items.map((item, index) => (
+        <button
+          type="button"
+          role="tab"
+          class="wf__tab"
+          id={`wf-tab-${item.id}`}
+          aria-controls={`wf-panel-${item.id}`}
+          aria-selected={String(index === 0)}
+          tabindex={index === 0 ? 0 : -1}
+          data-id={item.id}
+        >
+          <span class="wf__badge" aria-hidden="true">{item.id}</span>
+          <span>{item.short}</span>
+        </button>
+      ))
+    }
+  </div>
+  <div class="wf__panels">
+    <slot />
+  </div>
+</figure>
+
+<style>
+  .wf {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.5rem 0 2rem;
+    border: 1px solid rgb(28 43 33 / 0.1);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.7);
+    padding: 0.75rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  }
+
+  @media (min-width: 56rem) {
+    .wf {
+      padding: 1.25rem;
+    }
+  }
+
+  .wf__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .wf__tabs[hidden] {
+    display: none;
+  }
+
+  .wf__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem 0.35rem 0.35rem;
+    border: 1px solid rgb(28 43 33 / 0.15);
+    border-radius: 999px;
+    background: transparent;
+    color: #283a2e;
+    font: inherit;
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .wf__tab:hover {
+    border-color: #405847;
+  }
+
+  .wf__tab:focus-visible {
+    outline: 2px solid #405847;
+    outline-offset: 2px;
+  }
+
+  .wf__tab[aria-selected="true"] {
+    border-color: #405847;
+    background: #405847;
+    color: #f3f6f4;
+  }
+
+  .wf__badge {
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: rgb(64 88 71 / 0.12);
+    font-size: var(--sl-text-xs);
+  }
+
+  .wf__tab[aria-selected="true"] .wf__badge {
+    background: rgb(243 246 244 / 0.2);
+  }
+
+  .wf__panels {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  :global([data-theme="dark"]) .wf {
+    border-color: rgb(226 233 227 / 0.1);
+    background: rgb(14 26 18 / 0.4);
+  }
+
+  :global([data-theme="dark"]) .wf__tab {
+    border-color: rgb(226 233 227 / 0.2);
+    color: #c5d3c8;
+  }
+
+  :global([data-theme="dark"]) .wf__tab:hover,
+  :global([data-theme="dark"]) .wf__tab[aria-selected="true"] {
+    border-color: #9db3a3;
+  }
+
+  :global([data-theme="dark"]) .wf__tab[aria-selected="true"] {
+    background: #9db3a3;
+    color: #1c2b21;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wf__tab {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  for (const figure of document.querySelectorAll<HTMLElement>("[data-workflows]")) {
+    const tablist = figure.querySelector<HTMLElement>(".wf__tabs");
+    const tabs = [...figure.querySelectorAll<HTMLButtonElement>(".wf__tab")];
+    const panels = [...figure.querySelectorAll<HTMLElement>("[data-workflow-panel]")];
+    if (!tablist || tabs.length === 0 || panels.length === 0) continue;
+
+    const select = (tab: HTMLButtonElement, focus = false) => {
+      for (const other of tabs) {
+        const selected = other === tab;
+        other.setAttribute("aria-selected", String(selected));
+        other.tabIndex = selected ? 0 : -1;
+      }
+      for (const panel of panels) {
+        panel.hidden = panel.dataset.id !== tab.dataset.id;
+      }
+      if (focus) tab.focus();
+    };
+
+    tablist.hidden = false;
+    for (const panel of panels) {
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", `wf-tab-${panel.dataset.id}`);
+    }
+    const tabForHash = () =>
+      tabs.find(
+        (tab) => location.hash.toLowerCase() === `#workflow-${tab.dataset.id?.toLowerCase()}`,
+      );
+    select(tabForHash() ?? tabs[0]);
+    // Links such as `#workflow-b` on the same page switch tabs, then scroll to the heading.
+    window.addEventListener("hashchange", () => {
+      const tab = tabForHash();
+      if (!tab) return;
+      select(tab);
+      document.getElementById(location.hash.slice(1))?.scrollIntoView();
+    });
+
+    for (const [index, tab] of tabs.entries()) {
+      tab.addEventListener("click", () => select(tab));
+      tab.addEventListener("keydown", (event) => {
+        let next: number | null = null;
+        if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+        else if (event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === "Home") next = 0;
+        else if (event.key === "End") next = tabs.length - 1;
+        if (next !== null) {
+          event.preventDefault();
+          select(tabs[next], true);
+        }
+      });
+    }
+  }
+</script>

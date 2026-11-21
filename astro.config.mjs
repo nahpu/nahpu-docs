@@ -477,6 +477,22 @@ export default defineConfig({
               ],
             },
             {
+              label: "Teamwork",
+              collapsed: true,
+              translations: {
+                "pt-BR": "Trabalho em equipe",
+                es: "Trabajo en equipo",
+                id: "Kerja tim",
+              },
+              items: [
+                {
+                  autogenerate: {
+                    directory: "tutorials/teamwork",
+                  },
+                },
+              ],
+            },
+            {
               label: "Export",
               collapsed: true,
               translations: {
