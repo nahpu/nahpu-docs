@@ -224,9 +224,10 @@ const platforms: Platform[] = [
     requirements: [
       "An x86_64 or arm64 (aarch64) distribution with GLIBC 2.35 or later, such as Ubuntu 22.04, Debian 12, Fedora 36, or RHEL and Rocky Linux 9",
     ],
+    note: "For Ubuntu users, the Snap Store is recommended—it is easier and updates automatically, though it requires administrator access.",
     steps: [
       {
-        text: "Run the install script in a terminal. It picks the right package for your distribution and processor, and when the Snap Store has NAHPU for your system, it asks whether you want the Snap, which updates itself.",
+        text: "On Ubuntu, install NAHPU from the Snap Store with the button below if you have administrator access, or run the install script in a terminal. The script picks the right package for your distribution and processor, asks whether you want the Snap when available, and falls back to a portable install without administrator access.",
         code: "curl -fsSL https://nahpu.app/install.sh | bash",
       },
       "Open NAHPU from your application menu, or run <code>nahpu</code> in a terminal.",

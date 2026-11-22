@@ -1,48 +1,54 @@
 ---
-title: Coleta de Dados
+title: Coleta de dados
 sidebar:
-    label: Coleta de Dados
-    order: 4
+  label: Coleta de dados
+  order: 4
 ---
 
-Registre contexto suficiente para que outra pessoa interprete um espécime, retorne à sua localidade e avalie as observações. **O que um registro não conseguir dizer por si é o que será perdido.**
+Registre contexto suficiente para que outro pesquisador interprete um espécime, revisite sua localidade e avalie as observações. **O que um registro não consegue dizer por si só é o que será perdido.**
 
 {% aside type="note" title="Por que o contexto de campo se perde" %}
-[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) descrevem a entropia da informação que se segue a uma temporada de campo: o conteúdo interpretativo de um conjunto de dados se degrada à medida que as pessoas que o guardavam na memória se dispersam, e essa degradação é mais rápida nos primeiros meses.
+[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) descrevem a entropia da informação após uma temporada de campo: o conteúdo interpretativo de um conjunto de dados decai à medida que a equipe se dispersa, e decai mais rápido nos primeiros meses.
 {% /aside %}
 
-## Nomes de locais e coordenadas
+## Nomeação de locais e coordenadas
 
-**Use um `Site ID` estável para uma localidade de coleta**, como `PAT-01`. Registre o nome descritivo, a localização administrativa, o acesso e os pontos de referência nos campos do local, em vez de codificar tudo no ID. Um `Site ID` compacto, porém descritivo, é mais fácil de encontrar ao selecionar eventos de coleta. O NAHPU mostra automaticamente a localidade completa do local em cada campo depois que você seleciona um `Site ID`.
+**Use um `Site ID` estável e único para cada localidade de coleta**, como `PAT-01` ou `GPHH-L1` (até 40 letras, dígitos, `-` ou `_`; o NAHPU converte letras para maiúsculas automaticamente). Coloque o nome descritivo, a hierarquia administrativa, detalhes de acesso e marcos nos campos do local em vez de codificar tudo no ID. O NAHPU exibe automaticamente a localidade ao selecionar um `Site ID`, e a correspondência de locais em uma mesclagem depende de `Site ID` idênticos.
 
-**Nomeie as coordenadas de forma consistente dentro do local.** Por exemplo, `PAT-01-T01-START` e `PAT-01-T01-END` podem marcar um transecto, enquanto `PAT-01-TRAP-001` identifica a posição de uma armadilha. Documente a convenção e o que cada ponto representa. Esses exemplos são convenções da equipe, não identificadores gerados ou impostos pelo NAHPU. Cada espécime deve referenciar o ponto de coordenada adequado; um local pode conter vários.
+**Nomeie coordenadas de forma consistente dentro do local.** Por exemplo, `PAT-01-T01-START` e `PAT-01-T01-END` podem marcar um transecto, enquanto `PAT-01-TRAP-001` identifica uma armadilha. Documente a convenção e o que cada ponto representa. Um espécime deve referenciar o ponto de coordenada adequado; um local pode conter vários.
+
+{% aside type="tip" title="Reutilize localidades e locais" %}
+Use `Find existing locality` em `Geography` para reutilizar localidades administrativas compartilhadas sem criar variantes ortográficas, e use `Duplicate site` ou `Copy from project ...` ao criar linhas adjacentes na mesma localidade.
+{% /aside %}
 
 ## Georreferenciamento {% #georeferencing %}
 
-Preserve a descrição da localidade e a fonte da posição. **A precisão decimal, sozinha, não estabelece exatidão.**
+Preserve a descrição da localidade e a origem da posição. **Precisão decimal sozinha não garante acurácia.**
+
+{% bpdiagram kind="georef" locale="pt" /%}
 
 {% aside type="note" title="Guias de referência" %}
-Esta seção aplica aos campos de coordenadas do NAHPU as [*Georeferencing Best Practices*](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) de Chapman & Wieczorek (2020) e o [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/) que as acompanha (Zermoglio et al. 2020). Recomendamos consultar ambos para o método completo.
+Esta seção aplica [*Georeferencing Best Practices*](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) (Chapman & Wieczorek 2020) e o [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/) (Zermoglio et al. 2020) aos campos de coordenada do NAHPU. Recomendamos consultar ambos para o método completo.
 {% /aside %}
 
 ### Escreva uma localidade que se sustente sem as coordenadas
 
-**Descreva a localidade mesmo quando tiver coordenadas.** A descrição é a evidência independente contra a qual uma posição pode ser conferida. Use `Precise Locality`, a hierarquia geográfica e `Remarks` para isso, e escreva com detalhe suficiente para não permitir uma segunda leitura.
+**Forneça uma localidade descritiva mesmo quando tiver coordenadas.** A descrição é a evidência independente contra a qual uma posição pode ser conferida. Use `Precise Locality`, a hierarquia geográfica e `Remarks`, sem deixar margem para dupla leitura.
 
-- Evite construções vagas: `perto de`, `centro de` e uma direção sem distância, como `a leste de Temboan`.
-- Escreva, em vez disso, `7,2 km a NE de Muara Sipongi por estrada, pela trilha da crista acima do Abrigo II`.
+- Evite construções vagas: `perto de`, `centro de` ou uma direção sem distância como `Leste de Temboan`.
+- Escreva `7,2 km NE de Muara Sipongi por estrada, ao longo da trilha da crista acima do Abrigo II`.
 
-Essa descrição é o que detecta uma coordenada digitada com o hemisfério errado ou com latitude e longitude trocadas. Uma posição sem texto de localidade não tem nada com que ser confrontada.
+Essa descrição é o que detecta um hemisfério errado ou latitude e longitude trocadas. Uma posição sem texto de localidade não tem contra o que ser conferida.
 
-### Registre sempre o datum
+### Registre o datum, sempre
 
-**Um datum não registrado ou equivocado é um dos maiores erros de posição possíveis.** Os deslocamentos entre o que alguns mapas registram e o WGS84 vão de zero a 5359 m: um erro de escala quilométrica introduzido por um campo deixado no valor padrão.
+**Um datum ausente ou errado é um dos maiores erros posicionais possíveis.** Deslocamentos entre mapas antigos e WGS84 variam de zero a 5.359 m — um erro na escala de quilômetros introduzido por um campo deixado no padrão.
 
-O campo `Datum` do NAHPU usa WGS84 por padrão e é exportado como `dwc:geodeticDatum`. **Confira o ajuste de datum no próprio GPS**, em vez de supor que coincide. Alterar o campo `Datum` não transforma coordenadas registradas em outro datum, e converter entre os formatos de entrada aceitos também não. Faça essa transformação com uma ferramenta geoespacial antes de importar e registre-a nas notas.
+O `Datum` do NAHPU usa WGS84 por padrão e exporta como `dwc:geodeticDatum`. **Verifique o datum no próprio aparelho de GPS** em vez de presumir que coincide. Alterar o campo `Datum` não transforma coordenadas registradas em outro datum; transforme-as em uma ferramenta geoespacial antes de importar e anote a transformação.
 
 ### Mantenha todas as casas decimais da fonte
 
-Truncar uma coordenada descarta exatidão que não pode ser recuperada. Distância aproximada no terreno por casa decimal:
+Truncar uma coordenada descarta precisão que não pode ser recuperada:
 
 | Casas decimais | Distância aproximada no terreno |
 |---|---|
@@ -52,71 +58,53 @@ Truncar uma coordenada descarta exatidão que não pode ser recuperada. Distânc
 | 2 (0,01°) | 1.111 m |
 | 1 (0,1°) | 11.111 m |
 
-Uma linha de armadilhas registrada com duas casas decimais fica em algum ponto dentro de cerca de 1,1 km: mais largo que a própria linha e largo o bastante para colocar `PAT-01-T01-START` e `PAT-01-T01-END` no mesmo ponto. Um GPS de mão dedicado costuma fornecer cinco casas decimais. **Insira tantas casas decimais quantas a fonte da coordenada fornecer.**
+Uma linha de armadilhas registrada com duas casas decimais cai em algum lugar dentro de ~1,1 km — mais larga que a própria linha. Um GPS portátil dedicado costuma fornecer cinco casas decimais. **Insira tantas casas decimais quanto a fonte fornecer.**
 
 ### Capture a posição onde o evento aconteceu
 
-**Faça a leitura na posição de coleta, não no acampamento.** No NAHPU, capture com o cartão `Device GPS` no local e inspecione o resultado antes de aceitá-lo. Uma leitura feita depois no acampamento descreve o acampamento, a menos que você insira deliberadamente um deslocamento documentado ou uma posição corrigida.
+**Faça a leitura no ponto de coleta, não no acampamento.** No NAHPU, capture com o cartão `Device GPS` no local e inspecione o resultado antes de aceitar. Um smartphone recente alcança acurácia comparável à de um GPS dedicado, embora ainda prefiramos um GPS dedicado em campo pela bateria muito mais longa. **Se o tablet ficar no acampamento, capture no local com o celular ou GPS** e insira depois anotando a fonte.
 
-Um smartphone de topo dos últimos anos registra coordenadas com exatidão comparável à de um GPS de mão dedicado, de modo que registrar direto no NAHPU pelo telefone é uma opção viável. Ainda assim, preferimos um GPS dedicado para o trabalho de campo, pela autonomia muito maior. **Se o tablet que contém o projeto ficar no acampamento, faça a leitura no local com o telefone ou com o GPS** e insira-a depois, indicando a fonte.
+**Expresse deslocamentos como distância medida, nunca como rumo aproximado.** Indique se a distância foi medida ao longo da rota (`por estrada`) ou em linha reta (`em linha reta`) e use marcos permanentes, nunca um acampamento temporário. **Para um transecto, registre ambas as extremidades como coordenadas separadas.**
 
-**Expresse um deslocamento como distância medida, nunca como rumo.** Meça ao longo de um percurso ou como duas distâncias ortogonais a partir de um elemento do terreno; isso elimina a incerteza que um rumo impreciso acrescentaria. Registre se a distância foi medida pelo percurso (`by road`) ou em linha reta (`by air`) — as duas descrevem lugares diferentes. Use referências estáveis, como marcos permanentes ou pontos trigonométricos, nunca um ponto de passagem temporário ou um acampamento que não existirá na próxima temporada.
+### Defina a incerteza a partir da leitura e amplie-a
 
-**Em um transecto, registre as duas extremidades como coordenadas separadas**, que é para isso que serve a convenção `-START` e `-END` acima. Um local pode conter quantos pontos o protocolo exigir.
+Duas regras diretas:
 
-### Defina a incerteza pela leitura do dispositivo e depois amplie
+- **Insira pelo menos o dobro da acurácia relatada pelo GPS** no momento da captura.
+- **Quando a acurácia for desconhecida, use 30 m**, padrão conservador para leituras portáteis após maio de 2000.
 
-Duas regras de aplicação direta:
+Fazer a média de várias leituras em um ponto leva um receptor moderno a cerca de 3 m ou melhor. O NAHPU armazena `Uncertainty (m)` em metros inteiros e exporta como `dwc:coordinateUncertaintyInMeters`.
 
-- **Insira pelo menos o dobro da exatidão informada pelo GPS** no momento da captura.
-- **Quando a exatidão for desconhecida, use 30 m**, o valor conservador padrão para uma leitura de aparelho de mão feita depois de maio de 2000, quando a Disponibilidade Seletiva foi encerrada.
-
-A razão para ampliar o número do dispositivo é que a exatidão informada pressupõe condições que raramente se têm sob a floresta. **Fazer a média de várias leituras em uma posição** leva um receptor moderno a cerca de 3 m ou menos, o que compensa os minutos gastos em um local que será citado por décadas.
-
-{% aside type="note" title="Desempenho publicado dos receptores" %}
-As duas regras acima vêm do [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). [Chapman & Wieczorek](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) resumem o desempenho medido por trás delas: aparelhos de mão prometem menos de 5 m em áreas abertas com quatro ou mais satélites; smartphones chegam a cerca de 4,9 m sob céu aberto e pioram perto de árvores e prédios; a exatidão em floresta vai de 3 a 11 m em floresta decídua sem folhas e de 3 a 20 m com folhas.
+{% aside type="note" title="Desempenho publicado de receptores" %}
+As duas regras vêm do [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). [Chapman & Wieczorek](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) resumem o desempenho medido: unidades portáteis ficam abaixo de 5 m em áreas abertas; smartphones atingem cerca de 4,9 m a céu aberto e degradam sob copa; em floresta, a acurácia varia de 3–11 m sem folhas a 3–20 m com folhas.
 {% /aside %}
 
-O NAHPU armazena `Uncertainty (m)` em metros inteiros e exporta como `dwc:coordinateUncertaintyInMeters`. Uma captura pelo dispositivo pode preencher esse campo com a exatidão informada pelo sistema operacional.
+**Registre `Elevation (m)` com o mesmo cuidado.** A altitude por GPS costuma errar em 5 m ou mais; se usar um modelo digital de elevação (DEM) ou altímetro, anote em `notes`.
 
-**Registre `Elevation (m)` com o mesmo ceticismo.** A elevação por GPS costuma ter erro de 5 m ou mais, e um modelo digital de elevação muitas vezes é a melhor fonte; se você tirar a elevação de um MDE ou de um altímetro, diga isso nas notas.
+### Diferencie incerteza de extensão do espécime
 
-### Distinga incerteza de extensão do espécime
+`Coordinate extent (m)` descreve a extensão espacial do espécime em relação ao ponto escolhido, como uma área de coleta representada por uma coordenada. **É separado da incerteza da coordenada.** No mapeamento Darwin Core, o NAHPU soma incerteza positiva e extensão positiva. **Evite contar a mesma área duas vezes** e revise o valor exportado antes de publicar.
 
-O `Coordinate extent (m)` do espécime descreve sua extensão espacial em relação ao ponto selecionado, como uma área de coleta representada por uma coordenada. **É distinta da incerteza da coordenada.** Documente o significado e a medição de qualquer extensão usada pelo seu protocolo.
+### Registre quem georreferenciou e como
 
-O mapeamento Darwin Core do NAHPU soma os valores positivos de incerteza da coordenada e de extensão do espécime; se houver apenas um, usa esse valor. Isso é comportamento de exportação, não um método geral para calcular incerteza de georreferenciamento. **Evite contar a mesma extensão duas vezes** e confira o valor exportado com o método documentado antes de publicar.
+**O NAHPU presume que o líder do local registrou a coordenada. Se outra pessoa fez a leitura, registre isso em `notes`.** Anote o método também: `notes` vai para `dwc:georeferenceRemarks`, a entrada literal vai para `dwc:verbatimCoordinates` e `dwc:verbatimCoordinateSystem`, e `GPS unit` guarda o aparelho usado.
 
-{% aside type="note" title="O cálculo completo" %}
-O método ponto-raio de [Chapman & Wieczorek](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) combina a extensão do elemento, a exatidão da fonte da coordenada, a precisão da coordenada, o datum e o erro de medição de qualquer deslocamento.
-{% /aside %}
+### Revise pontos importados
 
-### Registre quem georreferenciou, e como
+Para CSV, TSV ou Excel, mapeie `Latitude` e `Longitude` para colunas em graus decimais em `Edit column mapping` e inspecione avisos em `Review coordinates`. **O importador atribui WGS84 e não mapeia incerteza.** Verifique o sistema de coordenadas antes de importar e preencha os metadados faltantes depois. Veja [importar coordenadas](/pt/usages/sites/#import-coordinates-from-a-file).
 
-**O NAHPU pressupõe que a coordenada foi registrada pelo responsável pelo local. Se a leitura foi feita por outra pessoa, diga isso nas `notes` da coordenada.**
+## Eventos e narrativas de campo
 
-Registre também ali o método. O NAHPU leva as `notes` para `dwc:georeferenceRemarks`, a entrada literal para `dwc:verbatimCoordinates` e `dwc:verbatimCoordinateSystem`, e `GPS unit` para o dispositivo utilizado. Um conjunto de dados que não consegue dizer como suas coordenadas foram obtidas não pode ser reavaliado depois.
+**Crie eventos que reflitam as visitas ou períodos de amostragem do seu protocolo.** Confirme local, data, hora (no relógio local do projeto), método e pessoal. Duplicar um evento deixa dados ambientais em branco, e valores astronômicos são inseridos manualmente.
 
-### Revise os pontos importados
+**Escreva uma breve `Narrative` no fim de cada dia de campo.** Campos estruturados não capturam tudo o que explica uma captura: chuva forte que fechou redes cedo, formigas atacando uma linha ou mudança de método no meio da semana. Vincule cada narrativa ao `Site ID`, data e `Writer`.
 
-Para CSV, TSV ou Excel, mapeie `Latitude` e `Longitude` para colunas em graus decimais em `Edit column mapping`. Revise os mapeamentos opcionais de nome, elevação, unidade de GPS e notas. Inspecione os avisos e selecione apenas os pontos pretendidos em `Review coordinates` antes de adicioná-los.
-
-**O importador de planilhas atribui WGS84 e não mapeia a incerteza.** Diante do pior caso de 5359 m acima, verifique o sistema de coordenadas de origem antes da importação, e não depois; em seguida, inspecione os pontos adicionados e complete os metadados que faltam. Uma linha lida com sucesso não é prova de que o ponto descreve a localidade correta. Consulte [importação de coordenadas](/pt/usages/sites/#import-coordinates-from-a-file).
-
-## Eventos e observações
-
-**Crie eventos que reflitam as visitas ou os períodos de amostragem do seu protocolo.** Confirme local, data, hora, método e pessoal de coleta. Duplicar um evento deixa os dados ambientais em branco, então registre as observações do novo evento. Os valores astronômicos são inseridos manualmente.
-
-**Registre as medidas com as unidades exibidas e distinga zero de um valor não registrado.** Explique estimativas ou exceções nas notas. Use campos personalizados combinados para observações recorrentes e verifique sua disponibilidade no catálogo e na posição pertinentes.
-
-**Antes de deixar o local, reabra espécimes representativos** e verifique evento, coordenada, identificação, Field ID, partes e anexos. Registre as dúvidas em aberto enquanto o contexto ainda está disponível. Este é o momento em que essa degradação é mais barata de conter, porque a resposta ainda está no acampamento, e não na memória de alguém um ano depois.
+**Antes de deixar o local, reabra espécimes representativos** e confira evento, coordenada, identificação, Field ID, partes e anexos. Para práticas de registro no nível do espécime, veja [Espécimes, partes e mídia](/pt/best-practices/specimen-records/).
 
 ## Referências
 
-Chapman AD & Wieczorek JR (2020). [Georeferencing Best Practices](https://docs.gbif.org/georeferencing-best-practices/1.0/en/). GBIF Secretariat, Copenhague.
+Chapman AD & Wieczorek JR (2020). [Georeferencing Best Practices](https://docs.gbif.org/georeferencing-best-practices/1.0/en/). GBIF Secretariat, Copenhagen.
 
-Zermoglio PF, Chapman AD, Wieczorek JR, Luo M-Y & Bloom DA (2020). [Georeferencing Quick Reference Guide](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). GBIF Secretariat, Copenhague.
+Zermoglio PF, Chapman AD, Wieczorek JR, Luo M-Y & Bloom DA (2020). [Georeferencing Quick Reference Guide](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). GBIF Secretariat, Copenhagen.
 
 Michener WK, Brunt JW, Helly JJ, Kirchner TB & Stafford SG (1997). [Nongeospatial metadata for the ecological sciences](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2). *Ecological Applications* 7:330–342.
-
-Use estes guias junto com um protocolo operacional documentado que reflita o método efetivamente utilizado.

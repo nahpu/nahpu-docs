@@ -1,0 +1,53 @@
+---
+title: Backups e recuperação
+sidebar:
+  label: Backups e recuperação
+  order: 6
+---
+
+Planeje contra o desgaste cotidiano — discos que morrem, tablets quebrados, cartões ilegíveis, arquivos sem rótulo e equipes que se dispersam após a viagem — não apenas contra catástrofes. **Um backup que você nunca restaurou é apenas um arquivo que você nunca abriu.**
+
+{% bpdiagram kind="backup" locale="pt" /%}
+
+## Combine o backup com a tarefa
+
+**Exporte o projeto ativo ao fim de cada dia de campo. Faça backup completo do banco de dados uma vez por semana e sempre antes de mesclar ou realizar uma grande curadoria.** As duas ferramentas resolvem problemas diferentes, e usar a mais pesada toda noite na bateria é o erro mais comum que vemos.
+
+- **Diário: `Export project`** (`TAR.GZ` padrão ou `ZIP`). Pequeno, rápido e leve para a bateria. Carrega os registros do projeto ativo e a mídia disponível, e `Import project` ou `Merge project` lê o arquivo diretamente de volta no NAHPU — assim, um dispositivo perdido ou quebrado custa no máximo um dia de trabalho. Sob sinal fraco, ative `Light export` (`JSON.GZ`) para enviar os registros sem mídia e guarde a mídia localmente.
+- **Semanal e pré-mesclagem: `Backup database`.** Copia toda a instalação do NAHPU: todos os projetos, configurações, presets, arquivos gerenciados, fontes e mapas. Use para reconstruir um dispositivo com exatidão ou criar um ponto seguro antes de `Merge project` ou de uma grande curadoria.
+
+Use [Empacotar registros](/pt/usages/export/export-bundles/) (`NAHPU Data Package` ou pacotes Darwin Core) para análise, publicação ou arquivamento — não como substituto para exportações diárias de projeto ou backups completos do banco de dados.
+
+{% aside type="caution" title="Investigue avisos de arquivos ausentes" %}
+Uma exportação ou arquivo não inclui mídia ou anexos que já estejam ausentes no disco. Sempre que `Export project` ou `Bundle records` sinalizar arquivos ausentes, localize os originais antes de apagar ou sobrescrever qualquer cópia.
+{% /aside %}
+
+## Aplique a regra 3-2-1 em campo remoto
+
+**Mantenha pelo menos três cópias, em duas mídias diferentes, com uma cópia fora do dispositivo de coleta.** Sem internet, adapte a terceira cópia para separação física em vez de esperar o retorno à cidade:
+
+1. **Cópia 1 — Dispositivo de coleta:** o tablet ou celular ativo onde você cataloga.
+2. **Cópia 2 — Segunda mídia local:** um pendrive USB-C resistente ou o dispositivo de um colega.
+3. **Cópia 3 — Fora do dispositivo / fora do local:** seu celular reserva em outro saco estanque, ou uma cópia na nuvem verificada quando houver sinal.
+
+**Um envio para a nuvem só termina depois de confirmar o arquivo remoto.** Verifique se o tamanho é maior que zero e se o envio foi concluído antes de desligar os dados ou apagar cópias antigas.
+
+## Nomeie arquivos para que sobrevivam à sua memória
+
+**Coloque projeto, finalidade e data em cada nome de arquivo**, como `PatahMammals_transfer_20260908.tar.gz` ou `PatahMammals_db_20260914.zip`. Ative `Append date` na caixa de exportação do NAHPU para evitar sobrescrever a cópia de ontem.
+
+## Teste a recuperação antes de precisar dela
+
+**Importe periodicamente uma exportação de projeto ou restaure um backup de banco em uma instalação reserva** e confira contagens de registros, vínculos entre tabelas e abertura de mídia e anexos. Nunca teste `Restore database` em um dispositivo com dados sem backup, pois a restauração substitui toda a instalação.
+
+## Recuperação quando um dispositivo falha no meio da expedição
+
+{% aside type="tip" title="Exemplo prático: o tablet falha no dia 12" %}
+Se o tablet de campo parar de funcionar e você vinha enviando arquivos diários de `Export project` para o celular reserva:
+1. Abra o NAHPU no celular e selecione `Import project` no menu da tela inicial.
+2. Escolha o arquivo `TAR.GZ` ou `ZIP` de ontem e confira registros e mídia importados.
+3. Verifique o último Field ID e Tissue ID registrados, ajuste o contador em `Personnel` ou nas configurações de `Field ID` do projeto e continue coletando.
+4. Registre a troca de dispositivo e eventuais registros redigitados do dia 12 em `Narrative`.
+{% /aside %}
+
+Para instruções passo a passo, veja [Backup diário](/pt/how-to-recipes/protect-and-collaborate/daily-backup/), [Transferir um Projeto](/pt/usages/export/project-transfer/) e [Restaurar banco de dados](/pt/how-to-recipes/protect-and-collaborate/restore-database/).

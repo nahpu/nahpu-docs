@@ -187,6 +187,32 @@ export default defineMarkdocConfig({
         },
       },
     },
+    // Scannable visual diagrams for the Best Practices section.
+    bpdiagram: {
+      render: component("./src/components/diagram/BestPracticeDiagram.astro"),
+      selfClosing: true,
+      attributes: {
+        kind: {
+          type: String,
+          required: true,
+          matches: [
+            "lifecycle",
+            "setup",
+            "merge",
+            "georef",
+            "specimen",
+            "backup",
+            "export",
+            "power",
+          ],
+        },
+        locale: {
+          type: String,
+          default: "en",
+          matches: ["en", "pt", "es", "id"],
+        },
+      },
+    },
     // Day One record map: the shared artwork with one labelled button per
     // `recordnode` child. Node ids must match `src/assets/day-one/figures.json`;
     // the app reads the same tags from the bundled Cookbook copy.

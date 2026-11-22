@@ -1,50 +1,53 @@
 ---
 title: App Setup
 sidebar:
-    label: App Setup
-    order: 2
+  label: App Setup
+  order: 2
 ---
 
 Prepare and test NAHPU on each device before relying on it for collection records. NAHPU is designed to make setup easy and config sharing straightforward. **Setup is where error prevention is cheapest.** A constraint added in Settings before departure removes a class of errors that would otherwise be found, if at all, by a curator years later.
 
+{% bpdiagram kind="setup" locale="en" /%}
+
 ## Agree on the configuration
 
-**Settle the configuration with the team, not device by device.** This ensures consistency across all devices and reduces the likelihood of errors. We recommend dedicating one person to run the setup in NAHPU. Then share the config with all members so they can configure their own devices.
+**Settle the configuration with the team, not device by device.** Dedicate one person to run [`Setup NAHPU`](/en/usages/setup/) on a lead device — choosing the catalog format, Field ID and Tissue ID conventions, controlled vocabularies for sites, events, specimens, and symbionts, and bundled export presets. At the `Finish` step, select `Export user configs` and share the file with the team. Everyone else selects `Import user configs` on the `Welcome` step of their own `Setup NAHPU`, then skips the rest of the wizard.
 
-**Review field visibility and presets in [Settings](/en/usages/settings/).** Hidden fields can still hold data and appear in exports. Define a custom field only when a built-in field does not express the observation, and agree on its placement, type, scope, applicable catalog, units, and allowed values. Enter a test value and check its export.
+**Review field visibility and custom fields in [Settings](/en/usages/settings/).** Hidden fields can still hold data and appear in exports. Define a custom field only when a built-in field does not express the observation, and agree on its placement, type, scope, applicable catalog, units, and allowed values. Enter a test value and check its export before leaving camp or the lab.
+
+{% aside type="tip" title="Worked example: configuring a four-person mammal crew" %}
+Before a three-week survey, the field lead runs `Setup NAHPU` on the lead tablet: selects `Mammalogy`, turns on `Personnel ID`, sets a `Tissue ID` prefix (`PT-T`), trims `Specimen Types` and `Treatments` to the museum's list, turns on `I will collect symbionts`, and adds the mammal export presets. They export `user_configs.json` and send it with the project QR code to three teammates. Each teammate imports the config file on `Welcome`, scans the project QR, and starts with identical vocabularies and the same project UUID.
+{% /aside %}
 
 ## Prepare shared resources
 
-- **Personnel and taxa.** Assign the required personnel and review the taxon list, including identification ranks and uncertain identifications. Reuse existing database entries when they represent the same person or taxon.
+- **Personnel and taxa.** Assign the required personnel and review the taxon list, including identification ranks, uncertain identifications, and expected symbiont taxa. Reuse existing database entries when they represent the same person or taxon.
 - **One maintainer.** Decide which device maintains shared definitions and distributes updates.
-- **Documents and fonts.** Prepare export presets, document templates, print layouts, and required fonts. User-config transfers do not include custom font files or images; install those assets separately and test the resulting documents.
-- **Project identity.** Use [project identity](/en/how-to-recipes/prepare/share-project-identity/) to establish a common project UUID when several devices contribute to one project. Everyone else using a different device imports that identity before creating records. A project name alone does not establish a shared UUID.
-
+- **Documents, fonts, and offline maps.** Prepare export presets, document templates, print layouts, custom map layers (`GeoJSON`, zipped WGS84 Shapefiles, or `PMTiles` under `Settings` > `Sites` > `Map layers`), and required fonts. User-config transfers do not include custom font files, template images, or map files; install those assets separately and test the resulting documents and maps.
+- **Project identity.** Use [project identity](/en/how-to-recipes/prepare/share-project-identity/) (`Export info` or `Scan project QR`) to establish a common project UUID when several devices contribute to one project. Everyone else imports that identity before creating records. A project name alone does not establish a shared UUID.
 
 ## Rehearse the workflow
 
-Use a clearly named practice project. Create a site, coordinate, event, and specimen; change an identification; add a part, media, and an associated file where applicable. **Leave and reopen each record to confirm the values persisted.** Dialogs need an explicit confirmation button; many record fields save automatically.
+Use a clearly named practice project (for example `Practice_2026`). Create a site, coordinate, event, and specimen; change an identification; add a part, a symbiont examination, media, and an associated file where applicable. **Leave and reopen each record to confirm the values persisted.** Dialogs need an explicit confirmation button; many record fields save automatically.
 
 Then run the exercise the way the field will run it:
 
-- Work without internet, including the required location and camera permissions.
-- Check the actual exported table and a printed label.
-- Import a project archive on a separate test installation and open its records and files.
+- Turn off Wi-Fi and cellular data, and verify location, camera, and barcode-scanning permissions work offline.
+- Check an actual exported table and print a sample label to verify clipping, font rendering, and QR scanning.
+- Import a project export on a separate test installation and open its records and attachments.
 - Test database replacement only on an installation whose contents you can discard.
 
-## Verify by reading the record, not the export
+## Verify practice records against a physical tag
 
-**Reopen each practice record and compare it against the physical tag, field by field.** Scanning an exported table for gaps and outliers is not equivalent, and the difference is measurable: almost every real entry error is a plausible value in an allowed range, so it survives a check based on missing values and impossible numbers. Treat a clean-looking export as evidence of nothing in particular.
+**Reopen each practice record and compare it against a sample physical tag, field by field.** Scanning an exported table for empty cells or outliers is not enough: almost every real data-entry error is a plausible value in an allowed range, so it slips past visual skimming. For identifiers and measurements that cannot be recovered once a specimen is in a jar, double-checking against the physical tag is worth the extra minutes.
 
-**Where a value matters enough to justify it, enter it twice from the source and compare.** Double entry costs time, which is a defensible trade for identifiers and measurements that cannot be recovered once the specimen is in a jar.
-
-{% aside type="note" title="Evidence for double entry" %}
+{% aside type="note" title="Evidence for checking against the source" %}
 [Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) had 195 participants enter 30 data sheets by three methods. Only 0.06% of the resulting errors were blank or outside the allowable range for their variable. Visual checking produced 29–58% more errors than double entry and was no better than single entry, while double entry cost 33% more time.
 {% /aside %}
 
 ## Before departure
 
-Confirm available storage, power, installed resources, backup destinations, and the team's working project. See [Devices](/en/usages/devices/), [Device Choice and Care](/en/best-practices/device-care/), and [project recovery](/en/how-to-recipes/protect-and-collaborate/import-project/).
+Confirm available storage, power banks, installed resources, backup destinations, and the team's working project. See [Devices](/en/usages/devices/), [Device Choice and Care](/en/best-practices/device-care/), and [Backups and Recovery](/en/best-practices/backups-and-recovery/).
 
 ## References
 

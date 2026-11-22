@@ -1,0 +1,59 @@
+---
+title: Backups and Recovery
+sidebar:
+  label: Backups and Recovery
+  order: 6
+---
+
+Plan against everyday attrition — dead drives, broken tablets, unreadable cards, unlabeled files, and people dispersing after a trip — not only against catastrophe. **A backup you have never restored is just a file you have never opened.**
+
+{% bpdiagram kind="backup" locale="en" /%}
+
+## Match the backup to the job
+
+**Export the active project at the end of every field day. Back up the full database once a week, and always before merging or major curation.** The two tools solve different problems, and running the heavier one every night on battery power is the most common mistake we see.
+
+- **Daily: `Export project`** (`TAR.GZ` default or `ZIP`). Small, fast, and easy on a battery you may not be able to recharge for days. It carries the active project's records and available media, and `Import project` or `Merge project` reads it straight back into NAHPU — so a lost, broken, or stolen device costs at most one day of work. Over a weak mobile signal, turn on `Light export` (`JSON.GZ`) to upload records without media, and keep full media copies locally.
+- **Weekly & pre-merge: `Backup database`.** Copies the entire NAHPU installation: every project, user configs, presets, managed files, fonts, and maps. Use it to rebuild a device exactly or to create a safe rollback point before `Merge project` or a large curation pass.
+
+Use [Bundle Records](/en/usages/export/export-bundles/) (`NAHPU Data Package` or Darwin Core bundles) for analysis, publishing, or long-term archiving — not as a replacement for daily project exports or full database backups.
+
+{% aside type="caution" title="Investigate missing-file warnings" %}
+An export or archive cannot include media or attachments that are already missing on disk. Whenever `Export project` or `Bundle records` flags missing files, locate the originals before deleting or overwriting anything.
+{% /aside %}
+
+## Apply the 3-2-1 rule in remote fieldwork
+
+**Keep at least three copies, on two different media, with one copy off the recording device.** When internet is unavailable, adapt the third copy to physical separation rather than waiting until you return to town:
+
+1. **Copy 1 — Recording device:** the active tablet or phone you catalog on.
+2. **Copy 2 — Second local medium:** a rugged USB-C flash drive (a 16 GB drive holds many full seasons of a typical photo-heavy project) or a teammate's device.
+3. **Copy 3 — Off-device / off-site:** your fallback phone kept in a separate dry bag, or a verified cloud copy once you reach signal.
+
+**A cloud upload is complete only after you confirm the remote file.** Check that the file size is non-zero and that it finished uploading before turning off data or deleting older local copies.
+
+## Name files so they outlive your memory
+
+**Put the project, purpose, and date in every filename**, for example `PatahMammals_transfer_20260908.tar.gz` or `PatahMammals_db_20260914.zip`. Turn on `Append date` in NAHPU's export dialog to avoid overwriting yesterday's copy. A descriptive filename stays interpretable years later when it is the only surviving copy on a lab drive.
+
+## Test recovery before you need it
+
+**Periodically import a project export or restore a database backup on a spare installation**, then check:
+
+- Record counts for sites, events, specimens, parts, symbionts, and narratives.
+- Linked relationships (specimens still pointing to the right events, coordinates, and taxa).
+- Attached media and associated files actually opening on the receiving device.
+
+Keep earlier verified backups until the newer copy has passed a check. Never test `Restore database` on a device holding unbacked-up work, because database replacement overwrites the entire installation.
+
+## Recovering when a device fails mid-trip
+
+{% aside type="tip" title="Worked example: tablet fails on day 12" %}
+If your field tablet dies or cracks mid-expedition and you have been sending daily `Export project` archives to your fallback phone:
+1. Open NAHPU on the phone and select `Import project` from the home screen menu.
+2. Choose yesterday's `TAR.GZ` or `ZIP` archive and confirm the imported records and media.
+3. Check the last Field ID and Tissue ID recorded, verify your cataloger counter under `Personnel` or project `Field ID` settings, and keep collecting.
+4. Note the device switch and any re-entered records from day 12 in `Narrative` so the handoff is documented.
+{% /aside %}
+
+For step-by-step instructions, see [Daily Backup](/en/how-to-recipes/protect-and-collaborate/daily-backup/), [Transfer a Project](/en/usages/export/project-transfer/), and [Restore Database](/en/how-to-recipes/protect-and-collaborate/restore-database/).
