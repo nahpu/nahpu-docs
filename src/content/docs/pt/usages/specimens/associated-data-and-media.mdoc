@@ -5,39 +5,49 @@ sidebar:
   order: 7
 ---
 
-Use `Dados associados` para dados digitais vinculados ao espécime que não fiquem
-melhor armazenados como parte do espécime ou registro de mídia. Exemplos incluem
-acessões do GenBank, registros do MorphoSource, arquivos de análise ou links
-para bancos de dados externos. É a aba com o ícone de armazenamento do cartão
+Use `Dados associados` para arquivos digitais vinculados ao espécime e links
+externos que não são partes do espécime nem registros de mídia — como acessões
+do GenBank, registros do MorphoSource, arquivos de análise ou URLs de bancos de
+dados externos. É a aba com o ícone de armazenamento do cartão
 `Partes do espécime`.
 
-Os campos de dados associados incluem:
-
-- `Tipo de dado`: `Link` ou `Arquivo`.
-- `Nome`: nome da fonte ou do conjunto de dados, como `GenBank`.
-- `Descrição`: número de acesso ou descrição dos dados.
-- `Data`: data associada aos dados.
-- `URI`: URL externa quando o tipo de dado é `Link`.
-- Seletor de arquivo: anexo de arquivo local quando o tipo de dado é `Arquivo`.
+| Campo | Observações |
+| --- | --- |
+| `Tipo de dado` | `Link` ou `Arquivo`. |
+| `Nome` | Nome da fonte ou do conjunto de dados, como `GenBank` ou `MorphoSource`. |
+| `Descrição` | Número de acesso ou breve descrição dos dados. |
+| `Data` | Data associada aos dados. |
+| `URI` | URL externa (com esquema válido, como `https://`) quando `Tipo de dado` é `Link`. |
+| Seletor de arquivo | Anexo de arquivo local não midiático quando `Tipo de dado` é `Arquivo`. Arquivos de mídia vão em `Mídia`, abaixo. |
 
 {% steps %}
 
-1. Escolha o `Tipo de dado`.
-2. Para um `Link`, informe o endereço em `URI`. Para um `Arquivo`, selecione o
-   arquivo. No desktop, escolha `Copiar para o projeto` para armazenar uma cópia
-   no NAHPU, ou `Vincular original` para apontar para o arquivo onde ele está;
-   um original vinculado precisa permanecer nesse caminho.
-3. Adicione `Nome`, `Descrição` e `Data`.
+1. Abra a aba com o ícone de armazenamento do cartão `Partes do espécime` e
+   selecione `Adicionar dados associados`.
+2. Escolha `Tipo de dado` (`Link` ou `Arquivo`) e depois informe `Nome`,
+   `Descrição` e `Data`.
+3. Em `Recurso`, insira a URL em `URI` para um `Link`, ou selecione um arquivo
+   para um `Arquivo`. No desktop, escolha `Copiar para o projeto` para
+   armazenar uma cópia gerenciada no NAHPU, ou `Vincular original` para apontar
+   para o arquivo no local atual; um original vinculado deixa de funcionar se o
+   arquivo for movido ou excluído.
+4. Salve o registro.
 
 {% /steps %}
 
-Confira os arquivos vinculados após uma transferência e investigue qualquer
-aviso de arquivo ausente. Use Mídia, abaixo, para imagens, áudio e vídeo.
+Use o menu de cada item para `Editar`, `Mostrar informações`, `Compartilhar` ou
+abri-lo (`Abrir link`, ou `Abrir no aplicativo padrão` no desktop). Confira os
+arquivos vinculados após transferir um projeto e verifique qualquer ícone de
+aviso de arquivo indisponível.
 
-## Mídia
+## Mídia {% #media %}
 
-Use `Mídia` para fotos, vídeos e áudios do espécime. Adicione-os com
-`Tirar fotos/vídeos`, `Gravar áudio`, `Adicionar da galeria` ou
-`Adicionar de arquivo`. Cada item pode ter legenda, tags e o nome do fotógrafo.
-As mídias são armazenadas uma única vez na biblioteca de mídia compartilhada do
-NAHPU e vinculadas ao espécime.
+Use `Mídia` na parte inferior do formulário do espécime para fotos, vídeos e
+áudios do espécime. Selecione `Adicionar` para anexar itens com
+`Tirar fotos/vídeos` (dispositivos móveis), `Gravar áudio`,
+`Adicionar da galeria` (dispositivos móveis) ou `Adicionar de arquivo`, ou
+selecione `Galeria` para navegar pela galeria de mídia compartilhada.
+
+Abra o menu de um item e escolha `Editar` para atualizar `Nome do arquivo`,
+`Legenda`, `Etiqueta` e `Fotógrafo`. As mídias são armazenadas uma única vez na
+biblioteca de mídia compartilhada do NAHPU e vinculadas ao espécime.

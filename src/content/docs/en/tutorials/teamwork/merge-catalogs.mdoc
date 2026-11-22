@@ -1,0 +1,101 @@
+---
+title: "Teamwork tutorial 6: Merge the catalogs"
+authors:
+  - Heru Handika
+lastUpdated: 2026-11-22
+sidebar:
+  label: "6. Merge the catalogs"
+  order: 6
+---
+
+Both catalogs are complete. Bima's device holds his share of the Line 1 check
+(Workflow A) and his own Line 2 (Workflow B). In this tutorial, Bima exports
+his catalog and sends it to Heru, and a single merge on Heru's device combines
+both workflows into one project.
+
+## 1. Export Bima's catalog and start the merge
+
+{% steps %}
+
+1. **Bima:** Open the menu and select `Export project`. Leave `Light export`
+   off and keep `TAR.GZ` (or choose `ZIP`) so the archive includes all records
+   and any attached media. Select `Export project` and send the archive to
+   Heru.
+2. **Heru:** Open the menu, select `Merge project`, and pick Bima's archive
+   with `Choose archive`. Confirm that `Project UUID` matches.
+3. **Heru:** Select `Back up now`, tick the backup confirmation box, and select
+   `Continue`.
+4. **Heru:** Review each section (detailed below) and select `Merge project` at
+   the end.
+
+{% /steps %}
+
+{% aside type="caution" title="Do not use Light export for the final merge" %}
+`Light export` omits media files to keep transfers small over limited internet.
+For a final merge, always leave `Light export` off and export a full `TAR.GZ`
+or `ZIP` archive so photos, audio recordings, and other media are bundled with
+the records.
+{% /aside %}
+
+{% aside type="tip" title="Merging catalogs from three or more lab members" %}
+If additional lab members practiced as extra catalogers, repeat these steps
+once for each teammate's export file. NAHPU merges each catalog cleanly into
+the same project.
+{% /aside %}
+
+## 2. Review each merge section
+
+The review steps show how cleanly the shared setup pays off:
+
+- **Personnel:** All three team members appear as `Matched`, with zero new
+  people. Bima's record is flagged `Conflict` only because his cataloger number
+  changed (i.e., it is still `1` on Heru's device, while it advanced to `5` on
+  Bima's after cataloging five specimens). For each cataloger, keep the version
+  from the device they cataloged on: choose `Use imported` for Bima and leave
+  `Keep current` for Heru.
+
+{% devicepair
+   tablet="app-screenshots/tutorials/teamwork/ipad-merge-personnel.webp"
+   tabletAlt="NAHPU Merge project Personnel step on an iPad with 0 new, 3 matched, and 0 needing attention; Bima Sampel's conflict action set to Use imported"
+   tabletLabel="Heru · iPad" /%}
+
+- **Taxonomy:** Every taxon is matched.
+- **Sites and Events:** Both workflows appear side by side. The shared Line 1
+  records (Workflow A) are `Matched`, preserving one shared site catalog, while
+  Bima's `TJBS-L2` site and event (Workflow B) are `New`. Keep `Keep current`
+  for the matched records; the `Conflict` badge simply indicates that a
+  matching record already exists on Heru's device.
+
+{% devicepair
+   tablet="app-screenshots/tutorials/teamwork/ipad-merge-sites.webp"
+   tabletAlt="NAHPU Merge project Sites step on an iPad with 1 new, 2 matched, and 0 needing attention; TJHH-L1 and TJHH-P1 are listed as matches"
+   tabletLabel="Heru · iPad" /%}
+
+- **Specimens:** Bima's five records arrive as `New`, with no conflicts or
+  items needing attention.
+
+{% devicepair
+   tablet="app-screenshots/tutorials/teamwork/ipad-merge-specimens.webp"
+   tabletAlt="NAHPU Merge project Specimens step on an iPad with 5 new, 0 matched, and no conflicts"
+   tabletLabel="Heru · iPad" /%}
+
+## 3. Verify the merged project
+
+Nothing is written to the database until the final `Merge project` button is
+selected, and any error rolls the entire transaction back safely. Once the
+merge finishes, open `Data table` under `Tools` on the dashboard: all ten
+specimens, three sites, and three events now live together in one project.
+
+{% devicepair
+   tablet="app-screenshots/tutorials/teamwork/ipad-data-table-merged.webp"
+   tabletAlt="NAHPU Data table on an iPad listing ten specimen records: Heru Handika 445 to 449 (Muridae), Bima Sampel 1 to 4 (Soricidae), and Bima Sampel 5 (Maxomys hylomyoides)"
+   tabletLabel="Heru · iPad" /%}
+
+{% aside type="tip" %}
+For resolving conflicts and duplicate identifiers in larger team merges, see
+[Merge a project and resolve conflicts](/en/how-to-recipes/protect-and-collaborate/merge-project/).
+{% /aside %}
+
+## Next
+
+[Teamwork tutorial 7: Check tissues and export](/en/tutorials/teamwork/check-tissues-and-export/)

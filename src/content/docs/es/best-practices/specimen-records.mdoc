@@ -1,0 +1,63 @@
+---
+title: Especímenes, partes y medios
+sidebar:
+  label: Especímenes, partes y medios
+  order: 5
+---
+
+Un ejemplar moderno de historia natural es más que una piel o un frasco: es un conjunto enlazado de identificaciones, mediciones, tejidos, simbiontes y medios. **Captura esos vínculos en la mesa de preparación, mientras el espécimen y sus tubos siguen frente a ti.**
+
+{% bpdiagram kind="specimen" locale="es" /%}
+
+## Registra identificaciones con honestidad
+
+**Nunca adivines un nombre de especie solo para llenar un espacio.** Si un juvenil, una especie críptica o un simbionte solo puede asignarse a género, familia u orden en campo, regístralo en ese rango superior. Una determinación segura a nivel de género es útil; una conjetura sin verificar se propaga en análisis posteriores hasta que alguien reexamina el ejemplar.
+
+- **Completa `Identification confidence`, `Determiner` e `Identification method`.**
+- **Distingue entre cambiar una identificación y editar un taxón.** Cambiar la identificación apunta ese espécimen a otro taxón; editar el registro del taxón cambia el nombre en todos los especímenes enlazados.
+- **Conserva el razonamiento original en observaciones** cuando un especialista actualice la determinación más adelante.
+
+## Mide con precisión y distingue cero de vacío
+
+**Sigue las unidades mostradas y nunca escribas `0` para un rasgo no medido.** En morfometría, cero es una medida real, no un dato faltante. Deja vacíos los campos no medidos y explica el motivo en `Remarks` (por ejemplo `punta de cola ausente`).
+
+- **Señala estimaciones y excepciones** en observaciones en lugar de mezclarlas con medidas exactas.
+- **Usa campos personalizados acordados para rasgos recurrentes** en vez de ocultar datos estructurados en texto libre.
+
+## Documenta partes y tejidos frescos en la mesa
+
+**Registra `Time taken` y `PMI` (intervalo post-mortem) con el reloj a la vista.** La integridad del ARN, el microbioma y otros ensayos dependen del tiempo entre captura, eutanasia y preservación.
+
+- **Vincula los identificadores de tubos de inmediato.** Asigna un `Tissue ID` o escanea el `QR/barcode ID` en `Specimen Parts` antes de guardar el vial en nitrógeno líquido, etanol o `RNAlater`. Así [Curaduría de tejidos](/es/usages/curation/tissue-curation/) puede ubicar tubos en cajas de congelador sin volver a escribir códigos.
+- **Registra `Treatment` y `Additional treatment` cuando cambie la preservación**, por ejemplo `RNAlater` seguido de `-80 °C`, o fijación en formol y paso a etanol.
+- **Acredita al `Preparator` real** de cada parte cuando otra persona tomó el tejido o preparó el esqueleto.
+- **En lotes de peces**, vincula tejidos y simbiontes a los `Individuals` correspondientes.
+
+{% aside type="tip" title="Ejemplo práctico: registrando un mamífero con tejidos y ectoparásitos" %}
+En la mesa de preparación, quien prepara registra `HH412`, anota medidas dejando un pie lesionado vacío con nota (`pie trasero izquierdo dañado`), agrega una parte `Liver` (`Tissue ID` `PT-T018`, `RNAlater`, `Time taken` `09:15`, `PMI` `0:25`) y escanea el código del criovial. Tras peinar el pelaje, marca `Symbionts examined: Yes` y `Symbionts detected: Yes`, y añade un lote de pulgas en la pestaña de simbiontes vinculado a `HH412` (`Ectosymbiont`, `Combing`, `70% ETOH`).
+{% /aside %}
+
+## Registra exámenes de simbiontes — incluidos hospederos limpios
+
+**Registra siempre los resultados negativos.** Un hospedero sin registros de simbiontes es ambiguo: no se revisó, o se revisó y estaba limpio. La sección `Symbionts` al final del formulario de mediciones elimina esa ambigüedad.
+
+- **Para un hospedero limpio**, marca `Symbionts examined: Yes` y `Symbionts detected: No`, y anota el método en `Detection remarks`.
+- **No crees un registro vacío de simbionte** para indicar que no se encontró nada.
+- **Cuando encuentres simbiontes**, agrega cada lote o individuo en la pestaña del icono de insecto en `Specimen Parts`. Consulta [Simbiontes](/es/usages/specimens/symbionts/).
+
+## Fotografía para identificación y conserva originales
+
+**Coloca una escala y una tarjeta legible con el Field ID en el encuadre.** Una foto sin Field ID queda huérfana en cuanto se renombra un archivo. En aves, anfibios, reptiles y peces, fotografía antes de que se desvanezcan los colores de partes blandas.
+
+- **Adjunta fotos de referencia en NAHPU y conserva originales en alta resolución en respaldo.** Consulta [Elección y cuidado de dispositivos](/es/best-practices/device-care/).
+- **Copia lo que puedas almacenar; enlaza solo lo que no puedas.** Usa `Media` para fotos y medios compatibles, y `Associated Data` para archivos relacionados o enlaces externos con descripción clara.
+
+{% aside type="note" title="Por qué importan los vínculos del espécimen extendido" %}
+[Webster (2017)](https://doi.org/10.1201/9781315120454) y [Lendemer et al. (2020)](https://doi.org/10.1093/biosci/biz140) definen el espécimen extendido como el ejemplar físico conectado a sus tejidos, parásitos, medios, contexto ambiental y datos derivados.
+{% /aside %}
+
+## Referencias
+
+Lendemer J, Thiers B, Monfils AK, Zaspel J, Ellwood ER, Bentley A, LeVan K, Bates J, Jennings D, Contreras D, Lagomarsino L, Mabee P, Ford LS, Guralnick R, Gropp RE, Revelez M, Cobb N, Seltmann K & Aime MC (2020). [The Extended Specimen Network: A strategy to enhance US biodiversity collections, promote research and education](https://doi.org/10.1093/biosci/biz140). *BioScience* 70:23–30.
+
+Webster MS (ed.) (2017). [*The Extended Specimen: Emerging Frontiers in Collections-Based Ornithological Research*](https://doi.org/10.1201/9781315120454). CRC Press, Boca Raton.

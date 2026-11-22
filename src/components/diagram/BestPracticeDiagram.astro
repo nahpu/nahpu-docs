@@ -1,0 +1,1155 @@
+---
+// Scannable visual diagrams for the Best Practices section.
+// Shares the "Canopy" + Silver Tree / Golden Grass palette with the other NAHPU
+// diagrams and supports light and dark Starlight themes plus all four locales.
+import {
+  bestPracticeStrings,
+  type DiagramKind,
+  type Locale,
+} from "./best-practices/strings";
+
+interface Props {
+  kind: DiagramKind;
+  locale?: Locale;
+}
+
+const { kind, locale = "en" } = Astro.props;
+const all = bestPracticeStrings[locale] ?? bestPracticeStrings.en;
+const s = all[kind];
+const decimalWidths = [16, 36, 66, 100];
+---
+
+<figure class="bp-diagram not-content" aria-label={s.label}>
+  <div class="bp-card">
+    {
+      kind === "lifecycle" && (
+        <div class="bp-lifecycle">
+          {all.lifecycle.phases.map((phase, idx) => (
+            <section class={`bp-phase bp-phase--${idx + 1}`}>
+              <div class="bp-phase__head">
+                <span class="bp-badge">{phase.step}</span>
+                <strong class="bp-phase__title">{phase.title}</strong>
+              </div>
+              <ul class="bp-phase__list">
+                {phase.pages.map((p) => (
+                  <li>
+                    <a href={p.href} class="bp-phase__link">
+                      <span class="bp-phase__name">{p.name}</span>
+                      <span class="bp-phase__note">{p.note}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      kind === "setup" && (
+        <div class="bp-flow">
+          <div class="bp-col bp-tone-forest">
+            <span class="bp-badge">{all.setup.leadBadge}</span>
+            <strong class="bp-col__title">{all.setup.leadTitle}</strong>
+            <ul class="bp-list">
+              {all.setup.leadSteps.map((step) => (
+                <li>{step}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="bp-bridge bp-tone-moss">
+            <div class="bp-bridge__arrow" aria-hidden="true">
+              <svg viewBox="0 0 32 16" width="28" height="14">
+                <line x1="2" y1="8" x2="24" y2="8" stroke="currentColor" stroke-width="2" />
+                <polygon points="30,8 22,3 22,13" fill="currentColor" />
+              </svg>
+            </div>
+            <strong class="bp-col__title">{all.setup.transferTitle}</strong>
+            <ul class="bp-chips-col">
+              {all.setup.transferItems.map((item) => (
+                <li class="bp-chip">{item}</li>
+              ))}
+            </ul>
+            <p class="bp-note">{all.setup.separateNote}</p>
+          </div>
+
+          <div class="bp-col bp-tone-mist">
+            <span class="bp-badge">{all.setup.teamBadge}</span>
+            <strong class="bp-col__title">{all.setup.teamTitle}</strong>
+            <ul class="bp-list">
+              {all.setup.teamSteps.map((step) => (
+                <li>{step}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      kind === "merge" && (
+        <div class="bp-merge">
+          <div class="bp-merge__top">
+            <div class="bp-col bp-tone-forest">
+              <span class="bp-badge">{all.merge.hubBadge}</span>
+              <strong class="bp-col__title">{all.merge.hubTitle}</strong>
+              <ul class="bp-list">
+                {all.merge.hubItems.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="bp-merge__arrows" aria-hidden="true">
+              <div class="bp-arrow-pill bp-arrow-pill--out">
+                <span>{all.merge.outArrow}</span>
+                <span class="bp-arrow-glyph">→</span>
+              </div>
+              <div class="bp-arrow-pill bp-arrow-pill--in">
+                <span class="bp-arrow-glyph">←</span>
+                <span>{all.merge.inArrow}</span>
+              </div>
+            </div>
+
+            <div class="bp-col bp-tone-mist">
+              <span class="bp-badge">{all.merge.spokeBadge}</span>
+              <strong class="bp-col__title">{all.merge.spokeTitle}</strong>
+              <ul class="bp-list">
+                {all.merge.spokeItems.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div class="bp-merge__bar bp-tone-gold">
+            <strong class="bp-col__title">{all.merge.mergeTitle}</strong>
+            <div class="bp-steps-row">
+              {all.merge.mergeSteps.map((step) => (
+                <span class="bp-step-pill">{step}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      kind === "georef" && (
+        <div class="bp-split">
+          <div class="bp-panel">
+            <strong class="bp-col__title">{all.georef.leftTitle}</strong>
+            <p class="bp-sub">{all.georef.leftSub}</p>
+            <div class="bp-scale-list">
+              {all.georef.decimals.map((row, i) => (
+                <div class="bp-scale-row">
+                  <div class="bp-scale-meta">
+                    <span class="bp-mono">{row.places}</span>
+                    <span class="bp-scale-dist">{row.distance}</span>
+                  </div>
+                  <div class="bp-scale-track">
+                    <div
+                      class={`bp-scale-bar bp-scale-bar--${i}`}
+                      style={`width: ${decimalWidths[i]}%`}
+                    />
+                  </div>
+                  <div class="bp-scale-foot">
+                    <span class="bp-mono-muted">{row.example}</span>
+                    <span>{row.note}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="bp-panel">
+            <strong class="bp-col__title">{all.georef.rightTitle}</strong>
+            <p class="bp-sub">{all.georef.rightSub}</p>
+            <div class="bp-georef-svg-wrap">
+              <svg viewBox="0 0 320 206" class="bp-svg" role="img" aria-hidden="true">
+                {/* Outer combined radius = uncertainty + extent */}
+                <circle cx="96" cy="103" r="82" class="geo-extent" stroke-dasharray="6 4" stroke-width="1.75" />
+                {/* Inner uncertainty radius */}
+                <circle cx="96" cy="103" r="46" class="geo-uncert" stroke-width="1.75" />
+                {/* Recorded point */}
+                <circle cx="96" cy="103" r="5" class="geo-point" />
+                {/* Radius ticks */}
+                <line x1="96" y1="103" x2="142" y2="103" class="geo-line" stroke-width="1.5" />
+                <line x1="142" y1="103" x2="178" y2="103" class="geo-line-ext" stroke-width="1.5" stroke-dasharray="3 3" />
+                {/* Callout anchors */}
+                <line x1="96" y1="98" x2="96" y2="30" class="geo-leader" stroke-width="1.2" />
+                <line x1="96" y1="30" x2="188" y2="30" class="geo-leader" stroke-width="1.2" />
+                <line x1="130" y1="74" x2="188" y2="74" class="geo-leader" stroke-width="1.2" />
+                <line x1="164" y1="134" x2="188" y2="134" class="geo-leader" stroke-width="1.2" />
+
+                <text x="194" y="34" class="geo-txt-strong" font-size="11.5">{all.georef.pointLabel}</text>
+
+                <text x="194" y="72" class="geo-txt-strong" font-size="11.5">{all.georef.uncertaintyLabel}</text>
+                <text x="194" y="87" class="geo-txt-muted" font-size="10">{all.georef.uncertaintySub}</text>
+
+                <text x="194" y="132" class="geo-txt-strong" font-size="11.5">{all.georef.extentLabel}</text>
+                <text x="194" y="147" class="geo-txt-muted" font-size="10">{all.georef.extentSub}</text>
+
+                <rect x="14" y="176" width="292" height="24" rx="12" class="geo-pill" />
+                <text x="160" y="192" text-anchor="middle" class="geo-pill-txt" font-size="10.5">
+                  {all.georef.combinedLabel}
+                </text>
+              </svg>
+            </div>
+            <p class="bp-warn">{all.georef.combinedWarning}</p>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      kind === "specimen" && (
+        <div class="bp-specimen">
+          <div class="bp-specimen__hub">
+            <span class="bp-badge bp-badge--solid">{all.specimen.centerBadge}</span>
+            <strong class="bp-specimen__title">{all.specimen.centerTitle}</strong>
+            <span class="bp-mono-muted">{all.specimen.centerSub}</span>
+          </div>
+          <div class="bp-specimen__grid">
+            {all.specimen.branches.map((branch) => (
+              <div class={`bp-col bp-tone-${branch.tone}`}>
+                <strong class="bp-col__title">{branch.title}</strong>
+                <p class="bp-body">{branch.rule}</p>
+                <div class="bp-chips">
+                  {branch.chips.map((c) => (
+                    <span class="bp-chip">{c}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      kind === "backup" && (
+        <div class="bp-backup">
+          <div>
+            <strong class="bp-section-label">{all.backup.cadenceTitle}</strong>
+            <div class="bp-tiers">
+              {all.backup.tiers.map((t) => (
+                <div class={`bp-col bp-tone-${t.tone}`}>
+                  <span class="bp-badge">{t.when}</span>
+                  <strong class="bp-col__title">{t.action}</strong>
+                  <span class="bp-chip">{t.format}</span>
+                  <p class="bp-body">{t.scope}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="bp-rule321">
+            <div class="bp-rule321__head">
+              <strong class="bp-col__title">{all.backup.ruleTitle}</strong>
+              <span class="bp-sub">{all.backup.ruleSub}</span>
+            </div>
+            <div class="bp-copies">
+              {all.backup.copies.map((c) => (
+                <div class="bp-copy">
+                  <span class="bp-copy__badge">{c.badge}</span>
+                  <strong>{c.title}</strong>
+                  <span class="bp-copy__detail">{c.detail}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      kind === "export" && (
+        <div class="bp-export-wrap">
+          <div class="bp-export-grid" role="table" aria-label={all.export.label}>
+            <div class="bp-export-head" role="row">
+              {all.export.headers.map((h) => (
+                <div role="columnheader">{h}</div>
+              ))}
+            </div>
+            {all.export.rows.map((r) => (
+              <div class="bp-export-row" role="row">
+                <div role="cell" class="bp-export-need">{r.need}</div>
+                <div role="cell"><span class="bp-chip">{r.action}</span></div>
+                <div role="cell" class="bp-mono-muted">{r.format}</div>
+                <div role="cell">
+                  <span class={`bp-pill ${r.reimportYes ? "bp-pill--yes" : "bp-pill--no"}`}>
+                    {r.reimport}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      kind === "power" && (
+        <div class="bp-split">
+          <div class="bp-panel">
+            <strong class="bp-col__title">{all.power.powerTitle}</strong>
+            <p class="bp-sub">{all.power.powerSub}</p>
+            <div class="bp-battery">
+              <div class="bp-battery__meta">
+                <span>{all.power.ratedLabel}</span>
+              </div>
+              <div class="bp-battery__bar" aria-hidden="true">
+                <div class="bp-battery__usable">60%</div>
+                <div class="bp-battery__loss">40%</div>
+              </div>
+              <div class="bp-battery__legend">
+                <span class="bp-dot bp-dot--usable">{all.power.usableLabel}</span>
+                <span class="bp-dot bp-dot--loss">{all.power.lossLabel}</span>
+              </div>
+              <div class="bp-battery__result">
+                <strong>{all.power.tabletLabel}</strong>
+                <span>{all.power.resultLabel}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bp-panel">
+            <strong class="bp-col__title">{all.power.tempTitle}</strong>
+            <p class="bp-sub">{all.power.tempSub}</p>
+            <ul class="bp-zones">
+              {all.power.zones.map((z) => (
+                <li class={`bp-zone bp-zone--${z.tone}`}>
+                  <span class="bp-zone__range">{z.range}</span>
+                  <span class="bp-zone__label">{z.label}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="bp-sub bp-temp-note">{all.power.tempNote}</p>
+          </div>
+        </div>
+      )
+    }
+  </div>
+  <figcaption>{s.caption}</figcaption>
+</figure>
+
+<style>
+  .bp-diagram {
+    --forest-50: #f3f6f4;
+    --forest-100: #e2e9e3;
+    --forest-200: #c5d3c8;
+    --forest-300: #9db3a3;
+    --forest-400: #718e78;
+    --forest-600: #405847;
+    --forest-700: #33473a;
+    --forest-800: #283a2e;
+    --forest-900: #1c2b21;
+    --forest-950: #0e1a12;
+    --moss-50: #f5f9eb;
+    --moss-100: #e8f1d2;
+    --moss-200: #d3e4a9;
+    --moss-300: #b5d177;
+    --moss-400: #9bbf4f;
+    --moss-600: #688a2c;
+    --moss-700: #506a25;
+    --moss-800: #415522;
+    --moss-900: #37481f;
+    --moss-950: #1c270c;
+    --mist-50: #f4f7f8;
+    --mist-100: #e4ecee;
+    --mist-200: #cdd9dd;
+    --mist-300: #a9bcc2;
+    --mist-400: #8199a2;
+    --mist-600: #4f646d;
+    --mist-700: #42535a;
+    --mist-900: #323c41;
+    --mist-950: #1e2629;
+
+    margin: 1.5rem 0 2rem;
+  }
+
+  .bp-card {
+    border: 1px solid rgb(28 43 33 / 0.12);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--forest-50) 65%, white);
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgb(14 37 31 / 0.05);
+  }
+
+  figcaption {
+    margin: 0.7rem auto 0;
+    max-width: 48rem;
+    text-align: center;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-2);
+  }
+
+  /* Shared tones */
+  .bp-tone-forest {
+    --bg: var(--forest-50);
+    --bd: var(--forest-300);
+    --fg: var(--forest-900);
+    --muted: var(--forest-700);
+    --chip-bg: var(--forest-100);
+    --chip-bd: var(--forest-300);
+    --badge-bg: var(--forest-800);
+    --badge-fg: #fff;
+  }
+  .bp-tone-moss {
+    --bg: var(--moss-50);
+    --bd: var(--moss-300);
+    --fg: var(--moss-900);
+    --muted: var(--moss-800);
+    --chip-bg: var(--moss-100);
+    --chip-bd: var(--moss-300);
+    --badge-bg: var(--moss-700);
+    --badge-fg: #fff;
+  }
+  .bp-tone-mist {
+    --bg: var(--mist-50);
+    --bd: var(--mist-300);
+    --fg: var(--mist-900);
+    --muted: var(--mist-700);
+    --chip-bg: var(--mist-100);
+    --chip-bd: var(--mist-300);
+    --badge-bg: var(--mist-700);
+    --badge-fg: #fff;
+  }
+  .bp-tone-gold {
+    --bg: var(--color-golden-grass-50);
+    --bd: var(--color-golden-grass-300);
+    --fg: var(--color-golden-grass-950);
+    --muted: var(--color-golden-grass-800);
+    --chip-bg: var(--color-golden-grass-100);
+    --chip-bd: var(--color-golden-grass-300);
+    --badge-bg: var(--color-golden-grass-700);
+    --badge-fg: #fff;
+  }
+
+  .bp-col,
+  .bp-bridge,
+  .bp-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    border: 1px solid var(--bd, var(--forest-200));
+    border-radius: 0.75rem;
+    background: var(--bg, #fff);
+    padding: 0.85rem;
+    color: var(--fg, var(--forest-900));
+  }
+
+  .bp-badge {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 0.14rem 0.55rem;
+    border-radius: 999px;
+    background: var(--badge-bg, var(--forest-800));
+    color: var(--badge-fg, #fff);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .bp-col__title {
+    font-size: 0.95rem;
+    line-height: 1.3;
+    color: var(--fg, var(--forest-900));
+  }
+
+  .bp-sub {
+    margin: 0;
+    font-size: var(--sl-text-xs);
+    color: var(--muted, var(--forest-700));
+    line-height: 1.4;
+  }
+
+  .bp-body {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: var(--muted, var(--forest-700));
+  }
+
+  .bp-list {
+    margin: 0.15rem 0 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.3rem;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--muted, var(--forest-700));
+  }
+
+  .bp-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: auto;
+    padding-top: 0.25rem;
+  }
+
+  .bp-chips-col {
+    list-style: none;
+    margin: 0.15rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .bp-chip {
+    display: inline-block;
+    padding: 0.18rem 0.55rem;
+    border: 1px solid var(--chip-bd, var(--forest-300));
+    border-radius: 0.45rem;
+    background: var(--chip-bg, var(--forest-100));
+    color: var(--fg, var(--forest-900));
+    font-family: var(--__sl-font-mono, ui-monospace, monospace);
+    font-size: 0.74rem;
+    line-height: 1.35;
+  }
+
+  .bp-note {
+    margin: 0.25rem 0 0;
+    font-size: 0.76rem;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .bp-mono {
+    font-family: var(--__sl-font-mono, ui-monospace, monospace);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .bp-mono-muted {
+    font-family: var(--__sl-font-mono, ui-monospace, monospace);
+    font-size: 0.76rem;
+    color: var(--muted, var(--forest-700));
+  }
+
+  /* 1. Lifecycle */
+  .bp-lifecycle {
+    display: grid;
+    gap: 0.75rem;
+  }
+  @media (min-width: 48rem) {
+    .bp-lifecycle {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .bp-phase {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    border: 1px solid var(--forest-200);
+    border-radius: 0.75rem;
+    background: #fff;
+    padding: 0.85rem;
+  }
+  .bp-phase--1 { border-top: 3px solid var(--forest-700); }
+  .bp-phase--2 { border-top: 3px solid var(--moss-600); }
+  .bp-phase--3 { border-top: 3px solid var(--color-golden-grass-600); }
+  .bp-phase--4 { border-top: 3px solid var(--mist-600); }
+
+  .bp-phase__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .bp-phase__title {
+    font-size: 0.94rem;
+    color: var(--forest-900);
+  }
+  .bp-phase__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .bp-phase__link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--forest-100);
+    background: var(--forest-50);
+    text-decoration: none;
+    transition: border-color 140ms ease, background-color 140ms ease;
+  }
+  .bp-phase__link:hover {
+    border-color: var(--forest-400);
+    background: var(--forest-100);
+  }
+  .bp-phase__name {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--forest-900);
+  }
+  .bp-phase__note {
+    font-size: 0.76rem;
+    color: var(--forest-700);
+    line-height: 1.35;
+  }
+
+  /* 2. Setup flow */
+  .bp-flow {
+    display: grid;
+    gap: 0.75rem;
+  }
+  @media (min-width: 52rem) {
+    .bp-flow {
+      grid-template-columns: 1fr 0.95fr 1fr;
+      align-items: stretch;
+    }
+  }
+  .bp-bridge__arrow {
+    color: var(--moss-700);
+    display: flex;
+    align-items: center;
+  }
+
+  /* 3. Merge */
+  .bp-merge {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .bp-merge__top {
+    display: grid;
+    gap: 0.75rem;
+  }
+  @media (min-width: 52rem) {
+    .bp-merge__top {
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+  }
+  .bp-merge__arrows {
+    display: grid;
+    gap: 0.45rem;
+    justify-items: stretch;
+  }
+  .bp-arrow-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.45rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 600;
+  }
+  .bp-arrow-pill--out {
+    background: var(--forest-100);
+    color: var(--forest-900);
+    border: 1px solid var(--forest-300);
+  }
+  .bp-arrow-pill--in {
+    background: var(--mist-100);
+    color: var(--mist-900);
+    border: 1px solid var(--mist-300);
+  }
+  .bp-arrow-glyph {
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .bp-merge__bar {
+    display: grid;
+    gap: 0.5rem;
+    border: 1px solid var(--bd);
+    border-radius: 0.75rem;
+    background: var(--bg);
+    padding: 0.75rem 0.9rem;
+  }
+  .bp-steps-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .bp-step-pill {
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    border: 1px solid var(--chip-bd);
+    color: var(--fg);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  /* 4. Georef & 8. Power split */
+  .bp-split {
+    display: grid;
+    gap: 0.85rem;
+  }
+  @media (min-width: 50rem) {
+    .bp-split {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .bp-scale-list {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 0.3rem;
+  }
+  .bp-scale-row {
+    display: grid;
+    gap: 0.2rem;
+  }
+  .bp-scale-meta,
+  .bp-scale-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+  }
+  .bp-scale-dist {
+    font-weight: 700;
+    color: var(--forest-800);
+  }
+  .bp-scale-track {
+    height: 0.6rem;
+    border-radius: 999px;
+    background: var(--forest-100);
+    overflow: hidden;
+  }
+  .bp-scale-bar {
+    height: 100%;
+    border-radius: 999px;
+  }
+  .bp-scale-bar--0 { background: var(--forest-700); }
+  .bp-scale-bar--1 { background: var(--moss-600); }
+  .bp-scale-bar--2 { background: var(--color-golden-grass-500); }
+  .bp-scale-bar--3 { background: #c2573a; }
+
+  .bp-georef-svg-wrap {
+    width: 100%;
+  }
+  .bp-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: var(--sl-font, sans-serif);
+  }
+  .geo-extent { fill: color-mix(in srgb, var(--moss-200) 40%, transparent); stroke: var(--moss-700); }
+  .geo-uncert { fill: color-mix(in srgb, var(--forest-300) 45%, transparent); stroke: var(--forest-800); }
+  .geo-point { fill: var(--forest-900); }
+  .geo-line { stroke: var(--forest-800); }
+  .geo-line-ext { stroke: var(--moss-700); }
+  .geo-leader { stroke: var(--forest-400); }
+  .geo-txt-strong { fill: var(--forest-900); font-weight: 700; }
+  .geo-txt-muted { fill: var(--forest-700); }
+  .geo-pill { fill: var(--forest-100); stroke: var(--forest-300); }
+  .geo-pill-txt { fill: var(--forest-900); font-family: var(--__sl-font-mono, ui-monospace, monospace); font-weight: 600; }
+
+  .bp-warn {
+    margin: 0.25rem 0 0;
+    padding: 0.35rem 0.6rem;
+    border-left: 3px solid var(--color-golden-grass-600);
+    border-radius: 0.35rem;
+    background: var(--color-golden-grass-50);
+    color: var(--color-golden-grass-950);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  /* 5. Specimen anatomy */
+  .bp-specimen {
+    display: grid;
+    gap: 0.85rem;
+  }
+  .bp-specimen__hub {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem 0.9rem;
+    padding: 0.7rem 1rem;
+    border-radius: 0.75rem;
+    background: var(--forest-900);
+    color: var(--forest-50);
+  }
+  .bp-specimen__hub .bp-mono-muted {
+    color: var(--forest-200);
+  }
+  .bp-badge--solid {
+    background: var(--color-golden-grass-400);
+    color: var(--color-golden-grass-950);
+  }
+  .bp-specimen__title {
+    font-size: 1rem;
+  }
+  .bp-specimen__grid {
+    display: grid;
+    gap: 0.7rem;
+  }
+  @media (min-width: 46rem) {
+    .bp-specimen__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* 6. Backup */
+  .bp-backup {
+    display: grid;
+    gap: 0.9rem;
+  }
+  .bp-section-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--forest-800);
+  }
+  .bp-tiers {
+    display: grid;
+    gap: 0.7rem;
+  }
+  @media (min-width: 50rem) {
+    .bp-tiers {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .bp-rule321 {
+    display: grid;
+    gap: 0.6rem;
+    padding: 0.85rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-golden-grass-300);
+    background: var(--color-golden-grass-50);
+  }
+  .bp-rule321__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+  }
+  .bp-copies {
+    display: grid;
+    gap: 0.55rem;
+  }
+  @media (min-width: 46rem) {
+    .bp-copies {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .bp-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 0.55rem;
+    background: #fff;
+    border: 1px solid var(--color-golden-grass-200);
+    color: var(--forest-900);
+    font-size: 0.84rem;
+  }
+  .bp-copy__badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-golden-grass-800);
+  }
+  .bp-copy__detail {
+    font-size: 0.76rem;
+    color: var(--forest-700);
+  }
+
+  /* 7. Export decision grid */
+  .bp-export-wrap {
+    overflow-x: auto;
+  }
+  .bp-export-grid {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 34rem;
+  }
+  .bp-export-head,
+  .bp-export-row {
+    display: grid;
+    grid-template-columns: 1.55fr 1.1fr 1.15fr 0.75fr;
+    gap: 0.6rem;
+    align-items: center;
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.55rem;
+    font-size: 0.82rem;
+  }
+  .bp-export-head {
+    background: var(--forest-800);
+    color: var(--forest-50);
+    font-weight: 700;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .bp-export-row {
+    background: #fff;
+    border: 1px solid var(--forest-100);
+    color: var(--forest-900);
+  }
+  .bp-export-need {
+    font-weight: 600;
+  }
+  .bp-pill {
+    display: inline-block;
+    padding: 0.14rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
+  .bp-pill--yes {
+    background: var(--moss-100);
+    color: var(--moss-900);
+    border: 1px solid var(--moss-300);
+  }
+  .bp-pill--no {
+    background: var(--mist-100);
+    color: var(--mist-700);
+    border: 1px solid var(--mist-200);
+  }
+
+  /* 8. Power & Temp */
+  .bp-battery {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+  .bp-battery__meta {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--forest-800);
+  }
+  .bp-battery__bar {
+    display: flex;
+    height: 2rem;
+    border-radius: 0.55rem;
+    overflow: hidden;
+    border: 1px solid var(--forest-300);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .bp-battery__usable {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--forest-700);
+    color: #fff;
+  }
+  .bp-battery__loss {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--mist-100),
+      var(--mist-100) 6px,
+      var(--mist-200) 6px,
+      var(--mist-200) 12px
+    );
+    color: var(--mist-900);
+  }
+  .bp-battery__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.9rem;
+    font-size: 0.76rem;
+    color: var(--forest-700);
+  }
+  .bp-dot::before {
+    content: "";
+    display: inline-block;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 999px;
+    margin-right: 0.35rem;
+    vertical-align: middle;
+  }
+  .bp-dot--usable::before { background: var(--forest-700); }
+  .bp-dot--loss::before { background: var(--mist-400); }
+  .bp-battery__result {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 0.55rem;
+    background: var(--moss-50);
+    border: 1px solid var(--moss-300);
+    font-size: 0.82rem;
+    color: var(--moss-900);
+  }
+  .bp-zones {
+    list-style: none;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .bp-zone {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.2rem 0.6rem;
+    padding: 0.42rem 0.65rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+  }
+  .bp-zone__range { font-weight: 700; white-space: nowrap; }
+  .bp-zone--cold { background: #e8f1f8; color: #193d5c; border-left: 3px solid #3c7db3; }
+  .bp-zone--safe { background: var(--moss-100); color: var(--moss-900); border-left: 3px solid var(--moss-600); }
+  .bp-zone--warm { background: var(--color-golden-grass-100); color: var(--color-golden-grass-950); border-left: 3px solid var(--color-golden-grass-600); }
+  .bp-zone--danger { background: #fae8e4; color: #6e2314; border-left: 3px solid #c2573a; }
+  .bp-temp-note { margin-top: 0.2rem; }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .bp-card {
+    border-color: rgb(226 233 227 / 0.12);
+    background: rgb(14 26 18 / 0.5);
+  }
+  :global([data-theme="dark"]) .bp-tone-forest {
+    --bg: var(--forest-900);
+    --bd: var(--forest-600);
+    --fg: var(--forest-50);
+    --muted: var(--forest-200);
+    --chip-bg: var(--forest-800);
+    --chip-bd: var(--forest-600);
+    --badge-bg: var(--forest-400);
+    --badge-fg: var(--forest-950);
+  }
+  :global([data-theme="dark"]) .bp-tone-moss {
+    --bg: var(--moss-950);
+    --bd: var(--moss-600);
+    --fg: var(--moss-50);
+    --muted: var(--moss-200);
+    --chip-bg: var(--moss-900);
+    --chip-bd: var(--moss-600);
+    --badge-bg: var(--moss-400);
+    --badge-fg: var(--moss-950);
+  }
+  :global([data-theme="dark"]) .bp-tone-mist {
+    --bg: var(--mist-950);
+    --bd: var(--mist-600);
+    --fg: var(--mist-50);
+    --muted: var(--mist-200);
+    --chip-bg: var(--mist-900);
+    --chip-bd: var(--mist-600);
+    --badge-bg: var(--mist-300);
+    --badge-fg: var(--mist-950);
+  }
+  :global([data-theme="dark"]) .bp-tone-gold {
+    --bg: color-mix(in srgb, var(--color-golden-grass-950) 75%, #17181c);
+    --bd: var(--color-golden-grass-700);
+    --fg: var(--color-golden-grass-50);
+    --muted: var(--color-golden-grass-200);
+    --chip-bg: color-mix(in srgb, var(--color-golden-grass-900) 70%, #17181c);
+    --chip-bd: var(--color-golden-grass-700);
+    --badge-bg: var(--color-golden-grass-400);
+    --badge-fg: var(--color-golden-grass-950);
+  }
+  :global([data-theme="dark"]) .bp-panel,
+  :global([data-theme="dark"]) .bp-phase,
+  :global([data-theme="dark"]) .bp-export-row,
+  :global([data-theme="dark"]) .bp-copy {
+    background: rgb(22 33 27 / 0.85);
+    border-color: rgb(226 233 227 / 0.14);
+    color: var(--forest-50);
+  }
+  :global([data-theme="dark"]) .bp-phase__title,
+  :global([data-theme="dark"]) .bp-phase__name,
+  :global([data-theme="dark"]) .bp-col__title,
+  :global([data-theme="dark"]) .bp-section-label,
+  :global([data-theme="dark"]) .bp-scale-dist,
+  :global([data-theme="dark"]) .bp-battery__meta {
+    color: var(--forest-50);
+  }
+  :global([data-theme="dark"]) .bp-phase__link {
+    background: rgb(14 26 18 / 0.7);
+    border-color: rgb(226 233 227 / 0.1);
+  }
+  :global([data-theme="dark"]) .bp-phase__link:hover {
+    background: var(--forest-800);
+    border-color: var(--forest-400);
+  }
+  :global([data-theme="dark"]) .bp-phase__note,
+  :global([data-theme="dark"]) .bp-sub,
+  :global([data-theme="dark"]) .bp-mono-muted,
+  :global([data-theme="dark"]) .bp-copy__detail,
+  :global([data-theme="dark"]) .bp-battery__legend {
+    color: var(--forest-200);
+  }
+  :global([data-theme="dark"]) .bp-arrow-pill--out {
+    background: var(--forest-900);
+    color: var(--forest-100);
+    border-color: var(--forest-600);
+  }
+  :global([data-theme="dark"]) .bp-arrow-pill--in {
+    background: var(--mist-900);
+    color: var(--mist-100);
+    border-color: var(--mist-600);
+  }
+  :global([data-theme="dark"]) .bp-scale-track {
+    background: var(--forest-900);
+  }
+  :global([data-theme="dark"]) .geo-extent { fill: color-mix(in srgb, var(--moss-700) 28%, transparent); stroke: var(--moss-400); }
+  :global([data-theme="dark"]) .geo-uncert { fill: color-mix(in srgb, var(--forest-400) 32%, transparent); stroke: var(--forest-300); }
+  :global([data-theme="dark"]) .geo-point { fill: var(--forest-50); }
+  :global([data-theme="dark"]) .geo-line { stroke: var(--forest-200); }
+  :global([data-theme="dark"]) .geo-line-ext { stroke: var(--moss-300); }
+  :global([data-theme="dark"]) .geo-leader { stroke: var(--forest-400); }
+  :global([data-theme="dark"]) .geo-txt-strong { fill: var(--forest-50); }
+  :global([data-theme="dark"]) .geo-txt-muted { fill: var(--forest-200); }
+  :global([data-theme="dark"]) .geo-pill { fill: var(--forest-900); stroke: var(--forest-600); }
+  :global([data-theme="dark"]) .geo-pill-txt { fill: var(--forest-100); }
+  :global([data-theme="dark"]) .bp-warn {
+    background: color-mix(in srgb, var(--color-golden-grass-950) 80%, #17181c);
+    color: var(--color-golden-grass-100);
+  }
+  :global([data-theme="dark"]) .bp-rule321 {
+    background: color-mix(in srgb, var(--color-golden-grass-950) 65%, #17181c);
+    border-color: var(--color-golden-grass-800);
+  }
+  :global([data-theme="dark"]) .bp-copy__badge {
+    color: var(--color-golden-grass-300);
+  }
+  :global([data-theme="dark"]) .bp-export-head {
+    background: var(--forest-900);
+  }
+  :global([data-theme="dark"]) .bp-pill--yes {
+    background: var(--moss-900);
+    color: var(--moss-100);
+    border-color: var(--moss-600);
+  }
+  :global([data-theme="dark"]) .bp-pill--no {
+    background: var(--mist-900);
+    color: var(--mist-200);
+    border-color: var(--mist-600);
+  }
+  :global([data-theme="dark"]) .bp-battery__loss {
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--mist-900),
+      var(--mist-900) 6px,
+      var(--mist-950) 6px,
+      var(--mist-950) 12px
+    );
+    color: var(--mist-100);
+  }
+  :global([data-theme="dark"]) .bp-battery__result {
+    background: var(--moss-950);
+    border-color: var(--moss-600);
+    color: var(--moss-100);
+  }
+  :global([data-theme="dark"]) .bp-zone--cold { background: #142a3d; color: #cfe6fa; border-left-color: #5ca2de; }
+  :global([data-theme="dark"]) .bp-zone--safe { background: var(--moss-950); color: var(--moss-100); border-left-color: var(--moss-400); }
+  :global([data-theme="dark"]) .bp-zone--warm { background: color-mix(in srgb, var(--color-golden-grass-950) 80%, #17181c); color: var(--color-golden-grass-100); border-left-color: var(--color-golden-grass-400); }
+  :global([data-theme="dark"]) .bp-zone--danger { background: #3b1710; color: #fad2c8; border-left-color: #e0765a; }
+</style>

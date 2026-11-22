@@ -1,0 +1,53 @@
+---
+title: Cadangan dan Pemulihan
+sidebar:
+  label: Cadangan dan Pemulihan
+  order: 6
+---
+
+Rencanakan perlindungan terhadap kehilangan sehari-hari — drive rusak, tablet retak, kartu tak terbaca, berkas tanpa nama, dan tim yang berpencar setelah ekspedisi — bukan hanya bencana besar. **Cadangan yang belum pernah Anda pulihkan hanyalah berkas yang belum pernah Anda buka.**
+
+{% bpdiagram kind="backup" locale="id" /%}
+
+## Sesuaikan cadangan dengan tugasnya
+
+**Ekspor proyek aktif di akhir setiap hari lapangan. Cadangkan seluruh basis data seminggu sekali, serta selalu sebelum penggabungan atau kurasi besar.** Keduanya punya peran berbeda, dan menjalankan cadangan penuh tiap malam dengan daya baterai adalah kesalahan paling umum.
+
+- **Harian: `Export project`** (`TAR.GZ` bawaan atau `ZIP`). Kecil, cepat, dan hemat baterai. Menyimpan catatan proyek aktif beserta media yang tersedia, dan `Import project` atau `Merge project` membacanya kembali ke NAHPU — sehingga perangkat rusak atau hilang paling banyak merugikan satu hari kerja. Saat sinyal lemah, aktifkan `Light export` (`JSON.GZ`) untuk mengunggah catatan tanpa media dan simpan media secara lokal.
+- **Mingguan & pra-penggabungan: `Backup database`.** Menyalin seluruh instalasi NAHPU: semua proyek, konfigurasi pengguna, preset, berkas terkelola, fon, dan peta. Gunakan untuk membangun ulang perangkat atau membuat titik aman sebelum `Merge project`.
+
+Gunakan [Paketkan Catatan](/id/usages/export/export-bundles/) (`NAHPU Data Package` atau paket Darwin Core) untuk analisis, publikasi, atau pengarsipan — bukan sebagai pengganti ekspor proyek harian atau cadangan basis data penuh.
+
+{% aside type="caution" title="Periksa peringatan berkas hilang" %}
+Ekspor atau arsip tidak dapat menyertakan media atau lampiran yang sudah hilang di penyimpanan. Setiap kali `Export project` atau `Bundle records` melaporkan berkas hilang, temukan berkas aslinya sebelum menghapus salinan lama.
+{% /aside %}
+
+## Terapkan aturan 3-2-1 di lapangan terpencil
+
+**Simpan minimal tiga salinan, pada dua media berbeda, dengan satu salinan di luar perangkat pencatat.** Tanpa internet, ganti salinan ketiga dengan pemisahan fisik:
+
+1. **Salinan 1 — Perangkat pencatat:** tablet atau ponsel aktif di perkemahan.
+2. **Salinan 2 — Media lokal kedua:** flash drive USB-C tangguh atau perangkat rekan satu tim.
+3. **Salinan 3 — Di luar perangkat / luar lokasi:** ponsel cadangan di dry bag terpisah, atau salinan cloud terverifikasi begitu mendapat sinyal.
+
+**Unggahan cloud baru selesai setelah Anda memeriksa berkas di server tujuan.**
+
+## Beri nama berkas agar bertahan melampaui ingatan
+
+**Cantumkan proyek, tujuan, dan tanggal pada tiap nama berkas**, seperti `PatahMammals_transfer_20260908.tar.gz` atau `PatahMammals_db_20260914.zip`. Aktifkan `Append date` di dialog ekspor NAHPU agar salinan kemarin tidak tertimpa.
+
+## Uji pemulihan sebelum dibutuhkan
+
+**Secara berkala impor ekspor proyek atau pulihkan cadangan basis data pada instalasi cadangan**, lalu periksa jumlah catatan, tautan antar-catatan, dan pembukaan media. Jangan pernah menguji `Restore database` di perangkat yang masih menyimpan data belum dicadangkan.
+
+## Pemulihan saat perangkat rusak di tengah ekspedisi
+
+{% aside type="tip" title="Contoh penerapan: tablet mati pada hari ke-12" %}
+Jika tablet lapangan rusak dan Anda rutin mengirim arsip harian `Export project` ke ponsel cadangan:
+1. Buka NAHPU di ponsel dan pilih `Import project` dari menu layar beranda.
+2. Pilih arsip `TAR.GZ` atau `ZIP` kemarin dan pastikan catatan serta media terbaca.
+3. Periksa Field ID dan Tissue ID terakhir, sesuaikan penghitung di `Personnel` atau pengaturan `Field ID` proyek, lalu lanjutkan pencatatan.
+4. Catat pergantian perangkat dan data hari ke-12 yang dimasukkan ulang di `Narrative`.
+{% /aside %}
+
+Untuk langkah rinci, lihat [Cadangan Harian](/id/how-to-recipes/protect-and-collaborate/daily-backup/), [Transfer Proyek](/id/usages/export/project-transfer/), dan [Pulihkan Basis Data](/id/how-to-recipes/protect-and-collaborate/restore-database/).

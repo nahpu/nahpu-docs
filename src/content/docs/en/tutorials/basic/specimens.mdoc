@@ -2,83 +2,94 @@
 title: "Basic tutorial 5: Enter specimen records"
 authors:
   - Heru Handika
-lastUpdated: 2026-11-13
+lastUpdated: 2026-11-19
 sidebar:
   label: "5. Enter specimen records"
   order: 5
 ---
 
-With the project, people, taxa, sites, and events in place, a specimen record
-is mostly a matter of choosing from lists and typing measurements. The place,
-coordinate, method, and possible collectors all come from the event you pick.
+With the project, personnel, taxa, sites, and events in place, entering a
+specimen record is mostly a matter of selecting from lists and typing
+measurements. Locality, coordinates, collection method, and eligible collectors
+all flow automatically from the event you choose.
 
-You enter the seven specimens chosen in
-[Basic tutorial 1](/en/tutorials/basic/paper-catalog/). Each one shows a
-different way paper records go wrong, and how to decide what to enter.
+In this tutorial, you will enter the seven specimens selected in
+[Basic tutorial 1](/en/tutorials/basic/paper-catalog/). Each illustrates a
+different paper-catalog failure mode and shows how to choose and document the
+best-supported value.
 
 ## From paper form to NAHPU
 
 | Paper box | NAHPU field | Note |
 | --- | --- | --- |
 | `Collector No.` | Field ID | Heru's initials and number, shown as `HH436` |
-| `Museum` | `Museum ID` | Under `Show more` |
-| `Species` | `Taxon` | Chosen from the registry |
+| `Museum` | `Tissue ID` (on the `Liver` part) | Young Heru wrote tissue numbers (`Z26230`, …) in the `Museum` box; leave `Museum ID` (under `Show more`) empty |
+| `Species` | `Taxon` | Selected from the taxon registry |
 | `Locality`, `Trap or net line` | `Site ID`, then `Event ID` | In the capture record |
 | `Capture date`, `Time` | `Capture date`, `Capture time` | Also enter the date as `Collection date` |
-| `Collection method` | `Method` | Only the event's methods are offered |
-| `Collector` | `Collector` | Only the event's people are offered |
-| `TTL`, `TL`, `HF`, `Ear`, `WT (FA)` | Total, tail, hind foot, and ear length; weight | Head-and-body length is calculated |
-| `male` / `female` and reproductive boxes | `Sex` and reproductive data | One sex; fields change with it |
+| `Collection method` | `Method` | Restricted to the event's methods |
+| `Collector` | `Collector` | Restricted to the event's personnel |
+| `TTL`, `TL`, `HF`, `Ear`, `WT (FA)` | Total, tail, hind foot, and ear length; weight | Head-and-body length is calculated automatically |
+| `male` / `female` and reproductive boxes | `Sex` and reproductive data | Single sex; reproductive fields adapt to it |
 | `Age` | `Life stage` | |
-| `Preparation Code`, `Tissues in` | `Specimen Parts` | One part per piece of material |
-| `Habitat` | Site habitat | Entered in Tutorial 3 |
+| `Preparation Code`, `Tissues in` | `Specimen Parts` | One part record per piece of material |
+| `Habitat` | Site habitat | Already entered in Tutorial 3 |
 | `Remarks` | `Remarks` | |
 
-The preparation codes have no legend on the form. These tutorials read them as:
+The paper forms include no legend for the preparation codes. These tutorials
+interpret them as:
 
-- `SA`: study skin, with the skull and skeleton cleaned and kept dry;
-- `AL`: whole animal fixed in formalin, as a fluid specimen.
+- `SA`: study skin with cleaned, dry skull and skeleton;
+- `AL`: whole animal fixed in formalin (fluid specimen).
 
-The `Tissues in` box records a tissue sample in ethanol. These tutorials enter
-it as liver.
+The `Tissues in` box indicates a tissue sample preserved in ethanol, entered
+here as `Liver`.
 
-Make sure `Skin`, `Skull`, `Skeleton`, `Whole body`, and `Liver` are in
-`Settings` > `Specimens` > `Specimen types`, and `None`, `ETOH`, and `Formalin`
-in `Treatments`,
-before you start.
+Before you begin, confirm that `Skin`, `Skull`, `Skeleton`, `Whole body`, and
+`Liver` exist under `Settings` > `Specimens` > `Specimen types`, and that
+`None`, `ETOH`, and `Formalin` exist under `Treatments`.
 
 ## 1. Enter HH 436, the complete record
 
 HH 436 is a squirrel caught on 12 September, the day the lines were set. The
-journal for that day says, "I caught a squirrel right after setting the traps."
-The two records agree.
+journal for that day reads, "I caught a squirrel right after setting the
+traps." Both sources agree.
 
 {% steps %}
 
-1. Open Specimens and select `+`. Check that the Field ID reads `HH436`. If it
-   does not, use `Edit field ID` to correct the number.
+1. Open `Specimens` and select `+`. Confirm that the Field ID reads `HH436`; if
+   not, use `Edit field ID` to fix it.
 
-    NAHPU fills the Field ID from Heru's cataloger number and increases that
-    number by one for each new specimen. In the field this keeps numbers in
-    sequence without anyone writing them by hand. Here you enter only selected
-    records, so the proposed number will often be wrong: after HH 437, NAHPU
-    proposes `HH438`, but the next record you enter is HH 442. Override the
-    number with `Edit field ID` each time it differs from the paper.
+    NAHPU fills each Field ID from Heru's cataloger number and increments it by
+    one for every new specimen. In real fieldwork, this keeps numbers in
+    sequence automatically. Because these tutorials skip numbers—after HH 437,
+    NAHPU proposes `HH438`, whereas the next tutorial specimen is HH 442—use
+    `Edit field ID` whenever the proposed number differs from the paper.
+
 2. In `Collection & Identification`:
 
     | Field | Value |
     | --- | --- |
     | `Cataloger` | `Heru Handika` (also fills `Preparator` and `Determiner`) |
-    | `Museum ID` | `Z26230` |
+    | `Museum ID` | Leave empty |
     | `Collection date`, `Collection time` | 12 September 2014, `16:00` |
     | `Taxon` | *Lariscus insignis* |
     | `ID Confidence` | `High` |
 
-    Set `Prep. date` to the collection date, 12 September 2014. Heru prepared
-    specimens on the day they were caught, but the paper does not record when,
-    so leave `Prep. time` empty.
+    Set `Prep. date` to 12 September 2014. Heru prepared specimens the same day
+    they were caught, but the paper does not record preparation times, so leave
+    `Prep. time` empty.
 
-3. In the capture record, choose `Site ID` `TJHH-L1`, then its event. Enter:
+    {% aside type="note" title="Why the Z numbers are not Museum IDs" %}
+    Young Heru wrote `Z26230` (and the rest of the `Z` series) in the paper
+    form's `Museum` box—another mistake in the 2014 catalog. Those `Z` numbers
+    are **tissue numbers**, not museum catalog numbers. Museums usually do not
+    assign a museum catalog number until a specimen arrives at the collection
+    and is formally accessioned. Leave `Museum ID` empty here and enter each
+    `Z` number as `Tissue ID` on the `Liver` part below.
+    {% /aside %}
+
+3. In the capture record, select `Site ID` `TJHH-L1`, then its event, and enter:
 
     | Field | Value |
     | --- | --- |
@@ -87,161 +98,190 @@ The two records agree.
     | `Coordinate ID` | `TJHH-PM` |
     | `Collector` | `Heru Handika` |
 
-4. Enter the measurements: total length `238`, tail `84`, hind foot `46`,
-   ear `18`, weight `120` g. Leave `Accuracy` as `Accurate`.
+4. Enter the measurements: total length `238`, tail `84`, hind foot `46`, ear
+   `18`, weight `120` g. Keep `Accuracy` as `Accurate`.
 5. Set `Sex` to `Male`, testis `Position` to `Abdominal`, and `Life stage` to
    `Subadult`.
-6. Under `Specimen Parts`, add four parts: `Skin`, `Skull`, and `Skeleton`,
-   each with treatment `None`; and `Liver` with treatment `ETOH`. The paper
-   code `SA` becomes three separate parts, so each can be stored, loaned, and
-   tracked on its own.
+6. Under `Specimen Parts`, add four parts: `Skin`, `Skull`, and `Skeleton` (each
+   with treatment `None`), plus `Liver` with treatment `ETOH` and `Tissue ID`
+   `Z26230`. The opaque code `SA` becomes three explicit parts that can be
+   stored, loaned, and tracked independently.
 
 {% /steps %}
 
-Open the record again. Without typing a locality, it shows Indonesia, Jambi,
-Kerinci, Pondok Merah, the coordinate, and the habitat, all from the site.
+Reopen the record: without typing a locality, it displays Indonesia, Jambi,
+Kerinci, Pondok Merah, the coordinate, and the habitat—all inherited from the
+site. (The screenshot below shows `Z26230` in `Museum ID` from an earlier
+draft; in your record, `Museum ID` stays empty and `Z26230` lives on the
+`Liver` part's `Tissue ID`.)
 
-![NAHPU Specimen Records page on an iPad for HH436, Lariscus insignis, with museum ID Z26230, collection on 12 September 2014 at 4:00 PM, preparation date 12 September 2014 with no preparation time, site TJHH-L1, method Snap trap, and coordinate TJHH-PM](../../../../../assets/images/app-screenshots/tutorials/basic/specimen-hh436.webp)
+![NAHPU Specimen Records page on an iPad for HH436, Lariscus insignis, with collection on 12 September 2014 at 4:00 PM, preparation date 12 September 2014 with no preparation time, site TJHH-L1, method Snap trap, and coordinate TJHH-PM](../../../../../assets/images/app-screenshots/tutorials/basic/specimen-hh436.webp)
 
-Further down the same record are the measurements and parts. NAHPU calculates
-head-and-body length (154 mm) and the tail ratio from the values you typed:
+Further down the record, NAHPU calculates head-and-body length (154 mm) and the
+tail ratio from the measurements you entered:
 
 ![NAHPU Specimen Attributes and Specimen Parts for HH436 on an iPad: total length 238, tail 84, hind foot 46, ear 18, weight 120 g, male, subadult; parts Skin, Skull, and Skeleton with no treatment, and Liver in ETOH](../../../../../assets/images/app-screenshots/tutorials/basic/specimen-hh436-attributes.webp)
 
-## 2. Enter the other six
+## 2. Enter the remaining six records
 
-Use the same steps with the values below. The notes after the table explain the
-choices.
+Follow the same steps with the values below, leaving `Museum ID` empty on every
+record and placing each `Z` tissue number in the `Liver` part's `Tissue ID`.
+The notes after the table explain each decision.
 
-| Field ID | `Museum ID` | `Taxon` | Site | Capture date and time | `Method` | `Collector` | TTL–TL–HF–Ear, weight | `Sex` | `Life stage` | Parts |
+| Field ID | `Tissue ID` | `Taxon` | Site | Capture date and time | `Method` | `Collector` | TTL–TL–HF–Ear, weight | `Sex` | `Life stage` | Parts |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `HH437` | `Z26231` | *Mus crociduroides* | `TJHH-L1` | 13 Sep 2014, `07:00` | `Snap trap` | Heru Handika | 191–103–22–16, 16 g | `Female` | `Subadult` | Skin; skull; skeleton; liver, ETOH |
-| `HH442` | `Z26236` | *Maxomys hylomyoides* | `TJHH-L1` | 13 Sep 2014, empty | `Snap trap` | Heru Handika | 238–119–30–18, 46 g | `Female` | Empty | Whole body, Formalin |
+| `HH442` | See note | *Maxomys hylomyoides* | `TJHH-L1` | 13 Sep 2014, empty | `Snap trap` | Heru Handika | 238–119–30–18, 46 g | `Female` | Empty | Whole body, Formalin |
 | `HH453` | `Z26247` | *Crocidura beccarii* | `TJHH-P1` | 13 Sep 2014, empty | `Pitfall` | Heru Handika | 150–75–17–8, 7 g | `Male` | `Adult` | Whole body, Formalin; liver, ETOH |
 | `HH456` | `Z26250` | *Maxomys hylomyoides* | `TJBS-L2` | 13 Sep 2014, `07:00` | `Snap trap` | Heru Handika | 221–113–28–16, 48 g | `Male`, testes abdominal | `Subadult` | Whole body, Formalin; liver, ETOH |
 | `HH523` | `Z26317` | *Maxomys* (genus) | `TJHH-L3` | 17 Sep 2014, `09:00` | `Snap trap` | Bima Sampel | 268–124–29–18, 66 g | `Male`, testes 17 × 4 mm | `Adult` | Skin; skull; skeleton; liver, ETOH |
 | `HH529` | Empty | *Crocidura neglecta* | `TJHH-P4` | 17 Sep 2014, `07:00` | `Pitfall` | Bima Sampel | 112–45–11–7, 4.4 g | `Male` | `Adult` | Whole body, Formalin; liver, ETOH |
 
-Copy each date to `Collection date` and `Prep. date` as well, and leave
-`Prep. time` empty. For the Pasir Putih specimens, leave `Coordinate ID` empty:
-those sites have no coordinate. Override the proposed Field ID for each record,
-as described in step 1.
+Copy each capture date to `Collection date` and `Prep. date`, and leave
+`Prep. time` empty. For the two Pasir Putih specimens (`HH523` and `HH529`),
+leave `Coordinate ID` empty because those sites have no coordinates. Override
+the proposed Field ID for each record as noted in step 1.
 
 {% aside type="note" title="Why collection and preparation times matter" %}
-In genomic tissue collections, the time between death and preservation affects
-DNA and RNA quality. Having both the collection time and the preparation time
-lets a curator or a lab judge a tissue before using it. Paper catalogs often
-leave this out; this one has a capture time but no preparation time. Genomic
-work was not as accessible in 2014, so young Heru did not record that context.
-NAHPU keeps both times on every specimen, and each part can also record when
-it was taken and its post-mortem interval (`PMI`).
+In genomic tissue collections, the interval between death and preservation
+directly affects DNA and RNA quality. Recording both collection time and
+preparation time helps curators and labs evaluate tissue suitability before
+sequencing. Paper catalogs often omit this—Heru's 2014 forms record capture
+times but not preparation times, because genomic work was far less accessible
+then. NAHPU tracks both times on every specimen, and individual parts can also
+record a sampling timestamp and post-mortem interval (`PMI`).
 {% /aside %}
 
 ### HH 437: overwritten number and sex
 
 On paper, `437` is written over `436`, and `male` is scribbled out with
-`female` circled. Both corrections look deliberate, so enter `HH437` and
-`Female`. In NAHPU these mistakes are harder to make: the Field ID comes from
-Heru's running number, not from memory, and `Sex` holds one value. Changing it
-asks `Change sex?` and clears the reproductive fields that no longer apply,
-rather than leaving both sets on the form.
+`female` circled. Both edits look deliberate, so enter `HH437` and `Female`.
+NAHPU makes these errors harder to introduce: Field IDs increment
+automatically, and `Sex` holds one value—changing it prompts `Change sex?` and
+clears mismatched reproductive fields instead of leaving both sets on the form.
 
 Add to `Remarks`:
-`Paper form: field number written over 436; sex corrected from male to female.`
 
-### HH 442: the date that breaks the sequence
+```text
+Paper form: field number written over 436; sex corrected from male to female.
+```
 
-The form says `17 Sept`, but the evidence points to 13 September:
+### HH 442: a date out of sequence
 
-- HH 441 and HH 443, on either side of it, were both caught on 13 September;
-- its museum number, Z26236, falls between theirs, Z26235 and Z26237;
-- the 17 September captures start much later, at HH 512.
+The form reads `17 Sept`, but three lines of evidence point to 13 September:
 
-Enter 13 September. The form also leaves the trap line, time, and age blank.
-Leave the time and life stage empty. A specimen needs an event, so link it to
-`TJHH-L1`, where HH 438–441 were caught, and say that this is an inference.
-The `Tissues in` box is not circled, so add no liver part.
+- the adjacent specimens (`HH 441` and `HH 443`) were both caught on 13
+  September;
+- its tissue number (`Z26236`, written in the `Museum` box) sits between theirs
+  (`Z26235` and `Z26237`);
+- the 17 September captures do not begin until `HH 512`.
+
+Enter 13 September, and leave the blank time and life stage empty. Because
+every specimen needs an event, link it to `TJHH-L1` (where `HH 438–441` were
+caught) and document that inference. Because `Tissues in` is not circled, do
+not add a liver part—note the uncircled `Z26236` tissue number in `Remarks`
+instead.
 
 Add to `Remarks`:
-`Paper form gives capture date 17 Sep 2014; entered as 13 Sep 2014 from the record sequence and museum numbers. Trap line not recorded; assigned to Line 1 as for HH 438–441.`
+
+```text
+Paper form gives capture date 17 Sep 2014; entered as 13 Sep 2014 from the record sequence and tissue numbers (Z26236 written in the Museum box, though Tissues in was not circled). Trap line not recorded; assigned to Line 1 as for HH 438–441.
+```
 
 ### HH 453: a pitfall capture on "Line 1"
 
-The form says line `1` and method `Pitfall`. On paper, Line 1 was both
-pitfalls and snap traps, so the line number alone cannot tell you which. In
-NAHPU you choose the `TJHH-P1` event, and `Method` offers only `Pitfall`. The
-neighboring record, HH 452, shows why this matters: its method was first
-written as `Snap Trap`, then crossed out and replaced with `Pitfall`.
+The form reads line `1` and method `Pitfall`. On paper, Line 1 held both
+pitfalls and snap traps, so the line number alone is ambiguous. In NAHPU,
+linking to `TJHH-P1` restricts `Method` to `Pitfall`. The neighboring record,
+`HH 452`, shows why this matters: its method was originally written as
+`Snap Trap`, then crossed out for `Pitfall`.
 
 ### HH 456: a changed identification
 
-On paper, `Mus crociduroides` is crossed out and `Maxomys hylomyoides` written
-after it, with no name or date for the change. Enter the current name and set
-`ID Confidence` to `Medium`, since the identification changed in the field.
-`Determiner` already names who made it.
+On paper, `Mus crociduroides` is crossed out and replaced with
+`Maxomys hylomyoides`, with no determiner or date. Enter *Maxomys hylomyoides*
+and set `ID Confidence` to `Medium` to reflect the field change. `Determiner`
+already records who made the call.
 
 Add to `Remarks`:
-`First recorded in the field as Mus crociduroides.`
+
+```text
+First recorded in the field as Mus crociduroides.
+```
 
 When a specialist re-identifies the specimen later, they update `Taxon`,
 `Determiner`, and `ID Confidence` in the same record.
 
-### HH 523: the possible new species
+### HH 523: a possible new species
 
-Heru wrote `Maxomys cf. hylomyoides`: it looks like *M. hylomyoides*, but he was
-not sure. Choose the genus *Maxomys* from the registry and set `ID Confidence`
-to `High`, because the genus is certain.
+Heru wrote `Maxomys cf. hylomyoides`—resembling *M. hylomyoides*, but
+uncertain. Choose the genus *Maxomys* from the registry and set `ID Confidence`
+to `High` because the genus is certain.
 
-The form's time is `09:00`, not the team's standard 07:00 for overnight
-captures. Enter it as written and note the difference. The journal also
-matters for the collector: on 17 September Heru stayed in camp while the boat
-team checked Pasir Putih, so choose `Bima Sampel`, who led that team.
+You can also enter *Maxomys hylomyoides* with `ID Confidence` set to `Low`.
+The low confidence marks the specimen as a priority for re-identification
+later. This tutorial uses the genus, so later tutorials count `HH523` as
+*Maxomys* (genus).
+
+The form records `09:00` instead of the team's standard `07:00` overnight time;
+enter `09:00` as written and note the difference. Because Heru stayed in camp
+on 17 September while the boat crew checked Pasir Putih, choose `Bima Sampel`
+as `Collector`.
 
 Add to `Remarks`:
-`cf. hylomyoides. Underparts darker than M. hylomyoides: more orange at the base and grey on the belly. Paper time 09:00 differs from the team's standard 07:00.`
 
-### HH 529: the wrong collector and a misused box
+```text
+cf. hylomyoides. Underparts darker than M. hylomyoides: more orange at the base and grey on the belly. Paper time 09:00 differs from the team's standard 07:00.
+```
 
-The form says `07.00`, the team's standard time for overnight captures. Enter
-`07:00`; the event notes from Tutorial 4 explain what it means. As for HH 523,
-Heru was in camp that morning, so choose `Bima Sampel` as collector.
+### HH 529: wrong collector and a misused box
 
-The `Museum` box says `Blank Tube`, which is not a museum number. Leave
-`Museum ID` empty and add the note to the liver part's `Remarks`:
-`Tube label left blank in 2014.` Museum and tissue numbers have separate fields
-in NAHPU, so this kind of note no longer needs a box of its own.
+The form lists `07.00`, the team's standard overnight capture time. Enter
+`07:00`—the event notes from Tutorial 4 explain what it means—and choose
+`Bima Sampel` as `Collector`, as for HH 523.
 
-In the finished record, the site and event say Pasir Putih, and
-`Coordinate ID` is empty because that site has no coordinate:
+The `Museum` box reads `Blank Tube`—which makes sense once you know young Heru
+was using that box for tissue tube numbers. Leave `Museum ID` and the liver
+part's `Tissue ID` empty, and add `Tube label left blank in 2014.` to the liver
+part's `Remarks`. Because NAHPU gives museum IDs, tissue numbers, and part
+remarks their own dedicated fields, notes like this no longer hijack the wrong
+box.
+
+In the finished record, the site and event show Pasir Putih, and `Coordinate ID`
+is empty because that site has no coordinate:
 
 ![NAHPU Specimen Records page on an iPad for HH529, Crocidura neglecta, captured on 17 September 2014 at 7:00 AM at TJHH-P4 by pitfall, with no coordinate](../../../../../assets/images/app-screenshots/tutorials/basic/specimen-hh529.webp)
 
 {% aside type="tip" title="Faster entry for similar specimens" %}
-Many specimens share the same parts. Open a finished record and choose
-`Duplicate part` from the three-dot menu. NAHPU creates a new specimen with the
-same part types and treatments. Tissue IDs, dates, and remarks are not copied.
+When many specimens share the same preparations, open a finished record and
+select `Duplicate part` from the three-dot menu. NAHPU creates a new specimen
+with the same part types and treatments while leaving tissue IDs, dates, and
+remarks blank.
 {% /aside %}
 
-## 3. Check the records
+## 3. Check your records
 
 {% steps %}
 
 1. Turn on `Show outlier warnings` and review any flagged measurements.
-2. Open each record and check the Field ID against the paper form.
-3. Check that the three Pasir Putih specimens show Pasir Putih, not Pondok
-   Merah.
-4. Check that HH 453 and HH 529 show `Pitfall`, and the others `Snap trap`.
+2. Open each record and verify its Field ID against the paper catalog.
+3. Confirm that the two Pasir Putih specimens (`HH523` and `HH529`) show Pasir
+   Putih, not Pondok Merah.
+4. Confirm that `HH453` and `HH529` show `Pitfall`, and the other five show
+   `Snap trap`.
 
 {% /steps %}
 
 ## What you gained over paper
 
-- No specimen carries a locality of its own, so none can carry the wrong one.
-- Method and collector come from the event, so a pitfall capture cannot be
-  filed as a snap-trap capture, and the collector is someone who was there.
-- Each name, sex, and life stage is chosen from a list, with one value.
-- Every correction is explained in `Remarks` instead of being written over.
-- Parts are explicit records, not codes that need a legend.
+- Specimens inherit locality from their site, so none can carry the wrong place.
+- Method and collector come from the event, preventing pitfall captures from
+  being logged as snap traps and ensuring the collector was actually present.
+- Taxon names, sex, and life stage are chosen from controlled lists with one
+  clean value.
+- Every correction and inference is explained in `Remarks` rather than
+  scribbled over.
+- Parts are explicit records instead of undocumented preparation codes.
 
 ## Next
 

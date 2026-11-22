@@ -1,116 +1,42 @@
 ---
-title: "Basic tutorial 7: Review and export a Darwin Core Archive"
+title: "Basic tutorial 9: Export a Darwin Core Archive"
 authors:
   - Heru Handika
-lastUpdated: 2026-11-13
+lastUpdated: 2026-11-20
 sidebar:
-  label: "7. Review and export"
-  order: 7
+  label: "9. Export Darwin Core"
+  order: 9
 ---
 
-Darwin Core is the shared vocabulary that museum databases and portals such as
-GBIF use for specimen data. Turning a paper catalog into Darwin Core usually
-means retyping it into a spreadsheet, then fixing the spellings, units, dates,
-and missing localities by hand. Because you fixed those problems as you entered
-the data, NAHPU can build the archive from the linked records directly.
+Darwin Core is the shared standard used by natural history museums and portals
+such as GBIF. Turning a paper catalog into Darwin Core normally means retyping
+everything into a spreadsheet and manually fixing spellings, units, dates, and
+missing localities. Because you resolved those issues at entry, NAHPU can build
+the archive directly from your linked records.
 
-In this tutorial you review the seven specimens, explore their statistics,
-export them as a Darwin Core Archive, and read the result.
+In this final tutorial, you will export a Darwin Core Archive and inspect the
+output.
 
-## 1. Review before you export
-
-Check the records against the paper one last time. Tutorials 3–5 removed most
-problems at entry; this review looks for the rest.
-
-| Check | Where | What to look for |
-| --- | --- | --- |
-| Field IDs | Specimens list | `HH436`, `HH437`, `HH442`, `HH453`, `HH456`, `HH523`, `HH529`, each once |
-| Names | Each specimen | One spelling per name; *Maxomys* (genus) only for HH 523 |
-| Places | Each specimen | Pondok Merah for HH 436–456; Pasir Putih for HH 523 and HH 529 |
-| Methods | Each specimen | `Pitfall` for HH 453 and HH 529; `Snap trap` for the others |
-| Explained choices | `Remarks` | HH 437, HH 442, HH 456, HH 523, and HH 529 say what was changed and why |
-| Gaps | Sites and events | No coordinates for Pasir Putih; no pitfall count for Line 4 |
-
-The gaps are not errors to fix before export. They are honest records of what
-the 2014 paper did not capture.
-
-{% aside type="tip" %}
-For a quick table to read through, use `Export records` with Darwin Core
-headers. See [Export tabular records](/en/how-to-recipes/export-and-print/export-tabular-records/).
-{% /aside %}
-
-## 2. Explore the statistics
-
-Before you export, look at the data as a whole. Exploring the record
-statistics is a NAHPU best practice. It shows imbalance in what was collected,
-shows how consistently parts were sampled, and, in the field, helps you decide
-which parts to prioritize when supplies such as tubes or ethanol run low.
-
-On the dashboard, open the `Record statistics` panel and select
-`Explore more stats`. The `Summary` view counts the whole project:
-
-![NAHPU Record statistics summary on an iPad: 7 specimens, 19 specimen parts, 5 narratives, 7 recorded sites, 6 events, and a taxonomic breakdown of 2 orders, 3 families, 4 genera, and 5 species](../../../../../assets/images/app-screenshots/tutorials/basic/statistics-summary.webp)
-
-### Check for imbalance
-
-Select `Explore` > `Counts` > `Specimens`. Group by `Species`, break down by
-`Sex`, and switch to `Table`:
-
-![NAHPU Explore view on an iPad showing specimens by species and sex as a table](../../../../../assets/images/app-screenshots/tutorials/basic/statistics-species-sex.webp)
-
-Five of the seven specimens are male, and *Maxomys hylomyoides* is the only
-species with both sexes. Seven hand-picked records are not a sample, so read
-this as a demonstration. With a full catalog, the same table shows whether a
-skew is real, for example from trap behavior or season, and whether to note it
-before analysis.
-
-### Check part sampling
-
-Select `Part quantity` and group by `Part type`:
-
-![NAHPU Explore view on an iPad showing part quantity by part type: Liver 6, Whole body 4, Skeleton 3, Skin 3, Skull 3](../../../../../assets/images/app-screenshots/tutorials/basic/statistics-parts.webp)
-
-Six of the seven specimens have a liver tissue. The exception is HH 442, whose form
-has no tissue circled. During fieldwork, check this table at the end of each
-day: it shows whether every specimen got the parts your protocol requires, and
-which part types use the most tubes, ethanol, and formalin. When supplies run short, it
-helps you decide what to keep collecting.
-
-Every table here has an `Export table` button for reports. See
-[Export statistics](/en/usages/export/export-statistics/).
-
-### Read the records in the Data table
-
-To see the records themselves, open `Data table` from `Tools` at the bottom
-of the dashboard. Choose what to show, such as `Specimen records`,
-`Specimen parts`, `Sites`, `Events`, or `Narrative`, then sort, search, or
-filter. This is the parts table for the seven specimens:
-
-![NAHPU Data table on an iPad listing specimen parts with type, count, treatment, cataloger, and field number](../../../../../assets/images/app-screenshots/tutorials/basic/data-table-parts.webp)
-
-The Data table is a quick way to scan for gaps, such as a part with no
-treatment or a specimen with no tissue, without opening each record.
-
-## 3. Create the archive
+## 1. Create the archive
 
 {% steps %}
 
-1. Open the `Dashboard`, open the project menu, and select `Bundle records`.
-2. Choose `Darwin Core Archive` as the `Bundle format`. It always uses ZIP.
-3. Choose `Selected taxa` and select Mammals.
-4. Enter the file name `mt-tujuh-2014` and choose a directory.
-5. Review `Package contents`. Expand `occurrence.csv` to see its fields. The
-   list also shows any recorded fields that are withheld because they have no
-   Darwin Core term.
+1. From the `Dashboard`, open the project menu and select `Bundle records`.
+2. Choose `Darwin Core Archive` as `Bundle format` (always packaged as ZIP).
+3. Select `Selected taxa` and choose `Mammals`.
+4. Name the file `mt-tujuh-2014` and choose a destination folder.
+5. Inspect `Package contents`. Expand `occurrence.csv` to review its columns;
+   this view also flags any recorded fields omitted because they lack a Darwin
+   Core term.
 6. Read any warnings, then select `Create bundle`.
 
 {% /steps %}
 
 NAHPU writes `mt-tujuh-2014.dwca.zip`.
 
-## 4. Read the archive
+## 2. Inspect the archive
 
-Unzip the file. It contains:
+Unzip `mt-tujuh-2014.dwca.zip` to see its structure:
 
 {% filetree %}
 - meta.xml
@@ -120,80 +46,92 @@ Unzip the file. It contains:
 - measurement_or_fact.csv
 {% /filetree %}
 
-`occurrence.csv` is the core table, with one row per specimen. The other tables
-hold parts and measurements and point back to their specimen. `meta.xml`
-describes the columns, and `eml.xml` holds the dataset metadata.
+`occurrence.csv` is the core table, with one row per specimen. `material.csv`
+and `measurement_or_fact.csv` store parts and measurements linked back to each
+specimen, `meta.xml` describes the schema, and `eml.xml` stores the dataset
+metadata.
 
 ### One specimen, one row
 
-This is part of the HH 436 row. Your UUID and Event ID will differ.
+Below is part of the `HH436` row (your UUID and Event ID will differ):
 
-| Darwin Core term | Value | Where it came from |
+| Darwin Core term | Value | Source in NAHPU |
 | --- | --- | --- |
-| `occurrenceID` | A UUID | Assigned by NAHPU when the record was created |
+| `occurrenceID` | A UUID | Generated by NAHPU when the record was created |
 | `basisOfRecord` | `PreservedSpecimen` | Specimen record |
 | `catalogNumber` | `HH436` | Field ID |
-| `eventID` | The `TJHH-L1` event | Event |
+| `eventID` | The `TJHH-L1` event | Collecting event |
 | `eventDate`, `eventTime` | `2014-09-12`, `16:00` | Specimen |
 | `scientificName` | `Lariscus insignis` | Taxon registry |
 | `family` | `Sciuridae` | Taxon registry |
 | `country`, `stateProvince`, `county` | `Indonesia`, `Jambi`, `Kerinci` | Site |
 | `locality` | `Gunung Tujuh, Sungai Jernih, Pondok Merah, beside Lake Gunung Tujuh` | Site |
 | `decimalLatitude`, `decimalLongitude` | `-1.70274`, `101.39032` | Site coordinate |
+| `geodeticDatum` | `WGS84` | Site coordinate |
 | `minimumElevationInMeters` | `2004` | Site coordinate |
 | `habitat` | Type, condition, and description | Site |
 | `recordedBy` | `Heru Handika` | Event personnel |
 | `identifiedBy` | `Heru Handika` | Specimen |
-| `sex`, `lifeStage` | Male, `Subadult` | Specimen |
+| `sex`, `lifeStage` | `Male`, `Subadult` | Specimen |
 
-On paper, many of these values lived in a sheet header, the journal, or the
-collector's memory. Here each comes from the record that owns it: the site, the
-event, the taxon registry, or the people you entered once.
+On paper, these values were scattered across sheet headers, the field journal,
+and the collector's memory. Here, each value comes cleanly from the record that
+owns it.
 
-### What the paper problems became
+### How the paper problems resolved
 
-| Paper | In the archive |
+| Paper catalog | Darwin Core Archive |
 | --- | --- |
-| Five spellings of *Maxomys hylomyoides* | One `scientificName` value |
-| `01.70274° S`, crossed-out `feet` | `-1.70274`; elevation in meters |
-| Blank locality headers | Every row has its own locality |
-| Pasir Putih filed under Pondok Merah | HH 523 and HH 529 have the Pasir Putih locality and no coordinates |
-| `Line 1` for two methods | Pitfall and snap-trap captures have separate events |
-| Heru as collector on every form | `recordedBy` names the person from the event |
-| `SA` and `AL` | Rows in `material.csv` with a type and treatment, such as `Skull`, `Whole body` in `Formalin`, or `Liver` in `ETOH` |
-| `TTL 238`, `TL 84`, … with no units | Rows in `measurement_or_fact.csv` with names and units, such as `total length`, `238`, `mm` |
+| Five spellings of *Maxomys hylomyoides* | One consistent `scientificName` value |
+| `01.70274° S`, crossed-out `feet`, no datum | `-1.70274`, elevation in meters, explicit `WGS84` datum (with missing uncertainty left blank) |
+| Blank locality headers | Every row carries its full locality |
+| Pasir Putih filed under Pondok Merah | `HH523` and `HH529` carry the Pasir Putih locality with no coordinates |
+| `Line 1` covering two methods | Pitfall and snap-trap captures link to separate events |
+| Heru listed as collector on every sheet | `recordedBy` names the person from the event |
+| Undocumented `SA` and `AL` codes | Rows in `material.csv` with explicit type and treatment (`Skull`, `Whole body` in `Formalin`, `Liver` in `ETOH`) |
+| `TTL 238`, `TL 84`, … with no units | Rows in `measurement_or_fact.csv` with names and units (`total length`, `238`, `mm`) |
 
-{% aside type="caution" title="Validate before you publish" %}
-Before you send the archive to a museum or portal, run it through a validator,
-such as the [GBIF data validator](https://www.gbif.org/tools/data-validator),
-and fix what it reports in NAHPU, not in the CSV files. Then export again.
+{% aside type="caution" title="Validate before publishing" %}
+In a real data management scenario, beforeå submitting an archive to a museum or portal, run it through a validator
+such as the [GBIF data validator](https://www.gbif.org/tools/data-validator).
+Fix any reported issues inside NAHPU—not by hand-editing the CSV files—then
+export again.
 {% /aside %}
 
-## What you have done
+## What you accomplished
 
-Across the seven Basic tutorials you:
+Across these nine tutorials, you:
 
-- read a paper catalog critically and listed its problems;
-- created a project with its people and a clean taxon registry;
-- turned one locality header into a camp and six line sites, and the journal's
-  trap notes into six events;
-- entered seven specimens, choosing the best-supported value where the paper
-  disagreed with itself and explaining each choice;
-- corrected and entered the field journal, linked to the camp where it was
+- audited a real paper catalog and identified its data-quality risks;
+- created a project with personnel records and a standardized taxon registry;
+- converted one locality header into a camp and six line sites, and journal
+  notes into six collecting events;
+- entered seven specimens, documenting every correction and inference;
+- cleaned up and entered the field journal linked to the camp where it was
   written;
-- checked sample balance and part sampling with record statistics and the
+- reviewed sample balance and part coverage using record statistics and the
   Data table;
-- exported a standard Darwin Core Archive from the linked records.
+- checked six liver tubes into a freezer box by tissue ID, and the unnumbered
+  tube by field ID;
+- exported a standards-compliant Darwin Core Archive directly from linked
+  records.
 
-Young Heru's catalog was better than most: it has standard measurements, trap
-lines, and a journal. NAHPU does not replace that care. It makes the links
-between place, time, method, people, and specimen part of the record, so they
-are not lost when the notebook is closed.
+Young Heru was quite thorough (I think). He numbered and measured every specimen,
+recorded trap lines, and kept a field journal. His catalog still had five
+spellings of one species, coordinates without a datum, blank locality headers,
+and a tube with no label. Mistakes like these are common in field data. 
+
+NAHPU does not replace standard field practices. Instead, it preserves the links between place,
+time, method, people, and specimen parts so that context stays with the data 
+from the moment of entry through every export.
 
 ## Where to go next
 
+- [Teamwork tutorials](/en/tutorials/teamwork/plan-and-set-up/): share the
+  project between two catalogers on two devices
+  ([Workflows A and B](/en/usages/workflows/)) and merge their catalogs.
 - [Export tutorials](/en/tutorials/export/specify-export-preset/): build export
-  presets, convert data packages, and print voucher tags.
-- [Bundle records](/en/usages/export/export-bundles/): every bundle format,
-  including the Darwin Core Data Package.
+  presets, convert data packages with Python or R, and print voucher tags.
+- [Bundle records](/en/usages/export/export-bundles/): explore every bundle
+  format, including the NAHPU Data Package.
 - [Data management best practices](/en/best-practices/data-management/).

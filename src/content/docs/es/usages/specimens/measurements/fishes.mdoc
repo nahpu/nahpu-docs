@@ -1,6 +1,6 @@
 ---
 title: Peces
-description: Registros de individuos y lotes, mediciones e ID de marca para especímenes de un catálogo Ichthyology.
+description: Registros de individuos y lotes, mediciones e ID de etiqueta para especímenes de un catálogo Ictiología.
 sidebar:
   order: 5
   badge:
@@ -8,128 +8,141 @@ sidebar:
     variant: caution
 ---
 
-Los especímenes de un proyecto que usa el formato de catálogo `Ichthyology`
-muestran el formulario de medición de peces. El sexo, la etapa de vida y las
-unidades de peso funcionan igual en todos los grupos taxonómicos; consulte
+Los especímenes en el formato de catálogo `Ictiología` muestran el formulario de
+medición de peces. Las unidades de peso, el sexo y la etapa de vida funcionan
+igual en todos los grupos taxonómicos; consulte
 [Mediciones](/es/usages/specimens/measurements/).
 
 {% aside type="caution" %}
 
-La compatibilidad con Ichthyology está en fase beta. Compruebe que las
-exportaciones cumplen los requisitos de su colección antes de confiar en ellas.
+La compatibilidad con Ictiología está en fase beta. Compruebe que las
+exportaciones cumplen los requisitos de su colección antes de depender de ellas.
 
 {% /aside %}
 
 ## Tipo de espécimen {% #specimen-type %}
 
-Todo registro de peces comienza con `Specimen type`:
+Todo registro de peces comienza con `Tipo de espécimen`:
 
-- `Individual`: un solo pez con sus propias mediciones.
-- `Lot`: muchos individuos almacenados juntos, como un frasco de peces de la
-  misma especie procedentes de un mismo evento de recolecta.
+- `Individuo`: un solo pez catalogado y almacenado por separado, con sus propias
+  mediciones.
+- `Lote`: varios individuos que comparten un mismo número de catálogo y
+  recipiente, como un frasco de peces de la misma especie de un mismo evento de
+  colecta.
 
-Elija `Individual` cuando el pez se cataloga y se almacena por separado. Elija
-`Lot` cuando varios peces comparten un número de catálogo y un recipiente. Un
-registro conserva los valores de ambos tipos, pero solo se muestran y se
-exportan los campos del tipo seleccionado.
+Un registro conserva los valores guardados de ambos tipos si cambia de opción,
+pero solo se muestran y se exportan los campos del tipo seleccionado.
 
 ## Mediciones de individuos {% #individual-measurements %}
 
-- `Sex`: se elige del vocabulario controlado de sexo del espécimen.
-- `Life stage`: se elige del vocabulario controlado de etapas de vida.
-- `Standard length (mm)`: la longitud desde la punta del hocico hasta el final
-  de la columna vertebral, sin incluir la aleta caudal.
-- `Total length (mm)`: la longitud desde la punta del hocico hasta la punta del
+- `Sexo`: seleccione del vocabulario controlado configurado de sexo del
+  espécimen.
+- `Etapa de vida`: seleccione del vocabulario controlado configurado de etapas
+  de vida.
+- `Longitud estándar (mm)`: longitud desde la punta del hocico hasta el final de
+  la columna vertebral, sin incluir la aleta caudal.
+- `Longitud total (mm)`: longitud desde la punta del hocico hasta la punta del
   radio más largo de la aleta caudal.
-- `Weight`: peso del espécimen en la unidad seleccionada.
-- `Remarks`: información adicional sobre el espécimen.
+- `Peso`: peso del espécimen en la unidad seleccionada.
+- `Observaciones`: notas adicionales sobre el espécimen.
 
 ## Mediciones de lotes {% #lot-measurements %}
 
-- `Total individuals`: el número de peces del lote, medidos o no.
-- `Life stage`: la etapa de vida del lote.
-- `Auto-update min and max`: cuando está activado, NAHPU completa los rangos
-  siguientes a partir de los individuos medidos del lote, y los campos de rango
-  pasan a ser de solo lectura. Desactívelo para introducir los rangos a mano,
-  por ejemplo cuando solo se midieron el pez más pequeño y el más grande.
-- `Min. standard length (mm)` y `Max. standard length (mm)`.
-- `Min. total length (mm)` y `Max. total length (mm)`.
-- `Min. weight` y `Max. weight`: rango de peso en la unidad seleccionada.
-- `Remarks`: información adicional sobre el lote.
+- `Total de individuos`: número de peces en el lote, medidos o no.
+- `Etapa de vida`: etapa de vida del lote.
+- `Actualizar mín. y máx. automáticamente`: cuando está activado, NAHPU completa
+  los rangos siguientes a partir de los individuos medidos del lote y deja esos
+  campos en solo lectura (y aumenta `Total de individuos` si se ingresan más
+  individuos que el conteo registrado). Desactívelo para ingresar los rangos
+  manualmente, por ejemplo cuando solo se midieron el pez más pequeño y el más
+  grande.
+- `Longitud estándar mín. (mm)` y `Longitud estándar máx. (mm)`.
+- `Longitud total mín. (mm)` y `Longitud total máx. (mm)`.
+- `Peso mín.` y `Peso máx.`: rango de peso en la unidad seleccionada. Cambiar la
+  unidad de peso del lote también actualiza la unidad guardada en sus
+  individuos.
+- `Observaciones`: notas adicionales sobre el lote.
 
-`Lot summary` muestra, para la longitud estándar, la longitud total y el peso,
-la media, la desviación estándar, el número de medidos (`n`) y el rango de los
-individuos del lote. También indica cuántos de los `Total individuals` se han
-medido.
+`Resumen del lote` muestra la media, la desviación estándar (`DE`, cuando hay al
+menos dos individuos medidos), el número medido (`n`) y el rango para
+`Longitud estándar`, `Longitud total` y `Peso`, además de cuántos de
+`Total de individuos` se han medido.
 
 ## Individuos de un lote {% #individuals-in-a-lot %}
 
-Use la sección `Individuals` de un lote para registrar peces medidos uno a uno.
+Use `Individuos` en un registro de lote para registrar peces medidos uno a uno.
 
 {% steps %}
 
-1. Seleccione `Add individual`.
-2. En `Identity`, introduzca el `Tag ID` o conserve la marca numerada
-   automáticamente. Seleccione `Sex` y `Life stage`.
-3. En `Measurements`, introduzca `SL (mm)`, `TL (mm)` y el peso en la unidad de
-   peso del lote. Añada `Remarks` cuando sea necesario.
-4. Seleccione `Save and add another` para continuar con el siguiente pez, o
-   `Save` para cerrar el formulario.
+1. Seleccione `Agregar individuo`.
+2. En `Identidad`, ingrese el `ID de etiqueta` o conserve la etiqueta
+   precompletada, y seleccione `Sexo` y `Etapa de vida`.
+3. En `Medidas`, ingrese `LE (mm)`, `LT (mm)` y `Peso` en la unidad de peso del
+   lote. Añada `Observaciones` si hace falta.
+4. Seleccione `Guardar y agregar otro` para pasar al siguiente pez, o `Guardar`
+   para cerrar el formulario.
 
 {% /steps %}
 
-Seleccione un individuo de la lista para editarlo. Al eliminar un individuo
-también se desvincula de las partes del espécimen y de los simbiontes.
+Seleccione cualquier individuo de la lista para editarlo. Al eliminar un
+individuo se borra el registro y se desvincula de todas las partes del espécimen
+y simbiontes.
 
 ## Numeración de ID de marca {% #tag-id-numbering %}
 
-Los ID de marca de los individuos pueden numerarse automáticamente. Configure
-el formato en `Settings` > `Specimens` > `Individual tag ID`, que solo aparece
-en el formato de catálogo Ichthyology, o abra el menú del campo `Tag ID` y
-seleccione `Settings`.
+Los ID de etiqueta individuales pueden numerarse automáticamente. Configure el
+formato en `Configuración` > `Especímenes` > `ID de etiqueta individual` (solo
+se muestra cuando `Ictiología` está activo), o abra el menú de opciones de
+`ID de etiqueta` y seleccione `Configuración`.
 
-- `Prefix`: texto antes del número, como `FT-`.
-- `Next number`: el número que recibirá el siguiente individuo. Los ceros a la
-  izquierda se conservan, de modo que a `0007` le sigue `0008`.
-- `Suffix`: texto después del número, como `-A`.
-- `Next tag`: vista previa del siguiente ID de marca.
+| Campo | Función |
+| --- | --- |
+| `Prefijo` | Texto antes del número, como `FT-` |
+| `Siguiente número` | Número asignado al siguiente individuo; se conservan los ceros a la izquierda (`0007` → `0008`) |
+| `Sufijo` | Texto después del número, como `-A` |
+| `Siguiente etiqueta` | Vista previa en vivo del siguiente ID de etiqueta |
 
-Una marca numerada automáticamente se indica con
-`Auto-numbered. Edit to override.` Si escribe otra marca, se conserva su valor
-y no se consume el siguiente número. Seleccione `New number` en el menú del
-campo para restaurar la siguiente marca numerada automáticamente.
+Una etiqueta numerada automáticamente muestra
+`Numerado automáticamente. Edítelo para cambiarlo.` Si escribe otro valor, se
+conserva sin avanzar el contador. Seleccione `Número nuevo` en el menú del campo
+para restaurar la siguiente etiqueta numerada automáticamente. Cuando la
+numeración automática no está configurada, NAHPU sugiere números correlativos
+(`1`, `2`, `3`, …) dentro del lote.
 
 ## Partes y simbiontes {% #parts-and-symbionts %}
 
-Los catálogos de peces muestran los campos de detección de simbiontes y la
-pestaña de simbiontes. Cuando un lote tiene individuos, las partes del
-espécimen y los simbiontes muestran un selector `Individuals`. Use
-`Add individual` para vincular la parte o el simbionte con el pez del que
-procede, como un corte de aleta de un pez marcado. Consulte
+Los catálogos de peces incluyen los campos de examen de `Simbiontes` al final
+del formulario de medición y la pestaña de simbiontes en `Partes del espécimen`.
+Cuando un lote tiene individuos registrados, las partes del espécimen y los
+simbiontes muestran un selector `Individuos`: use `Agregar individuo` para
+vincular la parte o el simbionte con el pez del que procede (como un corte de
+aleta de un pez etiquetado). Consulte
 [Partes de especímenes](/es/usages/specimens/parts/) y
 [Simbiontes](/es/usages/specimens/symbionts/).
 
 ## Condiciones del agua {% #water-conditions %}
 
-Registre las condiciones del agua en el evento de recolecta y no en el
-espécimen. Los [datos ambientales](/es/usages/events/) del evento de recolecta
-incluyen la temperatura del agua, el pH, el oxígeno disuelto, la saturación de
-oxígeno disuelto (%), la conductividad (µS/cm) y la velocidad del flujo.
+Registre las condiciones del agua en el evento de colecta y no en el espécimen.
+Los [datos ambientales](/es/usages/events/) del evento de colecta incluyen
+`Temperatura del agua`, `pH`, `Oxígeno disuelto`,
+`Saturación de oxígeno disuelto` (%), `Conductividad` (µS/cm) y
+`Velocidad del flujo`.
 
 ## Exportación {% #export %}
 
-Las exportaciones de especímenes de un catálogo Ichthyology añaden estas
+Las exportaciones de especímenes de un catálogo `Ictiología` añaden estas
 columnas de medición: `specimenType`, `individualCount`, `sex`, `lifeStage`,
 `standardLength`, `totalLength`, `weight`, `weightUnit`, `minStandardLength`,
 `maxStandardLength`, `minTotalLength`, `maxTotalLength`, `minWeight`,
 `maxWeight` y `remark`.
 
-La columna `individuals` enumera los individuos de un lote, separados por `|`.
-Cada entrada tiene este aspecto:
-`ID: FT-0001;SL: 52 mm;TL: 61 mm;Weight: 3.1 g;Sex: Female;Life stage: Adult`.
-Las exportaciones de partes del espécimen y de simbiontes enumeran los ID de sus
-individuos vinculados, separados por comas.
+La columna `individuals` enumera los individuos de un lote separados por `|`,
+con formato
+`ID: FT-0001;SL: 52 mm;TL: 61 mm;Weight: 3.1 g;Sex: Female;Life stage: Adult`
+(con `Remark: ...` al final cuando existe una observación). Las exportaciones de
+partes del espécimen y de simbiontes enumeran sus ID de individuos vinculados
+separados por comas.
 
-En las exportaciones Darwin Core, `individualCount` es el valor de
-`Total individuals` del lote, o `1` para un pez individual. Consulte
+En las exportaciones Darwin Core, `individualCount` corresponde a
+`Total de individuos` del lote, o a `1` en un pez individual. Consulte
 [Exportar Registros](/es/usages/export/export-records/).

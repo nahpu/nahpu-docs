@@ -1,0 +1,143 @@
+---
+title: Configurar o NAHPU
+---
+
+{% screenshots
+   large="app-screenshots/usage/setup-large.webp"
+   largeAlt="Etapa de boas-vindas de Configurar o NAHPU em um tablet"
+   large2="app-screenshots/usage/setup-large-2.webp"
+   large2Alt="Etapa final de Configurar o NAHPU em um tablet"
+   small="app-screenshots/usage/setup-small.webp"
+   smallAlt="Etapa de boas-vindas de Configurar o NAHPU em um celular"
+   small2="app-screenshots/usage/setup-small-2.webp"
+   small2Alt="Etapa final de Configurar o NAHPU em um celular" %}
+{% pin id="A" label="Etapas" large=[18.5, 17] small=[33, 17.1] /%}
+{% pin id="B" label="Importar configurações do usuário" large=[50, 78.8] small=[60, 81.8] /%}
+{% pin id="C" label="Pular configuração" large=[78, 93.6] small=[38, 92.7] /%}
+{% pin id="D" label="Resumo" large2=[88, 15.8] small2=[96.2, 25.6] /%}
+{% pin id="E" label="Vocabulários controlados" large2=[88, 51.6] small2=[96.2, 58.2] /%}
+{% /screenshots %}
+
+`Configurar o NAHPU` é um percurso guiado pelas configurações de que uma
+instalação nova precisa antes do primeiro projeto: o formato de catálogo, a
+forma dos IDs de campo e de tecido, os vocabulários controlados de locais,
+eventos e espécimes, e as predefinições de exportação incluídas.
+
+Abra `Configurar o NAHPU` no menu da tela inicial. Quando a instalação ainda
+não tem projetos, a tela inicial também mostra um botão `Configurar o NAHPU`
+abaixo das ações de projeto.
+
+Cada controle do assistente é o mesmo usado na tela correspondente de
+[Configurações](/pt/usages/settings/), e cada alteração é salva assim que é
+feita. Sair do assistente antes do fim mantém as respostas dadas até ali; não
+as desfaz. Qualquer resposta pode ser alterada depois em `Configurações` ou
+executando `Configurar o NAHPU` novamente.
+
+## Usar as configurações da sua equipe {% #use-settings-from-your-team %}
+
+Uma equipe só precisa configurar o NAHPU uma vez. Se um membro da equipe já
+exportou as configurações do usuário, selecione
+`Importar configurações do usuário` {% ref id="B" /%} na etapa
+`Boas-vindas`, escolha o arquivo e revise as seções a importar. Depois,
+selecione `Pular configuração` {% ref id="C" /%} para fechar o assistente.
+Consulte
+[Transferir configurações do usuário](/pt/usages/settings/#transferring-user-configs).
+
+## Percorrer o assistente {% #walk-through-the-wizard %}
+
+A lista de etapas {% ref id="A" /%} mostra onde você está. Selecione
+`Continuar` para avançar e `Voltar` para retornar; também é possível selecionar
+qualquer etapa já visitada.
+
+{% steps %}
+
+1. **Boas-vindas**
+
+    Resume o que o assistente abrange e oferece
+    `Importar configurações do usuário`.
+
+2. **Formato de catálogo**
+
+    Escolha o grupo taxonômico que você cataloga com mais frequência:
+    `Mammalogy`, `Ornithology`, `Herpetology`, `Invertebrate zoology` ou
+    `Ichthyology`. O formato define quais campos de medição aparecem nos
+    registros de espécimes. Um mesmo projeto pode conter registros em mais de
+    um formato. Consulte [Formato](/pt/usages/settings/#format).
+
+3. **Identificadores**
+
+    Em `IDs de campo dos espécimes`, escolha `ID do pessoal` (as iniciais do
+    catalogador e seu número sequencial) ou `ID do projeto` (um número
+    sequencial com prefixo e sufixo compartilhados). Os números são definidos
+    depois: o número de campo atual do catalogador ao adicionar pessoal com a
+    função `Catalogador`, ou o prefixo, o número e o sufixo do projeto nas
+    configurações desse projeto.
+
+    Em `IDs de tecidos`, ative `Usar um ID de tecido separado` se a sua coleção
+    numera os tecidos separadamente do espécime e, em seguida, informe o
+    prefixo, o próximo número e o sufixo. Uma prévia mostra o
+    `Próximo ID de tecido`. Com a opção desativada, os tecidos usam o ID de
+    campo do espécime. Consulte [ID de campo](/pt/usages/settings/#field-id) e
+    [ID de tecido](/pt/usages/settings/#tissue-id).
+
+4. **Locais**
+
+    Edite os vocabulários `Tipos de local`, `Tipos de hábitat` e `Datums`.
+
+5. **Eventos**
+
+    Edite os vocabulários `Atividades principais`, `Métodos de coleta` e
+    `Funções da equipe`.
+
+6. **Espécimes**
+
+    Edite os vocabulários `Métodos de identificação`, `Estágios de vida`,
+    `Tipos de espécime`, `Tratamentos` e `Condições`.
+
+7. **Simbiontes**
+
+    Aparece para `Mammalogy`, `Ornithology`, `Herpetology` e `Ichthyology`.
+    Ative `Vou coletar simbiontes` para editar os vocabulários de simbiontes:
+    `Tipos de interação`, `Categorias`, `Métodos de detecção`,
+    `Métodos de preparação`, `Localizações anatômicas`, `Armazenamento` e
+    `Tratamentos`. Consulte [Simbiontes](/pt/usages/specimens/symbionts/).
+
+8. **Predefinições de exportação**
+
+    `Padrões` lista predefinições que servem para qualquer formato de catálogo,
+    e `Para <formato de catálogo>` lista predefinições opcionais escritas para
+    o formato selecionado. Marque as predefinições desejadas e selecione
+    `Adicionar predefinições selecionadas`. As que já existem neste dispositivo
+    aparecem como `Adicionado`. Selecione `Revisar configuração` para
+    continuar.
+
+9. **Concluir**
+
+    Revise o resumo {% ref id="D" /%} do formato de catálogo, do ID de campo,
+    do ID de tecido, dos simbiontes e das predefinições de exportação, e o
+    número de termos em cada vocabulário controlado {% ref id="E" /%}.
+    Selecione `Concluído` para fechar o assistente.
+
+{% /steps %}
+
+## Editar vocabulários controlados {% #editing-controlled-vocabularies %}
+
+Cada vocabulário das etapas `Locais`, `Eventos`, `Espécimes` e `Simbiontes`
+funciona da mesma forma que em `Configurações`:
+
+- Digite um termo no campo de adição e selecione `+`.
+- Selecione `x` em uma etiqueta para remover um termo que você não usará.
+- Selecione `A` para escolher o formato de maiúsculas e minúsculas da lista.
+- Selecione `Corresponder ao banco de dados` para adicionar termos já usados
+  nos seus registros.
+
+Manter os valores padrão também funciona; as listas podem ser editadas depois
+em `Configurações` > `Catálogos`.
+
+## Compartilhar a configuração com a sua equipe {% #share-the-setup-with-your-team %}
+
+A etapa `Concluir` oferece `Exportar configurações do usuário`. Envie o arquivo
+exportado aos membros da equipe, que podem importá-lo na etapa `Boas-vindas` do
+próprio `Configurar o NAHPU`, para que todos os dispositivos usem os mesmos
+vocabulários e predefinições. Consulte
+[Exportar configurações do usuário](/pt/usages/export/#export-user-configs).

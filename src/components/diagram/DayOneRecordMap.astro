@@ -1,8 +1,8 @@
 ---
 // Day One record map: how a NAHPU project holds its narrative, sites, events,
-// and specimens, and which records are shared across projects. The artwork and node geometry are shared with the NAHPU app
-// (see `src/assets/day-one/`); the page supplies every word, so translations
-// stay in the Day One source.
+// and specimens, and which records are shared across projects. The artwork and
+// node geometry are shared with the NAHPU app (see `src/assets/day-one/`); the
+// page supplies every word, so translations stay in the Day One source.
 import art from "../../assets/day-one/record-map.svg?raw";
 import figures from "../../assets/day-one/figures.json";
 
@@ -26,6 +26,7 @@ const placed = figures.recordMap.nodes.flatMap((box) => {
   const words = text.get(box.id);
   return words ? [{ ...box, ...words }] : [];
 });
+const initial = placed.find((n) => n.id === "project") ?? placed[0];
 const pct = (value: number, total: number) => `${(value / total) * 100}%`;
 const detailId = "day-one-record-detail";
 ---
@@ -40,19 +41,34 @@ const detailId = "day-one-record-detail";
             type="button"
             class={`hotspot tone-${n.tone}`}
             style={`left: ${pct(n.x, width)}; top: ${pct(n.y, height)}; width: ${pct(n.w, width)}; height: ${pct(n.h, height)}`}
-            aria-pressed="false"
+            aria-pressed={String(n.id === initial?.id)}
             aria-controls={detailId}
             data-id={n.id}
             data-title={n.title}
             data-detail={n.detail}
           >
+            <span class="dot" aria-hidden="true"></span>
             <span class="title">{n.title}</span>
             <span class="sub">{n.summary}</span>
           </button>
         ))
       }
     </div>
-    <div class="detail" id={detailId} aria-live="polite">{hint}</div>
+    <div class="info">
+      <p class="hint">{hint}</p>
+      <div class="detail" id={detailId} aria-live="polite">
+        {
+          initial ? (
+            <>
+              <strong>{initial.title}</strong>
+              {initial.detail}
+            </>
+          ) : (
+            hint
+          )
+        }
+      </div>
+    </div>
   </div>
 </figure>
 
@@ -107,15 +123,40 @@ const detailId = "day-one-record-detail";
     font: inherit;
     text-align: center;
     cursor: pointer;
-    transition: box-shadow 150ms ease;
+    transition:
+      box-shadow 150ms ease,
+      background-color 150ms ease,
+      transform 150ms ease;
+  }
+  .hotspot .dot {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.4rem;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background: var(--ring);
+    opacity: 0.45;
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease;
   }
   .hotspot:hover,
   .hotspot:focus-visible {
     outline: none;
+    background: rgb(255 255 255 / 0.25);
     box-shadow: 0 0 0 2px var(--ring);
+  }
+  .hotspot:hover .dot,
+  .hotspot:focus-visible .dot {
+    opacity: 0.85;
   }
   .hotspot[aria-pressed="true"] {
     box-shadow: 0 0 0 3px var(--ring);
+  }
+  .hotspot[aria-pressed="true"] .dot {
+    opacity: 1;
+    transform: scale(1.25);
   }
   .hotspot .title {
     font-size: var(--sl-text-sm);
@@ -137,9 +178,23 @@ const detailId = "day-one-record-detail";
     text-align: left;
   }
 
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .hint {
+    margin: 0;
+    color: #465d4e;
+    font-size: var(--sl-text-xs);
+    line-height: 1.4;
+  }
+
   .detail {
     margin: 0;
     min-height: 5.5rem;
+    border: 1px solid rgb(28 43 33 / 0.08);
     border-radius: 0.75rem;
     background: rgb(243 246 244 / 0.9);
     padding: 0.75rem 1rem;
@@ -149,7 +204,15 @@ const detailId = "day-one-record-detail";
   }
   .detail :global(strong) {
     display: block;
+    margin-bottom: 0.2rem;
     color: #1c2b21;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hotspot,
+    .hotspot .dot {
+      transition: none;
+    }
   }
 
   /* "Canopy" palette: forest for the project and its places, moss for
@@ -175,7 +238,15 @@ const detailId = "day-one-record-detail";
     border-color: rgb(226 233 227 / 0.1);
     background: rgb(14 26 18 / 0.4);
   }
+  :global([data-theme="dark"]) .hotspot:hover,
+  :global([data-theme="dark"]) .hotspot:focus-visible {
+    background: rgb(255 255 255 / 0.08);
+  }
+  :global([data-theme="dark"]) .hint {
+    color: #9db3a3;
+  }
   :global([data-theme="dark"]) .detail {
+    border-color: rgb(226 233 227 / 0.1);
     background: rgb(28 43 33 / 0.8);
     color: #c5d3c8;
   }
@@ -232,18 +303,36 @@ const detailId = "day-one-record-detail";
     const detail = figure.querySelector<HTMLElement>(".detail");
     const buttons = [...figure.querySelectorAll<HTMLButtonElement>(".hotspot")];
 
-    const selectButton = (button: HTMLButtonElement) => {
+    const selectButton = (button: HTMLButtonElement, focus = false) => {
       for (const other of buttons) {
         other.setAttribute("aria-pressed", String(other === button));
       }
+      if (focus) button.focus();
       if (!detail) return;
       const title = document.createElement("strong");
       title.textContent = button.dataset.title ?? "";
       detail.replaceChildren(title, button.dataset.detail ?? "");
     };
 
-    for (const button of buttons) {
+    for (const [index, button] of buttons.entries()) {
       button.addEventListener("click", () => selectButton(button));
+      button.addEventListener("keydown", (event) => {
+        if (buttons.length === 0) return;
+        let nextIndex: number | null = null;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          nextIndex = (index + 1) % buttons.length;
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          nextIndex = (index - 1 + buttons.length) % buttons.length;
+        } else if (event.key === "Home") {
+          nextIndex = 0;
+        } else if (event.key === "End") {
+          nextIndex = buttons.length - 1;
+        }
+        if (nextIndex !== null) {
+          event.preventDefault();
+          selectButton(buttons[nextIndex], true);
+        }
+      });
     }
   }
 </script>

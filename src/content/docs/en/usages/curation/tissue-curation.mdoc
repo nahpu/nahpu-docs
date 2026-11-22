@@ -4,13 +4,11 @@ sidebar:
   order: 1
 ---
 
-Tissue curation checks tubes into storage boxes. For each tube you scan or
-place, NAHPU writes a museum code to `Museum permanent` or `Museum loan` and
-the next free cell to `Storage location`, such as `Box 1: D1`. Tubes are
-specimen parts and, if you include them, symbionts.
-
-Use it when tubes go into museum freezer boxes. Scan each tube as it goes into
-the box, and the records match the box with no typing.
+Tissue curation checks specimen part tubes—and optionally symbiont tubes—into
+storage boxes. For each tube you scan or place, NAHPU writes a museum code to
+`Museum permanent` or `Museum loan` and assigns the next free cell as its
+`Storage location` (such as `Box 1: D1`), keeping database records aligned with
+physical freezer boxes without manual typing.
 
 {% screenshots
    large="app-screenshots/usage/curation-large.webp"
@@ -36,174 +34,177 @@ the box, and the records match the box with no typing.
 
 ## Screen layout
 
-The screen has four areas:
+The screen has four areas (with the `Tissue` mode selector above the box):
 
-- **Box**: the grid of the box being filled. Filled cells show the last
-  characters of the tube's ID. Symbiont tubes start with `P`. The highlighted cell
-  is the next one to fill {% ref id="A" /%}.
-- **Scan**: the field for scanning or typing codes {% ref id="E" /%}, or the
-  work list {% ref id="C" /%}.
-- **Setup** {% ref id="G" /%}: which tubes to find, the field to write, and
-  the box settings.
-- **Log** {% ref id="J" /%}: the tubes checked and skipped in this session.
+- **Box**: grid of the box being filled. Filled cells display the last
+  characters of the tube's ID (symbiont tubes start with `P`). The highlighted
+  cell is the next cell to fill {% ref id="A" /%}.
+- **Scan**: code entry field {% ref id="E" /%} or the `Work list` {% ref id="C" /%}.
+- **Setup** {% ref id="G" /%}: tube filters, target curation field, and box
+  options.
+- **Log** {% ref id="J" /%}: tubes checked and skipped in this session.
 
-The `Tissue` selector above the box sets what you curate; tissue tubes are
-the only mode for now.
-
-On a phone, `Box`, `Setup`, and `Log` are tabs, and the scan field stays at
-the bottom of the screen. On a tablet or desktop, the box sits on the left,
-and the scan field sits on the right above the `Setup` and `Log` tabs. On a
-wide desktop window, the log gets its own column.
+On phones, `Box`, `Setup`, and `Log` appear as tabs with the scan panel docked
+at the bottom. On tablets and desktops, the box sits on the left beside the scan
+panel and `Setup`/`Log` tabs; wide desktop windows place `Log` in its own third
+column.
 
 ## Set up a check
 
-Open `Setup` before the first scan. NAHPU keeps these settings on the device,
-so the next session starts where you left off.
+Open `Setup` before your first scan. NAHPU saves these settings on the device so
+the next session resumes where you left off.
 
 ### Find tubes
 
-These filters decide which tubes a scan and the work list match.
+These filters control which tubes match scans and appear in the work list:
 
-- `Include symbionts`: also finds symbiont tubes, by symbiont ID or by the
-  field ID of their host.
-- `Tissue type`: the part types to match, such as Liver. Leave it at `Any` to
-  match every type. Symbionts have no part type, so this filter never
-  excludes them.
-- `Preservation`: the treatments to match, such as ETOH.
-- `Symbiont category`: shown with `Include symbionts` on. Matches categories
-  such as Ectosymbiont.
+- `Include symbionts`: also match symbiont tubes by symbiont ID or host field
+  ID.
+- `Tissue type`: part types to match (such as `Liver`). Leave at `Any` to match
+  all types. Symbionts have no part type, so this filter never excludes them.
+- `Preservation`: treatments to match (such as `ETOH`).
+- `Symbiont category`: shown when `Include symbionts` is on; matches categories
+  such as `Ectosymbiont`.
 
 ### Update field
 
 - `Field`: `Museum permanent` or `Museum loan`.
-- `Value`: the code written to each tube, usually the museum's code. Scanning
-  is blocked until you enter a value.
+- `Value`: code written to each placed tube (typically the museum code).
+  Scanning and placing stay blocked until a value is entered.
 
 ### Box
 
-- `Box size`: 81 (9×9) or 100 (10×10) cells.
+- `Box size`: `81 (9×9)` or `100 (10×10)` cells.
 - `Fill order`: `Rows, left to right`, `Columns, top to bottom`, or
-  `Serpentine rows`. In serpentine order, each row runs in the opposite
-  direction of the row before it.
-- `Box label` and `Box number`: name the box in the storage location, such
-  as `Box 1`. Use the label for a freezer or rack prefix, such as `F2 Box`.
+  `Serpentine rows` (each row reverses direction from the previous row).
+- `Box label` and `Box number`: define the box name in `Storage location`, such
+  as `Box 1`. Use `Box label` for a freezer or rack prefix, such as `F2 Box`.
 
-When a box is full, the next tube goes into the first cell of the next box.
-Select `Next box` or `Previous box` under the grid to change boxes yourself.
-NAHPU reads the storage location of every tube in the project, so cells
-filled earlier, by this tool or typed in the part form, show as filled.
+When a box fills, the next tube advances automatically to the first free cell of
+the next box (or reports a conflict if that box is already full). Use `Next box`
+or `Previous box` below the grid to switch boxes manually. NAHPU reads storage
+locations across the project, so cells filled earlier—in this tool or typed on a
+part or symbiont form—appear as filled.
 
 ### Labels and overwrite
 
-- `Customize cell labels`: changes how locations are written:
+- `Customize cell labels`: changes how storage locations are formatted:
   - `Numbering`: `A1, A2, A3…`, `1, 2, 3…`, or `1-1, 1-2, 1-3…`.
-  - `Box separator`: the text between the box and the cell.
-  - `Row–column separator`: the text between row and column.
+  - `Box separator`: text between the box name and cell label.
+  - `Row–column separator`: text between row and column (shown only for
+    `1-1, 1-2, 1-3…` numbering).
   - `Pad numbers with zeros`: writes `A01` instead of `A1`.
 
-  An example under the fields shows the result, such as `Box 1 / A01`. Turn it
-  off to go back to the standard `Box 1: A1`. NAHPU keeps your custom format
-  for next time.
-- `Overwrite existing values`: lets a scan replace a stored location or a
-  different museum code. With it off, these tubes are reported as conflicts
-  and left as they are.
+  An example preview shows the resulting range (such as `Box 1 / A01 … Box 1 / I09`).
+  Turn the toggle off to return to the standard `Box 1: A1` format; NAHPU
+  remembers your custom settings if you turn it back on later.
+- `Overwrite existing values`: allows a scan to replace an existing storage
+  location or a different museum code. When off, those tubes are reported as
+  conflicts and left unchanged.
 
 ## Scan tubes
 
-Use `Scan` when tubes come to you in no set order.
+Use `Scan` when tubes arrive in arbitrary order.
 
 {% steps %}
 
 1. Select `Scan` {% ref id="B" /%} above the scan field.
-2. Scan a tube's barcode with a barcode scanner, or type the code and press
-   Enter. On a phone or tablet, `Scan with camera` reads codes with the
-   device camera.
-3. Check the message under the field. A checked tube shows its new location
+2. Scan a tube's barcode or QR code with a keyboard-wedge scanner, or type the
+   code and press Enter. On devices with camera scanning, select
+   `Scan with camera` to scan barcodes and QR codes continuously with the
+   camera.
+3. Check the feedback under the field. A checked tube reports its new location
    and value, such as `AC-T0128 → Box 1: D1 · Museum permanent = EXM`.
-4. Put the tube in the cell the message names, then scan the next tube.
+4. Place the tube in the named cell, then scan the next tube.
 
 {% /steps %}
 
-By default, a code matches a part's tissue ID or barcode, or a symbiont ID
-when symbionts are included. A barcode match wins over a tissue ID match.
-Suggestions appear while you type. Pressing Enter always uses the typed text,
-so a scanner's code is never swapped for a suggestion.
+By default, a scanned or typed code matches a part's `Tissue ID` or barcode (or
+a symbiont ID when `Include symbionts` is on). A barcode match takes priority
+over a `Tissue ID` match. Type-ahead suggestions appear while typing, but
+pressing Enter always submits the exact text entered so a scanner's input is
+never swapped for a suggestion. For multi-line or URL QR payloads, NAHPU also
+checks each line and URL path/query segments.
 
-Turn on `Search by field ID` {% ref id="D" /%} when tubes are labeled with
-the specimen's field ID instead:
+Turn on `Search by field ID` {% ref id="D" /%} when tubes are labeled with the
+specimen's field ID instead:
 
-| You type | Matches |
+| You enter | Matches |
 | --- | --- |
-| `AC128` | Every tube of specimen AC128, such as its liver and its muscle |
+| `AC128` | Every tube of specimen AC128 (for example, liver and muscle) |
 | `AC128 liver etoh` | Only AC128's tubes with that part type and treatment |
-| `128` | Every specimen numbered 128, whatever its prefix |
+| `128` | Every specimen numbered 128, regardless of prefix |
 | A symbiont ID | That symbiont, when `Include symbionts` is on |
 
-When a code still matches more than one tube, NAHPU asks which one you are
-holding. Closing that list without a choice logs the code as skipped.
+If a code still matches multiple tubes, NAHPU prompts you to choose which tube
+you are holding; dismissing the dialog without choosing logs the code as
+skipped.
 
-The message under the field reports each result:
+The feedback message under the field reports each outcome:
 
 | Result | Meaning |
 | --- | --- |
-| Checked | The tube was written to the cell and the box moved on. |
-| Not found | No tube matches the code and filters. No cell was used. |
-| Already checked | The tube was checked earlier in this session. |
-| Conflict | The tube already has a location or another museum code. Turn on `Overwrite existing values` to replace them. |
-| Skipped | A choice between matching tubes was dismissed. |
+| Checked | The tube was written to the cell and the box advanced. |
+| Not found | No tube matches the code and active filters. No cell was used. |
+| Close match (`Did you mean`) | No exact match was found; tappable chips offer close codes without using a cell until you select one. |
+| Already checked | The tube was already checked earlier in this session. |
+| Conflict | The tube already has a storage location or a different museum code. Turn on `Overwrite existing values` to replace it. |
+| Skipped | A multi-match prompt was dismissed without selecting a tube. |
 
-`Undo` {% ref id="F" /%} reverts the most recent check. The tube gets back
-its previous value and location, and its cell is free again. Select `Undo`
-again to step further back.
+Select `Undo` {% ref id="F" /%} to revert the most recent check, restoring its
+previous value, previous location, and any displaced tubes, and freeing its
+cell. Select `Undo` repeatedly to step further back.
 
 ## Work through a list
 
-Use `Work list` when you fill a box in field ID order, such as all liver
-tubes from a trip.
+Use `Work list` when filling a box in field ID order, such as all liver tubes
+from an expedition.
 
 {% steps %}
 
 1. Select `Work list` {% ref id="C" /%} above the scan field.
-2. NAHPU lists the tubes that have no storage location and match the `Find
-   tubes` filters, in field ID order. The current tube and the cell it will go
-   to are shown first.
-3. Select `Place` to write the tube to the next cell, or `Skip` to move past
-   it. Skipped tubes stay on the list and show under `Skipped` in the log.
-4. Use `Search work list` to jump to a tube by ID, barcode, type, or
-   treatment.
+2. NAHPU lists unplaced tubes (no `Storage location`) that match your
+   `Find tubes` filters, sorted by field ID. The current tube, remaining count,
+   and target cell appear at the top, with upcoming tubes listed below.
+3. Select `Place` to assign the tube to the next cell, or `Skip` to move past it
+   (skipped tubes remain in the work list and appear under `Skipped` in the
+   log).
+4. Use `Search work list` to jump directly to a tube by ID, barcode, type, or
+   treatment, or tap any upcoming tube in the list.
 
 {% /steps %}
 
 ## Work with the box
 
-- **Change the next cell**: tap an empty cell. The next tube goes there, and
+- **Change the next cell**: tap any empty cell. The next tube goes there, and
   filling continues in fill order from that cell.
-- **See a filled cell**: tap a filled cell to see its tubes
-  {% ref id="H" /%}. `Details` shows the tube's IDs, count, and storage
-  location, and `Open record` opens its specimen form. A cell shared by
-  several tubes, usually from locations typed by hand, shows how many tubes
-  it holds.
-- **Replace a cell**: in a filled cell, select `Replace` {% ref id="I" /%}
-  and confirm. The next tube you scan or place goes into that cell, and the
-  tubes that were there lose their location and go back to the work list.
-  Undo puts them back.
+- **Inspect a filled cell**: tap a filled cell to open the cell inspector {% ref id="H" /%}.
+  Select `Details` to view the tube's IDs, count, storage
+  location, and museum codes, or `Open record` to open its specimen form. Cells
+  shared by multiple tubes (usually from manually typed locations) show a
+  warning and tube count.
+- **Replace a cell**: in the cell inspector, select `Replace` {% ref id="I" /%}
+  and confirm. The next tube you scan or place takes that cell, and the
+  displaced tube(s) have their storage location cleared and return to the work
+  list. `Undo` restores them.
 
 ## Session log and export
 
-The log lists the tubes checked in this session, newest first, under
-`Checked`, and the tubes passed over under `Skipped`. A skipped tube leaves
-the list once it is placed.
+The session log lists checked tubes (newest first) under `Checked` and skipped
+tubes under `Skipped`. Placing a skipped tube removes it from `Skipped`.
 
-Select `Export log` {% ref id="K" /%} to save the session as CSV, TSV, or
-Excel. Each row has the curation columns first: `Status`, `Order`,
-`Field ID`, `Tube ID`, `Kind`, `Type`, `Treatment`, `Updated field`, `Value`,
-`Location`, `Box`, `Cell`, `Previous value`, `Previous location`, and
-`Replaced`.
+Select `Export log` {% ref id="K" /%} to save the session as CSV, TSV, or Excel.
+Rows export in placement order (checked tubes first, then skipped tubes) and
+always start with the curation columns: `Status`, `Order`, `Field ID`,
+`Tube ID`, `Kind`, `Type`, `Treatment`, `Updated field`, `Value`, `Location`,
+`Box`, `Cell`, `Previous value`, `Previous location`, and `Replaced`.
 
-Under `Columns`, select `Add columns` to add part, specimen, and linked record
-fields after them, such as the catalog number or species. `Added column
-headers` names those columns by `Field names` or by `NAHPU keys`, such as
-`specimenPart::remark`. NAHPU keeps the columns you add for the next export.
+Under `Columns`, select `Add columns` to append part, specimen, symbiont, or
+linked record fields (such as catalog number or species); drag to reorder or
+remove added columns. Set `Added column headers` to `Field names` or
+`NAHPU keys` (such as `specimenPart::remark`; duplicate field names fall back to
+their NAHPU key). NAHPU remembers your added columns and header style for future
+exports.
 
-Keep the exported log with the box inventory. It records what each scan
-changed, including the previous values that were replaced.
+Keep the exported log with the box inventory as an audit trail of every change
+and replaced value.

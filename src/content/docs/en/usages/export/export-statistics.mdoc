@@ -21,115 +21,120 @@ sidebar:
 {% pin id="F" label="Explore more stats" large2=[68.8, 90.3] small2=[72.6, 82.6] /%}
 {% /screenshots %}
 
-Use the statistics export when you need a summary table rather than the full
-records. The tables are counts and percentages by category, which is what most
-grant reports, permit reports, and progress updates ask for. Every table shown
-on the statistics screen can be written to CSV, TSV, Excel, or JSON.
+Use statistics export when you need summarized counts and percentages—for grant
+reports, permit reports, and fieldwork updates—rather than raw records. Every
+table in `Counts` and `Spatial` can be exported as CSV, TSV, Excel, or JSON.
 
-Statistics are calculated for the active project only.
+Statistics work at two scopes:
+
+- **Active project:** open the `Record statistics` panel {% ref id="E" /%} on
+  the project `Dashboard` and select `Explore more stats` {% ref id="F" /%}.
+- **All projects:** open `Database statistics` from the home screen menu to
+  summarize and export statistics across every project in the database.
 
 ## Opening the statistics screen
 
-Open the record statistics panel {% ref id="E" /%} on the project dashboard and select
-`Explore more stats` {% ref id="F" /%}. Switch between two views with the buttons at the top of
-the screen:
+Switch between two top-level views:
 
-- **Summary** {% ref id="A" /%} shows the project totals, split into a `Record summary` {% ref id="C" /%} group
-  and a `Taxonomic breakdown` {% ref id="D" /%} group that counts distinct classes, orders,
-  families, genera, and species, followed by the top five counts by category.
-  Select `View details` on a chart to open it under `Explore`.
-- **Explore** {% ref id="B" /%} offers two choices. `Counts` builds one table or chart from the
-  measure, grouping, breakdown, and filter you choose. `Spatial` counts records
-  by site coordinate, shown on a map or as a table.
+- **`Summary`** {% ref id="A" /%} shows overall totals grouped into
+  `Record summary` {% ref id="C" /%}, `Taxonomic breakdown` {% ref id="D" /%}
+  (distinct classes, orders, families, genera, and species), and
+  `Media breakdown`—plus a `Per project` table when viewing
+  `Database statistics`—followed by top-five charts. Select `View details` on
+  any chart to open it in `Explore`.
+- **`Explore`** {% ref id="B" /%} has three tabs:
+  - `Counts`: builds a chart or exportable table by measure, grouping,
+    breakdown, and filter.
+  - `Spatial`: maps or tabulates counts per site coordinate.
+  - `Graph`: explores relationships among records interactively (visual only;
+    not exported as a table).
 
-Exports are available from the table view. Switch a panel from `Chart` or `Map`
-to `Table`, then use the `Export table` button above the table.
+To export, switch `Counts` or `Spatial` from `Chart` or `Map` to `Table`, then
+select `Export table` above the table.
 
 ## Counts
 
-Under `Explore`, select `Counts`. Choose a `Measure` first, because it decides
-which groupings are available.
+Under `Explore`, select `Counts` and choose a `Measure` first—it determines
+which `Group by` options appear:
 
 | Measure | Group by |
 | --- | --- |
-| Specimens | Species, Taxon rank, Site, Date, Method, Sex, Life stage |
-| Species | Taxon rank, Site, Date, Method, Sex, Life stage |
-| Part quantity | Part type, Treatment |
-| Symbionts | Symbiont taxon, Category, Anatomical location, Host species |
+| `Specimens` | `Species`, `Taxon rank`, `Site`, `Date`, `Method`, `Sex`, `Life stage` |
+| `Species` | `Taxon rank`, `Site`, `Date`, `Method`, `Sex`, `Life stage` |
+| `Part quantity` | `Part type`, `Treatment` |
+| `Symbionts` | `Symbiont taxon`, `Category`, `Anatomical location`, `Host species` |
 
-Life stage only appears when the project records it. Symbionts only appears
-when the project has a [symbiont record](/en/usages/specimens/symbionts/). Three further controls
-appear when they apply:
+`Life stage` appears only when recorded in the data, and `Symbionts` appears
+only when [symbiont records](/en/usages/specimens/symbionts/) exist. Three
+additional controls appear when applicable:
 
-- **Taxon rank** picks the rank to count by: `Class`, `Order`, `Family`, or
-  `Genus`. Species has its own grouping, because it is the only one that
-  offers the breakdown and the site filter below. The chart title, the table
-  header, and the file name all name the rank you picked rather than the
-  grouping, so counting by family reads `Specimens by family`.
-- **Breakdown** splits specimen counts by species into `Sex` or `Life stage`.
-  The breakdown becomes an extra column in the exported table.
-- **Filters** narrow the table to one site when counting specimens by species,
-  or to one species when counting part quantity. The selected filter is
-  included in the default file name.
+- **`Taxon rank`:** choose `Class`, `Order`, `Family`, or `Genus` (`Species`
+  has its own grouping because it supports breakdowns and site filtering).
+  Chart titles, column headers, and default filenames use the chosen rank, such
+  as `Specimens by family`.
+- **`Break down by`:** splits `Specimens` by `Species` into `Sex` or
+  `Life stage`, adding a breakdown column to the exported table.
+- **Filters:** filter `Specimens` by `Species` to one site, or filter
+  `Part quantity` or `Symbionts` to one species. Active filters are included in
+  the default filename.
 
-The exported table repeats what the on-screen table shows, one row per
-category:
+Exported tables mirror the on-screen table with one row per category:
 
 ```text
-| Rank | Species          | Specimens | Percent (%) |
-| ---- | ---------------- | --------- | ----------- |
-| 1    | Bunomys coelestis| 24        | 40.00       |
-| 2    | Bunomys penitus  | 18        | 30.00       |
+| Rank | Species           | Specimens | Percent (%) |
+| ---- | ----------------- | --------- | ----------- |
+| 1    | Bunomys coelestis | 24        | 40.00       |
+| 2    | Bunomys penitus   | 18        | 30.00       |
 ```
 
-The second column header follows the grouping you selected, and the count
-column header follows the measure. With a breakdown active, the series column
-sits between them, and categories with no recorded value are exported as
-`Not recorded`.
+The second header follows the active grouping and the count header follows the
+measure. When a breakdown is active, its column sits between them, and missing
+values export as `Not recorded`.
 
 ## Spatial
 
-Under `Explore`, select `Spatial`. The spatial panel counts `Specimens`, `Species`, or `Family` per site
-coordinate. `Coordinates by species` asks you to pick a species first and then
-counts that species at each coordinate.
+Under `Explore`, select `Spatial` to count `Specimens`, `Species`, or `Family`
+per site coordinate. `Coordinates by species` lets you pick a species and count
+its records at each coordinate.
 
-The spatial table exports one row per coordinate with place name, locality, latitude, longitude, elevation, count, and percent. These counts describe the selected records; they are not measurements of sampling effort. Review missing locations and the selected taxon before using the table in a report or GIS.
+Exported spatial tables write one row per coordinate with place name, locality,
+latitude, longitude, elevation, count, and percent. These are raw record
+counts—not measures of sampling effort—so verify missing coordinates and taxon
+filters before using them in a report or GIS.
 
 ## Writing the file
 
-The export dialog is the same for both panels. On a phone it opens as a bottom
-sheet, and on a wider screen as a dialog.
+Both `Counts` and `Spatial` share the same export dialog (a bottom sheet on
+phones and a dialog on wider screens).
 
 {% steps %}
 
-1. Check the file name. NAHPU proposes one built from the project name, the
-   measure and grouping, the active filter, and today's date.
-
-2. Turn on `Append date` if you want the current date added to the name. This
-   helps when you export the same table repeatedly during a field season.
-
-3. Choose the format. `CSV` and `TSV` are the safest for analysis, `Excel`
-   writes an `.xlsx` workbook, and `JSON` keeps the header names as keys.
-
-4. Select a destination folder. On desktop the file is written where you
-   choose; on mobile NAHPU uses the app export folder.
-
-5. Select `Export`. When the file is written, the button becomes `Share` so you
-   can send the table straight to another app.
+1. Review the filename. NAHPU proposes a name from the project name (or
+   `NAHPU_all-projects` for `Database statistics`), measure and grouping,
+   active filter, and today's date.
+2. Turn on `Append date` if you replace the filename with a custom name and
+   still want today's date added.
+3. Choose a format: `CSV` or `TSV` for analysis tools, `Excel` for an `.xlsx`
+   workbook, or `JSON` to keep column headers as keys.
+4. Select a destination folder on desktop (on mobile, NAHPU saves to its app
+   export folder).
+5. Select `Export`. Once written, you can `Share`, open the folder, or save a
+   copy.
 
 {% /steps %}
 
 {% aside type="note" %}
 
-The export writes the rows currently in the table, so the measure, grouping,
-breakdown, and filter all carry through to the file. Change the controls and
-export again when you need a different cut of the data.
+Exports reflect the exact rows currently shown in the table—including active
+measure, grouping, breakdown, and filters. Adjust the controls and export again
+for a different slice.
 
 {% /aside %}
 
 ## Related pages
 
 - [Record statistics on the dashboard](/en/usages/projects/)
-- [Export records](/en/usages/export/export-records/) for the underlying specimen, site, and
-  event data
-- [Bundle records](/en/usages/export/export-bundles/) for standards-based packages
+- [Export records](/en/usages/export/export-records/) for underlying specimen,
+  site, and collecting-event tables
+- [Bundle records](/en/usages/export/export-bundles/) for standards-based
+  packages

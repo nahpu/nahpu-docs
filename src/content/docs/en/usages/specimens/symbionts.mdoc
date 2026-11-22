@@ -8,10 +8,12 @@ sidebar:
 A symbiont is any organism living on or in a host specimen, whether
 parasitic, parasitoid, mutualistic, commensal, phoretic, or unknown.
 
-Each symbiont has its own UUID and is linked to its host.
-The link records how they interact, where on the host the symbiont was found,
-and whether the association is confirmed. Symbionts are available in every
-catalog format.
+Each symbiont has its own UUID and is linked to its host. The link records how
+they interact, where on the host the symbiont was found, and whether the
+association is confirmed. Symbionts are available in the `Mammalogy`,
+`Ornithology`, `Herpetology`, and `Ichthyology` catalog formats (in
+`Invertebrate zoology`, host relationships are recorded in the measurement
+form's `Ecological interactions` section).
 
 ## Where symbionts live in the specimen form
 
@@ -30,8 +32,9 @@ examination fields remove that ambiguity.
 
 ## Before you start
 
-Open `Settings` > `Specimens` and scroll to `Symbionts`. These lists start with
-editable defaults and are shared by every project on the device:
+Open `Settings` > `Specimens` and scroll to `Symbionts`. These controlled
+vocabularies start with editable defaults and are shared by every project on
+this device:
 
 | Setting | Defaults |
 | --- | --- |
@@ -42,16 +45,16 @@ editable defaults and are shared by every project on the device:
 | `Preparation Methods` | `Whole specimen`, `Fluid preserved`, `Slide mounted`, `Pinned`, `Dried`, `Frozen` |
 | `Anatomical Locations` | 24 sites from `Head` to `Body cavity`; see [Anatomical locations](#anatomical-locations). |
 | `Storage` | `Vial`, `Cryovial`, `Slide`, `Envelope`, `Jar` |
-| `Treatments` | The specimen treatment defaults, plus `RNAlater` and `Glycerol` |
+| `Treatments` | The specimen `Treatments` defaults, plus `RNAlater` and `Glycerol` |
 
-Agree on these lists before fieldwork, then share them with
+Agree on these controlled vocabularies before fieldwork, then share them via
 [user config transfer](/en/how-to-recipes/protect-and-collaborate/transfer-user-configs/)
-to keep every device on the same values. The setup wizard also has a
-`Symbionts` vocabulary step.
+so every device uses the same values. `Setup NAHPU` also includes a `Symbionts`
+step for supported catalog formats.
 
 Register the symbiont taxa you expect in the [taxon registry](/en/usages/taxon/)
-too. A symbiont's taxon is picked from the same registry as host taxa, and it
-can be a higher rank, such as an order or family, when the symbiont is not yet
+too. A symbiont's taxon is chosen from the same registry as host taxa, and it
+can be a higher rank—such as an order or family—when the symbiont is not yet
 identified to species.
 
 ## Record an examination
@@ -125,7 +128,7 @@ number without leaving the form.
 | `Date collected`, `Time collected` | When it was recovered from the host. |
 | `Determiner` | Who identified the symbiont, often a specialist working later. |
 | `Date determined` | When it was identified. |
-| `Determination method` | How it was identified. Uses the same list as the specimen `Identification Methods`. |
+| `Determination method` | How it was identified. Uses the specimen `Identification Methods` controlled vocabulary. |
 
 Collector and determiner are chosen from the project personnel, as on
 specimens. Keeping them separate lets a field team record what they collected
@@ -179,9 +182,8 @@ they are saved and exported as entered.
 
 The category is shown only when the interaction type is `Parasitic` or
 `Parasitoid`. Changing the interaction type to anything else clears the
-category when you save. A record with no interaction type keeps its category,
-since records imported or created before interaction types existed may carry
-only a category.
+category. A record with no interaction type keeps its category, since records
+imported or created before interaction types existed may carry only a category.
 
 When you leave `Interaction type` empty, choose `Unknown` instead if the
 relationship is genuinely unknown. An empty value means it was not recorded.
@@ -197,17 +199,18 @@ Choosing a category narrows `Anatomical location` to sites that fit it:
 | `Mesosymbiont` | Ear, Nasal cavity, Oral cavity, Gill, Skin |
 
 Without a category, or with a category you added yourself, every location is
-offered. Locations you add in Settings are never filtered out. Older category
+offered. Locations you add in `Settings` are never filtered out. Older category
 values, such as `Ectoparasite`, `Endoparasite`, and `Mesoparasite`, filter the
-list the same way as their symbiont names.
+options the same way as their symbiont names.
 
 ## Symbiont list
 
 The symbiont tab lists one row per record. The icon shows the interaction type,
-with a mite icon for records without one or with a custom type. The title is
-the symbiont taxon, or `Unidentified symbiont`, followed by the count. The
-subtitle shows linked fish individuals, the interaction type, the category,
-the anatomical location, the life stage, and the preparation method.
+with a mite icon for records without one or with a custom type. The title shows
+the symbiont taxon (or `Unidentified symbiont`), followed by the count and
+`Symbiont ID` when set. The subtitle shows linked fish individuals, the
+interaction type, the category (for parasitic and parasitoid interactions), the
+anatomical location, the life stage, and the preparation method.
 
 Select a row's edit button to change it. To delete records, turn on selection,
 check the records, and confirm the delete. Deleting the host specimen deletes

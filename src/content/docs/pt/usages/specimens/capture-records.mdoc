@@ -5,32 +5,35 @@ sidebar:
   order: 4
 ---
 
-Os registros de captura conectam um espécime ao evento de coleta, local,
+`Registros de captura` vincula um espécime ao evento de coleta, local,
 coordenada, método e coletor que o produziram.
 
 {% steps %}
 
-1. Escolha o `ID do local`. A lista `ID do evento` passa então a mostrar apenas
-   os eventos de coleta desse local.
-2. Escolha o `ID do evento`.
+1. Escolha `ID do local` (apenas locais com eventos de coleta aparecem). O menu
+   `ID do evento` passa então a filtrar os eventos de coleta desse local.
+2. Escolha `ID do evento`.
 3. Preencha os detalhes da captura abaixo.
 
 {% /steps %}
 
-Alterar o local ou o evento pede confirmação e, em seguida, limpa este cartão,
-exceto a data e a hora da captura. Quando você altera apenas o evento, a
-coordenada é mantida se pertencer ao mesmo local.
+Alterar `ID do local` ou `ID do evento` quando já há um definido pede
+confirmação e limpa os campos vinculados ao evento (`Método`, `Coletor` e
+`ID da coordenada`), mantendo `Data de captura` e `Hora de captura`. Quando
+você altera apenas `ID do evento`, `ID da coordenada` é mantido se pertencer ao
+mesmo local.
 
 | Campo | Observações |
 | --- | --- |
 | `Data de captura`, `Hora de captura` | Quando o espécime foi capturado. |
-| `Hora relativa` | Substitui a hora exata por `Dawn`, `Morning`, `Afternoon`, `Dusk` ou `Night`. Aparece após `Mostrar mais`. |
+| `Hora relativa` | Aparece após `Mostrar mais` (ou quando ativada). Substitui a `Hora de captura` exata por `Dawn`, `Morning`, `Afternoon`, `Dusk` ou `Night`. |
 | `Método` | Um método de coleta do evento selecionado. |
-| `ID do método` | Identificador opcional da armadilha, rede ou outro método. Aparece após `Mostrar mais`. |
+| `ID do método` | Identificador opcional da armadilha, rede ou outro método. Aparece após `Mostrar mais`, ou quando já tem um valor. |
 | `ID da coordenada` | Uma coordenada do local do evento. |
-| `Extensão da coordenada (m)` | Distância positiva opcional que a captura se estende além do ponto da coordenada. |
-| `Coletor` | Opcional, do pessoal do evento. Aparece quando tem um valor, após `Mostrar mais` ou sempre, se `Sempre mostrar o campo de coletor` estiver ativado em Configurações. |
+| `Extensão da coordenada (m)` | Distância positiva opcional (em metros) que a captura se estende além do ponto da coordenada. |
+| `Coletor` | Opcional, da equipe do evento. Aparece quando tem um valor, após `Mostrar mais`, ou sempre se `Sempre mostrar o campo de coletor` estiver ativado em `Configurações` > `Espécimes`. |
 
-Nas exportações Darwin Core, uma extensão de coordenada positiva é somada à
-incerteza da coordenada salva. Se a coordenada não tiver incerteza válida, a
-extensão é usada sozinha. Valores vazios, zero e negativos são ignorados.
+Nas exportações Darwin Core, uma `Extensão da coordenada (m)` positiva é somada
+à incerteza salva da coordenada (`coordinateUncertaintyInMeters`). Se a
+coordenada não tiver incerteza válida, a extensão é usada sozinha. Valores
+vazios, zero e negativos são ignorados.

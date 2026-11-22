@@ -10,7 +10,7 @@ title: Configurações
    small2="app-screenshots/usage/settings-small-2.webp"
    small2Alt="Tela Configurações de eventos de coleta do NAHPU em um celular" %}
 {% pin id="A" label="Formato" large=[30, 22.1] small=[96.2, 24.2] /%}
-{% pin id="B" label="Localidades" large=[30, 31.7] small=[96.2, 33] /%}
+{% pin id="B" label="Locais" large=[30, 31.7] small=[96.2, 33] /%}
 {% pin id="C" label="Eventos" large=[30, 41.2] small=[96.2, 41.8] /%}
 {% pin id="D" label="Espécimes" large=[30, 50.8] small=[96.2, 50.5] /%}
 {% pin id="E" label="Campos personalizados" large=[30, 60.4] small=[96.2, 59.3] /%}
@@ -18,218 +18,303 @@ title: Configurações
 {% pin id="G" label="Atividades principais" large=[55.5, 21.1] small2=[70.2, 17.1] /%}
 {% /screenshots %}
 
-As configurações controlam como o NAHPU funciona neste dispositivo: formatos
-de catálogo, listas controladas, campos personalizados, predefinições e
-preferências do aplicativo. Abra `Configurações` no menu da tela inicial ou no
-menu `Painel` de um projeto. Os campos personalizados de um projeto exigem que
-esse projeto esteja aberto.
+As configurações controlam como o NAHPU funciona neste dispositivo: formatos de
+catálogo, vocabulários controlados, campos personalizados, predefinições e
+preferências do aplicativo.
+
+Abra `Configurações` no menu da tela inicial ou no menu `Painel` de um projeto.
+Para configurar campos personalizados de um projeto ou os valores de
+`ID de campo` de um projeto, abra esse projeto primeiro. Para configurar um
+dispositivo novo passo a passo, use [`Configurar o NAHPU`](/pt/usages/setup/) no menu da tela
+inicial.
 
 ## O que cada configuração afeta
 
 | Tipo | Exemplos | Comportamento na transferência |
 | --- | --- | --- |
-| Informações do projeto | Nome, número de acesso, localização, fuso horário, datas, valores de ID de campo do projeto | Incluídas nas transferências de informações do projeto e de projeto |
-| Registros compartilhados do banco de dados | Táxons e pessoal | Armazenados no banco de dados do NAHPU e associados a projetos |
-| Configurações de usuário | Vocabulários controlados e predefinições de exportação ou de documento | Transferidas com `Exportar configurações do usuário` e `Importar configurações do usuário` |
-| Estado da instalação | Tema, idioma e táxon principal atual | Permanece na instalação atual |
+| Informações do projeto | Nome, número de acesso, localização, fuso horário, datas, valores de `ID de campo` do projeto | Incluídas nas transferências de informações do projeto e de projeto |
+| Registros compartilhados do banco de dados | Táxons e equipe | Armazenados no banco de dados do NAHPU e associados a projetos |
+| Configurações de usuário | Vocabulários controlados, visibilidade de campos, definições de campos personalizados e predefinições de exportação ou documento | Transferidas com `Exportar configurações do usuário` e `Importar configurações do usuário` |
+| Estado da instalação | Tema, idioma, formato regional, ferramentas do painel e formato de catálogo ativo | Permanece neste dispositivo |
 
-Alterar uma configuração com um projeto aberto pode afetar outros projetos da
-mesma instalação. Revise as configurações de usuário transferidas antes de
-substituir a sua configuração atual.
+Os vocabulários controlados, as predefinições e as preferências da instalação
+são compartilhados por todos os projetos deste dispositivo. Alterá-los com um
+projeto aberto também afeta outros projetos na mesma instalação.
 
 ## Catálogos {% #catalogs %}
 
+Em `Locais`, `Eventos` e `Espécimes`, as configurações seguem duas regras
+comuns:
+
+- **Vocabulários controlados** permitem adicionar ou remover opções, definir um
+  formato de maiúsculas e minúsculas (`A`) ou importar valores já usados nos
+  seus registros com `Corresponder ao banco de dados`.
+- **Visibilidade de campos** apenas mostra ou oculta campos nativos nos
+  formulários; ocultar um campo nunca apaga os valores já salvos no banco de
+  dados.
+
 ### Formato {% #format %}
 
-`Formato` {% ref id="A" /%} seleciona o táxon principal usado nos novos formulários de espécime
-deste dispositivo. Um projeto pode conter mais de um grupo taxonômico; esta
-configuração controla apenas o formato de espécime ativo e os seus campos de
-medição.
+`Formato` {% ref id="A" /%} define o formato de catálogo ativo para novos
+formulários de espécime e seus campos de medição neste dispositivo. Um mesmo
+projeto pode conter espécimes de mais de um grupo taxonômico.
+
+Quando `Mammalogy` está selecionado, `Registros de medidas` também oferece
+`Sempre mostrar os campos de morcegos` para exibi-los sempre nos formulários de
+mamíferos, em vez de alterná-los por espécime.
 
 ### Locais {% #sites %}
 
-`Locais` {% ref id="B" /%} gerencia:
+`Locais` {% ref id="B" /%} configura os formulários de local e o mapa de
+coordenadas:
 
-- os tipos de local e de habitat oferecidos nos formulários de local;
-- os datums de coordenadas;
-- `Campos geográficos`: quais campos geográficos os formulários de local exibem;
-- `Camadas do mapa` para o mapa de coordenadas.
-
-Ocultar um campo nunca apaga os valores já armazenados nele.
+- `Camadas do mapa`: escolha uma camada base ou importe e organize camadas
+  personalizadas (GeoJSON, Shapefiles WGS84 compactados em ZIP e PMTiles).
+- `Campos geográficos`: escolha quais campos geográficos aparecem nos
+  formulários de local.
+- Vocabulários controlados: gerencie `Tipos de local`, `Tipos de hábitat` e
+  `Datums`.
 
 ### Eventos {% #events %}
 
-`Eventos` {% ref id="C" /%} gerencia a lista de atividades principais {% ref id="G" /%},
-os métodos de coleta, as funções do pessoal do evento e os campos ambientais
-exibidos nos formulários de evento. As atividades principais começam com
-`Collecting`, `Recording` e `Observing`; `Other` não é incluído a menos que você
-o adicione. Os formulários ambientais começam com temperatura ambiente, umidade
-ambiente, cobertura de nuvens, chuva e notas; exiba ou oculte os outros campos
-da mesma forma que os campos geográficos.
+`Eventos` {% ref id="C" /%} configura os formulários de eventos de coleta:
 
-Mantenha essas listas iguais em todos os dispositivos de campo transferindo as
-configurações de usuário.
+- `Atividades principais` {% ref id="G" /%}: começa com `Collecting`,
+  `Recording` e `Observing` (`Other` não é incluído a menos que você o
+  adicione).
+- `Métodos de coleta` e `Funções da equipe`: vocabulários controlados para
+  métodos e funções de evento.
+- `Campos de dados ambientais`: escolha quais campos de temperatura, umidade,
+  medições, dados aquáticos, astronomia e notas aparecem nos formulários de
+  evento. Os formulários começam com temperatura ambiente, umidade ambiente,
+  cobertura de nuvens, chuva e notas.
+
+Transfira as configurações de usuário para manter esses vocabulários iguais em
+todos os dispositivos de campo.
 
 ### Espécimes {% #specimens %}
 
-`Espécimes` {% ref id="D" /%} contém:
+`Espécimes` {% ref id="D" /%} configura captura, numeração, vocabulários
+controlados e simbiontes:
 
-- `Sempre mostrar o campo de coletor` e a visibilidade de outros campos de
-  captura;
-- a numeração de `ID de campo` e de `ID de tecido`, descrita abaixo;
-- listas controladas de sexo do espécime, `Métodos de identificação`,
-  `Estágios de vida`, tipos de espécime, tratamentos e condições;
-- configurações de simbiontes: tipos de interação, categorias, métodos de
-  detecção e de preparação, localizações anatômicas, armazenamento e
-  tratamentos, todos começando com padrões editáveis.
-
-A lista de sexo do espécime é restrita. `Male`, `Female` e `Unknown` estão
-sempre disponíveis. Use os chips `+` para acrescentar `Gynandromorph`,
-`Hermaphrodite`, `Female?` ou `Male?`. Uma opção acrescentada só pode ser
-removida quando nenhum espécime do banco de dados a usa.
+- `Registros de captura`: ative ou desative
+  `Sempre mostrar o campo de coletor`.
+- Numeração: configure `ID de campo`, `ID de tecido` e (quando `Ichthyology`
+  estiver ativo) `ID de etiqueta individual`, descritos abaixo.
+- `Sexo`: vocabulário controlado restrito. `Male`, `Female` e `Unknown` estão
+  sempre disponíveis. Use os chips `+` para acrescentar `Gynandromorph`,
+  `Hermaphrodite`, `Female?` ou `Male?` (o ponto de interrogação registra
+  incerteza do examinador). Uma opção acrescentada só pode ser removida quando
+  nenhum espécime no banco de dados a usa.
+- Vocabulários controlados: gerencie `Métodos de identificação`,
+  `Estágios de vida`, `Tipos de espécime`, `Tratamentos` e `Condições`.
+- `Simbiontes` (para `Mammalogy`, `Ornithology`, `Herpetology` e `Ichthyology`):
+  configure `Identificação` (`Prefixo do ID de simbionte` e
+  `Número do ID de simbionte`) e vocabulários padrão editáveis para
+  `Tipos de interação`, `Categorias`, `Métodos de detecção`,
+  `Métodos de preparação`, `Localizações anatômicas`, `Armazenamento` e
+  `Tratamentos`. Consulte [Simbiontes](/pt/usages/specimens/symbionts/).
 
 #### ID de campo {% #field-id %}
 
-Em `ID de campo`, escolha como os espécimes são numerados:
+Em `ID de campo`, escolha como novos espécimes são numerados:
 
-| Opção | O ID de campo é formado por | Requisitos |
+| Opção | Formado por | Requisitos |
 | --- | --- | --- |
-| `ID da equipe` (padrão) | As iniciais do Catalogador e o seu próprio número sequencial | Uma pessoa com a função `Catalogador` no projeto, com iniciais e um número de campo atual |
-| `ID do projeto` | `Prefixo` + `Número de catálogo atual` + `Sufixo` | Os três valores e se `Incrementar automaticamente o número de catálogo` está ativado |
+| `ID da equipe` (padrão) | As iniciais do Catalogador e o seu número sequencial | Uma pessoa com a função `Catalogador` no projeto, com iniciais e um número de campo atual |
+| `ID do projeto` | `Prefixo` + `Número de catálogo atual` + `Sufixo` | Um projeto aberto, os três valores e se `Incrementar automaticamente o número de catálogo` está ativado |
 
-Com `ID do projeto`, o NAHPU junta os três valores diretamente: `NAHPU-`, `120` e
-`-M` formam `NAHPU-120-M`. Selecione `Salvar configurações de ID de campo` para
-aplicá-los.
+Com `ID do projeto`, o NAHPU junta os três valores diretamente: `NAHPU-`, `120`
+e `-M` formam `NAHPU-120-M`. Selecione `Salvar configurações de ID de campo`
+para aplicar as alterações.
 
 {% aside type="caution" %}
 
-Alterar o prefixo ou o sufixo de um ID de projeto muda a forma como os IDs de
-projeto já atribuídos são exibidos, e o NAHPU pede que você confirme. Verifique
-antes se esses IDs já foram exportados ou escritos em etiquetas.
+Alterar o prefixo ou o sufixo de um `ID do projeto` muda a forma como os IDs de
+projeto já atribuídos são exibidos, e o NAHPU pede confirmação. Verifique antes
+se esses IDs já foram exportados ou escritos em etiquetas de espécimes.
 
 {% /aside %}
 
 #### ID de tecido {% #tissue-id %}
 
-`ID de tecido` recebe um prefixo, um próximo número e um sufixo, e mostra uma
-prévia do próximo ID de tecido. Os zeros à esquerda são mantidos, então
-`M0042-T` é seguido por `M0043-T`. No formato de catálogo Ichthyology,
+`ID de tecido` recebe um prefixo, o próximo número e um sufixo, e mostra uma
+prévia em tempo real do próximo ID de tecido. Os zeros à esquerda são mantidos,
+então `M0042-T` é seguido por `M0043-T`.
+
+Quando o formato de catálogo ativo é `Ichthyology`,
 `ID de etiqueta individual` numera da mesma forma os indivíduos de um lote de
-peixes; consulte
+peixes. Consulte
 [Peixes](/pt/usages/specimens/measurements/fishes/#tag-id-numbering).
 
 ### Campos personalizados {% #custom-fields %}
 
-`Campos personalizados` {% ref id="E" /%} adiciona os seus próprios campos aos formulários de
-local, ambientais, de espécime, de parte e de simbionte.
+`Campos personalizados` {% ref id="E" /%} adiciona os seus próprios campos aos
+formulários de local, dados ambientais, espécime, parte e simbionte.
 
 | Configuração | Opções |
 | --- | --- |
-| Tipo | Texto, Número, Sim / Não, Lista suspensa |
-| Escopo | `Projeto atual` (somente este projeto) ou `Global` (todos os projetos desta instalação); escolhido na criação |
-| Catálogo | Campos relacionados a espécimes podem ser limitados a alguns formatos de catálogo |
+| Tipo | `Texto`, `Número`, `Sim / Não` ou `Lista suspensa` |
+| Escopo | `Projeto atual` (somente este projeto) ou `Global` (todos os projetos deste dispositivo); escolhido na criação |
+| Catálogo | Campos relacionados a espécimes podem ser limitados a formatos de catálogo selecionados |
 | Mapeamento Darwin Core | Termo de exportação opcional para o campo |
 
 {% steps %}
 
-1. Abra o projeto, acesse `Configurações` > `Campos personalizados` e selecione
-   `Adicionar campo personalizado`. Escolha onde o campo aparece.
-2. Defina `Rótulo` e `Tipo`. Para uma lista suspensa, informe as opções
-   permitidas. Coloque a unidade no rótulo de um campo numérico, como
-   "Altura do dossel (m)".
-3. Escolha o escopo e, para campos de espécime, os formatos de catálogo.
-4. Opcionalmente, defina um mapeamento Darwin Core. Mapear um campo não verifica
-   os seus valores, então confira uma exportação de amostra antes de
-   compartilhar dados.
-5. Salve, abra um registro nessa seção, informe um valor de teste e reabra o
-   registro para conferi-lo.
-6. Para compartilhar o campo, exporte-o em `Campos personalizados` ou com as
-   configurações de usuário, importe-o no outro dispositivo e confira a seção, o
-   escopo e as opções.
+1. Abra o projeto se o campo for de escopo de projeto, acesse `Configurações` >
+   `Campos personalizados`, escolha onde o campo aparece e selecione
+   `Adicionar campo personalizado`.
+2. Defina `Rótulo` e escolha `Tipo`. Para uma lista suspensa, adicione as
+   opções permitidas. Em um campo numérico, inclua a unidade no rótulo (como
+   `Altura do dossel (m)`).
+3. Escolha `Escopo` e, para campos relacionados a espécimes, os formatos de
+   catálogo aplicáveis.
+4. Opcionalmente, defina um mapeamento Darwin Core. O NAHPU não valida valores
+   em relação ao termo mapeado, portanto confira uma exportação de amostra
+   antes de compartilhar dados.
+5. Salve, informe um valor de teste em um registro dessa seção e reabra o
+   registro para confirmar que foi salvo corretamente.
+6. Para compartilhar definições com outro dispositivo, exporte-as em
+   `Campos personalizados` (como arquivo ou código QR) ou com as configurações
+   de usuário; depois importe e confira a seção, o escopo e as opções no
+   dispositivo de destino.
 
 {% /steps %}
 
-Para deixar de usar um campo, selecione `Arquivar`: os seus dados permanecem, e
-`Restaurar` o traz de volta. `Excluir` aparece como `Excluir (valores em uso)` e
-fica indisponível enquanto algum registro armazenar um valor. Descartar valores
-legados é uma ação separada e irreversível.
+Use o menu de ações de um campo existente para reordená-lo (`Mover para cima` /
+`Mover para baixo`), arquivá-lo ou excluí-lo:
+
+- `Arquivar` oculta um campo mantendo os dados armazenados; `Restaurar` o traz
+  de volta.
+- `Excluir` aparece como `Excluir (valores em uso)` e permanece indisponível
+  enquanto algum registro armazenar um valor.
+- `Descartar valores legados` limpa valores legados separadamente e não pode
+  ser desfeito.
 
 ## Banco de dados {% #database %}
 
-- `Táxons` {% ref id="F" /%} gerencia os registros de taxonomia disponíveis para os projetos.
-- `Equipe` gerencia as pessoas do banco de dados e as suas funções no cuidado de
-  espécimes.
-- `Fazer backup do banco de dados` salva um arquivo ZIP ou TAR.GZ completo de
-  todos os projetos, registros e arquivos gerenciados.
-- `Substituir banco de dados` substitui o banco SQLite ativo a partir de um
-  backup.
+- `Táxons` {% ref id="F" /%} gerencia os registros de taxonomia disponíveis
+  para os projetos.
+- `Equipe` gerencia as pessoas do banco de dados e as suas funções no cuidado
+  de espécimes.
+- `Fazer backup do banco de dados` salva um arquivo ZIP ou TAR.GZ completo com
+  todos os projetos, registros, mídias gerenciadas e configurações.
+- `Substituir banco de dados` restaura um arquivo de backup do NAHPU (ZIP ou
+  TAR.GZ) ou um arquivo SQLite (`.sqlite3`). O NAHPU mostra uma comparação lado
+  a lado antes de sobrescrever e mantém `Fazer backup dos dados atuais primeiro`
+  ativado por padrão.
+- `Verificar banco de dados` verifica todos os projetos em busca de problemas
+  que podem interromper exportações ou ocultar registros, e repara os que podem
+  ser corrigidos com segurança. Veja
+  [Verificar banco de dados](#check-database).
 
 {% aside type="caution" %}
 
-Faça um backup atual antes de usar `Substituir banco de dados`. Substituir o
-banco de dados é diferente de mesclar um projeto ou importar configurações de
-usuário.
+Mantenha `Fazer backup dos dados atuais primeiro` ativado, ou salve um backup
+separado antes de substituir o banco de dados. Substituir o banco de dados
+sobrescreve toda a instalação e é diferente de mesclar um projeto ou importar
+configurações de usuário. Consulte
+[Restaurar um banco de dados](../export/#restoring-a-database).
 
 {% /aside %}
 
+### Verificar banco de dados {% #check-database %}
+
+`Verificar banco de dados` verifica todo o banco de dados, incluindo todos os
+projetos, ao abrir a página. Erros interrompem exportações de projetos e
+pacotes de dados; avisos não.
+
+| Problema | O que significa | Correção |
+| --- | --- | --- |
+| Arquivo de banco de dados danificado | O SQLite encontrou danos no próprio arquivo do banco de dados | Restaurar um backup com `Substituir banco de dados` |
+| Links quebrados | Um registro aponta para um registro que não existe mais | `Limpar o link`, ou `Excluir este registro` quando o registro só pertencia ao registro ausente |
+| Links para outros projetos | Um espécime ou evento aponta para um evento ou local de outro projeto | `Limpar o link` |
+| Arquivos de mídia ausentes | Um registro de mídia não tem arquivo neste dispositivo | `Excluir o registro de mídia` |
+| Fotos de pessoal ausentes | Uma foto de pessoal não está mais neste dispositivo | `Remover a foto` |
+| Registros de medidas ausentes | Um espécime não tem registro de medidas para o seu grupo taxonômico | `Adicionar um registro vazio` |
+| Conflitos de número de campo | Um espécime tem um número de campo pessoal e um número de campo do projeto | Corrigir manualmente |
+| Números de campo duplicados | Vários espécimes compartilham um número de campo | Corrigir manualmente |
+
+O botão de abrir ao lado de cada problema mostra os registros afetados na
+tabela de dados, de todos os projetos. Selecione as correções uma a uma ou com
+`Selecionar todas as correções`, e depois selecione o botão `Corrigir`. A
+opção `Fazer backup do banco de dados primeiro` fica ativada por padrão e salva
+uma cópia do banco de dados na pasta de backup do NAHPU, onde
+`Substituir banco de dados` pode restaurá-la. Os arquivos de mídia não fazem
+parte desta cópia porque nenhuma correção exclui arquivos.
+
+Um registro que perdeu o seu projeto não tem correção automática, porque limpar
+o projeto ocultaria o registro em todos os projetos. O NAHPU recusa uma
+correção, sem alterar nada, quando outros registros ainda dependem do registro
+que a correção alteraria.
+
+Quando uma exportação falha, a mensagem de falha mostra o botão
+`Verificar banco de dados`.
+
 ## Exportações {% #exports %}
 
-- `Dados tabulares` gerencia as predefinições reutilizáveis de exportação de
-  registros.
-- `Documentos` gerencia os modelos de documento, as predefinições de layout de
-  impressão e as fontes disponíveis para os modelos.
+- `Dados tabulares` gerencia predefinições reutilizáveis para exportar
+  registros tabulares.
+- `Documentos` gerencia predefinições de layout de impressão, modelos de
+  documento e fontes disponíveis para os modelos.
 - `Editor de modelos` cria e edita modelos de documento.
 
-`Carregar padrões`, no menu de opções ou em uma lista de predefinições vazia,
-permite escolher quais predefinições incluídas adicionar. As predefinições que
-servem para qualquer formato de catálogo começam marcadas; as escritas para um
-formato de catálogo começam desmarcadas e também são oferecidas em
-`Configurar o NAHPU`. O carregamento nunca sobrescreve uma predefinição com o
-mesmo nome, e qualquer predefinição pode ser excluída.
+Escolha `Carregar padrões` no menu de opções — ou em uma lista de predefinições
+vazia — para adicionar predefinições incluídas. As predefinições compatíveis
+com qualquer formato de catálogo começam marcadas; as específicas de um formato
+começam desmarcadas e também são oferecidas em `Configurar o NAHPU`. Carregar
+padrões nunca sobrescreve uma predefinição existente com o mesmo nome, e
+qualquer predefinição pode ser excluída.
 
-Essas predefinições são configurações de usuário. Exporte-as quando outra
+Exporte essas predefinições como configurações de usuário quando outra
 instalação precisar reproduzir as mesmas colunas, rótulos ou layouts.
 
 ## Aplicativo {% #applications %}
 
-Estas preferências se aplicam apenas a esta instalação.
+Estas preferências se aplicam somente a esta instalação.
 
 | Configuração | O que faz |
 | --- | --- |
-| `Tema` | `Sistema`, `Claro` ou `Escuro`. |
-| `Idioma` | O idioma do aplicativo. Em beta. |
-| `Formato regional` | Como datas e números aparecem na tela. Os registros salvos e as exportações mantêm formatos padrão. Em beta. |
-| `Ferramentas` | Escolhe as ferramentas exibidas no painel do projeto. |
-| `Uso de dados` | Relatório de armazenamento e limpeza, descritos abaixo. |
+| `Tema` | Alterna entre `Claro`, `Escuro` e `Sistema`. |
+| `Idioma` | Define o idioma do aplicativo (`Padrão do sistema` ou um idioma específico). Em beta. |
+| `Formato regional` | Controla como datas e números aparecem na tela (`Igual ao idioma` ou uma região). Os registros salvos e as exportações mantêm formatos padrão. Em beta. |
+| `Ferramentas` | Escolhe quais ferramentas aparecem no painel do projeto. Use `Redefinir` para restaurar os padrões. |
+| `Uso de dados` | Mostra o relatório de armazenamento e limpa arquivos não vinculados, descritos abaixo. |
 
 ### Uso de dados e limpeza {% #data-usage-and-cleanup %}
 
 Abra `Uso de dados` para examinar as pastas gerenciadas pelo NAHPU. O resumo
-mostra o armazenamento total, as quantidades de arquivos e mídias e o espaço
-que pode ser recuperado de arquivos não vinculados.
+mostra `Uso total`, `Arquivos`, `Arquivos de mídia` e o espaço `Recuperável` de
+arquivos não vinculados.
 
-`Remover arquivos não vinculados` exclui arquivos que não são mais usados por
-nenhum registro, incluindo resíduos de mídias excluídas ou importações
-canceladas. Arquivos vinculados, bancos de dados e backups, fontes
-personalizadas, camadas de mapa e arquivos fora das pastas gerenciadas pelo
-NAHPU não são afetados. Remova uma fonte instalada em `Documentos` > `Fontes`, e
-não aqui.
+- **`Remover arquivos não vinculados`** exclui arquivos que não são mais usados
+  por nenhum registro, como resíduos de mídias excluídas ou importações
+  canceladas. Arquivos vinculados, bancos de dados e backups, fontes
+  personalizadas, camadas de mapa e arquivos fora das pastas gerenciadas pelo
+  NAHPU nunca são afetados. Remova fontes instaladas em `Documentos` >
+  `Fontes`.
+- **A árvore `Arquivos`** permite expandir ou recolher pastas (`Expandir tudo`
+  / `Recolher tudo`), inspecionar arquivos armazenados, salvar uma cópia,
+  remover pastas vazias ou excluir individualmente os arquivos permitidos.
+- **Limpeza de vários arquivos**: escolha `Selecionar` e marque arquivos
+  individuais, pastas ou `Selecionar tudo`. Use a barra inferior (`Limpar`,
+  `Revisar`, `Concluído`) para conferir a quantidade, o tamanho e os locais
+  antes de exportar a seleção para um arquivo compactado (com opção de remover
+  os originais depois) ou excluí-los permanentemente.
+- **`Verificar novamente`** atualiza o relatório se arquivos forem alterados
+  fora do NAHPU.
 
-A árvore `Arquivos` permite inspecionar os arquivos armazenados, salvar uma
-cópia ou remover individualmente os arquivos permitidos. Escolha `Selecionar`
-para trabalhar com vários arquivos. Use `Limpar` ou `Selecionar tudo` e escolha
-o botão flutuante `Revisar` para conferir a quantidade, o tamanho e os locais
-dos arquivos antes de exportar um arquivo compactado ou removê-los
-permanentemente.
+## Transferir configurações de usuário {% #transferring-user-configs %}
 
-Escolha `Verificar novamente` depois que arquivos forem alterados fora do NAHPU
-para atualizar o relatório.
+Tanto `Exportar configurações do usuário` quanto
+`Importar configurações do usuário` ficam disponíveis no menu da tela inicial,
+no menu `Painel` do projeto e em `Configurar o NAHPU` — não dentro da página
+`Configurações`.
 
-## Transferir configurações de usuário
-
-`Exportar configurações do usuário` está no menu da tela inicial e no menu
-`Painel` do projeto; `Importar configurações do usuário` está no menu `Painel`.
-Nenhum dos dois fica dentro da página de configurações. Uma transferência de
-configurações de usuário reproduz as listas controladas e as predefinições sem
-substituir o banco de dados do projeto. Consulte [Exportar](../export) antes de
-substituir configurações ou dados.
+Uma transferência de configurações de usuário permite escolher quais seções
+compartilhar (vocabulários controlados e visibilidade de campos, predefinições
+de exportação de registros, modelos e layouts de documento e campos
+personalizados) sem substituir o banco de dados do projeto. Revise as
+configurações importadas antes de substituir a configuração atual e consulte
+[Exportar configurações do usuário](../export/#export-user-configs) para ver as
+etapas completas.

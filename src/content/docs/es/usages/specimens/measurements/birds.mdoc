@@ -1,13 +1,13 @@
 ---
 title: Aves
-description: Campos de medición para especímenes de un catálogo Ornithology.
+description: Campos de medición para especímenes de un catálogo Ornitología.
 sidebar:
   order: 2
 ---
 
-Los especímenes de un proyecto que usa el formato de catálogo `Ornitología`
-muestran el formulario de medición de aves. El sexo, la etapa de vida y las
-unidades de peso funcionan igual en todos los grupos taxonómicos; consulte
+Los especímenes en el formato de catálogo `Ornitología` muestran el formulario
+de medición de aves. Las unidades de peso, el sexo y la etapa de vida funcionan
+igual en todos los grupos taxonómicos; consulte
 [Mediciones](/es/usages/specimens/measurements/).
 
 ## Mediciones {% #measurements %}
@@ -17,11 +17,14 @@ unidades de peso funcionan igual en todos los grupos taxonómicos; consulte
 - Colores de partes blandas: `Color del pico`, `Color de la maxila`,
   `Color de la mandíbula`, `Color del iris`, `Color del tarso` y
   `Color de los dedos`.
-- `Sexo`: se elige del vocabulario controlado de sexo del espécimen.
-- `Etapa de vida`: se elige del vocabulario controlado de etapas de vida.
-- `Parche de incubación`: sí o no.
-- `Bursa presente`: sí o no. Si la hay, registre la longitud y la anchura de
-  la bursa.
+- `Sexo`: seleccione del vocabulario controlado configurado de sexo del
+  espécimen. Cambiar `Sexo` pregunta `¿Cambiar el sexo?` y borra los datos de
+  gónadas que ya no corresponden.
+- `Etapa de vida`: seleccione del vocabulario controlado configurado de etapas
+  de vida.
+- `Parche de incubación`: `Sí` o `No`.
+- `Bursa presente`: `Sí` o `No`. Al elegir `Sí` aparecen
+  `Longitud de la bursa (mm)` y `Ancho de la bursa (mm)`.
 - `Osificación del cráneo (%)`: `100`, `95`, `90`, `75`, `50`, `25`, `10`, `5`
   o `0`.
 - `Grasa`: `None`, `Trace`, `Light`, `Moderate`, `Heavy` o `Extremely Heavy`.
@@ -29,25 +32,34 @@ unidades de peso funcionan igual en todos los grupos taxonómicos; consulte
 
 ## Gónadas {% #gonads %}
 
-| Sexo | Campo | Opciones |
+Los campos de gónadas masculinas aparecen para `Male`, `Male?`, `Gynandromorph`
+y `Hermaphrodite`. Los de gónadas femeninas aparecen para `Female`, `Female?`,
+`Gynandromorph` y `Hermaphrodite`.
+
+| Sexo | Campo | Opciones / Notas |
 | --- | --- | --- |
-| Macho | `Tamaño del testículo izquierdo (mm)` | Longitud y anchura |
-| Macho | Observaciones de los testículos | Notas |
-| Hembra | Longitud y anchura del ovario | Números |
-| Hembra | Aspecto del ovario | Smooth, Ova minute, At least one ovum ≥ 1 mm dia. |
-| Hembra | Diámetro de los tres óvulos más grandes (mm) | Números |
-| Hembra | Anchura del oviducto | Número |
-| Hembra | Aspecto del oviducto | Straight, Convoluted |
-| Hembra | Observaciones del ovario | Notas |
+| Macho | `Tamaño del testículo izquierdo (mm)` — `Tamaño` | `diminuto` o `1 mm o más` (muestra `Longitud` y `Ancho`) |
+| Macho | `Observaciones` | Notas, por ejemplo el tamaño del testículo derecho |
+| Hembra | `Tamaño del ovario` | `Longitud (mm)` y `Ancho (mm)` |
+| Hembra | `Apariencia` (ovario) | `Smooth`, `Ova minute` o `At least one ovum ≥ 1 mm dia.` |
+| Hembra | `Diámetro de los tres óvulos más grandes (mm)` | `Primero`, `Segundo`, `Tercero`; solo aparece cuando `Apariencia` es `At least one ovum ≥ 1 mm dia.` |
+| Hembra | `Oviducto` — `Ancho` | `diminuto` o `1 mm o más` (muestra `Ancho (mm)`) |
+| Hembra | `Oviducto` — `Apariencia` | `Straight`, `Convoluted` |
+| Hembra | `Observaciones` | Notas adicionales sobre las gónadas |
 
 ## Muda y notas {% #molt-and-notes %}
 
-- Campos de muda: muda de las alas, muda de la cola, muda corporal (`None`,
-  `Trace`, `Light`, `Moderate` o `Heavy`) y observaciones sobre la muda.
-- Notas: observaciones sobre el hábitat y sobre el espécimen.
+- `Muda`:
+  - `Muda corporal`: `None`, `Trace`, `Light`, `Moderate` o `Heavy`.
+  - `Muda de alas`: `Sí` o `No`; al elegir `Sí` aparece un campo de texto para
+    detallar la muda de alas.
+  - `Muda de cola`: `Sí` o `No`; al elegir `Sí` aparece un campo de texto para
+    detallar la muda de cola.
+  - `Observaciones`: notas adicionales sobre la muda.
+- `Notas`: campos de observaciones para `Hábitat` y `Espécimen`.
 
 ## Partes y simbiontes {% #parts-and-symbionts %}
 
-Los catálogos de aves muestran los campos de detección de simbiontes y la
-pestaña de simbiontes. Consulte
-[Simbiontes](/es/usages/specimens/symbionts/).
+Los catálogos de aves incluyen los campos de examen de `Simbiontes` al final del
+formulario de medición y la pestaña de simbiontes en `Partes del espécimen`.
+Consulte [Simbiontes](/es/usages/specimens/symbionts/).

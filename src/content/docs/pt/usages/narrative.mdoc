@@ -12,7 +12,7 @@ sidebar:
 {% pin id="A" label="Página de narrativa" large=[6.2, 54] small=[83.3, 90.6] /%}
 {% pin id="B" label="Criar narrativa" large=[96, 10.4] small=[80.5, 12.3] /%}
 {% pin id="C" label="Data e hora" large=[17, 12.9] small=[16.7, 15.7] /%}
-{% pin id="D" label="Localidade" large=[18, 19.6] small=[21.4, 21.8] /%}
+{% pin id="D" label="Local" large=[18, 19.6] small=[21.4, 21.8] /%}
 {% pin id="E" label="Autor" large=[62, 19.6] small=[63.1, 21.8] /%}
 {% pin id="F" label="Texto da narrativa" large=[18, 37.3] small=[26.2, 40.7] /%}
 {% pin id="G" label="Pesquisar" large=[90, 10.4] small=[69, 12.3] /%}
@@ -20,88 +20,95 @@ sidebar:
 {% pin id="I" label="Visualizar e editar" large=[93, 37.1] small=[82.1, 40.7] /%}
 {% /screenshots %}
 
-Uma narrativa é o seu diário de campo. Use-a para registrar observações,
-decisões e outro contexto que talvez não caiba em um registro de espécime ou de
+A narrativa é o seu diário de campo para observações, decisões de campo,
+impressões de hábitat e contexto que não cabem em um registro de espécime ou
 evento.
 
 ## Criando uma narrativa
 
 {% steps %}
 
-1. Abra a página Narrativa {% ref id="A" /%} pela barra de navegação.
-2. Selecione o ícone de adicionar ou `Criar narrativa` {% ref id="B" /%}.
-3. Informe a `Data` {% ref id="C" /%} e, se quiser, a `Hora`. Não é
-   possível escolher datas futuras.
-4. Selecione um `ID do local` {% ref id="D" /%}. O NAHPU mostra o nome do local abaixo dele.
+1. Abra a página `Narrativa` {% ref id="A" /%} pela barra de navegação.
+2. Selecione o ícone de adicionar {% ref id="B" /%} no canto superior direito
+   (ou `Criar narrativa` na tela vazia ou no menu de três pontos).
+3. Informe `Data` {% ref id="C" /%} e, opcionalmente, `Hora`. Datas futuras não
+   podem ser escolhidas.
+4. Selecione `ID do local` {% ref id="D" /%}. O NAHPU exibe o nome da
+   localidade logo abaixo do campo.
 
     {% aside type="note" %}
+
     Crie pelo menos um local na [página Locais](/pt/usages/sites) antes de
-    selecionar um local para uma narrativa.
+    vincular uma narrativa a um local.
+
     {% /aside %}
 
-5. Selecione o `Autor` {% ref id="E" /%} entre o pessoal atribuído ao projeto.
-6. Escreva o texto da narrativa {% ref id="F" /%}.
+5. Escolha o `Autor` {% ref id="E" /%} entre a equipe atribuída ao projeto.
+6. Escreva seu registro no campo de texto `Narrativa` {% ref id="F" /%}.
 
 {% /steps %}
 
-As alterações são salvas automaticamente; não há botão Salvar.
+Todas as alterações são salvas automaticamente—não há botão Salvar. `Data` e
+`Hora` são armazenadas separadamente:
 
-A data e a hora são armazenadas separadamente. Se você informar uma hora sem
-data, o NAHPU usa a data atual.
+- Informar `Hora` com `Data` em branco define `Data` automaticamente como hoje.
+- Limpar `Data` também limpa `Hora`; limpar `Hora` mantém `Data`.
 
 ## Escrevendo e visualizando o texto
 
-O texto da narrativa aceita Markdown. Use os controles `Visualizar` e `Editar` {% ref id="I" /%} acima
-do campo de texto para alternar entre a escrita e a visualização renderizada.
+As narrativas oferecem suporte a Markdown. Selecione o botão alternador de
+olho/lápis (`Visualizar` / `Editar`) {% ref id="I" /%} acima do campo de texto
+para alternar entre escrita e visualização formatada.
 
 ### Guia rápido de Markdown
 
-Você não precisa de Markdown para escrever uma narrativa. Texto simples
-funciona, e a formatação abaixo está disponível quando uma entrada longa fica
-mais legível com estrutura.
+Texto simples funciona normalmente; use a formatação abaixo quando anotações
+longas ficarem mais fáceis de ler com estrutura:
 
-| O que você quer | O que você digita | O que aparece |
+| O que você quer | O que você digita | Resultado |
 | --- | --- | --- |
-| Negrito | `**armadas ao anoitecer**` | **armadas ao anoitecer** |
+| Negrito | `**montadas antes do anoitecer**` | **montadas antes do anoitecer** |
 | Itálico | `_Bunomys penitus_` | _Bunomys penitus_ |
 | Tachado | `~~12 armadilhas~~` | ~~12 armadilhas~~ |
-| Título | `## Vistoria matinal` | um título de seção |
+| Título | `## Checagem matinal` | um título de seção |
 | Lista com marcadores | `- linha 1 verificada` | um item com marcador |
 | Lista numerada | `1. linha 1 verificada` | um item numerado |
-| Lista de tarefas | `- [ ] reiscar armadilhas` | um item com caixa de seleção |
+| Lista de verificação | `- [ ] repor iscas` | um item com caixa de seleção |
 | Citação | `> o guia relatou chuva` | um bloco de citação recuado |
 | Código ou valor de largura fixa | `` `GPHH-L1` `` | `GPHH-L1` |
 | Link | `[GBIF](https://gbif.org)` | [GBIF](https://gbif.org) |
 
-Mais três regras cobrem quase todo o resto:
+Três regras rápidas cobrem o restante:
 
-- Deixe uma linha em branco entre parágrafos. Uma única quebra de linha dentro
-  de um parágrafo é tratada como espaço.
-- Recue quatro espaços para aninhar um item de lista sob outro.
-- Escreva `---` em uma linha isolada para criar uma linha horizontal entre
-  seções de um dia longo.
+- Deixe uma linha em branco entre parágrafos (uma quebra de linha simples é
+  tratada como espaço).
+- Recue com quatro espaços para aninhar um item de lista sob outro.
+- Escreva `---` em uma linha própria para criar uma linha horizontal entre
+  seções.
 
-Mude para `Visualizar` para conferir se a entrada ficou como você pretendia antes
-de seguir adiante. O Markdown é armazenado exatamente como você digitou, então
-exportações e backups preservam o texto bruto.
+Mude para `Visualizar` para confirmar a formatação antes de seguir adiante. O
+NAHPU armazena o Markdown bruto, então exportações e backups preservam o que
+você digitou.
 
 ## Adicionar mídia
 
-Anexe mídia a uma narrativa pela câmera, pela galeria do dispositivo ou pelo
-seletor de arquivos. A mídia da narrativa é incluída na transferência do projeto
-e também pode ser incluída nas exportações em que a mídia de narrativa for
-selecionada.
+Anexe fotos, vídeos, gravações de áudio ou arquivos a uma narrativa usando a
+câmera, o gravador de áudio, a galeria do dispositivo ou o seletor de arquivos.
+As mídias de narrativa acompanham transferências de projeto e podem ser
+incluídas nas exportações quando a mídia de narrativa estiver selecionada.
 
 ## Pesquisar e gerenciar narrativas
 
-Use o botão de busca {% ref id="G" /%} na barra da Narrativa para filtrar as entradas. Use os
-controles de página {% ref id="H" /%} para navegar entre elas. O menu de três
-pontos oferece:
+Use o botão de pesquisa {% ref id="G" /%} na barra superior para filtrar
+entradas e os controles inferiores de página {% ref id="H" /%} para navegar
+entre elas. O menu de três pontos oferece:
 
-- `Criar narrativa`: adiciona uma nova entrada.
-- `Ordenar registros`: escolhe o campo e a direção da lista.
-- `Excluir registro`: exclui a narrativa selecionada e sua mídia.
-- `Excluir todos os registros`: exclui todas as narrativas do projeto ativo.
+| Ação | O que faz |
+| --- | --- |
+| `Criar narrativa` | Adiciona uma nova entrada de narrativa. |
+| `Ordenar registros` | Escolhe o campo e a direção de ordenação da lista. |
+| `Excluir registro` | Exclui permanentemente a narrativa atual e suas mídias. |
+| `Excluir todos os registros` | Exclui permanentemente todas as narrativas do projeto ativo. |
 
-A exclusão é permanente. Exporte ou faça backup do projeto antes, caso as
-entradas possam ser necessárias mais tarde.
+A exclusão não pode ser desfeita. Exporte ou faça backup do projeto primeiro se
+puder precisar das entradas mais tarde.

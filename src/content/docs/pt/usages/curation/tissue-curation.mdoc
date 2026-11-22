@@ -4,14 +4,12 @@ sidebar:
   order: 1
 ---
 
-A curadoria de tecidos registra tubos em caixas de armazenamento. Para cada
-tubo que você lê ou posiciona, o NAHPU grava um código de museu em
-`Acervo permanente do museu` ou `Empréstimo do museu` e a próxima célula livre
-em `Local de armazenamento`, como `Box 1: D1`. Os tubos são partes do
-espécime e, se você incluí-los, simbiontes.
-
-Use-a quando os tubos forem para caixas de freezer do museu. Leia cada tubo
-ao colocá-lo na caixa, e os registros correspondem à caixa sem digitação.
+A curadoria de tecidos registra tubos de partes do espécime — e opcionalmente
+tubos de simbiontes — em caixas de armazenamento. Para cada tubo que você lê ou
+posiciona, o NAHPU grava um código de museu em `Acervo permanente do museu` ou
+`Empréstimo do museu` e atribui a próxima célula livre como
+`Local de armazenamento` (como `Box 1: D1`), mantendo os registros alinhados às
+caixas físicas do freezer sem digitação manual.
 
 {% screenshots
    large="app-screenshots/usage/curation-large.webp"
@@ -23,9 +21,9 @@ ao colocá-lo na caixa, e os registros correspondem à caixa sem digitação.
    small2="app-screenshots/usage/curation-small-2.webp"
    small2Alt="Registro da sessão da tela Specimen curation do NAHPU em um celular" %}
 {% pin id="A" label="Próxima célula" large=[35.3, 24.2] small=[54.3, 26.7] /%}
-{% pin id="B" label="Escanear" large=[55.4, 24.5] small=[26.8, 73.4] /%}
+{% pin id="B" label="Leitura" large=[55.4, 24.5] small=[26.8, 73.4] /%}
 {% pin id="C" label="Lista de trabalho" large=[83.3, 24.5] small=[72.9, 73.4] /%}
-{% pin id="D" label="Buscar por ID de campo" large=[94.8, 32.1] small=[88.9, 80.4] /%}
+{% pin id="D" label="Pesquisar por ID de campo" large=[94.8, 32.1] small=[88.9, 80.4] /%}
 {% pin id="E" label="Campo de leitura" large=[52.2, 38.9] small=[36.2, 86.7] /%}
 {% pin id="F" label="Desfazer" large=[93.3, 46] small=[84.5, 93.1] /%}
 {% pin id="G" label="Configuração" large=[54.8, 55.5] small=[50, 16.1] /%}
@@ -37,117 +35,119 @@ ao colocá-lo na caixa, e os registros correspondem à caixa sem digitação.
 
 ## Layout da tela
 
-A tela tem quatro áreas:
+A tela tem quatro áreas (com o seletor de modo `Tissue` acima da caixa):
 
-- **Caixa**: a grade da caixa sendo preenchida. As células preenchidas mostram
-  os últimos caracteres do ID do tubo. Os tubos de simbiontes começam com `P`.
-  A célula destacada é a próxima a ser preenchida {% ref id="A" /%}.
-- **Leitura**: o campo para ler ou digitar códigos {% ref id="E" /%}, ou a
-  lista de trabalho {% ref id="C" /%}.
-- **Configuração** {% ref id="G" /%}: quais tubos encontrar, o campo a gravar
-  e as configurações da caixa.
-- **Registro** {% ref id="J" /%}: os tubos verificados e ignorados nesta
-  sessão.
+- **Caixa**: grade da caixa sendo preenchida. As células preenchidas mostram os
+  últimos caracteres do ID do tubo (tubos de simbiontes começam com `P`). A
+  célula destacada é a próxima a ser preenchida {% ref id="A" /%}.
+- **Leitura**: campo de entrada de códigos {% ref id="E" /%} ou a
+  `Lista de trabalho` {% ref id="C" /%}.
+- **Configuração** {% ref id="G" /%}: filtros de tubos, campo de curadoria de
+  destino e opções da caixa.
+- **Registro** {% ref id="J" /%}: tubos registrados e ignorados nesta sessão.
 
-O seletor `Tissue` acima da caixa define o que você vai curar; por enquanto,
-tubos de tecido são o único modo.
-
-No celular, `Caixa`, `Configuração` e `Registro` são abas, e o campo de
-leitura fica na parte inferior da tela. Em tablet ou computador, a caixa fica
-à esquerda, e o campo de leitura fica à direita, acima das abas
-`Configuração` e `Registro`. Em uma janela larga no computador, o registro
-ganha uma coluna própria.
+No celular, `Caixa`, `Configuração` e `Registro` aparecem como abas com o painel
+de leitura fixo na parte inferior. Em tablets e computadores, a caixa fica à
+esquerda ao lado do painel de leitura e das abas `Configuração`/`Registro`;
+janelas largas de computador exibem `Registro` em uma terceira coluna própria.
 
 ## Configurar a conferência
 
-Abra `Configuração` antes da primeira leitura. O NAHPU guarda essas
-configurações no dispositivo, então a próxima sessão começa de onde você
-parou.
+Abra `Configuração` antes da primeira leitura. O NAHPU salva esses ajustes no
+dispositivo para que a próxima sessão retome de onde você parou.
 
 ### Encontrar tubos
 
-Estes filtros definem quais tubos a leitura e a lista de trabalho encontram.
+Estes filtros controlam quais tubos correspondem às leituras e aparecem na lista
+de trabalho:
 
-- `Incluir simbiontes`: também encontra tubos de simbiontes, pelo ID do
-  simbionte ou pelo ID de campo do hospedeiro.
-- `Tipo de tecido`: os tipos de parte a encontrar, como Liver. Deixe em
+- `Incluir simbiontes`: também encontra tubos de simbiontes pelo ID do simbionte
+  ou pelo ID de campo do hospedeiro.
+- `Tipo de tecido`: tipos de parte a encontrar (como `Liver`). Deixe em
   `Qualquer` para aceitar todos os tipos. Simbiontes não têm tipo de parte,
   então este filtro nunca os exclui.
-- `Preservação`: os tratamentos a encontrar, como ETOH.
-- `Categoria de simbionte`: aparece com `Incluir simbiontes` ativado.
-  Encontra categorias como Ectosymbiont.
+- `Preservação`: tratamentos a encontrar (como `ETOH`).
+- `Categoria de simbionte`: exibida quando `Incluir simbiontes` está ativado;
+  filtra categorias como `Ectosymbiont`.
 
 ### Campo a atualizar
 
 - `Campo`: `Acervo permanente do museu` ou `Empréstimo do museu`.
-- `Valor`: o código gravado em cada tubo, geralmente o código do museu. A
-  leitura fica bloqueada até você informar um valor.
+- `Valor`: código gravado em cada tubo posicionado (geralmente o código do
+  museu). A leitura e o posicionamento ficam bloqueados até você informar um
+  valor.
 
 ### Caixa
 
-- `Tamanho da caixa`: 81 (9×9) ou 100 (10×10) células.
+- `Tamanho da caixa`: `81 (9×9)` ou `100 (10×10)` células.
 - `Ordem de preenchimento`: `Linhas, da esquerda para a direita`,
-  `Colunas, de cima para baixo` ou `Linhas em serpentina`. Na ordem
-  serpentina, cada linha segue na direção oposta à da linha anterior.
-- `Rótulo da caixa` e `Número da caixa`: nomeiam a caixa no local de
-  armazenamento, como `Box 1`. Use o rótulo para um prefixo de freezer ou
-  rack, como `F2 Box`.
+  `Colunas, de cima para baixo` ou `Linhas em serpentina` (cada linha inverte o
+  sentido em relação à anterior).
+- `Rótulo da caixa` e `Número da caixa`: definem o nome da caixa em
+  `Local de armazenamento`, como `Box 1`. Use `Rótulo da caixa` para um prefixo
+  de freezer ou rack, como `F2 Box`.
 
-Quando uma caixa enche, o próximo tubo vai para a primeira célula da caixa
-seguinte. Selecione `Próxima caixa` ou `Caixa anterior` abaixo da grade para
-trocar de caixa manualmente. O NAHPU lê o local de armazenamento de todos os
-tubos do projeto, então células preenchidas antes, por esta ferramenta ou
-digitadas no formulário da parte, aparecem como preenchidas.
+Quando uma caixa enche, o próximo tubo avança automaticamente para a primeira
+célula livre da caixa seguinte (ou relata conflito se essa caixa já estiver
+cheia). Use `Próxima caixa` ou `Caixa anterior` abaixo da grade para trocar de
+caixa manualmente. O NAHPU lê os locais de armazenamento em todo o projeto, de
+modo que células preenchidas antes — nesta ferramenta ou digitadas no formulário
+da parte ou do simbionte — aparecem como preenchidas.
 
 ### Rótulos e substituição
 
-- `Personalizar rótulos das células`: muda como os locais são escritos:
+- `Personalizar rótulos das células`: muda a formatação dos locais de
+  armazenamento:
   - `Numeração`: `A1, A2, A3…`, `1, 2, 3…` ou `1-1, 1-2, 1-3…`.
-  - `Separador da caixa`: o texto entre a caixa e a célula.
-  - `Separador linha–coluna`: o texto entre a linha e a coluna.
+  - `Separador da caixa`: texto entre o nome da caixa e o rótulo da célula.
+  - `Separador linha–coluna`: texto entre linha e coluna (exibido apenas com a
+    numeração `1-1, 1-2, 1-3…`).
   - `Preencher números com zeros`: grava `A01` em vez de `A1`.
 
-  Um exemplo abaixo dos campos mostra o resultado, como `Box 1 / A01`.
-  Desative a opção para voltar ao padrão `Box 1: A1`. O NAHPU guarda seu
-  formato personalizado para a próxima vez.
-- `Substituir valores existentes`: permite que uma leitura substitua um local
-  armazenado ou outro código de museu. Desativada, esses tubos são relatados
-  como conflitos e ficam como estão.
+  Uma prévia de exemplo mostra o intervalo resultante (como
+  `Box 1 / A01 … Box 1 / I09`). Desative a opção para voltar ao formato padrão
+  `Box 1: A1`; o NAHPU guarda suas configurações personalizadas caso você a
+  reative depois.
+- `Substituir valores existentes`: permite que uma leitura substitua um local de
+  armazenamento existente ou outro código de museu. Desativada, esses tubos são
+  relatados como conflitos e permanecem inalterados.
 
 ## Ler tubos
 
-Use `Leitura` quando os tubos chegam a você sem ordem definida.
+Use `Leitura` quando os tubos chegam em ordem arbitrária.
 
 {% steps %}
 
 1. Selecione `Leitura` {% ref id="B" /%} acima do campo de leitura.
-2. Leia o código de barras do tubo com um leitor de código de barras, ou
-   digite o código e pressione Enter. No celular ou tablet,
-   `Ler com a câmera` lê códigos com a câmera do dispositivo.
-3. Confira a mensagem abaixo do campo. Um tubo verificado mostra o novo local
-   e o valor, como `AC-T0128 → Box 1: D1 · Museum permanent = EXM`.
-4. Coloque o tubo na célula indicada pela mensagem e leia o próximo tubo.
+2. Leia o código de barras ou código QR do tubo com um leitor de teclado, ou
+   digite o código e pressione Enter. Em dispositivos com câmera, selecione
+   `Ler com a câmera` para ler códigos de barras e códigos QR continuamente.
+3. Confira a mensagem abaixo do campo. Um tubo verificado informa o novo local e
+   valor, como `AC-T0128 → Box 1: D1 · Museum permanent = EXM`.
+4. Coloque o tubo na célula indicada e leia o próximo tubo.
 
 {% /steps %}
 
-Por padrão, um código corresponde ao ID de tecido ou ao código de barras de
-uma parte, ou ao ID de um simbionte quando os simbiontes estão incluídos. Uma
-correspondência por código de barras tem prioridade sobre o ID de tecido.
-Sugestões aparecem enquanto você digita. Pressionar Enter sempre usa o texto
-digitado, então o código de um leitor nunca é trocado por uma sugestão.
+Por padrão, o código lido ou digitado corresponde ao `ID de tecido` ou código de
+barras de uma parte (ou ao ID de simbionte quando `Incluir simbiontes` está
+ativado). Uma correspondência por código de barras tem prioridade sobre o
+`ID de tecido`. Sugestões aparecem enquanto você digita, mas pressionar Enter
+sempre envia o texto exato digitado, evitando que o código de um leitor seja
+trocado por uma sugestão. Em códigos QR com várias linhas ou URLs, o NAHPU
+também verifica cada linha e os segmentos ou parâmetros da URL.
 
-Ative `Pesquisar por ID de campo` {% ref id="D" /%} quando os tubos
-estiverem etiquetados com o ID de campo do espécime:
+Ative `Pesquisar por ID de campo` {% ref id="D" /%} quando os tubos estiverem
+etiquetados com o ID de campo do espécime:
 
-| Você digita | Corresponde a |
+| Você informa | Corresponde a |
 | --- | --- |
-| `AC128` | Todos os tubos do espécime AC128, como o fígado e o músculo |
+| `AC128` | Todos os tubos do espécime AC128 (por exemplo, fígado e músculo) |
 | `AC128 liver etoh` | Apenas os tubos de AC128 com esse tipo de parte e tratamento |
-| `128` | Todos os espécimes numerados 128, qualquer que seja o prefixo |
+| `128` | Todos os espécimes numerados 128, independentemente do prefixo |
 | Um ID de simbionte | Esse simbionte, quando `Incluir simbiontes` está ativado |
 
-Quando um código ainda corresponde a mais de um tubo, o NAHPU pergunta qual
-você está segurando. Fechar essa lista sem escolher registra o código como
+Se um código ainda corresponder a vários tubos, o NAHPU pede que você escolha
+qual tubo está segurando; fechar a caixa sem escolher registra o código como
 ignorado.
 
 A mensagem abaixo do campo informa cada resultado:
@@ -155,65 +155,72 @@ A mensagem abaixo do campo informa cada resultado:
 | Resultado | Significado |
 | --- | --- |
 | Verificado | O tubo foi gravado na célula e a caixa avançou. |
-| Não encontrado | Nenhum tubo corresponde ao código e aos filtros. Nenhuma célula foi usada. |
-| Já verificado | O tubo foi verificado antes nesta sessão. |
-| Conflito | O tubo já tem um local ou outro código de museu. Ative `Substituir valores existentes` para substituí-los. |
-| Ignorado | A escolha entre tubos correspondentes foi descartada. |
+| Não encontrado | Nenhum tubo corresponde ao código e aos filtros ativos. Nenhuma célula foi usada. |
+| Correspondência próxima (`Você quis dizer`) | Nenhuma correspondência exata foi encontrada; opções tocáveis sugerem códigos parecidos sem usar nenhuma célula até você escolher um. |
+| Já verificado | O tubo já foi verificado antes nesta sessão. |
+| Conflito | O tubo já tem um local de armazenamento ou outro código de museu. Ative `Substituir valores existentes` para substituí-lo. |
+| Ignorado | A escolha entre vários tubos correspondentes foi descartada sem seleção. |
 
-`Desfazer` {% ref id="F" /%} reverte a verificação mais recente. O tubo
-recupera o valor e o local anteriores, e a célula fica livre de novo.
-Selecione `Desfazer` novamente para voltar mais um passo.
+Selecione `Desfazer` {% ref id="F" /%} para reverter a verificação mais recente,
+restaurando o valor anterior, o local anterior e quaisquer tubos deslocados, e
+liberando a célula. Selecione `Desfazer` repetidamente para voltar mais passos.
 
 ## Seguir uma lista
 
-Use `Lista de trabalho` quando preencher uma caixa na ordem dos IDs de campo,
-como todos os tubos de fígado de uma expedição.
+Use `Lista de trabalho` ao preencher uma caixa na ordem dos IDs de campo, como
+todos os tubos de fígado de uma expedição.
 
 {% steps %}
 
 1. Selecione `Lista de trabalho` {% ref id="C" /%} acima do campo de leitura.
-2. O NAHPU lista os tubos sem local de armazenamento que correspondem aos
-   filtros de `Encontrar tubos`, na ordem dos IDs de campo. O tubo atual e a
-   célula para onde ele vai aparecem primeiro.
-3. Selecione `Posicionar` para gravar o tubo na próxima célula, ou `Pular`
-   para passar adiante. Tubos ignorados continuam na lista e aparecem em
-   `Ignorados` no registro.
-4. Use `Pesquisar na lista de trabalho` para ir a um tubo por ID, código de
-   barras, tipo ou tratamento.
+2. O NAHPU lista os tubos sem `Local de armazenamento` que correspondem aos
+   filtros de `Encontrar tubos`, ordenados por ID de campo. O tubo atual, a
+   contagem restante e a célula de destino aparecem no topo, seguidos pelos
+   próximos tubos abaixo.
+3. Selecione `Posicionar` para atribuir o tubo à próxima célula, ou `Pular` para
+   passar adiante (tubos ignorados permanecem na lista de trabalho e aparecem em
+   `Ignorados` no registro).
+4. Use `Pesquisar na lista de trabalho` para ir diretamente a um tubo por ID,
+   código de barras, tipo ou tratamento, ou toque em qualquer tubo seguinte na
+   lista.
 
 {% /steps %}
 
 ## Trabalhar com a caixa
 
-- **Mudar a próxima célula**: toque em uma célula vazia. O próximo tubo vai
+- **Mudar a próxima célula**: toque em qualquer célula vazia. O próximo tubo vai
   para ela, e o preenchimento continua na ordem definida a partir dela.
-- **Ver uma célula preenchida**: toque em uma célula preenchida para ver
-  seus tubos {% ref id="H" /%}. `Detalhes` mostra os IDs, a quantidade e o
-  local de armazenamento do tubo, e `Abrir registro` abre o formulário do
-  espécime. Uma célula compartilhada por vários tubos, geralmente por locais
-  digitados à mão, mostra quantos tubos contém.
-- **Substituir uma célula**: em uma célula preenchida, selecione `Substituir`
-  {% ref id="I" /%} e confirme. O próximo tubo lido ou posicionado vai para
-  essa célula, e os tubos que estavam nela perdem o local e voltam para a
-  lista de trabalho. `Desfazer` os coloca de volta.
+- **Inspecionar uma célula preenchida**: toque em uma célula preenchida para
+  abrir o inspetor de célula {% ref id="H" /%}. Selecione `Detalhes` para ver os
+  IDs, a quantidade, o local de armazenamento e os códigos de museu do tubo, ou
+  `Abrir registro` para abrir o formulário do espécime. Células compartilhadas
+  por vários tubos (geralmente por locais digitados à mão) exibem um aviso e a
+  quantidade de tubos.
+- **Substituir uma célula**: no inspetor de célula, selecione `Substituir` {% ref id="I" /%}
+  e confirme. O próximo tubo lido ou posicionado ocupa essa
+  célula, e os tubos deslocados têm o local de armazenamento limpo e voltam para
+  a lista de trabalho. `Desfazer` os restaura.
 
 ## Registro da sessão e exportação
 
-O registro lista os tubos verificados nesta sessão, do mais recente para o
-mais antigo, em `Registrados`, e os tubos deixados de lado em `Ignorados`. Um
-tubo ignorado sai da lista quando é posicionado.
+O registro da sessão lista os tubos verificados (do mais recente ao mais antigo)
+em `Registrados` e os tubos ignorados em `Ignorados`. Posicionar um tubo
+ignorado o remove de `Ignorados`.
 
-Selecione `Exportar registro` {% ref id="K" /%} para salvar a sessão em CSV,
-TSV ou Excel. Cada linha começa com as colunas de curadoria: `Status`,
-`Ordem`, `ID de campo`, `ID do tubo`, `Tipo de item`, `Tipo`, `Tratamento`,
-`Campo atualizado`, `Valor`, `Localização`, `Caixa`, `Célula`,
+Selecione `Exportar registro` {% ref id="K" /%} para salvar a sessão em CSV, TSV
+ou Excel. As linhas são exportadas na ordem de posicionamento (tubos verificados
+primeiro e depois ignorados) e começam sempre pelas colunas de curadoria:
+`Status`, `Ordem`, `ID de campo`, `ID do tubo`, `Tipo de item`, `Tipo`,
+`Tratamento`, `Campo atualizado`, `Valor`, `Localização`, `Caixa`, `Célula`,
 `Valor anterior`, `Localização anterior` e `Substituídos`.
 
-Em `Colunas`, selecione `Adicionar colunas` para adicionar campos da parte,
-do espécime e de registros vinculados depois delas, como o número de catálogo
-ou a espécie. `Cabeçalhos das colunas adicionadas` nomeia essas colunas por
-`Nomes de campo` ou por `Chaves NAHPU`, como `specimenPart::remark`. O NAHPU
-guarda as colunas adicionadas para a próxima exportação.
+Em `Colunas`, selecione `Adicionar colunas` para acrescentar campos da parte, do
+espécime, do simbionte ou de registros vinculados (como número de catálogo ou
+espécie); arraste para reordenar ou remova colunas adicionadas. Defina
+`Cabeçalhos das colunas adicionadas` como `Nomes de campo` ou `Chaves NAHPU`
+(como `specimenPart::remark`; nomes de campo duplicados usam sua chave NAHPU). O
+NAHPU lembra as colunas adicionadas e o estilo de cabeçalho para futuras
+exportações.
 
-Guarde o registro exportado com o inventário da caixa. Ele documenta o que
-cada leitura alterou, incluindo os valores anteriores substituídos.
+Guarde o registro exportado junto com o inventário da caixa como registro de
+auditoria de cada alteração e valor substituído.

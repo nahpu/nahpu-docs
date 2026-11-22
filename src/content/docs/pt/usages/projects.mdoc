@@ -19,180 +19,199 @@ sidebar:
 {% pin id="D" label="Equipe" large=[69, 15.2] small=[34.5, 71.7] /%}
 {% pin id="E" label="Criar novo projeto" large2=[87.5, 25.5] small2=[94, 36.7] /%}
 {% pin id="F" label="Importar informações do projeto" large2=[87.5, 32.3] small2=[6, 42.9] /%}
-{% pin id="G" label="Escanear QR do projeto" large2=[87.5, 39] small2=[94, 49] /%}
+{% pin id="G" label="Ler QR do projeto" large2=[87.5, 39] small2=[94, 49] /%}
 {% /screenshots %}
 
-Os projetos organizam os dados do NAHPU. Um projeto pode conter pessoal,
-táxons, locais, eventos de coleta, registros de espécimes, narrativas e mídias
-vinculadas.
+Os projetos mantêm os dados do NAHPU organizados. Cada projeto guarda seus
+próprios locais, eventos de coleta, registros de espécimes, narrativas, dados
+associados e mídias vinculadas, enquanto compartilha registros de equipe e
+taxonomia do banco de dados do NAHPU.
 
 ## Criar um projeto
 
 {% aside type="caution" %}
-Um projeto precisa de pelo menos uma pessoa com a função `Catalogador`. Ao escolher Field IDs por `Pessoal`, o assistente adiciona uma etapa condicional `Catalogador` e não permite concluir enquanto não existir uma pessoa elegível. Consulte [Pessoal](/pt/usages/personnel/#adding-personnel-to-a-project).
+
+Projetos que usam `ID de campo` por `Equipe` precisam de pelo menos uma pessoa
+com a função `Catalogador` e um número de campo pessoal registrado. Ao escolher
+`Equipe` no assistente, a etapa `Catalogador` permite selecionar ou criar uma;
+se você escolher `Pular`, o assistente mantém sua configuração atual de
+`ID de campo`. Consulte
+[Pessoal](/pt/usages/personnel/#adding-personnel-to-a-project).
+
 {% /aside %}
 
-Na tela inicial, selecione `Criar projeto` e decida se vai criar uma nova
-identidade ou reutilizar informações do projeto de outro dispositivo.
+Na tela inicial, selecione `Criar projeto` para criar uma nova identidade ou
+reutilizar informações de projeto de outro dispositivo.
 
 {% steps %}
 
-1. Em `Boas-vindas`, selecione `Criar novo projeto` {% ref id="E" /%}. Para reutilizar a
-   identidade de um projeto existente, selecione `Importar JSON de informações do projeto` {% ref id="F" /%} ou,
-   em um dispositivo com leitor de câmera (Android, iOS, macOS ou web),
-   `Ler QR do projeto`.
-2. Em `Informações do projeto`, informe um nome de projeto único com 3 a 25
-   caracteres. Opcionalmente, adicione descrição, pesquisador principal,
-   número de acesso institucional, local, fuso horário IANA e datas de início e
-   término.
-3. Em `Táxon principal`, escolha o táxon que deve controlar os novos formulários
-   de espécimes neste dispositivo. Um projeto pode conter vários grupos
-   taxonômicos. Esta etapa pode ser ignorada e alterada depois em
-   `Configurações` > `Catálogos` > `Formato`.
-4. Em `ID de campo`, escolha `Pessoal` ou `Projeto`. Esta etapa também pode ser
-   ignorada e concluída depois em `Configurações` > `Catálogos` > `Espécimes`.
-   - `Pessoal` usa as iniciais e o número de campo pessoal de um Catalogador
-     elegível. Selecione um Catalogador existente ou crie um quando a etapa
-     condicional `Catalogador` aparecer.
-   - `Projeto` combina um prefixo, o número de catálogo atual e um sufixo. O
-     NAHPU não insere separadores. Ative o incremento automático para avançar o
-     número do projeto quando ele for atribuído.
-5. Em `Revisão`, confira a identidade do projeto, a configuração do dispositivo
-   e a prontidão da taxonomia. Selecione `Criar projeto` para abrir o painel.
+1. Em `Boas-vindas`, selecione `Criar novo projeto` {% ref id="E" /%}. Para
+   reutilizar uma identidade existente, selecione
+   `Importar JSON de informações do projeto` {% ref id="F" /%} ou, em um
+   dispositivo com leitura por câmera (Android, iOS, macOS ou web),
+   `Ler QR do projeto` {% ref id="G" /%}.
+2. Em `Informações do projeto`, informe um `Nome do projeto` único (3 a 25
+   caracteres). Opcionalmente adicione `Descrição` (até 160 caracteres),
+   `Pesquisador principal`, `Tombo`, `Localização`, `Fuso horário` IANA,
+   `Data de início` e `Data de término`.
+3. Em `Táxon principal`, escolha o formato de catálogo para novos formulários
+   de espécimes neste dispositivo. Um mesmo projeto ainda pode reunir espécimes
+   de vários grupos taxonômicos. Você pode selecionar `Pular` e alterar depois
+   em `Configurações` > `Catálogos` > `Formato`.
+4. Em `ID de campo`, escolha `Equipe` ou `Projeto` (ou `Pular` para configurar
+   depois em `Configurações` > `Catálogos` > `Espécimes`):
+   - **`Equipe`** usa as iniciais e o número sequencial de um catalogador
+     elegível. Selecione um catalogador existente ou crie um na etapa seguinte
+     (`Catalogador`).
+   - **`Projeto`** une diretamente `Prefixo`, `Número de catálogo atual` e
+     `Sufixo`, sem inserir separadores. Ative
+     `Incrementar o número de catálogo automaticamente` para avançar o número
+     ao atribuí-lo.
+5. Em `Revisão`, confira os detalhes do projeto, a configuração do dispositivo
+   e a prontidão taxonômica, e selecione `Criar projeto` para abrir o painel.
 
 {% /steps %}
 
-O NAHPU gera um UUID para um projeto novo. Em telas largas, o assistente exibe
-as etapas em uma coluna à esquerda; em telas mais estreitas, as mesmas etapas
-aparecem como chips horizontais. O fluxo e a validação são os mesmos nos dois
-layouts.
+O NAHPU gera um UUID para cada novo projeto. Em telas largas, as etapas do
+assistente aparecem em uma barra lateral esquerda; em telas menores, aparecem
+como chips horizontais com a mesma validação.
 
-Importar o JSON de informações do projeto ou ler o seu QR preserva o UUID de
-origem e leva diretamente à revisão. Isso copia apenas os metadados do
-projeto—não registros, pessoal, táxons, mídias ou configurações do dispositivo.
-Use uma transferência completa do projeto quando esses dados também precisarem
-passar de um dispositivo para outro.
+Importar um JSON de informações do projeto ou ler seu código QR preserva o UUID
+de origem e vai direto para `Revisão`. Isso copia apenas metadados do projeto—
+não registros, equipe, táxons, mídias ou ajustes do dispositivo. Use uma
+transferência completa de projeto quando esses dados também precisarem ser
+movidos.
 
 ## Fuso horário do projeto
 
-O campo `Fuso horário` registra onde o trabalho de campo acontece, como um nome
-de fuso horário IANA, por exemplo `Asia/Jakarta` ou `America/New_York`. Escolha
-o fuso horário do trabalho de campo, e não o do dispositivo usado para inserir
-os dados.
+`Fuso horário` registra onde o trabalho de campo acontece usando um nome IANA
+como `Asia/Jakarta` ou `America/New_York`. Escolha o fuso horário do local de
+campo, não o do dispositivo usado na digitação.
 
-**O NAHPU nunca converte horários.** Cada data e hora de um registro é
-armazenada exatamente como foi informada, como a hora local do relógio em campo.
-Abrir o projeto em um dispositivo em outro fuso horário não as altera. Esse
-dispositivo pode apenas formatá-las de outro modo, como com outra ordem de data
-ou um relógio de 12 horas.
+**O NAHPU nunca converte horários.** Datas e horas são armazenadas exatamente
+como foram digitadas, no relógio local do campo. Abrir o projeto em outro fuso
+horário não desloca os horários salvos—apenas pode alterar o formato de data ou
+o relógio de 12/24 horas. Por exemplo, com `Asia/Jakarta`, um evento inserido
+como **12 de maio, 08:30** sempre mostra `08:30` em qualquer dispositivo, e o
+fuso horário do projeto documenta a qual relógio esse `08:30` se refere.
 
-Por exemplo, com o fuso horário do projeto `Asia/Jakarta`, um evento registrado
-como **12 de maio, 08:30** aparece como 08:30 em todos os dispositivos. O fuso
-horário do projeto indica a que relógio esse `08:30` se refere.
-
-O fuso horário aparece em Visão geral do projeto, acompanha as informações do
-projeto e as transferências de projeto, e fica disponível como
-`project::timeZone` em modelos de documentos e exportações. Um banco de dados
-que armazene horários em UTC pode usá-lo para convertê-los corretamente.
-
-Alterar o fuso horário não muda o relógio do dispositivo nem reescreve os
-horários já registrados. Mantenha o mesmo valor em todos os dispositivos do
-projeto.
-
-Se a equipe trabalhar em vários fusos horários, ou inserir dados históricos de
-outro lugar, registre a exceção na descrição do projeto ou em uma narrativa. Um
-projeto separado para cada fuso horário geralmente é mais claro.
+- O fuso horário aparece em `Visão geral do projeto`, acompanha transferências
+  de informações e de projeto e fica disponível como `project::timeZone` em
+  modelos e exportações para que bancos externos possam converter horários para
+  UTC.
+- Alterar `Fuso horário` nunca muda o relógio do dispositivo nem reescreve
+  horários já registrados. Mantenha o mesmo valor em todos os dispositivos do
+  projeto.
+- Se a equipe atuar em mais de um fuso horário ou registrar dados históricos de
+  outra região, anote a exceção na descrição ou em uma narrativa—ou crie um
+  projeto separado por fuso horário.
 
 ## Gerenciar projetos na tela inicial
 
-Cada projeto tem um menu de ações com estas opções:
+Quando já existem projetos, a tela inicial oferece barra de pesquisa, ações
+rápidas (`Criar projeto`, `Galeria`, `Importar projeto` e `Estatísticas`) e
+alternância entre lista e grade. O menu de três pontos de cada projeto inclui:
 
-- **Editar informações** - Atualiza o formulário do projeto.
-- **Mostrar QR** - Exibe as informações do projeto para leitura por um
-  dispositivo móvel.
-- **Exportar informações** - Exporta as informações do projeto como JSON. Isso
-  contém os detalhes do projeto, não os seus registros e mídias.
-- **Detalhes** - Mostra as informações do projeto sem permitir edição.
+| Ação | O que faz |
+| --- | --- |
+| `Editar informações` | Abre o formulário do projeto para atualizar os metadados. |
+| `Mostrar QR` | Exibe um código QR dos metadados do projeto para leitura em outro dispositivo. |
+| `Exportar informações` | Salva os metadados do projeto em JSON (sem registros nem mídias). |
+| `Detalhes` | Visualiza as informações do projeto sem editá-las. |
 
 ## Painel do projeto
 
-O painel contém quatro áreas:
+O `Painel do projeto` tem quatro painéis e uma barra inferior de `Ferramentas`:
 
-- **Visão geral do projeto** {% ref id="A" /%} - Mostra nome, UUID, descrição, pesquisador
-  principal, número de acesso, local, fuso horário, datas, data de criação e
-  último acesso. As informações são agrupadas em Identidade, Descrição, Detalhes
-  do projeto, Cronograma e Metadados do registro.
-  Use `Editar` {% ref id="B" /%} para alterar o projeto e `Exportar informações` para compartilhar {% ref id="C" /%} as suas informações.
-- **Equipe** {% ref id="D" /%} - Lista o pessoal atribuído ao projeto. Use `Adicionar membro da equipe`
-  para selecionar uma pessoa existente no banco de dados ou criar uma nova, e
-  `Gerenciar` para editar o pessoal do projeto.
-- **Registro de táxons** - Lista os táxons registrados e oferece controles para
-  adicionar ou importar táxons.
-- **Estatísticas de registros** - Resume os registros do projeto e dá acesso a
-  estatísticas mais detalhadas.
+- **`Visão geral do projeto`** {% ref id="A" /%}: mostra o código QR do projeto
+  e os metadados agrupados em `Identidade`, `Descrição`, `Detalhes do projeto`,
+  `Cronograma` e `Metadados do registro`. Use `Editar` {% ref id="B" /%} para
+  atualizar dados ou `Exportar informações` {% ref id="C" /%} para exportar
+  metadados como JSON.
+- **`Equipe`** {% ref id="D" /%}: lista as pessoas atribuídas ao projeto, com
+  `Adicionar membro da equipe`, `Gerenciar`, ícones de edição e controles de
+  seleção.
+- **`Registro de táxons`**: exibe contagens de ordens, famílias e espécies
+  registradas (além do total de táxons quando há entradas de categoria superior
+  ou subespécie), com `Gerenciar` e `Adicionar táxon`.
+- **`Estatísticas de registros`**: resume os registros do projeto e dá acesso a
+  estatísticas detalhadas.
+- **Barra `Ferramentas`**: oferece atalhos na parte inferior do painel
+  (configurados em `Configurações` > `Ferramentas` ou via `Editar` no fim da
+  barra).
 
-O menu do projeto também contém ações de transferência, exportação, backup,
-configurações e exclusão do projeto.
+O menu do projeto (barra lateral fixa no desktop ou gaveta em telas menores)
+oferece `Mesclar projeto`, `Exportar projeto`, `Importação em lote`,
+`Empacotar registros`, `Exportar registros`, `Exportar documentos`,
+`Fazer backup do banco de dados`, `Configurações`,
+`Exportar configurações do usuário`, `Importar configurações do usuário` e
+`Excluir projeto`.
 
 ## Atualizar informações do projeto
 
-No painel, selecione `Editar` no painel Visão geral do projeto. Na tela inicial,
-abra o menu de ações de um projeto e selecione `Editar informações`. O
-formulário de edição agrupa os campos em Detalhes do projeto, Local e tempo, e
-Datas do projeto. Altere o táxon principal ou os padrões de ID de campo em
+Selecione `Editar` {% ref id="B" /%} em `Visão geral do projeto` no painel, ou
+escolha `Editar informações` no menu do projeto na tela inicial. Os campos são
+agrupados em `Detalhes do projeto`, `Local e horário` e `Datas do projeto`.
+Altere o formato de catálogo ativo ou as opções de `ID de campo` em
 [Configurações](../settings).
 
 ## Compartilhar informações do projeto {% #sharing-project-information %}
 
-As informações do projeto podem ser copiadas para outro dispositivo sem
+Copie a identidade e os metadados de um projeto para outro dispositivo sem
 transferir registros:
 
-1. No dispositivo de origem, selecione `Exportar informações` ou `Mostrar QR` no
-   menu de ações do projeto na tela inicial.
-2. No dispositivo receptor, selecione `Criar projeto` e use `Importar JSON de
-   informações do projeto` ou `Ler QR do projeto` {% ref id="G" /%} em um dispositivo com
-   leitor de câmera.
+{% steps %}
 
-Esses métodos mantêm o UUID do projeto de origem e criam um projeto com as
-mesmas informações. Para transferir registros, mídias e dados relacionados, use
-o fluxo [Transferir um projeto](../export/project-transfer).
+1. No dispositivo de origem, escolha `Exportar informações` ou `Mostrar QR` no
+   menu do projeto na tela inicial (ou toque no código QR /
+   `Exportar informações` em `Visão geral do projeto`).
+2. No dispositivo receptor, selecione `Criar projeto` e escolha
+   `Importar JSON de informações do projeto` {% ref id="F" /%} ou
+   `Ler QR do projeto` {% ref id="G" /%} em um dispositivo com leitura por
+   câmera.
+
+{% /steps %}
+
+Isso preserva o UUID de origem e cria uma estrutura de projeto idêntica. Para
+mover registros, mídias e dados vinculados, use
+[Transferência de projeto](../export/project-transfer).
 
 ## Transferir dados do projeto
 
-Para mover registros e mídias, use `Exportar projeto` no menu do projeto e,
-depois, no dispositivo receptor:
+Para mover registros e mídias, execute `Exportar projeto` no menu do projeto e,
+no dispositivo receptor:
 
 | No dispositivo receptor | Use | Resultado |
 | --- | --- | --- |
-| O projeto ainda não existe | `Importar projeto` na tela inicial | Um novo projeto local |
-| O projeto já existe | `Mesclar projeto` no menu `Painel` desse projeto | Os registros importados combinados com os existentes |
+| O projeto ainda não existe | `Importar projeto` na tela inicial | Cria um novo projeto local |
+| O projeto já existe | `Mesclar projeto` no menu desse projeto | Mescla os registros importados aos existentes |
 
 Exportações ZIP e TAR.GZ incluem mídias; `Exportação leve` (JSON.GZ) inclui
-apenas registros. Um NAHPU Data Package também pode ser importado ou mesclado.
-Pacotes Darwin Core e exportações tabulares não restauram um projeto. Mantenha
-o arquivo de origem até conferir os registros e anexos no dispositivo receptor.
-Consulte [Transferência de projeto](../export/project-transfer) para todas as
-etapas.
+apenas registros. Um pacote de dados do NAHPU também pode ser importado ou
+mesclado. Pacotes Darwin Core e exportações tabulares não restauram um projeto.
+Mantenha o arquivo de origem até verificar registros e mídias no dispositivo
+receptor. Consulte [Transferência de projeto](../export/project-transfer) para
+todos os passos.
 
 ## Excluir um projeto
 
-Abra o menu do projeto e selecione `Excluir projeto`. O NAHPU solicita os cinco
-primeiros caracteres do UUID do projeto porque a exclusão não pode ser
-desfeita.
+Abra o menu do projeto e selecione `Excluir projeto`. O NAHPU pede que você
+digite os cinco primeiros caracteres do UUID do projeto porque a exclusão não
+pode ser desfeita.
 
-A exclusão remove os registros de espécimes e as medições, os eventos de coleta
-e seus métodos de coleta, o pessoal dos eventos, as narrativas, os locais e as
-coordenadas, os vínculos entre projeto e pessoal, as mídias do projeto e o
-registro do projeto. Os arquivos armazenados do projeto também são removidos.
-Mídias ainda compartilhadas com um registro taxonômico são desvinculadas em vez
-de excluídas. Se a limpeza dos arquivos falhar, o NAHPU mostra um aviso depois
-que os registros do banco de dados forem excluídos.
+Excluir um projeto remove seus registros e medidas de espécimes, eventos de
+coleta (com métodos de coleta, pessoal do evento e dados ambientais),
+narrativas, locais e coordenadas, dados associados, vínculos projeto-equipe,
+mídias do projeto, arquivos salvos do projeto e o próprio registro do projeto.
+Mídias ainda referenciadas por um registro taxonômico são desvinculadas em vez
+de excluídas. Se a limpeza de arquivos falhar, o NAHPU exibe um aviso após
+excluir os registros do banco de dados.
 
-Exporte uma transferência do projeto ou um backup do banco de dados antes de
-excluir, caso possa precisar dos dados depois.
+Exporte uma transferência de projeto ou faça um backup do banco de dados antes
+de excluir, caso possa precisar dos dados depois.
 
 ## Terminologia
 
 ### Pesquisador principal
 
-O pesquisador principal é a pessoa responsável pelo projeto.
+A pessoa responsável pelo projeto.

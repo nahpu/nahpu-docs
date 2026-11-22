@@ -19,201 +19,238 @@ sidebar:
 {% pin id="D" label="Ekspor catatan" large=[36, 50.5] small=[66, 57.1] /%}
 {% pin id="E" label="Ekspor dokumen" large=[36, 57.2] small=[66, 63.3] /%}
 {% pin id="F" label="Cadangkan basis data" large=[36, 65.7] small=[66, 71.2] /%}
-{% pin id="G" label="Ekspor konfigurasi" large=[36, 81.1] small=[66, 85.2] /%}
+{% pin id="G" label="Ekspor konfigurasi pengguna" large=[36, 81.1] small=[66, 85.2] /%}
 {% pin id="H" label="Format arsip" large2=[24.8, 33.1] small2=[57.1, 36] /%}
 {% pin id="I" label="Simpan cadangan" large2=[56.3, 93.3] small2=[69, 92.3] /%}
 {% /screenshots %}
 
-NAHPU dapat mengekspor data proyek yang sama dengan beberapa cara, masing-masing
-untuk keperluan berbeda. Semuanya dimulai dari menu proyek.
+NAHPU mengekspor data proyek, media, statistik, cadangan, dan pengaturan dalam
+format yang disesuaikan untuk setiap kebutuhan. Ekspor khusus proyek dimulai
+dari menu dasbor proyek (`Dashboard`); `Cadangkan basis data`,
+`Ekspor konfigurasi pengguna`, dan `Impor konfigurasi pengguna` juga tersedia
+dari menu layar beranda.
 
 ## Ekspor mana yang saya perlukan?
 
-| Anda ingin… | Gunakan | Hasilnya |
-|---|---|---|
-| Memindahkan proyek ke perangkat lain, atau menyimpan salinan lengkap | `Ekspor proyek` {% ref id="B" /%} | Berkas proyek yang dapat diimpor atau digabungkan NAHPU |
-| Menggabungkan berkas proyek rekan dengan milik Anda | `Gabungkan proyek` {% ref id="A" /%} | Catatan rekan ditambahkan ke proyek Anda |
+| Jika Anda ingin… | Gunakan | Hasilnya |
+| --- | --- | --- |
+| Memindahkan proyek ke perangkat lain atau menyimpan salinan penuh | `Ekspor proyek` {% ref id="B" /%} | Arsip proyek yang dapat diimpor atau digabungkan oleh NAHPU |
+| Menggabungkan berkas proyek rekan tim ke proyek Anda | `Gabungkan proyek` {% ref id="A" /%} | Catatan mereka digabungkan ke proyek yang sedang dibuka |
 | Mengirim catatan ke basis data, lembar kerja, atau skrip | [Ekspor catatan](/id/usages/export/export-records/) {% ref id="D" /%} | Tabel CSV, TSV, Excel, atau JSON |
-| Menerbitkan atau mengarsipkan data beserta berkasnya | [Bundel catatan](/id/usages/export/export-bundles/) {% ref id="C" /%} | Paket Darwin Core atau NAHPU Data Package |
-| Mencetak label, tag, katalog, atau buku lapangan | [Ekspor dokumen](/id/usages/export/export-documents/) {% ref id="E" /%} | PDF |
-| Melaporkan jumlah, seperti spesimen per spesies | [Ekspor statistik](/id/usages/export/export-statistics/) | Tabel ringkasan dalam CSV, TSV, Excel, atau JSON |
-| Mengambil foto-foto proyek | [Ekspor gambar](/id/usages/export/export-images/) | Satu gambar, atau arsip ZIP atau TAR.GZ berisi banyak gambar |
-| Melindungi semua yang ada di perangkat ini | [`Cadangkan basis data`](#backup-database) {% ref id="F" /%} | Satu arsip berisi seluruh instalasi |
-| Membagikan pengaturan dan prasetel Anda | [`Ekspor konfigurasi pengguna`](#export-user-configs) {% ref id="G" /%} | Berkas pengaturan |
+| Menerbitkan atau mengarsipkan data beserta berkasnya | [Bundel catatan](/id/usages/export/export-bundles/) {% ref id="C" /%} | Bundel Darwin Core atau NAHPU Data Package |
+| Mencetak label, tag, katalog, atau buku lapangan | [Ekspor dokumen](/id/usages/export/export-documents/) {% ref id="E" /%} | Berkas PDF |
+| Melaporkan ringkasan hitungan, seperti spesimen per spesies | [Ekspor statistik](/id/usages/export/export-statistics/) | Tabel ringkasan dalam CSV, TSV, Excel, atau JSON |
+| Mengeluarkan foto dan berkas media lainnya | [Ekspor gambar](/id/usages/export/export-images/) | Satu berkas, atau arsip TAR.GZ maupun ZIP berisi banyak berkas |
+| Melindungi semua data di perangkat ini | [`Cadangkan basis data`](#backup-database) {% ref id="F" /%} | Satu arsip untuk seluruh instalasi |
+| Berbagi pengaturan, kosakata terkontrol, dan setelan awal | [`Ekspor konfigurasi pengguna`](#export-user-configs) {% ref id="G" /%} | Berkas konfigurasi JSON atau JSON.GZ |
 
 Hanya tiga di antaranya yang dapat mengembalikan data ke NAHPU:
 
 - **ekspor proyek**, melalui `Impor proyek` di layar beranda atau
-  `Gabungkan proyek` di proyek yang ada
-  ([Transfer proyek](/id/usages/export/project-transfer/));
-- **NAHPU Data Package**, yang membawa data proyek yang sama;
+  `Gabungkan proyek` di dalam proyek yang terbuka
+  ([Transfer Proyek](/id/usages/export/project-transfer/));
+- **NAHPU Data Package**, yang membawa muatan transfer proyek yang sama;
 - **cadangan basis data**, yang mengganti seluruh instalasi
   ([Memulihkan basis data](#restoring-a-database)).
 
-Tabel catatan, paket Darwin Core, dokumen, dan statistik bersifat satu arah:
+Tabel catatan, bundel Darwin Core, dokumen, dan statistik bersifat satu arah:
 NAHPU tidak dapat membangun ulang proyek dari berkas tersebut. Mengimpor JSON
-info proyek atau kode QR proyek hanya membuat nama dan detail proyek, tanpa
-catatan atau media.
+atau kode QR informasi proyek hanya membuat nama dan metadata proyek tanpa
+catatan maupun media.
 
 ## Strategi pencadangan {% #backup-strategy %}
 
-Simpan salinan data setiap hari lapangan yang sudah diperiksa di luar perangkat
-kerja Anda. Dua jenis cadangan saling melengkapi:
+Simpan salinan terverifikasi dari setiap hari kerja lapangan di luar perangkat
+utama Anda. Gabungkan dua jenis cadangan:
 
 | Cadangan | Seberapa sering | Isinya |
-|---|---|---|
-| Ekspor proyek | Setiap hari lapangan | Satu proyek, dengan medianya dalam ZIP atau TAR.GZ |
-| Cadangan basis data | Setiap minggu, dan sebelum mengimpor, menggabungkan, atau mengganti data | Semua proyek dan pengaturan di perangkat |
+| --- | --- | --- |
+| Ekspor proyek | Setiap hari lapangan | Satu proyek beserta medianya dalam TAR.GZ atau ZIP |
+| Cadangan basis data | Mingguan, dan sebelum mengimpor, menggabungkan, atau mengganti data | Semua proyek, berkas, dan pengaturan di perangkat |
 
 {% steps %}
 
-1. Buka menu proyek dan pilih `Ekspor proyek`.
-2. Periksa jumlah catatan dan peringatan berkas yang hilang. Pilih ZIP atau
-   TAR.GZ untuk menyertakan media. `Ekspor ringan` (JSON.GZ) hanya berisi
-   catatan, jadi bukan cadangan lengkap.
-3. Simpan berkas dengan nama proyek dan tanggal, lalu salin ke penyimpanan lain
-   atau perangkat lain.
-4. Buka salinannya untuk memastikan dapat dibaca. Sesekali, impor ke instalasi
-   lain untuk menguji pemulihan.
-5. Pada titik pemeriksaan rutin, buat juga `Cadangkan basis data` {% ref id="F" /%}. Simpan cadangan sebelumnya yang sudah diperiksa sampai
-   cadangan baru selesai diperiksa.
+1. Buka menu dasbor proyek lalu pilih `Ekspor proyek`.
+2. Periksa jumlah catatan dan peringatan berkas yang hilang. Biarkan
+   `Ekspor ringan` nonaktif lalu pilih `TAR.GZ` atau `ZIP` agar media ikut
+   tersimpan; `Ekspor ringan` (`JSON.GZ`) hanya memuat catatan sehingga bukan
+   cadangan penuh.
+3. Simpan arsip dengan nama proyek dan tanggal (atau aktifkan
+   `Tambahkan tanggal`), lalu salin ke penyimpanan terpisah atau perangkat
+   lain.
+4. Buka salinannya untuk memastikan dapat dibaca, dan uji impor secara berkala
+   di instalasi lain.
+5. Pada jadwal rutin Anda, buat juga `Cadangkan basis data` {% ref id="F" /%}.
+   Pertahankan cadangan sebelumnya hingga cadangan baru selesai diperiksa.
 
 {% /steps %}
 
-Untuk memulihkan proyek, gunakan `Impor proyek` di layar beranda, atau
-`Gabungkan proyek` di dalam proyek yang ada.
+Untuk memulihkan satu proyek saja, gunakan `Impor proyek` di layar beranda atau
+`Gabungkan proyek` di dalam proyek yang sudah ada.
 
 ## Cadangan basis data {% #backup-database %}
 
-`Cadangkan basis data` menyimpan seluruh instalasi dalam satu arsip ZIP atau
-TAR.GZ {% ref id="H" /%}: basis data SQLite serta folder proyek, personel, dan
-pengaturan, termasuk berkas yang tidak ditautkan ke catatan mana pun. Berkas
-SQLite saja hanya berisi catatan, tanpa media atau berkas lain.
+`Cadangkan basis data` menyimpan seluruh instalasi dalam satu arsip `TAR.GZ`
+(default) atau `ZIP` {% ref id="H" /%}: basis data SQLite ditambah folder
+proyek, personel, dan pengaturan, termasuk berkas yang tidak tertaut ke catatan
+aktif. Berkas `.sqlite3` saja hanya memuat catatan tanpa media atau berkas
+lain.
+
+Anda dapat membuka `Cadangkan basis data` dari menu layar beranda, menu dasbor
+proyek, atau `Pengaturan` > `Basis data`.
 
 {% steps %}
 
-1. Buka menu proyek dan pilih `Cadangkan basis data`.
-2. Pilih format arsip, nama berkas, dan tujuan.
-3. Pilih `Simpan cadangan` {% ref id="I" /%}.
-4. Salin arsip ke luar perangkat dan periksa sebelum menghapus cadangan yang
-   lebih lama.
+1. Pilih `Cadangkan basis data` {% ref id="F" /%}.
+2. Pilih `TAR.GZ` atau `ZIP` {% ref id="H" /%}, isi nama berkas (opsional
+   aktifkan `Tambahkan tanggal`), lalu pilih folder tujuan di desktop.
+3. Periksa ringkasan cadangan lalu pilih `Simpan cadangan` {% ref id="I" /%}.
+   Anda dapat membatalkan saat arsip sedang ditulis.
+4. Salin arsip ke luar perangkat dan periksa sebelum menghapus cadangan lama.
 
 {% /steps %}
 
 ## Ekspor konfigurasi pengguna {% #export-user-configs %}
 
-`Ekspor konfigurasi pengguna` {% ref id="G" /%} menyimpan pengaturan Anda agar
-perangkat lain, atau Anda di kemudian hari, dapat bekerja dengan cara yang sama.
-Berkasnya mencakup prasetel ekspor, tata letak dokumen, templat, dan daftar
-terkendali.
+`Ekspor konfigurasi pengguna` {% ref id="G" /%} menyimpan konfigurasi Anda agar
+perangkat lain—atau instalasi mendatang—memakai pengaturan yang sama tanpa
+mengubah data proyek. Fitur ini tersedia di menu layar beranda, menu dasbor
+proyek, dan `Siapkan NAHPU`.
+
+Anda dapat memilih bagian mana yang diekspor:
+
+- `Kosakata terkontrol dan pengaturan`
+- `Preset ekspor tabel`
+- `Template dokumen`
+- `Preset tata letak dokumen`
+- `Kolom pratinjau tabel template`
+- `Bidang kustom` (termasuk memilih definisi bidang khusus tertentu)
 
 {% steps %}
 
-1. Buka halaman `Dasbor`.
-2. Buka menu proyek dan pilih `Ekspor konfigurasi pengguna`.
-3. Pilih format: `JSON (.json)` atau `JSON.GZ (.json.gz)` yang lebih kecil.
-4. Ketik `Nama berkas` dan pilih foldernya.
-5. Pilih `Ekspor konfigurasi pengguna`.
+1. Buka `Ekspor konfigurasi pengguna` dari menu layar beranda, menu dasbor
+   proyek, atau `Siapkan NAHPU`.
+2. Pilih bagian konfigurasi yang ingin disertakan. Jika bagian bidang kustom
+   dicentang, pilih definisi yang ingin diekspor.
+3. Tinjau isi yang akan ditulis di `Akan diekspor` (tab `Pratinjau` di ponsel).
+4. Pilih `JSON (.json)` atau `JSON.GZ (.json.gz)` yang lebih ringkas, atur nama
+   berkas (opsional aktifkan `Tambahkan tanggal`), lalu pilih folder tujuan di
+   desktop.
+5. Pilih `Ekspor konfigurasi pengguna`. Setelah selesai, Anda dapat
+   membagikan, membuka folder, atau menyimpan salinan.
 
 {% /steps %}
 
 ## Memulihkan basis data {% #restoring-a-database %}
 
-Pulihkan basis data untuk mengganti seluruh isi NAHPU di perangkat ini dengan
-sebuah cadangan.
+Memulihkan basis data mengganti seluruh data NAHPU di perangkat ini dengan
+salinan cadangan.
+
+{% aside type="caution" %}
+
+Biarkan opsi pencadangan data saat ini tetap aktif kecuali Anda yakin tidak
+memerlukan data lama lagi. Pemulihan basis data tidak dapat dibatalkan.
+
+{% /aside %}
 
 {% steps %}
 
 1. Buka `Pengaturan`.
 2. Di bawah `Basis data`, pilih `Ganti basis data`.
-3. Di bawah `Ganti dengan`, pilih `Telusuri` lalu pilih berkas `.sqlite3`, arsip
-   ZIP, atau arsip TAR.GZ.
-4. Bandingkan kedua basis data. NAHPU menampilkan versi skema, catatan, berkas,
-   dan ukuran cadangan di samping basis data saat ini. Cadangan yang lebih lama
-   ditingkatkan setelah dipulihkan. Berkas yang bukan basis data NAHPU, atau
-   berasal dari versi NAHPU yang lebih baru, tidak dapat dipulihkan; perbarui
-   NAHPU terlebih dahulu.
-5. Biarkan `Cadangkan data saat ini terlebih dahulu` aktif kecuali Anda yakin
-   tidak lagi memerlukan data saat ini. NAHPU menyimpannya sebagai arsip TAR.GZ
-   di folder cadangannya.
-6. Pilih `Ganti basis data` dan konfirmasi peringatannya.
+3. Pilih berkas pengganti: berkas `.sqlite3`, arsip `ZIP`, atau arsip
+   `TAR.GZ`.
+4. Bandingkan kedua basis data. NAHPU menampilkan versi skema, jumlah catatan,
+   berkas, dan ukuran secara berdampingan. Cadangan dari versi lebih lama akan
+   dimutakhirkan otomatis; cadangan dari versi NAHPU yang lebih baru tidak
+   dapat dipulihkan sebelum NAHPU diperbarui.
+5. Biarkan opsi cadangkan data saat ini tetap aktif agar NAHPU menyimpan data
+   sekarang sebagai arsip `TAR.GZ` di folder cadangannya.
+6. Pilih `Ganti basis data` lalu konfirmasi peringatan.
 
 {% /steps %}
 
 Yang dilakukan pemulihan:
 
 - Mengganti basis data aktif dengan basis data dari cadangan.
-- Dari arsip, juga menyalin berkas proyek ke folder dokumen NAHPU dan
-  mengimpor pengaturan yang ada di arsip. Foto personel dari cadangan lama
-  dipindahkan ke folder foto personel.
-- Berkas media atau pengaturan dengan nama yang sama dengan berkas di arsip
-  ditimpa, tanpa salinan kedua. Berkas yang identik dibiarkan.
-- Berkas yang hanya ada di perangkat tetap disimpan dan akan muncul di cadangan
-  berikutnya.
-
-Pemulihan tidak dapat dibatalkan, karena itu
-`Cadangkan data saat ini terlebih dahulu` sebaiknya tetap aktif.
+- Dari arsip, menyalin berkas proyek ke folder dokumen NAHPU dan mengimpor
+  pengaturan di dalamnya. Foto personel dari cadangan lama dipindahkan ke
+  folder foto personel.
+- Menimpa berkas media atau pengaturan dengan nama yang sama; berkas yang
+  identik dibiarkan.
+- Mempertahankan berkas yang hanya ada di perangkat ini sehingga tetap muncul
+  di cadangan berikutnya.
 
 ## Memulihkan konfigurasi pengguna {% #restoring-user-configs %}
 
-Pulihkan konfigurasi pengguna untuk mengganti pengaturan Anda dengan pengaturan
-dari perangkat atau cadangan lain.
+Impor berkas konfigurasi pengguna untuk menerapkan kosakata terkontrol,
+setelan awal, template, tata letak, atau bidang kustom dari perangkat lain atau
+cadangan. Sama seperti ekspor, `Impor konfigurasi pengguna` tersedia dari menu
+layar beranda, menu dasbor proyek, dan `Siapkan NAHPU`.
 
 {% steps %}
 
-1. Buka menu `Dasbor` proyek.
-2. Pilih `Impor konfigurasi pengguna`.
-3. Pilih berkas pengaturan `.json` atau `.json.gz`.
-4. Pilih `Ganti` dan konfirmasi peringatannya.
+1. Buka `Impor konfigurasi pengguna` dari menu layar beranda, menu dasbor
+   proyek, atau `Siapkan NAHPU`.
+2. Pilih berkas konfigurasi `.json` atau `.json.gz`.
+3. Pilih bagian yang ingin diimpor lalu tinjau di `Akan diimpor` (tab
+   `Pratinjau` di ponsel). Jika bidang kustom dipilih saat proyek sedang
+   terbuka, atur `Tujuan kolom kustom` ke `Global` atau `Proyek saat ini`.
+4. Pilih `Impor konfigurasi yang dipilih` lalu konfirmasi dengan `Impor`.
 
 {% /steps %}
 
-Ini hanya mengubah pengaturan, bukan data proyek. Untuk memulihkan keduanya
-sekaligus, pulihkan cadangan basis data dalam ZIP atau TAR.GZ. Untuk cara kerja
-penyimpanan dan kompatibilitas di balik layar, lihat
+Bagian yang dipilih akan mengganti pengaturan terkait di perangkat ini, kecuali
+bidang kustom yang dicocokkan berdasarkan ID template dan digabungkan sehingga
+definisi yang ada tetap terjaga. Bagian yang tidak dipilih tidak berubah. Jika
+template dokumen yang diimpor memakai font yang belum terpasang di perangkat ini,
+NAHPU akan meminta Anda memilih font pengganti.
+
+Tindakan ini hanya mengubah pengaturan, bukan catatan proyek. Untuk memulihkan
+keduanya sekaligus, pulihkan cadangan basis data `ZIP` atau `TAR.GZ`. Untuk
+detail penyimpanan teknis, lihat
 [Impor dan ekspor data](../../contributing/code/data-import-export-overview).
 
 ## Mengarsipkan proyek {% #archiving-a-project %}
 
-Arsip menjaga proyek yang sudah selesai tetap dapat dipakai bertahun-tahun
-kemudian, oleh orang yang mungkin tidak ikut mengerjakannya. Simpan data beserta
-konteks yang cukup untuk mengetahui isinya, kapan dibuat, dengan perangkat lunak
-apa, dan siapa penanggung jawabnya.
+Arsip menjaga proyek yang telah selesai tetap berguna bertahun-tahun kemudian,
+termasuk bagi orang yang tidak ikut mengumpulkan datanya. Simpan data bersama
+konteks yang jelas mengenai isi, waktu pembuatan, versi perangkat lunak, dan
+penanggung jawabnya.
 
 Sebelum mengarsipkan:
 
-- Selesaikan kurasi data, dan perbaiki atau catat masalah yang diketahui. Lihat
-  [Pengelolaan data](../../best-practices/data-management).
-- Buat cadangan basis data yang baru.
-- Ekspor konfigurasi pengguna bila daftar terkendali, prasetel, templat, atau
-  tata letak diperlukan untuk mengulangi pekerjaan.
-- Buat ekspor proyek lengkap dengan `Ekspor ringan` nonaktif, agar media ikut
-  tersimpan. Periksa jumlah catatan dan peringatan media yang hilang sebelum
-  menyimpan.
+- Selesaikan kurasi data lalu perbaiki atau catat kendala yang diketahui. Lihat
+  [Manajemen Data](../../best-practices/data-management).
+- Buat cadangan basis data terbaru.
+- Ekspor konfigurasi pengguna jika kosakata terkontrol, setelan awal ekspor,
+  template, tata letak cetak, atau bidang kustom diperlukan untuk mengulang
+  pekerjaan.
+- Buat ekspor proyek penuh dengan `Ekspor ringan` nonaktif agar media ikut
+  masuk, sambil memeriksa jumlah catatan dan peringatan media hilang.
 - Tambahkan tabel catatan atau paket data bila data akan dianalisis,
   diterbitkan, atau dipakai ulang di luar NAHPU.
 
-Beri nama berkas yang menjelaskan isinya, dengan proyek, jenis ekspor, dan
-tanggal, misalnya `BorneoMammals_project_20241015.tar.gz`. Simpan ekspor proyek,
-cadangan basis data, berkas pengaturan, dan readme singkat bersama-sama.
+Beri nama berkas secara jelas dengan nama proyek, jenis ekspor, dan tanggal,
+misalnya `BorneoMammals_project_20241015.tar.gz`. Simpan ekspor proyek,
+cadangan basis data, berkas konfigurasi pengguna, dan berkas catatan singkat
+bersama-sama.
 
-Simpan setidaknya dua salinan di tempat berbeda, dan pertahankan aslinya sampai
-arsip terbuka dengan benar di perangkat lain. Catat tanggal arsip, isi, lokasi
-penyimpanan, dan batasan akses. Sesekali buka atau uji pemulihan berkas untuk
-memastikan masih dapat dibaca. Simpan berkas digital dan dokumen cetak sesuai
-kebijakan retensi institusi Anda.
+Simpan minimal dua salinan di lokasi terpisah dan pertahankan salinan asli
+hingga arsip dapat dibuka dengan baik di perangkat lain. Catat tanggal arsip,
+isi, lokasi penyimpanan, dan batasan akses, serta uji buka atau uji pemulihan
+secara berkala sesuai kebijakan retensi lembaga Anda.
 
 ## Sebelum membagikan data {% #before-sharing-data %}
 
 Sebelum mengirim data NAHPU ke museum, kolaborator, atau perangkat lain:
 
-- Buat cadangan basis data yang baru.
-- Pilih berkas proyek yang tepat:
-  - `Ekspor ringan` (JSON.GZ) bila penerima memerlukan catatan tanpa media,
-    misalnya melalui koneksi lambat;
-  - ZIP atau TAR.GZ bila media atau salinan lengkap harus ikut bersama proyek.
-- Ekspor konfigurasi pengguna bila penerima memerlukan daftar terkendali,
-  prasetel, templat, atau tata letak Anda.
-- Tambahkan berkas catatan atau dokumen yang diminta penerima.
-- Uji bahwa setidaknya satu cara pemulihan berhasil sebelum menghapus apa pun
-  dari perangkat asal.
+- Buat cadangan basis data terbaru.
+- Pilih berkas ekspor proyek yang tepat:
+  - `Ekspor ringan` (`JSON.GZ`) saat penerima hanya memerlukan catatan tanpa
+    media (misalnya pada koneksi lambat);
+  - `TAR.GZ` atau `ZIP` saat media atau salinan lengkap harus ikut dikirim.
+- Ekspor konfigurasi pengguna jika penerima memerlukan kosakata terkontrol,
+  setelan awal, template, tata letak, atau bidang kustom Anda.
+- Sertakan ekspor tabel, bundel, atau dokumen yang diminta penerima.
+- Pastikan setidaknya satu jalur pemulihan berhasil sebelum menghapus data apa
+  pun dari perangkat asal.

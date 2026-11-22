@@ -9,7 +9,7 @@ import "../styles/global.css";
 import "../styles/landing.css";
 
 const sectionClasses = cntl`
-  px-6 py-16 sm:py-20
+  px-6 py-14 sm:py-16
 `;
 
 const innerClasses = cntl`
@@ -22,34 +22,36 @@ const kickerClasses = cntl`
 `;
 
 const titleClasses = cntl`
-  mt-3 text-3xl sm:text-4xl font-semibold
+  mt-2 text-2xl sm:text-3xl font-semibold
   text-silver-tree-950 dark:text-silver-tree-50
 `;
 
 const leadClasses = cntl`
-  mt-4
+  mt-3
   text-base leading-relaxed
   text-silver-tree-700 dark:text-silver-tree-300
 `;
 
 const mainBtnClasses = cntl`
+  inline-flex items-center justify-center
   rounded-xl
-  px-6 py-3.5
+  px-5 py-3
   bg-linear-to-r from-silver-tree-700 to-silver-tree-600
   dark:from-silver-tree-400 dark:to-silver-tree-300
   text-silver-tree-50 dark:text-silver-tree-950
-  font-semibold no-underline
+  text-sm font-semibold no-underline
   shadow-lg shadow-silver-tree-700/20
   transition-transform duration-300
   hover:-translate-y-0.5
 `;
 
 const secondaryBtnClasses = cntl`
+  inline-flex items-center justify-center
   rounded-xl
-  px-6 py-3.5
+  px-5 py-3
   border border-silver-tree-700/70 dark:border-silver-tree-400/70
   text-silver-tree-800 dark:text-silver-tree-200
-  font-semibold no-underline
+  text-sm font-semibold no-underline
   backdrop-blur-sm
   transition-colors duration-300
   hover:bg-silver-tree-700 hover:text-silver-tree-50
@@ -123,18 +125,6 @@ const stepNumberClasses = cntl`
   text-xs font-semibold
 `;
 
-const downloadBtnClasses = cntl`
-  mt-6 inline-flex items-center justify-center
-  rounded-xl px-5 py-3
-  bg-linear-to-r from-silver-tree-700 to-silver-tree-600
-  dark:from-silver-tree-400 dark:to-silver-tree-300
-  text-silver-tree-50 dark:text-silver-tree-950
-  text-sm font-semibold no-underline
-  shadow-lg shadow-silver-tree-700/20
-  transition-transform duration-300
-  hover:-translate-y-0.5
-`;
-
 interface PlatformLink {
   label: string;
   href: string;
@@ -155,6 +145,27 @@ interface Platform {
   links: PlatformLink[];
   note?: string;
 }
+
+const journeySteps = [
+  {
+    number: "1",
+    title: "Install NAHPU",
+    desc: "Pick your device and download the app",
+    href: "#install",
+  },
+  {
+    number: "2",
+    title: "Set up & Day 1",
+    desc: "Configure the app and learn the data model",
+    href: "#after-install",
+  },
+  {
+    number: "3",
+    title: "Follow a tutorial",
+    desc: "Practice with real field data, teams, and exports",
+    href: "#tutorials",
+  },
+];
 
 const platforms: Platform[] = [
   {
@@ -184,7 +195,7 @@ const platforms: Platform[] = [
       "iPadOS 15.6 or later",
       "macOS 12.4 or later (arm64 and x86_64)",
     ],
-    note: "One App Store listing serves iPhone, iPad, and Mac. Apple detect and install the version for your device.",
+    note: "One App Store listing serves iPhone, iPad, and Mac. Apple detects and installs the version for your device.",
     steps: [
       "Open the App Store listing with the button below on your iPhone, iPad, or Mac.",
       "Tap or click <strong>Get</strong> and wait for the download to finish.",
@@ -213,9 +224,10 @@ const platforms: Platform[] = [
     requirements: [
       "An x86_64 or arm64 (aarch64) distribution with GLIBC 2.35 or later, such as Ubuntu 22.04, Debian 12, Fedora 36, or RHEL and Rocky Linux 9",
     ],
+    note: "For Ubuntu users, the Snap Store is recommended—it is easier and updates automatically, though it requires administrator access.",
     steps: [
       {
-        text: "Run the install script in a terminal. It picks the right package for your distribution and processor, and when the Snap Store has NAHPU for your system, it asks whether you want the Snap, which updates itself.",
+        text: "On Ubuntu, install NAHPU from the Snap Store with the button below if you have administrator access, or run the install script in a terminal. The script picks the right package for your distribution and processor, asks whether you want the Snap when available, and falls back to a portable install without administrator access.",
         code: "curl -fsSL https://nahpu.app/install.sh | bash",
       },
       "Open NAHPU from your application menu, or run <code>nahpu</code> in a terminal.",
@@ -253,28 +265,60 @@ const platforms: Platform[] = [
 
 const nextSteps = [
   {
-    title: "Set up the app",
-    desc: "The setup wizard on the home screen walks you through field identifiers and the controlled vocabularies your team uses. Setup is done once and can be shared with everyone else.",
+    title: "Run the setup wizard",
+    desc: "The setup wizard on the home screen walks you through field identifiers and the controlled vocabularies your team uses. Setup is done once and can be shared across devices.",
+    links: [
+      { label: "App setup best practices", href: "/en/best-practices/app-setup/" },
+    ],
   },
   {
-    title: "Create your first project",
-    desc: "A project holds the specimens, sites, collecting events, samples, and media of one expedition or season. Start one in the lab with a real specimen before you rely on it in the field.",
+    title: "Read the Day 1 guide",
+    desc: "Learn how projects, sites, collecting events, narratives, and specimens fit together. The same guide is bundled offline inside NAHPU under Cookbook in the menu drawer.",
+    links: [{ label: "Open Day 1 guide", href: "/en/day-one/" }],
   },
   {
-    title: "Learn the workflow",
-    desc: "The Quick Start in the documentation introduction links the Day 1 guide, best practices, and the device notes for fieldwork, in the order they are useful.",
+    title: "Prepare for fieldwork",
+    desc: "Review backup habits, device care, and team workflows before heading out—or read the migration guide if you are transitioning from paper catalogs.",
+    links: [
+      { label: "Best Practices", href: "/en/best-practices/" },
+      { label: "Switch to NAHPU", href: "/en/switch/" },
+    ],
+  },
+];
+
+const tutorials = [
+  {
+    badge: "9 lessons · ~2 hours",
+    title: "Basic tutorials",
+    desc: "Follow a real 2014 Mt. Tujuh small-mammal paper catalog and field journal from project creation, sites, events, specimens, and tissue curation to a Darwin Core Archive.",
+    href: "/en/tutorials/basic/paper-catalog/",
+    cta: "Start Basic tutorials",
+  },
+  {
+    badge: "7 lessons · ~1 hour",
+    title: "Teamwork tutorials",
+    desc: "Practice multi-device fieldwork: share projects, sites, and collecting events by QR code, catalog in parallel across two devices, and merge catalogs cleanly.",
+    href: "/en/tutorials/teamwork/plan-and-set-up/",
+    cta: "Start Teamwork tutorials",
+  },
+  {
+    badge: "4 tutorials",
+    title: "Export tutorials",
+    desc: "Build custom tabular export presets for museum databases like Specify, reshape NAHPU Data Packages with R or Python, and design printable two-sided voucher tags.",
+    href: "/en/tutorials/export/specify-export-preset/",
+    cta: "Explore Export tutorials",
   },
 ];
 ---
 
 <Layout
   title="Get Started"
-  description="Install NAHPU on Android, Apple devices, Linux, or Windows, then continue with the Quick Start."
+  description="Install NAHPU on Android, Apple devices, Linux, or Windows, set up your first project, and follow hands-on tutorials."
   overlayNav
 >
   <!-- Header -------------------------------------------------------------->
   <section
-    class="nh-hero relative flex min-h-[52svh] items-end px-6 pt-32 pb-12"
+    class="nh-hero relative flex min-h-[46svh] items-end px-6 pt-28 pb-10"
   >
     <div class="nh-hero-bg" aria-hidden="true">
       <div class="nh-blob nh-blob-teal"></div>
@@ -296,115 +340,103 @@ const nextSteps = [
       <h1
         class="mt-3 text-4xl font-bold text-silver-tree-950 sm:text-5xl dark:text-silver-tree-50"
       >
-        Install NAHPU on any device you already have
+        Install NAHPU and learn the workflow
       </h1>
       <p
-        class="mt-5 max-w-2xl text-lg text-silver-tree-800 dark:text-silver-tree-200"
+        class="mt-4 max-w-2xl text-lg text-silver-tree-800 dark:text-silver-tree-200"
       >
-        NAHPU is free, open source, and runs on Android, Apple devices, Linux,
-        and Windows. Install it on a phone, a tablet, a laptop, or a desktop,
-        whichever is with you, then follow the Quick Start to build your first
-        project.
+        NAHPU is free, open source, and runs offline on Android, Apple devices,
+        Linux, and Windows. Follow three steps to install the app, learn the
+        basics, and practice with real field data.
       </p>
 
-      <div class="mt-8 flex flex-wrap gap-4">
-        <a href="#install" class={mainBtnClasses}>Install NAHPU</a>
-        <a href="/en/#quick-start" class={secondaryBtnClasses}
-          >Read the Quick Start</a
-        >
-      </div>
+      <!-- Three-step roadmap visible above the fold -->
+      <nav
+        aria-label="Getting started steps"
+        class="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3"
+      >
+        {
+          journeySteps.map((step) => (
+            <a
+              href={step.href}
+              class="group flex items-start gap-3 rounded-xl border border-silver-tree-300/80 bg-silver-tree-50/80 p-4 no-underline backdrop-blur-sm transition-colors duration-200 hover:border-silver-tree-500 hover:bg-silver-tree-50 dark:border-silver-tree-700/80 dark:bg-silver-tree-900/70 dark:hover:border-silver-tree-400 dark:hover:bg-silver-tree-900"
+            >
+              <span class={stepNumberClasses}>{step.number}</span>
+              <span class="min-w-0">
+                <span class="block text-sm font-semibold text-silver-tree-950 group-hover:text-silver-tree-700 dark:text-silver-tree-50 dark:group-hover:text-silver-tree-200">
+                  {step.title}
+                </span>
+                <span class="mt-0.5 block text-xs leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
+                  {step.desc}
+                </span>
+              </span>
+            </a>
+          ))
+        }
+      </nav>
 
       <p
-        class="mt-6 text-[11px] tracking-wide text-silver-tree-700 dark:text-silver-tree-400"
+        class="mt-5 text-[11px] tracking-wide text-silver-tree-700 dark:text-silver-tree-400"
       >
         Taken at Mt. Gede by Heru Handika.
       </p>
     </div>
   </section>
 
-  <!-- Release status ------------------------------------------------------->
+  <!-- Latest release ------------------------------------------------------->
   <section
-    class="relative isolate overflow-hidden bg-silver-tree-100 px-6 pt-32 pb-16 sm:pt-40 sm:pb-20 dark:bg-silver-tree-950"
+    class="relative isolate overflow-hidden bg-silver-tree-100 px-6 py-10 sm:py-12 dark:bg-silver-tree-950"
   >
     <TropicalMountains />
 
     <div class={innerClasses}>
       <div
-        class="nh-reveal rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/90 p-6 backdrop-blur-sm dark:border-silver-tree-700/70 dark:bg-silver-tree-900/80"
+        class="nh-reveal rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/90 p-5 backdrop-blur-sm sm:p-6 dark:border-silver-tree-700/70 dark:bg-silver-tree-900/80"
       >
-        <p class={labelClasses}>Latest release</p>
-        <h2
-          class="mt-3 text-xl font-semibold text-silver-tree-900 dark:text-silver-tree-50"
+        <div
+          class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
         >
-          NAHPU v1.3.0 is out
-        </h2>
-        <p class={`${bodyTextClasses} mt-3 max-w-3xl`}>
-          Version 1.3.0 add support for symbionts, expanding the previously
-          supported parasites only records, with an interaction type that
-          exports to Darwin Core. Data table columns now resize by dragging, and
-          the column picker can search fields.
-        </p>
-
-        <hr
-          class="my-8 border-silver-tree-300/70 dark:border-silver-tree-700/70"
-        />
-
-        <p class={labelClasses}>Version 1</p>
-        <h2
-          class="mt-3 text-xl font-semibold text-silver-tree-900 dark:text-silver-tree-50"
-        >
-          NAHPU v1 &ldquo;Tropical Mountains&rdquo; is out
-        </h2>
-        <p class={`${bodyTextClasses} mt-3 max-w-3xl`}>
-          Version 1 is available now on every platform. If something looks
-          wrong, please <a
-            class={linkClasses}
-            href="https://github.com/nahpu/nahpu/issues"
-            target="_blank"
-            rel="noopener noreferrer">report it on GitHub</a
-          >.
-        </p>
-        <p
-          class={`${bodyTextClasses} mt-4 max-w-3xl text-silver-tree-600 dark:text-silver-tree-400`}
-        >
-          The codename comes from NAHPU’s first real-world field test on Mt.
-          Gede in West Java, Indonesia. The mountain also exemplifies the
-          importance of biodiversity inventories, and the need for tools like
-          NAHPU that aim to accelerate the discovery and documentation of
-          biodiversity. Despite the mountain’s close proximity to Jakarta, <a
-            class={linkClasses}
-            href="https://www.theguardian.com/world/2025/nov/27/jakarta-overtakes-tokyo-most-populous-city-world"
-            target="_blank">the world’s most populous city</a
-          >, and to Indonesia’s largest natural history museum, <a
-            class={linkClasses}
-            href="https://brin.go.id/en/news/125996/home-to-millions-of-specimens-the-bogor-zoological-museum-preserves-southeast-asias-largest-faunal-collection"
-            target="_blank">MZB</a
-          >, undescribed species continue to be discovered there (noted in <a
-            class={linkClasses}
-            href="https://doi.org/10.1644/13-MAMM-A-215"
-            target="_blank">Esselstyn et al., 2014</a
-          > and <a
-            class={linkClasses}
-            href="https://doi.org/10.1093/jmammal/gyw183"
-            target="_blank">Demos et al., 2017)</a
-          >.
-        </p>
-
-        <a id="release-cta" class={downloadBtnClasses} href="#install"
-          >Install NAHPU</a
-        >
+          <div class="max-w-3xl">
+            <p class={labelClasses}>Latest release</p>
+            <h2
+              class="mt-2 text-lg font-semibold text-silver-tree-900 sm:text-xl dark:text-silver-tree-50"
+            >
+              NAHPU v1.3.0 is out
+            </h2>
+            <p class={`${bodyTextClasses} mt-2`}>
+              Version 1.3.0 adds support for symbionts, expanding the previously
+              supported parasite-only records with an interaction type that
+              exports to Darwin Core. Data table columns now resize by dragging,
+              and the column picker can search fields.
+            </p>
+          </div>
+          <div class="flex shrink-0 flex-wrap gap-x-4 gap-y-2 text-sm sm:flex-col sm:items-end">
+            <a
+              class={linkClasses}
+              href="https://github.com/nahpu/nahpu/releases"
+              target="_blank"
+              rel="noopener noreferrer">All release notes</a
+            >
+            <a
+              class={linkClasses}
+              href="https://github.com/nahpu/nahpu/issues"
+              target="_blank"
+              rel="noopener noreferrer">Report an issue</a
+            >
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Installation --------------------------------------------------------->
+  <!-- Step 1: Installation ------------------------------------------------->
   <section
     id="install"
     class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
   >
     <div class={innerClasses}>
       <header class="nh-reveal max-w-3xl">
-        <p class={kickerClasses}>Step 1</p>
+        <p class={kickerClasses}>Step 1 of 3</p>
         <h2 class={titleClasses}>Install NAHPU</h2>
         <p class={leadClasses}>
           Every platform installs the same catalog and reads the same project
@@ -413,173 +445,219 @@ const nextSteps = [
         </p>
       </header>
 
+      <!-- Platform switcher tabs -->
       <div
-        id="detected-panel"
-        class="nh-reveal nh-in mt-8 hidden rounded-2xl border border-silver-tree-400/70 bg-silver-tree-50/80 p-6 sm:p-8 dark:border-silver-tree-500/60 dark:bg-silver-tree-950/50"
+        role="tablist"
+        aria-label="Choose your platform"
+        class="nh-reveal mt-6 flex flex-wrap gap-2"
       >
-        <div
-          class="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_auto] lg:items-center"
-        >
-          <div>
-            <p class={labelClasses}>Detected on this device</p>
-            <h3
-              class="mt-3 text-xl font-semibold text-silver-tree-900 sm:text-2xl dark:text-silver-tree-50"
+        {
+          platforms.map((platform, index) => (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${platform.id}`}
+              aria-selected={index === 0 ? "true" : "false"}
+              aria-controls={`panel-${platform.id}`}
+              data-platform-tab={platform.id}
+              class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-silver-tree-300/80 bg-silver-tree-50/70 px-4 py-2.5 text-sm font-semibold text-silver-tree-800 transition-colors duration-200 hover:border-silver-tree-500 aria-selected:border-silver-tree-700 aria-selected:bg-silver-tree-700 aria-selected:text-silver-tree-50 dark:border-silver-tree-700/80 dark:bg-silver-tree-950/50 dark:text-silver-tree-200 dark:hover:border-silver-tree-500 dark:aria-selected:border-silver-tree-400 dark:aria-selected:bg-silver-tree-400 dark:aria-selected:text-silver-tree-950"
             >
-              <span id="detected-name"></span>
-            </h3>
-            <p id="detected-requirements" class={`${bodyTextClasses} mt-2`}></p>
-            <p class={`${bodyTextClasses} mt-3`}>
-              Start here, or pick a different platform below if you are
-              installing on another device.
-            </p>
-          </div>
-
-          <div class="flex flex-col items-start gap-3 lg:items-end">
-            <a
-              id="detected-cta"
-              class={`${downloadBtnClasses} mt-0`}
-              href="#install"
-              target="_blank"
-              rel="noopener noreferrer"></a>
-            <a id="detected-steps" class={linkClasses} href="#install"
-              >See the full steps</a
-            >
-          </div>
-        </div>
+              <span
+                class="block h-2.5 w-2.5 shrink-0 rounded-full"
+                style={`background:${platform.color}`}
+                aria-hidden="true"
+              />
+              <span>{platform.name}</span>
+              <span
+                data-current-badge
+                class="hidden rounded-full bg-silver-tree-200/90 px-2 py-0.5 text-[10px] font-semibold text-silver-tree-900 dark:bg-silver-tree-800 dark:text-silver-tree-100"
+              >
+                This device
+              </span>
+            </button>
+          ))
+        }
       </div>
 
-      <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <!-- Active platform panel -->
+      <div class="mt-4">
         {
           platforms.map((platform, index) => (
             <article
-              id={platform.id}
-              class={cardClasses}
-              style={`transition-delay: ${index * 60}ms`}
+              id={`panel-${platform.id}`}
+              role="tabpanel"
+              aria-labelledby={`tab-${platform.id}`}
+              data-platform-panel={platform.id}
+              hidden={index !== 0}
+              class="rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/90 p-6 sm:p-8 dark:border-silver-tree-700/70 dark:bg-silver-tree-950/60"
             >
-              <div class="flex items-center gap-2">
-                <span
-                  class="block h-2.5 w-2.5 rounded-full"
-                  style={`background:${platform.color}`}
-                />
-                <span class={labelClasses}>{platform.devices}</span>
-                <span
-                  data-current-badge
-                  class="ml-auto hidden rounded-full bg-silver-tree-200 px-2.5 py-0.5 text-[11px] font-semibold whitespace-nowrap text-silver-tree-800 dark:bg-silver-tree-800 dark:text-silver-tree-100"
-                >
-                  This device
-                </span>
-              </div>
+              <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1.25fr_1fr]">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span
+                      class="block h-2.5 w-2.5 rounded-full"
+                      style={`background:${platform.color}`}
+                      aria-hidden="true"
+                    />
+                    <span class={labelClasses}>{platform.devices}</span>
+                  </div>
+                  <h3 class="mt-2 text-xl font-semibold text-silver-tree-950 dark:text-silver-tree-50">
+                    {platform.name}
+                  </h3>
 
-              <h3 class={`${cardTitleClasses} mt-3`}>{platform.name}</h3>
-
-              <p class={`${labelClasses} mt-5`}>Requirements</p>
-              <ul class="mt-2 flex flex-col gap-1">
-                {platform.requirements.map((requirement) => (
-                  <li class={bodyTextClasses}>{requirement}</li>
-                ))}
-              </ul>
-
-              {platform.note && (
-                <p class={`${bodyTextClasses} mt-4`}>{platform.note}</p>
-              )}
-
-              <p class={`${labelClasses} mt-6`}>Installation</p>
-              <ol class="mt-3 flex flex-col gap-3">
-                {platform.steps.map((step, stepIndex) => {
-                  const { text, code } =
-                    typeof step === "string"
-                      ? { text: step, code: undefined }
-                      : step;
-                  return (
-                    <li class="flex gap-3">
-                      <span class={stepNumberClasses}>{stepIndex + 1}</span>
-                      <div class="min-w-0 flex-1">
-                        <span class={bodyTextClasses} set:html={text} />
-                        {code && (
-                          <div class={commandClasses}>
-                            <code class={commandTextClasses}>{code}</code>
-                            <button
-                              type="button"
-                              class={copyBtnClasses}
-                              data-copy={code}
-                              aria-label={`Copy command: ${code}`}
-                            >
-                              Copy
-                            </button>
+                  <p class={`${labelClasses} mt-5`}>Installation steps</p>
+                  <ol class="mt-3 flex flex-col gap-3">
+                    {platform.steps.map((step, stepIndex) => {
+                      const { text, code } =
+                        typeof step === "string"
+                          ? { text: step, code: undefined }
+                          : step;
+                      return (
+                        <li class="flex gap-3">
+                          <span class={stepNumberClasses}>{stepIndex + 1}</span>
+                          <div class="min-w-0 flex-1">
+                            <span class={bodyTextClasses} set:html={text} />
+                            {code && (
+                              <div class={commandClasses}>
+                                <code class={commandTextClasses}>{code}</code>
+                                <button
+                                  type="button"
+                                  class={copyBtnClasses}
+                                  data-copy={code}
+                                  aria-label={`Copy command: ${code}`}
+                                >
+                                  Copy
+                                </button>
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
-                    </li>
-                  );
-                })}
-              </ol>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </div>
 
-              {platform.links.length > 0 && (
-                <ul class="mt-5 flex flex-col gap-1">
-                  {platform.links.map((link) => (
-                    <li class={bodyTextClasses}>
-                      <a
-                        class={linkClasses}
-                        href={link.href}
-                        {...(link.href.startsWith("http")
-                          ? { target: "_blank", rel: "noopener noreferrer" }
-                          : {})}
-                      >
-                        {link.label}
+                <div class="flex flex-col justify-between rounded-xl border border-silver-tree-300/60 bg-silver-tree-100/70 p-5 dark:border-silver-tree-700/60 dark:bg-silver-tree-900/60">
+                  <div>
+                    <p class={labelClasses}>Requirements</p>
+                    <ul class="mt-2 flex flex-col gap-1">
+                      {platform.requirements.map((requirement) => (
+                        <li class={bodyTextClasses}>{requirement}</li>
+                      ))}
+                    </ul>
+
+                    {platform.note && (
+                      <p class={`${bodyTextClasses} mt-3`}>{platform.note}</p>
+                    )}
+
+                    {platform.links.length > 0 && (
+                      <ul class="mt-4 flex flex-col gap-1">
+                        {platform.links.map((link) => (
+                          <li class={bodyTextClasses}>
+                            <a
+                              class={linkClasses}
+                              href={link.href}
+                              {...(link.href.startsWith("http")
+                                ? {
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                  }
+                                : {})}
+                            >
+                              {link.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  <div class="mt-6">
+                    <a
+                      class={`${mainBtnClasses} w-full`}
+                      href={platform.cta.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-download-cta
+                    >
+                      {platform.cta.label}
+                    </a>
+                    <p class="mt-3 text-center text-xs text-silver-tree-700 dark:text-silver-tree-300">
+                      Next while it installs:{" "}
+                      <a class={linkClasses} href="#after-install">
+                        Step 2 (Day 1)
+                      </a>{" "}
+                      or{" "}
+                      <a class={linkClasses} href="#tutorials">
+                        Step 3 (Tutorials)
                       </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              <div class="mt-auto">
-                <a
-                  class={downloadBtnClasses}
-                  href={platform.cta.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {platform.cta.label}
-                </a>
+                    </p>
+                  </div>
+                </div>
               </div>
             </article>
           ))
         }
       </div>
 
-      <p class={`${bodyTextClasses} nh-reveal mt-6`}>
-        Looking for an older build or the release notes? Every version is listed
-        on the <a
+      <!-- Highlighted banner revealed after a user clicks a download button or copies the install command -->
+      <div
+        id="post-download-banner"
+        class="mt-4 hidden rounded-2xl border border-silver-tree-500/70 bg-silver-tree-50 p-5 shadow-md dark:border-silver-tree-400/60 dark:bg-silver-tree-950/80"
+        role="status"
+      >
+        <div
+          class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            <p class={labelClasses}>While NAHPU installs</p>
+            <p
+              class="mt-1 text-sm font-medium text-silver-tree-950 dark:text-silver-tree-50"
+            >
+              Do not stop here—learn the core workflow in the Day 1 guide or
+              follow the Basic tutorials with real field data.
+            </p>
+          </div>
+          <div class="flex shrink-0 flex-wrap gap-3">
+            <a href="/en/day-one/" class={mainBtnClasses}>Read Day 1 guide</a>
+            <a href="/en/tutorials/basic/paper-catalog/" class={secondaryBtnClasses}
+              >Start Basic tutorials</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <p class={`${bodyTextClasses} nh-reveal mt-5`}>
+        Looking for an older build or portable Linux packages? See the <a
           class={linkClasses}
           href="https://github.com/nahpu/nahpu/releases"
           target="_blank"
           rel="noopener noreferrer">NAHPU releases page</a
-        >. The full guide also lives in the <a
-          class={linkClasses}
-          href="/en/installation/">installation documentation</a
+        > or the <a class={linkClasses} href="/en/installation/"
+          >full installation documentation</a
         >.
       </p>
     </div>
   </section>
 
-  <!-- Next step ------------------------------------------------------------>
+  <!-- Step 2: After you install -------------------------------------------->
   <section
+    id="after-install"
     class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
   >
     <div class={innerClasses}>
       <header class="nh-reveal max-w-3xl">
-        <p class={kickerClasses}>Step 2</p>
-        <h2 class={titleClasses}>Continue with the Quick Start</h2>
+        <p class={kickerClasses}>Step 2 of 3</p>
+        <h2 class={titleClasses}>Set up and learn the basics</h2>
         <p class={leadClasses}>
-          With the app installed, the next step is the <a
-            class={linkClasses}
-            href="/en/#quick-start">Quick Start</a
-          > in the documentation introduction. It takes you from a fresh install to
-          a project you can trust in the field.
+          Once NAHPU is open, take a few minutes to configure your workspace and
+          walk through the <a class={linkClasses} href="/en/day-one/"
+            >Day 1 guide</a
+          > before relying on it in the field.
         </p>
       </header>
 
-      <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
         {
           nextSteps.map((item, index) => (
             <article
@@ -588,43 +666,75 @@ const nextSteps = [
             >
               <span class={stepNumberClasses}>{index + 1}</span>
               <h3 class={`${cardTitleClasses} mt-3`}>{item.title}</h3>
-              <p class={`${bodyTextClasses} mt-3`}>{item.desc}</p>
+              <p class={`${bodyTextClasses} mt-2`}>{item.desc}</p>
+              <div class="mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-4 text-sm">
+                {item.links.map((link) => (
+                  <a class={linkClasses} href={link.href}>
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 3: Hands-on tutorials ------------------------------------------->
+  <section
+    id="tutorials"
+    class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
+  >
+    <div class={innerClasses}>
+      <header class="nh-reveal max-w-3xl">
+        <p class={kickerClasses}>Step 3 of 3</p>
+        <h2 class={titleClasses}>Practice with hands-on tutorials</h2>
+        <p class={leadClasses}>
+          You do not have to invent practice data. Work through a complete field
+          survey from paper notes to museum-ready exports, or practice
+          multi-device teamwork with a colleague.
+        </p>
+      </header>
+
+      <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+        {
+          tutorials.map((tutorial, index) => (
+            <article
+              class={cardClasses}
+              style={`transition-delay: ${index * 60}ms`}
+            >
+              <p class={labelClasses}>{tutorial.badge}</p>
+              <h3 class={`${cardTitleClasses} mt-2`}>{tutorial.title}</h3>
+              <p class={`${bodyTextClasses} mt-2`}>{tutorial.desc}</p>
+              <div class="mt-auto pt-5">
+                <a class={secondaryBtnClasses} href={tutorial.href}>
+                  {tutorial.cta}
+                </a>
+              </div>
             </article>
           ))
         }
       </div>
 
-      <div class="nh-reveal mt-10 flex flex-wrap gap-4">
-        <a href="/en/#quick-start" class={mainBtnClasses}
-          >Go to the Quick Start</a
+      <div class="nh-reveal mt-8 flex flex-wrap items-center gap-4">
+        <a href="/en/tutorials/basic/paper-catalog/" class={mainBtnClasses}
+          >Start the Basic tutorials</a
         >
-        <a href="/en/day-one/" class={secondaryBtnClasses}
-          >Read the Day 1 guide</a
+        <a href="/en/#quick-start" class={secondaryBtnClasses}
+          >Read the full Quick Start</a
         >
       </div>
     </div>
   </section>
-
-  <script
-    id="platform-data"
-    type="application/json"
-    is:inline
-    set:html={JSON.stringify(platforms)}
-  />
 </Layout>
 
 <script>
-  /// Offer the download for the visitor's own operating system, while every
-  /// platform stays available below. Android is matched before Linux because
-  /// Android user agents also carry the word "Linux".
-  interface DetectablePlatform {
-    id: string;
-    name: string;
-    devices: string;
-    requirements: string[];
-    cta: { label: string; href: string };
-  }
+  const platformIds = ["android", "apple", "linux", "windows"];
 
+  /// Detect the visitor's operating system so their platform tab opens first.
+  /// Android is matched before Linux because Android user agents also carry
+  /// the word "Linux".
   const detectPlatformId = (): string | null => {
     const agent = navigator.userAgent;
     const uaData = (
@@ -643,60 +753,73 @@ const nextSteps = [
     return null;
   };
 
-  const showDetectedPlatform = () => {
-    const dataElement = document.getElementById("platform-data");
-    const panel = document.getElementById("detected-panel");
-    const nameElement = document.getElementById("detected-name");
-    const requirementsElement = document.getElementById(
-      "detected-requirements",
-    );
-    const cta = document.getElementById("detected-cta");
-    const releaseCta = document.getElementById("release-cta");
-    const stepsLink = document.getElementById("detected-steps");
+  const tabs = Array.from(
+    document.querySelectorAll<HTMLButtonElement>("[data-platform-tab]"),
+  );
+  const panels = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-platform-panel]"),
+  );
 
-    if (
-      !dataElement?.textContent ||
-      !panel ||
-      !nameElement ||
-      !requirementsElement ||
-      !(cta instanceof HTMLAnchorElement) ||
-      !(releaseCta instanceof HTMLAnchorElement) ||
-      !(stepsLink instanceof HTMLAnchorElement)
-    ) {
-      return;
-    }
+  const selectPlatform = (platformId: string, focusTab = false) => {
+    tabs.forEach((tab) => {
+      const selected = tab.dataset.platformTab === platformId;
+      tab.setAttribute("aria-selected", selected ? "true" : "false");
+      tab.tabIndex = selected ? 0 : -1;
+      if (selected && focusTab) tab.focus();
+    });
 
-    const platformId = detectPlatformId();
-    if (!platformId) return;
-
-    const platforms: DetectablePlatform[] = JSON.parse(dataElement.textContent);
-    const platform = platforms.find((item) => item.id === platformId);
-    if (!platform) return;
-
-    nameElement.textContent = platform.name;
-    requirementsElement.textContent = [
-      platform.devices,
-      ...platform.requirements,
-    ].join(" · ");
-    cta.textContent = platform.cta.label;
-    cta.href = platform.cta.href;
-    releaseCta.textContent = platform.cta.label;
-    releaseCta.href = platform.cta.href;
-    releaseCta.target = "_blank";
-    releaseCta.rel = "noopener noreferrer";
-    stepsLink.href = `#${platform.id}`;
-    panel.classList.remove("hidden");
-
-    const card = document.getElementById(platform.id);
-    card?.querySelector("[data-current-badge]")?.classList.remove("hidden");
-    card?.classList.add(
-      "ring-2",
-      "ring-silver-tree-500/60",
-      "dark:ring-silver-tree-400/50",
-    );
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.platformPanel !== platformId;
+    });
   };
 
-  showDetectedPlatform();
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => {
+      const id = tab.dataset.platformTab;
+      if (id) selectPlatform(id);
+    });
+
+    tab.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+      event.preventDefault();
+      const delta = event.key === "ArrowRight" ? 1 : -1;
+      const next = tabs[(index + delta + tabs.length) % tabs.length];
+      const nextId = next?.dataset.platformTab;
+      if (nextId) selectPlatform(nextId, true);
+    });
+  });
+
+  const detectedId = detectPlatformId();
+  if (detectedId) {
+    const detectedTab = tabs.find(
+      (tab) => tab.dataset.platformTab === detectedId,
+    );
+    detectedTab
+      ?.querySelector("[data-current-badge]")
+      ?.classList.remove("hidden");
+  }
+
+  const hashPlatform = window.location.hash.replace(/^#/, "");
+  const initialPlatform = platformIds.includes(hashPlatform)
+    ? hashPlatform
+    : (detectedId ?? "android");
+  selectPlatform(initialPlatform);
+
+  if (platformIds.includes(hashPlatform)) {
+    document.getElementById("install")?.scrollIntoView();
+  }
+
+  const revealPostDownload = () => {
+    document
+      .getElementById("post-download-banner")
+      ?.classList.remove("hidden");
+  };
+
+  document
+    .querySelectorAll<HTMLAnchorElement>("[data-download-cta]")
+    .forEach((link) => {
+      link.addEventListener("click", revealPostDownload);
+    });
 
   /// Copy a step's command. When the clipboard is unavailable, select the
   /// command so the visitor can copy it themselves.
@@ -705,6 +828,7 @@ const nextSteps = [
     .forEach((button) => {
       button.addEventListener("click", async () => {
         const command = button.dataset.copy ?? "";
+        revealPostDownload();
         try {
           await navigator.clipboard.writeText(command);
           button.textContent = "Copied";

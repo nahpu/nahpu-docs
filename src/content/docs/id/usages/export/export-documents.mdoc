@@ -13,327 +13,323 @@ sidebar:
 {% pin id="B" label="Ukuran halaman" large=[23.8, 64.2] small=[67.4, 67.1] /%}
 {% pin id="C" label="Pratinjau" large=[82.2, 17.7] small=[81, 16.1] /%}
 {% pin id="D" label="Ekspor dokumen" large=[59, 93.2] small=[72.6, 92.3] /%}
-{% pin id="E" label="Kelola preset" large=[32.3, 46.9] small=[52.5, 51.3] /%}
+{% pin id="E" label="Kelola setelan awal" large=[32.3, 46.9] small=[52.5, 51.3] /%}
 {% /screenshots %}
 
-Gunakan `Ekspor dokumen` untuk mencetak catatan NAHPU sebagai PDF: label
-spesimen, tag jaringan, lembar katalog, buku lapangan, dan dokumen berformat
-lainnya. Untuk tabel data, gunakan [Ekspor catatan](../export-records).
+Gunakan `Ekspor dokumen` untuk membuat berkas PDF dari catatan NAHPU: label
+spesimen, tag jaringan, lembar katalog, buku lapangan, dan cetakan berformat
+lainnya. Untuk berkas tabel data, gunakan [Ekspor catatan](../export-records).
 
 ## Cara kerja komponennya
 
 ```text
-Data catatan + templat = satu blok terisi
+Data catatan + template = satu blok terisi
 Blok terisi + tata letak cetak = halaman
 Halaman + pratinjau/ekspor = PDF
 ```
 
-{% documentlayout locale="id" /%}
+{% documentlayout /%}
 
-| Komponen | Menentukan | Contoh |
-|---|---|---|
-| **Templat** | Isi dan tampilan satu label atau blok | Tag tengkorak 50 × 20 mm |
-| **Tata letak cetak** | Kertas, margin, kisi, urutan, dan pemisah halaman | 40 tag tengkorak per lembar A4 |
-| **Catatan** | Nilai yang mengisi templat | Spesimen yang Anda pilih |
+| Bagian | Menentukan | Contoh |
+| --- | --- | --- |
+| **Template dokumen** | Apa yang tampil pada satu label atau blok serta tampilannya | Tag tengkorak 50 × 20 mm |
+| **Setelan awal tata letak cetak** | Kertas, margin, kisi, urutan, dan pemisah halaman | 40 tag tengkorak per lembar A4 |
+| **Catatan** | Nilai yang mengisi template | Spesimen yang Anda pilih |
 
-Templat dan tata letak cetak adalah pengaturan tersimpan yang dipakai ulang.
-Simpan satu tata letak untuk setiap pekerjaan cetak yang berulang, seperti label
-museum, tag jaringan, atau lembar lapangan.
+Template dokumen dan setelan awal tata letak cetak tersimpan agar bisa dipakai
+berulang. Simpan satu tata letak untuk setiap pekerjaan cetak rutin—seperti
+label museum, tag jaringan, atau lembar lapangan.
 
 ## Ekspor cepat
 
 {% steps %}
 
-1. Buka halaman `Dasbor`.
-2. Buka menu proyek dan pilih `Ekspor dokumen`.
-3. Pilih `Profil tata letak` {% ref id="A" /%}.
-4. Periksa penyiapan halaman, blok templat, dan catatan yang dipilih.
-5. Pilih `Pratinjau` {% ref id="C" /%} dan buat pratinjau. Lihat halaman
+1. Buka menu dasbor proyek lalu pilih `Ekspor dokumen`.
+2. Pilih `Profil tata letak` {% ref id="A" /%}. Jika belum ada tata letak
+   cetak, muat setelan awal default atau pilih `Kelola setelan awal` {% ref id="E" /%}
+   untuk membuatnya.
+3. Periksa pengaturan halaman, blok template, dan catatan yang dipilih.
+4. Pilih `Pratinjau` {% ref id="C" /%} lalu buat pratinjau, periksa halaman
    pertama dan terakhir.
-6. Ketik `Nama berkas` dan pilih lokasi penyimpanan saat diminta.
-7. Pilih `Ekspor dokumen` {% ref id="D" /%}.
-8. Di ponsel, gunakan `Bagikan` setelah ekspor selesai untuk mengirim PDF.
+5. Masukkan nama berkas (opsional aktifkan `Tambahkan tanggal`) dan pilih
+   folder tujuan di desktop.
+6. Pilih `Ekspor dokumen` {% ref id="D" /%}. Setelah selesai, Anda dapat
+   membagikan PDF, membuka folder, menyimpan salinan, atau memilih
+   `Ekspor lagi`.
 
 {% /steps %}
 
-## Membuat templat {% #create-a-template %}
+## Membuat template {% #create-a-template %}
 
-Buka `Settings` > `Documents` {% ref id="E" /%}, pilih `Templates`, lalu pilih `Create new
-template`.
+Untuk panduan lengkap dari template kosong sampai lembar tercetak, lihat
+[Tutorial 4: Create a mammal voucher tag](/id/tutorials/export/voucher-tag/)
+(dalam bahasa Inggris).
 
-1. Masukkan `Template name` yang unik dan, bila perlu, `Description` singkat hingga 80 karakter.
-2. Pilih `Record type`: `Specimen`, `Specimen Part`, `Symbiont`, `Site`, `Collecting Event`,
-   `Narrative`, atau `None`.
-3. Pilih `1 sided` atau `2 sided`. Templat dua sisi memiliki desain Front dan
-   Back terpisah; desain belakang tetap tersimpan dalam mode satu sisi, tetapi
-   tidak dicetak sampai mode dua sisi diaktifkan.
-4. Atur lebar dan tinggi sesuai ukuran satu label, tag, atau blok, bukan ukuran
-   seluruh kertas.
-5. Tambahkan teks, gambar, garis, dan bentuk. Pilih elemen untuk mengatur
-   posisi, ukuran, gaya, visibilitas, penguncian, dan urutan tumpukan.
-6. Simpan dengan `Save template`; gunakan `Save as...` untuk membuat variasi.
+Buka `Pengaturan` > `Dokumen` {% ref id="E" /%}, pindah ke tab template, lalu
+buat template baru:
 
-Buka tombol pengaturan di editor templat untuk mengubah nama, deskripsi, atau
-jumlah sisi templat tersimpan. Penggantian nama mengarahkan ulang setiap tata
-letak cetak yang memakai nama lama, sehingga tata letak tetap berfungsi.
+{% steps %}
 
-Jenis catatan menentukan field dan catatan yang tersedia. Untuk templat
-spesimen, pilih filter takson sebelum memilih field khusus takson.
+1. Masukkan nama template yang unik dan deskripsi opsional (maksimal 80
+   karakter).
+2. Pilih jenis catatan: `Spesimen`, `Bagian spesimen`, `Simbion`, `Lokasi`,
+   `Peristiwa koleksi`, `Narasi`, atau `Tanpa catatan`.
+3. Pilih `1 sisi` atau `2 sisi`. Template dua sisi menyimpan desain Depan dan
+   Belakang secara terpisah; saat beralih ke satu sisi, desain Belakang tetap
+   tersimpan tetapi tidak dicetak.
+4. Atur lebar dan tinggi sesuai ukuran satu label, tag, atau blok—bukan ukuran
+   lembar kertas.
+5. Tambahkan teks, gambar, garis, dan bentuk di kanvas. Pilih elemen mana pun
+   untuk mengatur posisi, ukuran, gaya, visibilitas, kunci, dan urutan lapis.
+6. Pilih `Simpan template` (atau `Simpan sebagai…` untuk variasi).
 
-## Mengisi templat dengan data catatan
+{% /steps %}
 
-Elemen teks menampilkan data catatan melalui placeholder, seperti
-`[specimen::fieldNumber]`, yang dicampur dengan teks biasa. Sisipkan dengan
-`Sisipkan bidang`, bukan diketik:
+Gunakan tombol `Pengaturan template` di editor untuk mengubah nama, deskripsi,
+atau jumlah sisi template yang sudah tersimpan. Mengganti nama otomatis
+memperbarui semua tata letak cetak yang merujuknya.
+
+Jenis catatan template menentukan bidang yang tersedia. Pada template spesimen,
+pilih filter takson sebelum memilih bidang khusus kelompok tersebut.
+
+## Mengisi template dengan data catatan
+
+Elemen teks menampilkan data melalui penanda seperti `[specimen::fieldNumber]`
+yang dipadukan dengan teks biasa. Gunakan `Sisipkan bidang` alih-alih mengetik
+kunci secara manual:
 
 ```text
 [taxonomy::genus] [taxonomy::specificEpithet] - [specimen::fieldNumber]
 ```
 
-Gunakan kunci lengkap `table::field` pada templat yang dipakai ulang; bentuk
-pendek seperti `[fieldNumber]` dapat mengambil bidang yang salah bila dua tabel
-memiliki nama bidang yang sama. Jenis catatan templat menentukan bidang yang
-ditawarkan. Untuk templat spesimen, pilih filter takson sebelum memilih bidang
-khusus takson.
+Gunakan kunci lengkap `tabel::bidang` pada template pakai ulang; bentuk singkat
+seperti `[fieldNumber]` bisa mengarah ke tabel yang keliru jika dua tabel
+memakai nama kolom sama.
 
-Tiga pengaturan pada elemen teks menentukan apa yang dicetak:
+Tiga pengaturan elemen teks mengendalikan tampilannya:
 
-| Pengaturan | Gunakan untuk | Contoh |
-|---|---|---|
-| `Jenis` dan `Format` | Memformat nilai sebagai tanggal, koordinat, angka, simbol jenis kelamin, daftar, tabel bertingkat, atau label kode | `17 Feb 2016`, `♀`, `Scrotal` |
-| `Pengganti tanpa konten` | Memilih apa yang dicetak bidang kosong: tidak ada, `N/A`, `None`, kunci bidang, atau teks Anda | `[specimen::preparator??N/A]` |
-| `Keluaran bersyarat` | Mengurung, mengganti, atau menambahkan teks bergantung pada bidang lain | `[82.5]` untuk bobot yang diperkirakan |
+| Pengaturan | Kegunaan | Contoh |
+| --- | --- | --- |
+| Jenis teks dan `Format` | Memformat tanggal, koordinat, angka, simbol kelamin, daftar, tabel bersarang, atau kode | `17 Feb 2016`, `♀`, `Scrotal` |
+| `Pengganti tanpa konten` | Menentukan teks jika bidang kosong: kosong, `N/A`, `None`, kunci bidang, atau teks khusus | `[specimen::preparator??N/A]` |
+| `Keluaran bersyarat` | Memberi kurung, mengganti, atau menambah teks berdasarkan syarat | `[82.5]` untuk bobot perkiraan |
 
-`Daftar bertingkat` mencetak catatan terkait, seperti bagian spesimen atau
-personel, sebagai tabel atau daftar kartu. `Teks terkode` mengubah kode
-tersimpan menjadi label. Jenis kelamin yang belum pasti tetap memakai tanda
-tanya di setiap format: `Female?`, `F?`, `♀?`.
+- Daftar bersarang mencetak catatan terkait (bagian spesimen atau personel)
+  sebagai tabel atau daftar kartu.
+- Teks berkode menerjemahkan kode numerik ke label. Jenis kelamin tidak pasti
+  mempertahankan tanda tanya di semua format: `Female?`, `F?`, `♀?`.
+- Atur `Pengganti tanpa konten` sebelum merapikan spasi tata letak karena ruang
+  kosong dan `N/A` membutuhkan lebar berbeda.
+- Buat kondisi melalui dialog `Keluaran bersyarat`, lalu pratinjau catatan yang
+  cocok dan yang tidak cocok.
+- Penggantian teks menulis ulang nilai setelah pemformatan—cocok untuk
+  singkatan tetap; gunakan kondisi bila perubahan bergantung pada bidang lain.
 
-Pilih teks untuk nilai kosong sebelum menata label, karena kosong dan `N/A`
-memakan ruang yang berbeda. Buat ekspresi bersyarat dengan dialog
-`Keluaran bersyarat`, yang menuliskan sintaksnya untuk Anda, lalu pratinjau
-catatan yang memenuhi kondisi dan yang tidak.
-
-Semua ini bekerja sama di ekspor tabular. Untuk semua opsi, contoh, dan sintaks
-bersyarat lengkap, lihat [Ekspresi ekspor](../export-expressions), terutama
+Lihat [Ekspresi ekspor](../export-expressions) untuk panduan lengkap, terutama
 [Keluaran bersyarat](../export-expressions#conditional-output) dan
 [Jenis teks dan formatnya](../export-expressions#text-types-and-their-formats).
 
-`Ganti teks` adalah cara lain untuk menulis ulang nilai. Fitur ini berjalan
-setelah pemformatan dan cocok untuk penggantian yang berulang di banyak nilai,
-seperti singkatan; gunakan ekspresi bersyarat bila perubahan bergantung pada
-bidang lain.
+## Merancang untuk catatan nyata
 
-## Merancang untuk data nyata
+Uji pratinjau dengan catatan yang memiliki teks terpanjang, daftar berulang
+terbesar, bidang opsional kosong, dan pengenal panjang; contoh singkat sering
+menyembunyikan luapan teks.
 
-Buat pratinjau dengan teks terpanjang yang mungkin, daftar berulang terbesar,
-nilai kosong, identifier panjang, dan kedua sisi templat. Untuk narasi dan daftar
-bersarang, aktifkan teks dinamis dan `Auto-fill page`, sediakan ruang untuk
-pergantian baris, lalu buat ulang pratinjau setelah mengedit.
+Untuk narasi atau daftar bersarang:
 
-Gambar menggunakan path lokal yang dikelola perangkat. JSON templat berisi
-definisi, bukan salinan setiap file gambar eksternal; periksa gambar setelah
-mengimpor templat ke perangkat lain.
+- aktifkan ukuran teks dinamis agar kotak teks melebar sesuai isi;
+- aktifkan `Isi halaman otomatis` pada blok tata letak saat tinggi blok
+  bervariasi;
+- sediakan lebar bungkus teks dan margin cetak yang memadai;
+- buat ulang pratinjau setelah setiap perubahan template atau tata letak.
+
+Untuk gambar statis, gunakan jalur gambar terkelola di perangkat dan periksa
+kembali setelah mengimpor template di perangkat lain; JSON template hanya
+menyimpan referensi, bukan salinan berkas gambar eksternal.
 
 ## Membuat preset tata letak cetak {% #create-a-print-layout-preset %}
 
-Di `Settings` > `Documents`, pilih `Print layouts`. Buat tata letak baru
-atau gunakan `Save as...` sebelum mencoba perubahan pada tata letak yang sudah
-dipakai. Di bawah nama, tambahkan deskripsi opsional hingga 80 karakter;
-`Update` menyimpan nama dan deskripsi sekaligus, dan deskripsinya tampil di
-daftar preset.
+Di `Pengaturan` > `Dokumen`, buka tab tata letak cetak. Buat tata letak baru
+atau gunakan `Simpan sebagai…` sebelum memodifikasi tata letak yang sudah baik.
+Tambahkan deskripsi opsional (hingga 80 karakter) di bawah nama setelan awal lalu
+pilih perbarui untuk menyimpannya bersama.
 
-### Penyiapan halaman
+### Pengaturan halaman
 
-Pilih `Page size` {% ref id="B" /%}, `Orientation`, ukuran khusus bila diperlukan, dan jarak isi
-halaman. Pengaturan halaman menjelaskan lembarnya; templat menjelaskan satu
-blok.
+Atur `Ukuran halaman` {% ref id="B" /%}, orientasi, ukuran kustom bila perlu,
+dan margin halaman. Pengaturan halaman menggambarkan kertas fisik; template
+menggambarkan satu blok.
 
-### Blok templat
+### Blok template
 
-Tambahkan satu atau beberapa `Template blocks`. Untuk setiap blok, pilih:
+Tambahkan satu atau lebih `Blok template`. Untuk setiap blok, atur:
 
-- `Template` — definisi blok yang dapat digunakan ulang;
-- `Copies` — berapa salinan yang dibuat untuk setiap catatan;
-- `Rows` dan `Cols` — grid tetap untuk satu lembar;
-- `Auto-fill page` — mengukur tinggi hasil render setiap blok alih-alih memaksa
-  tinggi baris yang tetap;
-- jarak isi templat — ruang di sekeliling setiap blok;
-- `Order by` dan `Direction` — pengurutan catatan yang pasti;
-- `Page break after` — memaksa pemenggalan setelah blok tersebut.
+- template dokumen pakai ulang;
+- jumlah salinan per catatan;
+- jumlah baris dan kolom untuk kisi tetap;
+- `Isi halaman otomatis` untuk mengukur tinggi nyata tiap blok alih-alih tinggi
+  baris tetap;
+- bantalan (padding) di sekitar tiap blok;
+- urutan dan arah untuk pengurutan deterministik;
+- pemisah halaman setelah blok.
 
-Bila sebuah blok tata letak menampilkan `This template no longer exists`, pilih
-templat pengganti yang tersedia sebelum membuat pratinjau atau mengekspor. NAHPU
-tidak mengganti templat secara diam-diam.
+Jika sebuah blok menampilkan bahwa templatenya sudah tidak ada, pilih template
+pengganti sebelum pratinjau atau ekspor; NAHPU tidak mengganti template secara
+diam-diam.
 
 ### Beberapa blok
 
-Bila sebuah tata letak memiliki beberapa blok, `Multiple blocks mode` mengatur
-urutannya:
+Saat tata letak memiliki lebih dari satu blok, mode banyak blok mengatur urutan
+cetak:
 
-- `Continuous (Block-by-block)` mencetak semua catatan dari blok 1, lalu semua
-  catatan dari blok 2.
-- `Alternate (Record-by-record)` mencetak blok 1 dan blok 2 untuk catatan 1,
-  lalu blok 1 dan blok 2 untuk catatan 2.
+- kontinu (blok demi blok): mencetak semua catatan blok 1 lalu semua catatan
+  blok 2 (cocok untuk paket multi-bagian);
+- bergantian (catatan demi catatan): mencetak blok 1 dan blok 2 untuk catatan
+  1, lalu untuk catatan 2 (cocok untuk keluaran berpasangan).
 
-Gunakan mode pertama untuk bagian-bagian terpisah dalam satu berkas, dan mode
-kedua untuk keluaran berpasangan yang harus tetap bersama.
+## Resep tata letak praktis
 
-## Resep praktis
+| Tujuan | Pengaturan disarankan |
+| --- | --- |
+| Dokumen satu halaman penuh | Satu blok, 1 baris, 1 kolom, tinggi tetap |
+| Kisi label tetap | Baris dan kolom tepat, `Isi halaman otomatis` nonaktif |
+| Lembar narasi bervariasi | Ukuran teks dinamis dan `Isi halaman otomatis` aktif; pratinjau catatan panjang |
+| Beberapa salinan tiap label | Naikkan jumlah salinan pada blok |
+| Tag dua sisi | Template `2 sisi`; periksa cermin depan/belakang |
+| Paket campuran | Beberapa blok dengan mode kontinu (blok demi blok) |
+| Keluaran catatan berpasangan | Beberapa blok dengan mode bergantian (catatan demi catatan) |
 
-| Tujuan | Pengaturan yang disarankan |
-|---|---|
-| Dokumen satu halaman penuh | Satu blok, satu baris, satu kolom |
-| Grid label tetap | Atur baris dan kolom, matikan `Auto-fill page` |
-| Lembar narasi berubah-ubah | Aktifkan teks dinamis dan `Auto-fill page` |
-| Banyak salinan | Naikkan `Copies` |
-| Tag dua sisi | Gunakan templat `2 sided` dan uji pencerminan |
-| Paket campuran | Beberapa blok dan `Continuous (Block-by-block)` |
-| Catatan berpasangan | Beberapa blok dan `Alternate (Record-by-record)` |
+## Pratinjau dan ekspor dengan aman
 
-## Pratinjau, ekspor, dan berbagi
+Pratinjau menjalankan mesin template, pengukuran, dan penomoran halaman yang
+sama persis dengan ekspor PDF. Sebelum mengekspor:
 
-Pratinjau menggunakan alur pemilihan, substitusi, pengukuran, dan paginasi yang
-sama dengan PDF. Periksa catatan panjang, daftar berulang, halaman pertama dan
-terakhir, keselarasan grid, serta kedua sisi. Buat ulang pratinjau jika ditandai
-usang.
+- pilih catatan yang mewakili untuk setiap blok;
+- periksa halaman pertama dan terakhir;
+- periksa teks panjang, daftar berulang, keselarasan kisi, margin, serta kedua
+  sisi dupleks;
+- buat ulang pratinjau jika ditandai usang.
 
-Perubahan pada tata letak yang dipilih dari layar ekspor disimpan ke tata letak
-tersebut. Gunakan `Save as...` sebelum mencoba susunan baru. Masukkan `File name`,
-pilih direktori, lalu gunakan `Export documents`. PDF adalah hasil presentasi,
-bukan ekspor data terstruktur atau cadangan database yang dapat dipulihkan.
+Perubahan pada tata letak terpilih di layar ekspor langsung tersimpan ke tata
+letak itu—gunakan `Simpan sebagai…` dahulu sebelum bereksperimen. PDF hasil
+ekspor bukan ekspor data terstruktur maupun cadangan yang dapat dipulihkan.
 
-## Fon
+## Font
 
-Buka `Settings` > `Documents` lalu beralih ke `Fonts` untuk melihat semua fon
-yang tersedia bagi templat. Daftarnya terbagi dua: fon bawaan NAHPU, yang
-selalu tersedia, dan fon yang Anda pasang sendiri. Panel kanan menampilkan
-pratinjau fon terpilih pada ukuran yang Anda pilih, dalam gaya normal, tebal,
-dan miring.
+Buka `Pengaturan` > `Dokumen` > `Font` untuk melihat font default NAHPU dan font
+yang Anda pasang sendiri. Panel pratinjau menampilkan gaya normal, tebal, dan
+miring pada ukuran pilihan Anda.
 
-Pilih `Install font` untuk menambahkan berkas `.ttf`, `.otf`, atau `.ttc` dari
-perangkat ini. `Find fonts` membuka pustaka fon di peramban Anda; unduh
-berkasnya di sana lebih dulu, lalu pasang di sini. Lisensi fon yang Anda pasang
-menjadi tanggung jawab Anda.
+- Pilih `Pasang font` untuk memasang berkas `.ttf`, `.otf`, atau `.ttc` dari
+  perangkat.
+- Pilih `Cari font daring` untuk menelusuri font di peramban, lalu pasang berkas
+  yang diunduh. Anda bertanggung jawab atas lisensi font yang dipasang.
+- Font terpasang hanya berada di instalasi ini dan tidak ikut dalam transfer
+  konfigurasi pengguna. Pasang font yang sama di perangkat lain atau pilih font
+  pengganti saat mengimpor template.
+- Font yang masih dipakai template tersimpan tidak dapat dihapus sampai tidak ada
+  template yang menggunakannya.
 
-Fon yang dipasang hanya ada di instalasi tersebut. Fon bukan bagian dari
-transfer konfigurasi pengguna, sehingga instalasi yang menerima templat yang
-memakainya tidak ikut menerima fonnya. Pasang fon yang sama di setiap perangkat
-yang mencetak templat itu, atau terima pengganti yang ditawarkan NAHPU saat
-impor. Fon yang dipakai templat tersimpan tidak dapat dihapus sampai tidak ada
-templat yang merujuknya.
+## Impor dan berbagi template serta tata letak
 
-## Mengimpor dan berbagi
+Ekspor template dan tata letak dari `Pengaturan` > `Dokumen`, baik satu item
+maupun semuanya sekaligus; keduanya memakai format berkas yang sama dan diimpor
+lewat tindakan impor yang sama. Ekspor tata letak menyertakan template tertaut
+secara default (matikan opsi penyertaan template tertaut jika ingin mengekspor
+tata letak saja).
 
-Templat diekspor dari `Settings` > `Documents` > `Templates`, dan tata letak
-dari `Print layouts`. Keduanya menawarkan dua cakupan: `Export this ...` pada
-sebuah baris atau di menu opsi menulis satu item, dan `Export all ...` menulis
-semuanya. Keduanya menulis format berkas yang sama, jadi salah satunya dapat
-diimpor dengan tindakan `Import` yang sama. Dialog ekspor mengatur nama dan
-folder berkas, dan `Share` mengirim berkas setelah ditulis. Ekspor tata letak
-menyertakan templat yang dipakai bloknya; matikan `Include linked templates`
-untuk mengekspor tata letak saja. Mengimpor berkas tersebut juga menambahkan
-templatnya, dan templat hanya diganti namanya bila sudah ada templat lain yang
-berbeda dengan nama yang sama.
+Penanganan konflik dan sumber daya hilang saat impor:
 
-Impor templat akan meminta pilihan untuk mengganti atau memakai nama baru, dan
-menambahkan akhiran bernomor bila beberapa templat datang sekaligus; impor tata
-letak membuat nama yang tidak bertabrakan.
+- **Nama template ganda:** menanyakan apakah ingin menimpa atau memberi nama
+  baru (menambahkan akhiran angka saat beberapa template masuk bersamaan).
+- **Nama tata letak ganda:** membuat nama baru tanpa konflik secara otomatis.
+- **Impor konfigurasi pengguna:** mengganti bagian terpilih secara atomik.
+- **Font hilang:** mencantumkan font yang tidak tersedia dan membiarkan Anda
+  memilih pengganti dengan pratinjau sebelum disimpan.
+- **Gambar statis:** hanya dirujuk lewat nama berkas; template dengan logo
+  memberi peringatan saat ekspor dan gambar perlu ditambahkan kembali di
+  perangkat penerima.
 
-Bila templat yang diimpor memakai fon yang tidak ada di instalasi ini, NAHPU
-mendaftar fon yang hilang dan meminta penggantinya, lengkap dengan pratinjau
-setiap pilihan sebelum diterapkan. Tidak ada yang disimpan sampai penggantinya
-dipilih, sehingga templat hasil transfer tidak pernah membawa fon yang tidak
-dapat ditampilkan.
-
-Gambar yang dipakai templat dirujuk berdasarkan nama dan tidak disimpan di
-berkas ekspor. Templat yang memakai logo akan memberi peringatan saat diekspor,
-dan gambarnya harus ditambahkan lagi di instalasi penerima.
-
-Tata letak merujuk templat berdasarkan nama, jadi pindahkan keduanya
-bersama-sama. Untuk salinan lengkap dengan data dan file terkelola, gunakan
-`Backup database`.
+Karena tata letak merujuk template berdasarkan nama, kirim keduanya bersamaan.
+Untuk salinan instalasi penuh termasuk data proyek dan berkas terkelola,
+gunakan `Cadangkan basis data`.
 
 ## Mencetak label spesimen {% #printing-specimen-tags %}
 
-Label cetak adalah alasan paling umum mengekspor dokumen. Mencetaknya dari data
-NAHPU, alih-alih menulis dengan tangan:
+Mencetak label dari data NAHPU alih-alih menulis tangan:
 
-- **Menghemat waktu di lapangan.** Label lengkap tulisan tangan dapat memakan
-  10 menit atau lebih. Sebagai gantinya, tulis label sementara kecil berisi
-  pengenal, seperti nomor jaringan (`B-729113`) dan nomor lapangan
-  (`JPO 7299`), lalu cetak label lengkapnya kemudian di museum.
-- **Menghasilkan label yang rapi dan seragam** yang dapat dibaca siapa pun,
-  apa pun tulisan tangannya.
-- **Mencegah kesalahan salin.** Lokalitas dengan koordinat dan elevasi dimasukkan
-  sekali, ditautkan ke setiap spesimen melalui lokasinya, dan diperbaiki di satu
-  tempat bila perlu.
-- **Memberi waktu untuk membersihkan data.** Sebelum mencetak, Anda dapat
-  memperbaiki koordinat atau elevasi yang janggal, istilah, dan ejaan.
+- **Menghemat waktu di lapangan:** cukup tulis label sementara singkat dengan
+  ID utama—seperti nomor jaringan (`B-729113`) dan nomor lapangan
+  (`JPO 7299`)—lalu cetak label lengkap nanti di museum.
+- **Lebih rapi dan seragam:** mudah dibaca siapa saja tanpa bergantung pada
+  tulisan tangan.
+- **Mencegah salah salin:** lokalitas, koordinat, dan elevasi cukup dicatat
+  sekali per lokasi dan diperbaiki di satu tempat.
+- **Memberi ruang kurasi sebelum cetak:** perbaiki koordinat, elevasi, istilah,
+  dan ejaan sebelum mencetak.
 
-### Alur pencetakan label
+### Alur cetak label
 
-NAHPU dapat mencetak label langsung dari templat dan prasetel tata letak. Bila
-Anda memerlukan penataan huruf yang tidak dicakup tata letak bawaan, perkakas
-label eksternal tetap menjadi pilihan:
+NAHPU mencetak label langsung dari template dan setelan awal tata letak cetak. Jika
+Anda membutuhkan tata huruf eksternal khusus, Anda tetap bisa memadukan ekspor
+NAHPU dengan alat label eksternal:
 
 {% steps %}
 
-1. Ekspor data spesimen dari NAHPU sebagai berkas `.csv`.
-2. Lakukan pembersihan data akhir: pemeriksaan ejaan, koreksi kesalahan lain,
-   serta penataan, penggabungan, atau pemisahan kolom seperlunya.
-3. Unggah lembar kerja ke Entomolabels. Dengan
-   [perangkat lunak Entomolabels](https://labels.entomo.pl/) (sayangnya hanya
-   tersedia untuk komputer Windows) dan templat label khusus, Anda dapat menata
-   data pada label spesimen.
-4. Ekspor PDF label akhir untuk sisi depan dan belakang, lalu gabungkan secara
-   berselang-seling.
-5. Gunakan pencetak dupleks otomatis untuk mencetak label akhir.
+1. Ekspor catatan spesimen dari NAHPU sebagai `.csv`.
+2. Lakukan pembersihan akhir: ejaan, perbaikan galat, serta penggabungan atau
+   pemisahan kolom.
+3. Unggah lembar kerja ke [Entomolabels](https://labels.entomo.pl/) (khusus
+   Windows) bersama template label Anda.
+4. Ekspor PDF sisi depan dan belakang, lalu gabungkan halaman depan dan
+   belakang secara berselang-seling.
+5. Cetak dengan printer auto-duplex.
 
 {% /steps %}
 
-### Peralatan pencetakan
+### Peralatan cetak {% #printing-equipment %}
 
-- **Pencetak.** Untuk mencetak label, tim NAHPU menggunakan
+- **Printer:** Tim NAHPU menggunakan
   [Epson WorkForce Pro WF-3820](https://epson.com/For-Work/Printers/Inkjet/WorkForce-Pro-WF-3820-Wireless-All-in-One-Printer/p/C11CJ07201)
-  dengan [tinta pigmen cepat kering DURABrite® Ultra](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1).
-  Dengan pencetak, tinta, dan kertas yang disebutkan di bawah, kami baru-baru
-  ini (musim semi 2024) mencetak lebih dari 1000 label spesimen burung untuk
+  dengan tinta pigmen cepat kering
+  [DURABrite® Ultra](https://www.amazon.com/gp/product/B08DX9DNSJ/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1),
+  mencetak lebih dari 1.000 label spesimen burung (musim semi 2024) untuk
   Louisiana State University Museum of Natural Science.
-- **Kertas.** Kami menggunakan [kertas 100% katun bebas asam](https://www.redrivercatalog.com/browse/aurora-art-white-250.html)
-  dengan gramatur 250 gsm. Karena kertas ini cukup tebal dan kaku, melenturkannya
-  sedikit sebelum dicetak sangat membantu. Jika tidak, pencetak dapat kesulitan
-  membalik halaman di dalam mesin.
+- **Kertas:**
+  [Kertas 100% katun bebas asam 250 gsm](https://www.redrivercatalog.com/browse/aurora-art-white-250.html).
+  Karena kertas ini tebal dan kaku, lenturkan sedikit sebelum dicetak agar
+  printer mudah membalik lembar secara otomatis.
 
-### Arsipkan hasil cetak
+### Mengarsipkan hasil cetak
 
-Simpan PDF digital bersama arsip proyek, dan simpan prasetel tata letak serta
-templat bila dokumen perlu dibuat ulang. Periksa hasil cetak sebelum memproduksi
-satu batch penuh, dan cetak pada kertas yang sesuai dan tahan lama. Simpan
-salinan cetaknya bersama catatan koleksi yang bersangkutan.
-
-Jangan memperlakukan dokumen cetak sebagai pengganti basis data, hasil ekspor
-proyek, atau ekspor catatan terstruktur. Lihat
+Simpan PDF yang dihasilkan—bersama setelan awal template dan tata letak untuk
+membuatnya ulang—di arsip proyek. Periksa satu cetakan uji sebelum mencetak
+seluruh tumpukan, gunakan kertas tahan lama, dan simpan salinan fisik bersama
+catatan koleksi. Dokumen cetak tidak pernah menggantikan cadangan basis data
+atau ekspor data terstruktur; lihat
 [Mengarsipkan proyek](../#archiving-a-project).
 
 ## Pemecahan masalah
 
 | Gejala | Yang perlu diperiksa |
-|---|---|
-| Placeholder tampil apa adanya | Jenis catatan dan key lengkap `table::field`. |
-| Kondisional tercetak apa adanya | Ekspresinya salah bentuk. Periksa `]]` yang hilang, nilai tanpa tanda kutip, atau `&&` dan `\|\|` yang dicampur. |
-| Kondisi tidak pernah cocok | Pembandingan membedakan huruf besar-kecil, membaca nilai tersimpan alih-alih label yang ditampilkan, dan nilai catatan yang kosong tidak pernah cocok. |
-| Pratinjau kosong | Jenis blok dan catatan yang dipilih. |
-| Templat hilang | Tetapkan ulang blok atau pulihkan/impor templat. |
-| Teks bertumpuk atau terpotong | Teks dinamis, `Auto-fill page`, lebar, dan tinggi blok. |
-| Ruang kosong tidak terduga | Baris tetap, ukuran templat, dan padding. |
-| Urutan catatan salah | `Order by` dan `Direction` pada blok. |
-| Pengulangan tidak terduga | `Copies` dan pilihan catatan. |
-| Urutan blok salah | `Multiple blocks mode`. |
-| Sisi belakang hilang atau berputar | `2 sided`, isi Back, dan pencerminan. |
-| Pratinjau usang | Buat pratinjau baru. |
-| Impor mengubah banyak preset | Impor satu bagian mengganti seluruh bagian tersebut. |
+| --- | --- |
+| Penanda tercetak apa adanya | Periksa jenis catatan template dan gunakan kunci lengkap `tabel::bidang`. |
+| Kondisi tercetak apa adanya | Sintaks salah—periksa `]]` yang kurang, nilai tanpa tanda kutip, atau campuran `&&` dan `\|\|`. |
+| Kondisi tidak pernah cocok | Perbandingan peka huruf besar/kecil, memeriksa nilai tersimpan (bukan label tampilan), dan nilai kosong tidak cocok dengan operator biasa. |
+| Pratinjau kosong | Periksa jenis catatan blok dan pilih catatan yang sesuai. |
+| Template hilang | Tetapkan ulang template pada blok atau impor/pulihkan template bernama itu. |
+| Teks bertumpuk atau terpotong | Aktifkan ukuran teks dinamis dan `Isi halaman otomatis`, atau perbesar blok. |
+| Ruang kosong tak terduga | Periksa baris tetap, ukuran template, margin halaman, dan bantalan blok. |
+| Urutan catatan salah | Atur urutan dan arah pengurutan pada blok tersebut. |
+| Label terduplikasi tak terduga | Periksa jumlah salinan dan daftar catatan terpilih. |
+| Urutan blok keliru | Ubah mode banyak blok. |
+| Sisi belakang hilang atau terbalik | Periksa mode `2 sisi`, isi Belakang, dan opsi cermin. |
+| Pratinjau ditandai usang | Buat ulang pratinjau setelah suntingan terakhir. |
+| Impor mengubah banyak pengaturan | Impor bagian konfigurasi pengguna mengganti tiap bagian yang dipilih (kecuali bidang kustom yang digabungkan). |
 
-Setiap opsi di editor templat tercantum di
+Semua kontrol penyunting template dijelaskan di
 [Ekspresi ekspor](../export-expressions#template-editor-options). Untuk detail
-penyimpanan dan rendering, lihat [Templates and presets (bahasa Inggris)](/en/contributing/code/templates-and-presets/) dan [Export workflows (bahasa Inggris)](/en/contributing/code/data-export-workflows/).
+arsitektur tingkat pengembang, lihat
+[Templates and presets](/en/contributing/code/templates-and-presets/) dan
+[Export workflows](/en/contributing/code/data-export-workflows/) (bahasa
+Inggris).

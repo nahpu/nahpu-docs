@@ -1,62 +1,63 @@
 ---
 title: Project Management
 sidebar:
-    label: Project Management
-    order: 3
+  label: Project Management
+  order: 3
 ---
 
-Agree on project ownership, identifier allocation, and transfer responsibilities before several people enter records.
+Agree on project ownership, workflow, identifier allocation, and transfer responsibilities before several people enter records.
+
+{% bpdiagram kind="merge" locale="en" /%}
 
 ## Assign a single source of truth
 
-**Designate one device to maintain the authoritative project copy.** That device holds the master taxon list, personnel, and custom-field definitions. It distributes updates to other devices, which do not edit those definitions. If specimens share the same sites, coordinates, and events, the authoritative device also holds those records. Other devices scan the QR or import the authoritative copy and add their own specimens, but they do not edit the shared records.
+**Designate one device to maintain the authoritative project copy.** That device holds the master taxon list, personnel, and custom-field definitions, and distributes updates to other devices, which do not edit those shared definitions.
 
-**Merging a project should be handled by the authoritative device.** It reviews UUID conflicts and section-level choices.
+Match how sites and events are shared to your [field workflow](/en/usages/workflows/):
 
+- **Shared site, parallel catalogs (Workflow A).** The authoritative device creates the shared sites, coordinates, and events. Teammates scan the QR or import the JSON and add their own specimens without editing the shared records.
+- **Separate sites, parallel catalogs (Workflow B).** The authoritative device shares project identity, personnel, and taxa. Each line leader creates sites and events for their own lines, using their initials in each `Site ID` (such as `GPHH-L1`), so records arrive cleanly at merge time.
+- **Assembly line, one catalog (Workflow C).** One scribe enters every record on a single device and credits teammates in event personnel and as `Preparator` on the specimen parts they prepared.
+
+**Handle every project merge on the authoritative device.** It reviews UUID conflicts and section-level choices before committing the combined project.
 
 ## Name and identify the project
 
-**Use a recognizable name** such as `Patah Mammals`, and record dates in the project date fields. A project UUID identifies the project for transfers; it is separate from the project catalog number and from the specimen's readable Field ID. **Recreating a project with the same name does not recreate its UUID.**
+**Use a short, recognizable name** (3–25 characters, such as `Patah Mammals`), record `Accession` and `Location`, and set `Time zone` to the fieldwork location's IANA time zone (such as `Asia/Jakarta`). NAHPU never converts dates or times across time zones — it stores the field's local clock exactly as entered, and the project time zone documents which clock that is.
 
-Give sites stable IDs and keep their meaning in the locality description. See [site and coordinate naming](/en/best-practices/data-collection/).
+A project UUID identifies the project for transfers; it is separate from `Accession`, the project's `Field ID` counter, and each specimen's readable Field ID. **Recreating a project with the same name does not recreate its UUID.**
+
+Give sites stable IDs and keep their meaning in the locality description. See [Data Collection](/en/best-practices/data-collection/).
 
 ## Agree on Field ID conventions
 
-**Choose the convention that matches your collection protocol**. Project Field IDs suit a shared processing sequence; personnel Field IDs suit work organized around catalogers' individual sequences.
+**Choose the convention that matches your collection protocol.** Project Field IDs suit a shared processing sequence; personnel Field IDs suit work organized around catalogers' individual sequences.
 
-**NAHPU does not automatically synchronize devices.** It is purposely designed that way, so that all data sharing is deliberate and reviewed.
+**NAHPU does not automatically synchronize devices.** It is purposely designed that way so that every transfer and merge is deliberate and reviewed.
 
-**Document handoffs and check duplicates after transfers.** UUIDs help distinguish records but do not prevent duplicate readable Field IDs or mislabeled specimens.
+**Document handoffs and check duplicates after transfers.** UUIDs distinguish records internally, but they do not prevent duplicate readable Field IDs or mislabeled physical specimens.
 
-{% aside type="tip" title="Deciding which field ID to use" %}
-If you are starting a lab, or your lab does not yet have a standard Field ID convention, in our experience personnel Field IDs are suitable for parallel specimen processing, where you have multiple people preparing specimens and recording data on their own devices. They carry less risk of ID duplication. A project Field ID is more appropriate if data is being recorded on a single device and specimen preparation is being done in a single sequence, where each person on the team has a different role in the workflow, such as collecting tissues, photographing, preparing voucher specimens, etc.
-
+{% aside type="tip" title="Deciding which Field ID to use" %}
+If you are starting a lab, or your lab does not yet have a standard Field ID convention, in our experience **personnel Field IDs** work best for parallel specimen processing, where multiple people prepare specimens and record data on their own devices (Workflows A and B). They carry far less risk of ID duplication. A **project Field ID** is more appropriate when data is recorded on a single device in a single sequence (Workflow C), where each teammate has a distinct role such as collecting tissues, photographing, or preparing vouchers.
 {% /aside %}
-## Manage contributions
+
+## Manage contributions {% #manage-contributions %}
 
 **Establish a common project identity before distributing work.** Assign responsibility for shared personnel, taxa, vocabularies, and custom-field definitions. Agree when each device stops editing for a handoff and who reviews the combined project.
 
-- **`Import project`** on the home screen brings a project onto another installation.
-- **`Merge project`** inside an existing project combines contributions; review UUID conflicts and section-level choices. Do not force a UUID mismatch merely because two projects have similar names.
-- **Keep the source packages and a pre-merge backup** until the result has been checked.
+- **`Import project`** on the home screen brings a project onto a device that does not have it yet.
+- **`Merge project`** inside an existing project combines contributions; review UUID conflicts and section-level choices (`Keep current`, `Use imported`, `Import as new`, or `Skip`). Nothing is written until the final step — NAHPU commits all changes together or leaves the database unchanged if an error occurs. Do not force a UUID mismatch merely because two projects share a similar name.
+- **Back up before merging.** Use the `Back up now` button built into `Merge project`, and keep the source packages and pre-merge backup until the merged project has been checked.
 
-**Record who supplied and reviewed each package, and what was decided at each handoff, while the team is still together.** You can record the details that explain a merge in the narrative, so they stay together with the data. A note written at camp is worth more than a reconstruction attempted next year.
+**Record who supplied and reviewed each package, and what was decided at each handoff, while the team is still together.** Write a short entry in the project's `Narrative` so merge decisions travel with the data. A note written at camp is worth more than a reconstruction attempted next year.
 
 {% aside type="note" title="Information entropy" %}
 [Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) describe this as resisting information entropy: the interpretive content of a dataset degrades over time as the people who held it in memory disperse.
 {% /aside %}
 
-## Schedule and verify backups
+## Keep a backup routine
 
-**Export the active project at agreed intervals**, for example at the end of each field day and before a major handoff. Choose ZIP or TAR.GZ when available project files must travel with the records; JSON.GZ omits those files. Missing-file warnings require investigation, because an archive cannot include files that are already missing.
-
-**Use `Backup database` for installation-wide recovery** and before merges or major curation. Choose its frequency from the amount of work at risk, storage, and available power; archive size and duration depend on the installation.
-
-**Plan against attrition, not only against catastrophe.** Data is lost mostly through dead drives, unreadable media, unlabeled files, and people leaving, rather than through a single dramatic event. Keep dated copies beyond the recording device, including a separate physical device when internet is unavailable. A cloud upload is complete only after confirming the remote copy.
-
-**Periodically test recovery on another installation** and compare record counts, relationships, identifiers, and files. That restore is the only step that distinguishes a backup from a file you have never opened. Retain earlier versions until the newer copy has been verified.
-
-**Name packages clearly**, for example `PatahMammals_transfer_20260908.zip`. A name that carries the project, the purpose, and the date stays interpretable when it is the only surviving copy. Follow the [Project Transfer guide](/en/usages/export/project-transfer/) for transfer choices and the [Export guide](/en/usages/export/) for database replacement.
+Agree on who runs daily project exports, weekly database backups, and off-device copies before leaving camp. See [Backups and Recovery](/en/best-practices/backups-and-recovery/) for the full cadence, naming conventions, and restore checks, and [Transfer a Project](/en/usages/export/project-transfer/) for step-by-step transfer details.
 
 ## References
 

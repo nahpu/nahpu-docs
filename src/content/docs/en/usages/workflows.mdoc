@@ -1,0 +1,191 @@
+---
+title: Supported Workflows
+description: The three field workflows NAHPU supports (shared site with parallel catalogs, separate sites with parallel catalogs, and an assembly line with one catalog), how they fit different taxon groups, and how to adapt an existing field routine.
+sidebar:
+  order: 3
+---
+
+Field teams prepare and catalog specimens in different ways. Most experienced
+teams already have a routine and can match NAHPU to how they work, while teams
+new to natural history collecting can use the three workflows below as proven
+starting templates. Your workflow guides how many devices you bring, how Field
+IDs are numbered, what gets shared between devices, and whether catalogs are
+merged afterward.
+
+{% aside type="note" title="Preprint citation" %}
+These three workflows follow Figure 2 of the NAHPU preprint: Handika, H.,
+Moncrieff, A., Henderson, C., et al. (2026). *NAHPU: An integrated approach to
+natural history data acquisition and management in the extended specimen era*.
+EcoEvoRxiv. [doi:10.32942/X21M6D](https://doi.org/10.32942/X21M6D).
+{% /aside %}
+
+{% workflows label="Field workflows supported by NAHPU. Select a workflow to see how the team, the sites, and the devices fit together." %}
+
+{% workflow id="A" short="Shared site" title="Shared site, parallel catalogs" source="One shared site and event" people="Each person catalogs on their own device" result="Merge into one project" %}
+
+Best when the team works a shared collecting effort (e.g., a mist net, pitfall
+line, Malaise trap, or harp trap) and splits up the catch to sort and prepare.
+
+- **Common in:** ornithology, terrestrial and freshwater invertebrate zoology,
+  and bat fieldwork.
+- **Share before cataloging:** project identity, sites, events, people, and
+  taxa via QR code or file so every device links to the same records.
+- **Field IDs:** personnel Field IDs (one series per cataloger).
+- **Merge behavior:** shared sites, events, and people match automatically
+  instead of duplicating.
+- **Practice:** [Teamwork tutorials](/en/tutorials/teamwork/plan-and-set-up/).
+
+{% /workflow %}
+
+{% workflow id="B" short="Separate sites" title="Separate sites, parallel catalogs" source="Each person runs their own line" people="Each person catalogs on their own device" result="Merge into one project" %}
+
+Best when each cataloger manages their own trap lines from setup through
+specimen preparation.
+
+- **Common in:** non-volant small-mammal fieldwork.
+- **Share before cataloging:** project identity, people, and taxa. Each
+  cataloger creates sites and events for their own lines and shares them only
+  if a teammate needs them before the merge.
+- **Field IDs:** personnel Field IDs, with the line leader's initials in each
+  Site ID (e.g., `TJBS-L2`).
+- **Merge behavior:** each cataloger's own sites and events arrive as new
+  records.
+- **Practice:** [Teamwork tutorial 5](/en/tutorials/teamwork/run-your-own-line/).
+
+{% /workflow %}
+
+{% workflow id="C" short="Assembly line" title="Assembly line, one catalog" source="One shared site and event" people="Each person has one role" result="One device, one catalog" %}
+
+Best when each teammate handles one task on the table (e.g., taking tissues or
+photographing live animals) while a single scribe enters every record.
+
+- **Common in:** herpetology, ichthyology, and mammalogy fieldwork.
+- **Sharing:** none needed in the field. Credit teammates as event personnel
+  and as `Preparator` on the parts they prepared.
+- **Field IDs:** project Field ID (prefix, number, and suffix) fits a single
+  running sequence.
+- **Lots:** for fishes and invertebrates, one record can store a lot (i.e.,
+  several individuals of one species) with tag IDs and individual measurements.
+- **Practice:** [Basic tutorials](/en/tutorials/basic/paper-catalog/).
+
+{% /workflow %}
+
+{% /workflows %}
+
+## Compare the workflows
+
+| | A: Shared site | B: Separate sites | C: Assembly line |
+| --- | --- | --- | --- |
+| Devices | One per cataloger | One per cataloger | One |
+| Sites and events | Created once, shared | Created by each line leader | Created once |
+| Field IDs | Personnel | Personnel | Project or personnel |
+| Merge at the end | Yes | Yes | No |
+| Tutorial | [Teamwork 1–7](/en/tutorials/teamwork/plan-and-set-up/) | [Teamwork 5](/en/tutorials/teamwork/run-your-own-line/) | [Basic 1–9](/en/tutorials/basic/paper-catalog/) |
+
+Workflows can also be mixed on the same trip. In the
+[Teamwork tutorials](/en/tutorials/teamwork/plan-and-set-up/), two teammates
+share Line 1 (Workflow A) while one also runs Line 2 independently
+(Workflow B), and a single merge handles both.
+
+For help choosing between personnel and project Field IDs, see
+[Project Management](/en/best-practices/project-management/).
+
+## How workflows fit NAHPU-supported taxa
+
+Collecting methods, catch volume, and preparation steps vary widely across
+natural history disciplines. NAHPU's workflows and catalog formats are built
+around how field teams actually work with each group:
+
+- **Mammals (`Mammalogy`):** Non-volant small-mammal surveys (rodents, shrews,
+  treeshrews) commonly use **Workflow B** when each collector runs their own
+  trap line, or **Workflow C** on heavy-catch days when tasks (measuring,
+  tissue sampling, skinning, fluid fixation) are split across an assembly line.
+  Bat surveys based on shared mist nets or harp traps usually fit **Workflow A**,
+  with bat-specific fields enabled in
+  [Mammals](/en/usages/specimens/measurements/mammals/#bat-fields). Extended
+  specimen data (e.g., tissues, ectoparasites, and field narratives) stay
+  linked to each voucher.
+- **Birds (`Ornithology`):** Field crews typically run shared mist-net lines or
+  targeted collecting at one site and then prepare specimens in parallel
+  (**Workflow A**). Because soft-part colors fade quickly after capture and
+  preparators record detailed internal data (e.g., fat, brood patch, skull
+  ossification, bursa, gonads, and stomach contents) alongside study skins,
+  spread wings, skeletons, tissues, and audio vouchers, giving each preparator
+  their own device prevents bottlenecks at the prep table. See
+  [Birds](/en/usages/specimens/measurements/birds/).
+- **Herpetofauna (`Herpetology`, beta):** Teams often run shared nocturnal
+  visual-encounter surveys, pitfall arrays, or drift fences and process the
+  catch together back at camp (**Workflow C** or **Workflow A**). One person
+  can photograph live animals or record calls, another takes snout-vent length
+  (`SVL`), weight, tissues, and [symbiont](/en/usages/specimens/symbionts/)
+  samples, and another fixes vouchers in formalin while a single scribe (or
+  parallel catalogers) logs the batch. See
+  [Herpetofauna](/en/usages/specimens/measurements/herpetofauna/).
+- **Fishes (`Ichthyology`, beta):** Seine hauls, electrofishing, cast nets, and
+  sampling stations often produce large batches from one site and collecting
+  event, making **Workflow C** (or **Workflow A** with multiple sorters) a
+  natural fit. NAHPU supports both `Individual` and `Lot` records so a jar of
+  individuals of the same species shares one catalog number, while still
+  recording tag IDs and individual measurements (e.g., standard length, total
+  length) for vouchered or tissue-sampled fish. See
+  [Fishes](/en/usages/specimens/measurements/fishes/).
+- **Invertebrates (`Invertebrate zoology`, beta):** Bulk-sampling methods
+  (e.g., Malaise traps, pitfall traps, light traps, sweep nets, and aquatic
+  kick-nets) fit **Workflow A** or **Workflow C** as team members sort shared
+  samples into vials or pins. Records focus on `Ecological interactions` (host
+  organism and host part), social-insect `Caste`, optional morphometrics, and
+  site or event environmental conditions. See
+  [Invertebrates](/en/usages/specimens/measurements/invertebrates/).
+
+A single NAHPU project can hold specimens from more than one taxon group.
+Multi-taxon expeditions can keep everything in one shared project with shared
+sites and events, or maintain separate projects per discipline if each group
+exports to a different museum collection.
+
+## Adapt your existing workflow to NAHPU
+
+You do not need to change how your lab collects specimens to adopt NAHPU. Start
+by mapping your current field routine onto NAHPU's settings before departure:
+
+- **Keep your Field ID system:** If each collector already maintains a personal
+  catalog number series (e.g., `HH445`), choose **personnel Field ID** mode and
+  set each person's starting counter. If your team numbers specimens under a
+  single expedition or institutional series, choose **project Field ID** mode.
+- **Match your museum's terms:** Before leaving camp or the lab, configure
+  specimen types, treatments, life stages, and custom fields under `Settings` >
+  `Specimens`, and import a regional taxon checklist so field entry uses the
+  exact names your collection expects.
+- **Keep your division of labor:** In parallel workflows (A and B), each
+  cataloger works on their own device and merges at the end of the day or trip.
+  In an assembly line (C), keep one scribe on the device and record everyone
+  else in event personnel and as `Preparator` on the specimen parts they
+  handled.
+- **Transition at your own pace:** Teams moving from paper notebooks or custom
+  form apps can run a soft transition (using NAHPU alongside paper forms on a
+  first trip) or rehearse with lab members using the
+  [Teamwork tutorials](/en/tutorials/teamwork/plan-and-set-up/) before relying
+  on it in remote sites. See [Transitioning to NAHPU](/en/switch/) for device,
+  power, and backup planning.
+
+## Share records between devices
+
+Workflows A and B rely on shared records keeping the same UUIDs across devices
+(taxa are matched by scientific name). Create shared records once and copy them
+to teammates:
+
+| Record | How to share it | Learn more |
+| --- | --- | --- |
+| Project identity | Project QR or project-info JSON | [Projects](/en/usages/projects/) |
+| Sites | Site QR or JSON | [Sites](/en/usages/sites/) |
+| Events | Event QR, or JSON when the QR is too large | [Collecting Events](/en/usages/events/) |
+| Taxa | Taxon QR or a taxon list | [Taxon](/en/usages/taxon/) |
+| People | Inside site and event QR codes and files | [Personnel](/en/usages/personnel/) |
+| Specimen catalogs | Export project, then merge | [Transfer a Project](/en/usages/export/project-transfer/) |
+
+{% aside type="caution" %}
+Teammates can create personnel records on their own devices when needed, but
+sharing existing people across devices is recommended so every device uses the
+same UUID. Because NAHPU matches people by UUID rather than by name, creating
+the same person independently on two devices causes the merge to treat them as
+two separate people.
+{% /aside %}

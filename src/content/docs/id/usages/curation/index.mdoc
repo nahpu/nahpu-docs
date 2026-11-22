@@ -5,36 +5,39 @@ sidebar:
   order: 0
 ---
 
-`Kurasi spesimen` adalah alat proyek untuk mencocokkan material fisik
+`Kurasi spesimen` (beta) adalah alat proyek untuk mencocokkan material fisik
 dengan catatannya setelah koleksi. Alat ini menulis kolom kurasi ke banyak
-catatan sekaligus, tanpa membuka formulir setiap spesimen. Alat ini masih
-beta.
+catatan sekaligus tanpa perlu membuka formulir setiap spesimen satu per satu.
 
 ## Membuka alat
 
-Buka proyek dan pilih `Kurasi` di dok alat pada dasbor proyek. Dok
-menampilkannya secara bawaan. Jika Anda menghapusnya, pilih `Sunting daftar` di
-dok dan aktifkan kembali `Kurasi`.
+Buka proyek dan pilih `Kurasi` di dok alat pada dasbor proyek. Alat ini tampil
+di dok secara default. Jika Anda menghapusnya, pilih `Sunting daftar` di dok
+—atau buka `Pengaturan` > `Aplikasi` > `Alat`— lalu aktifkan kembali `Kurasi`.
 
-Pemilih mode di bagian atas layar menentukan apa yang dikurasi. Saat ini
-hanya ada satu mode:
+Pemilih mode di bagian atas layar menentukan apa yang dikurasi. Saat ini baru
+tersedia satu mode:
 
-- [Kurasi jaringan](/id/usages/curation/tissue-curation/): pindai tabung
-  bagian spesimen, dan tabung simbion jika diinginkan, ke kotak penyimpanan.
-  Setiap tabung mendapat kode museum dan sel kosong berikutnya sebagai lokasi
-  penyimpanan.
+- [Kurasi jaringan](/id/usages/curation/tissue-curation/): pindai atau tempatkan
+  tabung bagian spesimen —dan secara opsional tabung simbion— ke dalam kotak
+  penyimpanan. Setiap tabung mendapat kode museum dan sel kosong berikutnya
+  sebagai lokasi penyimpanan.
 
 ## Cara kurasi mengubah catatan
 
-Kurasi menulis ke kolom yang sama dengan yang Anda ubah di formulir
-spesimen. Kurasi jaringan menulis `Koleksi tetap museum` atau `Pinjaman museum` dan
-`Lokasi penyimpanan` pada bagian atau simbion. Nilainya tampil di catatan, di
-tabel data, dan di setiap ekspor.
+Kurasi memperbarui kolom yang sama dengan yang Anda sunting di formulir
+spesimen. Kurasi jaringan menulis `Koleksi tetap museum` atau `Pinjaman museum`
+dan `Lokasi penyimpanan` langsung pada catatan bagian spesimen atau simbion.
+Perubahan langsung terlihat pada catatan, di tabel data, dan di setiap ekspor.
 
-Setiap perubahan langsung disimpan. Log sesi mencantumkan perubahan pada
-kunjungan ini, dan `Urungkan` membatalkan perubahan terakhir, termasuk nilai yang
-digantikannya. Menutup layar mengakhiri sesi. Perubahan tetap tersimpan,
-tetapi log dan riwayat pengurungan dihapus.
+Setiap perubahan langsung disimpan saat dibuat:
+
+- Log sesi melacak setiap tabung yang dicatat atau dilewati pada kunjungan saat
+  ini.
+- `Urungkan` membatalkan pencatatan terakhir, mengembalikan nilai yang diganti
+  dan tabung yang sebelumnya tergeser dari sel tersebut.
+- Menutup `Kurasi spesimen` mengakhiri sesi: perubahan yang tersimpan tetap ada
+  di basis data, sedangkan log sesi dan riwayat pengurungan dihapus.
 
 Cadangkan basis data sebelum mengkurasi koleksi besar. Lihat
 [Cadangkan basis data](/id/usages/export/#backup-database).

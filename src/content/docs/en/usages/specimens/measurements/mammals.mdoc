@@ -5,57 +5,73 @@ sidebar:
   order: 1
 ---
 
-Specimens in a project that uses the `Mammalogy` catalog format show the mammal
-measurement form. Sex, life stage, and weight units work the same way in every
-taxon group; see [Measurements](/en/usages/specimens/measurements/).
+Specimens in the `Mammalogy` catalog format show the mammal measurement form.
+Weight units, sex, and life stage work the same way across taxon groups; see
+[Measurements](/en/usages/specimens/measurements/).
 
 ## Measurements
 
-- `Total length (mm)`: the total length from the tip of the nose to the tip of
-  the tail.
-- `Tail length (mm)`: the length of the tail from the base to the tip.
-- `Head and body length (mm)`: auto-calculated from `Total length (mm) - Tail length (mm)`.
-- `Tail/HB length`: auto-calculated from `Tail length (mm) / Head and body length (mm)`.
-- `Hind foot length (mm)`: the length of the hind foot from the base to the tip of the claw.
+- `Show outlier warnings`: on by default. Flags `Total length (mm)`,
+  `Tail length (mm)`, `Hind foot length (mm)`, `Ear length (mm)`, and `Weight`
+  values that fall outside the typical range for the same species (or genus)
+  once the project has at least 10 comparison records. Turn it off to suppress
+  warnings.
+- `Total length (mm)`: length from the tip of the nose to the tip of the tail.
+- `Tail length (mm)`: length of the tail from the base to the tip.
+- `Head and body length (mm)`: auto-calculated as
+  `Total length (mm) - Tail length (mm)`.
+- `Tail/HB length`: auto-calculated as a percentage,
+  `(Tail length / Head and body length) × 100`.
+- `Hind foot length (mm)`: length of the hind foot from the base to the tip of
+  the claw.
 - `Ear length (mm)`: ear length.
 - `Weight`: specimen weight in the selected unit.
 - `Accuracy`: `Accurate` or `Inaccurate`. Choosing `Inaccurate` opens
-  `Select inaccurate measurements`, where you tick each affected measurement
+  `Inaccurate measurements`, where you tick at least one affected measurement
   (total, tail, hind foot, ear, and weight, plus forearm and tibia when bat
-  fields are shown), and an `Accuracy remark` field for the reason. Exports and
-  labels can bracket the flagged values.
-- `Sex`: select from the configured specimen-sex vocabulary.
-- `Life stage`: select from the configured life-stage vocabulary.
+  fields are shown) and can enter an `Accuracy remark`. Select
+  `Select inaccurate measurements` to edit the selection later. Flagged fields
+  are marked with `*` in the form and can be bracketed in exports and labels.
+- `Sex`: select from the configured specimen-sex controlled vocabulary. Changing
+  `Sex` prompts `Change sex?` and clears reproductive data that no longer
+  applies.
+- `Life stage`: select from the configured life-stage controlled vocabulary.
 - `Remarks`: additional notes about measurements.
-
-Turn on `Show outlier warnings` to flag measurements that look unusual for the
-taxon. Changing `Sex` asks `Change sex?` and clears reproductive data that no
-longer applies.
 
 ## Reproductive data
 
-| Sex | Field | Options |
+Male fields appear for `Male`, `Male?`, `Gynandromorph`, and `Hermaphrodite`.
+Female fields appear for `Female`, `Female?`, `Gynandromorph`, and
+`Hermaphrodite`.
+
+| Sex | Field | Options / Notes |
 | --- | --- | --- |
-| Male | Testis `Position` | Scrotal, Abdominal |
-| Male | Testis length and width (mm) | Numbers |
-| Male | Epididymis appearance | Tubular, Partial, Not Tubular |
-| Female | Vagina opening | Imperforate, Perforate |
-| Female | Pubic symphysis | Close, Small Open, Open |
-| Female | Reproductive stage | Nulliparous, Primiparous, Multiparous |
-| Female | Mammae condition | Small, Large, Lactating |
-| Female | Mammae counts | Axillary, abdominal, and inguinal pairs |
-| Female | Placental scars, embryos | Counted left and right |
-| Female | Embryo `CR length (mm)` | Crown-rump length |
+| Male | `Testes` — `Position` | `Scrotal`, `Abdominal` |
+| Male | `Length (mm)` and `Width (mm)` | Right testis; shown only when `Position` is `Scrotal` |
+| Male | `Epididymis` | `Tubular`, `Partial`, `Not Tubular`; shown only when `Position` is `Scrotal` |
+| Female | `Vagina opening` | `Imperforate`, `Perforate` |
+| Female | `Pubic symphysis` | `Close`, `Small Open`, `Open`; shown when `Life stage` is `Adult` |
+| Female | `Reproductive stage` | `Nulliparous`, `Primiparous`, `Multiparous` (`Adult` only) |
+| Female | `Mammae counts (pairs)` | `Axillary`, `Abdominal`, and `Inguinal` pairs (`Adult` only) |
+| Female | `Mammae condition` | `Small`, `Large`, `Lactating` (`Adult` only) |
+| Female | `Embryo` | `Left` and `Right` counts, plus `CR length (mm)` (crown-rump length) (`Adult` only) |
+| Female | `Placental scars` | `Left` and `Right` counts (`Adult` only) |
 
 ## Bat fields
 
-Turn on `Show bat fields` on a specimen to add forearm length, tibia length,
-`Echolocate?`, echolocation type (`FM`, `CF`, `QCF`, or `None`), maximum and
-minimum frequency, frequency at maximum energy, and duration. To show them on
-every mammal specimen, turn on `Always show bat fields` in `Settings` >
-`Catalogs` > `Format`. A specimen with saved bat data always shows the section.
+Turn on `Show bat fields` on a specimen to add `Forearm Length (mm)`,
+`Tibia Length (mm)`, and `Echolocate?`. Turning on `Echolocate?` adds
+`Echolocation` (`FM`, `CF`, `QCF`, or `None`), `Frequency Max (kHz)`,
+`Frequency Min (kHz)`, `Frequency At Max Energy (kHz)`, and
+`Duration (seconds)`.
+
+To show bat fields on every mammal specimen, turn on `Always show bat fields` in
+`Settings` > `Catalogs` > `Format` (under `Measurement records` when `Mammalogy`
+is selected). Once bat or echolocation data is saved on a specimen, the section
+stays visible and cannot be toggled off.
 
 ## Parts and symbionts
 
-Mammal catalogs show symbiont-detection fields and the symbiont tab. See
+Mammal catalogs include the `Symbionts` examination fields at the bottom of the
+measurement form and the symbiont tab in `Specimen Parts`. See
 [Symbionts](/en/usages/specimens/symbionts/).

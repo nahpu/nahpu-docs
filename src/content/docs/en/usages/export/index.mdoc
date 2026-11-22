@@ -24,191 +24,226 @@ sidebar:
 {% pin id="I" label="Save backup" large2=[56.3, 93.3] small2=[69, 92.3] /%}
 {% /screenshots %}
 
-NAHPU can export the same project data in several ways, each for a different
-job. All of them start from the project menu.
+NAHPU exports project data, media, statistics, backups, and settings in
+formats tailored to each task. Project exports start from the project
+`Dashboard` menu; `Backup database`, `Export user configs`, and
+`Import user configs` are also available from the home screen menu.
 
 ## Which export do I need?
 
 | You want to… | Use | You get |
-|---|---|---|
-| Move a project to another device, or keep a full copy | `Export project` {% ref id="B" /%} | A project file that NAHPU can import or merge |
-| Combine a teammate's project file with yours | `Merge project` {% ref id="A" /%} | Their records added to your project |
+| --- | --- | --- |
+| Move a project to another device, or keep a full copy | `Export project` {% ref id="B" /%} | A project archive that NAHPU can import or merge |
+| Combine a teammate's project file with yours | `Merge project` {% ref id="A" /%} | Their records merged into the open project |
 | Send records to a database, spreadsheet, or script | [Export records](/en/usages/export/export-records/) {% ref id="D" /%} | A CSV, TSV, Excel, or JSON table |
-| Publish or archive data with its files | [Bundle records](/en/usages/export/export-bundles/) {% ref id="C" /%} | A Darwin Core or NAHPU Data Package |
+| Publish or archive data with its files | [Bundle records](/en/usages/export/export-bundles/) {% ref id="C" /%} | A Darwin Core bundle or NAHPU Data Package |
 | Print labels, tags, catalogs, or field books | [Export documents](/en/usages/export/export-documents/) {% ref id="E" /%} | A PDF |
 | Report counts, such as specimens per species | [Export statistics](/en/usages/export/export-statistics/) | A summary table as CSV, TSV, Excel, or JSON |
-| Pull out the project's photos | [Export images](/en/usages/export/export-images/) | One image, or a ZIP or TAR.GZ archive of many |
+| Pull out photographs and other media files | [Export images](/en/usages/export/export-images/) | One file, or a TAR.GZ or ZIP archive of many |
 | Protect everything on this device | [`Backup database`](#backup-database) {% ref id="F" /%} | One archive of the whole installation |
-| Share your settings and presets | [`Export user configs`](#export-user-configs) {% ref id="G" /%} | A settings file |
+| Share your settings, vocabularies, and presets | [`Export user configs`](#export-user-configs) {% ref id="G" /%} | A JSON or JSON.GZ config file |
 
 Only three of these can bring data back into NAHPU:
 
-- a **project export**, through `Import project` on the home screen or
-  `Merge project` in an existing project
+- a **project export**, via `Import project` on the home screen or
+  `Merge project` in an open project
   ([Project transfer](/en/usages/export/project-transfer/));
-- a **NAHPU Data Package**, which carries the same project data;
+- a **NAHPU Data Package**, which carries the same project transfer payload;
 - a **database backup**, which replaces the whole installation
   ([Restoring a database](#restoring-a-database)).
 
-Record tables, Darwin Core packages, documents, and statistics are one-way:
-NAHPU cannot rebuild a project from them. Importing a project-info JSON or a
-project QR code creates only the project's name and details, without records or
-media.
+Record tables, Darwin Core bundles, documents, and statistics are one-way:
+NAHPU cannot rebuild a project from them. Importing a project-info JSON or QR
+code creates only the project's name and metadata, without records or media.
 
 ## Backup strategy {% #backup-strategy %}
 
-Keep a checked copy of each field day's data somewhere other than the device
-you work on. Two kinds of backup work together:
+Keep a verified copy of each field day's work off the device you collect on.
+Combine two kinds of backup:
 
 | Backup | How often | Holds |
-|---|---|---|
-| Project export | Every field day | One project, with its media in ZIP or TAR.GZ |
-| Database backup | Weekly, and before importing, merging, or replacing data | Every project and setting on the device |
+| --- | --- | --- |
+| Project export | Every field day | One project, with its media in TAR.GZ or ZIP |
+| Database backup | Weekly, and before importing, merging, or replacing data | Every project, file, and setting on the device |
 
 {% steps %}
 
-1. Open the project menu and select `Export project`.
-2. Check the record counts and any missing-file warnings. Choose ZIP or TAR.GZ
-   to include media. `Light export` (JSON.GZ) holds records only, so it is not a
-   full backup.
-3. Save the file with the project name and date, and copy it to separate
-   storage or another device.
-4. Open the copy to make sure it is readable. Now and then, import it on another
-   installation to test that recovery works.
-5. At your regular checkpoint, also create a `Backup database`
-   {% ref id="F" /%}. Keep the previous checked backup until the new one has
-   been checked.
+1. Open the project `Dashboard` menu and select `Export project`.
+2. Check the record counts and any missing-file warnings. Leave `Light export`
+   off and choose `TAR.GZ` or `ZIP` so media are included; `Light export`
+   (`JSON.GZ`) holds records only and is not a full backup.
+3. Save the archive with the project name and date (or turn on `Append date`),
+   then copy it to separate storage or another device.
+4. Open the copy to verify it is readable, and periodically test-import it on
+   another installation.
+5. At your regular checkpoint, create a `Backup database` {% ref id="F" /%}.
+   Keep the previous checked backup until the new one is verified.
 
 {% /steps %}
 
-To recover a project, use `Import project` on the home screen, or
+To recover a single project, use `Import project` on the home screen or
 `Merge project` inside an existing project.
 
 ## Backup database {% #backup-database %}
 
-`Backup database` saves the whole installation in one ZIP or TAR.GZ archive
-{% ref id="H" /%}: the SQLite database plus the project, personnel, and
-settings folders, including files no current record links to. A bare SQLite
-file holds the records but not the media or other files.
+`Backup database` saves the entire installation in one `TAR.GZ` (default) or
+`ZIP` archive {% ref id="H" /%}: the SQLite database plus the project,
+personnel, and settings folders, including files no current record links to. A
+bare `.sqlite3` file holds records only, without media or other files.
+
+Open `Backup database` from the home screen menu, the project `Dashboard` menu,
+or `Settings` > `Database`.
 
 {% steps %}
 
-1. Open the project menu and select `Backup database`.
-2. Choose the archive format, file name, and destination.
-3. Select `Save backup` {% ref id="I" /%}.
-4. Copy the archive off the device and check it before you delete an older
+1. Select `Backup database` {% ref id="F" /%}.
+2. Choose `TAR.GZ` or `ZIP` {% ref id="H" /%}, enter a `File name` (optionally
+   turn on `Append date`), and choose a destination folder on desktop.
+3. Review the backup summary and select `Save backup` {% ref id="I" /%}. You
+   can cancel while the archive is being written.
+4. Copy the archive off the device and verify it before removing an older
    backup.
 
 {% /steps %}
 
 ## Export user configs {% #export-user-configs %}
 
-`Export user configs` {% ref id="G" /%} saves your settings so another device,
-or a future you, can work the same way. The file includes saved export presets,
-document layouts, templates, and controlled lists.
+`Export user configs` {% ref id="G" /%} saves your configuration so another
+device—or a future installation—uses the same setup without touching project
+data. You can open `Export user configs` from the home screen menu, the project
+`Dashboard` menu, or `Setup NAHPU`.
+
+Choose which sections to export:
+
+- `Controlled vocabularies and settings`
+- `Tabular export presets`
+- `Document templates`
+- `Document layout presets`
+- `Template table preview columns`
+- `Custom fields` (including selecting specific custom field definitions)
 
 {% steps %}
 
-1. Open the `Dashboard` page.
-2. Open the project menu and select `Export user configs`.
-3. Choose a `Settings format`: `JSON (.json)` or the smaller
-   `JSON.GZ (.json.gz)`.
-4. Type a `File name` and choose the `Directory`.
-5. Select `Export user configs`.
+1. Open `Export user configs` from the home screen menu, the project
+   `Dashboard` menu, or `Setup NAHPU`.
+2. Select the configuration sections to include. If `Custom fields` is checked,
+   choose which definitions to export.
+3. Review what will be written under `Will export` (under the `Preview` tab on
+   phones).
+4. Choose `JSON (.json)` or the smaller `JSON.GZ (.json.gz)`, set the
+   `File name` (with optional `Append date`), and choose a destination folder
+   on desktop.
+5. Select `Export user configs`. Use `Share`, open the folder, or save a copy
+   once the file is written.
 
 {% /steps %}
 
 ## Restoring a database {% #restoring-a-database %}
 
-Restore a database to replace everything in NAHPU on this device with a backup.
+Restoring a database replaces everything in NAHPU on this device with a backup.
+
+{% aside type="caution" %}
+
+Keep `Back up current data first` turned on unless you are sure you no longer
+need the data on this device. A database restore cannot be undone.
+
+{% /aside %}
 
 {% steps %}
 
 1. Open `Settings`.
 2. Under `Database`, select `Replace database`.
-3. Under `Replace with`, select `Browse` and choose a `.sqlite3` file, a ZIP
-   archive, or a TAR.GZ archive.
-4. Compare the two databases. NAHPU shows the backup's schema version, records,
-   files, and size next to the current database. An older backup is upgraded
-   after the restore. A file that is not a NAHPU database, or that comes from a
-   newer NAHPU version, cannot be restored; update NAHPU first.
-5. Keep `Back up current data first` on unless you are sure you no longer need
-   the current data. NAHPU saves it as a TAR.GZ archive in its backup folder.
+3. Under `Replace with`, select `Browse` and choose a `.sqlite3` file, a
+   `ZIP` archive, or a `TAR.GZ` archive.
+4. Compare the two databases. NAHPU shows schema version, records, files, and
+   size side by side. Older backups upgrade automatically after restore; files
+   from a newer NAHPU version cannot be restored until you update NAHPU.
+5. Keep `Back up current data first` turned on so NAHPU saves your current data
+   as a `TAR.GZ` archive in its backup folder.
 6. Select `Replace database` and confirm the warning.
 
 {% /steps %}
 
 What a restore does:
 
-- It replaces the active database with the one in the backup.
-- From an archive, it also copies the project files into NAHPU's documents
-  folder and imports any settings in the archive. Personnel photos from older
-  backups are moved to the personnel photo folder.
-- A media or settings file with the same name as one in the archive is
-  overwritten, without a second copy. Identical files are left alone.
-- Files that exist only on the device are kept, and appear in later backups.
+- Replaces the active database with the one in the backup.
+- From an archive, copies project files into NAHPU's documents folder and
+  imports settings from the archive. Personnel photos from older backups move
+  to the personnel photo folder.
+- Overwrites a media or settings file with the same name as one in the archive;
+  identical files are left alone.
+- Keeps files that exist only on this device, so they appear in later backups.
 
-A restore cannot be undone, which is why `Back up current data first` should
-stay on.
+## Restoring user configs {% #restoring-user-configs %}
 
-## Restoring user configs
-
-Restore user configs to replace your settings with ones from another device or
-backup.
+Import a user-config file to apply controlled vocabularies, presets, templates,
+layouts, or custom fields from another device or backup. Like exporting,
+`Import user configs` is available from the home screen menu, the project
+`Dashboard` menu, and `Setup NAHPU`.
 
 {% steps %}
 
-1. Open the project `Dashboard` menu.
-2. Select `Import user configs`.
-3. Choose a `.json` or `.json.gz` settings file.
-4. Select `Replace` and confirm the warning.
+1. Open `Import user configs` from the home screen menu, the project
+   `Dashboard` menu, or `Setup NAHPU`.
+2. Choose a `.json` or `.json.gz` user-config file.
+3. Select the sections to import and review them under `Will import` (under the
+   `Preview` tab on phones). If `Custom fields` is checked and a project is
+   open, set `Custom field destination` to `Global` or `Current project`.
+4. Select `Import selected configs` and confirm with `Import`.
 
 {% /steps %}
 
-This changes settings only, not project data. To restore both together, restore
-a ZIP or TAR.GZ database archive. For how storage and compatibility work under
-the hood, see [Data import and
-export](../../contributing/code/data-import-export-overview).
+Selected sections replace the matching settings on this device, except
+`Custom fields`, which match by template ID and merge so existing definitions
+are kept. Unselected sections stay unchanged. If imported document templates
+reference fonts not installed on this device, NAHPU prompts you to pick
+replacements.
 
-## Archiving a project
+This changes settings only, not project records. To restore both together,
+restore a `ZIP` or `TAR.GZ` database backup. For technical storage details, see
+[Data import and export](../../contributing/code/data-import-export-overview).
 
-An archive keeps a finished project usable years later, by people who may not
-have worked on it. Store the data together with enough context to know what it
-is, when it was made, with which software, and who is responsible for it.
+## Archiving a project {% #archiving-a-project %}
+
+An archive keeps a finished project usable years later by people who did not
+collect it. Store the data together with enough context to identify what it is,
+when it was made, which software created it, and who curates it.
 
 Before archiving:
 
-- Finish curating the data, and fix or write down known issues. See
+- Finish curating the data and fix or document known issues. See
   [Data Management](../../best-practices/data-management).
 - Create a fresh database backup.
-- Export user configs if the controlled lists, presets, templates, or layouts
-  are needed to repeat the work.
-- Create a full project export with `Light export` off, so media are included.
-  Check the record counts and missing-media warnings before saving.
-- Add record tables or a data package if the data will be analyzed, published,
-  or reused outside NAHPU.
+- Export user configs if controlled vocabularies, record-export presets,
+  document templates, print-layout presets, or custom fields are needed to
+  reproduce the work.
+- Create a full project export with `Light export` off so media are included,
+  checking record counts and missing-media warnings first.
+- Add tabular record exports or a data package if the data will be analyzed,
+  published, or reused outside NAHPU.
 
-Name files so they explain themselves, with the project, export type, and date,
-such as `BorneoMammals_project_20241015.tar.gz`. Keep the project export,
-database backup, settings file, and a short readme together.
+Name files clearly with the project, export type, and date, such as
+`BorneoMammals_project_20241015.tar.gz`. Store the project export, database
+backup, user-config file, and a short readme together.
 
-Store at least two copies in different places, and keep the original until the
-archive opens correctly on another device. Record the archive date, contents,
-storage locations, and any access restrictions. Open or test-restore the files
-from time to time to confirm they are still readable. Keep digital files and
-printed documents according to your institution's retention policies.
+Keep at least two copies in separate locations, and retain the original until
+the archive opens cleanly on another device. Record the archive date, contents,
+storage locations, and any access restrictions, and periodically test-open or
+test-restore the files. Follow your institution's retention policies for both
+digital files and printed documents.
 
-## Before sharing data
+## Before sharing data {% #before-sharing-data %}
 
-Before you send NAHPU data to a museum, a collaborator, or another device:
+Before sending NAHPU data to a museum, collaborator, or another device:
 
 - Create a fresh database backup.
-- Choose the right project file:
-  - `Light export` (JSON.GZ) when the recipient needs records but not media,
-    such as over a slow connection;
-  - ZIP or TAR.GZ when media or a complete copy must travel with the project.
-- Export user configs if the recipient needs your controlled lists, presets,
-  templates, or layouts.
-- Add the record files or documents the recipient asked for.
-- Test that at least one way of restoring works before you delete anything
-  from the original device.
+- Choose the right project export:
+  - `Light export` (`JSON.GZ`) when the recipient needs records without media
+    (such as over a slow connection);
+  - `TAR.GZ` or `ZIP` when media or a complete copy must travel with the
+    project.
+- Export user configs if the recipient needs your controlled vocabularies,
+  presets, templates, layouts, or custom fields.
+- Include any tabular exports, bundles, or documents the recipient requested.
+- Verify that at least one restore path works before deleting anything from the
+  source device.

@@ -318,6 +318,24 @@ export default defineConfig({
               },
             },
             {
+              label: "Supported Workflows",
+              link: "usages/workflows",
+              translations: {
+                "pt-BR": "Fluxos de Trabalho Suportados",
+                es: "Flujos de Trabajo Compatibles",
+                id: "Alur Kerja yang Didukung",
+              },
+            },
+            {
+              label: "Setup NAHPU",
+              link: "usages/setup",
+              translations: {
+                "pt-BR": "Configurar o NAHPU",
+                es: "Configurar NAHPU",
+                id: "Siapkan NAHPU",
+              },
+            },
+            {
               label: "Projects",
               link: "usages/projects",
               translations: {
@@ -472,6 +490,22 @@ export default defineConfig({
                 {
                   autogenerate: {
                     directory: "tutorials/basic",
+                  },
+                },
+              ],
+            },
+            {
+              label: "Teamwork",
+              collapsed: true,
+              translations: {
+                "pt-BR": "Trabalho em equipe",
+                es: "Trabajo en equipo",
+                id: "Kerja tim",
+              },
+              items: [
+                {
+                  autogenerate: {
+                    directory: "tutorials/teamwork",
                   },
                 },
               ],

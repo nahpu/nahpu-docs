@@ -1,50 +1,49 @@
 ---
 title: Pengumpulan Data
 sidebar:
-    label: Pengumpulan Data
-    order: 4
+  label: Pengumpulan Data
+  order: 4
 ---
 
-Catat konteks yang cukup agar peneliti lain dapat menafsirkan spesimen, mengunjungi kembali lokalitasnya, dan menilai pengamatan. **Apa pun yang tidak dapat dinyatakan sendiri oleh catatan itulah yang akan hilang.**
+Catat konteks yang cukup agar peneliti lain dapat menafsirkan spesimen, mengunjungi kembali lokasinya, dan menilai pengamatan Anda. **Apa pun yang tidak dapat dinyatakan sendiri oleh sebuah catatan akan hilang.**
 
 {% aside type="note" title="Mengapa konteks lapangan memudar" %}
-[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) menggambarkan entropi informasi yang menyusul satu musim lapangan: isi penafsiran sebuah kumpulan data merosot seiring bubarnya orang-orang yang menyimpannya dalam ingatan, dan penurunan itu paling cepat pada bulan-bulan pertama.
+[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) menjelaskan entropi informasi setelah musim lapangan: konteks interpretatif data menyusut seiring berpencarnya tim, dan menyusut paling cepat pada bulan-bulan pertama.
 {% /aside %}
 
 ## Penamaan lokasi dan koordinat
 
-**Gunakan `Site ID` yang stabil untuk satu lokalitas pengumpulan**, misalnya `PAT-01`. Simpan nama deskriptif, wilayah administratif, keterangan akses, dan penanda bentang alam pada kolom lokasi, bukan memampatkan semuanya ke dalam ID. `Site ID` yang ringkas tetapi deskriptif lebih mudah ditemukan saat memilih kegiatan pengumpulan. NAHPU otomatis menampilkan lokalitas lengkap pada tiap kolom setelah Anda memilih sebuah `Site ID`.
+**Gunakan `Site ID` yang stabil dan unik untuk tiap lokasi pengumpulan**, seperti `PAT-01` atau `GPHH-L1` (hingga 40 huruf, angka, `-`, atau `_`; NAHPU otomatis mengubah huruf menjadi kapital). Simpan nama deskriptif, wilayah administratif, akses, dan patokan di kolom lokasi, bukan menjejalkannya ke dalam ID. NAHPU menampilkan lokalitas secara otomatis saat `Site ID` dipilih, dan pencocokan saat penggabungan proyek bergantung pada `Site ID` yang persis sama.
 
-**Beri nama koordinat secara konsisten di dalam satu lokasi.** Misalnya, `PAT-01-T01-START` dan `PAT-01-T01-END` dapat menandai satu transek, sedangkan `PAT-01-TRAP-001` menandai posisi perangkap. Dokumentasikan konvensinya dan makna tiap titik. Contoh-contoh ini adalah konvensi tim, bukan pengenal yang dibuat atau diwajibkan NAHPU. Setiap spesimen harus merujuk titik koordinat yang tepat; satu lokasi dapat memuat beberapa titik.
+**Beri nama koordinat secara konsisten di dalam lokasi**, misalnya `PAT-01-T01-START` dan `PAT-01-T01-END` untuk transek, atau `PAT-01-TRAP-001` untuk titik perangkap. Dokumentasikan konvensinya dan pastikan tiap spesimen merujuk titik koordinat yang tepat.
+
+{% aside type="tip" title="Gunakan kembali lokalitas dan lokasi" %}
+Gunakan `Find existing locality` di bawah `Geography` agar tidak muncul variasi ejaan lokalitas administratif, dan gunakan `Duplicate site` atau `Copy from project ...` saat membuat jalur berdekatan di lokalitas yang sama.
+{% /aside %}
 
 ## Georeferensi {% #georeferencing %}
 
-Simpan deskripsi lokalitas dan sumber posisinya. **Banyaknya angka desimal saja tidak menjamin ketepatan.**
+Pertahankan deskripsi lokalitas dan sumber posisi. **Presisi desimal saja tidak menjamin akurasi.**
 
-{% aside type="note" title="Panduan sumber" %}
-Bagian ini menerapkan [*Georeferencing Best Practices*](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) karya Chapman & Wieczorek (2020) beserta [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/) pendampingnya (Zermoglio et al. 2020) pada kolom koordinat NAHPU. Kami menyarankan membaca keduanya untuk metode selengkapnya.
+{% bpdiagram kind="georef" locale="id" /%}
+
+{% aside type="note" title="Panduan rujukan" %}
+Bagian ini menerapkan [*Georeferencing Best Practices*](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) (Chapman & Wieczorek 2020) dan [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/) (Zermoglio et al. 2020) pada kolom koordinat NAHPU.
 {% /aside %}
 
-### Tulis lokalitas yang berdiri tanpa koordinat
+### Tulis lokalitas yang tetap jelas tanpa koordinat
 
-**Tuliskan deskripsi lokalitas sekalipun Anda punya koordinat.** Deskripsi itu adalah bukti mandiri untuk memeriksa sebuah posisi. Gunakan `Precise Locality`, hierarki geografi, dan `Remarks` untuk itu, dan buatlah cukup rinci sehingga tidak menyisakan tafsir kedua.
+**Berikan deskripsi lokalitas meskipun Anda memiliki koordinat.** Deskripsi menjadi bukti independen untuk memeriksa koordinat. Gunakan `Precise Locality`, hierarki geografi, dan `Remarks` tanpa kata samar seperti `dekat` atau arah tanpa jarak; tulis misalnya `7,2 km TL Muara Sipongi melalui jalan, di jalur punggungan di atas Shelter II`.
 
-- Hindari rumusan yang kabur: `dekat`, `pusat dari`, dan arah tanpa jarak seperti `sebelah timur Temboan`.
-- Tulislah `7,2 km timur laut Muara Sipongi lewat jalan darat, menyusuri jalur punggungan di atas Shelter II`.
+### Catat datum, selalu
 
-Deskripsi itulah yang menangkap koordinat yang salah belahan bumi atau tertukar antara lintang dan bujur. Posisi tanpa teks lokalitas tidak punya pembanding apa pun.
+**Datum yang kosong atau keliru adalah salah satu sumber kesalahan posisi terbesar** — pergeseran terhadap WGS84 dapat mencapai 5.359 m. `Datum` di NAHPU memakai WGS84 secara bawaan dan diekspor sebagai `dwc:geodeticDatum`. **Periksa pengaturan datum langsung di perangkat GPS.** Mengubah kolom `Datum` tidak mentransformasi koordinat dari datum lain; transformasikan terlebih dahulu dengan alat geospasial dan catat di `notes`.
 
-### Selalu catat datum
+### Pertahankan semua angka desimal dari sumber
 
-**Datum yang tidak dicatat atau keliru adalah salah satu sumber galat posisi terbesar.** Pergeseran antara yang tercatat pada sebagian peta dan WGS84 berkisar dari nol hingga 5359 m: galat berskala kilometer yang muncul hanya karena satu kolom dibiarkan pada nilai bawaannya.
+Memotong desimal membuang akurasi secara permanen:
 
-Kolom `Datum` NAHPU berisi WGS84 secara bawaan dan diekspor sebagai `dwc:geodeticDatum`. **Periksa setelan datum pada unit GPS itu sendiri**, jangan menganggapnya sudah cocok. Mengubah kolom `Datum` tidak mengonversi koordinat yang direkam dalam datum lain, begitu pula peralihan antarformat masukan yang diterima. Konversikan data semacam itu dengan perkakas geospasial sebelum diimpor, dan catat konversinya pada catatan.
-
-### Pertahankan semua desimal dari sumbernya
-
-Memotong angka koordinat membuang ketepatan yang tak dapat dipulihkan. Perkiraan jarak di permukaan untuk tiap angka desimal:
-
-| Angka desimal | Perkiraan jarak di permukaan |
+| Angka desimal | Perkiraan jarak di lapangan |
 |---|---|
 | 5 (0,00001°) | 1,1 m |
 | 4 (0,0001°) | 11 m |
@@ -52,71 +51,51 @@ Memotong angka koordinat membuang ketepatan yang tak dapat dipulihkan. Perkiraan
 | 2 (0,01°) | 1.111 m |
 | 1 (0,1°) | 11.111 m |
 
-Satu jalur perangkap yang dicatat dengan dua desimal berada di suatu titik dalam radius sekitar 1,1 km: lebih lebar daripada jalur perangkapnya sendiri, dan cukup lebar untuk menempatkan `PAT-01-T01-START` dan `PAT-01-T01-END` di titik yang sama. GPS genggam khusus umumnya memberi lima angka desimal. **Masukkan sebanyak mungkin desimal yang disediakan sumber koordinat.**
+GPS genggam khusus biasanya memberi lima angka desimal. **Masukkan semua angka desimal yang disediakan sumber.**
 
-### Ambil posisi di tempat kegiatan berlangsung
+### Ambil posisi tepat di tempat kejadian
 
-**Ambil pembacaan di titik pengumpulan, bukan di kamp.** Di NAHPU, ambil koordinat lewat kartu `Device GPS` di lokasi dan periksa hasilnya sebelum menerimanya. Pembacaan yang diambil belakangan di kamp menggambarkan kamp, kecuali Anda sengaja memasukkan pergeseran terdokumentasi atau posisi terkoreksi.
+**Ambil pembacaan di titik pengumpulan, bukan di perkemahan.** Gunakan kartu `Device GPS` di lokasi dan periksa hasilnya sebelum diterima. Ponsel unggulan modern memiliki akurasi setara GPS genggam, namun kami tetap menyukai GPS khusus di lapangan karena daya tahan baterainya jauh lebih lama. **Jika tablet tinggal di kemah, ambil titik di lokasi dengan ponsel atau GPS** lalu masukkan nanti disertai sumbernya.
 
-Ponsel kelas atas beberapa tahun terakhir merekam koordinat dengan ketepatan yang sebanding dengan GPS genggam khusus, sehingga mencatat langsung di NAHPU pada ponsel merupakan pilihan yang memadai. Kami tetap lebih menyukai GPS khusus untuk kerja lapangan karena baterainya jauh lebih awet. **Bila tablet yang memuat proyek ditinggal di kamp, ambil pembacaan di lokasi dengan ponsel atau unit GPS**, lalu masukkan kemudian dengan mencantumkan sumbernya.
+**Nyatakan offset sebagai jarak terukur, bukan arah kira-kira**, dan bedakan `melalui jalan` dengan `garis lurus` dari patokan permanen. **Untuk transek, catat kedua ujung sebagai koordinat terpisah.**
 
-**Nyatakan pergeseran sebagai jarak terukur, jangan sebagai arah kompas.** Ukur menyusuri jalur atau sebagai dua jarak tegak lurus dari sebuah bentang alam; cara itu menghilangkan ketidakpastian yang ditimbulkan arah kompas yang kurang presisi. Catat apakah jarak diukur menyusuri rute (`by road`) atau garis lurus (`by air`) — keduanya menggambarkan tempat yang berbeda. Gunakan penanda acuan yang tetap, seperti tengara permanen atau titik triangulasi, jangan titik singgah sementara atau kamp yang tak akan ada musim depan.
+### Tetapkan ketidakpastian dari perangkat, lalu perlebar
 
-**Untuk transek, catat kedua ujungnya sebagai koordinat terpisah**, dan untuk itulah konvensi `-START` dan `-END` di atas. Satu lokasi dapat memuat titik sebanyak yang dibutuhkan protokol.
+Dua aturan praktis:
 
-### Tetapkan ketidakpastian dari pembacaan perangkat, lalu perlebar
+- **Masukkan minimal dua kali akurasi yang dilaporkan GPS** saat pengambilan titik.
+- **Jika akurasi tidak diketahui, gunakan 30 m**, nilai konservatif untuk pembacaan setelah Mei 2000.
 
-Dua aturan yang bisa langsung diterapkan:
+Merata-ratakan beberapa pembacaan membawa penerima modern ke ~3 m atau lebih baik. NAHPU menyimpan `Uncertainty (m)` dalam meter bulat dan mengekspornya ke `dwc:coordinateUncertaintyInMeters`. **Catat `Elevation (m)` dengan kehati-hatian serupa**: elevasi GPS sering meleset 5 m atau lebih; jika memakai DEM atau altimeter, sebutkan di `notes`.
 
-- **Masukkan sekurang-kurangnya dua kali lipat ketepatan yang dilaporkan GPS** pada saat pengambilan.
-- **Bila ketepatannya tidak diketahui, gunakan 30 m**, nilai bawaan yang konservatif untuk pembacaan alat genggam setelah Mei 2000, saat Selective Availability dihentikan.
-
-Alasan memperlebar angka perangkat adalah bahwa ketepatan yang dilaporkan mengandaikan kondisi yang jarang Anda dapatkan di bawah tegakan hutan. **Merata-ratakan beberapa pembacaan pada satu posisi** membawa penerima modern ke sekitar 3 m atau lebih baik, sepadan dengan beberapa menit di lokasi yang akan Anda kutip selama puluhan tahun.
-
-{% aside type="note" title="Kinerja penerima menurut publikasi" %}
-Kedua aturan di atas berasal dari [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). [Chapman & Wieczorek](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) merangkum kinerja terukur di baliknya: alat genggam menjanjikan di bawah 5 m di area terbuka dengan empat satelit atau lebih; ponsel mencapai sekitar 4,9 m di bawah langit terbuka dan memburuk di dekat pohon dan bangunan; ketepatan di hutan berkisar 3–11 m pada hutan luruh daun tanpa daun dan 3–20 m saat berdaun.
+{% aside type="note" title="Kinerja penerima dalam literatur" %}
+Kedua aturan di atas berasal dari [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). [Chapman & Wieczorek](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) merangkum bahwa GPS genggam mencapai di bawah 5 m di area terbuka, ponsel ~4,9 m di ruang terbuka, dan akurasi di hutan berkisar 3–20 m tergantung tajuk.
 {% /aside %}
 
-NAHPU menyimpan `Uncertainty (m)` dalam meter bulat dan mengekspornya sebagai `dwc:coordinateUncertaintyInMeters`. Pengambilan lewat perangkat dapat mengisinya dari ketepatan yang dilaporkan sistem operasi.
+### Bedakan ketidakpastian koordinat dan luas spesimen
 
-**Catat `Elevation (m)` dengan kehati-hatian yang sama.** Elevasi GPS umumnya meleset 5 m atau lebih, dan model elevasi digital sering menjadi sumber yang lebih baik; bila Anda mengambil elevasi dari DEM atau altimeter, sebutkan pada catatan.
+`Coordinate extent (m)` menjelaskan luas area pengumpulan spesimen terhadap titik terpilih dan terpisah dari ketidakpastian koordinat. Saat ekspor Darwin Core, NAHPU menjumlahkan ketidakpastian positif dan luas positif. **Hindari menghitung area yang sama dua kali.**
 
-### Bedakan ketidakpastian dan rentang spesimen
+### Catat siapa yang mengambil koordinat dan caranya
 
-`Coordinate extent (m)` pada spesimen menggambarkan rentang ruang spesimen terhadap titik yang dipilih, misalnya area pengumpulan yang diwakili satu koordinat. **Ini berbeda dari ketidakpastian koordinat.** Dokumentasikan makna dan cara pengukuran rentang yang dipakai protokol Anda.
-
-Pemetaan Darwin Core NAHPU menjumlahkan nilai positif ketidakpastian koordinat dan rentang spesimen; bila hanya satu yang terisi, nilai itulah yang dipakai. Ini perilaku ekspor, bukan metode umum menghitung ketidakpastian georeferensi. **Hindari menghitung rentang yang sama dua kali**, dan periksa nilai hasil ekspor terhadap metode yang Anda dokumentasikan sebelum publikasi.
-
-{% aside type="note" title="Perhitungan lengkapnya" %}
-Metode titik-radius pada [Chapman & Wieczorek](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) menggabungkan luas bentang alamnya, ketepatan sumber koordinat, presisi koordinat, datum, dan galat pengukuran pergeseran.
-{% /aside %}
-
-### Catat siapa yang mengambil koordinat, dan bagaimana
-
-**NAHPU menganggap koordinat dicatat oleh ketua lokasi. Bila pembacaan diambil orang lain, sebutkan pada `notes` koordinat tersebut.**
-
-Catat metodenya di sana juga. NAHPU membawa `notes` ke `dwc:georeferenceRemarks`, entri verbatim ke `dwc:verbatimCoordinates` dan `dwc:verbatimCoordinateSystem`, serta `GPS unit` untuk perangkat yang dipakai. Kumpulan data yang tak dapat menjelaskan bagaimana koordinatnya dibuat tidak dapat dinilai ulang kemudian.
+**NAHPU menganggap pemimpin lokasi yang mencatat koordinat; jika orang lain yang mengambilnya, tulis di `notes`.** Catat pula metodenya: `notes` diekspor ke `dwc:georeferenceRemarks`, entri mentah ke `dwc:verbatimCoordinates` dan `dwc:verbatimCoordinateSystem`, serta `GPS unit` menyimpan perangkatnya.
 
 ### Tinjau titik hasil impor
 
-Untuk CSV, TSV, atau Excel, petakan `Latitude` dan `Longitude` ke kolom derajat desimal melalui `Edit column mapping`. Tinjau pemetaan opsional untuk nama, elevasi, unit GPS, dan catatan. Periksa peringatan dan pilih hanya titik yang dimaksud pada `Review coordinates` sebelum menambahkannya.
+Untuk CSV, TSV, atau Excel, petakan `Latitude` dan `Longitude` dalam derajat desimal di `Edit column mapping` dan tinjau peringatan di `Review coordinates`. **Pengimpor menetapkan WGS84 dan tidak memetakan ketidakpastian.** Pastikan sistem koordinat sebelum impor lalu lengkapi metadata setelahnya. Lihat [impor koordinat](/id/usages/sites/#import-coordinates-from-a-file).
 
-**Pengimpor lembar sebar menetapkan WGS84 dan tidak memetakan ketidakpastian.** Mengingat kasus terburuk 5359 m di atas, pastikan sistem koordinat sumbernya sebelum impor, bukan sesudah; lalu periksa titik yang ditambahkan dan lengkapi metadata yang kurang. Baris yang berhasil terbaca bukan bukti bahwa titiknya menggambarkan lokalitas yang benar. Lihat [impor koordinat](/id/usages/sites/#import-coordinates-from-a-file).
+## Kegiatan pengumpulan dan narasi lapangan
 
-## Kegiatan pengumpulan dan pengamatan
+**Buat kegiatan yang mencerminkan kunjungan atau periode sampling protokol Anda.** Pastikan lokasi, tanggal, jam (jam lokal proyek), metode, dan personel benar. Menduplikasi kegiatan mengosongkan data lingkungan, dan data astronomi diisi manual.
 
-**Buat kegiatan pengumpulan yang mencerminkan kunjungan atau periode pencuplikan dalam protokol Anda.** Pastikan lokasi, tanggal, waktu, metode, dan personel pengumpul sudah benar. Menggandakan sebuah kegiatan menyisakan data lingkungan yang kosong, jadi masukkan pengamatan untuk kegiatan yang baru. Nilai astronomi dimasukkan secara manual.
+**Tulis `Narrative` singkat di akhir setiap hari lapangan.** Kolom terstruktur tidak mencatat hujan deras yang menutup jaring lebih awal, semut di jalur perangkap, atau perubahan metode di tengah minggu. Tautkan tiap narasi ke `Site ID`, tanggal, dan `Writer`.
 
-**Catat pengukuran dengan satuan yang ditampilkan, dan bedakan nol dari nilai yang tidak dicatat.** Jelaskan perkiraan atau pengecualian pada catatan. Gunakan kolom khusus yang disepakati untuk pengamatan berulang, dan periksa ketersediaannya pada katalog serta penempatan yang relevan.
-
-**Sebelum meninggalkan lokasi, buka kembali beberapa spesimen mewakili** dan periksa kegiatan, koordinat, identifikasi, ID lapangan, bagian spesimen, dan lampirannya. Catat pertanyaan yang belum terjawab selagi konteksnya masih ada. Inilah saat termurah untuk menahan kemerosotan itu, karena jawabannya masih ada di kamp, bukan di ingatan seseorang setahun kemudian.
+**Sebelum meninggalkan lokasi, buka kembali spesimen perwakilan** dan periksa kegiatan, koordinat, identifikasi, Field ID, bagian, serta lampiran. Untuk praktik pencatatan tingkat spesimen, lihat [Spesimen, Bagian, dan Media](/id/best-practices/specimen-records/).
 
 ## Referensi
 
-Chapman AD & Wieczorek JR (2020). [Georeferencing Best Practices](https://docs.gbif.org/georeferencing-best-practices/1.0/en/). GBIF Secretariat, Kopenhagen.
+Chapman AD & Wieczorek JR (2020). [Georeferencing Best Practices](https://docs.gbif.org/georeferencing-best-practices/1.0/en/). GBIF Secretariat, Copenhagen.
 
-Zermoglio PF, Chapman AD, Wieczorek JR, Luo M-Y & Bloom DA (2020). [Georeferencing Quick Reference Guide](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). GBIF Secretariat, Kopenhagen.
+Zermoglio PF, Chapman AD, Wieczorek JR, Luo M-Y & Bloom DA (2020). [Georeferencing Quick Reference Guide](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/). GBIF Secretariat, Copenhagen.
 
 Michener WK, Brunt JW, Helly JJ, Kirchner TB & Stafford SG (1997). [Nongeospatial metadata for the ecological sciences](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2). *Ecological Applications* 7:330–342.
-
-Gunakan panduan ini bersama protokol operasional terdokumentasi yang mencerminkan metode yang benar-benar dipakai.

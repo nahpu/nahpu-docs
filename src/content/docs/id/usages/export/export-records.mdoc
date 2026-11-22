@@ -11,8 +11,8 @@ sidebar:
    smallAlt="Layar Ekspor catatan NAHPU di ponsel"
    small2="app-screenshots/usage/records-small-2.webp"
    small2Alt="Layar Pratinjau Ekspor catatan NAHPU di ponsel" %}
-{% pin id="A" label="Preset ekspor" large=[47.2, 33.7] small=[30.5, 41.2] /%}
-{% pin id="B" label="Kelola preset" large=[34, 43.1] small=[56, 51.5] /%}
+{% pin id="A" label="Setelan awal ekspor" large=[47.2, 33.7] small=[30.5, 41.2] /%}
+{% pin id="B" label="Kelola setelan awal" large=[34, 43.1] small=[56, 51.5] /%}
 {% pin id="C" label="Format berkas" large=[47.2, 59.5] small=[28.1, 65.4] /%}
 {% pin id="D" label="Pratinjau tabel" large=[83, 83.5] small2=[69, 81.7] /%}
 {% pin id="E" label="Ekspor catatan" large=[57.5, 93.2] small=[69.8, 92.3] /%}
@@ -21,51 +21,54 @@ sidebar:
 {% /screenshots %}
 
 Gunakan `Ekspor catatan` untuk menyimpan catatan proyek aktif sebagai berkas
-CSV, TSV, Excel, atau JSON. Prasetel ekspor yang tersimpan menentukan catatan
-mana yang menjadi baris, kolom apa saja yang dimilikinya, dan nama kolomnya.
+CSV, TSV, Excel, atau JSON. Setelan awal ekspor tabel yang tersimpan menentukan
+catatan mana yang menjadi baris, kolom apa saja yang disertakan, dan bagaimana
+nama tajuknya.
 
 ## Cara cepat mengekspor catatan
 
 {% steps %}
 
-1. Buka menu proyek dan pilih `Ekspor catatan`.
-2. Pilih `Prasetel ekspor` {% ref id="A" /%}. Untuk membuat atau mengubahnya,
-   pilih `Kelola prasetel` {% ref id="B" /%}.
-3. Periksa ringkasan prasetel: jenis catatan, format tajuk, dan kolom. Pilih
-   `Pratinjau tabel` {% ref id="D" /%} untuk melihat baris yang sebenarnya. Di
-   ponsel, pratinjau ada di tab `Pratinjau` {% ref id="F" /%}.
-4. Pilih format berkas {% ref id="C" /%} dan ketik nama berkas. Aktifkan
-   `Tambahkan tanggal saat ini` {% ref id="G" /%} untuk menambahkan tanggal ke
-   nama. JSON tidak mendukung tajuk Darwin Core.
-5. Pilih lokasi penyimpanan dan pilih `Ekspor catatan` {% ref id="E" /%}.
-6. Buka berkas dan periksa baris, tajuk, satuan, dan nilai berulang. Gunakan
-   `Bagikan` untuk mengirimnya, atau `Ekspor lagi` untuk membuat berkas lain.
+1. Buka menu dasbor proyek lalu pilih `Ekspor catatan`.
+2. Pilih `Setelan awal ekspor` {% ref id="A" /%}. Untuk membuat atau mengubah
+   setelan awal, pilih `Kelola setelan awal` {% ref id="B" /%}.
+3. Periksa ringkasan setelan awal (jenis catatan, format tajuk, dan kolom) lalu
+   pilih `Pratinjau tabel` {% ref id="D" /%} untuk melihat baris data nyata. Di
+   ponsel, buka tab `Pratinjau` {% ref id="F" /%}.
+4. Pilih format berkas {% ref id="C" /%} dan isi nama berkas. Aktifkan
+   `Tambahkan tanggal` {% ref id="G" /%} untuk menambahkan tanggal hari ini.
+   JSON tidak mendukung tajuk Darwin Core.
+5. Pilih folder tujuan di desktop lalu pilih `Ekspor catatan` {% ref id="E" /%}.
+6. Periksa berkas hasil ekspor untuk memastikan baris, tajuk, satuan, dan
+   nilai berulang sesuai. Setelah selesai, bagikan, buka folder, simpan
+   salinan, atau pilih `Ekspor lagi`.
 
 {% /steps %}
 
 ## Penjelasan {% #deep-dive %}
 
-Prasetel ekspor tabular adalah resep tersimpan untuk satu tabel. Prasetel
-menentukan tiga hal:
+Setelan awal ekspor tabel adalah resep yang dapat dipakai ulang untuk satu tabel.
+Setelan awal menentukan tiga hal:
 
-- **Catatan mana** yang menjadi baris: `Jenis catatan`, dan untuk spesimen,
-  `Kelompok takson spesimen`.
-- **Kolom apa saja** yang dimiliki setiap baris, diatur di `Sunting Kolom`.
-- **Nama tajuk**, diatur oleh `Format tajuk yang dihasilkan` atau oleh nama yang
-  Anda berikan pada setiap kolom.
+- **Baris:** jenis catatan dan, untuk spesimen, kelompok takson spesimen
+  (`Semua takson`, `Mamalia`—termasuk kelelawar, `Burung`, `Herpetofauna`,
+  `Invertebrata`, atau `Ikan`).
+- **Kolom:** bidang yang diatur pada penyuntingan bidang.
+- **Tajuk:** diatur melalui format tajuk otomatis atau penamaan manual tiap
+  kolom.
 
-Semua ini diubah di `Pengaturan` > `Data tabular`, bukan di layar ekspor.
-Perubahan bidang dan pengaturan langsung tersimpan. Nama prasetel dan
-`Deskripsi` opsional (hingga 80 karakter, tampil di bawah nama dalam daftar)
-baru tersimpan setelah Anda memilih `Perbarui`. Gunakan `Duplikat` untuk
-membuat prasetel baru dari prasetel yang ada.
+Ubah setelan awal di `Pengaturan` > `Data tabular`, bukan di layar ekspor.
+Perubahan bidang dan format tersimpan langsung; nama setelan awal dan deskripsi
+opsional (maksimal 80 karakter, tampil di bawah nama pada daftar) tersimpan
+saat Anda memilih perbarui. Gunakan duplikasi untuk membuat setelan awal baru dari
+yang sudah ada.
 
-### Apa itu satu baris
+### Arti setiap baris
 
-| Jenis catatan | Satu baris per |
-|---|---|
-| `Spesimen` | Spesimen. Bagian dan detail berulang lainnya dapat digabung dalam satu sel atau disebar ke kolom bernomor. |
-| `Bagian spesimen` | Bagian spesimen, seperti kulit atau tabung jaringan, dengan detail spesimennya diulang di setiap baris. Cocok untuk inventaris jaringan. |
+| Jenis catatan | Satu baris mewakili |
+| --- | --- |
+| `Spesimen` | Spesimen. Bagian dan detail berulang dapat digabung dalam satu sel atau dipecah ke kolom bernomor. |
+| `Bagian spesimen` | Bagian spesimen (misalnya kulit atau tabung jaringan), dengan data spesimennya diulang tiap baris. Cocok untuk inventaris jaringan. |
 | `Lokasi` | Lokasi. |
 | `Peristiwa koleksi` | Peristiwa koleksi. |
 | `Narasi` | Entri narasi. |
@@ -73,128 +76,123 @@ membuat prasetel baru dari prasetel yang ada.
 
 ### Jenis kolom
 
-Setiap kolom di `Pemetaan terpilih` adalah salah satu dari empat jenis, yang
-dipilih di `Jenis pemetaan`:
+Setiap kolom dalam `Pemetaan terpilih` memakai salah satu dari empat jenis
+pemetaan:
 
-| Jenis pemetaan | Gunakan untuk | Contoh keluaran |
-|---|---|---|
-| `Bidang tunggal` | Satu bidang NAHPU, apa adanya atau dengan format lain. | `Rattus` |
-| `Bidang daftar` | Beberapa bidang yang digabung, melewati yang kosong. | `Indonesia, West Java, Cibodas` |
-| `Bidang kustom` | Bidang yang dicampur dengan teks Anda sendiri, atau teks saja. | `HH-156` |
-| `Catatan bersarang` | Catatan berulang, seperti bagian atau kolektor sebuah spesimen. | `Skin; Skull; Tissue` |
+| Jenis pemetaan | Kegunaan | Contoh hasil |
+| --- | --- | --- |
+| Bidang tunggal | Satu bidang NAHPU, apa adanya atau diformat ulang. | `Rattus` |
+| Bidang daftar | Beberapa bidang digabung, melewati yang kosong. | `Indonesia, West Java, Cibodas` |
+| Bidang kustom | Bidang dicampur teks tetap, atau teks tetap saja. | `HH-156` |
+| Catatan bersarang | Catatan anak berulang, seperti bagian spesimen atau kolektor. | `Skin; Skull; Tissue` |
 
 Centang bidang di `Sisipkan bidang sumber` (`Bidang tersedia` di ponsel) untuk
-menambahkannya sebagai `Bidang tunggal`. Gunakan `Tambah bidang kustom` dan
-`Tambah bersarang` untuk jenis lainnya. Pilih ikon pensil pada kolom untuk
-mengubahnya, dan seret pegangannya untuk mengubah urutan. Bidang kustom dan
-keluaran bersyarat dijelaskan di
-[Ekspresi ekspor](/id/usages/export/export-expressions/#custom-fields).
+menambahkannya sebagai bidang tunggal. Gunakan `Tambah bidang kustom` dan
+`Tambah bersarang` untuk jenis lainnya. Pilih ikon edit kolom untuk
+mengaturnya, lalu seret gagangnya untuk mengubah urutan. Lihat
+[Ekspresi ekspor](/id/usages/export/export-expressions/#custom-fields) untuk
+bidang kustom dan keluaran bersyarat.
 
 ### Memformat bidang tunggal
 
-Kolom `Bidang tunggal` dapat mengubah format nilainya melalui `Format nilai`:
+Kolom bidang tunggal dapat mengubah nilainya melalui format nilai:
 
 | Format nilai | Fungsinya |
-|---|---|
-| `Teks biasa` | Menulis nilai apa adanya. |
-| `Teks terkode` | Menulis label dari kode yang tersimpan, misalnya `Jantan` untuk `0`. |
-| `Koordinat` | Menulis koordinat dalam format yang diatur di `Lanjutan`. |
-| `Tanggal` | Menulis tanggal dalam format yang diatur di `Lanjutan` > `Opsi format mentah`, misalnya `dd/mm/yyyy`. |
-| `Kurung bersyarat`, `Bidang bersyarat`, `Nilai bersyarat` | Mengurung atau mengganti nilai saat kondisi terpenuhi; lihat [Keluaran bersyarat](/id/usages/export/export-expressions/#conditional-output). |
+| --- | --- |
+| Teks normal | Menulis nilai sebagaimana tersimpan. |
+| Teks berkode | Menulis label terbaca untuk kode numerik, seperti `Male` untuk `0`. |
+| Koordinat | Memformat koordinat sesuai gaya di `Lanjutan`. |
+| Tanggal | Memformat tanggal sesuai opsi format mentah di `Lanjutan`, misalnya `dd/mm/yyyy`. |
+| Kurung bersyarat, bidang bersyarat, nilai bersyarat | Memberi tanda kurung atau mengganti nilai bila syarat terpenuhi; lihat [Keluaran bersyarat](/id/usages/export/export-expressions/#conditional-output). |
 
-Setiap jenis kolom juga dapat memakai `Ganti teks` untuk menulis ulang nilai
-setelah diformat, misalnya untuk mengganti nama jenis bagian sesuai basis data
-penerima.
+Semua jenis kolom juga mendukung penggantian teks untuk menulis ulang nilai
+setelah diformat—misalnya mengganti nama jenis preparasi agar cocok dengan
+basis data penerima.
 
 ### Nilai berulang
 
-Sebagian nilai berulang: satu spesimen dapat memiliki banyak bagian, kolektor,
-atau metode koleksi. Kolom `Bidang daftar` dan `Catatan bersarang` menentukan
-cara menuliskannya:
+Jika spesimen memiliki banyak bagian, kolektor, atau metode koleksi, kolom
+daftar dan catatan bersarang mengatur cara penulisan nilai berulang:
 
 | Keluaran | Hasil |
-|---|---|
-| `Satu kolom` | Semua nilai dalam satu sel, digabung dengan pemisah yang Anda pilih. |
-| `Kolom berindeks` | Satu kolom, atau satu kelompok kolom, per nilai, misalnya `prep_1_type`, `prep_2_type`, … Jumlah kolom mengikuti catatan dengan nilai terbanyak. |
-| `Baris berulang` | Khusus catatan bersarang: satu baris per nilai, dengan sisa catatan diulang. Hanya satu kolom per prasetel yang dapat melakukannya. |
+| --- | --- |
+| Satu kolom | Semua nilai dalam satu sel, dipisahkan pemisah pilihan Anda. |
+| Kolom berindeks | Satu kolom (atau grup kolom) per nilai, seperti `prep_1_type`, `prep_2_type`, … Jumlah kolom mengikuti catatan dengan nilai terbanyak. |
+| Baris berulang | Khusus catatan bersarang: satu baris per nilai dengan mengulang catatan induk. Maksimal satu kolom per setelan awal. |
 
-Dengan `Kolom berindeks` atau `Baris berulang`, setiap bidang anak pada kolom
-bersarang dapat memiliki `Nama kolom (opsional)` sendiri. Tulis `{n}` di tempat
-nomor: `PrepType{n}Count` menghasilkan `PrepType1Count`, `PrepType2Count`, dan
-seterusnya. Nama tanpa `{n}` mendapat nomor dengan gaya
-`Nama kolom berindeks`.
+Pada kolom berindeks atau baris berulang, setiap bidang anak dapat diberi nama
+kolom sendiri. Tulis `{n}` di posisi nomor urut: `PrepType{n}Count` menjadi
+`PrepType1Count`, `PrepType2Count`, dan seterusnya. Nama tanpa `{n}` mengikuti
+gaya penomoran kolom berindeks.
 
-Pratinjau catatan dengan beberapa nilai untuk memastikan bentuknya sesuai bagi
-perangkat lunak penerima.
+Pratinjau catatan yang punya banyak nilai untuk memastikan bentuk tabel sesuai
+dengan aplikasi tujuan.
 
 ### Tajuk kolom
 
-`Format tajuk yang dihasilkan` menamai setiap kolom yang belum Anda beri nama:
+Format tajuk otomatis memberi nama kolom yang tidak diberi nama manual:
 
 | Format | Tajuk untuk `specimen::uuid` |
-|---|---|
+| --- | --- |
 | `table::fieldName` | `specimen::uuid` |
 | `fieldName` | `uuid` |
 | `Darwin Core (dwc:/dcterms:)` | `dwc:occurrenceID` |
 | `NAHPU namespace (nahpu:table.field)` | `nahpu:specimen.uuid` |
 
-Nama yang diketik di `Nama kolom` selalu diutamakan. Pilih format yang diminta
-penerima, lalu periksa tajuknya di pratinjau.
+Nama kolom manual selalu diutamakan.
 
-Dengan tajuk Darwin Core, bidang yang tidak memiliki istilah Darwin Core tetap
-memakai tajuk NAHPU; format ini tidak mengubah setiap pengamatan menjadi istilah
-baku. Keluaran Darwin Core juga:
+Dengan tajuk Darwin Core, bidang tanpa istilah Darwin Core mempertahankan tajuk
+NAHPU daripada dipaksa memakai istilah perkiraan. Keluaran Darwin Core juga:
 
 - mencatat identifikasi atas nama determinator spesimen;
-- mempertahankan koordinat verbatim;
-- menambahkan luasan koordinat spesimen yang positif ke ketidakpastian
-  koordinat yang positif. Periksa nilai gabungan itu terhadap
+- mempertahankan koordinat verbatim asli;
+- menambahkan luas koordinat spesimen positif ke ketidakpastian koordinat
+  positif—periksa nilai gabungan ini terhadap
   [metode georeferensi](/id/best-practices/data-collection/#georeferencing)
-  proyek.
+  proyek Anda.
 
-Satuan ukuran tidak dikonversi; periksa di keluaran.
+Satuan pengukuran tidak dikonversi; periksa langsung pada hasil ekspor.
 
 ### Kolom kosong
 
-Lembar penerima dapat memiliki kolom yang tidak dicatat NAHPU, seperti benua.
-Tambahkan bidang kustom, beri nama kolom, dan biarkan nilainya kosong. Bidang
-itu ditulis sebagai kolom kosong, sehingga berkas tetap sejajar dengan
-lembarnya.
+Jika lembar kerja penerima mengharapkan kolom yang tidak dicatat NAHPU (seperti
+benua), tambahkan bidang kustom dengan nama kolom tersebut dan biarkan
+ekspresinya kosong agar urutan kolom tetap sejajar.
 
 ### Bidang pengamatan tambahan
 
-Bidang kustom yang Anda buat di `Pengaturan`, seperti pengamatan lingkungan,
-diekspor seperti bidang lainnya. Kunci sumbernya memakai ID bidang, misalnya
-`customEnvironment::<definition UUID>`. Ekspor peristiwa dan spesimen tetap
-menyertakan nilai tersimpan meskipun bidang itu disembunyikan di formulir;
-menyembunyikan bidang tidak mengecualikannya dari ekspor.
+Bidang kustom yang dibuat di `Pengaturan` (seperti pengamatan lingkungan)
+diekspor seperti bidang default dengan kunci seperti
+`customEnvironment::<UUID definisi>`. Ekspor peristiwa dan spesimen menyertakan
+nilai tersimpan meskipun bidang disembunyikan di formulir; menyembunyikan
+bidang tidak mengecualikannya dari ekspor.
 
 ### Format berkas
 
-| Format | Gunakan untuk |
-|---|---|
-| CSV atau TSV | Pertukaran dengan basis data dan skrip. |
-| Excel | Peninjauan di lembar kerja. |
-| JSON | Perangkat lunak yang membaca JSON. Tajuk Darwin Core tidak tersedia. |
+| Format | Paling cocok untuk |
+| --- | --- |
+| `CSV` atau `TSV` | Pertukaran dengan basis data, R, Python, dan skrip lainnya. |
+| `Excel` | Meninjau tabel di aplikasi lembar kerja. |
+| `JSON` | Perangkat lunak yang membaca JSON langsung (tajuk Darwin Core tidak tersedia). |
 
-Buka berkas di alat yang akan memakainya. Lembar kerja dapat menghapus angka nol
-di depan ID dan menafsirkan ulang tanggal.
+Selalu periksa berkas hasil di aplikasi tujuan—lembar kerja dapat menghapus
+angka nol di awal ID atau menafsirkan ulang tanggal secara otomatis.
 
-[Tutorial Mamalogi LSUMZ](/id/tutorials/export/specify-export-preset/) membuat
-prasetel lengkap untuk basis data museum, memakai sebagian besar opsi di halaman
-ini.
+[Tutorial Mamalogi LSUMZ](/id/tutorials/export/specify-export-preset/)
+menunjukkan pembuatan setelan awal lengkap untuk basis data museum menggunakan
+sebagian besar opsi di halaman ini.
 
 ## Transfer dan pemulihan
 
-Ekspor catatan adalah salinan satu arah: NAHPU tidak dapat mengimpornya kembali
+Ekspor catatan bersifat satu arah: NAHPU tidak dapat mengimpornya kembali
 sebagai proyek. Untuk memindahkan atau memulihkan data di NAHPU, gunakan:
 
 - [transfer proyek](/id/usages/export/project-transfer/) atau
-  [NAHPU Data Package](/id/usages/export/export-bundles/) untuk memindahkan
-  proyek ke instalasi lain, dengan `Impor proyek` di layar beranda, atau untuk
-  menggabungkan kontribusi dengan `Gabungkan proyek` di proyek yang ada;
+  [NAHPU Data Package](/id/usages/export/export-bundles/) melalui
+  `Impor proyek` di layar beranda atau `Gabungkan proyek` di dalam proyek
+  terbuka;
 - [cadangan basis data](/id/usages/export/#backup-database) untuk memulihkan
   seluruh instalasi.
 
-Untuk membagikan prasetel kepada tim, lihat
-[Buat preset ekspor tabular](/id/how-to-recipes/export-and-print/create-export-preset/).
+Untuk membagikan satu setelan awal ke tim Anda, lihat
+[Membuat setelan awal ekspor tabular](/id/how-to-recipes/export-and-print/create-export-preset/).

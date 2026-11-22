@@ -1,0 +1,217 @@
+---
+// Field-data workflows supported by NAHPU (Workflows A, B, and C). The page
+// supplies every word through `workflow` child tags; each child renders its own
+// schematic and text panel. Without JavaScript, all panels stay visible in
+// order; with it, tabs switch between them.
+interface WorkflowTab {
+  id: string;
+  short: string;
+}
+
+interface Props {
+  label: string;
+  items: WorkflowTab[];
+}
+
+const { label, items } = Astro.props;
+---
+
+<figure class="wf not-content" data-workflows aria-label={label}>
+  <div class="wf__tabs" role="tablist" aria-label={label} hidden>
+    {
+      items.map((item, index) => (
+        <button
+          type="button"
+          role="tab"
+          class="wf__tab"
+          id={`wf-tab-${item.id}`}
+          aria-controls={`wf-panel-${item.id}`}
+          aria-selected={String(index === 0)}
+          tabindex={index === 0 ? 0 : -1}
+          data-id={item.id}
+        >
+          <span class="wf__badge" aria-hidden="true">{item.id}</span>
+          <span>{item.short}</span>
+        </button>
+      ))
+    }
+  </div>
+  <div class="wf__panels">
+    <slot />
+  </div>
+</figure>
+
+<style>
+  .wf {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+    border: 1px solid color-mix(in srgb, var(--color-silver-tree-500) 22%, transparent);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--color-silver-tree-50) 78%, white);
+    padding: 0.9rem;
+    box-shadow: 0 4px 18px rgb(14 37 31 / 0.06);
+  }
+
+  @media (min-width: 56rem) {
+    .wf {
+      padding: 1.25rem;
+    }
+  }
+
+  .wf__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .wf__tabs[hidden] {
+    display: none;
+  }
+
+  .wf__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.95rem 0.35rem 0.35rem;
+    border: 1px solid color-mix(in srgb, var(--color-silver-tree-500) 28%, transparent);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.7);
+    color: var(--color-silver-tree-900);
+    font: inherit;
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .wf__tab:hover {
+    border-color: var(--color-silver-tree-500);
+    background: var(--color-silver-tree-100);
+  }
+
+  .wf__tab:focus-visible {
+    outline: 2px solid var(--color-silver-tree-600);
+    outline-offset: 2px;
+  }
+
+  .wf__tab[aria-selected="true"] {
+    border-color: var(--color-silver-tree-700);
+    background: var(--color-silver-tree-700);
+    color: var(--color-silver-tree-50);
+    box-shadow: 0 2px 8px rgb(34 77 65 / 0.24);
+  }
+
+  .wf__badge {
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-silver-tree-500) 18%, transparent);
+    font-size: var(--sl-text-xs);
+    font-weight: 700;
+  }
+
+  .wf__tab[aria-selected="true"] .wf__badge {
+    background: rgb(243 250 247 / 0.22);
+  }
+
+  .wf__panels {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  :global([data-theme="dark"]) .wf {
+    border-color: color-mix(in srgb, var(--color-silver-tree-400) 22%, transparent);
+    background: color-mix(in srgb, var(--color-silver-tree-950) 68%, #17181c);
+    box-shadow: 0 6px 24px rgb(0 0 0 / 0.35);
+  }
+
+  :global([data-theme="dark"]) .wf__tab {
+    border-color: color-mix(in srgb, var(--color-silver-tree-300) 24%, transparent);
+    background: color-mix(in srgb, var(--color-silver-tree-900) 55%, transparent);
+    color: var(--color-silver-tree-100);
+  }
+
+  :global([data-theme="dark"]) .wf__tab:hover {
+    border-color: var(--color-silver-tree-400);
+    background: color-mix(in srgb, var(--color-silver-tree-800) 80%, transparent);
+  }
+
+  :global([data-theme="dark"]) .wf__tab[aria-selected="true"] {
+    border-color: var(--color-silver-tree-300);
+    background: var(--color-silver-tree-300);
+    color: var(--color-silver-tree-950);
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.32);
+  }
+
+  :global([data-theme="dark"]) .wf__tab[aria-selected="true"] .wf__badge {
+    background: rgb(14 37 31 / 0.16);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wf__tab {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  for (const figure of document.querySelectorAll<HTMLElement>("[data-workflows]")) {
+    const tablist = figure.querySelector<HTMLElement>(".wf__tabs");
+    const tabs = [...figure.querySelectorAll<HTMLButtonElement>(".wf__tab")];
+    const panels = [...figure.querySelectorAll<HTMLElement>("[data-workflow-panel]")];
+    if (!tablist || tabs.length === 0 || panels.length === 0) continue;
+
+    const select = (tab: HTMLButtonElement, focus = false) => {
+      for (const other of tabs) {
+        const selected = other === tab;
+        other.setAttribute("aria-selected", String(selected));
+        other.tabIndex = selected ? 0 : -1;
+      }
+      for (const panel of panels) {
+        panel.hidden = panel.dataset.id !== tab.dataset.id;
+      }
+      if (focus) tab.focus();
+    };
+
+    tablist.hidden = false;
+    for (const panel of panels) {
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", `wf-tab-${panel.dataset.id}`);
+    }
+    const tabForHash = () =>
+      tabs.find(
+        (tab) => location.hash.toLowerCase() === `#workflow-${tab.dataset.id?.toLowerCase()}`,
+      );
+    select(tabForHash() ?? tabs[0]);
+    // Links such as `#workflow-b` on the same page switch tabs, then scroll to the heading.
+    window.addEventListener("hashchange", () => {
+      const tab = tabForHash();
+      if (!tab) return;
+      select(tab);
+      document.getElementById(location.hash.slice(1))?.scrollIntoView();
+    });
+
+    for (const [index, tab] of tabs.entries()) {
+      tab.addEventListener("click", () => select(tab));
+      tab.addEventListener("keydown", (event) => {
+        let next: number | null = null;
+        if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+        else if (event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === "Home") next = 0;
+        else if (event.key === "End") next = tabs.length - 1;
+        if (next !== null) {
+          event.preventDefault();
+          select(tabs[next], true);
+        }
+      });
+    }
+  }
+</script>

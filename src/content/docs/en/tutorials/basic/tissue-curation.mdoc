@@ -1,0 +1,106 @@
+---
+title: "Basic tutorial 8: Check tissues into a freezer box"
+authors:
+  - Heru Handika
+lastUpdated: 2026-11-20
+sidebar:
+  label: "8. Check tissues into a box"
+  order: 8
+---
+
+After fieldwork, tissue tubes go into freezer boxes at the museum. The paper
+catalog records which specimens have a tissue, but not where each tube ends up.
+Specimen curation writes each tube's museum code and storage location to its
+part record as you place it, so the box and the database stay in sync.
+
+In this tutorial, you will check the six liver tubes from Mt. Tujuh into one
+box: five by tissue ID and one by field ID.
+
+## 1. Set up the box
+
+{% steps %}
+
+1. On the `Dashboard`, select `Curation` in the tool dock.
+2. Open `Setup`. Under `Find tubes`, set `Tissue type` to `Liver` and
+   `Preservation` to `ETOH`.
+3. Under `Update field`, choose `Museum permanent` and enter the museum code as
+   `Value`. This tutorial uses `EXM`.
+4. Under `Box`, set the box to match the one on your bench. `Box label` and
+   `Box number` name the box in each tube's `Storage location`. Use the label
+   for a freezer or rack prefix, such as `F2 Box`. You can also set
+   `Box size` and `Fill order`. This tutorial keeps the defaults: `Box` and
+   `1`, which give `Box 1`, with 81 cells filled in rows from left to right.
+
+{% /steps %}
+
+![NAHPU Specimen curation on an iPad with an empty Box 1 and Setup set to find liver tubes in ETOH and write Museum permanent EXM](../../../../../assets/images/app-screenshots/tutorials/basic/curation-setup.webp)
+
+## 2. Find tubes by tissue ID
+
+Five tubes carry the `Z` tissue numbers you entered on the `Liver` parts in
+Tutorial 5.
+
+{% steps %}
+
+1. Select `Scan` above the scan field.
+2. Enter `Z26230` and press Enter. NAHPU reports the tube and its cell:
+   `Z26230 → Box 1: A1 · Museum permanent = EXM`.
+3. Place the tube in that cell.
+4. Repeat for `Z26231`, `Z26247`, `Z26250`, and `Z26317`.
+
+{% /steps %}
+
+The five tubes fill `A1` to `A5`. Each cell shows the last characters of its
+tissue ID.
+
+![NAHPU Specimen curation on an iPad with tubes 6230, 6231, 6247, 6250, and 6317 in cells A1 to A5 of Box 1, and Z26317 placed in Box 1: A5](../../../../../assets/images/app-screenshots/tutorials/basic/curation-tissue-id.webp)
+
+## 3. Find a tube without a tissue number by field ID
+
+One tube is left: `HH529`'s liver. Young Heru left its label blank in 2014,
+so it has no tissue number to enter. Without a tissue number, you can still find
+the tube by its field ID. Turn on `Search by field ID` and enter `HH529`.
+Because `Find tubes` is limited to liver in ETOH, the field ID matches only that
+tube, and NAHPU places it in the next cell:
+`HH529 · Liver · ETOH → Box 1: A6 · Museum permanent = EXM`.
+
+![NAHPU Specimen curation on an iPad with Search by field ID turned on and HH529's liver in ETOH placed in Box 1: A6](../../../../../assets/images/app-screenshots/tutorials/basic/curation-field-id.webp)
+
+{% aside type="tip" title="Write the field number on tissue tubes" %}
+It is also good practice to write the field number on tissue tubes, next to the
+tissue number. If a tissue number is missing or unreadable, the field number
+still leads you to the right tube.
+{% /aside %}
+
+## 4. Keep the log
+
+Open `Log` to see the six checked tubes and their cells. Select `Export log` to
+save the session as CSV, TSV, or Excel, and keep it with the box inventory as a
+record of every placement.
+
+![NAHPU Specimen curation Log on an iPad listing six checked tubes, from Z26230 in Box 1: A1 to HH529 Liver ETOH in Box 1: A6, with no skipped tubes](../../../../../assets/images/app-screenshots/tutorials/basic/curation-log.webp)
+
+## 5. Check the Data table
+
+The museum codes and storage locations are now saved on each liver part. To
+check them all at once, open `Data table` under `Tools` on the dashboard,
+choose `Specimen parts`, and search for `Liver`. Under the columns button, turn
+on `museumPermanent` and `storageLocation`. Every liver tube now reads `EXM`
+and has its cell, from `Box 1: A1` to `Box 1: A6`, including `HH529`'s, which
+has no tissue ID:
+
+![NAHPU Data table on an iPad showing the six liver parts with tissue ID, type, treatment, field number, museumPermanent EXM, and storage locations Box 1: A1 to Box 1: A6; the row for field number 529 has no tissue ID](../../../../../assets/images/app-screenshots/tutorials/basic/data-table-curated-parts.webp)
+
+Later, you can export these records to match the data input of your collection
+management system for the permanent database.
+
+## What you gained over paper
+
+- Each tube's location is written to its record as you place it, not copied
+  from a box sheet later.
+- A missing tissue number does not stop the check; the field ID finds the tube.
+- The session log keeps every placement for review.
+
+## Next
+
+[Basic tutorial 9: Export a Darwin Core Archive](/en/tutorials/basic/export-darwin-core/)

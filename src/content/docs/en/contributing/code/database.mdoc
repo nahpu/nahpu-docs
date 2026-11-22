@@ -435,6 +435,55 @@ Import, export, backup, and migration changes can permanently affect user data.
 Favor small migrations, explicit tests, and clear pull request notes.
 {% /aside %}
 
+## Database health check
+
+`Settings` > `Database` > `Check database` lets users find and repair data
+problems without a developer. The service is `DatabaseHealthService` in
+`lib/services/database/database_health/`, and the screen is
+`lib/screens/settings/database/check_database.dart`.
+
+`scan()` runs `PRAGMA integrity_check` first. When the database file is
+damaged, `scan()` stops there, because the other checks would not be reliable.
+Otherwise, `scan()` reports:
+
+- `PRAGMA foreign_key_check` violations as broken links.
+- Specimens linked to another project's event, and events linked to another
+  project's site. SQLite cannot catch these cross-project links, but project
+  exports reject them.
+- Media records and personnel photos whose files are missing. The file paths
+  come from `lib/services/common/media_file_resolver.dart`, which project
+  export also uses, so the check and the export agree on which files are
+  missing.
+- Specimens without the attribute row for their taxon group. The attribute
+  table for each group comes from `dataTableAttributeTableForGroup`.
+- Specimens with both a personnel and a project field number, and duplicate
+  field numbers.
+
+The fix for a broken link deletes the row when the link column is listed in
+`DatabaseHealthService.ownerColumns`, meaning the row only exists for its
+parent (e.g., `siteAttribute.siteID`). Otherwise, the fix clears the link when
+the column is nullable. A record with a missing project gets no automatic fix.
+When the user keeps the backup option on, `applyFixes()` first writes a
+`VACUUM INTO` copy to the backup folder. `applyFixes()` then runs each fix in
+its own transaction, so a fix that SQLite refuses leaves the other fixes in
+place.
+
+Readers should not fail on the problems that the check reports. Attribute
+reads return an empty record when the attribute row is missing, attribute
+updates insert the row when no row matched, and the record writers use
+`findTaxonById` and `findPersonnelByUuid`, which return null for a deleted
+taxon or person.
+
+To add a check:
+
+1. Add a `HealthIssueKind`, and report the new kind from `scan()`.
+2. Add a `HealthFixAction` only when the repair is safe without user judgment.
+3. Add the labels in `service_labels.dart` and the ARB files.
+4. Cover the check and its fix in
+   `test/database/database_health_service_test.dart`.
+
+A new table that belongs to a parent should also be added to `ownerColumns`.
+
 ## Persistence data flows
 
 **Database-backed workflows** run from Dart services and providers. Screens

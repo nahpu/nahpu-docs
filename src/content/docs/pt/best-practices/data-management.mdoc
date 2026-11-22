@@ -1,68 +1,76 @@
 ---
-title: Gerenciamento de Dados e Curadoria de Espécimes
+title: Gestão de dados e curadoria de espécimes
 sidebar:
-    label: Gerenciamento de Dados e Curadoria
-    order: 5
+  label: Gestão de dados e curadoria
+  order: 7
 ---
 
-Revise os registros enquanto o contexto de campo estiver disponível e preserve as evidências necessárias para a curadoria.
+Revise os registros enquanto o contexto de campo está disponível, confira espécimes físicos e tecidos frente ao banco de dados e preserve as evidências para curadoria futura.
 
-## Revise registros e relações
+## Revise registros frente aos espécimes físicos
 
-**Confira os Field IDs com as etiquetas físicas** e depois verifique locais, eventos, coordenadas, pessoal de coleta, identificações, partes e preparações. Procure identificadores legíveis duplicados, datas inesperadas, valores ausentes e unidades inconsistentes. As contagens, sozinhas, não comprovam que os registros corretos foram transferidos.
+**Confira os Field IDs nas etiquetas físicas primeiro**, depois verifique locais, eventos, coordenadas, pessoal coletor, identificações, partes, simbiontes e preparações. Procure identificadores legíveis duplicados, datas inesperadas, valores ausentes e unidades inconsistentes. Contagens sozinhas não provam que os registros certos sobreviveram a uma transferência.
 
-**Leia os registros, e não um resumo deles.** Uma exportação do NAHPU sem células vazias e sem medidas impossíveis é compatível com centenas de dígitos trocados e identificações mal atribuídas. A conferência que funciona é o espécime na mão diante do registro na tela: um Field ID trocado entre dois musaranhos é invisível em uma tabela de frequências e evidente na bandeja.
+**Leia os registros junto à bandeja, não apenas uma tabela resumo.** Uma exportação do NAHPU sem células vazias e sem medidas impossíveis ainda pode conter Field IDs trocados ou identificações incorretas. Um Field ID trocado entre dois musaranhos é invisível em uma tabela de frequências e óbvio com os espécimes em mãos.
 
-{% aside type="note" title="Por que resumos não pegam erros de digitação" %}
-O NAHPU oferece estatísticas de resumo para apoiar decisões em campo, de modo que você possa otimizar a coleta de dados e evitar viés amostral. Elas não substituem a prevenção de erros de dados. [Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) constataram que apenas 0,06% dos erros de digitação eram valores em branco ou fora da faixa permitida para a variável, e concluíram que não se pode confiar em histogramas e tabelas de frequência para detectá-los.
+{% aside type="note" title="Por que resumos deixam passar erros de entrada" %}
+O NAHPU oferece estatísticas resumidas para orientar decisões de campo e evitar viés de amostragem — não para detectar erros de digitação. [Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) observaram que apenas 0,06% dos erros estavam em branco ou fora da faixa permitida e concluíram que histogramas e tabelas de frequência não detectam erros de entrada com segurança.
 {% /aside %}
 
-**Alterar a identificação de um espécime seleciona seu táxon; editar um táxon compartilhado muda a entrada usada por outros registros.** Preserve a confiança da identificação, o determinador e as observações explicativas, e revise os registros afetados depois de corrigir táxons ou pessoal compartilhados.
+**Preserve observações originais ao documentar correções.** Use observações ou documentação do projeto para registrar motivo, fonte, data e responsável por alterações curatorialmente relevantes.
 
-**Preserve as observações originais ao documentar correções.** Use notas ou a documentação do projeto para registrar motivo, fonte, data e responsável por curadorias relevantes. Não presuma que toda edição gera um histórico completo de auditoria.
+## Cure tecidos e simbiontes em caixas
 
-## Preserve os anexos
+Use a ferramenta [`Specimen curation`](/pt/usages/curation/) (`Tissue curation`) do NAHPU para conferir tubos físicos de tecidos e simbiontes em caixas de freezer ou armário sem redigitar.
 
-- **Media** guarda fotografias e outros registros de mídia compatíveis.
-- **Associated Data** guarda arquivos relacionados ou recursos externos, com relação e descrição significativas.
-- **Abra os anexos depois de copiá-los ou importá-los.** Preserve os originais e investigue avisos de arquivo ausente antes de remover as cópias de origem.
+- **Faça backup do banco antes de uma grande sessão de curadoria.** Cada leitura grava `Museum permanent` ou `Museum loan` e `Storage location` diretamente no registro da parte ou simbionte assim que conferido.
+- **Configure `Setup` uma vez antes da primeira leitura.** Defina filtros (`Include symbionts`, `Tissue type`, `Preservation`), código do museu, tamanho da caixa (`81` ou `100`), ordem de preenchimento e formato das células. Mantenha `Overwrite existing values` desligado a menos que pretenda mover tubos já alocados.
+- **Exporte o log da sessão ao terminar.** Fechar `Specimen curation` limpa o log e o histórico de desfazer (mantendo as alterações salvas no banco). Selecione `Export log` para salvar a ordem de alocação, valores anteriores e tubos substituídos em CSV, TSV ou Excel como trilha de auditoria.
 
-**Copie o que você puder guardar; vincule apenas o que não puder.** Um link externo não garante que o destino continuará disponível nem que será incluído em uma transferência.
+Veja [Curadoria de tecidos](/pt/usages/curation/tissue-curation/).
 
-{% aside type="note" title="A que velocidade os dados vinculados somem" %}
-[Vines et al. (2014)](https://doi.org/10.1016/j.cub.2013.11.014) mediram uma queda de 17% ao ano na probabilidade de que o conjunto de dados por trás de um artigo publicado ainda existisse. Uma URL em um registro de Associated Data está sujeita ao mesmo desgaste.
+## Preserve anexos
+
+- **Media** guarda fotografias e outros arquivos de mídia suportados.
+- **Associated Data** guarda arquivos relacionados ou recursos externos, com relação e descrição claras.
+- **Abra anexos após copiá-los ou importá-los.** Mantenha os originais e investigue avisos de arquivos ausentes antes de apagar cópias de origem.
+
+**Copie o que puder guardar; vincule apenas o que não puder.** Uma URL externa não garante que o destino continuará acessível.
+
+{% aside type="note" title="Com que rapidez dados vinculados desaparecem" %}
+[Vines et al. (2014)](https://doi.org/10.1016/j.cub.2013.11.014) mediram uma queda de 17% ao ano na chance de que um conjunto de dados de um artigo publicado ainda existisse. Uma URL em `Associated Data` está sujeita ao mesmo desgaste.
 {% /aside %}
 
-Decida se fontes personalizadas e imagens de modelos precisam ser transferidas separadamente. Alterar a visibilidade do formulário não remove valores armazenados nem os exclui das exportações. As fontes só são usadas para imprimir arquivos dos registros e para criar etiquetas de espécimes e partes.
+Fontes personalizadas são usadas apenas para imprimir arquivos de registros e criar etiquetas de espécimes e partes; transferir fontes e imagens de modelo pode exigir cópia separada. Alterar a visibilidade de um campo nunca apaga valores armazenados nem os remove de exportações.
 
-## Escolha e inspecione as exportações
+## Escolha e inspecione exportações
 
-**Use `Export records` com uma predefinição revisada** para análise ou curadoria em planilha. Verifique colunas, valores repetidos, unidades, filtros e identificadores na saída. A escolha de cabeçalhos Darwin Core é um mapeamento, não a garantia de que cada campo tenha um termo padrão equivalente.
+{% bpdiagram kind="export" locale="pt" /%}
 
-**Use exportações nativas de projeto ou NAHPU Data Packages para fluxos de reimportação compatíveis.** As transferências de projeto ZIP e TAR.GZ incluem os arquivos disponíveis do projeto; JSON.GZ os omite. Pacotes de padrões, tabelas, imagens e documentos impressos servem para intercâmbio ou publicação e não substituem uma cópia nativa recuperável. Consulte [Pacotes de registros](/pt/usages/export/export-bundles/) para o conteúdo e as limitações de cada pacote.
+**Use `Export records` com um preset revisado** para análise ou curadoria em planilha. Verifique colunas, valores repetidos, unidades, filtros e identificadores. Escolher cabeçalhos Darwin Core é um mapeamento, não garantia de que todo campo tenha termo equivalente.
 
-**Guarde um backup de toda a instalação antes de curadoria de grande porte ou de mesclagens** e verifique a recuperação separadamente. Siga a [rotina de backup](/pt/best-practices/project-management/) combinada pela equipe.
+**Use exportações nativas de projeto ou NAHPU Data Packages quando precisar de uma cópia recuperável.** Pacotes Darwin Core (`DwC-A` e `DwC-DP`) incluem apenas campos com termo exato registrado e não podem ser reimportados no NAHPU. Escolha um **NAHPU Data Package** quando nada puder ficar de fora — incluindo campos personalizados — ou para análise em R ou Python. Veja [Empacotar registros](/pt/usages/export/export-bundles/) e [Backups e recuperação](/pt/best-practices/backups-and-recovery/).
 
-## Proteja informações antes de compartilhar
+## Proteja informações sensíveis antes de compartilhar
 
-**Decida o que divulgar a partir do risco para o táxon**, e não do hábito de reter tudo ou publicar tudo. Aplique esse julgamento por táxon e registre a decisão junto com a documentação do projeto, para que uma divulgação posterior siga o mesmo raciocínio.
+**Decida o que divulgar a partir do risco ao táxon**, não por hábito de ocultar tudo ou publicar tudo. Aplique esse critério por táxon e registre a decisão na documentação do projeto.
 
-**Quando uma localidade for sensível, generalize em vez de excluir.** Uma coordenada arredondada para uma precisão documentada, com a incerteza ampliada na mesma medida, mantém o registro útil para análises em escala de distribuição e elimina a linha de armadilhas. Informe no conjunto divulgado quais valores foram generalizados ou retidos e guarde o original protegido.
+**Quando uma localidade for sensível, generalize em vez de apagar.** Uma coordenada arredondada para uma precisão documentada, com a incerteza ampliada na mesma medida, mantém o registro útil em escala regional enquanto remove a linha de armadilhas. Indique o que foi generalizado e guarde o original protegido.
 
-**Revise localizações exatas, contatos do pessoal, notas e metadados de imagem quanto a restrições.** Exporte apenas informações aprovadas e inspecione os arquivos reais, incluindo tabelas complementares e anexos. Ocultar um campo no NAHPU não é supressão: um campo oculto mantém o valor armazenado e ainda pode aparecer em uma exportação.
+**Revise localizações exatas, contatos de pessoal, notas e metadados de imagem (EXIF) antes de liberar arquivos.** Ocultar um campo no NAHPU não é redação: o valor continua armazenado e pode aparecer em uma exportação.
 
-## Imprima e confira as etiquetas
+## Imprima e confira etiquetas
 
-**Inclua um Field ID legível e as informações de coleção exigidas pela sua instituição.** Um QR do UUID do espécime pode ligar a etiqueta ao registro digital; mantenha o texto legível para que a etiqueta sirva sem leitor, e porque uma etiqueta sobrevive ao programa que a gerou.
+**Inclua um Field ID legível e as informações exigidas pela sua instituição.** Um código QR com o UUID do espécime liga a etiqueta ao registro digital; mantenha sempre o texto legível, pois a etiqueta física sobrevive ao software que a gerou.
 
 Antes de fixar qualquer etiqueta:
 
 - Pré-visualize registros representativos, incluindo nomes longos e campos vazios.
-- Imprima nas dimensões pretendidas e verifique cortes e legibilidade.
-- Escaneie o QR para confirmar que ele identifica o espécime pretendido.
-- Confira cada etiqueta com o espécime físico e suas partes.
+- Imprima nas dimensões reais e verifique cortes, fontes e legibilidade.
+- Escaneie o código QR para confirmar que aponta ao espécime correto.
+- Confira cada etiqueta contra o espécime físico e suas partes.
 
-Consulte [exportação de documentos](/pt/usages/export/export-documents/).
+Veja [Exportar documentos](/pt/usages/export/export-documents/).
 
 ## Referências
 
