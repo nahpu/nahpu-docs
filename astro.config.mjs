@@ -327,6 +327,15 @@ export default defineConfig({
               },
             },
             {
+              label: "Setup NAHPU",
+              link: "usages/setup",
+              translations: {
+                "pt-BR": "Configurar o NAHPU",
+                es: "Configurar NAHPU",
+                id: "Siapkan NAHPU",
+              },
+            },
+            {
               label: "Projects",
               link: "usages/projects",
               translations: {

@@ -1,0 +1,135 @@
+---
+title: Setup NAHPU
+---
+
+{% screenshots
+   large="app-screenshots/usage/setup-large.webp"
+   largeAlt="NAHPU Setup NAHPU welcome step on a tablet"
+   large2="app-screenshots/usage/setup-large-2.webp"
+   large2Alt="NAHPU Setup NAHPU finish step on a tablet"
+   small="app-screenshots/usage/setup-small.webp"
+   smallAlt="NAHPU Setup NAHPU welcome step on a phone"
+   small2="app-screenshots/usage/setup-small-2.webp"
+   small2Alt="NAHPU Setup NAHPU finish step on a phone" %}
+{% pin id="A" label="Steps" large=[18.5, 17] small=[33, 17.1] /%}
+{% pin id="B" label="Import user configs" large=[50, 78.8] small=[60, 81.8] /%}
+{% pin id="C" label="Skip setup" large=[78, 93.6] small=[38, 92.7] /%}
+{% pin id="D" label="Summary" large2=[88, 15.8] small2=[96.2, 25.6] /%}
+{% pin id="E" label="Controlled vocabularies" large2=[88, 51.6] small2=[96.2, 58.2] /%}
+{% /screenshots %}
+
+`Setup NAHPU` is a guided pass over the settings a new installation needs
+before the first project: the catalog format, how field and tissue IDs are
+formed, the controlled vocabularies for sites, events, and specimens, and the
+bundled export presets.
+
+Open `Setup NAHPU` from the home screen menu. When the installation has no
+projects yet, the home screen also shows a `Setup NAHPU` button below the
+project actions.
+
+Each control in the wizard is the same control used on the matching
+[Settings](/en/usages/settings/) screen, and every change is saved as soon as it
+is made. Leaving the wizard early keeps the answers given so far; it does not
+undo them. Any answer can be changed later in `Settings`, or by running
+`Setup NAHPU` again.
+
+## Use settings from your team {% #use-settings-from-your-team %}
+
+A team only needs to configure NAHPU once. If a team member has already
+exported their user configs, select `Import user configs` {% ref id="B" /%} on
+the `Welcome` step, choose the file, and review the sections to import. Then
+select `Skip setup` {% ref id="C" /%} to close the wizard. See
+[Transferring user configs](/en/usages/settings/#transferring-user-configs).
+
+## Walk through the wizard {% #walk-through-the-wizard %}
+
+The step list {% ref id="A" /%} shows where you are. Select `Continue` to move
+forward and `Back` to return; you can also select any step already visited.
+
+{% steps %}
+
+1. **Welcome**
+
+    Summarizes what the wizard covers and offers `Import user configs`.
+
+2. **Catalog format**
+
+    Choose the taxon group you catalog most often: `Mammalogy`,
+    `Ornithology`, `Herpetology`, `Invertebrate zoology`, or `Ichthyology`.
+    The format decides which measurement fields appear on specimen records. A
+    single project can still hold records in more than one format. See
+    [Format](/en/usages/settings/#format).
+
+3. **Identifiers**
+
+    Under `Specimen field IDs`, choose `Personnel ID` (the cataloger's
+    initials and running number) or `Project ID` (one running number with a
+    shared prefix and suffix). The numbers themselves are set later: the
+    cataloger's current field number when adding personnel with the
+    `Cataloger` role, or the project's prefix, number, and suffix in that
+    project's settings.
+
+    Under `Tissue IDs`, turn on `Use a separate tissue ID` if your collection
+    numbers tissues separately from the specimen, then enter the prefix, next
+    number, and suffix. A preview shows the `Next tissue ID`. When the switch
+    is off, tissues use the specimen's field ID. See
+    [Field ID](/en/usages/settings/#field-id) and
+    [Tissue ID](/en/usages/settings/#tissue-id).
+
+4. **Sites**
+
+    Edit the `Site types`, `Habitat types`, and `Datums` vocabularies.
+
+5. **Events**
+
+    Edit the `Primary activities`, `Collection methods`, and
+    `Personnel roles` vocabularies.
+
+6. **Specimens**
+
+    Edit the `Identification methods`, `Life stages`, `Specimen types`,
+    `Treatments`, and `Conditions` vocabularies.
+
+7. **Symbionts**
+
+    Shown for `Mammalogy`, `Ornithology`, `Herpetology`, and `Ichthyology`.
+    Turn on `I will collect symbionts` to edit the symbiont vocabularies:
+    `Interaction types`, `Categories`, `Detection methods`,
+    `Preparation methods`, `Anatomical locations`, `Storage`, and
+    `Treatments`. See [Symbionts](/en/usages/specimens/symbionts/).
+
+8. **Export presets**
+
+    `Defaults` lists presets that suit any catalog format, and
+    `For <catalog format>` lists optional presets written for the selected
+    format. Check the presets you want and select `Add selected presets`.
+    Presets already on this device are marked `Added`. Select `Review setup`
+    to continue.
+
+9. **Finish**
+
+    Review the summary {% ref id="D" /%} of the catalog format, field ID,
+    tissue ID, symbionts, and export presets, and the number of terms in each
+    controlled vocabulary {% ref id="E" /%}. Select `Done` to close the wizard.
+
+{% /steps %}
+
+## Editing controlled vocabularies {% #editing-controlled-vocabularies %}
+
+Each vocabulary in the `Sites`, `Events`, `Specimens`, and `Symbionts` steps
+works the same way as in `Settings`:
+
+- Type a term in the add field and select `+` to add it.
+- Select `x` on a chip to remove a term you will not use.
+- Select `A` to choose a text case format for the list.
+- Select `Match database` to add terms already used in your records.
+
+Leaving the defaults unchanged is fine; the lists can be edited later under
+`Settings` > `Catalogs`.
+
+## Share the setup with your team {% #share-the-setup-with-your-team %}
+
+The `Finish` step offers `Export user configs`. Send the exported file to your
+team members, who can import it from the `Welcome` step of their own
+`Setup NAHPU`, so every device uses the same vocabularies and presets. See
+[Export user configs](/en/usages/export/#export-user-configs).
