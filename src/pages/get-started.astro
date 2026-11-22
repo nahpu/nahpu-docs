@@ -125,6 +125,26 @@ const stepNumberClasses = cntl`
   text-xs font-semibold
 `;
 
+const statusChipClasses = cntl`
+  inline-flex items-center gap-1.5
+  rounded-full
+  border border-silver-tree-300/70 dark:border-silver-tree-700/70
+  bg-silver-tree-100 dark:bg-silver-tree-950/70
+  px-3 py-1
+  text-xs font-medium
+  text-silver-tree-800 dark:text-silver-tree-100
+`;
+
+/// Rollout of the latest release. Apple devices share one App Store listing,
+/// but Apple reviews the iOS and macOS builds separately.
+const releaseStatus = [
+  { name: "Android", available: true },
+  { name: "iOS and iPadOS", available: false },
+  { name: "macOS", available: false },
+  { name: "Linux", available: true },
+  { name: "Windows", available: true },
+];
+
 interface PlatformLink {
   label: string;
   href: string;
@@ -401,14 +421,31 @@ const tutorials = [
             <h2
               class="mt-2 text-lg font-semibold text-silver-tree-900 sm:text-xl dark:text-silver-tree-50"
             >
-              NAHPU v1.3.0 is out
+              NAHPU v1.3.1 is out
             </h2>
             <p class={`${bodyTextClasses} mt-2`}>
-              Version 1.3.0 adds support for symbionts, expanding the previously
-              supported parasite-only records with an interaction type that
-              exports to Darwin Core. Data table columns now resize by dragging,
-              and the column picker can search fields.
+              Version 1.3.1 shares personnel by QR code or JSON, and site and
+              event QR codes can leave out details the other device already
+              has. Check database in Settings now finds and fixes broken links,
+              missing files, and field number conflicts. It also adds symbiont
+              support to invertebrate catalogs and fixes database upgrades that
+              failed partway.
             </p>
+            <ul class="mt-4 flex list-none flex-wrap gap-2 p-0">
+              {
+                releaseStatus.map((item) => (
+                  <li class={statusChipClasses}>
+                    <span
+                      class="h-1.5 w-1.5 rounded-full"
+                      style={`background:${item.available ? "var(--color-silver-tree-500)" : "var(--color-golden-grass-500)"}`}
+                      aria-hidden="true"
+                    />
+                    {item.name}:{" "}
+                    {item.available ? "Available" : "In App Store review"}
+                  </li>
+                ))
+              }
+            </ul>
           </div>
           <div class="flex shrink-0 flex-wrap gap-x-4 gap-y-2 text-sm sm:flex-col sm:items-end">
             <a
