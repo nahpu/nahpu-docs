@@ -139,10 +139,14 @@ const statusChipClasses = cntl`
 /// but Apple reviews the iOS and macOS builds separately.
 const releaseStatus = [
   { name: "Android", available: true },
-  { name: "iOS and iPadOS", available: false },
-  { name: "macOS", available: false },
+  { name: "iOS and iPadOS", available: false, pending: "In App Store review" },
+  { name: "macOS", available: false, pending: "In App Store review" },
   { name: "Linux", available: true },
-  { name: "Windows", available: true },
+  {
+    name: "Windows",
+    available: false,
+    pending: "In Microsoft Store certification",
+  },
 ];
 
 interface PlatformLink {
@@ -421,15 +425,20 @@ const tutorials = [
             <h2
               class="mt-2 text-lg font-semibold text-silver-tree-900 sm:text-xl dark:text-silver-tree-50"
             >
-              NAHPU v1.3.1 is out
+              NAHPU v1.3.1 is rolling out
             </h2>
             <p class={`${bodyTextClasses} mt-2`}>
-              Version 1.3.1 shares personnel by QR code or JSON, and site and
-              event QR codes can leave out details the other device already
-              has. Check database in Settings now finds and fixes broken links,
-              missing files, and field number conflicts. It also adds symbiont
-              support to invertebrate catalogs and fixes database upgrades that
-              failed partway.
+              This release adds personnel sharing, symbiont records for
+              invertebrates, and a database check that fixes common problems.
+              It is available now on Android and Linux. Other platforms will
+              follow after store review. See the{" "}
+              <a
+                class={linkClasses}
+                href="https://github.com/nahpu/nahpu/blob/main/CHANGELOGS.md"
+                target="_blank"
+                rel="noopener noreferrer">changelog</a
+              >{" "}
+              for details.
             </p>
             <ul class="mt-4 flex list-none flex-wrap gap-2 p-0">
               {
@@ -441,7 +450,7 @@ const tutorials = [
                       aria-hidden="true"
                     />
                     {item.name}:{" "}
-                    {item.available ? "Available" : "In App Store review"}
+                    {item.available ? "Available" : item.pending}
                   </li>
                 ))
               }
