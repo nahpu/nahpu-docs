@@ -1,0 +1,101 @@
+---
+title: "Teamwork tutorial 7: Check tissues and export"
+authors:
+  - Heru Handika
+lastUpdated: 2026-11-21
+sidebar:
+  label: "7. Check tissues and export"
+  order: 7
+---
+
+After the merge, Heru's device holds the whole team's catalog. In this final
+tutorial, Heru checks every tissue tube into one freezer box and exports a
+single Darwin Core Archive.
+
+## 1. Check all tissues into one freezer box
+
+Tubes from both catalogers go into the same box. On **Heru's device**, follow
+[Basic tutorial 8](/en/tutorials/basic/tissue-curation/):
+
+{% steps %}
+
+1. Open `Curation` from the dashboard `Tools`.
+2. In `Setup`, set `Tissue type` to `Liver`, `Preservation` to `ETOH`, and
+   `Museum permanent` to `EXM`.
+3. Under `Scan`, enter each tissue ID and press Enter: `Z26239`, `Z26240`,
+   `Z26241`, `Z26242`, `Z26243`, `Z26245`, `Z26246`, `Z26247`, `Z26248`, and
+   `Z26250`.
+
+{% /steps %}
+
+Scan the tubes in the order they sit on the bench (i.e., by tissue number). On
+paper, `HH446` has `Z26241` and `HH447` has `Z26240`, so their box positions
+follow the physical tubes rather than the field numbers. (`Z26244` and `Z26249`
+belong to specimens outside this tutorial series.)
+
+{% devicepair
+   tablet="app-screenshots/tutorials/teamwork/ipad-curation-box.webp"
+   tabletAlt="NAHPU Specimen curation on an iPad with Box 1 row A filled by tubes 6239 to 6243 and 6245 to 6248, tube 6250 in B1, and Z26250 placed in Box 1: B1"
+   tabletLabel="Heru · iPad" /%}
+
+Heru's tubes fill `A1` to `A5`, Bima's Line 1 tubes fill `A6` to `A9`, and the
+tube from Bima's own Line 2 lands in `B1`. Once merged, curation treats every
+tube as part of one unified catalog, regardless of which teammate or workflow
+created the record.
+
+## 2. Export one Darwin Core Archive
+
+{% steps %}
+
+1. From the `Dashboard`, open the menu and select `Bundle records`.
+2. Choose `Darwin Core Archive` as `Bundle format` and name the file
+   `tujuh-teamwork-2014`.
+3. Review `Package contents`, then select `Create bundle`.
+
+{% /steps %}
+
+{% devicepair
+   tablet="app-screenshots/tutorials/teamwork/ipad-bundle-dwca.webp"
+   tabletAlt="NAHPU Bundle records on an iPad set to Darwin Core Archive, with package contents meta.xml, eml.xml, occurrence.csv with 10 records, material.csv with 20 records, and measurement_or_fact.csv with 50 records"
+   tabletLabel="Heru · iPad" /%}
+
+The resulting archive contains 10 occurrences, 20 material rows (a whole body
+and a liver per specimen), and 50 measurements (five per specimen). In
+`occurrence.csv`, specimens from the shared line reference the same events,
+Bima's Line 2 specimen references his own event, and `recordedBy` lists each
+specimen's collector first followed by the rest of the event team (separated by
+`|`):
+
+| `catalogNumber` | `scientificName` | `eventID` ends with | `recordedBy` starts with |
+| --- | --- | --- | --- |
+| `HH445` | *Mus crociduroides* | `TJHH-L1-2014-09-12` | `Heru Handika` |
+| `BS1` | *Crocidura neglecta* | `TJHH-P1-2014-09-12` | `Bima Sampel` |
+| `BS5` | *Maxomys hylomyoides* | `TJBS-L2-2014-09-12` | `Bima Sampel` |
+
+For a full walk-through of the archive files, see
+[Basic tutorial 9](/en/tutorials/basic/export-darwin-core/).
+
+## What the team gained over separate paper catalogs
+
+- **Enter shared context once:** One teammate created the project, people,
+  sites, and events; everyone else copied them in minutes instead of retyping
+  them.
+- **No duplicate sites or people (Workflow A):** Both catalogs linked to the
+  same site and event UUIDs, so the merge combined specimens without
+  duplicating a single site, event, or person.
+- **Independent lines fit right in (Workflow B):** Bima's own trap line
+  traveled with his catalog and merged cleanly as new records, with no extra
+  steps.
+- **Collision-free numbering:** Separate personnel field-ID series kept each
+  cataloger's numbers distinct on every label and tube.
+- **One unified dataset:** After the merge, tissue curation and Darwin Core
+  export handled the entire team's work as a single catalog.
+
+## Next
+
+- [Supported Workflows](/en/usages/workflows/): when to choose Workflow A, B,
+  or C for your next expedition.
+- [Export tutorials](/en/tutorials/export/specify-export-preset/): build export
+  presets and print voucher tags.
+- [Transfer a Project](/en/usages/export/project-transfer/): full reference for
+  project export, import, and merge options.

@@ -1,0 +1,65 @@
+---
+title: Specimens, Parts, and Media
+sidebar:
+  label: Specimens, Parts, and Media
+  order: 5
+---
+
+A modern natural history voucher is more than a skin or jar — it is a linked bundle of identifications, measurements, tissues, symbionts, and media. **Capture those links at the prep table, while the specimen and its tubes are still in front of you.**
+
+{% bpdiagram kind="specimen" locale="en" /%}
+
+## Record identifications honestly
+
+**Never guess a species name just to fill a blank.** If a juvenile, cryptic species, or symbiont can only be placed to genus, family, or order in the field, record it at that higher rank. A confident genus-level determination is scientifically useful; an unverified species guess propagates into downstream analyses until someone re-examines the voucher.
+
+- **Fill `Identification confidence`, `Determiner`, and `Identification method`.** These fields explain how much weight a later researcher should place on a field identification.
+- **Know the difference between changing an identification and editing a taxon.** Changing a specimen's identification points that specimen to another taxon in the registry. Editing a taxon record itself changes the name on every specimen linked to it across your projects.
+- **Keep original field reasoning in remarks.** When a museum specialist updates an identification later, note the date, determiner, and basis for the revision so the history stays legible.
+
+## Measure cleanly and distinguish zero from blank
+
+**Follow the displayed units on every measurement field, and never type `0` for an unmeasured trait.** In morphometric analysis, a zero tail length or zero gonad measurement is a real number, not a missing value. Leave unmeasured fields empty and explain why in `Remarks` (for example `tail tip missing` or `skull damaged in trap`).
+
+- **Record estimates and exceptions explicitly.** If a measurement is approximate because of damage or rigor mortis, say so in remarks rather than letting it sit beside exact readings.
+- **Use agreed custom fields for recurring protocol traits** rather than burying structured data in free-text remarks. Verify that the custom field is enabled for the right catalog format and placement before fieldwork starts.
+
+## Document parts and fresh tissues at the bench
+
+**Record `Time taken` and `PMI` (post-mortem interval) while the clock is right in front of you.** RNA integrity, microbiome profiles, and certain biochemical assays depend on how long elapsed between capture, euthanasia, and preservation. Those minutes cannot be reconstructed after camp.
+
+- **Link tube identifiers immediately.** Assign a `Tissue ID` or scan the tube's `QR/barcode ID` into `Specimen Parts` before putting the vial in liquid nitrogen, ethanol, or `RNAlater`. That identifier is what lets [Tissue Curation](/en/usages/curation/tissue-curation/) check tubes into freezer boxes back at the museum without manual retyping.
+- **Record both `Treatment` and `Additional treatment` when preservation changes.** For example, a tissue taken in `RNAlater` and later moved to `-80 °C`, or a voucher fixed in formalin and transferred to ethanol, should carry both steps.
+- **Credit the actual `Preparator`** on each part whenever a teammate took the tissue or prepared the skeleton separately from the voucher preparator.
+- **For fish lots**, link tissues and symbionts to the specific `Individuals` inside the lot so downstream genetic sequences trace back to the right measured fish.
+
+{% aside type="tip" title="Worked example: logging a mammal voucher with tissues and ectoparasites" %}
+At the prep table, a preparator logs specimen `HH412`, records standard measurements leaving an injured hind foot blank with a remark (`left hind foot damaged`), adds a `Liver` part (`Tissue ID` `PT-T018`, `RNAlater`, `Time taken` `09:15`, `PMI` `0:25`), and scans the cryovial barcode. After combing the pelt, they set `Symbionts examined: Yes` and `Symbionts detected: Yes`, then add one flea lot under the symbiont tab linked to `Host` `HH412` (`Ectosymbiont`, `Combing`, `70% ETOH`).
+{% /aside %}
+
+## Record symbiont examinations — including clean hosts
+
+**Always record negative examination results.** A host specimen with no symbiont records is ambiguous: nobody checked it, or someone checked it and found nothing. In NAHPU, the `Symbionts` section at the end of the measurement form removes that ambiguity.
+
+- **For a clean host**, set `Symbionts examined` to `Yes` and `Symbionts detected` to `No`, and note the method in `Detection remarks` (such as `Visual inspection and combing, 3 min`).
+- **Do not create an empty symbiont record** to indicate that no parasites were found.
+- **When symbionts are found**, add each lot or individual under the bug icon tab in `Specimen Parts`, recording `Interaction type`, `Category`, `Detection method`, `Anatomical location`, and `Treatment`. Register expected higher-rank symbiont taxa (such as `Siphonaptera` or `Ixodidae`) in the taxon registry before departure.
+
+See [Symbionts](/en/usages/specimens/symbionts/) for the full list of fields and vocabularies.
+
+## Photograph for identification and preserve originals
+
+**Put a scale bar and a readable Field ID card in the frame.** A photograph without a Field ID becomes an orphan the moment a filename is renamed or a card is copied. For birds, amphibians, reptiles, and fishes, photograph live or freshly euthanized specimens before soft-part colors (iris, bill, legs, throat, skin) fade.
+
+- **Attach key reference photos in NAHPU, and keep full-resolution originals on backup media.** Remember that NAHPU database size is driven by media, not records; see [Device Choice and Care](/en/best-practices/device-care/).
+- **Copy what you can hold; link only what you cannot.** Use `Media` for photographs and supported media files, and `Associated Data` for related files (such as audio calls, field scans, or external repository links) with a clear relationship and description. An external URL can break over time, so keep local copies of critical files.
+
+{% aside type="note" title="Why extended specimen links matter" %}
+[Webster (2017)](https://doi.org/10.1201/9781315120454) and [Lendemer et al. (2020)](https://doi.org/10.1093/biosci/biz140) frame the extended specimen as a physical voucher connected to its tissues, parasites, media, environmental context, and derived data. Those connections are easiest to establish in the field and hardest to recover once specimens, vials, and photo cards separate.
+{% /aside %}
+
+## References
+
+Lendemer J, Thiers B, Monfils AK, Zaspel J, Ellwood ER, Bentley A, LeVan K, Bates J, Jennings D, Contreras D, Lagomarsino L, Mabee P, Ford LS, Guralnick R, Gropp RE, Revelez M, Cobb N, Seltmann K & Aime MC (2020). [The Extended Specimen Network: A strategy to enhance US biodiversity collections, promote research and education](https://doi.org/10.1093/biosci/biz140). *BioScience* 70:23–30.
+
+Webster MS (ed.) (2017). [*The Extended Specimen: Emerging Frontiers in Collections-Based Ornithological Research*](https://doi.org/10.1201/9781315120454). CRC Press, Boca Raton.

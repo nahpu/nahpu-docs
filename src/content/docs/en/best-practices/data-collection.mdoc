@@ -1,8 +1,8 @@
 ---
 title: Data Collection
 sidebar:
-    label: Data Collection
-    order: 4
+  label: Data Collection
+  order: 4
 ---
 
 Record enough context for another researcher to interpret a specimen, revisit its locality, and assess the observations. **Whatever a record cannot say for itself is what will be lost.**
@@ -13,13 +13,19 @@ Record enough context for another researcher to interpret a specimen, revisit it
 
 ## Site and coordinate naming
 
-**Use a stable `Site ID` for a collecting locality**, such as `PAT-01`. Put its descriptive name, administrative location, access details, and relevant landmarks in the site fields rather than encoding everything in the ID. A compact, yet descriptive, site ID is easier to find when selecting collecting events. NAHPU will automatically show the full site locality in each field after you select a site ID.
+**Use a stable, unique `Site ID` for each collecting locality**, such as `PAT-01` or `GPHH-L1` (up to 40 letters, digits, `-`, or `_`; NAHPU uppercases letters automatically). Put the descriptive name, administrative location, access details, and landmarks in the site fields rather than encoding everything in the ID. NAHPU shows the site's locality automatically whenever you select a `Site ID` on an event or narrative, and matching sites during a project merge depends on exact `Site ID` matches.
 
 **Name coordinates consistently within the site.** For example, `PAT-01-T01-START` and `PAT-01-T01-END` can mark a transect, while `PAT-01-TRAP-001` identifies a trap position. Document the convention and what each point represents. These examples are team conventions, not identifiers generated or enforced by NAHPU. A specimen must reference the appropriate coordinate point; a site can contain several.
+
+{% aside type="tip" title="Reuse localities and sites" %}
+Use `Find existing locality` under `Geography` to reuse shared administrative localities without introducing spelling variants, and use `Duplicate site` or `Copy from project ...` when creating adjacent trap lines at the same locality.
+{% /aside %}
 
 ## Georeferencing {% #georeferencing %}
 
 Preserve the locality description and the source of the position. **Decimal precision alone does not establish accuracy.**
+
+{% bpdiagram kind="georef" locale="en" /%}
 
 {% aside type="note" title="Source guides" %}
 This section applies Chapman & Wieczorek's (2020) [*Georeferencing Best Practices*](https://docs.gbif.org/georeferencing-best-practices/1.0/en/) and the companion [*Quick Reference Guide*](https://docs.gbif.org/georeferencing-quick-reference-guide/1.0/en/) (Zermoglio et al. 2020) to NAHPU's coordinate fields. We recommend consulting both for the full method.
@@ -36,7 +42,7 @@ That description is what catches a coordinate typed with the wrong hemisphere or
 
 ### Record the datum, always
 
-**An unrecorded or mistaken datum is one of the largest positional errors available.** Shifts between what some maps record and WGS84 range from zero to 5359 m, a kilometres-scale error introduced by a field left at its default.
+**An unrecorded or mistaken datum is one of the largest positional errors available.** Shifts between what some maps record and WGS84 range from zero to 5,359 m — a kilometres-scale error introduced by a field left at its default.
 
 NAHPU's `Datum` defaults to WGS84 and exports as `dwc:geodeticDatum`. **Check the datum setting on the GPS unit itself** rather than assuming it matches. Changing the `Datum` field does not transform coordinates recorded in a different datum, and neither does converting between the accepted input formats. Transform such data with a geospatial tool before importing, and record the transformation in notes.
 
@@ -52,13 +58,13 @@ Truncating a coordinate discards accuracy that cannot be recovered. Approximate 
 | 2 (0.01°) | 1,111 m |
 | 1 (0.1°) | 11,111 m |
 
-A trap line recorded to two decimal places sits somewhere inside roughly 1.1 km, wider than the trap line itself, and wide enough to place `PAT-01-T01-START` and `PAT-01-T01-END` at the same point. A dedicated handheld GPS device usually gives five decimal places. **Enter as many decimals as the coordinate source provides.**
+A trap line recorded to two decimal places sits somewhere inside roughly 1.1 km — wider than the trap line itself, and wide enough to place `PAT-01-T01-START` and `PAT-01-T01-END` at the same point. A dedicated handheld GPS unit usually gives five decimal places. **Enter as many decimals as the coordinate source provides.**
 
 ### Capture the position where the event happened
 
 **Take the reading at the collecting position, not at camp.** In NAHPU, capture with the `Device GPS` card at the site and inspect the result before accepting it. A reading taken later at camp describes camp, unless you deliberately enter a documented offset or corrected position.
 
-A flagship smartphone from the past few years records coordinates with an accuracy comparable to a dedicated handheld GPS device, so recording directly in NAHPU on your phone is a workable option. We still prefer a dedicated GPS unit for fieldwork, for its far longer battery life. **If the tablet holding the project stays in camp, take the reading at the site with the phone or the GPS unit** and enter it later with its source noted.
+A flagship smartphone from the past few years records coordinates with an accuracy comparable to a dedicated handheld GPS unit, so recording directly in NAHPU on your phone is a workable option. We still prefer a dedicated GPS unit for fieldwork, for its far longer battery life. **If the tablet holding the project stays in camp, take the reading at the site with the phone or the GPS unit** and enter it later with its source noted.
 
 **Express an offset as a measured distance, never as a heading.** Measure along a path or as two orthogonal distances from a feature; that removes the uncertainty an imprecise heading would add. Record whether the distance was measured along the route (`by road`) or as a straight line (`by air`) — the two describe different places. Use stable reference features such as permanent landmarks or trig points, never a temporary waypoint or a camp that will be gone next season.
 
@@ -101,15 +107,15 @@ Record the method there too. NAHPU carries `notes` to `dwc:georeferenceRemarks`,
 
 For CSV, TSV, or Excel, map `Latitude` and `Longitude` to decimal-degree columns in `Edit column mapping`. Review optional name, elevation, GPS-unit, and notes mappings. Inspect warnings and select only the intended points in `Review coordinates` before adding them.
 
-**The spreadsheet importer assigns WGS84 and does not map uncertainty.** Given the 5359 m worst case above, verify the source coordinate system before import rather than after; then inspect the added coordinates and supply the missing metadata. A successfully parsed row is not proof that the point describes the correct locality. See [coordinate import](/en/usages/sites/#import-coordinates-from-a-file).
+**The spreadsheet importer assigns WGS84 and does not map uncertainty.** Given the 5,359 m worst case above, verify the source coordinate system before import rather than after; then inspect the added coordinates and supply the missing metadata. A successfully parsed row is not proof that the point describes the correct locality. See [coordinate import](/en/usages/sites/#import-coordinates-from-a-file).
 
-## Events and observations
+## Events and field narratives
 
-**Create events that reflect your protocol's visits or sampling periods.** Confirm the site, date, time, method, and collecting personnel. Duplicating an event leaves environmental data blank, so enter observations for the new event. Astronomy values are entered manually.
+**Create events that reflect your protocol's visits or sampling periods.** Confirm the site, date, time (in the project's local field clock), method, and collecting personnel. Duplicating an event leaves environmental data blank, so enter observations for the new event. Astronomy values are entered manually.
 
-**Record measurements with the displayed units, and distinguish zero from an unrecorded value.** Explain estimates or exceptions in notes. Use agreed custom fields for recurring observations, and check their availability for the relevant catalog and placement.
+**Write a short `Narrative` at the end of each field day.** Structured fields cannot capture everything that explains a catch: heavy rain that closed mist nets early, a trap line raided by ants, a guide's local name for a ridge, or why a collecting method changed mid-week. Link each narrative to its `Site ID`, date, and `Writer`. Markdown headings and checklists make long camp journals easy to skim later.
 
-**Before leaving the site, reopen representative specimens** and verify their event, coordinate, identification, Field ID, parts, and attachments. Record unresolved questions while their context is still available. This is the point at which decay is cheapest to arrest, because the answer is still in the camp rather than in someone's memory a year later.
+**Before leaving the site, reopen representative specimens** and verify their event, coordinate, identification, Field ID, parts, and attachments. Record unresolved questions while their context is still available. This is the point at which decay is cheapest to arrest, because the answer is still in camp rather than in someone's memory a year later. For specimen-level recording practices, see [Specimens, Parts, and Media](/en/best-practices/specimen-records/).
 
 ## References
 

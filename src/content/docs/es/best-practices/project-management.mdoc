@@ -1,65 +1,66 @@
 ---
-title: Gestión de Proyectos
+title: Gestión de proyectos
 sidebar:
-    label: Gestión de Proyectos
-    order: 3
+  label: Gestión de proyectos
+  order: 3
 ---
 
-Acuerde la responsabilidad del proyecto, la asignación de identificadores y las transferencias antes de que varias personas introduzcan registros.
+Acuerda la responsabilidad del proyecto, el flujo de trabajo, la asignación de identificadores y las entregas antes de que varias personas ingresen registros.
 
-## Designe una única fuente de verdad
+{% bpdiagram kind="merge" locale="es" /%}
 
-**Designe un dispositivo que mantenga la copia autorizada del proyecto.** Ese dispositivo conserva la lista principal de taxones, el personal y las definiciones de campos personalizados. Distribuye las actualizaciones a los demás dispositivos, que no editan esas definiciones. Si los especímenes comparten los mismos sitios, coordenadas y eventos, el dispositivo autorizado también conserva esos registros. Los demás dispositivos escanean el QR o importan la copia autorizada y añaden sus propios especímenes, pero no editan los registros compartidos.
+## Asigna una fuente única de verdad
 
-**La fusión de un proyecto debe realizarla el dispositivo autorizado.** Es el que revisa los conflictos de UUID y las decisiones por sección.
+**Designa un dispositivo para mantener la copia autoritativa del proyecto.** Ese dispositivo conserva la lista maestra de taxones, personal y campos personalizados, y distribuye actualizaciones al resto, que no edita esas definiciones compartidas.
 
-## Nombre e identifique el proyecto
+Alinea el intercambio de sitios y eventos con tu [flujo de trabajo en campo](/es/usages/workflows/):
 
-**Use un nombre reconocible**, como `Patah Mammals`, y registre las fechas en los campos de fecha del proyecto. El UUID identifica el proyecto en las transferencias; es distinto del número de catálogo del proyecto y del Field ID legible del espécimen. **Crear otro proyecto con el mismo nombre no recrea su UUID.**
+- **Sitio compartido, catálogos paralelos (Flujo A).** El dispositivo autoritativo crea sitios, coordenadas y eventos compartidos. Los colegas escanean el QR o importan el JSON y agregan sus especímenes sin editar los registros compartidos.
+- **Sitios separados, catálogos paralelos (Flujo B).** El dispositivo autoritativo comparte identidad del proyecto, personal y taxones. Cada responsable crea sitios y eventos para sus propias líneas usando sus iniciales en el `Site ID` (por ejemplo `GPHH-L1`).
+- **Línea de montaje, un catálogo (Flujo C).** Una sola persona captura todos los registros en un dispositivo y acredita al equipo en el personal del evento y como `Preparator` en las partes preparadas.
 
-Asigne IDs estables a los sitios y explique su significado en la descripción de la localidad. Consulte [nombres de sitios y coordenadas](/es/best-practices/data-collection/).
+**Realiza todas las fusiones en el dispositivo autoritativo.** Allí se revisan los conflictos de UUID y las decisiones por sección antes de confirmar el proyecto combinado.
 
-## Acuerde las convenciones de Field ID
+## Nombra e identifica el proyecto
 
-**Elija la convención adecuada a su protocolo de recolección.** Los Field IDs por proyecto sirven para una secuencia compartida de procesamiento; los Field IDs por persona, para las secuencias individuales de catalogadores.
+**Usa un nombre breve y reconocible** (3–25 caracteres, como `Patah Mammals`), registra `Accession` y `Location` y fija `Time zone` en la zona horaria IANA del sitio de campo (como `Asia/Jakarta` o `America/Bogota`). NAHPU nunca convierte fechas ni horas entre zonas — guarda el reloj local de campo tal como se ingresó, y la zona horaria documenta ese reloj.
 
-**NAHPU no sincroniza dispositivos automáticamente.** Está diseñado así a propósito, para que todo intercambio de datos sea deliberado y revisado.
+Un UUID de proyecto identifica el proyecto en transferencias; es independiente de `Accession`, del contador `Field ID` y del Field ID legible de cada espécimen. **Volver a crear un proyecto con el mismo nombre no recrea su UUID.**
 
-**Documente las entregas y busque duplicados tras las transferencias.** Los UUID ayudan a distinguir registros, pero no impiden Field IDs legibles duplicados ni etiquetas incorrectas.
+Asigna IDs estables a los sitios y guarda su significado en la descripción de la localidad. Consulta [Recolección de datos](/es/best-practices/data-collection/).
 
-{% aside type="tip" title="Cómo decidir qué Field ID usar" %}
-Si está empezando un laboratorio, o su laboratorio todavía no tiene una convención estándar de Field ID, en nuestra experiencia los Field IDs por persona son adecuados para el procesamiento en paralelo de especímenes, donde varias personas preparan especímenes y registran datos en sus propios dispositivos. Conllevan menos riesgo de duplicar identificadores. Un Field ID de proyecto es más apropiado si los datos se registran en un solo dispositivo y la preparación de especímenes se hace en una única secuencia, donde cada persona del equipo tiene un papel distinto en el flujo de trabajo, como recoger tejidos, fotografiar, preparar especímenes testigo, etc.
+## Acuerda convenciones de Field ID
 
+**Elige la convención que coincida con tu protocolo.** Los Field ID de proyecto encajan en una secuencia compartida; los Field ID de personal encajan en series individuales de catalogadores.
+
+**NAHPU no sincroniza dispositivos automáticamente.** Está diseñado así deliberadamente para que cada transferencia y fusión sea intencional y revisada.
+
+**Documenta las entregas y revisa duplicados tras cada transferencia.** Los UUID distinguen registros internamente, pero no evitan Field IDs legibles duplicados ni ejemplares mal etiquetados.
+
+{% aside type="tip" title="Cómo elegir qué Field ID usar" %}
+Si estás iniciando un laboratorio o aún no tienes un estándar, en nuestra experiencia los **Field ID de personal** funcionan mejor en el procesamiento paralelo con varios dispositivos (Flujos A y B), con mucho menor riesgo de duplicación. Un **Field ID de proyecto** resulta más adecuado cuando se registra en un solo dispositivo en una sola secuencia (Flujo C).
 {% /aside %}
 
-## Gestione las contribuciones
+## Gestionar contribuciones {% #gestionar-contribuciones %}
 
-**Establezca una identidad común antes de repartir el trabajo.** Asigne responsables del personal, taxones, vocabularios y campos personalizados compartidos. Acuerde cuándo cada dispositivo dejará de editar para una entrega y quién revisará el proyecto combinado.
+**Establece una identidad común de proyecto antes de repartir el trabajo.** Acuerda cuándo deja de editar cada dispositivo para una entrega y quién revisa el proyecto combinado.
 
-- **`Import project`** en la pantalla inicial lleva un proyecto a otra instalación.
-- **`Merge project`** dentro de un proyecto existente combina contribuciones; revise los conflictos de UUID y las decisiones por sección. No fuerce una incompatibilidad de UUID solo porque los nombres se parezcan.
-- **Conserve los paquetes de origen y una copia anterior a la fusión** hasta comprobar el resultado.
+- **`Import project`** en la pantalla inicial incorpora un proyecto en un dispositivo que aún no lo tiene.
+- **`Merge project`** dentro de un proyecto existente combina contribuciones; revisa conflictos de UUID y decisiones por sección (`Keep current`, `Use imported`, `Import as new` o `Skip`). Nada se escribe hasta el último paso: NAHPU aplica todos los cambios juntos o deja intacta la base de datos si ocurre un error. No fuerces una discrepancia de UUID solo por nombres similares.
+- **Respalda antes de fusionar.** Usa el botón `Back up now` integrado en `Merge project` y conserva los paquetes fuente y el respaldo previo hasta verificar el resultado.
 
-**Registre quién proporcionó y revisó cada paquete, y qué se decidió en cada entrega, mientras el equipo siga reunido.** Puede registrar los detalles que explican una fusión en la narrativa, para que se conserven junto a los datos. Una nota escrita en el campamento vale más que una reconstrucción intentada al año siguiente.
+**Registra quién envió y revisó cada paquete y qué se decidió en cada entrega mientras el equipo sigue junto.** Anótalo en `Narrative` para que las decisiones viajen con los datos.
 
 {% aside type="note" title="Entropía de la información" %}
-[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) lo describen como resistir la entropía de la información: el contenido interpretativo de un conjunto de datos se degrada con el tiempo, a medida que se dispersan las personas que lo conservaban en la memoria.
+[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) describen esto como resistir la entropía de la información: el contenido interpretativo de un conjunto de datos se degrada con el tiempo conforme se dispersan las personas que lo recuerdan.
 {% /aside %}
 
-## Programe y verifique las copias
+## Mantén una rutina de respaldos
 
-**Exporte el proyecto activo a intervalos acordados**, por ejemplo al terminar cada jornada de campo y antes de una entrega importante. Elija ZIP o TAR.GZ cuando los archivos disponibles deban acompañar los registros; JSON.GZ los omite. Investigue los avisos de archivos ausentes, porque un paquete no puede incluir archivos que ya faltan.
-
-**Use `Backup database` para recuperar toda la instalación** y antes de fusiones o curación importante. Determine la frecuencia según el trabajo en riesgo, el almacenamiento y la energía disponible; el tamaño y la duración dependen de la instalación.
-
-**Planifique contra el desgaste, no solo contra la catástrofe.** Los datos se pierden sobre todo por discos averiados, medios ilegibles, archivos sin etiquetar y personas que se marchan, más que por un único suceso dramático. Conserve copias fechadas fuera del dispositivo de registro, incluido otro dispositivo físico si no hay internet. Una subida a la nube solo está completa tras confirmar la copia remota.
-
-**Pruebe periódicamente la recuperación en otra instalación** y compare cantidades de registros, relaciones, identificadores y archivos. Esa restauración es el único paso que distingue una copia de seguridad de un archivo que nunca ha abierto. Conserve versiones anteriores hasta verificar la nueva.
-
-**Use nombres claros**, como `PatahMammals_transfer_20260908.zip`. Un nombre que lleva el proyecto, el propósito y la fecha sigue siendo interpretable cuando es la única copia que sobrevive. Consulte [Transferencia de proyectos](/es/usages/export/project-transfer/) y [Exportación](/es/usages/export/) para las opciones de transferencia y sustitución de la base de datos.
+Acuerda quién realiza exportaciones diarias del proyecto, respaldos semanales de la base de datos y copias fuera del dispositivo. Consulta [Copias de seguridad y recuperación](/es/best-practices/backups-and-recovery/) y [Transferir un proyecto](/es/usages/export/project-transfer/).
 
 ## Referencias
 
-Chapman AD (2005). [Principles of Data Quality](https://www.gbif.org/document/80509/principles-of-data-quality). GBIF Secretariat, Copenhague.
+Chapman AD (2005). [Principles of Data Quality](https://www.gbif.org/document/80509/principles-of-data-quality). GBIF Secretariat, Copenhagen.
 
 Michener WK, Brunt JW, Helly JJ, Kirchner TB & Stafford SG (1997). [Nongeospatial metadata for the ecological sciences](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2). *Ecological Applications* 7:330–342.

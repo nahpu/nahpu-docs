@@ -1,0 +1,148 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+// One tutorial step seen on two devices, such as a tablet showing a QR code and the phone that
+// imports it. Either capture may be left out; a lone phone capture is kept at phone width.
+interface Props {
+  /// Path under `src/assets/images/`, such as `app-screenshots/tutorials/teamwork/a.webp`.
+  tablet?: string;
+  tabletAlt?: string;
+  /// Short device label shown above the capture, such as `Heru · iPad`.
+  tabletLabel?: string;
+  phone?: string;
+  phoneAlt?: string;
+  phoneLabel?: string;
+}
+
+const { tablet, tabletAlt, tabletLabel, phone, phoneAlt, phoneLabel } = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/**/*.{png,jpg,jpeg,webp}",
+  { eager: true },
+);
+
+function resolveImage(path: string): ImageMetadata {
+  const image = images[`/src/assets/images/${path}`];
+  if (!image) {
+    throw new Error(`Screenshot not found in src/assets/images: ${path}`);
+  }
+  return image.default;
+}
+
+const shots = [
+  tablet && {
+    kind: "tablet",
+    src: resolveImage(tablet),
+    alt: tabletAlt ?? "",
+    label: tabletLabel,
+    width: 1000,
+  },
+  phone && {
+    kind: "phone",
+    src: resolveImage(phone),
+    alt: phoneAlt ?? "",
+    label: phoneLabel,
+    width: 320,
+  },
+].filter(Boolean) as {
+  kind: "tablet" | "phone";
+  src: ImageMetadata;
+  alt: string;
+  label?: string;
+  width: number;
+}[];
+---
+
+<div class:list={["nh-pair not-content", { "nh-pair--both": shots.length === 2 }]}>
+  {
+    shots.map((shot) => (
+      <figure class={`nh-pair__shot nh-pair__shot--${shot.kind}`}>
+        {shot.label && (
+          <figcaption class="nh-pair__label">
+            <span class={`nh-pair__dot nh-pair__dot--${shot.kind}`} aria-hidden="true" />
+            <span>{shot.label}</span>
+          </figcaption>
+        )}
+        <div class="nh-pair__frame">
+          <Image src={shot.src} alt={shot.alt} width={shot.width} densities={[1.5, 2]} />
+        </div>
+      </figure>
+    ))
+  }
+</div>
+
+<style>
+  .nh-pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+    justify-items: center;
+    margin-block: 1.5rem 2rem;
+    padding: 1rem 1.125rem 1.25rem;
+    background: color-mix(in srgb, var(--sl-color-gray-6) 55%, transparent);
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 0.875rem;
+  }
+
+  .nh-pair__shot {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .nh-pair__shot--phone {
+    max-width: 17.5rem;
+  }
+
+  .nh-pair__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 0.5rem;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-xs);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .nh-pair__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+
+  .nh-pair__dot--tablet {
+    background-color: var(--color-silver-tree-500);
+  }
+
+  .nh-pair__dot--phone {
+    background-color: var(--color-golden-grass-500);
+  }
+
+  .nh-pair__frame {
+    overflow: hidden;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.08);
+  }
+
+  :global(:root[data-theme="dark"]) .nh-pair__frame {
+    box-shadow: 0 6px 20px rgb(0 0 0 / 0.35);
+  }
+
+  .nh-pair__frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 40rem) {
+    .nh-pair--both {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 13rem);
+    }
+  }
+</style>

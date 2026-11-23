@@ -32,7 +32,7 @@ NAHPU dapat menyimpan informasi yang Anda masukkan, impor, atau buat, termasuk:
 - lokasi, lokalitas presisi, koordinat, kegiatan pengoleksian, catatan lapangan,
   pengamatan lingkungan, serta catatan spesimen atau sampel;
 - foto, video, rekaman audio, berkas terkait, dan metadatanya; dan
-- pengaturan aplikasi, bidang khusus, templat, font, preset ekspor, dan lapisan
+- pengaturan aplikasi, bidang khusus, template, font, preset ekspor, dan lapisan
   peta lokal.
 
 Anda menentukan informasi yang akan dicatat. Catatan sejarah alam dapat memuat
@@ -67,7 +67,7 @@ terkait mungkin tidak berfungsi tanpa izinnya.
 
 ## Penyimpanan lokal, pencadangan, dan retensi
 
-NAHPU menyimpan basis data, media, berkas terkait, pengaturan, templat, font,
+NAHPU menyimpan basis data, media, berkas terkait, pengaturan, template, font,
 dan peta lokal dalam penyimpanan yang dikelola aplikasi pada perangkat Anda.
 Sistem operasi melindungi penyimpanan ini dengan sandbox aplikasi dan kontrol
 keamanan perangkat.
@@ -99,7 +99,7 @@ terlihat oleh OpenFreeMap, penyedia hostingnya, dan perantara jaringan.
 
 OpenFreeMap menyatakan bahwa mereka mengumpulkan informasi server anonim,
 seperti jenis peramban atau klien, halaman perujuk, waktu, dan sistem operasi.
-Mereka tidak mencatat alamat IP secara bawaan, tetapi dapat mencatatnya untuk
+Mereka tidak mencatat alamat IP secara default, tetapi dapat mencatatnya untuk
 sementara hingga 30 hari selama insiden keamanan. OpenFreeMap dapat menggunakan
 Cloudflare sebagai jaringan pengiriman konten. Lihat [Kebijakan Privasi
 OpenFreeMap](https://openfreemap.org/privacy/) untuk praktik terbarunya.
@@ -128,13 +128,13 @@ peta. unpkg menyajikan berkas dari registri npm publik dan dapat menggunakan
 Cloudflare sebagai jaringan pengiriman konten.
 
 Jika pustaka perender tidak dapat dimuat, NAHPU beralih ke peta Natural Earth
-bawaan, yang digambar sepenuhnya pada perangkat Anda. Karena itu, bekerja
+default, yang digambar sepenuhnya pada perangkat Anda. Karena itu, bekerja
 luring di macOS atau Windows menghasilkan peta tanpa permintaan jaringan sama
 sekali, setelah jeda singkat saat NAHPU memastikan pustaka tersebut tidak dapat
 dijangkau. Di Linux, NAHPU menggambar semua peta dengan perender yang ada di
 dalam aplikasi dan tidak ada pustaka perender yang diminta. Peta dasar daring di
 Linux tetap meminta gaya dan ubin dari OpenFreeMap seperti dijelaskan di atas,
-dan beralih ke peta Natural Earth bawaan bila OpenFreeMap tidak dapat
+dan beralih ke peta Natural Earth default bila OpenFreeMap tidak dapat
 dijangkau.
 
 Selama peta tampil di layar pada macOS atau Windows, NAHPU juga membuka koneksi

@@ -1,52 +1,56 @@
 ---
-title: Configuração do Aplicativo
+title: Configuração do aplicativo
 sidebar:
-    label: Configuração do Aplicativo
-    order: 2
+  label: Configuração do aplicativo
+  order: 2
 ---
 
-Prepare e teste o NAHPU em cada dispositivo antes de usá-lo para registros de coleta. O NAHPU foi projetado para tornar a configuração fácil e o compartilhamento dela simples. **A configuração é o momento em que prevenir erros custa menos.** Uma restrição adicionada em Configurações antes da saída elimina toda uma classe de erros que, de outro modo, seria encontrada por um curador anos depois, se é que seria.
+Prepare e teste o NAHPU em cada dispositivo antes de depender dele para registros de coleção. O NAHPU foi projetado para tornar a configuração simples e o compartilhamento de configurações direto. **É na configuração que evitar erros custa menos.** Uma restrição definida em Configurações antes da partida elimina uma classe inteira de erros que, de outro modo, só seria descoberta anos depois por um curador.
 
-## Defina a configuração
+{% bpdiagram kind="setup" locale="pt" /%}
 
-**Defina a configuração com a equipe, e não dispositivo a dispositivo.** Isso mantém a consistência entre todos os dispositivos e reduz a chance de erros. Recomendamos designar uma pessoa para executar a configuração no NAHPU. Depois, compartilhe essa configuração com toda a equipe, para que cada um configure o próprio dispositivo.
+## Acorde a configuração
 
-**Revise a visibilidade dos campos e as predefinições em [Configurações](/pt/usages/settings/).** Campos ocultos ainda podem guardar dados e aparecer nas exportações. Crie um campo personalizado apenas quando nenhum campo nativo expressar a observação, e combine posição, tipo, escopo, catálogo aplicável, unidades e valores permitidos. Insira um valor de teste e verifique sua exportação.
+**Defina a configuração com a equipe, não dispositivo por dispositivo.** Dedique uma pessoa para executar [`Setup NAHPU`](/pt/usages/setup/) em um dispositivo líder — escolhendo o formato de catálogo, convenções de Field ID e Tissue ID, vocabulários controlados de locais, eventos, espécimes e simbiontes e presets de exportação incluídos. Na etapa `Finish`, selecione `Export user configs` e compartilhe o arquivo com a equipe. Os demais selecionam `Import user configs` na etapa `Welcome` do próprio `Setup NAHPU` e pulam o restante do assistente.
 
-## Prepare os recursos compartilhados
+**Revise a visibilidade de campos e campos personalizados em [Configurações](/pt/usages/settings/).** Campos ocultos ainda podem armazenar dados e aparecer em exportações. Crie um campo personalizado apenas quando um campo nativo não expressar a observação, e acorde sua posição, tipo, escopo, catálogo aplicável, unidades e valores permitidos. Insira um valor de teste e confira a exportação antes de sair.
 
-- **Pessoal e táxons.** Atribua o pessoal necessário e revise a lista de táxons, incluindo categorias de identificação e identificações incertas. Reutilize entradas existentes quando representarem a mesma pessoa ou táxon.
-- **Um único mantenedor.** Defina qual dispositivo mantém as definições compartilhadas e distribui as atualizações.
-- **Documentos e fontes.** Prepare predefinições de exportação, modelos de documento, leiautes de impressão e as fontes necessárias. A transferência de configurações de usuário não inclui arquivos de fontes personalizadas nem imagens; instale esses recursos separadamente e teste os documentos resultantes.
-- **Identidade do projeto.** Use a [identidade do projeto](/pt/how-to-recipes/prepare/share-project-identity/) para estabelecer um UUID comum quando vários dispositivos contribuírem para o mesmo projeto. Quem usar outro dispositivo importa essa identidade antes de criar registros. Ter o mesmo nome de projeto não estabelece um UUID compartilhado.
+{% aside type="tip" title="Exemplo prático: configurando uma equipe de quatro pessoas em mamíferos" %}
+Antes de uma expedição de três semanas, quem lidera o campo executa `Setup NAHPU` no tablet principal: seleciona `Mammalogy`, ativa `Personnel ID`, define o prefixo de `Tissue ID` (`PT-T`), ajusta `Specimen Types` e `Treatments` à lista do museu, ativa `I will collect symbionts` e adiciona os presets de exportação de mamíferos. Em seguida, exporta `user_configs.json` e o envia junto com o QR do projeto aos três colegas. Cada pessoa importa o arquivo em `Welcome`, escaneia o QR do projeto e começa com vocabulários idênticos e o mesmo UUID de projeto.
+{% /aside %}
+
+## Prepare recursos compartilhados
+
+- **Pessoal e táxons.** Atribua o pessoal necessário e revise a lista de táxons, incluindo níveis de identificação, identificações incertas e táxons esperados de simbiontes. Reutilize entradas já existentes no banco quando representarem a mesma pessoa ou táxon.
+- **Um mantenedor.** Decida qual dispositivo mantém as definições compartilhadas e distribui atualizações.
+- **Documentos, fontes e mapas offline.** Prepare presets de exportação, modelos de documento, layouts de impressão, camadas de mapa offline (`GeoJSON`, Shapefiles WGS84 compactados ou `PMTiles` em `Settings` > `Sites` > `Map layers`) e fontes necessárias. Transferências de configuração de usuário não incluem arquivos de fonte personalizados, imagens de modelo ou arquivos de mapa; instale esses ativos separadamente e teste os documentos e mapas resultantes.
+- **Identidade do projeto.** Use a [identidade do projeto](/pt/how-to-recipes/prepare/share-project-identity/) (`Export info` ou `Scan project QR`) para estabelecer um UUID comum quando vários dispositivos contribuírem para o mesmo projeto. Um nome de projeto sozinho não estabelece um UUID compartilhado.
 
 ## Ensaie o fluxo de trabalho
 
-Use um projeto de prática com nome claro. Crie local, coordenada, evento e espécime; altere uma identificação; adicione uma parte, mídia e um arquivo associado quando couber. **Saia e reabra cada registro para confirmar que os valores foram gravados.** As caixas de diálogo exigem um botão de confirmação explícito; muitos campos de registro salvam automaticamente.
+Use um projeto de prática claramente nomeado (por exemplo `Pratica_2026`). Crie um local, coordenada, evento e espécime; altere uma identificação; adicione uma parte, um exame de simbiontes, mídia e um arquivo associado quando aplicável. **Saia e reabra cada registro para confirmar que os valores foram salvos.** Caixas de diálogo exigem confirmação explícita; muitos campos de registro salvam automaticamente.
 
-Depois, repita o exercício como será no campo:
+Depois execute o exercício como o campo funcionará:
 
-- Trabalhe sem internet, incluindo as permissões necessárias de localização e câmera.
-- Verifique a tabela exportada real e uma etiqueta impressa.
-- Importe um arquivo de projeto em outra instalação de teste e abra seus registros e arquivos.
+- Desligue o Wi-Fi e os dados móveis e confirme que permissões de localização, câmera e leitura de código de barras funcionam offline.
+- Confira uma tabela exportada real e imprima uma etiqueta de amostra para checar cortes, fontes e leitura do QR.
+- Importe uma exportação de projeto em outra instalação de teste e abra seus registros e anexos.
 - Teste a substituição do banco de dados apenas em uma instalação cujo conteúdo possa ser descartado.
 
-## Verifique lendo o registro, não a exportação
+## Verifique os registros de prática frente a uma etiqueta física
 
-**Reabra cada registro de prática e compare-o campo a campo com a etiqueta física.** Percorrer a tabela exportada em busca de lacunas e valores atípicos não equivale a isso, e a diferença é mensurável: quase todo erro real de digitação é um valor plausível dentro da faixa permitida, portanto sobrevive a uma verificação baseada em valores ausentes e números impossíveis. Trate uma exportação de aparência limpa como prova de nada em particular.
+**Reabra cada registro de prática e compare-o campo por campo com uma etiqueta física de exemplo.** Passar os olhos em uma tabela exportada procurando células vazias ou valores extremos não basta: quase todo erro real de digitação é um valor plausível dentro da faixa permitida e passa despercebido na leitura rápida. Para identificadores e medições irrecuperáveis depois que o espécime vai para o frasco, conferir contra a etiqueta física compensa os minutos extras.
 
-**Quando um valor justificar, digite-o duas vezes a partir da fonte e compare.** A dupla digitação custa tempo, uma troca defensável para identificadores e medidas que não podem ser recuperados depois que o espécime está no vidro.
-
-{% aside type="note" title="Evidência a favor da dupla digitação" %}
-[Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) pediram a 195 participantes que digitassem 30 folhas de dados por três métodos. Apenas 0,06% dos erros resultantes eram valores em branco ou fora da faixa permitida para a variável. A conferência visual produziu de 29% a 58% mais erros do que a dupla digitação e não foi melhor que a digitação simples, enquanto a dupla digitação custou 33% mais tempo.
+{% aside type="note" title="Evidência sobre conferência na fonte" %}
+[Barchard & Pace (2011)](https://doi.org/10.1016/j.chb.2011.04.004) pediram a 195 participantes que digitassem 30 planilhas por três métodos. Apenas 0,06% dos erros resultantes estavam em branco ou fora da faixa permitida. A conferência visual produziu 29–58% mais erros que a dupla entrada e não superou a entrada simples, enquanto a dupla entrada custou 33% mais tempo.
 {% /aside %}
 
-## Antes da saída
+## Antes da partida
 
-Confirme armazenamento, energia, recursos instalados, destinos de backup e o projeto de trabalho da equipe. Consulte [Dispositivos](/pt/usages/devices/), [Escolha e cuidados com o dispositivo](/pt/best-practices/device-care/) e [recuperação de projeto](/pt/how-to-recipes/protect-and-collaborate/import-project/).
+Confirme armazenamento disponível, power banks, recursos instalados, destinos de backup e o projeto ativo da equipe. Veja [Requisitos de Dispositivos](/pt/usages/devices/), [Escolha e cuidado de dispositivos](/pt/best-practices/device-care/) e [Backups e recuperação](/pt/best-practices/backups-and-recovery/).
 
 ## Referências
 
 Barchard KA & Pace LA (2011). [Preventing human error: the impact of data entry methods on data accuracy and statistical results](https://doi.org/10.1016/j.chb.2011.04.004). *Computers in Human Behavior* 27:1834–1839.
 
-Chapman AD (2005). [Principles of Data Quality](https://www.gbif.org/document/80509/principles-of-data-quality). GBIF Secretariat, Copenhague.
+Chapman AD (2005). [Principles of Data Quality](https://www.gbif.org/document/80509/principles-of-data-quality). GBIF Secretariat, Copenhagen.

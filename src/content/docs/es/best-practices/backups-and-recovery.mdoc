@@ -1,0 +1,53 @@
+---
+title: Copias de seguridad y recuperación
+sidebar:
+  label: Copias de seguridad y recuperación
+  order: 6
+---
+
+Planifica contra el desgaste cotidiano — discos dañados, tabletas rotas, tarjetas ilegibles, archivos sin nombre y equipos que se dispersan tras el viaje — no solo contra catástrofes. **Una copia de seguridad que nunca has restaurado es solo un archivo que nunca has abierto.**
+
+{% bpdiagram kind="backup" locale="es" /%}
+
+## Ajusta el respaldo a la tarea
+
+**Exporta el proyecto activo al final de cada día de campo. Respalda toda la base de datos una vez por semana y siempre antes de fusionar o realizar una curaduría grande.** Ambas herramientas resuelven problemas distintos, y ejecutar la más pesada cada noche con batería es el error más común.
+
+- **Diario: `Export project`** (`TAR.GZ` por defecto o `ZIP`). Pequeño, rápido y ligero para la batería. Incluye los registros del proyecto activo y los medios disponibles, y `Import project` o `Merge project` lo lee de vuelta en NAHPU — así un dispositivo perdido o roto cuesta como máximo un día de trabajo. Con señal débil, activa `Light export` (`JSON.GZ`) para subir registros sin medios y conserva los medios localmente.
+- **Semanal y antes de fusionar: `Backup database`.** Copia toda la instalación de NAHPU: todos los proyectos, configuraciones, presets, archivos gestionados, fuentes y mapas. Úsalo para reconstruir un dispositivo o crear un punto seguro antes de `Merge project`.
+
+Usa [Empaquetar registros](/es/usages/export/export-bundles/) (`NAHPU Data Package` o paquetes Darwin Core) para análisis, publicación o archivo — no como reemplazo de las exportaciones diarias de proyecto ni de los respaldos de base de datos.
+
+{% aside type="caution" title="Investiga los avisos de archivos faltantes" %}
+Una exportación o archivo no puede incluir medios o adjuntos que ya faltan en disco. Cuando `Export project` o `Bundle records` avise de archivos faltantes, localiza los originales antes de borrar o sobrescribir copias.
+{% /aside %}
+
+## Aplica la regla 3-2-1 en campo remoto
+
+**Conserva al menos tres copias, en dos medios distintos, con una copia fuera del dispositivo de registro.** Sin internet, adapta la tercera copia a separación física:
+
+1. **Copia 1 — Dispositivo de registro:** la tableta o teléfono activo en campamento.
+2. **Copia 2 — Segundo medio local:** una memoria USB-C resistente o el dispositivo de un colega.
+3. **Copia 3 — Fuera del dispositivo / fuera del sitio:** tu teléfono de respaldo en otra bolsa estanca, o una copia en la nube verificada al recuperar señal.
+
+**Una subida a la nube solo termina tras confirmar el archivo remoto.**
+
+## Nombra archivos para que sobrevivan a tu memoria
+
+**Incluye proyecto, propósito y fecha en cada nombre**, por ejemplo `PatahMammals_transfer_20260908.tar.gz` o `PatahMammals_db_20260914.zip`. Activa `Append date` en NAHPU para no sobrescribir la copia de ayer.
+
+## Prueba la recuperación antes de necesitarla
+
+**Importa periódicamente una exportación de proyecto o restaura un respaldo en una instalación de prueba** y comprueba conteos, vínculos entre registros y apertura de medios. Nunca pruebes `Restore database` en un dispositivo con trabajo sin respaldar.
+
+## Recuperación cuando un dispositivo falla en plena expedición
+
+{% aside type="tip" title="Ejemplo práctico: la tableta falla el día 12" %}
+Si tu tableta falla y venías enviando archivos diarios de `Export project` a tu teléfono de respaldo:
+1. Abre NAHPU en el teléfono y selecciona `Import project` en el menú de inicio.
+2. Elige el archivo `TAR.GZ` o `ZIP` de ayer y verifica registros y medios importados.
+3. Revisa el último Field ID y Tissue ID registrados, ajusta el contador en `Personnel` o en `Field ID` del proyecto y sigue recolectando.
+4. Anota el cambio de dispositivo y los registros reingresados del día 12 en `Narrative`.
+{% /aside %}
+
+Para pasos detallados, consulta [Respaldo diario](/es/how-to-recipes/protect-and-collaborate/daily-backup/), [Transferir un proyecto](/es/usages/export/project-transfer/) y [Restaurar base de datos](/es/how-to-recipes/protect-and-collaborate/restore-database/).

@@ -1,0 +1,63 @@
+---
+title: Espécimes, partes e mídia
+sidebar:
+  label: Espécimes, partes e mídia
+  order: 5
+---
+
+Um testemunho moderno de história natural é mais do que uma pele ou frasco — é um conjunto interligado de identificações, medições, tecidos, simbiontes e mídia. **Capture esses vínculos na bancada de preparação, enquanto o espécime e seus tubos ainda estão à sua frente.**
+
+{% bpdiagram kind="specimen" locale="pt" /%}
+
+## Registre identificações com honestidade
+
+**Nunca adivinhe um nome de espécie apenas para preencher um campo.** Se um jovem, espécie críptica ou simbionte só puder ser identificado até gênero, família ou ordem em campo, registre-o nesse nível superior. Uma determinação segura em gênero tem valor científico; um palpite não verificado se propaga em análises futuras até alguém reexaminar o testemunho.
+
+- **Preencha `Identification confidence`, `Determiner` e `Identification method`.** Esses campos mostram quanto peso um pesquisador futuro deve atribuir à identificação de campo.
+- **Saiba a diferença entre alterar uma identificação e editar um táxon.** Alterar a identificação de um espécime aponta esse espécime para outro táxon no registro. Editar o registro do táxon altera o nome em todos os espécimes vinculados a ele nos seus projetos.
+- **Mantenha o raciocínio original em observações.** Quando um especialista atualizar uma identificação no museu, anote a data, o determinador e a base da revisão.
+
+## Meça com clareza e diferencie zero de vazio
+
+**Siga as unidades exibidas em cada campo de medição e nunca digite `0` para um traço não medido.** Em análises morfométricas, zero é um valor real, não dado ausente. Deixe campos não medidos em branco e explique o motivo em `Remarks` (por exemplo `ponta da cauda ausente` ou `crânio danificado`).
+
+- **Registre estimativas e exceções explicitamente.** Se uma medida for aproximada por dano ou rigor mortis, anote isso nas observações.
+- **Use campos personalizados acordados para traços recorrentes** em vez de enterrar dados estruturados em texto livre.
+
+## Documente partes e tecidos frescos na bancada
+
+**Registre `Time taken` e `PMI` (intervalo pós-morte) enquanto o relógio está à sua frente.** Integridade de RNA, microbioma e ensaios bioquímicos dependem do tempo decorrido entre captura, eutanásia e preservação.
+
+- **Vincule os identificadores dos tubos imediatamente.** Atribua um `Tissue ID` ou escaneie o `QR/barcode ID` do tubo em `Specimen Parts` antes de colocá-lo em nitrogênio líquido, etanol ou `RNAlater`. Esse identificador permite que a [Curadoria de tecidos](/pt/usages/curation/tissue-curation/) confira os tubos nas caixas de freezer sem redigitação.
+- **Registre `Treatment` e `Additional treatment` quando a preservação mudar**, como tecido em `RNAlater` transferido para `-80 °C` ou testemunho fixado em formol e passado para etanol.
+- **Credite o `Preparator` real** em cada parte quando outra pessoa retirou o tecido ou preparou o esqueleto.
+- **Em lotes de peixes**, vincule tecidos e simbiontes aos `Individuals` específicos do lote.
+
+{% aside type="tip" title="Exemplo prático: registrando um mamífero com tecidos e ectoparasitas" %}
+Na bancada, quem prepara registra o espécime `HH412`, anota as medidas padrão deixando um pé traseiro ferido em branco com observação (`pé traseiro esquerdo danificado`), adiciona uma parte `Liver` (`Tissue ID` `PT-T018`, `RNAlater`, `Time taken` `09:15`, `PMI` `0:25`) e escaneia o código do criotubo. Após pentear a pelagem, marca `Symbionts examined: Yes` e `Symbionts detected: Yes`, e adiciona um lote de pulgas na aba de simbiontes vinculado a `HH412` (`Ectosymbiont`, `Combing`, `70% ETOH`).
+{% /aside %}
+
+## Registre exames de simbiontes — inclusive hospedeiros limpos
+
+**Registre sempre resultados negativos de exame.** Um hospedeiro sem registros de simbiontes é ambíguo: ninguém olhou, ou alguém olhou e não encontrou nada. A seção `Symbionts` no fim do formulário de medições elimina essa ambiguidade.
+
+- **Para um hospedeiro limpo**, defina `Symbionts examined` como `Yes` e `Symbionts detected` como `No`, e descreva o método em `Detection remarks`.
+- **Não crie um registro de simbionte vazio** para indicar que nada foi encontrado.
+- **Quando encontrar simbiontes**, adicione cada lote ou indivíduo na aba do ícone de inseto em `Specimen Parts`, registrando interação, categoria, método de detecção, localização anatômica e tratamento. Veja [Simbiontes](/pt/usages/specimens/symbionts/).
+
+## Fotografe para identificação e preserve os originais
+
+**Inclua uma escala e um cartão legível com o Field ID no enquadramento.** Uma foto sem Field ID vira órfã assim que um arquivo é renomeado. Em aves, anfíbios, répteis e peixes, fotografe antes que as cores das partes moles (íris, bico, patas, pele) desbotem.
+
+- **Anexe fotos de referência no NAHPU e mantenha os originais em alta resolução em mídia de backup.** Veja [Escolha e cuidado de dispositivos](/pt/best-practices/device-care/).
+- **Copie o que puder guardar; vincule apenas o que não puder.** Use `Media` para fotos e mídia suportada, e `Associated Data` para arquivos relacionados ou links externos com descrição clara.
+
+{% aside type="note" title="Por que os vínculos do espécime estendido importam" %}
+[Webster (2017)](https://doi.org/10.1201/9781315120454) e [Lendemer et al. (2020)](https://doi.org/10.1093/biosci/biz140) definem o espécime estendido como o testemunho físico conectado a seus tecidos, parasitas, mídia, contexto ambiental e dados derivados. Esses vínculos são mais fáceis de estabelecer em campo e mais difíceis de recuperar depois.
+{% /aside %}
+
+## Referências
+
+Lendemer J, Thiers B, Monfils AK, Zaspel J, Ellwood ER, Bentley A, LeVan K, Bates J, Jennings D, Contreras D, Lagomarsino L, Mabee P, Ford LS, Guralnick R, Gropp RE, Revelez M, Cobb N, Seltmann K & Aime MC (2020). [The Extended Specimen Network: A strategy to enhance US biodiversity collections, promote research and education](https://doi.org/10.1093/biosci/biz140). *BioScience* 70:23–30.
+
+Webster MS (ed.) (2017). [*The Extended Specimen: Emerging Frontiers in Collections-Based Ornithological Research*](https://doi.org/10.1201/9781315120454). CRC Press, Boca Raton.

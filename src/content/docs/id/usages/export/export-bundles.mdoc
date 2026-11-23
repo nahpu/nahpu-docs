@@ -47,7 +47,7 @@ dapat dibaca alat [Frictionless](https://frictionlessdata.io); lihat
 2. Pilih format bundel {% ref id="B" /%}.
 3. Pilih format arsip {% ref id="C" /%} bila format mendukung lebih dari satu
    wadah:
-   - `TAR.GZ` adalah bawaan untuk Data Package.
+   - `TAR.GZ` adalah default untuk Data Package.
    - `ZIP` tersedia untuk alat dan sistem yang lebih memilih arsip ZIP standar.
    - Darwin Core Archive selalu memakai `ZIP`.
 4. Untuk bundel Darwin Core, pilih `Semua takson` {% ref id="A" /%} atau
@@ -67,7 +67,7 @@ dapat dibaca alat [Frictionless](https://frictionlessdata.io); lihat
 {% aside type="caution" title="Periksa sebelum berbagi" %}
 
 NAHPU Data Package memuat data transfer proyek aktif dan konfigurasi pengguna
-secara lengkap, termasuk detail personel, lokasi proyek, media, dan fon kustom.
+secara lengkap, termasuk detail personel, lokasi proyek, media, dan font kustom.
 Periksa isinya sebelum dibagikan secara publik.
 
 {% /aside %}
@@ -76,7 +76,7 @@ Periksa isinya sebelum dibagikan secara publik.
 
 | Wadah | Ekstensi umum | Catatan |
 | --- | --- | --- |
-| `TAR.GZ` | `.dwc-dp.tar.gz`, `.nahpu-dp.tar.gz` | Bawaan untuk Data Package dan pilihan sesuai standar DwC-DP. Setelah diekstrak, `datapackage.json` dan metadata berada di direktori akar. |
+| `TAR.GZ` | `.dwc-dp.tar.gz`, `.nahpu-dp.tar.gz` | Default untuk Data Package dan pilihan sesuai standar DwC-DP. Setelah diekstrak, `datapackage.json` dan metadata berada di direktori akar. |
 | `ZIP` | `.dwca.zip`, `.dwc-dp.zip`, `.nahpu-dp.zip` | Wajib untuk Darwin Core Archive; opsi normal untuk NAHPU Data Package; opsi kompatibilitas untuk DwC-DP (menampilkan peringatan karena panduan DwC-DP mengutamakan gzip). |
 
 ## Penjelasan mendalam
@@ -185,7 +185,7 @@ sebagai asersi MeasurementOrFact dalam milimeter. Tutupan tajuk dan parameter
 lingkungan menempel pada peristiwa koleksi dengan satuan terdefinisi (`°C`,
 `%`, `mg/L`, `m/s`, `mm`, `okta`).
 
-Keluaran: `<nama-berkas>.dwc-dp.tar.gz` (bawaan) atau
+Keluaran: `<nama-berkas>.dwc-dp.tar.gz` (default) atau
 `<nama-berkas>.dwc-dp.zip` (opsi kompatibilitas, dengan peringatan).
 
 ### NAHPU Data Package {% #nahpu-data-package %}
@@ -263,7 +263,7 @@ dicantumkan.
 #### Kosakata terkontrol
 
 Empat sumber daya CSV memotret kosakata terkontrol aktif dari Pengaturan NAHPU
-(atau bawaan NAHPU jika belum diubah):
+(atau default NAHPU jika belum diubah):
 
 - `vocabularies/site.csv`: jenis lokasi dan jenis habitat;
 - `vocabularies/events.csv`: metode koleksi dan peran personel koleksi;
@@ -320,14 +320,14 @@ if ("specimen" %in% resource_names(package)) {
   tabel/enum/kosakata, serta versi crate `nahpu_api` (`nahpu_dp`, `nahpu_dwc`,
   `nahpu_db`, `nahpu_configs`, dan lainnya).
 - **`configs/user_configs.json`** menyimpan ekspor konfigurasi pengguna
-  berversi (pengaturan umum, prasetel ekspor catatan, templat dokumen, dan
-  prasetel tata letak cetak).
+  berversi (pengaturan umum, setelan awal ekspor catatan, template dokumen, dan
+  setelan awal tata letak cetak).
 - **`media/` dan `files/`** memuat media proyek yang dirujuk, foto personel
-  yang dirujuk (di bawah `media/` dengan jalur kompatibel transfer), dan fon
+  yang dirujuk (di bawah `media/` dengan jalur kompatibel transfer), dan font
   kustom pengguna (di bawah `files/`). Berkas yang hilang dilaporkan sebagai
   peringatan.
 
-Keluaran: `<nama-berkas>.nahpu-dp.tar.gz` (bawaan) atau
+Keluaran: `<nama-berkas>.nahpu-dp.tar.gz` (default) atau
 `<nama-berkas>.nahpu-dp.zip`, dengan isi internal yang sama persis.
 
 ## Bundel versus cadangan

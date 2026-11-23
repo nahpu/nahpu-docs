@@ -1,65 +1,66 @@
 ---
 title: Pengelolaan Proyek
 sidebar:
-    label: Pengelolaan Proyek
-    order: 3
+  label: Pengelolaan Proyek
+  order: 3
 ---
 
-Sepakati penanggung jawab proyek, pembagian pengenal, dan tanggung jawab transfer sebelum beberapa orang mulai mencatat.
+Sepakati kepemilikan proyek, alur kerja, pembagian pengenal, dan tanggung jawab serah terima sebelum beberapa orang mulai mencatat data.
 
-## Tetapkan satu sumber acuan
+{% bpdiagram kind="merge" locale="id" /%}
 
-**Tunjuk satu perangkat yang memelihara salinan proyek yang menjadi acuan.** Perangkat itu menyimpan daftar takson induk, personel, dan definisi kolom khusus. Perangkat itu pula yang membagikan pembaruan ke perangkat lain, yang tidak menyunting definisi tersebut. Jika spesimen berbagi lokasi, koordinat, dan kegiatan pengumpulan yang sama, perangkat acuan juga menyimpan catatan-catatan itu. Perangkat lain memindai QR atau mengimpor salinan acuan lalu menambahkan spesimen masing-masing, tetapi tidak menyunting catatan bersama.
+## Tetapkan sumber kebenaran tunggal
 
-**Penggabungan proyek sebaiknya dilakukan oleh perangkat acuan.** Perangkat itulah yang meninjau konflik UUID dan pilihan per bagian.
+**Tunjuk satu perangkat untuk memelihara salinan proyek otoritatif.** Perangkat ini menyimpan daftar induk takson, personel, dan definisi kolom kustom, lalu membagikan pembaruan ke perangkat lain yang tidak mengubah definisi bersama tersebut.
 
-## Beri nama dan identitas proyek
+Sesuaikan cara berbagi lokasi dan kegiatan dengan [alur kerja lapangan](/id/usages/workflows/) Anda:
 
-**Gunakan nama yang mudah dikenali**, misalnya `Patah Mammals`, dan isi kolom tanggal proyek. UUID mengidentifikasi proyek dalam transfer; UUID berbeda dari nomor katalog proyek dan dari ID lapangan spesimen yang terbaca. **Membuat ulang proyek dengan nama yang sama tidak membuat ulang UUID-nya.**
+- **Lokasi bersama, katalog paralel (Alur Kerja A).** Perangkat otoritatif membuat lokasi, koordinat, dan kegiatan bersama. Rekan memindai QR atau mengimpor JSON lalu menambahkan spesimen mereka tanpa mengubah catatan bersama.
+- **Lokasi terpisah, katalog paralel (Alur Kerja B).** Perangkat otoritatif membagikan identitas proyek, personel, dan takson. Setiap penanggung jawab jalur membuat lokasi dan kegiatan sendiri dengan inisial pada `Site ID` (misalnya `GPHH-L1`).
+- **Lini perakitan, satu katalog (Alur Kerja C).** Satu pencatat memasukkan semua data di satu perangkat dan mencatat rekan lain di personel kegiatan serta sebagai `Preparator` pada bagian spesimen.
 
-Beri lokasi ID yang stabil dan simpan maknanya dalam deskripsi lokalitas. Lihat [penamaan lokasi dan koordinat](/id/best-practices/data-collection/).
+**Lakukan setiap penggabungan proyek di perangkat otoritatif.** Perangkat tersebut meninjau konflik UUID dan pilihan tiap bagian sebelum menyimpan hasil gabungan.
 
-## Sepakati konvensi ID lapangan
+## Beri nama dan identifikasi proyek
 
-**Pilih konvensi yang sesuai dengan protokol koleksi Anda.** ID lapangan proyek cocok untuk satu urutan pemrosesan bersama; ID lapangan personel cocok untuk pekerjaan yang tersusun menurut urutan masing-masing pengatalog.
+**Gunakan nama singkat yang mudah dikenali** (3–25 karakter, seperti `Patah Mammals`), isi `Accession` dan `Location`, lalu atur `Time zone` ke zona waktu IANA lokasi lapangan (seperti `Asia/Jakarta`). NAHPU tidak pernah mengonversi tanggal atau jam antar zona waktu — jam lokal lapangan disimpan apa adanya, dan zona waktu proyek mendokumentasikan jam acuan tersebut.
 
-**NAHPU tidak menyinkronkan perangkat secara otomatis.** Itu dirancang dengan sengaja, agar setiap pertukaran data dilakukan secara sadar dan ditinjau.
+UUID proyek mengidentifikasi proyek saat transfer; UUID terpisah dari `Accession`, penghitung `Field ID` proyek, dan Field ID spesimen. **Membuat ulang proyek dengan nama yang sama tidak membuat ulang UUID-nya.**
 
-**Dokumentasikan setiap serah terima dan periksa duplikat setelah transfer.** UUID membantu membedakan catatan, tetapi tidak mencegah ID lapangan terbaca yang ganda maupun spesimen yang salah label.
+Beri lokasi ID yang stabil dan simpan maknanya di deskripsi lokalitas. Lihat [Pengumpulan Data](/id/best-practices/data-collection/).
 
-{% aside type="tip" title="Memilih jenis ID lapangan" %}
-Jika Anda baru merintis laboratorium, atau laboratorium Anda belum punya konvensi ID lapangan yang baku, menurut pengalaman kami ID lapangan personel cocok untuk pemrosesan spesimen secara paralel, ketika beberapa orang menyiapkan spesimen dan mencatat data pada perangkat masing-masing. Risiko penggandaan pengenalnya lebih kecil. ID lapangan proyek lebih sesuai bila data dicatat pada satu perangkat dan preparasi spesimen berjalan dalam satu urutan, ketika tiap anggota tim memegang peran berbeda dalam alur kerja, seperti mengambil jaringan, memotret, menyiapkan spesimen bukti, dan sebagainya.
+## Sepakati konvensi Field ID
 
+**Pilih konvensi yang sesuai dengan protokol koleksi Anda.** Field ID proyek cocok untuk satu urutan terpadu; Field ID personel cocok untuk seri katalog pribadi tiap pencatat.
+
+**NAHPU tidak menyinkronkan perangkat secara otomatis.** Rancangan ini disengaja agar setiap transfer dan penggabungan selalu disengaja dan ditinjau.
+
+**Dokumentasikan serah terima dan periksa duplikasi setelah transfer.** UUID membedakan catatan secara internal, tetapi tidak mencegah Field ID terbaca yang sama atau spesimen salah label.
+
+{% aside type="tip" title="Memilih jenis Field ID" %}
+Jika Anda baru memulai laboratorium atau belum memiliki standar Field ID, menurut pengalaman kami **Field ID personel** paling aman untuk pemrosesan paralel di banyak perangkat (Alur Kerja A dan B) karena risiko duplikasi jauh lebih kecil. **Field ID proyek** lebih cocok bila data dicatat di satu perangkat dalam satu urutan (Alur Kerja C).
 {% /aside %}
 
-## Kelola kontribusi
+## Mengelola kontribusi {% #mengelola-kontribusi %}
 
-**Tetapkan identitas proyek bersama sebelum membagi pekerjaan.** Tentukan penanggung jawab personel, takson, kosakata, dan definisi kolom khusus yang dipakai bersama. Sepakati kapan tiap perangkat berhenti menyunting untuk serah terima dan siapa yang meninjau proyek gabungan.
+**Bangun identitas proyek bersama sebelum membagi pekerjaan.** Sepakati kapan setiap perangkat berhenti mengedit untuk serah terima dan siapa yang meninjau hasil gabungan.
 
-- **`Import project`** di layar utama membawa proyek ke instalasi lain.
-- **`Merge project`** di dalam proyek yang ada menggabungkan kontribusi; tinjau konflik UUID dan pilihan per bagian. Jangan memaksakan penggabungan saat UUID tidak cocok hanya karena namanya mirip.
-- **Simpan paket sumber dan cadangan sebelum penggabungan** sampai hasilnya diperiksa.
+- **`Import project`** di layar beranda membawa proyek ke perangkat yang belum memilikinya.
+- **`Merge project`** di dalam proyek menggabungkan kontribusi; tinjau konflik UUID dan pilihan tiap bagian (`Keep current`, `Use imported`, `Import as new`, atau `Skip`). Tidak ada perubahan yang ditulis hingga langkah terakhir — NAHPU menyimpan semua perubahan secara atomik atau membiarkan basis data tetap utuh jika terjadi galat. Jangan memaksa penggabungan UUID berbeda hanya karena nama proyek mirip.
+- **Cadangkan sebelum menggabungkan.** Gunakan tombol `Back up now` di dalam `Merge project`, dan simpan paket sumber serta cadangan pra-penggabungan sampai hasilnya diperiksa.
 
-**Catat siapa yang menyerahkan dan meninjau tiap paket, serta apa yang diputuskan pada tiap serah terima, selagi tim masih berkumpul.** Anda dapat mencatat rincian yang menjelaskan sebuah penggabungan dalam narasi, sehingga tersimpan bersama datanya. Satu catatan yang ditulis di kamp lebih berharga daripada rekonstruksi yang dicoba tahun berikutnya.
+**Catat siapa yang mengirim dan meninjau setiap paket serta keputusan serah terima selagi tim masih berkumpul.** Tulis catatan singkat di `Narrative` agar riwayat keputusan ikut bersama data.
 
 {% aside type="note" title="Entropi informasi" %}
-[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) menyebutnya sebagai menahan entropi informasi: isi penafsiran sebuah kumpulan data merosot seiring waktu, seiring bubarnya orang-orang yang menyimpannya dalam ingatan.
+[Michener et al. (1997)](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2) menyebut ini sebagai melawan entropi informasi: kandungan interpretatif kumpulan data menurun seiring berpencarnya orang-orang yang mengingat konteksnya.
 {% /aside %}
 
-## Jadwalkan dan verifikasi pencadangan
+## Jalankan rutinitas pencadangan
 
-**Ekspor proyek aktif pada selang waktu yang disepakati**, misalnya di penghujung tiap hari lapangan dan sebelum serah terima besar. Pilih ZIP atau TAR.GZ bila berkas proyek yang tersedia harus ikut bersama catatan; JSON.GZ tidak menyertakannya. Peringatan berkas hilang perlu ditelusuri, sebab arsip tidak dapat menyertakan berkas yang memang sudah hilang.
-
-**Gunakan `Backup database` untuk pemulihan seluruh instalasi** dan sebelum penggabungan atau kurasi besar. Tentukan frekuensinya dari besarnya pekerjaan yang berisiko hilang, penyimpanan, dan daya yang tersedia; ukuran dan lama prosesnya bergantung pada instalasi.
-
-**Bersiaplah menghadapi keausan, bukan hanya bencana.** Data lebih sering hilang karena cakram mati, media tak terbaca, berkas tanpa label, dan orang yang pergi, ketimbang karena satu peristiwa dramatis. Simpan salinan bertanggal di luar perangkat pencatat, termasuk pada perangkat fisik terpisah bila tidak ada internet. Unggahan ke awan baru selesai setelah salinan jauhnya dipastikan ada.
-
-**Uji pemulihan secara berkala pada instalasi lain** dan bandingkan jumlah catatan, hubungan antarcatatan, pengenal, dan berkas. Pemulihan itulah satu-satunya langkah yang membedakan cadangan dari berkas yang tak pernah Anda buka. Simpan versi lama sampai salinan yang lebih baru terverifikasi.
-
-**Beri nama paket dengan jelas**, misalnya `PatahMammals_transfer_20260908.zip`. Nama yang memuat proyek, tujuan, dan tanggal tetap dapat ditafsirkan ketika ia menjadi satu-satunya salinan yang tersisa. Ikuti [panduan transfer proyek](/id/usages/export/project-transfer/) untuk pilihan transfer dan [panduan ekspor](/id/usages/export/) untuk penggantian basis data.
+Sepakati siapa yang melakukan ekspor proyek harian, cadangan basis data mingguan, dan salinan di luar perangkat. Lihat [Cadangan dan Pemulihan](/id/best-practices/backups-and-recovery/) serta [Transfer Proyek](/id/usages/export/project-transfer/).
 
 ## Referensi
 
-Chapman AD (2005). [Principles of Data Quality](https://www.gbif.org/document/80509/principles-of-data-quality). GBIF Secretariat, Kopenhagen.
+Chapman AD (2005). [Principles of Data Quality](https://www.gbif.org/document/80509/principles-of-data-quality). GBIF Secretariat, Copenhagen.
 
 Michener WK, Brunt JW, Helly JJ, Kirchner TB & Stafford SG (1997). [Nongeospatial metadata for the ecological sciences](https://doi.org/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2). *Ecological Applications* 7:330–342.

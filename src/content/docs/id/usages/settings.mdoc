@@ -19,12 +19,12 @@ title: Pengaturan
 {% /screenshots %}
 
 Pengaturan mengatur cara NAHPU bekerja di perangkat ini: format katalog,
-kosakata terkontrol, kolom khusus, prasetel, dan preferensi aplikasi.
+kosakata terkontrol, kolom khusus, setelan awal, dan preferensi aplikasi.
 
 Buka `Pengaturan` dari menu layar beranda atau dari menu `Dasbor` proyek. Untuk
 mengatur kolom khusus cakupan proyek atau nilai `ID lapangan` milik proyek,
 buka proyek tersebut terlebih dahulu. Untuk menyiapkan perangkat baru langkah
-demi langkah, gunakan `Siapkan NAHPU` di menu layar beranda.
+demi langkah, gunakan [`Siapkan NAHPU`](/id/usages/setup/) di menu layar beranda.
 
 ## Cakupan setiap pengaturan
 
@@ -32,10 +32,10 @@ demi langkah, gunakan `Siapkan NAHPU` di menu layar beranda.
 | --- | --- | --- |
 | Informasi proyek | Nama, nomor akses, lokasi, zona waktu, tanggal, nilai `ID lapangan` proyek | Ikut serta dalam transfer informasi proyek dan transfer proyek |
 | Catatan bersama basis data | Takson dan personel | Tersimpan di basis data NAHPU dan dikaitkan dengan proyek |
-| Konfigurasi pengguna | Kosakata terkontrol, visibilitas bidang, definisi kolom khusus, serta prasetel ekspor atau dokumen | Dipindahkan dengan `Ekspor konfigurasi pengguna` dan `Impor konfigurasi pengguna` |
+| Konfigurasi pengguna | Kosakata terkontrol, visibilitas bidang, definisi kolom khusus, serta setelan awal ekspor atau dokumen | Dipindahkan dengan `Ekspor konfigurasi pengguna` dan `Impor konfigurasi pengguna` |
 | Status instalasi | Tema, bahasa, format regional, alat dasbor, dan format katalog aktif | Tetap di perangkat ini |
 
-Kosakata terkontrol, prasetel, dan preferensi instalasi dipakai bersama oleh
+Kosakata terkontrol, setelan awal, dan preferensi instalasi dipakai bersama oleh
 semua proyek di perangkat ini. Mengubahnya saat satu proyek terbuka juga
 memengaruhi proyek lain pada instalasi yang sama.
 
@@ -48,7 +48,7 @@ yang sama:
   mengatur format huruf (`A`), atau menarik nilai yang sudah ada di catatan
   Anda dengan `Cocokkan dengan basis data`.
 - **Pengaturan visibilitas bidang** hanya menampilkan atau menyembunyikan
-  bidang bawaan di formulir; menyembunyikan bidang tidak pernah menghapus nilai
+  bidang default di formulir; menyembunyikan bidang tidak pernah menghapus nilai
   yang sudah tersimpan di basis data.
 
 ### Format {% #format %}
@@ -75,13 +75,13 @@ di formulir pengukuran mamalia tanpa perlu diaktifkan per spesimen.
 
 `Kegiatan` {% ref id="C" /%} mengatur formulir kegiatan koleksi:
 
-- `Kegiatan utama` {% ref id="G" /%}: bawaannya `Collecting`, `Recording`, dan
+- `Kegiatan utama` {% ref id="G" /%}: default-nya `Collecting`, `Recording`, dan
   `Observing` (`Other` tidak disertakan kecuali Anda menambahkannya).
 - `Metode koleksi` dan `Peran personel`: kosakata terkontrol untuk metode dan
   peran dalam kegiatan.
 - `Bidang data lingkungan`: pilih bidang suhu, kelembapan, pengukuran, data
   perairan, astronomi, dan catatan yang muncul pada formulir kegiatan. Secara
-  bawaan formulir menampilkan suhu udara, kelembapan udara, tutupan awan, curah
+  default formulir menampilkan suhu udara, kelembapan udara, tutupan awan, curah
   hujan, dan catatan.
 
 Pindahkan konfigurasi pengguna agar kosakata ini tetap sama di setiap perangkat
@@ -105,7 +105,7 @@ terkontrol, dan simbion:
   `Jenis spesimen`, `Perlakuan`, dan `Kondisi`.
 - `Simbion` (untuk `Mammalogy`, `Ornithology`, `Herpetology`, dan
   `Ichthyology`): atur `Identifikasi` (`Prefiks ID simbion` dan
-  `Nomor ID simbion`) serta kosakata bawaan yang dapat disunting untuk
+  `Nomor ID simbion`) serta kosakata default yang dapat disunting untuk
   `Jenis interaksi`, `Kategori`, `Metode deteksi`, `Metode preparasi`,
   `Lokasi anatomi`, `Penyimpanan`, dan `Perlakuan`. Lihat
   [Simbion](/id/usages/specimens/symbionts/).
@@ -116,7 +116,7 @@ Pada `ID lapangan`, pilih cara spesimen baru diberi nomor:
 
 | Pilihan | Dibentuk dari | Memerlukan |
 | --- | --- | --- |
-| `ID personel` (bawaan) | Inisial pengatalog dan nomor urutnya sendiri | Seseorang dengan peran `Cataloger` di proyek, beserta inisial dan nomor lapangan saat ini |
+| `ID personel` (default) | Inisial pengatalog dan nomor urutnya sendiri | Seseorang dengan peran `Cataloger` di proyek, beserta inisial dan nomor lapangan saat ini |
 | `ID proyek` | `Prefiks` + `Nomor katalog saat ini` + `Sufiks` | Proyek terbuka, ketiga nilai tersebut, serta apakah `Tambah nomor katalog secara otomatis` aktif |
 
 Dengan `ID proyek`, NAHPU menyambung ketiga nilai itu secara langsung: `NAHPU-`,
@@ -195,7 +195,10 @@ Gunakan menu tindakan pada bidang yang ada untuk mengatur urutannya
 - `Ganti basis data` memulihkan arsip cadangan NAHPU (ZIP atau TAR.GZ) atau
   berkas SQLite (`.sqlite3`). NAHPU menampilkan perbandingan berdampingan
   sebelum menimpa dan mengaktifkan `Cadangkan data saat ini terlebih dahulu`
-  secara bawaan.
+  secara default.
+- `Periksa basis data` memeriksa semua proyek untuk masalah yang dapat
+  menghentikan ekspor atau menyembunyikan rekaman, dan memperbaiki yang aman
+  untuk diperbaiki. Lihat [Periksa basis data](#check-database).
 
 {% aside type="caution" %}
 
@@ -207,21 +210,53 @@ konfigurasi pengguna. Lihat
 
 {% /aside %}
 
+### Periksa basis data {% #check-database %}
+
+`Periksa basis data` memeriksa seluruh basis data, termasuk semua proyek, saat
+halaman dibuka. Galat (error) menghentikan ekspor proyek dan paket data;
+peringatan (warning) tidak.
+
+| Masalah | Artinya | Perbaikan |
+| --- | --- | --- |
+| Berkas basis data rusak | SQLite menemukan kerusakan pada berkas basis data itu sendiri | Pulihkan cadangan dengan `Ganti basis data` |
+| Tautan rusak | Rekaman menunjuk ke rekaman yang sudah tidak ada | `Hapus tautan`, atau `Hapus rekaman ini` jika rekaman hanya milik rekaman yang hilang |
+| Tautan ke proyek lain | Spesimen atau kegiatan menunjuk ke kegiatan atau lokasi di proyek lain | `Hapus tautan` |
+| Berkas media hilang | Rekaman media tidak memiliki berkas di perangkat ini | `Hapus rekaman media` |
+| Foto personel hilang | Foto personel sudah tidak ada di perangkat ini | `Hapus foto` |
+| Rekaman pengukuran hilang | Spesimen tidak memiliki rekaman pengukuran untuk kelompok taksonnya | `Tambahkan rekaman kosong` |
+| Konflik nomor lapangan | Spesimen memiliki nomor lapangan (field number) personel dan nomor lapangan proyek sekaligus | Perbaiki manual |
+| Nomor lapangan ganda | Beberapa spesimen memakai nomor lapangan yang sama | Perbaiki manual |
+
+Tombol buka di samping setiap masalah menampilkan rekaman yang terdampak di
+tabel data, dari semua proyek. Pilih perbaikan satu per satu atau dengan
+`Pilih semua perbaikan`, lalu pilih tombol `Perbaiki`. Opsi
+`Cadangkan basis data terlebih dahulu` aktif secara default dan menyimpan
+salinan basis data ke folder cadangan NAHPU. Salinan ini dapat dipulihkan
+dengan `Ganti basis data`. Berkas media tidak termasuk dalam salinan ini
+karena tidak ada perbaikan yang menghapus berkas.
+
+Rekaman yang kehilangan proyeknya tidak memiliki perbaikan otomatis, karena
+mengosongkan proyek akan menyembunyikan rekaman dari semua proyek. NAHPU
+menolak perbaikan, tanpa mengubah apa pun, jika rekaman lain masih bergantung
+pada rekaman yang akan diubah.
+
+Saat ekspor gagal, pesan kegagalan menampilkan tombol `Periksa basis data`.
+
 ## Ekspor {% #exports %}
 
-- `Data tabular` mengelola prasetel yang dapat dipakai ulang untuk mengekspor
+- `Data tabular` mengelola setelan awal yang dapat dipakai ulang untuk mengekspor
   catatan tabular.
-- `Dokumen` mengelola prasetel tata letak cetak, templat dokumen, dan fon yang
-  tersedia untuk templat.
-- `Penyunting templat` membuat dan menyunting templat dokumen.
+- `Dokumen` mengelola setelan awal tata letak cetak, template dokumen, dan font yang
+  tersedia untuk template.
+- `Penyunting template` membuat dan menyunting template dokumen.
 
-Pilih `Muat bawaan` dari menu opsi—atau dari daftar prasetel yang kosong—untuk
-menambahkan prasetel bawaan. Prasetel yang cocok untuk semua format katalog
-sudah dicentang; prasetel khusus satu format katalog belum dicentang dan juga
-ditawarkan di `Siapkan NAHPU`. Memuat bawaan tidak pernah menimpa prasetel
-bernama sama, dan setiap prasetel dapat dihapus.
+Pilih `Muat default` dari menu opsi—atau dari daftar setelan awal yang kosong—untuk
+menambahkan setelan awal default. Setelan awal yang cocok untuk semua format katalog
+sudah dicentang; setelan awal khusus satu format katalog belum dicentang dan juga
+ditawarkan di `Siapkan NAHPU`. Memuat default tidak pernah menimpa setelan awal
+bernama sama, dan setiap setelan awal dapat dihapus.
 
-Ekspor prasetel ini sebagai konfigurasi pengguna bila instalasi lain perlu
+Ekspor setelan awal ini sebagai konfigurasi pengguna bila instalasi lain perlu
 menghasilkan kolom, label, atau tata letak yang sama.
 
 ## Aplikasi {% #applications %}
@@ -231,9 +266,9 @@ Preferensi ini hanya berlaku pada instalasi ini.
 | Pengaturan | Fungsi |
 | --- | --- |
 | `Tema` | Berpindah antara `Terang`, `Gelap`, dan `Sistem`. |
-| `Bahasa` | Mengatur bahasa aplikasi (`Bawaan sistem` atau bahasa tertentu). Masih beta. |
+| `Bahasa` | Mengatur bahasa aplikasi (`Default sistem` atau bahasa tertentu). Masih beta. |
 | `Format regional` | Mengatur cara tanggal dan angka ditampilkan di layar (`Sesuai bahasa` atau wilayah tertentu). Catatan tersimpan dan ekspor tetap memakai format standar. Masih beta. |
-| `Alat` | Memilih alat yang ditampilkan di dasbor proyek. Gunakan `Atur ulang` untuk kembali ke bawaan. |
+| `Alat` | Memilih alat yang ditampilkan di dasbor proyek. Gunakan `Atur ulang` untuk kembali ke default. |
 | `Penggunaan data` | Menampilkan laporan penyimpanan dan membersihkan berkas tidak tertaut, dijelaskan di bawah. |
 
 ### Penggunaan dan pembersihan data {% #data-usage-and-cleanup %}
@@ -244,9 +279,9 @@ menampilkan `Total penggunaan`, `Berkas`, `Berkas media`, dan ruang yang
 
 - **`Hapus berkas tidak tertaut`** menghapus berkas yang tidak lagi dipakai
   catatan mana pun, seperti sisa media yang dihapus atau impor yang dibatalkan.
-  Berkas tertaut, basis data dan cadangannya, fon kustom, lapisan peta, serta
-  berkas di luar folder yang dikelola NAHPU tidak terpengaruh. Hapus fon yang
-  terpasang melalui `Dokumen` > `Fon`.
+  Berkas tertaut, basis data dan cadangannya, font kustom, lapisan peta, serta
+  berkas di luar folder yang dikelola NAHPU tidak terpengaruh. Hapus font yang
+  terpasang melalui `Dokumen` > `Font`.
 - **Pohon `Berkas`** memungkinkan Anda membentangkan atau menciutkan folder
   (`Bentangkan semua` / `Ciutkan semua`), memeriksa berkas tersimpan, menyimpan
   salinan, menghapus folder kosong, atau menghapus berkas yang diizinkan satu
@@ -265,8 +300,8 @@ di menu layar beranda, menu `Dasbor` proyek, dan `Siapkan NAHPU`—bukan di dala
 halaman `Pengaturan`.
 
 Transfer konfigurasi pengguna memungkinkan Anda memilih bagian mana yang ingin
-dibagikan (kosakata terkontrol dan visibilitas bidang, prasetel ekspor catatan,
-templat dan tata letak dokumen, serta kolom khusus) tanpa mengganti basis data
+dibagikan (kosakata terkontrol dan visibilitas bidang, setelan awal ekspor catatan,
+template dan tata letak dokumen, serta kolom khusus) tanpa mengganti basis data
 proyek. Tinjau konfigurasi yang diimpor sebelum mengganti pengaturan saat ini,
 dan lihat [Ekspor konfigurasi pengguna](../export/#export-user-configs) untuk
 langkah lengkapnya.

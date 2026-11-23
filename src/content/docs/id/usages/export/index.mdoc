@@ -42,7 +42,7 @@ dari menu layar beranda.
 | Melaporkan ringkasan hitungan, seperti spesimen per spesies | [Ekspor statistik](/id/usages/export/export-statistics/) | Tabel ringkasan dalam CSV, TSV, Excel, atau JSON |
 | Mengeluarkan foto dan berkas media lainnya | [Ekspor gambar](/id/usages/export/export-images/) | Satu berkas, atau arsip TAR.GZ maupun ZIP berisi banyak berkas |
 | Melindungi semua data di perangkat ini | [`Cadangkan basis data`](#backup-database) {% ref id="F" /%} | Satu arsip untuk seluruh instalasi |
-| Berbagi pengaturan, kosakata terkontrol, dan prasetel | [`Ekspor konfigurasi pengguna`](#export-user-configs) {% ref id="G" /%} | Berkas konfigurasi JSON atau JSON.GZ |
+| Berbagi pengaturan, kosakata terkontrol, dan setelan awal | [`Ekspor konfigurasi pengguna`](#export-user-configs) {% ref id="G" /%} | Berkas konfigurasi JSON atau JSON.GZ |
 
 Hanya tiga di antaranya yang dapat mengembalikan data ke NAHPU:
 
@@ -91,7 +91,7 @@ Untuk memulihkan satu proyek saja, gunakan `Impor proyek` di layar beranda atau
 ## Cadangan basis data {% #backup-database %}
 
 `Cadangkan basis data` menyimpan seluruh instalasi dalam satu arsip `TAR.GZ`
-(bawaan) atau `ZIP` {% ref id="H" /%}: basis data SQLite ditambah folder
+(default) atau `ZIP` {% ref id="H" /%}: basis data SQLite ditambah folder
 proyek, personel, dan pengaturan, termasuk berkas yang tidak tertaut ke catatan
 aktif. Berkas `.sqlite3` saja hanya memuat catatan tanpa media atau berkas
 lain.
@@ -121,9 +121,9 @@ Anda dapat memilih bagian mana yang diekspor:
 
 - `Kosakata terkontrol dan pengaturan`
 - `Preset ekspor tabel`
-- `Templat dokumen`
+- `Template dokumen`
 - `Preset tata letak dokumen`
-- `Kolom pratinjau tabel templat`
+- `Kolom pratinjau tabel template`
 - `Bidang kustom` (termasuk memilih definisi bidang khusus tertentu)
 
 {% steps %}
@@ -183,7 +183,7 @@ Yang dilakukan pemulihan:
 ## Memulihkan konfigurasi pengguna {% #restoring-user-configs %}
 
 Impor berkas konfigurasi pengguna untuk menerapkan kosakata terkontrol,
-prasetel, templat, tata letak, atau bidang kustom dari perangkat lain atau
+setelan awal, template, tata letak, atau bidang kustom dari perangkat lain atau
 cadangan. Sama seperti ekspor, `Impor konfigurasi pengguna` tersedia dari menu
 layar beranda, menu dasbor proyek, dan `Siapkan NAHPU`.
 
@@ -200,10 +200,10 @@ layar beranda, menu dasbor proyek, dan `Siapkan NAHPU`.
 {% /steps %}
 
 Bagian yang dipilih akan mengganti pengaturan terkait di perangkat ini, kecuali
-bidang kustom yang dicocokkan berdasarkan ID templat dan digabungkan sehingga
+bidang kustom yang dicocokkan berdasarkan ID template dan digabungkan sehingga
 definisi yang ada tetap terjaga. Bagian yang tidak dipilih tidak berubah. Jika
-templat dokumen yang diimpor memakai fon yang belum terpasang di perangkat ini,
-NAHPU akan meminta Anda memilih fon pengganti.
+template dokumen yang diimpor memakai font yang belum terpasang di perangkat ini,
+NAHPU akan meminta Anda memilih font pengganti.
 
 Tindakan ini hanya mengubah pengaturan, bukan catatan proyek. Untuk memulihkan
 keduanya sekaligus, pulihkan cadangan basis data `ZIP` atau `TAR.GZ`. Untuk
@@ -222,8 +222,8 @@ Sebelum mengarsipkan:
 - Selesaikan kurasi data lalu perbaiki atau catat kendala yang diketahui. Lihat
   [Manajemen Data](../../best-practices/data-management).
 - Buat cadangan basis data terbaru.
-- Ekspor konfigurasi pengguna jika kosakata terkontrol, prasetel ekspor,
-  templat, tata letak cetak, atau bidang kustom diperlukan untuk mengulang
+- Ekspor konfigurasi pengguna jika kosakata terkontrol, setelan awal ekspor,
+  template, tata letak cetak, atau bidang kustom diperlukan untuk mengulang
   pekerjaan.
 - Buat ekspor proyek penuh dengan `Ekspor ringan` nonaktif agar media ikut
   masuk, sambil memeriksa jumlah catatan dan peringatan media hilang.
@@ -250,7 +250,7 @@ Sebelum mengirim data NAHPU ke museum, kolaborator, atau perangkat lain:
     media (misalnya pada koneksi lambat);
   - `TAR.GZ` atau `ZIP` saat media atau salinan lengkap harus ikut dikirim.
 - Ekspor konfigurasi pengguna jika penerima memerlukan kosakata terkontrol,
-  prasetel, templat, tata letak, atau bidang kustom Anda.
+  setelan awal, template, tata letak, atau bidang kustom Anda.
 - Sertakan ekspor tabel, bundel, atau dokumen yang diminta penerima.
 - Pastikan setidaknya satu jalur pemulihan berhasil sebelum menghapus data apa
   pun dari perangkat asal.

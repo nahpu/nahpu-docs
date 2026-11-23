@@ -1,0 +1,130 @@
+---
+title: "Teamwork tutorial 5: Run your own line (Workflow B)"
+authors:
+  - Heru Handika
+lastUpdated: 2026-11-21
+sidebar:
+  label: "5. Run your own line (B)"
+  order: 5
+---
+
+Tutorials 2–4 followed [Workflow A](/en/usages/workflows/#workflow-a): a shared
+site and event, with each cataloger recording the specimens they sorted. Most
+small-mammal fieldwork also uses
+[Workflow B](/en/usages/workflows/#workflow-b): each person runs their own trap
+line, then prepares and catalogs its catch on their own device. Nobody else
+needs that line's site or event until the catalogs are merged.
+
+In this tutorial, **Bima** works independently on Line 2, creating its site and
+event on his own device and cataloging one specimen from it. Nothing is shared
+with Heru until [Teamwork tutorial 6](/en/tutorials/teamwork/merge-catalogs/).
+
+| | Workflow A (Tutorials 2–4) | Workflow B (this tutorial) |
+| --- | --- | --- |
+| Where specimens come from | Line 1, worked by both teammates | Line 2, worked by Bima |
+| Who creates the site and event | Heru, then shares them | Bima, on his own device |
+| What the merge does with them | Matches existing records | Adds them as new records |
+| Field IDs | Each cataloger's own series | Each cataloger's own series |
+
+## 1. Create Bima's site
+
+On **Bima's device**, follow [Basic tutorial 3](/en/tutorials/basic/sites/) to
+create the site.
+
+{% steps %}
+
+1. Open `Sites` and select `+`.
+2. Enter `TJBS-L2` as `Site ID`, select `Bima Sampel` as `Site Leader`, and
+   choose `Trapline` as `Site Type`.
+3. Under `Geography`, select `Find existing locality` and choose the Pondok
+   Merah locality that arrived with Heru's sites. Reusing it keeps one shared
+   locality for all three lines.
+4. Enter the same habitat description as `TJHH-L1`, and add
+   `Most snap traps set 1–2 m above the ground.` to `Remarks`.
+5. Add the `TJHH-PM` coordinate from
+   [Basic tutorial 3](/en/tutorials/basic/sites/#3-add-the-coordinate).
+
+{% /steps %}
+
+{% devicepair
+   phone="app-screenshots/tutorials/teamwork/iphone-site-tjbs-l2.webp"
+   phoneAlt="NAHPU Sites page on an iPhone for TJBS-L2 with site leader Bima Sampel, site type Trapline, and the geography Indonesia, Jambi, Kerinci; the page counter reads page 3 of 3"
+   phoneLabel="Bima · iPhone" /%}
+
+The Site ID includes the line leader's initials (`BS`), following the
+[Site ID convention](/en/usages/sites/). Because each line leader uses their
+own initials, two teammates cannot accidentally create the same Site ID.
+
+## 2. Create Bima's collecting event
+
+{% steps %}
+
+1. Open `Events` and select `+`.
+2. Choose `TJBS-L2` as `Site ID`, and set `Start Date` to 12 September 2014 and
+   `End Date` to 18 September 2014.
+3. Set `Primary activity` to `Collecting`, and add the note explaining the
+   `07:00` overnight capture-time convention from
+   [Basic tutorial 4](/en/tutorials/basic/events/).
+4. Add `Snap trap` with `Count` `25`.
+5. Add the team: Bima Sampel (`Leader`), and Citra Contoh and Heru Handika
+   (`Helper`).
+
+{% /steps %}
+
+{% devicepair
+   phone="app-screenshots/tutorials/teamwork/iphone-event-tjbs-l2.webp"
+   phoneAlt="NAHPU Events page on an iPhone for TJBS-L2-2014-09-12, site TJBS-L2, from 12 to 18 September 2014, with no start or end time"
+   phoneLabel="Bima · iPhone" /%}
+
+Pick Citra and Heru from the personnel list that arrived with the shared
+events. While you can create new personnel on your own device when needed, we
+recommend sharing existing teammates across devices so every device uses the
+same UUID; recreating a teammate independently causes the merge to treat the
+duplicate as a different person.
+
+## 3. Catalog the catch from Line 2
+
+On 13 September, Line 2 caught one *Maxomys hylomyoides*. On paper it is
+HH 456, the specimen from
+[Basic tutorial 5](/en/tutorials/basic/specimens/#hh-456-a-changed-identification)
+whose identification was changed from *Mus crociduroides*. Here, Bima catalogs
+it as `BS5`:
+
+| Field | Value |
+| --- | --- |
+| Field ID | `BS5` (paper: HH 456) |
+| `Taxon` | *Maxomys hylomyoides*, `ID Confidence` `Medium` |
+| Site and event | `TJBS-L2`, `TJBS-L2-2014-09-12` |
+| Capture date and time | 13 September 2014, `07:00` |
+| `Method`, `Collector` | `Snap trap`, Bima Sampel |
+| TTL–TL–HF–Ear, weight | 221–113–28–16, 48 g |
+| `Sex`, `Life stage` | `Male`, testes abdominal; `Subadult` |
+| Parts | `Whole body` in `Formalin`; `Liver` in `ETOH`, `Tissue ID` `Z26250` |
+| `Remarks` | `First recorded in the field as Mus crociduroides.` |
+
+If *Maxomys hylomyoides* is not yet in Bima's taxon registry, add it by
+scanning Heru's taxon QR, as in
+[Teamwork tutorial 3](/en/tutorials/teamwork/share-events-and-taxa/#2-copy-the-taxa-bima-needs).
+
+## 4. Check the catalog before merging
+
+Bima's device now holds two kinds of records:
+
+- **Shared with Heru (Workflow A):** sites `TJHH-L1` and `TJHH-P1`, their
+  events, and specimens `BS1` to `BS4`.
+- **Created independently (Workflow B):** site `TJBS-L2`, its event, and
+  specimen `BS5`.
+
+Both go into the same project export. During the merge, NAHPU matches the
+shared records to Heru's copies and adds Bima's own line as new, so mixing the
+two workflows requires no extra steps.
+
+{% aside type="tip" title="When a teammate needs your line before the merge" %}
+If Heru needs `TJBS-L2` on his device (e.g., to help check its traps), Bima
+can share its site and event using the same QR and JSON steps from Tutorials 2
+and 3. The merge will then match them instead of adding them as new.
+{% /aside %}
+
+## Next
+
+[Teamwork tutorial 6: Merge the catalogs](/en/tutorials/teamwork/merge-catalogs/)

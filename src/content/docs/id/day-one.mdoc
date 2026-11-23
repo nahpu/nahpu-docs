@@ -69,7 +69,7 @@ ini kapan saja untuk meninjau konsep utamanya.
 
 **Field ID** adalah pengenal kerja yang ditulis pada label fisik spesimen:
 
-- **`ID personel`** (bawaan): menggabungkan inisial Cataloger dan nomor urut
+- **`ID personel`** (default): menggabungkan inisial Cataloger dan nomor urut
   pribadinya. Cocok saat beberapa orang mengatalogkan spesimen secara paralel.
 - **`ID proyek`**: menggabungkan prefiks proyek, nomor katalog berurutan, dan
   sufiks. Cocok untuk preparasi bergaya lini perakitan saat satu orang
@@ -91,7 +91,7 @@ kegiatan**:
   koleksi (seperti ketua, mahasiswa pembantu, pemandu lokal, atau sopir) dan
   dapat berbeda di tiap kegiatan.
 
-Registri takson secara bawaan mengimpor tingkat spesies, tetapi mendukung
+Registri takson secara default mengimpor tingkat spesies, tetapi mendukung
 peringkat lebih tinggi seperti genus atau famili agar Anda dapat mencatat
 identifikasi pada peringkat yang paling yakin beserta **tingkat keyakinan
 identifikasi**.
@@ -105,7 +105,7 @@ identifikasi**.
   di perangkat ini. Satu proyek tetap dapat memuat spesimen dari lebih dari
   satu kelompok takson.
 - **Kolom khusus** menambahkan pengamatan khusus proyek atau global yang belum
-  tersedia di bidang bawaan.
+  tersedia di bidang default.
 - **Zona waktu proyek** mendokumentasikan waktu lokal rujukan untuk catatan
   pengamatan tanpa mengubah jam perangkat atau mengonversi stempel waktu yang
   sudah tersimpan.
@@ -121,7 +121,7 @@ menyimpan salinan luring), serta **Media** untuk gambar, audio, atau video.
 | --- | --- | --- |
 | **Identitas proyek** | Hanya nama, rincian, dan UUID proyek | Menyiapkan perangkat tim agar catatan dapat digabungkan nanti |
 | **Transfer proyek** | Catatan proyek dan media (`.zip` / `.tar.gz`), atau catatan saja (`Ekspor ringan`, `.json.gz`) | Memindahkan atau menggabungkan satu proyek antarperangkat |
-| **Konfigurasi pengguna** | Kosakata terkontrol, visibilitas bidang, kolom khusus, templat, dan prasetel | Menyalin pengaturan yang sama ke perangkat lain |
+| **Konfigurasi pengguna** | Kosakata terkontrol, visibilitas bidang, kolom khusus, template, dan setelan awal | Menyalin pengaturan yang sama ke perangkat lain |
 | **Cadangan basis data** | Arsip instalasi lengkap (semua proyek, media, dan pengaturan) | Membuat titik pemulihan penuh sebelum impor, penggabungan, atau titik simpan lapangan |
 
 {% aside type="caution" title="Ekspor bukan cadangan" %}
@@ -132,6 +132,18 @@ tersebut. Gunakan transfer proyek atau cadangan basis data penuh untuk
 pemulihan.
 
 {% /aside %}
+
+### Saat terjadi masalah
+
+Jika ekspor berhenti dengan galat (error), buka `Pengaturan` > `Basis data` >
+`Periksa basis data`, atau pilih `Periksa basis data` pada pesan kegagalan.
+Halaman `Periksa basis data` memeriksa semua proyek untuk menemukan tautan
+rusak, berkas media yang hilang, rekaman pengukuran yang hilang, dan nomor
+lapangan yang bertentangan. Di halaman ini, Anda dapat membuka rekaman yang
+terdampak, dan NAHPU memperbaiki kasus yang aman setelah menyimpan salinan
+basis data. Jika berkas basis data itu sendiri rusak, pulihkan cadangan basis
+data terbaru. Lihat
+[Periksa dan perbaiki basis data](/id/how-to-recipes/protect-and-collaborate/check-and-repair-database/).
 
 ## Berlatih menggunakan NAHPU
 
@@ -145,7 +157,7 @@ agar catatan latihan tetap terpisah dari data penelitian.
 1. **Buka NAHPU dan jelajahi pengaturan**
 
     Buka `Siapkan NAHPU` dari menu layar beranda untuk meninjau format katalog,
-    mode ID lapangan, kosakata terkontrol, dan prasetel ekspor—atau impor
+    mode ID lapangan, kosakata terkontrol, dan setelan awal ekspor—atau impor
     konfigurasi pengguna tim dari menu layar beranda, menu `Dasbor` proyek,
     atau `Siapkan NAHPU`.
 
@@ -246,3 +258,6 @@ Sebelum memulai pekerjaan lapangan atau laboratorium, pastikan Anda dapat:
   proyek hingga Darwin Core Archive.
 - Pelajari cara [mengatur bidang khusus](/id/how-to-recipes/prepare/configure-custom-fields/).
 - [Jelajahi panduan praktis](/id/how-to-recipes/) untuk resep tugas singkat.
+- Jika ekspor berhenti dengan galat, gunakan
+  [Periksa dan perbaiki basis data](/id/how-to-recipes/protect-and-collaborate/check-and-repair-database/)
+  untuk menemukan dan memperbaiki rekaman yang bermasalah.

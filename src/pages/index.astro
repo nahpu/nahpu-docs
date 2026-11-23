@@ -5,6 +5,9 @@ import Pillars from "../components/landing/Pillars.astro";
 import AppShowcase from "../components/landing/AppShowcase.astro";
 import CatalogFormats from "../components/landing/CatalogFormats.astro";
 import FieldGallery from "../components/landing/FieldGallery.astro";
+import { Image } from "astro:assets";
+import tissueCuration from "../assets/images/app-screenshots/usage/curation-large.webp";
+import labelExport from "../assets/images/app-screenshots/tutorials/voucher-export-large.webp";
 import cntl from "cntl";
 
 import "../styles/global.css";
@@ -218,6 +221,27 @@ const spreadsheetSteps = [
     },
 ];
 
+const postFieldwork = [
+    {
+        step: "Tissue curation",
+        title: "Check tissues into freezer boxes",
+        desc: "Scan each tube's barcode or QR code, and NAHPU assigns the next free cell in the box. The storage location and museum code are written to the part record, and each session is logged. These data can later be exported to match the data input of a collection management system for the permanent database.",
+        image: tissueCuration,
+        alt: "NAHPU Specimen curation screen with a partly filled tissue box and the scan field on a tablet",
+        href: "/en/usages/curation/tissue-curation/",
+        linkLabel: "Read about tissue curation",
+    },
+    {
+        step: "Voucher tags",
+        title: "Print tags from the records",
+        desc: "Design voucher tags and tissue tags in the template editor, arrange them on a page, and export a PDF. Each tag is filled from its specimen record.",
+        image: labelExport,
+        alt: "NAHPU Export documents screen previewing a page of mammal voucher tags on a tablet",
+        href: "/en/usages/export/export-documents/",
+        linkLabel: "Read about exporting documents",
+    },
+];
+
 const preprint = {
     title: "NAHPU: An integrated approach to natural history data acquisition and management in the extended specimen era",
     authors: "Handika, H., Moncrieff, A., Henderson, C., Dadaian, A., Gordon, C., Canton, R., Chipps, A., Inayah, N., Chornelia, A., Rego, M., Pérez-Amaya, N., Gan, L., Jaiswal, A., Lee, D., Yu, J., Aravind, A., Evangelista, D., Rutledge, S., Elías, D., Troyer, E., Silva de Miranda, G., Vonnahme, L., Shi, B., Nations, J., Del-Rio, G., Thom, G., Porto, A., & Esselstyn, J.",
@@ -422,45 +446,10 @@ const bibtex = `@misc{Handika_2026,
         </div>
     </section>
 
-    <!-- Capabilities -------------------------------------------------------->
-    <section
-        id="capabilities"
-        class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
-    >
-        <div class={sectionInnerClasses}>
-            <header class="nh-reveal max-w-3xl">
-                <p class={kickerClasses}>Capabilities</p>
-                <h2 class={sectionTitleClasses}>What comes with the catalog</h2>
-            </header>
-
-            <div class="mt-12 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2">
-                {capabilities.map((item, index) => (
-                    <div
-                        class="nh-reveal flex gap-4 border-t border-silver-tree-300/70 pt-5 dark:border-silver-tree-700/70"
-                        style={`transition-delay: ${index * 50}ms`}
-                    >
-                        <span
-                            class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full"
-                            style={`background:${item.color}`}
-                        />
-                        <div>
-                            <h3 class="text-base font-semibold text-silver-tree-900 dark:text-silver-tree-50">
-                                {item.title}
-                            </h3>
-                            <p class="mt-1 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
-                                {item.desc}
-                            </p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    </section>
-
     <!-- Spreadsheet replacement --------------------------------------------->
     <section
         id="spreadsheet"
-        class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
+        class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
     >
         <div class={sectionInnerClasses}>
             <header class="nh-reveal max-w-3xl">
@@ -488,6 +477,95 @@ const bibtex = `@misc{Handika_2026,
                             {item.desc}
                         </p>
                     </article>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Post-fieldwork ---------------------------------------------------->
+    <section
+        id="post-fieldwork"
+        class={`${sectionClasses} bg-silver-tree-200/60 dark:bg-silver-tree-900`}
+    >
+        <div class={sectionInnerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Post-fieldwork</p>
+                <h2 class={sectionTitleClasses}>
+                    Curate tissues and print voucher tags
+                </h2>
+                <p class={sectionLeadClasses}>
+                    NAHPU provides a growing list of GUI-based specimen
+                    curation features to support work after fieldwork.
+                </p>
+            </header>
+
+            <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+                {postFieldwork.map((item, index) => (
+                    <article
+                        class="nh-reveal flex flex-col overflow-hidden rounded-2xl border border-silver-tree-300/70 bg-silver-tree-50/70 dark:border-silver-tree-700/70 dark:bg-silver-tree-900/50"
+                        style={`transition-delay: ${index * 60}ms`}
+                    >
+                        <div class="border-b border-silver-tree-300/70 bg-silver-tree-100/70 p-4 dark:border-silver-tree-700/70 dark:bg-silver-tree-950/50">
+                            <Image
+                                src={item.image}
+                                alt={item.alt}
+                                widths={[640, 1200]}
+                                sizes="(min-width: 768px) 36rem, 100vw"
+                                class="h-auto w-full rounded-lg shadow-md"
+                                loading="lazy"
+                            />
+                        </div>
+                        <div class="flex flex-1 flex-col p-6">
+                            <p class={kickerClasses}>{item.step}</p>
+                            <h3 class="mt-2 text-lg font-semibold text-silver-tree-900 dark:text-silver-tree-50">
+                                {item.title}
+                            </h3>
+                            <p class="mt-3 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
+                                {item.desc}
+                            </p>
+                            <a
+                                href={item.href}
+                                class="mt-4 text-sm font-semibold text-silver-tree-700 underline-offset-4 hover:underline dark:text-silver-tree-300"
+                            >
+                                {item.linkLabel} →
+                            </a>
+                        </div>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities -------------------------------------------------------->
+    <section
+        id="capabilities"
+        class={`${sectionClasses} bg-silver-tree-100 dark:bg-silver-tree-950`}
+    >
+        <div class={sectionInnerClasses}>
+            <header class="nh-reveal max-w-3xl">
+                <p class={kickerClasses}>Capabilities</p>
+                <h2 class={sectionTitleClasses}>Summary features</h2>
+            </header>
+
+            <div class="mt-12 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2">
+                {capabilities.map((item, index) => (
+                    <div
+                        class="nh-reveal flex gap-4 border-t border-silver-tree-300/70 pt-5 dark:border-silver-tree-700/70"
+                        style={`transition-delay: ${index * 50}ms`}
+                    >
+                        <span
+                            class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full"
+                            style={`background:${item.color}`}
+                        />
+                        <div>
+                            <h3 class="text-base font-semibold text-silver-tree-900 dark:text-silver-tree-50">
+                                {item.title}
+                            </h3>
+                            <p class="mt-1 text-sm leading-relaxed text-silver-tree-700 dark:text-silver-tree-300">
+                                {item.desc}
+                            </p>
+                        </div>
+                    </div>
                 ))}
             </div>
         </div>

@@ -90,7 +90,7 @@ sebelumnya Anda miliki atas materi tersebut.
 Anda bertanggung jawab untuk memastikan bahwa Anda memiliki hak, izin, dan
 dasar hukum yang diperlukan untuk mencatat, menyalin, memproses, mengekspor,
 dan membagikan materi tersebut. Ini mencakup foto, audio, video, data personel,
-catatan lapangan, koordinat, kumpulan data pihak ketiga, fon, templat, dan berkas
+catatan lapangan, koordinat, kumpulan data pihak ketiga, font, template, dan berkas
 terkait.
 
 Anda juga bertanggung jawab atas:
@@ -183,7 +183,7 @@ kami.
 Syarat ini tidak menggantikan atau membatasi hak yang diberikan oleh lisensi
 sumber terbuka yang berlaku. Jika Syarat ini bertentangan dengan lisensi sumber
 terbuka untuk komponen tertentu, lisensi tersebut yang berlaku untuk komponen
-itu. Pustaka, fon, data peta, dan materi pihak ketiga lainnya dapat tunduk pada
+itu. Pustaka, font, data peta, dan materi pihak ketiga lainnya dapat tunduk pada
 lisensi dan persyaratan atribusi masing-masing.
 
 Nama dan logo NAHPU, konten situs web, dan materi proyek lainnya dapat
