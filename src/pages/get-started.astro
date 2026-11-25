@@ -135,13 +135,21 @@ const statusChipClasses = cntl`
   text-silver-tree-800 dark:text-silver-tree-100
 `;
 
-/// Platforms where the latest release is available.
-const releaseStatus = [
-  { name: "Android", available: true },
-  { name: "iOS and iPadOS", available: true },
-  { name: "macOS", available: true },
-  { name: "Linux", available: true },
-  { name: "Windows", available: true },
+/// Rollout of the latest release, one entry per store. Apple devices share one
+/// App Store listing, but Apple reviews the iOS and macOS builds separately, so
+/// set `pending` on an entry while a store still has the build in review.
+interface ReleaseStatus {
+  store: string;
+  platforms: string;
+  available: boolean;
+  pending?: string;
+}
+
+const releaseStatus: ReleaseStatus[] = [
+  { store: "Google Play", platforms: "Android", available: true },
+  { store: "App Store", platforms: "iOS, iPadOS, macOS", available: true },
+  { store: "Snap Store", platforms: "Linux", available: true },
+  { store: "Microsoft Store", platforms: "Windows", available: true },
 ];
 
 interface PlatformLink {
@@ -420,12 +428,13 @@ const tutorials = [
             <h2
               class="mt-2 text-lg font-semibold text-silver-tree-900 sm:text-xl dark:text-silver-tree-50"
             >
-              NAHPU v1.3.1 is out
+              NAHPU v1.3.1 is available in all supported stores
             </h2>
             <p class={`${bodyTextClasses} mt-2`}>
               This release adds personnel sharing, symbiont records for
               invertebrates, and a database check that fixes common problems.
-              It is available now on all platforms. See the{" "}
+              Update from Google Play, the App Store, the Snap Store, or the
+              Microsoft Store. See the{" "}
               <a
                 class={linkClasses}
                 href="https://github.com/nahpu/nahpu/blob/main/CHANGELOGS.md"
@@ -443,8 +452,8 @@ const tutorials = [
                       style={`background:${item.available ? "var(--color-silver-tree-500)" : "var(--color-golden-grass-500)"}`}
                       aria-hidden="true"
                     />
-                    {item.name}:{" "}
-                    {item.available ? "Available" : "Coming soon"}
+                    {item.store} ({item.platforms}):{" "}
+                    {item.available ? "Available" : item.pending}
                   </li>
                 ))
               }
