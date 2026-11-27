@@ -604,7 +604,9 @@
     padding-right: 1.5rem;
   }
 
-  .nh-tl-today-mobile {
+  /* Raised specificity so the wide-screen `.nh-tl-row` flex rule below
+     cannot re-show this row and break the track between the two bends. */
+  .nh-tl-row.nh-tl-today-mobile {
     display: none;
   }
 
@@ -612,7 +614,10 @@
     padding-right: 3rem;
   }
 
+  /* Stacks above the planned band so its dashed curve cannot paint over the
+     Today badge, which lives inside this band's curve. */
   .nh-timeline-band-released {
+    z-index: 1;
     padding-bottom: 2.25rem;
   }
 
